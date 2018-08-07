@@ -1,0 +1,36 @@
+--region *.lua
+--Date
+--此文件由[BabeLua]插件自动生成
+
+local base = require("ui.common.panel")
+local view = class("view", base)
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function view:ctor()
+    local gameObject = viewManager.load(self.folder, self.resource)
+
+    self:bind(gameObject)
+    self:init(gameObject)
+    self:setParent(viewManager.canvas)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function view:close()
+    if self.widgets ~= nil then 
+        for _, v in pairs(self.widgets) do 
+            v:destroy()
+        end
+        self.widgets = nil
+    end
+    viewManager.unload(self)
+
+    self:destroy()
+end
+
+return view
+
+--endregion

@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6dee483e-a03a-4d5b-8001-13e063d54c6c}</ProjectGuid>
+    <!--$guid1$-->
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Lua\" />
+    <Folder Include="Lua\common\" />
+    <Folder Include="Lua\config\" />
+    <Folder Include="Lua\logic\" />
+    <Folder Include="Lua\manager\" />
+    <Folder Include="Lua\network\" />
+    <Folder Include="Lua\tween\" />
+    <Folder Include="Lua\ui\" />
+    <Folder Include="Lua\ui\common\" />
+    <Folder Include="Lua\utils\" />
+    <Folder Include="ToLua\" />
+    <Folder Include="ToLua\Lua\" />
+    <Folder Include="ToLua\Lua\cjson\" />
+    <Folder Include="ToLua\Lua\jit\" />
+    <Folder Include="ToLua\Lua\lpeg\" />
+    <Folder Include="ToLua\Lua\misc\" />
+    <Folder Include="ToLua\Lua\protobuf\" />
+    <Folder Include="ToLua\Lua\socket\" />
+    <Folder Include="ToLua\Lua\System\" />
+    <Folder Include="ToLua\Lua\System\Injection\" />
+    <Folder Include="ToLua\Lua\System\Reflection\" />
+    <Folder Include="ToLua\Lua\UnityEngine\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Lua\common\component.lua" />
+    <Compile Include="Lua\common\object.lua" />
+    <Compile Include="Lua\config\appConfig.lua" />
+    <Compile Include="Lua\logic\clientApp.lua" />
+    <Compile Include="Lua\main.lua" />
+    <Compile Include="Lua\manager\eventManager.lua" />
+    <Compile Include="Lua\manager\sceneManager.lua" />
+    <Compile Include="Lua\manager\soundManager.lua" />
+    <Compile Include="Lua\manager\tweenManager.lua" />
+    <Compile Include="Lua\manager\viewManager.lua" />
+    <Compile Include="Lua\network\network.lua" />
+    <Compile Include="Lua\std.lua" />
+    <Compile Include="Lua\tween\tweenParallel.lua" />
+    <Compile Include="Lua\tween\tweenPosition.lua" />
+    <Compile Include="Lua\tween\tweenRotation.lua" />
+    <Compile Include="Lua\tween\tweenScale.lua" />
+    <Compile Include="Lua\tween\tweenSerial.lua" />
+    <Compile Include="Lua\ui\common\button.lua" />
+    <Compile Include="Lua\ui\common\input.lua" />
+    <Compile Include="Lua\ui\common\pageview.lua" />
+    <Compile Include="Lua\ui\common\panel.lua" />
+    <Compile Include="Lua\ui\common\scrollview.lua" />
+    <Compile Include="Lua\ui\common\slider.lua" />
+    <Compile Include="Lua\ui\common\sprite.lua" />
+    <Compile Include="Lua\ui\common\text.lua" />
+    <Compile Include="Lua\ui\common\toggle.lua" />
+    <Compile Include="Lua\ui\common\view.lua" />
+    <Compile Include="Lua\utils\json.lua" />
+    <Compile Include="Lua\utils\string.lua" />
+    <Compile Include="Lua\utils\table.lua" />
+    <Compile Include="Lua\utils\time.lua" />
+    <Compile Include="Lua\utils\utils.lua" />
+    <Compile Include="ToLua\Lua\cjson\util.lua" />
+    <Compile Include="ToLua\Lua\event.lua" />
+    <Compile Include="ToLua\Lua\jit\bc.lua" />
+    <Compile Include="ToLua\Lua\jit\bcsave.lua" />
+    <Compile Include="ToLua\Lua\jit\dis_arm.lua" />
+    <Compile Include="ToLua\Lua\jit\dis_arm64.lua" />
+    <Compile Include="ToLua\Lua\jit\dis_arm64be.lua" />
+    <Compile Include="ToLua\Lua\jit\dis_mips.lua" />
+    <Compile Include="ToLua\Lua\jit\dis_mips64.lua" />
+    <Compile Include="ToLua\Lua\jit\dis_mips64el.lua" />
+    <Compile Include="ToLua\Lua\jit\dis_mipsel.lua" />
+    <Compile Include="ToLua\Lua\jit\dis_ppc.lua" />
+    <Compile Include="ToLua\Lua\jit\dis_x64.lua" />
+    <Compile Include="ToLua\Lua\jit\dis_x86.lua" />
+    <Compile Include="ToLua\Lua\jit\dump.lua" />
+    <Compile Include="ToLua\Lua\jit\p.lua" />
+    <Compile Include="ToLua\Lua\jit\v.lua" />
+    <Compile Include="ToLua\Lua\jit\vmdef.lua" />
+    <Compile Include="ToLua\Lua\jit\zone.lua" />
+    <Compile Include="ToLua\Lua\list.lua" />
+    <Compile Include="ToLua\Lua\lpeg\re.lua" />
+    <Compile Include="ToLua\Lua\ltn12.lua" />
+    <Compile Include="ToLua\Lua\mime.lua" />
+    <Compile Include="ToLua\Lua\misc\functions.lua" />
+    <Compile Include="ToLua\Lua\misc\strict.lua" />
+    <Compile Include="ToLua\Lua\misc\utf8.lua" />
+    <Compile Include="ToLua\Lua\protobuf\containers.lua" />
+    <Compile Include="ToLua\Lua\protobuf\decoder.lua" />
+    <Compile Include="ToLua\Lua\protobuf\descriptor.lua" />
+    <Compile Include="ToLua\Lua\protobuf\encoder.lua" />
+    <Compile Include="ToLua\Lua\protobuf\listener.lua" />
+    <Compile Include="ToLua\Lua\protobuf\protobuf.lua" />
+    <Compile Include="ToLua\Lua\protobuf\text_format.lua" />
+    <Compile Include="ToLua\Lua\protobuf\type_checkers.lua" />
+    <Compile Include="ToLua\Lua\protobuf\wire_format.lua" />
+    <Compile Include="ToLua\Lua\slot.lua" />
+    <Compile Include="ToLua\Lua\socket.lua" />
+    <Compile Include="ToLua\Lua\socket\ftp.lua" />
+    <Compile Include="ToLua\Lua\socket\headers.lua" />
+    <Compile Include="ToLua\Lua\socket\http.lua" />
+    <Compile Include="ToLua\Lua\socket\mbox.lua" />
+    <Compile Include="ToLua\Lua\socket\smtp.lua" />
+    <Compile Include="ToLua\Lua\socket\tp.lua" />
+    <Compile Include="ToLua\Lua\socket\url.lua" />
+    <Compile Include="ToLua\Lua\System\coroutine.lua" />
+    <Compile Include="ToLua\Lua\System\Injection\InjectionBridgeInfo.lua" />
+    <Compile Include="ToLua\Lua\System\Injection\LuaInjectionBus.lua" />
+    <Compile Include="ToLua\Lua\System\Injection\LuaInjectionStation.lua" />
+    <Compile Include="ToLua\Lua\System\Reflection\BindingFlags.lua" />
+    <Compile Include="ToLua\Lua\System\Timer.lua" />
+    <Compile Include="ToLua\Lua\System\ValueType.lua" />
+    <Compile Include="ToLua\Lua\tolua.lua" />
+    <Compile Include="ToLua\Lua\typeof.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Bounds.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Color.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\LayerMask.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Mathf.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Plane.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Profiler.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Quaternion.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Ray.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\RaycastHit.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Time.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Touch.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Vector2.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Vector3.lua" />
+    <Compile Include="ToLua\Lua\UnityEngine\Vector4.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ToLua\Lua\Build.bat" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+</Project>
