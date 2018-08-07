@@ -35,7 +35,7 @@ public class LuaPanelInspector : Editor
     /// <summary>
     /// 
     /// </summary>
-    private void OnEnable ()
+    private void OnEnable()
     {
         mPanel = target as LuaPanel;
 
@@ -44,7 +44,7 @@ public class LuaPanelInspector : Editor
             Item item = new Item();
             item.widget = widget;
             item.expand = false;
-            
+
             mItemList.Add(item);
         }
     }

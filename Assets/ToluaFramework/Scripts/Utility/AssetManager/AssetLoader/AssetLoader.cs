@@ -106,7 +106,7 @@ public class AssetLoader
         Object asset = Resources.Load(LFS.CombinePath(mPath, name));
 #else
         InitDependentManifest();
-        LoadDependentAB(assetName);
+        LoadDependentAB(assetPath, assetName);
 
         Object asset = Load(LFS.CombinePath(mDownloadPath, name), assetName, true);
         if (asset == null)
@@ -180,18 +180,19 @@ public class AssetLoader
     /// 加载依赖资源
     /// </summary>
     /// <param name="assetName"></param>
-    private void LoadDependentAB(string assetName)
+    private void LoadDependentAB(string assetPath, string assetName)
     {
         if (mDependentManifest == null)
             return;
 
-        string[] dependentNames = mDependentManifest.GetAllDependencies(LFS.CombinePath(mPath, assetName));
+        string key = LFS.CombinePath(LFS.CombinePath(mPath, assetPath), assetName);
+        string[] dependentNames = mDependentManifest.GetAllDependencies(key);
         foreach (string name in dependentNames)
         {
-            AssetBundle ab = LoadAssetBundle(LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, name), true);
+            AssetBundle ab = LoadAssetBundle(LFS.CombinePath(LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, SUB_PATH), name), true);
             if (ab == null)
             {
-                ab = LoadAssetBundle(LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, name), false);
+                ab = LoadAssetBundle(LFS.CombinePath(LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, SUB_PATH), name), false);
             }
         }
     }
@@ -257,8 +258,11 @@ public class AssetLoader
     /// <param name="bundle"></param>
     private void Unload(Bundle bundle)
     {
-        bundle.bundle.Unload(false);
-        bundle.bundle = null;
+        if (bundle.bundle != null)
+        {
+            bundle.bundle.Unload(false);
+            bundle.bundle = null;
+        }
     }
 
     #endregion

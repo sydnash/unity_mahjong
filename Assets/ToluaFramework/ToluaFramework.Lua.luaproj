@@ -25,7 +25,6 @@
     <Folder Include="Lua\" />
     <Folder Include="Lua\common\" />
     <Folder Include="Lua\config\" />
-    <Folder Include="Lua\logic\" />
     <Folder Include="Lua\manager\" />
     <Folder Include="Lua\network\" />
     <Folder Include="Lua\tween\" />
@@ -49,7 +48,6 @@
     <Compile Include="Lua\common\component.lua" />
     <Compile Include="Lua\common\object.lua" />
     <Compile Include="Lua\config\appConfig.lua" />
-    <Compile Include="Lua\logic\clientApp.lua" />
     <Compile Include="Lua\main.lua" />
     <Compile Include="Lua\manager\eventManager.lua" />
     <Compile Include="Lua\manager\sceneManager.lua" />

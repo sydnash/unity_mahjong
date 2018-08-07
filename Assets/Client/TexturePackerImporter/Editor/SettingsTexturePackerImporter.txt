@@ -1,0 +1,15 @@
+version: 2
+importPivots: 1
+tpsheetFileNames:
+- Assets/Client/_Resources/UI/LoadingUI/Atlas/LoadingUI.tpsheet
+- Assets/Client/_Resources/UI/LoginUI/Atlas/LoginUI.tpsheet
+- Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
+textureFileNames:
+- Assets/Client/_Resources/UI/LoadingUI/Atlas/LoadingUI.png
+- Assets/Client/_Resources/UI/LoginUI/Atlas/LoginUI.png
+- Assets/codeandweb.com/Example/SpriteSheet/sprites.png
+normalmapFileNames:
+- 
+- 
+- Assets/codeandweb.com/Example/SpriteSheet/sprites_n.png
+enableDebugOutput: 0

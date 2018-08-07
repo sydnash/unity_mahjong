@@ -1,0 +1,24 @@
+ManifestFileVersion: 0
+CRC: 927365120
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: model/audiosource
+      Dependencies: {}
+    Info_1:
+      Name: sound/bgm
+      Dependencies: {}
+    Info_2:
+      Name: ui/loadingui/loadingui
+      Dependencies:
+        Dependency_0: texture/dl_bg
+    Info_3:
+      Name: ui/loginui/loginui
+      Dependencies:
+        Dependency_0: texture/dl_bg
+    Info_4:
+      Name: scene/lobbyscene
+      Dependencies: {}
+    Info_5:
+      Name: texture/dl_bg
+      Dependencies: {}

@@ -1,0 +1,17 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:d71a0b7c87e16ac79cae8a300631dbde:0d6677081a7f57d35cd18e1a97636169:c2e9a16a675c25e06b9a080f3e51185c$
+#
+:format=40300
+:texture=LoadingUI.png
+:size=2048x2048
+:pivotpoints=enabled
+:borders=disabled
+
+dl_jindut01;1;2024;1163;23; 0.5;0.5; 0;0;0;0
+dl_jindut02;1;1999;1163;23; 0.5;0.5; 0;0;0;0
+dl_jindut03;1166;1946;107;101; 0.5;0.5; 0;0;0;0

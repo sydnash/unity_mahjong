@@ -1,0 +1,16 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:7c142fd41ec45f82c5b58b7dc83c334b:7b43049b7d5584714d56c6529286a0cc:858b6c1f10ebf0bdaa9eeb80cf96080c$
+#
+:format=40300
+:texture=LoginUI.png
+:size=256x256
+:pivotpoints=enabled
+:borders=disabled
+
+DL_weixin;1;168;244;87; 0.5;0.5; 0;0;0;0
+DL_yk;1;79;244;87; 0.5;0.5; 0;0;0;0

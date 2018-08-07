@@ -116,7 +116,7 @@ public class Audio
     /// </summary>
     public void Update()
     {
-        if (mAudioSource == null || mPlayMode == PlayMode.Loop) 
+        if (mAudioSource == null || mAudioClip  == null || mPlayMode == PlayMode.Loop) 
             return;
 
         if (Time.realtimeSinceStartup - mTimestamp > mAudioClip.length)

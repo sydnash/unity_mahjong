@@ -54,7 +54,7 @@ public class LuaPanel : MonoBehaviour
     /// 
     /// </summary>
     [SerializeField]
-    protected List<Widget> mWidgets = null;
+    protected List<Widget> mWidgets = new List<Widget>();
 
     /// <summary>
     /// 
