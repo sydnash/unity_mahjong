@@ -1,0 +1,30 @@
+version: 2
+importPivots: 1
+tpsheetFileNames:
+- Assets/Client/_Resources/UI/ConfirmUI/Atlas/ConfirmUI.tpsheet
+- Assets/Client/_Resources/UI/LobbyUI/Atlas/LobbyUI.tpsheet
+- Assets/Client/_Resources/UI/LoginUI/Atlas/LoginUI.tpsheet
+- Assets/Client/_Resources/UI/PatchUI/Atlas/PatchUI.tpsheet
+- Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
+- Assets/Core/TexturePackerImporter/Example/SpriteSheet/sprites.tpsheet
+- Assets/TexturePackerImporter/Example/SpriteSheet/sprites.tpsheet
+- Assets/ToluaFramework/TexturePackerImporter/Example/SpriteSheet/sprites.tpsheet
+textureFileNames:
+- Assets/Client/_Resources/UI/ConfirmUI/Atlas/PatchConfirmUI.png
+- Assets/Client/_Resources/UI/LobbyUI/Atlas/LobbyUI.png
+- Assets/Client/_Resources/UI/LoginUI/Atlas/PatchUI.png
+- Assets/Client/_Resources/UI/PatchUI/Atlas/PatchUI.png
+- Assets/codeandweb.com/Example/SpriteSheet/sprites.png
+- Assets/Core/TexturePackerImporter/Example/SpriteSheet/sprites.png
+- Assets/TexturePackerImporter/Example/SpriteSheet/sprites.png
+- Assets/ToluaFramework/TexturePackerImporter/Example/SpriteSheet/sprites.png
+normalmapFileNames:
+- 
+- 
+- 
+- 
+- Assets/codeandweb.com/Example/SpriteSheet/sprites_n.png
+- Assets/Core/TexturePackerImporter/Example/SpriteSheet/sprites_n.png
+- Assets/TexturePackerImporter/Example/SpriteSheet/sprites_n.png
+- Assets/ToluaFramework/TexturePackerImporter/Example/SpriteSheet/sprites_n.png
+enableDebugOutput: 0
