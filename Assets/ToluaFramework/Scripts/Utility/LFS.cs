@@ -23,6 +23,18 @@ public static class LFS
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="c"></param>
+    /// <returns></returns>
+    public static string CombinePath(string a, string b, string c)
+    {
+        return Path.Combine(Path.Combine(a, b), c).Replace('\\', '/');
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="filename"></param>
     /// <param name="content"></param>
     public static void WriteFile(string filename, string content, Encoding encode)

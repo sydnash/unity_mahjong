@@ -84,7 +84,7 @@ public class SceneLoader : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="sceneName"></param>
-    public void Load(string sceneName, Action callback)
+    public void Load(string sceneName, Action<bool, float> callback)
     {
         sceneName = sceneName.ToLower();
 
@@ -118,7 +118,7 @@ public class SceneLoader : MonoBehaviour
     /// <param name="checkExists"></param>
     /// <param name="callback"></param>
     /// <returns></returns>
-    private IEnumerator LoadCoroutine(SceneBundle[] bundleInfos, string sceneName, Action callback)
+    private IEnumerator LoadCoroutine(SceneBundle[] bundleInfos, string sceneName, Action<bool, float> callback)
     {
         AssetBundle bundle = null;
 
@@ -140,6 +140,9 @@ public class SceneLoader : MonoBehaviour
             }
         }
 
+        InvokeCallback(callback, false, 0.5f);
+        yield return new WaitForEndOfFrame();
+
         if (bundle != null)
         {
             AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
@@ -160,12 +163,23 @@ public class SceneLoader : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        if (callback != null)
-        {
-            callback();
-        }
+        InvokeCallback(callback, true, 1.0f);
 
         yield return new WaitForEndOfFrame();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="callback"></param>
+    /// <param name="completed"></param>
+    /// <param name="progress"></param>
+    private void InvokeCallback(Action<bool, float> callback, bool completed, float progress)
+    {
+        if (callback != null)
+        {
+            callback(completed, progress);
+        }
     }
 
     #endregion

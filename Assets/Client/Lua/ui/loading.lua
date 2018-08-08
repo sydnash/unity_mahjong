@@ -13,7 +13,10 @@ function loading:onInit()
 end
 
 function loading:setProgress(value)
+    self.mProgress:setFillAmount(value)
 
+    local x = self.mProgress:getWidth() * value
+    self.mDot:setLocalPosition(Vector3.New(x, 0, 0))
 end
 
 return loading

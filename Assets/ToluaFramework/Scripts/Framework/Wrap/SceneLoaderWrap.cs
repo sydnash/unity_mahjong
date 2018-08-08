@@ -22,7 +22,7 @@ public class SceneLoaderWrap
 			ToLua.CheckArgsCount(L, 3);
 			SceneLoader obj = (SceneLoader)ToLua.CheckObject<SceneLoader>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			System.Action arg1 = (System.Action)ToLua.CheckDelegate<System.Action>(L, 3);
+			System.Action<bool,float> arg1 = (System.Action<bool,float>)ToLua.CheckDelegate<System.Action<bool,float>>(L, 3);
 			obj.Load(arg0, arg1);
 			return 0;
 		}

@@ -185,15 +185,12 @@ public class AssetLoader
         if (mDependentManifest == null)
             return;
 
-        string key = LFS.CombinePath(LFS.CombinePath(mPath, assetPath), assetName);
-        string[] dependentNames = mDependentManifest.GetAllDependencies(key);
-        foreach (string name in dependentNames)
+        string target = LFS.CombinePath(mPath, assetPath, assetName);
+        string[] dependentNames = mDependentManifest.GetAllDependencies(target);
+
+        foreach (string dependentName in dependentNames)
         {
-            AssetBundle ab = LoadAssetBundle(LFS.CombinePath(LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, SUB_PATH), name), true);
-            if (ab == null)
-            {
-                ab = LoadAssetBundle(LFS.CombinePath(LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, SUB_PATH), name), false);
-            }
+            DependentBundleManager.instance.Load(assetName, dependentName);
         }
     }
 

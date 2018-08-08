@@ -17,8 +17,12 @@ function login:onCustomLoginClickedHandler()
     local loading = require("ui.loading").new()
     loading:show()
 
-    sceneManager.load("LobbyScene", function()
-        loading:hide()
+    sceneManager.load("LobbyScene", function(completed, progress)
+        loading:setProgress(progress)
+
+        if completed then
+            loading:close()
+        end
     end)
 
     self:close()

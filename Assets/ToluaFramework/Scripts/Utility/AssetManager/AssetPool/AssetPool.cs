@@ -52,6 +52,7 @@ public class AssetPool
             ObjectQueue queue = mDic[assetName];
             if (queue.count > 0)
             {
+                DependentBundleManager.instance.Reload(asset.name);
                 asset = queue.Pop() as Object;
             }
             else
@@ -95,6 +96,8 @@ public class AssetPool
             ObjectQueue queue = mDic[name];
             queue.Push(asset);
             queue.activedCount--;
+
+            DependentBundleManager.instance.Unload(name);
 
             return true;
         }

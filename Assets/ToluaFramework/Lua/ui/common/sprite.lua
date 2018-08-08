@@ -18,6 +18,20 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
+function sprite:getWidth()
+    return self.component.preferredWidth
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function sprite:getHeight()
+    return self.component.preferredHeight
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
 function sprite:setFillAmount(amount)
     assert(self.component ~= nil, "")
     self.component.fillAmount = amount
