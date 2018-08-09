@@ -9,7 +9,16 @@ lobby.folder = "LobbyUI"
 lobby.resource = "LobbyUI"
 
 function lobby:onInit()
+    self.mEnterRoom:addClickListener(self.onEnterRoomClickedHandler, self)
+    self.mCreateRoom:addClickListener(self.onCreateRoomClickedHandler, self)
+end
 
+function lobby:onEnterRoomClickedHandler()
+    log("enter room")
+end
+
+function lobby:onCreateRoomClickedHandler()
+    log("create room")
 end
 
 return lobby

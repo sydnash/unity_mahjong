@@ -21,6 +21,9 @@ function login:onCustomLoginClickedHandler()
         loading:setProgress(progress)
 
         if completed then
+            local lobby = require("ui.lobby").new()
+            lobby:show()
+
             loading:close()
         end
     end)
