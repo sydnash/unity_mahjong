@@ -102,7 +102,7 @@ public class AssetLoader
     {
         string name = LFS.CombinePath(assetPath.ToLower(), assetName.ToLower());
 
-#if UNITY_EDITOR && LOAD_FROM_RESOURCES
+#if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
         Object asset = Resources.Load(LFS.CombinePath(mPath, name));
 #else
         InitDependentManifest();

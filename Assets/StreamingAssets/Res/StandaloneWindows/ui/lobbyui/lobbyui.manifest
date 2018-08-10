@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2743519779
+CRC: 2334927010
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 948ce4f3a376d2c25537b8bc4814c445
+    Hash: 6f2c9a4389d2824689cc86f9ebdf8ca5
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9fefbf0606b21f32115ae13bbd40ad91
@@ -36,5 +36,5 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/_Resources/UI/LobbyUI/LobbyUI.prefab
+- Assets/Client/Resources/UI/LobbyUI/LobbyUI.prefab
 Dependencies: []

@@ -52,6 +52,11 @@ public class Audio
     /// </summary>
     private float mTimestamp = 0;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    private bool mFinished = true;
+
     #endregion
 
     #region Public
@@ -86,6 +91,8 @@ public class Audio
             mAudioSource.clip = mAudioClip;
             mAudioSource.loop = (mPlayMode == PlayMode.Loop);
             mAudioSource.Play();
+
+            mFinished = false;
         }
 
         mTimestamp = Time.realtimeSinceStartup;
@@ -99,6 +106,7 @@ public class Audio
         if (mAudioSource != null)
         {
             mAudioSource.Stop();
+            mAudioSource.clip = null;
 
             AssetPoolManager.instance.Dealloc(AssetPoolManager.Type.Model, mAudioSource.gameObject);
             mAudioSource = null;
@@ -109,6 +117,8 @@ public class Audio
             AssetPoolManager.instance.Dealloc(AssetPoolManager.Type.Audio, mAudioClip);
             mAudioClip = null;
         }
+
+        mFinished = true;
     }
 
     /// <summary>
@@ -132,6 +142,14 @@ public class Audio
     {
         set { mAudioSource.volume = Mathf.Clamp01(value); }
         get { return mAudioSource.volume; }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool finished
+    {
+        get { return mFinished; }
     }
 
     #endregion

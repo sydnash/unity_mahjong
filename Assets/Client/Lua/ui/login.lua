@@ -10,10 +10,12 @@ login.resource = "LoginUI"
 
 function login:onInit()
     self.mWechatLogin:hide()
-    self.mCustomLogin:addClickListener(self.onCustomLoginClickedHandler, self)
+    self.mGuestLogin:addClickListener(self.onGuestLoginClickedHandler, self)
 end
 
-function login:onCustomLoginClickedHandler()
+function login:onGuestLoginClickedHandler()
+    soundManager.playButtonClickedSound()
+
     local loading = require("ui.loading").new()
     loading:show()
 

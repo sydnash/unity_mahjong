@@ -27,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
+    <Compile Include="Lua\ui\enterroom.lua" />
     <Compile Include="Lua\ui\loading.lua" />
     <Compile Include="Lua\ui\lobby.lua" />
     <Compile Include="Lua\ui\login.lua" />

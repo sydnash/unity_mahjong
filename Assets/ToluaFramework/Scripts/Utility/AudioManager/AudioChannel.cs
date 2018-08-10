@@ -81,9 +81,15 @@ public class AudioChannel
     /// </summary>
     public void Update()
     {
-        foreach (Audio audio in mAudioList)
+        for (int i = mAudioList.Count - 1; i >= 0; i--)
         {
+            Audio audio = mAudioList[i];
             audio.Update();
+
+            if (audio.finished)
+            {
+                mAudioList.RemoveAt(i);
+            }
         }
     }
 

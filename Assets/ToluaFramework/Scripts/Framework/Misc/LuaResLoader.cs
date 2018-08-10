@@ -36,34 +36,32 @@ public class LuaResLoader : LuaFileUtils
 
     public override byte[] ReadFile(string fileName)
     {
-#if !UNITY_EDITOR
+#if UNITY_EDITOR
+    #if !SIMULATE_RUNTIME_ENVIRONMENT
+        byte[] buffer = base.ReadFile(fileName);
+        Debug.Assert(buffer != null);
+    #else
+        byte[] buffer = ReadResourceFile(fileName);
+
+        if (buffer == null)
+        {
+            buffer = ReadDownLoadFile(fileName);
+        }
+
+        Debug.Assert(buffer != null);
+        buffer = MD5.Decrypt(buffer);        
+    #endif
+#else
         byte[] buffer = ReadDownLoadFile(fileName);
 
         if (buffer == null)
         {
             buffer = ReadResourceFile(fileName);
         }
-        
-        if (buffer == null)
-        {
-            buffer = base.ReadFile(fileName);
-        } 
        
         if (buffer != null)
         {
             buffer = MD5.Decrypt(buffer);
-        }
-#else
-        byte[] buffer = base.ReadFile(fileName);
-
-        if (buffer == null)
-        {
-            buffer = ReadResourceFile(fileName);
-        }
-
-        if (buffer == null)
-        {
-            buffer = ReadDownLoadFile(fileName);
         }
 #endif
 

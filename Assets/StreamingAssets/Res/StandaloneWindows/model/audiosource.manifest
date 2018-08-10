@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2499311989
+CRC: 3752169514
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -16,5 +16,5 @@ ClassTypes:
 - Class: 82
   Script: {instanceID: 0}
 Assets:
-- Assets/ToluaFramework/_Resources/Model/AudioSource.prefab
+- Assets/ToluaFramework/Resources/Model/AudioSource.prefab
 Dependencies: []

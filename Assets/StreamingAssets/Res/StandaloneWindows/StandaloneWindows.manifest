@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3221743119
+CRC: 2678687223
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -24,4 +24,10 @@ AssetBundleManifest:
       Dependencies: {}
     Info_6:
       Name: ui/lobbyui/lobbyui
+      Dependencies: {}
+    Info_7:
+      Name: sound/click
+      Dependencies: {}
+    Info_8:
+      Name: ui/enterroomui/enterroomui
       Dependencies: {}

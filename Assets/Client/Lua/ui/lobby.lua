@@ -14,10 +14,14 @@ function lobby:onInit()
 end
 
 function lobby:onEnterRoomClickedHandler()
-    log("enter room")
+    soundManager.playButtonClickedSound()
+
+    local ui = require("ui.enterroom").new()
+    ui:show()
 end
 
 function lobby:onCreateRoomClickedHandler()
+    soundManager.playButtonClickedSound()
     log("create room")
 end
 
