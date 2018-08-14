@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Http : MonoBehaviour
+public class HttpDownload : MonoBehaviour
 {
     #region Enum
 

@@ -120,6 +120,7 @@ public class SceneLoader : MonoBehaviour
     /// <returns></returns>
     private IEnumerator LoadCoroutine(SceneBundle[] bundleInfos, string sceneName, Action<bool, float> callback)
     {
+        float time = Time.realtimeSinceStartup;
         AssetBundle bundle = null;
 
         foreach (SceneBundle sb in bundleInfos)
@@ -140,8 +141,12 @@ public class SceneLoader : MonoBehaviour
             }
         }
 
+        while (Time.realtimeSinceStartup - time < 1.0f) ;
+
         InvokeCallback(callback, false, 0.5f);
         yield return new WaitForEndOfFrame();
+
+        time = Time.realtimeSinceStartup;
 
         if (bundle != null)
         {
@@ -161,10 +166,17 @@ public class SceneLoader : MonoBehaviour
         }
 #endif
 
+        while (Time.realtimeSinceStartup - time < 1.0f) ;
+        yield return new WaitForEndOfFrame();
+
+        InvokeCallback(callback, false, 1.0f);
+        time = Time.realtimeSinceStartup;
+        yield return new WaitForEndOfFrame();
+
+        while (Time.realtimeSinceStartup - time < 0.5f) ;
         yield return new WaitForEndOfFrame();
 
         InvokeCallback(callback, true, 1.0f);
-
         yield return new WaitForEndOfFrame();
     }
 

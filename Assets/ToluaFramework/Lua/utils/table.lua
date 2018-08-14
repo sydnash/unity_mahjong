@@ -94,4 +94,27 @@ function table.tostring(t, _n)
 	return _t:_tostring(t, 0)
 end
 
+local function escape(k)
+    local ret = k
+    if type(ret) ~= "string" then
+        ret = tostring(ret)
+    end
+    ret = string.gsub(k, "[^a-zA-Z0-9%-_%.!%*]", function (c)
+        return string.format("%%%02X", string.byte(c))
+    end)
+    ret = string.gsub(ret, " ", "+")
+    return ret
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function table.toUrlArgs(t)
+    local b = {}
+    for k, v in pairs(t) do
+        b[#b + 1] = (escape(k) .. "=" .. escape(v))
+    end
+    return table.concat(b, "&")
+end 
+
 --endregion

@@ -11,7 +11,12 @@ public class AssetPool
     /// <summary>
     /// 
     /// </summary>
-    protected AssetLoader mLoader = null;
+    private AssetLoader mLoader = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private DependentBundlePool mDependentBundlePool = new DependentBundlePool();
 
     /// <summary>
     /// 
@@ -35,6 +40,8 @@ public class AssetPool
     public AssetPool(AssetLoader loader, bool reference)
     {
         mLoader = loader;
+        mLoader.dependentBundlePool = mDependentBundlePool;
+
         mReference = reference;
     }
 
@@ -53,7 +60,7 @@ public class AssetPool
             if (queue.count > 0)
             {
                 asset = queue.Pop() as Object;
-                DependentBundleManager.instance.Reload(asset.name);
+                mDependentBundlePool.Reload(asset.name);
             }
             else
             {
@@ -97,7 +104,7 @@ public class AssetPool
             queue.Push(asset);
             queue.activedCount--;
 
-            DependentBundleManager.instance.Unload(name);
+            mDependentBundlePool.Unload(name);
 
             return true;
         }

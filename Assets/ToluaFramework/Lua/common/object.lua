@@ -126,6 +126,20 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function object:setAnchoredPosition(pos)
+    self.transform.anchoredPosition = pos
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function object:getAnchoredPosition()
+    return self.transform.anchoredPosition
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function object:setRotation(rot)
     self.transform.rotation = rot
 end

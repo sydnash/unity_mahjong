@@ -16,21 +16,25 @@ end
 function login:onGuestLoginClickedHandler()
     soundManager.playButtonClickedSound()
 
-    local loading = require("ui.loading").new()
-    loading:show()
+--    local loading = require("ui.loading").new()
+--    loading:show()
 
-    sceneManager.load("LobbyScene", function(completed, progress)
-        loading:setProgress(progress)
+--    sceneManager.load("LobbyScene", function(completed, progress)
+--        loading:setProgress(progress)
 
-        if completed then
-            local lobby = require("ui.lobby").new()
-            lobby:show()
+--        if completed then
+--            local lobby = require("ui.lobby").new()
+--            lobby:show()
 
-            loading:close()
-        end
+--            loading:close()
+--        end
+--    end)
+
+--    self:close()
+
+    networkManager.login(function()
+        --
     end)
-
-    self:close()
 end
 
 return login

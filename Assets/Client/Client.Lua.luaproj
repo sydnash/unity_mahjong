@@ -23,10 +23,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Lua\" />
+    <Folder Include="Lua\network\" />
     <Folder Include="Lua\ui\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
+    <Compile Include="Lua\network\networkManager.lua" />
     <Compile Include="Lua\ui\enterroom.lua" />
     <Compile Include="Lua\ui\loading.lua" />
     <Compile Include="Lua\ui\lobby.lua" />

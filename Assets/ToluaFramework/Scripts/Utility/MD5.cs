@@ -4,22 +4,54 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
-public static class MD5 
+public static class MD5
 {
+    #region Data
+
+    /// <summary>
+    /// 
+    /// </summary>
     private static readonly byte[] CRYPTOGRAM_KEY = { 169, 66, 129, 191, 81, 74, 97, 160 };
 
+    #endregion
+
+    #region Public
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static string GetHash(string content)
+    {
+        using (MD5CryptoServiceProvider crypto = new MD5CryptoServiceProvider())
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(content);
+            byte[] hash = crypto.ComputeHash(bytes);
+
+            return ConvertBytesToHexString(hash);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <returns></returns>
     public static string GetHashFromFile(string filename)
     {
         try
         {
             if (File.Exists(filename))
             {
-                FileStream file = new FileStream(filename, FileMode.Open);
-                MD5CryptoServiceProvider crypto = new MD5CryptoServiceProvider();
-                byte[] bytes = crypto.ComputeHash(file);
-                file.Close();
+                using (MD5CryptoServiceProvider crypto = new MD5CryptoServiceProvider())
+                {
+                    FileStream file = new FileStream(filename, FileMode.Open);
+                    byte[] bytes = crypto.ComputeHash(file);
+                    file.Close();
 
-                return ConvertBytesToHexString(bytes);
+                    return ConvertBytesToHexString(bytes);
+                }
             }
         }
         catch (Exception ex)
@@ -36,21 +68,28 @@ public static class MD5
     //    return crypto.Key;
     //}
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
     public static byte[] Encrypt(byte[] content)
     {
         try
         {
-            DESCryptoServiceProvider crypto = new DESCryptoServiceProvider();
-            crypto.Key = CRYPTOGRAM_KEY;
-            crypto.IV  = CRYPTOGRAM_KEY;
+            using (DESCryptoServiceProvider crypto = new DESCryptoServiceProvider())
+            {
+                crypto.Key = CRYPTOGRAM_KEY;
+                crypto.IV = CRYPTOGRAM_KEY;
 
-            MemoryStream ms = new MemoryStream();
-            CryptoStream cs = new CryptoStream(ms, crypto.CreateEncryptor(), CryptoStreamMode.Write);
-            cs.Write(content, 0, content.Length);
-            cs.FlushFinalBlock();
-            cs.Close();
+                MemoryStream ms = new MemoryStream();
+                CryptoStream cs = new CryptoStream(ms, crypto.CreateEncryptor(), CryptoStreamMode.Write);
+                cs.Write(content, 0, content.Length);
+                cs.FlushFinalBlock();
+                cs.Close();
 
-            return ms.ToArray();
+                return ms.ToArray();
+            }
         }
         catch (Exception ex)
         {
@@ -60,21 +99,28 @@ public static class MD5
         return null;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
     public static byte[] Decrypt(byte[] content)
     {
         try
         {
-            DESCryptoServiceProvider crypto = new DESCryptoServiceProvider();
-            crypto.Key = CRYPTOGRAM_KEY;
-            crypto.IV  = CRYPTOGRAM_KEY;
+            using (DESCryptoServiceProvider crypto = new DESCryptoServiceProvider())
+            {
+                crypto.Key = CRYPTOGRAM_KEY;
+                crypto.IV = CRYPTOGRAM_KEY;
 
-            MemoryStream ms = new MemoryStream();
-            CryptoStream cs = new CryptoStream(ms, crypto.CreateDecryptor(), CryptoStreamMode.Write);
-            cs.Write(content, 0, content.Length);
-            cs.FlushFinalBlock();
-            cs.Close();
+                MemoryStream ms = new MemoryStream();
+                CryptoStream cs = new CryptoStream(ms, crypto.CreateDecryptor(), CryptoStreamMode.Write);
+                cs.Write(content, 0, content.Length);
+                cs.FlushFinalBlock();
+                cs.Close();
 
-            return ms.ToArray();
+                return ms.ToArray();
+            }
         }
         catch (Exception ex)
         {
@@ -84,6 +130,15 @@ public static class MD5
         return null;
     }
 
+    #endregion
+
+    #region Private 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
     private static string ConvertBytesToHexString(byte[] bytes)
     {
         StringBuilder sb = new StringBuilder();
@@ -96,21 +151,5 @@ public static class MD5
         return sb.ToString();
     }
 
-    //private static byte[] ConvertHexStringToBytes(string content)
-    //{
-    //    content = content.Replace(" ", "");
-
-    //    if ((content.Length % 2) != 0)
-    //    {
-    //        content += " ";
-    //    }
-
-    //    byte[] bytes = new byte[content.Length / 2];
-    //    for (int i = 0; i < bytes.Length; i++)
-    //    {
-    //        bytes[i] = System.Convert.ToByte(content.Substring(i * 2, 2), 16);
-    //    }
-
-    //    return bytes;
-    //}
+    #endregion
 }

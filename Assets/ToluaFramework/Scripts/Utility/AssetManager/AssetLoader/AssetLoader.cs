@@ -36,6 +36,11 @@ public class AssetLoader
     /// <summary>
     /// 
     /// </summary>
+    private DependentBundlePool mDependentBundlePool = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
     private Dictionary<string, Bundle> mBundles = new Dictionary<string, Bundle>();
 
     /// <summary>
@@ -147,6 +152,15 @@ public class AssetLoader
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public DependentBundlePool dependentBundlePool
+    {
+        set { mDependentBundlePool = value; }
+        get { return mDependentBundlePool; }
+    }
+
     #endregion
 
     #region Private
@@ -190,7 +204,7 @@ public class AssetLoader
 
         foreach (string dependentName in dependentNames)
         {
-            DependentBundleManager.instance.Load(assetName, dependentName);
+            dependentBundlePool.Load(assetName, dependentName);
         }
     }
 

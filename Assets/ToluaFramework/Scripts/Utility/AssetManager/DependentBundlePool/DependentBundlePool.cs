@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DependentBundleManager
+public class DependentBundlePool
 {
     #region Class
 
@@ -46,23 +46,6 @@ public class DependentBundleManager
 #else
     private const string SUB_PATH = "Res/StandaloneWindows";
 #endif
-
-    #endregion
-
-    #region Instance
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private static DependentBundleManager mInstance = new DependentBundleManager();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public static DependentBundleManager instance
-    {
-        get { return mInstance; }
-    }
 
     #endregion
 

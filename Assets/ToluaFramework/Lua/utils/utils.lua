@@ -248,4 +248,15 @@ function BKMGT(bytes)
     return string.format("%.1fT", bytes / T)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function getDeviceId()
+    if appConfig.debug and appConfig.deviceId ~= nil then
+        return appConfig.deviceId
+    end
+
+    return nil
+end
+
 --endregion

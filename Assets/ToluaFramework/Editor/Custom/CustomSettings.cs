@@ -178,6 +178,7 @@ public static class CustomSettings
         _GT(typeof(LuaPanel.WidgetType)),
         _GT(typeof(StingyScrollRect)),
         _GT(typeof(PageView)),
+        _GT(typeof(NetworkManager)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

@@ -32,5 +32,6 @@ eventManager    = require("manager.eventManager")
 soundManager    = require("manager.soundManager")
 sceneManager    = require("manager.sceneManager")
 tweenManager    = require("manager.tweenManager")
+networkManager  = require("network.networkManager")
 
 --endregion

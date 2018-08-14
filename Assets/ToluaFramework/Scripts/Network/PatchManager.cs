@@ -48,7 +48,7 @@ public class PatchManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private Http mHttp = null;
+    private HttpDownload mHttp = null;
 
     /// <summary>
     /// 
@@ -171,7 +171,7 @@ public class PatchManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        mHttp = gameObject.AddComponent<Http>();
+        mHttp = gameObject.AddComponent<HttpDownload>();
         //mPatchRootURL = AppConfig.instance.patchURL;
         mPatchRootURL = "file:///" + LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, "Patch");
     }
@@ -182,9 +182,9 @@ public class PatchManager : MonoBehaviour
     /// <param name="code"></param>
     /// <param name="text"></param>
     /// <param name="args"></param>
-    private void OnLocalVersionDownloadedHandler(Http.StatusCode code, string text, object args)
+    private void OnLocalVersionDownloadedHandler(HttpDownload.StatusCode code, string text, object args)
     {
-        if (code == Http.StatusCode.OK)
+        if (code == HttpDownload.StatusCode.OK)
         {
             mLocalVersion = text;
         }
@@ -216,14 +216,14 @@ public class PatchManager : MonoBehaviour
     /// <param name="code"></param>
     /// <param name="text"></param>
     /// <param name="args"></param>
-    private void OnRemoteVersionDownloadedHandler(Http.StatusCode code, string text, object args)
+    private void OnRemoteVersionDownloadedHandler(HttpDownload.StatusCode code, string text, object args)
     {
         CallbackWrap wrap = args as CallbackWrap;
 
         LuaFunction function = wrap.function;
         object target = wrap.args;
 
-        if (code == Http.StatusCode.OK)
+        if (code == HttpDownload.StatusCode.OK)
         {
             if (text != mLocalVersion)
             {
@@ -268,9 +268,9 @@ public class PatchManager : MonoBehaviour
     /// <param name="code"></param>
     /// <param name="text"></param>
     /// <param name="args"></param>
-    private void OnLocalPatchlistDownloadedHandler(Http.StatusCode code, string text, object args)
+    private void OnLocalPatchlistDownloadedHandler(HttpDownload.StatusCode code, string text, object args)
     {
-        if (code == Http.StatusCode.OK)
+        if (code == HttpDownload.StatusCode.OK)
         {
             mLocalPatchDict = Parse(text);
         }
@@ -303,14 +303,14 @@ public class PatchManager : MonoBehaviour
     /// <param name="code"></param>
     /// <param name="text"></param>
     /// <param name="args"></param>
-    private void OnRemotePatchlistDownloadedHandler(Http.StatusCode code, string text, object args)
+    private void OnRemotePatchlistDownloadedHandler(HttpDownload.StatusCode code, string text, object args)
     {
         CallbackWrap wrap = args as CallbackWrap;
 
         LuaFunction function = wrap.function;
         object target = wrap.args;
 
-        if (code == Http.StatusCode.OK)
+        if (code == HttpDownload.StatusCode.OK)
         {
             mPatchlistText = text;
             Dictionary<string, Patch> remotePatchDict = Parse(mPatchlistText);
@@ -348,14 +348,14 @@ public class PatchManager : MonoBehaviour
     /// <param name="code"></param>
     /// <param name="bytes"></param>
     /// <param name="args"></param>
-    private void OnPatchDownloadHandler(Http.StatusCode code, string url, byte[] bytes, object args)
+    private void OnPatchDownloadHandler(HttpDownload.StatusCode code, string url, byte[] bytes, object args)
     {
         CallbackWrap wrap = args as CallbackWrap;
 
         LuaFunction function = wrap.function;
         object target = wrap.args;
 
-        if (code == Http.StatusCode.OK)
+        if (code == HttpDownload.StatusCode.OK)
         {
             string filePath = url.Substring(mPatchRootURL.Length + 1);
             string targetPath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, filePath);
