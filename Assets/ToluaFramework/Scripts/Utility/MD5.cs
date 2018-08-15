@@ -11,6 +11,11 @@ public static class MD5
     /// <summary>
     /// 
     /// </summary>
+    private const string HASH_EXTRA_STR = "68475F71B9E447AC8D2E9962246DD295";
+
+    /// <summary>
+    /// 
+    /// </summary>
     private static readonly byte[] CRYPTOGRAM_KEY = { 169, 66, 129, 191, 81, 74, 97, 160 };
 
     #endregion
@@ -26,7 +31,7 @@ public static class MD5
     {
         using (MD5CryptoServiceProvider crypto = new MD5CryptoServiceProvider())
         {
-            byte[] bytes = Encoding.UTF8.GetBytes(content);
+            byte[] bytes = Encoding.UTF8.GetBytes(content + HASH_EXTRA_STR);
             byte[] hash = crypto.ComputeHash(bytes);
 
             return ConvertBytesToHexString(hash);

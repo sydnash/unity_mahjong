@@ -31,6 +31,8 @@ class AES
         {
             aes.Mode = CipherMode.CBC;
             aes.Padding = PaddingMode.PKCS7;
+            aes.KeySize = 256;
+            aes.BlockSize = 128;
 
             var encryptor = aes.CreateEncryptor(PASSWORD, IV);
 
@@ -71,6 +73,8 @@ class AES
         {
             aes.Mode = CipherMode.CBC;
             aes.Padding = PaddingMode.PKCS7;
+            aes.KeySize = 256;
+            aes.BlockSize = 128;
 
             var decryptor = aes.CreateDecryptor(PASSWORD, IV);
 

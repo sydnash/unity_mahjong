@@ -6,6 +6,10 @@ local network  = require("network.network")
 local gamepref = require("logic.gamepref")
 local networkManager = class("networkManager")
 
+function networkManager.disconnect()
+    network.disconnect()
+end
+
 function networkManager.login(callback)
     local form = table.toUrlArgs({ mac = getDeviceId() })
     network.requestText(appConfig.guestURL, form, function(ok, text)

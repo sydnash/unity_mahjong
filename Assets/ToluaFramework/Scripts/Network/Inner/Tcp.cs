@@ -320,6 +320,10 @@ public class Tcp
                 while (receivedSize < INT_BYTES_COUNT)
                 {
                     receivedSize += mSocket.Receive(lengthBytes, 0, lengthBytes.Length, SocketFlags.None, out socketState);
+                    if (socketState != SocketError.Success)
+                    {
+                        return;
+                    }
                 }
                 //协议内容+校验码
                 int size = BitConverter.ToInt32(lengthBytes, 0) - INT_BYTES_COUNT;

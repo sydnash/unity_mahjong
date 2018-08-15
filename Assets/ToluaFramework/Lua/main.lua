@@ -30,9 +30,13 @@ function onLevelWasLoaded(level)
 end
 
 function onApplicationQuit()
+    networkManager.disconnect()
+
     if appConfig.debug then
         profiler:stop()
     end
+
+    log("application quit")
 end
 
 --endregion

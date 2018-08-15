@@ -66,9 +66,16 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function network.disconnect()
+    NetworkManager.instance:Disconnect()
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function network.send(command, data, callback)
     local token = callbacks:push(callback)
-    local payload = data --and table.tojson(data) or string.empty
+    local payload = data and table.tojson(data) or string.empty
 
     local msg = { Command   = command or string.empty, 
                   RequestId = token, 
@@ -76,7 +83,7 @@ function network.send(command, data, callback)
                   Session   = gamepref.session, 
                   Payload   = payload,
     }
-    
+
     local json = table.tojson(msg)
     NetworkManager.instance:Send(json)
 end

@@ -17,7 +17,7 @@ end
 --
 -------------------------------------------------------------------
 function table.tojson(tb)
-    return json.encode(tb, true)
+    return json.encode(tb, false)
 end
 
 -------------------------------------------------------------------

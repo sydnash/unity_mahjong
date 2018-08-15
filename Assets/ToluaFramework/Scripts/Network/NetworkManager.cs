@@ -102,6 +102,7 @@ public class NetworkManager : MonoBehaviour
     private void Awake()
     {
         mInstance = this;
+        DontDestroyOnLoad(gameObject);
         mLua.Require("network/network");
     }
 
@@ -113,36 +114,9 @@ public class NetworkManager : MonoBehaviour
         mTcp.Update();
         byte[] msg = mTcp.nextReceivedMessage;
 
-        if (msg != null && msg.Length > 0)
+        string data = ParseMessage(msg);
+        if (!string.IsNullOrEmpty(data))
         {
-            int length = BitConverter.ToInt32(msg, 0);
-            if (msg.Length != length)
-            {
-#if UNITY_EDITOR
-                Debug.LogError("");
-#endif
-                return;
-            }
-
-            byte[] contentBytes = new byte[length - INT_BYTES_COUNT];
-            Array.Copy(msg, INT_BYTES_COUNT, contentBytes, 0, contentBytes.Length);
-            byte[] bytes = Base64.Decrypt(contentBytes);
-            string decrypt = AES.Decrypt(bytes);
-
-            int checksumLength = 32;
-            int dataLength = decrypt.Length - checksumLength;
-
-            string data = decrypt.Substring(0, dataLength);
-            string checkSum = decrypt.Substring(dataLength, checksumLength);
-
-            if (MD5.GetHash(data) != checkSum)
-            {
-#if UNITY_EDITOR
-                Debug.LogError("");
-#endif
-                return;
-            }
-
             DispatchMessage(data);
         }
     }
@@ -154,9 +128,10 @@ public class NetworkManager : MonoBehaviour
     /// <returns></returns>
     private byte[] BuildMessage(string data)
     {
-        data += MD5.GetHash(data);
-        byte[] contentBytes = AES.Encrypt(data);
+        string md5 = MD5.GetHash(data);
+        byte[] contentBytes = AES.Encrypt(data + md5);
         contentBytes = Base64.Encrypt(contentBytes);
+
         byte[] lengthBytes = BitConverter.GetBytes(contentBytes.Length);
 
         byte[] msg = new byte[contentBytes.Length + lengthBytes.Length];
@@ -164,6 +139,49 @@ public class NetworkManager : MonoBehaviour
         Array.Copy(contentBytes, 0, msg, lengthBytes.Length, contentBytes.Length);
 
         return msg;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <returns></returns>
+    private string ParseMessage(byte[] msg)
+    {
+        string data = null;
+
+        if (msg != null && msg.Length > 0)
+        {
+            int length = BitConverter.ToInt32(msg, 0);
+            if (msg.Length != length)
+            {
+#if UNITY_EDITOR
+                Debug.LogError("");
+#endif
+                return null;
+            }
+
+            byte[] contentBytes = new byte[length - INT_BYTES_COUNT];
+            Array.Copy(msg, INT_BYTES_COUNT, contentBytes, 0, contentBytes.Length);
+            byte[] bytes = Base64.Decrypt(contentBytes);
+            string decrypt = AES.Decrypt(bytes);
+
+            int checksumLength = 32;
+            int dataLength = decrypt.Length - checksumLength;
+
+            data = decrypt.Substring(0, dataLength);
+            string checkSum = decrypt.Substring(dataLength, checksumLength);
+
+            if (MD5.GetHash(data) != checkSum)
+            {
+#if UNITY_EDITOR
+                Debug.LogError("");
+#endif
+                return null;
+            }
+        }
+
+        return data;
     }
 
     /// <summary>
