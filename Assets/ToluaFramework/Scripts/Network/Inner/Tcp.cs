@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class Tcp
+public class Tcp : MonoBehaviour
 {
     #region Data
 
@@ -51,7 +51,34 @@ public class Tcp
     /// <summary>
     /// 
     /// </summary>
+    private Action<byte[]> mReceivedHandler = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private byte[] mLengthBuffer = new byte[INT_BYTES_COUNT];
+
+    /// <summary>
+    /// 
+    /// </summary>
     private const int INT_BYTES_COUNT = sizeof(int);
+
+    #endregion
+
+    #region Instance
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static Tcp mInstance = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static Tcp instance
+    {
+        get { return mInstance; }
+    }
 
     #endregion
 
@@ -122,37 +149,32 @@ public class Tcp
     /// <summary>
     /// 
     /// </summary>
-    public void Update()
+    /// <param name="receivedHandler"></param>
+    public void RegisterReceivedHandler(Action<byte[]> receivedHandler)
     {
-        if (mIsConnected && !mIsConnectedLastFrame)
-        {
-            InvokeCallback(mConnectCallback, true);
-        }
-        else if (!mIsConnected && mIsConnectedLastFrame)
-        {
-            InvokeCallback(mConnectCallback, false);
-        }
-
-        mIsConnectedLastFrame = mIsConnected;
+        mReceivedHandler = receivedHandler;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public byte[] nextReceivedMessage
+    public void UnregisterReceivedHandler()
     {
-        get 
-        {
-            lock (mRecevieQueueMutex)
-            {
-                return (mReceiveQueue.Count == 0) ? null : mReceiveQueue.Dequeue();
-            }
-        }
+        mReceivedHandler = null;
     }
 
     #endregion
 
     #region Private
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void Awake()
+    {
+        mInstance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     /// <summary>
     /// 
@@ -192,7 +214,7 @@ public class Tcp
         catch (Exception ex)
         {
 #if UNITY_EDITOR
-            Debug.LogError(ex.Message);
+            //Debug.LogError(ex.Message);
 #endif
         }
     }
@@ -315,18 +337,21 @@ public class Tcp
             while (mIsConnected)
             {
                 int receivedSize = 0;
+
                 //协议长度
-                byte[] lengthBytes = new byte[INT_BYTES_COUNT];
+                ZeroLengthBuffer();
+
                 while (receivedSize < INT_BYTES_COUNT)
                 {
-                    receivedSize += mSocket.Receive(lengthBytes, 0, lengthBytes.Length, SocketFlags.None, out socketState);
+                    receivedSize += mSocket.Receive(mLengthBuffer, 0, INT_BYTES_COUNT, SocketFlags.None, out socketState);
                     if (socketState != SocketError.Success)
                     {
                         return;
                     }
                 }
+
                 //协议内容+校验码
-                int size = BitConverter.ToInt32(lengthBytes, 0) - INT_BYTES_COUNT;
+                int size = BitConverter.ToInt32(mLengthBuffer, 0) - INT_BYTES_COUNT;
                 byte[] msg = new byte[size];
 
                 receivedSize = 0;
@@ -339,6 +364,7 @@ public class Tcp
                         return;
                     }
                 }
+
                 //进入接收消息队列
                 lock (mRecevieQueueMutex)
                 {
@@ -355,6 +381,57 @@ public class Tcp
         finally
         {
             Close();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void ZeroLengthBuffer()
+    {
+        for (int i = 0; i < INT_BYTES_COUNT; i++)
+        {
+            mLengthBuffer[i] = 0;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void Update()
+    {
+        if (mIsConnected && !mIsConnectedLastFrame)
+        {
+            InvokeCallback(mConnectCallback, true);
+        }
+        else if (!mIsConnected && mIsConnectedLastFrame)
+        {
+            InvokeCallback(mConnectCallback, false);
+        }
+
+        mIsConnectedLastFrame = mIsConnected;
+
+        if (mIsConnected && mReceivedHandler != null)
+        {
+            byte[] msg = nextReceivedMessage;
+            if (msg != null)
+            {
+                mReceivedHandler(msg);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private byte[] nextReceivedMessage
+    {
+        get
+        {
+            lock (mRecevieQueueMutex)
+            {
+                return (mReceiveQueue.Count == 0) ? null : mReceiveQueue.Dequeue();
+            }
         }
     }
 

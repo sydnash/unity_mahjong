@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2678687223
+CRC: 196171186
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -30,4 +30,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_8:
       Name: ui/enterroomui/enterroomui
+      Dependencies: {}
+    Info_9:
+      Name: ui/waitingui/waitingui
       Dependencies: {}

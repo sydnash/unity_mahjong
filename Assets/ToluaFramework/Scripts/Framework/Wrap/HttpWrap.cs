@@ -2,16 +2,13 @@
 using System;
 using LuaInterface;
 
-public class NetworkManagerWrap
+public class HttpWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(NetworkManager), typeof(UnityEngine.MonoBehaviour));
+		L.BeginClass(typeof(Http), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("RequestText", RequestText);
 		L.RegFunction("RequestBytes", RequestBytes);
-		L.RegFunction("Connect", Connect);
-		L.RegFunction("Disconnect", Disconnect);
-		L.RegFunction("Send", Send);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -24,7 +21,7 @@ public class NetworkManagerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 4);
-			NetworkManager obj = (NetworkManager)ToLua.CheckObject<NetworkManager>(L, 1);
+			Http obj = (Http)ToLua.CheckObject<Http>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			System.Action<bool,string> arg2 = (System.Action<bool,string>)ToLua.CheckDelegate<System.Action<bool,string>>(L, 4);
@@ -43,63 +40,11 @@ public class NetworkManagerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 4);
-			NetworkManager obj = (NetworkManager)ToLua.CheckObject<NetworkManager>(L, 1);
+			Http obj = (Http)ToLua.CheckObject<Http>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			System.Action<bool,byte[]> arg2 = (System.Action<bool,byte[]>)ToLua.CheckDelegate<System.Action<bool,byte[]>>(L, 4);
 			obj.RequestBytes(arg0, arg1, arg2);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Connect(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 4);
-			NetworkManager obj = (NetworkManager)ToLua.CheckObject<NetworkManager>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
-			System.Action<bool> arg2 = (System.Action<bool>)ToLua.CheckDelegate<System.Action<bool>>(L, 4);
-			obj.Connect(arg0, arg1, arg2);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Disconnect(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			NetworkManager obj = (NetworkManager)ToLua.CheckObject<NetworkManager>(L, 1);
-			obj.Disconnect();
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Send(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			NetworkManager obj = (NetworkManager)ToLua.CheckObject<NetworkManager>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			obj.Send(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -131,7 +76,7 @@ public class NetworkManagerWrap
 	{
 		try
 		{
-			ToLua.Push(L, NetworkManager.instance);
+			ToLua.Push(L, Http.instance);
 			return 1;
 		}
 		catch (Exception e)

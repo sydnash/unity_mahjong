@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.IO;
 
-class AES
+public class AES
 {
     #region Data
 
@@ -56,17 +56,6 @@ class AES
     /// </summary>
     /// <param name="content"></param>
     /// <returns></returns>
-    public static byte[] Encrypt(byte[] content)
-    {
-        string text = Encoding.UTF8.GetString(content);
-        return Encrypt(text);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="content"></param>
-    /// <returns></returns>
     public static string Decrypt(byte[] content)
     {
         using (Aes aes = Aes.Create())
@@ -89,17 +78,6 @@ class AES
                 }
             }
         }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static string Decrypt(string content)
-    {
-        byte[] bytes = Encoding.UTF8.GetBytes(content);
-        return Decrypt(bytes);
     }
 
     #endregion

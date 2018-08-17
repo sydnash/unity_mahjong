@@ -2,6 +2,8 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local stateCode = require("network.stateCode")
+
 local base = require("ui.common.view")
 local login = class("login", base)
 
@@ -16,24 +18,37 @@ end
 function login:onGuestLoginClickedHandler()
     soundManager.playButtonClickedSound()
 
---    local loading = require("ui.loading").new()
---    loading:show()
+    local waiting = require("ui.waiting").new()
+    waiting:show()
 
---    sceneManager.load("LobbyScene", function(completed, progress)
---        loading:setProgress(progress)
+    networkManager.login(function(ok, msg)
+        waiting:close()
 
---        if completed then
---            local lobby = require("ui.lobby").new()
---            lobby:show()
+        if not ok then
+            log("login failed")
+        else
+            if msg.RetCode == stateCode.Ok then
+                log("login succssfully, acid = " .. tostring(msg.AcId) .. ", nickname = " .. msg.Nickname)
 
---            loading:close()
---        end
---    end)
+                local loading = require("ui.loading").new()
+                loading:show()
 
---    self:close()
+                sceneManager.load("LobbyScene", function(completed, progress)
+                    loading:setProgress(progress)
 
-    networkManager.login(function()
-        --
+                    if completed then
+                        local lobby = require("ui.lobby").new()
+                        lobby:show()
+
+                        loading:close()
+                    end
+                end)
+
+                self:close()
+            else
+                log("login failed, state code = " .. tostring(msg.RetCode))
+            end
+        end
     end)
 end
 

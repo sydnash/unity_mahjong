@@ -4,6 +4,8 @@
 
 local tweenRotation = class("tweenRotation")
 
+local Quaternion = UnityEngine.Quaternion
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
@@ -13,8 +15,8 @@ function tweenRotation:ctor(target, duration, from, to, callback)
 
     self.target     = target
     self.duration   = math.max(0.01, duration)
-    self.from       = Quaternion.Euler(from.x, from.y, from.z)
-    self.to         = Quaternion.Euler(to.x, to.y, to.z)
+    self.from       = from--Quaternion.Euler(from.x, from.y, from.z)
+    self.to         = to  --Quaternion.Euler(to.x, to.y, to.z)
     self.callback   = callback
     self.playing    = false
     self.finished   = false
@@ -42,7 +44,14 @@ function tweenRotation:update()
             self.finished = true
         else
             local t = deltaTime / self.duration
-            self.target:setLocalRotation(Quaternion.Slerp(self.from, self.to, t))
+            --Quaternion.Slerp(self.from, self.to, t)
+
+            -- 用四元数有点问题，暂时用下面的方式替代
+            local x = Mathf.Lerp(self.from.x, self.to.x, t)
+            local y = Mathf.Lerp(self.from.y, self.to.y, t)
+            local z = Mathf.Lerp(self.from.z, self.to.z, t)
+            
+            self.target:setLocalRotation(Quaternion.Euler(x, y, z))
         end
     end
 
@@ -52,7 +61,7 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function tweenPosition:stop()
+function tweenRotation:stop()
     self.playing  = false
     self.finished = true
 end

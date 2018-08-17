@@ -1,0 +1,16 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:047b765897ff71d95250e90c9fdd6e0f:3d1046e4f0cd142664b9d83090673f24:b665a10c853455b300cdfcd62cf96135$
+#
+:format=40300
+:texture=WaitingUI.png
+:size=256x256
+:pivotpoints=enabled
+:borders=disabled
+
+dl_jiazai01;145;214;45;41; 0.5;0.5; 0;0;0;0
+dl_jiazai02;1;113;142;142; 0.5;0.5; 0;0;0;0

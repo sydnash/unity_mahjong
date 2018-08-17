@@ -7,6 +7,7 @@ local gameURL = "http://test.cdbshy.com:17776/"
 
 local appConfig = {
     debug = true,
+    usemouse = true,
     patchURL = patchURL,
     gameURL = gameURL,
     guestURL = gameURL .. "anonymouslogin",

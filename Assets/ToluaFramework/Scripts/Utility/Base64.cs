@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-class Base64
+public class Base64
 {
     /// <summary>
     /// 

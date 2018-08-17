@@ -56,7 +56,8 @@
     <Compile Include="Lua\manager\soundManager.lua" />
     <Compile Include="Lua\manager\tweenManager.lua" />
     <Compile Include="Lua\manager\viewManager.lua" />
-    <Compile Include="Lua\network\network.lua" />
+    <Compile Include="Lua\network\http.lua" />
+    <Compile Include="Lua\network\tcp.lua" />
     <Compile Include="Lua\std.lua" />
     <Compile Include="Lua\tween\tweenParallel.lua" />
     <Compile Include="Lua\tween\tweenPosition.lua" />

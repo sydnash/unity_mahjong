@@ -30,7 +30,7 @@ local function update()
 
     for _, v in pairs(queue) do
         if v:update() then
-            table.insert(finishedIndexes, v)
+            table.insert(finishedTweens, v)
         end
     end
 

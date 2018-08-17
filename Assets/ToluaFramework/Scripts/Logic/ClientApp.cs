@@ -20,10 +20,6 @@ public class ClientApp : LuaClient
         DontDestroyOnLoad(gameObject);
         AssetPoolManager.instance.Setup();
         base.OnAwake();
-
-        //string t = "abcdefghijklmn1234567890";
-        //byte[] b = Base64.Encrypt(System.Text.Encoding.UTF8.GetBytes(t));
-        //Debug.Log(System.Text.Encoding.UTF8.GetString(b));
     }
 
     /// <summary>

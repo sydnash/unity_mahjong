@@ -5,14 +5,17 @@ tpsheetFileNames:
 - Assets/Client/Resources/UI/LoadingUI/Atlas/LoadingUI.tpsheet
 - Assets/Client/Resources/UI/LobbyUI/Atlas/LobbyUI.tpsheet
 - Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.tpsheet
+- Assets/Client/Resources/UI/WaitingUI/WaitingUI.tpsheet
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
 textureFileNames:
 - Assets/Client/Resources/UI/EnterRoomUI/EnterRoomUI.png
 - Assets/Client/Resources/UI/LoadingUI/Atlas/LoadingUI.png
 - Assets/Client/Resources/UI/LobbyUI/Atlas/LobbyUI.png
 - Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.png
+- Assets/Client/Resources/UI/WaitingUI/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

@@ -13,11 +13,9 @@ function loading:onInit()
 end
 
 function loading:setProgress(value)
-    log(tostring(value) .. " | " .. tostring(self.mProgress:getWidth()))
     self.mProgress:setFillAmount(value)
     
     local x = self.mProgress:getWidth() * value
-    log(tostring(x))
     self.mDot:setAnchoredPosition(Vector3.New(x, 0, 0))
 end
 

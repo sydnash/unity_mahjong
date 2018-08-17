@@ -23,16 +23,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Lua\" />
+    <Folder Include="Lua\logic\gameroom\" />
+    <Folder Include="Lua\logic\gameroom\majiang\" />
+    <Folder Include="Lua\logic\player\" />
     <Folder Include="Lua\network\" />
+    <Folder Include="Lua\logic\" />
+    <Folder Include="Lua\const\" />
     <Folder Include="Lua\ui\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
+    <Compile Include="Lua\logic\gameroom\majiang\majiangRoomBase.lua" />
+    <Compile Include="Lua\logic\touch.lua" />
+    <Compile Include="Lua\network\proto.lua" />
+    <Compile Include="Lua\network\stateCode.lua" />
+    <Compile Include="Lua\logic\player\gamePlayer.lua" />
     <Compile Include="Lua\network\networkManager.lua" />
+    <Compile Include="Lua\network\protoType.lua" />
     <Compile Include="Lua\ui\enterroom.lua" />
     <Compile Include="Lua\ui\loading.lua" />
     <Compile Include="Lua\ui\lobby.lua" />
     <Compile Include="Lua\ui\login.lua" />
+    <Compile Include="Lua\ui\waiting.lua" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

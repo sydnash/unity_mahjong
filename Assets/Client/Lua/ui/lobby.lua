@@ -9,6 +9,9 @@ lobby.folder = "LobbyUI"
 lobby.resource = "LobbyUI"
 
 function lobby:onInit()
+    self.mNickname:setText(app.gamePlayer.nickname)
+    self.mID:setText(app.gamePlayer.acId)
+
     self.mEnterRoom:addClickListener(self.onEnterRoomClickedHandler, self)
     self.mCreateRoom:addClickListener(self.onCreateRoomClickedHandler, self)
 end
@@ -22,7 +25,7 @@ end
 
 function lobby:onCreateRoomClickedHandler()
     soundManager.playButtonClickedSound()
-    log("create room")
+    local room = require("logic.gameroom.majiang.majiangRoomBase").new()
 end
 
 return lobby

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Http : MonoBehaviour
 {
@@ -26,16 +27,7 @@ public class Http : MonoBehaviour
     /// </summary>
     public static Http instance
     {
-        get 
-        { 
-            if (mInstance == null)
-            {
-                GameObject go = GameObject.Find("NetworkManager/Http");
-                mInstance = go.GetComponent<Http>();
-            }
-
-            return mInstance; 
-        }
+        get { return mInstance; }
     }
 
     #endregion
@@ -47,17 +39,9 @@ public class Http : MonoBehaviour
     /// </summary>
     /// <param name="url"></param>
     /// <param name="callback"></param>
-    public void RequestText(string url, string form, Action<bool, string> callback)
+    public void RequestText(string url, string method, Action<bool, string> callback)
     {
-        if (form == null || string.IsNullOrEmpty(form))
-        {
-            StartCoroutine(RequestTextCoroutione(url, null, callback));
-        }
-        else
-        {
-            byte[] bytes = Encoding.UTF8.GetBytes(form);
-            StartCoroutine(RequestTextCoroutione(url, bytes, callback));
-        }
+        StartCoroutine(RequestTextCoroutione(url, method.ToUpper(), callback));
     }
 
     /// <summary>
@@ -65,17 +49,9 @@ public class Http : MonoBehaviour
     /// </summary>
     /// <param name="url"></param>
     /// <param name="callback"></param>
-    public void RequestBytes(string url, string form, Action<bool, byte[]> callback)
+    public void RequestBytes(string url, string method, Action<bool, byte[]> callback)
     {
-        if (form == null || string.IsNullOrEmpty(form))
-        {
-            StartCoroutine(RequestBytesCoroutione(url, null, callback));
-        }
-        else
-        {
-            byte[] bytes = Encoding.UTF8.GetBytes(form);
-            StartCoroutine(RequestBytesCoroutione(url, bytes, callback));
-        }
+        StartCoroutine(RequestBytesCoroutione(url, method.ToUpper(), callback));
     }
 
     #endregion
@@ -85,27 +61,43 @@ public class Http : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    private void Awake()
+    {
+        mInstance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="url"></param>
     /// <param name="callback"></param>
     /// <returns></returns>
-    private IEnumerator RequestTextCoroutione(string url, byte[] form, Action<bool, string> callback)
+    private IEnumerator RequestTextCoroutione(string url, string method, Action<bool, string> callback)
     {
         bool state = false;
         string text = string.Empty;
 
-        WWW www = new WWW(url, form);
+        UnityWebRequest www = new UnityWebRequest(url, method);
 
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SendWebRequest();
+        
         while (!www.isDone)
         {
             yield return WAIT_FOR_END_OF_FRAME; 
         }
 
-        string error = www.error;
-
-        if (string.IsNullOrEmpty(error))
+        if (www.isHttpError || www.isNetworkError)
+        {
+#if UNITY_EDITOR
+            Debug.LogError("Http Error: " + www.error);
+#endif
+        }
+        else
         {
             state = true;
-            text = www.text;
+            text = www.downloadHandler.text;
         }
 
         if (callback != null)
@@ -122,24 +114,31 @@ public class Http : MonoBehaviour
     /// <param name="url"></param>
     /// <param name="callback"></param>
     /// <returns></returns>
-    private IEnumerator RequestBytesCoroutione(string url, byte[] form, Action<bool, byte[]> callback)
+    private IEnumerator RequestBytesCoroutione(string url, string method, Action<bool, byte[]> callback)
     {
         bool state = false;
         byte[] bytes = null;
 
-        WWW www = new WWW(url, form);
+        UnityWebRequest www = new UnityWebRequest(url, method);
+
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SendWebRequest();
 
         while (!www.isDone)
         {
             yield return WAIT_FOR_END_OF_FRAME;
         }
 
-        string error = www.error;
-
-        if (string.IsNullOrEmpty(error))
+        if (www.isHttpError || www.isNetworkError)
+        {
+#if UNITY_EDITOR
+            Debug.LogError("Http Error: " + www.error);
+#endif
+        }
+        else
         {
             state = true;
-            bytes = www.bytes;
+            bytes = www.downloadHandler.data;
         }
 
         if (callback != null)
