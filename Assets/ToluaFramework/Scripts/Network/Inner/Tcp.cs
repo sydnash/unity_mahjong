@@ -16,12 +16,7 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private bool mIsConnected = false;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private bool mIsConnectedLastFrame = false;
+    private bool mConnected = false;
 
     /// <summary>
     /// 
@@ -36,22 +31,7 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private object mSendQueueMutex = new object();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private Queue<byte[]> mReceiveQueue = new Queue<byte[]>();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private object mRecevieQueueMutex = new object();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private Action<byte[]> mReceivedHandler = null;
+    private Action<byte[], int> mReceivedCallback = null;
 
     /// <summary>
     /// 
@@ -98,14 +78,14 @@ public class Tcp : MonoBehaviour
             mConnectCallback = callback;
 
             mSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            mSocket.BeginConnect(host, port, OnConnectHandler, callback);
+            mSocket.Blocking = false;
+            mSocket.Connect(host, port);
         }
         catch (Exception ex)
         {
 #if UNITY_EDITOR
             Debug.LogError(ex.Message);
 #endif
-            mIsConnected = false;
         }
     }
 
@@ -119,7 +99,7 @@ public class Tcp : MonoBehaviour
         {
             if (mSocket != null)
             {
-                mSocket.BeginDisconnect(false, OnDisconnectHandler, null);
+                mSocket.Disconnect(false);
             }
         }
         catch (Exception ex)
@@ -127,10 +107,6 @@ public class Tcp : MonoBehaviour
 #if UNITY_EDITOR
             Debug.LogError(ex.Message);
 #endif
-        }
-        finally
-        {
-            mIsConnected = false;
         }
     }
 
@@ -140,27 +116,24 @@ public class Tcp : MonoBehaviour
     /// <param name="msg"></param>
     public void Send(byte[] msg)
     {
-        lock (mSendQueueMutex)
-        {
-            mSendQueue.Enqueue(msg);
-        }
+        mSendQueue.Enqueue(msg);
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="receivedHandler"></param>
-    public void RegisterReceivedHandler(Action<byte[]> receivedHandler)
+    public void RegisterReceivedCallback(Action<byte[], int> callback)
     {
-        mReceivedHandler = receivedHandler;
+        mReceivedCallback = callback;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public void UnregisterReceivedHandler()
+    public void UnregisterReceivedCallback()
     {
-        mReceivedHandler = null;
+        mReceivedCallback = null;
     }
 
     #endregion
@@ -179,33 +152,9 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private void Open()
-    {
-        mIsConnected = true;
-
-        Thread sendingThread = new Thread(OnSending);
-        sendingThread.Start(mSocket);
-
-        Thread receivingThread = new Thread(OnReceiving);
-        receivingThread.Start(mSocket);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     private void Close()
     {
-        mIsConnected = false;
-
-        lock (mSendQueueMutex)
-        {
-            mSendQueue.Clear();
-        }
-
-        lock (mRecevieQueueMutex)
-        {
-            mReceiveQueue.Clear();
-        }
+        mSendQueue.Clear();
 
         try
         {
@@ -222,189 +171,56 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="args"></param>
-    private void OnConnectHandler(IAsyncResult args)
-    {
-        Action<bool> callback = args.AsyncState as Action<bool>;
-
-        try
-        {
-            if (mSocket != null)
-            {
-                mSocket.EndConnect(args);
-                Open();
-
-                mIsConnected = true;
-            }
-        }
-        catch (Exception ex)
-        {
-#if UNITY_EDITOR
-            Debug.LogError(ex.Message);
-#endif
-            mIsConnected = false;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="args"></param>
-    private void OnDisconnectHandler(IAsyncResult args)
-    {
-        try
-        {
-            mSocket.EndDisconnect(args);
-            mSocket.Close();
-        }
-        catch (Exception ex)
-        {
-#if UNITY_EDITOR
-            Debug.LogError(ex.Message);
-#endif
-        }
-        finally
-        {
-            mIsConnected = false;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="args"></param>
-    private void OnSending(object args)
-    {
-        try
-        {
-            SocketError socketState = SocketError.Success;
-
-            while (mIsConnected)
-            {
-                byte[] msg = nextSendMessage;
-
-                if (msg != null)
-                {
-                    int sentSize = 0;
-
-                    while (sentSize < msg.Length)
-                    {
-                        sentSize += mSocket.Send(msg, sentSize, msg.Length - sentSize, SocketFlags.None, out socketState);
-                        if (socketState != SocketError.Success)
-                        {
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-#if UNITY_EDITOR
-            Debug.LogError(ex.Message);
-#endif
-        }
-        finally
-        {
-            Close();
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private byte[] nextSendMessage
-    {
-        get
-        {
-            lock (mSendQueueMutex)
-            {
-                return (mSendQueue.Count == 0) ? null : mSendQueue.Dequeue();
-            }
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="args"></param>
-    private void OnReceiving(object args)
-    {
-        try
-        {
-            SocketError socketState = SocketError.Success;
-
-            while (mIsConnected)
-            {
-                int receivedSize = mSocket.Receive(mReceivedBuffer, 0, RECEIVED_BUFFER_SIZE, SocketFlags.None, out socketState);
-                if (socketState != SocketError.Success)
-                {
-                    return;
-                }
-
-                if (receivedSize > 0)
-                {
-                    byte[] buffer = new byte[receivedSize];
-                    Array.Copy(mReceivedBuffer, 0, buffer, 0, receivedSize);
-
-                    lock (mRecevieQueueMutex)
-                    {
-                        mReceiveQueue.Enqueue(buffer);
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-#if UNITY_EDITOR
-            Debug.LogError(ex.Message);
-#endif
-        }
-        finally
-        {
-            Close();
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     private void Update()
     {
-        if (mConnectCallback != null)
+        if (mSocket == null)
+            return;
+
+        if (mSocket.Connected)
         {
-            if (mIsConnected && !mIsConnectedLastFrame)
+            if (!mConnected && mConnectCallback != null)
             {
                 mConnectCallback(true);
+                mConnected = true;
             }
-            else if (!mIsConnected && mIsConnectedLastFrame)
+
+            //发送数据
+            if (mSendQueue.Count > 0)
+            {
+                byte[] msg = mSendQueue.Dequeue();
+                int sentSize = 0;
+                SocketError err = SocketError.Success;
+
+                while (sentSize < msg.Length)
+                {
+                    sentSize += mSocket.Send(msg, sentSize, msg.Length - sentSize, SocketFlags.None, out err);
+                    if (err != SocketError.Success)
+                    {
+#if UNITY_EDITOR
+                        Debug.LogError("tcp send data failed");
+#endif
+                        return;
+                    }
+                }
+            }
+
+            //收取数据
+            {
+                SocketError err = SocketError.Success;
+                int receivedSize = mSocket.Receive(mReceivedBuffer, 0, RECEIVED_BUFFER_SIZE, SocketFlags.None, out err);
+
+                if (receivedSize > 0 && mReceivedCallback != null)
+                {
+                    mReceivedCallback(mReceivedBuffer, receivedSize);
+                }
+            }
+        }
+        else if (mConnected)
+        {
+            if (mConnectCallback != null)
             {
                 mConnectCallback(false);
-            }
-        }
-
-        mIsConnectedLastFrame = mIsConnected;
-
-        if (mIsConnected)
-        {
-            byte[] bytes = nextReceivedMessage;
-            if (bytes != null && mReceivedHandler != null)
-            {
-                mReceivedHandler(bytes);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private byte[] nextReceivedMessage
-    {
-        get 
-        {
-            lock (mRecevieQueueMutex)
-            {
-                return (mReceiveQueue.Count == 0) ? null : mReceiveQueue.Dequeue();
+                mConnected = false;
             }
         }
     }

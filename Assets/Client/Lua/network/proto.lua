@@ -36,41 +36,29 @@ end
 --
 -------------------------------------------------------------------
 function proto.parse(bytes)
-    if proto.buffer == nil then
-        proto.buffer = bytes
-    else
-        proto.buffer = cvt.ConcatBytes(proto.buffer, proto.buffer.Length, bytes, bytes.Length)
-    end
-
-    if proto.length == 0 then
-        if proto.buffer.Length < INT_BYTES_COUNT then
-            return nil
-        else
-            proto.length = cvt.BytesToInt32(proto.buffer, 0)
-        end
-    end
+    if bytes.Length >= INT_BYTES_COUNT then            
+        local length = cvt.BytesToInt32(bytes, 0)
     
-    if proto.length > 0 and proto.length <= proto.buffer.Length then
-        local bytes = cvt.SubBytes(proto.buffer, INT_BYTES_COUNT, proto.length - INT_BYTES_COUNT)
-        
-        proto.buffer = cvt.TrimBytes(proto.buffer, proto.length)
-        proto.length = 0
+        if length <= bytes.Length then
+            bytes = cvt.SubBytes(bytes, INT_BYTES_COUNT, length - INT_BYTES_COUNT)
 
-        local decrypt = b64.Decrypt(bytes)
-        decrypt = aes.Decrypt(decrypt)
+            local decrypt = b64.Decrypt(bytes)
+            decrypt = aes.Decrypt(decrypt)
 
-        local len = string.len(decrypt) - CHECKSUM_LENGTH
+            local size = string.len(decrypt) - CHECKSUM_LENGTH
+            local data = string.sub(decrypt, 1, size)
+            local hash = string.sub(decrypt, size + 1, size + CHECKSUM_LENGTH)
 
-        local data = string.sub(decrypt, 1, len)
-        local hash = string.sub(decrypt, len + 1, len + CHECKSUM_LENGTH)
+            if md5.GetHash(data) ~= hash then
+                log("checksum of msg is wrong!")
+                return nil, length
+            end
 
-        if md5.GetHash(data) ~= hash then
-            log("checksum of msg is wrong!")
-            return nil
+            return table.fromjson(data), length
         end
-
-        return table.fromjson(data)
     end
+
+    return nil, 0
 end
 
 return proto

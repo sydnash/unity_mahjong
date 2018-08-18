@@ -47,11 +47,12 @@ end
 
 
 
-local http = require("network.http")
-local tcp = require("network.tcp")
-local proto = require("network.proto")
+local http      = require("network.http")
+local tcp       = require("network.tcp")
+local proto     = require("network.proto")
 local protoType = require("network.protoType")
 local gamepref  = require("logic.gamepref")
+local cvt       = ByteUtils
 
 local networkManager = class("networkManager")
 
@@ -68,14 +69,26 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-local function receive(bytes)
-    local msg = proto.parse(bytes)
+local function receive(bytes, size)
+    --缓存收到的数据
+    if networkManager.recvbuffer == nil then
+        networkManager.recvbuffer = cvt.NewByteArray(bytes, 0, size)
+    else
+        networkManager.recvbuffer = cvt.ConcatBytes(networkManager.recvbuffer, networkManager.recvbuffer.Length, bytes, size)
+    end
 
-    if msg ~= nil then
-        local callback = networkCallbackPool:pop(msg.RequestId)
-        if callback ~= nil then
-            local data = table.fromjson(msg.Payload)
-            callback(data)
+    --解析数据
+    local msg, length = proto.parse(networkManager.recvbuffer, size)
+
+    if length > 0 then
+        --剔除已解析过的数据
+        networkManager.recvbuffer = cvt.TrimBytes(networkManager.recvbuffer, length)
+
+        if msg ~= nil then
+            local callback = networkCallbackPool:pop(msg.RequestId)
+            if callback ~= nil then
+                callback(table.fromjson(msg.Payload))
+            end
         end
     end
 end
@@ -133,7 +146,9 @@ function networkManager.login(callback)
     end)
 end
 
+-------------------------------------------------------------------
 --
+-------------------------------------------------------------------
 function networkManager.createRoom(gameType, choose, clubId)
     local data = { GameType = gameType, ConfigChoose = table.tojson(choose), ClubId = clubId }
     network.send(protoType.cs.createDesk, data, function(msg)

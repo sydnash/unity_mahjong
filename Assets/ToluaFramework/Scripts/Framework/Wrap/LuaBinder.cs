@@ -140,7 +140,7 @@ public static class LuaBinder
 		L.RegFunction("Action_bool_string", System_Action_bool_string);
 		L.RegFunction("Action_bool_bytes", System_Action_bool_bytes);
 		L.RegFunction("Action_bool", System_Action_bool);
-		L.RegFunction("Action_bytes", System_Action_bytes);
+		L.RegFunction("Action_bytes_int", System_Action_bytes_int);
 		L.EndModule();
 		L.EndModule();
 		L.BeginPreLoad();
@@ -755,7 +755,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_bytes(IntPtr L)
+	static int System_Action_bytes_int(IntPtr L)
 	{
 		try
 		{
@@ -764,13 +764,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateTraits<System.Action<byte[]>>.Create(func);
+				Delegate arg1 = DelegateTraits<System.Action<byte[],int>>.Create(func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<System.Action<byte[]>>.Create(func, self);
+				Delegate arg1 = DelegateTraits<System.Action<byte[],int>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

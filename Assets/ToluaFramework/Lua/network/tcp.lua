@@ -16,7 +16,7 @@ end
 -------------------------------------------------------------------
 function tcp.disconnect()
     Tcp.instance:Disconnect()
-    Tcp.instance:UnregisterReceivedHandler()
+    Tcp.instance:UnregisterReceivedCallback()
 end
 
 -------------------------------------------------------------------
@@ -30,7 +30,7 @@ end
 --
 -------------------------------------------------------------------
 function tcp.registerReceivedCallback(callback)
-    Tcp.instance:RegisterReceivedHandler(callback)
+    Tcp.instance:RegisterReceivedCallback(callback)
 end
 
 return tcp

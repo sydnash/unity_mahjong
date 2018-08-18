@@ -39,7 +39,7 @@ public class DelegateFactory
 		dict.Add(typeof(System.Action<bool,string>), factory.System_Action_bool_string);
 		dict.Add(typeof(System.Action<bool,byte[]>), factory.System_Action_bool_bytes);
 		dict.Add(typeof(System.Action<bool>), factory.System_Action_bool);
-		dict.Add(typeof(System.Action<byte[]>), factory.System_Action_bytes);
+		dict.Add(typeof(System.Action<byte[],int>), factory.System_Action_bytes_int);
 
 		DelegateTraits<System.Action>.Init(factory.System_Action);
 		DelegateTraits<UnityEngine.Events.UnityAction>.Init(factory.UnityEngine_Events_UnityAction);
@@ -63,7 +63,7 @@ public class DelegateFactory
 		DelegateTraits<System.Action<bool,string>>.Init(factory.System_Action_bool_string);
 		DelegateTraits<System.Action<bool,byte[]>>.Init(factory.System_Action_bool_bytes);
 		DelegateTraits<System.Action<bool>>.Init(factory.System_Action_bool);
-		DelegateTraits<System.Action<byte[]>>.Init(factory.System_Action_bytes);
+		DelegateTraits<System.Action<byte[],int>>.Init(factory.System_Action_bytes_int);
 
 		TypeTraits<System.Action>.Init(factory.Check_System_Action);
 		TypeTraits<UnityEngine.Events.UnityAction>.Init(factory.Check_UnityEngine_Events_UnityAction);
@@ -87,7 +87,7 @@ public class DelegateFactory
 		TypeTraits<System.Action<bool,string>>.Init(factory.Check_System_Action_bool_string);
 		TypeTraits<System.Action<bool,byte[]>>.Init(factory.Check_System_Action_bool_bytes);
 		TypeTraits<System.Action<bool>>.Init(factory.Check_System_Action_bool);
-		TypeTraits<System.Action<byte[]>>.Init(factory.Check_System_Action_bytes);
+		TypeTraits<System.Action<byte[],int>>.Init(factory.Check_System_Action_bytes_int);
 
 		StackTraits<System.Action>.Push = factory.Push_System_Action;
 		StackTraits<UnityEngine.Events.UnityAction>.Push = factory.Push_UnityEngine_Events_UnityAction;
@@ -111,7 +111,7 @@ public class DelegateFactory
 		StackTraits<System.Action<bool,string>>.Push = factory.Push_System_Action_bool_string;
 		StackTraits<System.Action<bool,byte[]>>.Push = factory.Push_System_Action_bool_bytes;
 		StackTraits<System.Action<bool>>.Push = factory.Push_System_Action_bool;
-		StackTraits<System.Action<byte[]>>.Push = factory.Push_System_Action_bytes;
+		StackTraits<System.Action<byte[],int>>.Push = factory.Push_System_Action_bytes_int;
 	}
     
     public static Delegate CreateDelegate(Type t, LuaFunction func = null)
@@ -1501,59 +1501,61 @@ public class DelegateFactory
 		ToLua.Push(L, o);
 	}
 
-	class System_Action_bytes_Event : LuaDelegate
+	class System_Action_bytes_int_Event : LuaDelegate
 	{
-		public System_Action_bytes_Event(LuaFunction func) : base(func) { }
-		public System_Action_bytes_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Action_bytes_int_Event(LuaFunction func) : base(func) { }
+		public System_Action_bytes_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(byte[] param0)
+		public void Call(byte[] param0, int param1)
 		{
 			func.BeginPCall();
 			func.Push(param0);
+			func.Push(param1);
 			func.PCall();
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(byte[] param0)
+		public void CallWithSelf(byte[] param0, int param1)
 		{
 			func.BeginPCall();
 			func.Push(self);
 			func.Push(param0);
+			func.Push(param1);
 			func.PCall();
 			func.EndPCall();
 		}
 	}
 
-	public System.Action<byte[]> System_Action_bytes(LuaFunction func, LuaTable self, bool flag)
+	public System.Action<byte[],int> System_Action_bytes_int(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Action<byte[]> fn = delegate(byte[] param0) { };
+			System.Action<byte[],int> fn = delegate(byte[] param0, int param1) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Action_bytes_Event target = new System_Action_bytes_Event(func);
-			System.Action<byte[]> d = target.Call;
+			System_Action_bytes_int_Event target = new System_Action_bytes_int_Event(func);
+			System.Action<byte[],int> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Action_bytes_Event target = new System_Action_bytes_Event(func, self);
-			System.Action<byte[]> d = target.CallWithSelf;
+			System_Action_bytes_int_Event target = new System_Action_bytes_int_Event(func, self);
+			System.Action<byte[],int> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	bool Check_System_Action_bytes(IntPtr L, int pos)
+	bool Check_System_Action_bytes_int(IntPtr L, int pos)
 	{
-		return TypeChecker.CheckDelegateType(typeof(System.Action<byte[]>), L, pos);
+		return TypeChecker.CheckDelegateType(typeof(System.Action<byte[],int>), L, pos);
 	}
 
-	void Push_System_Action_bytes(IntPtr L, System.Action<byte[]> o)
+	void Push_System_Action_bytes_int(IntPtr L, System.Action<byte[],int> o)
 	{
 		ToLua.Push(L, o);
 	}

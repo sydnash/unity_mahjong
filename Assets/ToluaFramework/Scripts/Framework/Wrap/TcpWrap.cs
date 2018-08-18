@@ -10,8 +10,8 @@ public class TcpWrap
 		L.RegFunction("Connect", Connect);
 		L.RegFunction("Disconnect", Disconnect);
 		L.RegFunction("Send", Send);
-		L.RegFunction("RegisterReceivedHandler", RegisterReceivedHandler);
-		L.RegFunction("UnregisterReceivedHandler", UnregisterReceivedHandler);
+		L.RegFunction("RegisterReceivedCallback", RegisterReceivedCallback);
+		L.RegFunction("UnregisterReceivedCallback", UnregisterReceivedCallback);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -71,14 +71,14 @@ public class TcpWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int RegisterReceivedHandler(IntPtr L)
+	static int RegisterReceivedCallback(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
 			Tcp obj = (Tcp)ToLua.CheckObject<Tcp>(L, 1);
-			System.Action<byte[]> arg0 = (System.Action<byte[]>)ToLua.CheckDelegate<System.Action<byte[]>>(L, 2);
-			obj.RegisterReceivedHandler(arg0);
+			System.Action<byte[],int> arg0 = (System.Action<byte[],int>)ToLua.CheckDelegate<System.Action<byte[],int>>(L, 2);
+			obj.RegisterReceivedCallback(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -88,13 +88,13 @@ public class TcpWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int UnregisterReceivedHandler(IntPtr L)
+	static int UnregisterReceivedCallback(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			Tcp obj = (Tcp)ToLua.CheckObject<Tcp>(L, 1);
-			obj.UnregisterReceivedHandler();
+			obj.UnregisterReceivedCallback();
 			return 0;
 		}
 		catch (Exception e)
