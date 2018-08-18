@@ -23,7 +23,7 @@ public static class LuaBinder
 		MD5Wrap.Register(L);
 		AESWrap.Register(L);
 		Base64Wrap.Register(L);
-		DataConvertWrap.Register(L);
+		ByteUtilsWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);
 		LuaInterface_InjectTypeWrap.Register(L);

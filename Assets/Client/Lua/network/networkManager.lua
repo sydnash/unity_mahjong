@@ -68,18 +68,15 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-local function receive(msg)
-    msg = proto.parse(msg)
+local function receive(bytes)
+    local msg = proto.parse(bytes)
 
-    if msg == nil then
-        log("receive a error msg")
-        return
-    end
-    
-    local callback = networkCallbackPool:pop(msg.RequestId)
-    if callback ~= nil then
-        local data = table.fromjson(msg.Payload)
-        callback(data)
+    if msg ~= nil then
+        local callback = networkCallbackPool:pop(msg.RequestId)
+        if callback ~= nil then
+            local data = table.fromjson(msg.Payload)
+            callback(data)
+        end
     end
 end
 

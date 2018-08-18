@@ -2,23 +2,26 @@
 using System;
 using LuaInterface;
 
-public class DataConvertWrap
+public class ByteUtilsWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(DataConvert), typeof(System.Object));
+		L.BeginClass(typeof(ByteUtils), typeof(System.Object));
 		L.RegFunction("StringToBytes", StringToBytes);
 		L.RegFunction("BytesToString", BytesToString);
 		L.RegFunction("Int32ToBytes", Int32ToBytes);
 		L.RegFunction("BytesToInt32", BytesToInt32);
+		L.RegFunction("NewByteArray", NewByteArray);
 		L.RegFunction("ConcatBytes", ConcatBytes);
-		L.RegFunction("New", _CreateDataConvert);
+		L.RegFunction("SubBytes", SubBytes);
+		L.RegFunction("TrimBytes", TrimBytes);
+		L.RegFunction("New", _CreateByteUtils);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _CreateDataConvert(IntPtr L)
+	static int _CreateByteUtils(IntPtr L)
 	{
 		try
 		{
@@ -26,13 +29,13 @@ public class DataConvertWrap
 
 			if (count == 0)
 			{
-				DataConvert obj = new DataConvert();
+				ByteUtils obj = new ByteUtils();
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
 			else
 			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: DataConvert.New");
+				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: ByteUtils.New");
 			}
 		}
 		catch (Exception e)
@@ -48,7 +51,7 @@ public class DataConvertWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			byte[] o = DataConvert.StringToBytes(arg0);
+			byte[] o = ByteUtils.StringToBytes(arg0);
 			ToLua.Push(L, o);
 			return 1;
 		}
@@ -65,7 +68,7 @@ public class DataConvertWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
-			string o = DataConvert.BytesToString(arg0);
+			string o = ByteUtils.BytesToString(arg0);
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}
@@ -82,7 +85,7 @@ public class DataConvertWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-			byte[] o = DataConvert.Int32ToBytes(arg0);
+			byte[] o = ByteUtils.Int32ToBytes(arg0);
 			ToLua.Push(L, o);
 			return 1;
 		}
@@ -102,7 +105,7 @@ public class DataConvertWrap
 			if (count == 1)
 			{
 				byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
-				int o = DataConvert.BytesToInt32(arg0);
+				int o = ByteUtils.BytesToInt32(arg0);
 				LuaDLL.lua_pushinteger(L, o);
 				return 1;
 			}
@@ -110,14 +113,33 @@ public class DataConvertWrap
 			{
 				byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
 				int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
-				int o = DataConvert.BytesToInt32(arg0, arg1);
+				int o = ByteUtils.BytesToInt32(arg0, arg1);
 				LuaDLL.lua_pushinteger(L, o);
 				return 1;
 			}
 			else
 			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: DataConvert.BytesToInt32");
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: ByteUtils.BytesToInt32");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int NewByteArray(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
+			byte[] o = ByteUtils.NewByteArray(arg0, arg1, arg2);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
@@ -130,10 +152,49 @@ public class DataConvertWrap
 	{
 		try
 		{
+			ToLua.CheckArgsCount(L, 4);
+			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			byte[] arg2 = ToLua.CheckByteBuffer(L, 3);
+			int arg3 = (int)LuaDLL.luaL_checknumber(L, 4);
+			byte[] o = ByteUtils.ConcatBytes(arg0, arg1, arg2, arg3);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SubBytes(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
+			byte[] o = ByteUtils.SubBytes(arg0, arg1, arg2);
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int TrimBytes(IntPtr L)
+	{
+		try
+		{
 			ToLua.CheckArgsCount(L, 2);
 			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
-			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
-			byte[] o = DataConvert.ConcatBytes(arg0, arg1);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			byte[] o = ByteUtils.TrimBytes(arg0, arg1);
 			ToLua.Push(L, o);
 			return 1;
 		}

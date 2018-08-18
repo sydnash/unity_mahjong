@@ -56,12 +56,12 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private byte[] mLengthBuffer = new byte[INT_BYTES_COUNT];
+    private byte[] mReceivedBuffer = new byte[RECEIVED_BUFFER_SIZE];
 
     /// <summary>
     /// 
     /// </summary>
-    private const int INT_BYTES_COUNT = sizeof(int);
+    private const int RECEIVED_BUFFER_SIZE = 4 * 1024;
 
     #endregion
 
@@ -336,39 +336,21 @@ public class Tcp : MonoBehaviour
 
             while (mIsConnected)
             {
-                int receivedSize = 0;
-
-                //协议长度
-                ZeroLengthBuffer();
-
-                while (receivedSize < INT_BYTES_COUNT)
+                int receivedSize = mSocket.Receive(mReceivedBuffer, 0, RECEIVED_BUFFER_SIZE, SocketFlags.None, out socketState);
+                if (socketState != SocketError.Success)
                 {
-                    receivedSize += mSocket.Receive(mLengthBuffer, 0, INT_BYTES_COUNT, SocketFlags.None, out socketState);
-                    if (socketState != SocketError.Success)
-                    {
-                        return;
-                    }
+                    return;
                 }
 
-                //协议内容+校验码
-                int size = BitConverter.ToInt32(mLengthBuffer, 0) - INT_BYTES_COUNT;
-                byte[] msg = new byte[size];
-
-                receivedSize = 0;
-
-                while (receivedSize < size)
+                if (receivedSize > 0)
                 {
-                    receivedSize += mSocket.Receive(msg, receivedSize, size - receivedSize, SocketFlags.None, out socketState);
-                    if (socketState != SocketError.Success)
+                    byte[] buffer = new byte[receivedSize];
+                    Array.Copy(mReceivedBuffer, 0, buffer, 0, receivedSize);
+
+                    lock (mRecevieQueueMutex)
                     {
-                        return;
+                        mReceiveQueue.Enqueue(buffer);
                     }
-                }
-
-                //进入接收消息队列
-                lock (mRecevieQueueMutex)
-                {
-                    mReceiveQueue.Enqueue(msg);
                 }
             }
         }
@@ -387,36 +369,28 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private void ZeroLengthBuffer()
-    {
-        for (int i = 0; i < INT_BYTES_COUNT; i++)
-        {
-            mLengthBuffer[i] = 0;
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     private void Update()
     {
-        if (mIsConnected && !mIsConnectedLastFrame)
+        if (mConnectCallback != null)
         {
-            InvokeCallback(mConnectCallback, true);
-        }
-        else if (!mIsConnected && mIsConnectedLastFrame)
-        {
-            InvokeCallback(mConnectCallback, false);
+            if (mIsConnected && !mIsConnectedLastFrame)
+            {
+                mConnectCallback(true);
+            }
+            else if (!mIsConnected && mIsConnectedLastFrame)
+            {
+                mConnectCallback(false);
+            }
         }
 
         mIsConnectedLastFrame = mIsConnected;
 
-        if (mIsConnected && mReceivedHandler != null)
+        if (mIsConnected)
         {
-            byte[] msg = nextReceivedMessage;
-            if (msg != null)
+            byte[] bytes = nextReceivedMessage;
+            if (bytes != null && mReceivedHandler != null)
             {
-                mReceivedHandler(msg);
+                mReceivedHandler(bytes);
             }
         }
     }
@@ -426,38 +400,12 @@ public class Tcp : MonoBehaviour
     /// </summary>
     private byte[] nextReceivedMessage
     {
-        get
+        get 
         {
             lock (mRecevieQueueMutex)
             {
                 return (mReceiveQueue.Count == 0) ? null : mReceiveQueue.Dequeue();
             }
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="callback"></param>
-    private void InvokeCallback(Action<bool> callback, bool args)
-    {
-        if (callback != null)
-        {
-            callback(args);
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="callback"></param>
-    /// <param name="state"></param>
-    /// <param name="text"></param>
-    private void InvokeCallback(Action<SocketError, string> callback, SocketError state, string text)
-    {
-        if (callback != null)
-        {
-            callback(state, text);
         }
     }
 

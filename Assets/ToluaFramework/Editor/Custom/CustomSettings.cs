@@ -183,7 +183,7 @@ public static class CustomSettings
         _GT(typeof(MD5)),
         _GT(typeof(AES)),
         _GT(typeof(Base64)),
-        _GT(typeof(DataConvert)),
+        _GT(typeof(ByteUtils)),
     };
 
     public static List<Type> dynamicList = new List<Type>()
