@@ -51,6 +51,11 @@ public class SceneLoader : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    private static readonly WaitForEndOfFrame WAIT_FOR_END_OF_FRAME = new WaitForEndOfFrame();
+
+    /// <summary>
+    /// 
+    /// </summary>
 #if UNITY_ANDROID
     private const string SUB_PATH = "Res/Android/scene";
 #elif UNITY_IOS
@@ -131,7 +136,12 @@ public class SceneLoader : MonoBehaviour
             if (checkExist && System.IO.File.Exists(bundleName))
             {
                 var request = AssetBundle.LoadFromFileAsync(bundleName);
-                yield return request;
+                
+                while (!request.isDone)
+                {
+                    InvokeCallback(callback, false, request.progress * 0.5f);
+                    yield return WAIT_FOR_END_OF_FRAME;
+                }
 
                 bundle = request.assetBundle;
                 if (bundle != null)
@@ -144,7 +154,7 @@ public class SceneLoader : MonoBehaviour
         while (Time.realtimeSinceStartup - time < 1.0f) ;
 
         InvokeCallback(callback, false, 0.5f);
-        yield return new WaitForEndOfFrame();
+        yield return WAIT_FOR_END_OF_FRAME;
 
         time = Time.realtimeSinceStartup;
 
@@ -154,7 +164,8 @@ public class SceneLoader : MonoBehaviour
 
             while (!op.isDone)
             {
-                yield return new WaitForEndOfFrame();
+                InvokeCallback(callback, false, 0.5f + op.progress * 0.5f);
+                yield return WAIT_FOR_END_OF_FRAME;
             }
 
             bundle.Unload(false);
@@ -167,17 +178,17 @@ public class SceneLoader : MonoBehaviour
 #endif
 
         while (Time.realtimeSinceStartup - time < 1.0f) ;
-        yield return new WaitForEndOfFrame();
+        yield return WAIT_FOR_END_OF_FRAME;
 
         InvokeCallback(callback, false, 1.0f);
         time = Time.realtimeSinceStartup;
-        yield return new WaitForEndOfFrame();
+        yield return WAIT_FOR_END_OF_FRAME;
 
         while (Time.realtimeSinceStartup - time < 0.5f) ;
-        yield return new WaitForEndOfFrame();
+        yield return WAIT_FOR_END_OF_FRAME;
 
         InvokeCallback(callback, true, 1.0f);
-        yield return new WaitForEndOfFrame();
+        yield return WAIT_FOR_END_OF_FRAME;
     }
 
     /// <summary>

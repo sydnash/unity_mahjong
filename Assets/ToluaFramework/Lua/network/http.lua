@@ -8,14 +8,14 @@ local http = class("http")
 --
 -------------------------------------------------------------------
 function http.getText(url, callback)
-    Http.instance:RequestText(url, "Get", callback)
+    Http.instance:RequestText(url, "GET", callback)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function http.getBytes(url, callback)
-    Http.instance:RequestBytes(url, "Get", callback)
+    Http.instance:RequestBytes(url, "GET", callback)
 end
 
 return http

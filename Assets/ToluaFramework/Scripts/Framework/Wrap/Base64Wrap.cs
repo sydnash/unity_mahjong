@@ -43,9 +43,11 @@ public class Base64Wrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
+			ToLua.CheckArgsCount(L, 3);
 			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
-			byte[] o = Base64.Encrypt(arg0);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
+			byte[] o = Base64.Encrypt(arg0, arg1, arg2);
 			ToLua.Push(L, o);
 			return 1;
 		}
@@ -60,9 +62,11 @@ public class Base64Wrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
+			ToLua.CheckArgsCount(L, 3);
 			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
-			byte[] o = Base64.Decrypt(arg0);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
+			byte[] o = Base64.Decrypt(arg0, arg1, arg2);
 			ToLua.Push(L, o);
 			return 1;
 		}

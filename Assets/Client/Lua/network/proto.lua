@@ -26,7 +26,7 @@ function proto.build(command, token, acid, session, payload)
 
     local encrypt = table.tojson(p)
     encrypt = aes.Encrypt(encrypt .. md5.GetHash(encrypt))
-    encrypt = b64.Encrypt(encrypt)
+    encrypt = b64.Encrypt(encrypt, 0, encrypt.Length)
     local length = cvt.Int32ToBytes(encrypt.Length + INT_BYTES_COUNT)
 
     return cvt.ConcatBytes(length, length.Length, encrypt, encrypt.Length)
@@ -40,9 +40,7 @@ function proto.parse(bytes)
         local length = cvt.BytesToInt32(bytes, 0)
     
         if length <= bytes.Length then
-            bytes = cvt.SubBytes(bytes, INT_BYTES_COUNT, length - INT_BYTES_COUNT)
-
-            local decrypt = b64.Decrypt(bytes)
+            local decrypt = b64.Decrypt(bytes, INT_BYTES_COUNT, length - INT_BYTES_COUNT)
             decrypt = aes.Decrypt(decrypt)
 
             local size = string.len(decrypt) - CHECKSUM_LENGTH

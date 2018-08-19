@@ -40,9 +40,9 @@ public class ByteUtils
     /// <param name="bytes"></param>
     /// <param name="startIndex"></param>
     /// <returns></returns>
-    public static int BytesToInt32(byte[] bytes, int startIndex = 0)
+    public static int BytesToInt32(byte[] bytes, int offset = 0)
     {
-        return BitConverter.ToInt32(bytes, startIndex);
+        return BitConverter.ToInt32(bytes, offset);
     }
 
     /// <summary>
@@ -52,12 +52,12 @@ public class ByteUtils
     /// <param name="startIndex"></param>
     /// <param name="length"></param>
     /// <returns></returns>
-    public static byte[] NewByteArray(byte[] s, int startIndex, int length)
+    public static byte[] NewByteArray(byte[] s, int offset, int length)
     {
         if (s == null || length == 0) return null;
 
         byte[] d = new byte[length];
-        Array.Copy(s, startIndex, d, 0, length);
+        Array.Copy(s, offset, d, 0, length);
 
         return d;
     }

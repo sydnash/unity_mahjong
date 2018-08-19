@@ -1,17 +1,58 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
+using System.Net;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class Http : MonoBehaviour
 {
+    #region Class
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private class RequestArgs
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public HttpWebRequest request = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string url = string.Empty;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="url"></param>
+        public RequestArgs(HttpWebRequest request, string url)
+        {
+            this.request = request;
+            this.url = url;
+        }
+    }
+
+    #endregion
+
     #region Datas
 
     /// <summary>
     /// 
     /// </summary>
-    private static readonly WaitForEndOfFrame WAIT_FOR_END_OF_FRAME = new WaitForEndOfFrame();
+    private Dictionary<string, Action<bool, string>> mTextCallbackDict = new Dictionary<string, Action<bool, string>>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Dictionary<string, Action<bool, byte[]>> mByteCallbackDict = new Dictionary<string, Action<bool, byte[]>>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Dictionary<string, byte[]> mResponseDict = new Dictionary<string, byte[]>();
 
     #endregion
 
@@ -41,7 +82,11 @@ public class Http : MonoBehaviour
     /// <param name="callback"></param>
     public void RequestText(string url, string method, Action<bool, string> callback)
     {
-        StartCoroutine(RequestTextCoroutione(url, method.ToUpper(), callback));
+        mTextCallbackDict.Add(url, callback);
+
+        HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+        request.Method = method.ToUpper();
+        request.BeginGetResponse(OnResponse, new RequestArgs(request, url));
     }
 
     /// <summary>
@@ -51,7 +96,25 @@ public class Http : MonoBehaviour
     /// <param name="callback"></param>
     public void RequestBytes(string url, string method, Action<bool, byte[]> callback)
     {
-        StartCoroutine(RequestBytesCoroutione(url, method.ToUpper(), callback));
+        mByteCallbackDict.Add(url, callback);
+
+        HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+        request.Method = method.ToUpper();
+        request.BeginGetResponse(OnResponse, new RequestArgs(request, url));
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Reset()
+    {
+        mTextCallbackDict.Clear();
+        mByteCallbackDict.Clear();
+
+        lock (mResponseDict)
+        {
+            mResponseDict.Clear();
+        }
     }
 
     #endregion
@@ -70,83 +133,117 @@ public class Http : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="url"></param>
-    /// <param name="callback"></param>
-    /// <returns></returns>
-    private IEnumerator RequestTextCoroutione(string url, string method, Action<bool, string> callback)
+    private void Update()
     {
-        bool state = false;
-        string text = string.Empty;
-
-        UnityWebRequest www = new UnityWebRequest(url, method);
-
-        www.downloadHandler = new DownloadHandlerBuffer();
-        www.SendWebRequest();
-        
-        while (!www.isDone)
+        lock (mResponseDict)
         {
-            yield return WAIT_FOR_END_OF_FRAME; 
-        }
+            foreach (KeyValuePair<string, byte[]> p in mResponseDict)
+            {
+                string k = p.Key;
+                byte[] v = p.Value;
+                //文本回调
+                if (mTextCallbackDict.ContainsKey(k))
+                {
+                    Action<bool, string> callback = mTextCallbackDict[k];
 
-        if (www.isHttpError || www.isNetworkError)
-        {
-#if UNITY_EDITOR
-            Debug.LogError("Http Error: " + www.error);
-#endif
-        }
-        else
-        {
-            state = true;
-            text = www.downloadHandler.text;
-        }
+                    if (v != null)
+                    {
+                        callback(true, Encoding.UTF8.GetString(v));
+                    }
+                    else
+                    {
+                        callback(false, string.Empty);
+                    }
 
-        if (callback != null)
-        {
-            callback(state, text);
-        }
+                    mResponseDict.Remove(k);
+                    mTextCallbackDict.Remove(k);
 
-        yield return WAIT_FOR_END_OF_FRAME; 
+                    break;
+                }
+                //字节回调
+                if (mByteCallbackDict.ContainsKey(k))
+                {
+                    Action<bool, byte[]> callback = mByteCallbackDict[k];
+                    callback(v != null, v);
+
+                    mResponseDict.Remove(k);
+                    mByteCallbackDict.Remove(k);
+
+                    break;
+                }
+            }
+        }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="url"></param>
-    /// <param name="callback"></param>
-    /// <returns></returns>
-    private IEnumerator RequestBytesCoroutione(string url, string method, Action<bool, byte[]> callback)
+    /// <param name="result"></param>
+    private void OnResponse(IAsyncResult result)
     {
-        bool state = false;
-        byte[] bytes = null;
+        RequestArgs args = result.AsyncState as RequestArgs;
 
-        UnityWebRequest www = new UnityWebRequest(url, method);
+        HttpWebRequest request = args.request;
+        string url = args.url;
+        HttpWebResponse response = null;
 
-        www.downloadHandler = new DownloadHandlerBuffer();
-        www.SendWebRequest();
-
-        while (!www.isDone)
+        try
         {
-            yield return WAIT_FOR_END_OF_FRAME;
-        }
+            response = request.EndGetResponse(result) as HttpWebResponse;
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                int length = (int)response.ContentLength;
+                System.IO.Stream responseStream = response.GetResponseStream();
 
-        if (www.isHttpError || www.isNetworkError)
+                byte[] bytes = new byte[length];
+                int readSize = 0;
+
+                while (readSize < length)
+                {
+                    readSize += responseStream.Read(bytes, readSize, length - readSize);
+                }
+
+                responseStream.Close();
+
+                lock (mResponseDict)
+                {
+                    mResponseDict.Add(url, bytes);
+                }
+            }
+            else
+            {
+                lock (mResponseDict)
+                {
+                    mResponseDict.Add(url, null);
+                }
+
+#if UNITY_EDITOR
+                Debug.LogError("http failed: " + response.StatusDescription);
+#endif 
+            }
+        }
+        catch (Exception ex)
         {
 #if UNITY_EDITOR
-            Debug.LogError("Http Error: " + www.error);
+            Debug.LogError(ex.Message);
 #endif
+            lock (mResponseDict)
+            {
+                mResponseDict.Add(url, null);
+            }
         }
-        else
+        finally
         {
-            state = true;
-            bytes = www.downloadHandler.data;
-        }
+            if (request != null)
+            {
+                request.Abort();
+            }
 
-        if (callback != null)
-        {
-            callback(state, bytes);
+            if (response != null)
+            {
+                response.Close();
+            }
         }
-
-        yield return WAIT_FOR_END_OF_FRAME;
     }
 
     #endregion

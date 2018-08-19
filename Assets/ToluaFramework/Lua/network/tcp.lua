@@ -33,6 +33,13 @@ function tcp.registerReceivedCallback(callback)
     Tcp.instance:RegisterReceivedCallback(callback)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function tcp.unregisterReceivedCallback()
+    Tcp.instance:UnregisterReceivedCallback()
+end
+
 return tcp
 
 --endregion

@@ -78,7 +78,7 @@ local function receive(bytes, size)
     end
 
     --解析数据
-    local msg, length = proto.parse(networkManager.recvbuffer, size)
+    local msg, length = proto.parse(networkManager.recvbuffer)
 
     if length > 0 then
         --剔除已解析过的数据
