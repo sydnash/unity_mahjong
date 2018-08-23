@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 196171186
+CRC: 944941245
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -29,8 +29,182 @@ AssetBundleManifest:
       Name: sound/click
       Dependencies: {}
     Info_8:
-      Name: ui/enterroomui/enterroomui
+      Name: ui/waitingui/waitingui
       Dependencies: {}
     Info_9:
-      Name: ui/waitingui/waitingui
+      Name: scene/mahjongscene
+      Dependencies: {}
+    Info_10:
+      Name: model/mjpai01
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_11:
+      Name: model/mjpai02
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_12:
+      Name: model/mjpai03
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_13:
+      Name: model/mjpai04
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_14:
+      Name: model/mjpai05
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_15:
+      Name: model/mjpai06
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_16:
+      Name: model/mjpai07
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_17:
+      Name: model/mjpai08
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_18:
+      Name: model/mjpai09
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_19:
+      Name: model/mjpai10
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_20:
+      Name: model/mjpai11
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_21:
+      Name: model/mjpai12
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_22:
+      Name: model/mjpai13
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_23:
+      Name: model/mjpai14
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_24:
+      Name: model/mjpai15
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_25:
+      Name: model/mjpai16
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_26:
+      Name: model/mjpai17
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_27:
+      Name: model/mjpai18
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_28:
+      Name: model/mjpai19
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_29:
+      Name: model/mjpai20
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_30:
+      Name: model/mjpai21
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_31:
+      Name: model/mjpai22
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_32:
+      Name: model/mjpai23
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_33:
+      Name: model/mjpai24
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_34:
+      Name: model/mjpai25
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_35:
+      Name: model/mjpai26
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_36:
+      Name: model/mjpai27
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_37:
+      Name: model/mjpai28
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_38:
+      Name: model/mjpai29
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_39:
+      Name: model/mjpai30
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_40:
+      Name: model/mjpai31
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_41:
+      Name: model/mjpai32
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_42:
+      Name: model/mjpai33
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_43:
+      Name: model/mjpai34
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_44:
+      Name: model/mjpai35
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_45:
+      Name: model/mjpai36
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_46:
+      Name: model/mjpai37
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_47:
+      Name: model/mjpai38
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_48:
+      Name: model/mjpai39
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_49:
+      Name: model/mjpai40
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_50:
+      Name: model/mjpai41
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_51:
+      Name: model/mjpai42
+      Dependencies:
+        Dependency_0: texture/mj_dif
+    Info_52:
+      Name: texture/mj_dif
+      Dependencies: {}
+    Info_53:
+      Name: ui/enterdeskui/enterdeskui
       Dependencies: {}

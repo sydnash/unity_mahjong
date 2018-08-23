@@ -31,6 +31,9 @@ public static class CustomSettings
         typeof(UnityEngine.QualitySettings),
         typeof(UnityEngine.GL),
         typeof(UnityEngine.Graphics),
+
+        //自定义类
+        //typeof(Logger),
     };
 
     //附加导出委托类型(在导出委托时, customTypeList 中牵扯的委托类型都会导出， 无需写在这里)
@@ -93,7 +96,7 @@ public static class CustomSettings
         //_GT(typeof(LineRenderer))
         //_GT(typeof(TrailRenderer))
 #endif
-      
+     
         _GT(typeof(Behaviour)),
         _GT(typeof(MonoBehaviour)),        
         _GT(typeof(GameObject)),
@@ -170,9 +173,9 @@ public static class CustomSettings
 
         //Custom Classes
         _GT(typeof(UIManager)),
+        _GT(typeof(ModelManager)),
         _GT(typeof(AudioManager)),
         _GT(typeof(SceneLoader)),
-        _GT(typeof(PatchManager)),
         _GT(typeof(LuaPanel)),
         _GT(typeof(LuaPanel.Widget)),
         _GT(typeof(LuaPanel.WidgetType)),
@@ -184,6 +187,9 @@ public static class CustomSettings
         _GT(typeof(AES)),
         _GT(typeof(Base64)),
         _GT(typeof(ByteUtils)),
+        _GT(typeof(AnimationEventManager)),
+        _GT(typeof(GameObjectPicker)),
+        _GT(typeof(Logger)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

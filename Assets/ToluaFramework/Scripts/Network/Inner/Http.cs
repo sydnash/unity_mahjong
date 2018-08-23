@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
+using System.Threading;
 using UnityEngine;
 
 public class Http : MonoBehaviour
@@ -16,22 +17,28 @@ public class Http : MonoBehaviour
         /// <summary>
         /// 
         /// </summary>
-        public HttpWebRequest request = null;
+        public string url = string.Empty;
 
         /// <summary>
         /// 
         /// </summary>
-        public string url = string.Empty;
+        public string method = string.Empty;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int timeout = 2 * 60 * 1000;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="request"></param>
         /// <param name="url"></param>
-        public RequestArgs(HttpWebRequest request, string url)
+        public RequestArgs(string url, string method, int timeout)
         {
-            this.request = request;
             this.url = url;
+            this.method = method.ToUpper();
+            this.timeout = timeout;
         }
     }
 
@@ -80,13 +87,12 @@ public class Http : MonoBehaviour
     /// </summary>
     /// <param name="url"></param>
     /// <param name="callback"></param>
-    public void RequestText(string url, string method, Action<bool, string> callback)
+    public void RequestText(string url, string method, int timeout, Action<bool, string> callback)
     {
         mTextCallbackDict.Add(url, callback);
 
-        HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-        request.Method = method.ToUpper();
-        request.BeginGetResponse(OnResponse, new RequestArgs(request, url));
+        Thread thread = new Thread(OnRequest);
+        thread.Start(new RequestArgs(url, method, timeout));
     }
 
     /// <summary>
@@ -94,13 +100,12 @@ public class Http : MonoBehaviour
     /// </summary>
     /// <param name="url"></param>
     /// <param name="callback"></param>
-    public void RequestBytes(string url, string method, Action<bool, byte[]> callback)
+    public void RequestBytes(string url, string method, int timeout, Action<bool, byte[]> callback)
     {
         mByteCallbackDict.Add(url, callback);
 
-        HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-        request.Method = method.ToUpper();
-        request.BeginGetResponse(OnResponse, new RequestArgs(request, url));
+        Thread thread = new Thread(OnRequest);
+        thread.Start(new RequestArgs(url, method, timeout));
     }
 
     /// <summary>
@@ -178,18 +183,39 @@ public class Http : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="result"></param>
-    private void OnResponse(IAsyncResult result)
+    /// <param name="obj"></param>
+    private void OnRequest(object obj)
     {
-        RequestArgs args = result.AsyncState as RequestArgs;
-
-        HttpWebRequest request = args.request;
-        string url = args.url;
-        HttpWebResponse response = null;
+        RequestArgs args = obj as RequestArgs;
+        HttpWebRequest request = WebRequest.Create(args.url) as HttpWebRequest;
 
         try
         {
-            response = request.EndGetResponse(result) as HttpWebResponse;
+            request.Method = args.method;
+            request.Timeout = args.timeout;
+            request.ReadWriteTimeout = args.timeout;
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+
+            OnResponse(response, args.url);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex.Message);
+        }
+        finally
+        {
+            request.Abort();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="result"></param>
+    private void OnResponse(HttpWebResponse response, string url)
+    {
+        try
+        {
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 int length = (int)response.ContentLength;
@@ -217,16 +243,13 @@ public class Http : MonoBehaviour
                     mResponseDict.Add(url, null);
                 }
 
-#if UNITY_EDITOR
-                Debug.LogError("http failed: " + response.StatusDescription);
-#endif 
+                Logger.LogError("http failed: " + response.StatusDescription);
             }
         }
         catch (Exception ex)
         {
-#if UNITY_EDITOR
-            Debug.LogError(ex.Message);
-#endif
+            Logger.LogError(ex.Message);
+
             lock (mResponseDict)
             {
                 mResponseDict.Add(url, null);
@@ -234,11 +257,6 @@ public class Http : MonoBehaviour
         }
         finally
         {
-            if (request != null)
-            {
-                request.Abort();
-            }
-
             if (response != null)
             {
                 response.Close();

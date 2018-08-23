@@ -2,56 +2,87 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local deviceConfig = require("config.deviceConfig")
+
 local touch = class("touch")
 local Input = UnityEngine.Input
 
 touch.phaseType = {
     began = 1,
-    ended = 2,
+    moved = 2,
+    ended = 3,
 }
 
-touch.phase = touch.phaseType.ended
+local phase = touch.phaseType.ended
+local phaseCallback = nil
+local phaseCallbackTarget = nil
+local updateHandler = nil
 
-function touch.update()
-    if touch.phase == touch.phaseType.ended then
-        if appConfig.usemouse then
+local function position()
+    return deviceConfig.usemouse and Input.mousePosition or Input.GetTouch(0).position
+end
+
+local function update()
+    if phase == touch.phaseType.ended then
+        if deviceConfig.usemouse then
             if Input.GetMouseButtonDown(0) then
-                touch.phase = touch.phaseType.began
+                phase = touch.phaseType.began
+                phaseCallback(phaseCallbackTarget, phase, position())
             end
         else
             if Input.touchCount > 0 then
                 local t = Input.GetTouch(0)
                 if t.phase == TouchPhase.Began then
-                    touch.phase = touch.phaseType.began
+                    phase = touch.phaseType.began
+                    phaseCallback(phaseCallbackTarget, phase, position())
                 end
             end
         end
     else
-        if appConfig.usemouse then
+        if deviceConfig.usemouse then
             if Input.GetMouseButtonUp(0) then
-                touch.phase = touch.phaseType.ended
+                phase = touch.phaseType.ended
+            else
+                phase = touch.phaseType.moved
             end
         else
             if Input.touchCount > 0 then
                 local t = Input.GetTouch(0)
                 if t.phase == TouchPhase.Ended then
-                    touch.phase = touch.phaseType.ended
+                    phase = touch.phaseType.ended
+                elseif t.phase == TouchPhase.Moved then
+                    phase = touch.phaseType.moved
                 end
             end
         end
+
+        phaseCallback(phaseCallbackTarget, phase, position())
     end
 end
 
-function touch.position()
-    if touch.phase == touch.phaseType.began then
-        if appConfig.usemouse then
-            return Input.mousePosition
-        else
-            return Input.GetTouch(0).position
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function touch.addListener(callback, target)
+    if callback ~= nil then
+        if updateHandler == nil then
+            updateHandler = registerUpdateListener(update, nil)
         end
-    end
 
-    return nil
+        phaseCallback = callback
+        phaseCallbackTarget = target
+    end
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function touch.removeListener()
+    unregisterUpdateListener(updateHandler)
+    updateHandler = nil
+
+    phaseCallback = nil
+    phaseCallbackTarget = nil
 end
 
 return touch

@@ -2,8 +2,6 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local appConfig = require("config.appConfig")
-
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
@@ -163,15 +161,19 @@ function removeComponentU(gameObject, componentType)
     end
 end
 
-local logInfoD       = Debugger.Log
-local logWarningD    = Debugger.LogWarning
-local logErrorD      = Debugger.LogError
+Logger.debug = appConfig.debug
+Logger.Open()
+
+local logInfoD       = Logger.Log
+local logWarningD    = Logger.LogWarning
+local logErrorD      = Logger.LogError
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function log(message)
     if appConfig.debug then
+        if type(message) ~= "string" then message = tostring(message) end
         logInfoD(message)
     end
 end
@@ -181,6 +183,7 @@ end
 -------------------------------------------------------------------
 function logWarning(message)
     if appConfig.debug then
+        if type(message) ~= "string" then message = tostring(message) end
         logWarningD(message)
     end
 end
@@ -190,9 +193,12 @@ end
 -------------------------------------------------------------------
 function logError(message)
     if appConfig.debug then
+        if type(message) ~= "string" then message = tostring(message) end
         logErrorD(message)
     end
 end
+
+log("test log")
 
 -------------------------------------------------------------------
 --
@@ -246,17 +252,6 @@ function BKMGT(bytes)
     if bytes < T then return string.format("%.1fGB", bytes / G) end
 
     return string.format("%.1fT", bytes / T)
-end
-
--------------------------------------------------------------------
---
--------------------------------------------------------------------
-function getDeviceId()
-    if appConfig.debug and appConfig.deviceId ~= nil then
-        return appConfig.deviceId
-    end
-
-    return nil
 end
 
 --endregion

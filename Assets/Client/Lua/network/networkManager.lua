@@ -2,26 +2,16 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local networkCallbackPool = {}
+local networkCallbackPool = class("networkCallbackPool")
+local token = 100
 
-networkCallbackPool.token = 1
 networkCallbackPool.pool = {}
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkCallbackPool:generateToken()
-    self.token = self.token + 1
-    return self.token
-end
-
--------------------------------------------------------------------
---
--------------------------------------------------------------------
-function networkCallbackPool:push(callback)
-    local token = self:generateToken()
+function networkCallbackPool:push(token, callback)
     self.pool[token] = callback
-
     return token
 end
 
@@ -45,31 +35,52 @@ end
 
 
 
+protoType           = require("network.protoType")
+retc                = require("network.retc")
+retcText            = require("const.retcText")
 
-
-local http      = require("network.http")
-local tcp       = require("network.tcp")
-local proto     = require("network.proto")
-local protoType = require("network.protoType")
-local gamepref  = require("logic.gamepref")
-local cvt       = ByteUtils
+local http          = require("network.http")
+local tcp           = require("network.tcp")
+local proto         = require("network.proto")
+local networkConfig = require("config.networkConfig")
+local deviceConfig  = require("config.deviceConfig")
+local gamepref      = require("logic.gamepref")
+local cvt           = ByteUtils
 
 local networkManager = class("networkManager")
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+local function getDeviceId()
+    if appConfig.debug and deviceConfig.deviceId ~= nil then
+        return deviceConfig.deviceId
+    end
+
+    return nil
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 local function send(command, data, callback)
-    local token = networkCallbackPool:push(callback)
+    token = networkCallbackPool:push(token + 1, callback)
     local msg = proto.build(command, token, gamepref.acId, gamepref.session, data)
 
-    tcp.send(msg)
+    tcp.send(msg, function()
+        networkCallbackPool:pop(token)
+        callback(nil)
+    end)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 local function receive(bytes, size)
+    if bytes == nil and size < 0 then
+        return
+    end
+
     --缓存收到的数据
     if networkManager.recvbuffer == nil then
         networkManager.recvbuffer = cvt.NewByteArray(bytes, 0, size)
@@ -86,6 +97,10 @@ local function receive(bytes, size)
 
         if msg ~= nil then
             local callback = networkCallbackPool:pop(msg.RequestId)
+            if callback == nil then
+                callback = networkCallbackPool:pop(msg.Command)
+            end
+
             if callback ~= nil then
                 callback(table.fromjson(msg.Payload))
             end
@@ -104,7 +119,23 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.disconnect()
+    log("network disconnect begin: " .. time.now())
     tcp.disconnect()
+    log("network disconnect end: " .. time.now())
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.registerCommandHandler(command, callback)
+    networkCallbackPool:push(command, callback)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.unregisterCommandHandler(command)
+    networkCallbackPool:pop(command)
 end
 
 -------------------------------------------------------------------
@@ -112,7 +143,7 @@ end
 -------------------------------------------------------------------
 function networkManager.login(callback)
     local form = table.toUrlArgs({ mac = getDeviceId() })
-    http.getText(appConfig.guestURL .. "?" .. form, function(ok, text)
+    http.getText(networkConfig.guestURL .. "?" .. form, networkConfig.httpTimeout * 1000, function(ok, text)
         if not ok or string.isNilOrEmpty(text) then
             log("http response: error")
             callback(false, nil)
@@ -135,10 +166,17 @@ function networkManager.login(callback)
                     local loginType = 1
                     local data = { AcId = acid, Session = session, LoginType = loginType }
                     send(protoType.cs.loginHs, data, function(msg)
-                        app.gamePlayer.acId = msg.AcId
-                        app.gamePlayer.nickname = msg.Nickname
+                        if msg == nil then
+                            callback(false, nil)
+                        else
+                            log("login msg = " .. table.tostring(msg))
 
-                        callback(true, msg)
+                            gamepref.session = msg.Session
+                            app.gamePlayer.acId = msg.AcId
+                            app.gamePlayer.nickname = msg.Nickname
+
+                            callback(true, msg)
+                        end
                     end)
                 end
             end)
@@ -149,10 +187,64 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.createRoom(gameType, choose, clubId)
-    local data = { GameType = gameType, ConfigChoose = table.tojson(choose), ClubId = clubId }
-    network.send(protoType.cs.createDesk, data, function(msg)
-        callback(true, msg)
+function networkManager.createDesk(cityType, choose, clubId, callback)
+    local data = { GameType = cityType, ConfigChoose = table.tojson(choose), ClubId = clubId }
+    send(protoType.cs.createDesk, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            log("create desk msg = " .. table.tostring(msg))
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.checkDesk(cityType, deskId, callback)
+    local data = { GameType = cityType, DeskId = deskId }
+    send(protoType.cs.checkDesk, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            log("check desk msg = " .. table.tostring(msg))
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.enterDesk(cityType, deskId, callback)
+    local latitude = 0
+    local longitude = 0
+    local hasPosition = false
+
+    local data = { GameType = cityType, DeskId = deskId, Latitude = latitude, Longitude = longitude, HasPosition = has}
+    send(protoType.cs.enterGSDesk, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            log("enter desk msg = " .. table.tostring(msg))
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.ready(ready, callback)
+    local data = {IsReady = ready}
+    send(protoType.cs.ready, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            log("ready msg = " .. table.tostring(msg))
+            callback(true, msg)
+        end
     end)
 end
 

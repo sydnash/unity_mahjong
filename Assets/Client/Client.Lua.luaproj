@@ -23,28 +23,41 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Lua\" />
-    <Folder Include="Lua\logic\gameroom\" />
-    <Folder Include="Lua\logic\gameroom\majiang\" />
+    <Folder Include="Lua\logic\mahjong\" />
     <Folder Include="Lua\logic\player\" />
     <Folder Include="Lua\network\" />
     <Folder Include="Lua\logic\" />
     <Folder Include="Lua\const\" />
+    <Folder Include="Lua\config\" />
     <Folder Include="Lua\ui\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
-    <Compile Include="Lua\logic\gameroom\majiang\majiangRoomBase.lua" />
+    <Compile Include="Lua\config\deviceConfig.lua" />
+    <Compile Include="Lua\config\networkConfig.lua" />
+    <Compile Include="Lua\config\soundConfig.lua" />
+    <Compile Include="Lua\const\cityType.lua" />
+    <Compile Include="Lua\const\retcText.lua" />
+    <Compile Include="Lua\logic\gamepref.lua" />
+    <Compile Include="Lua\logic\mahjong\mahjong.lua" />
+    <Compile Include="Lua\logic\mahjong\mahjongDesk.lua" />
+    <Compile Include="Lua\logic\mahjong\mahjongType.lua" />
     <Compile Include="Lua\logic\touch.lua" />
     <Compile Include="Lua\network\proto.lua" />
-    <Compile Include="Lua\network\stateCode.lua" />
+    <Compile Include="Lua\network\retc.lua" />
     <Compile Include="Lua\logic\player\gamePlayer.lua" />
     <Compile Include="Lua\network\networkManager.lua" />
     <Compile Include="Lua\network\protoType.lua" />
-    <Compile Include="Lua\ui\enterroom.lua" />
+    <Compile Include="Lua\ui\enterDesk.lua" />
     <Compile Include="Lua\ui\loading.lua" />
     <Compile Include="Lua\ui\lobby.lua" />
     <Compile Include="Lua\ui\login.lua" />
     <Compile Include="Lua\ui\waiting.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lua\logic\mahjong\mahjong.lua.meta" />
+    <Content Include="Lua\logic\mahjong\mahjongDesk.lua.meta" />
+    <Content Include="Lua\logic\mahjong\mahjongType.lua.meta" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

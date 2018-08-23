@@ -26,7 +26,12 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private Queue<byte[]> mSendQueue = new Queue<byte[]>();
+    private Queue<byte[]> mSendMessageQueue = new Queue<byte[]>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Queue<Action> mSendErrorCallbackQueue = new Queue<Action>();
 
     /// <summary>
     /// 
@@ -83,9 +88,7 @@ public class Tcp : MonoBehaviour
         }
         catch (Exception ex)
         {
-#if UNITY_EDITOR
-            Debug.LogError(ex.Message);
-#endif
+            Logger.LogError(ex.Message);
         }
     }
 
@@ -104,9 +107,7 @@ public class Tcp : MonoBehaviour
         }
         catch (Exception ex)
         {
-#if UNITY_EDITOR
-            Debug.LogError(ex.Message);
-#endif
+            Logger.LogError(ex.Message);
         }
     }
 
@@ -114,9 +115,10 @@ public class Tcp : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="msg"></param>
-    public void Send(byte[] msg)
+    public void Send(byte[] msg, Action callback)
     {
-        mSendQueue.Enqueue(msg);
+        mSendMessageQueue.Enqueue(msg);
+        mSendErrorCallbackQueue.Enqueue(callback);
     }
 
     /// <summary>
@@ -154,18 +156,10 @@ public class Tcp : MonoBehaviour
     /// </summary>
     private void Close()
     {
-        mSendQueue.Clear();
+        mSendMessageQueue.Clear();
+        mSendErrorCallbackQueue.Clear();
 
-        try
-        {
-            mSocket.Shutdown(SocketShutdown.Both);
-        }
-        catch (Exception ex)
-        {
-#if UNITY_EDITOR
-            //Debug.LogError(ex.Message);
-#endif
-        }
+        Disconnect();
     }
 
     /// <summary>
@@ -185,9 +179,9 @@ public class Tcp : MonoBehaviour
             }
 
             //发送数据
-            if (mSendQueue.Count > 0)
+            if (mSendMessageQueue.Count > 0)
             {
-                byte[] msg = mSendQueue.Dequeue();
+                byte[] msg = mSendMessageQueue.Dequeue();
                 int sentSize = 0;
                 SocketError err = SocketError.Success;
 
@@ -196,9 +190,14 @@ public class Tcp : MonoBehaviour
                     sentSize += mSocket.Send(msg, sentSize, msg.Length - sentSize, SocketFlags.None, out err);
                     if (err != SocketError.Success)
                     {
-#if UNITY_EDITOR
-                        Debug.LogError("tcp send data failed");
-#endif
+                        Logger.LogError(string.Format("tcp send data failed, err = {0}", err));
+
+                        if (mSendErrorCallbackQueue.Count > 0)
+                        {
+                            Action callback = mSendErrorCallbackQueue.Dequeue();
+                            callback();
+                        }
+                        
                         return;
                     }
                 }
@@ -209,7 +208,12 @@ public class Tcp : MonoBehaviour
                 SocketError err = SocketError.Success;
                 int receivedSize = mSocket.Receive(mReceivedBuffer, 0, RECEIVED_BUFFER_SIZE, SocketFlags.None, out err);
 
-                if (receivedSize > 0 && mReceivedCallback != null)
+                if (err != SocketError.Success)
+                {
+                    Logger.LogError(string.Format("tcp recv data failed, err = {0}", err));
+                    mReceivedCallback(null, -1);
+                }
+                else if (receivedSize > 0 && mReceivedCallback != null)
                 {
                     mReceivedCallback(mReceivedBuffer, receivedSize);
                 }

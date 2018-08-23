@@ -20,7 +20,7 @@ function main()
 
     -- global entry: app
     app = require("clientApp").new()
-    app.start()
+    app:start()
 end
 
 --场景切换通知
@@ -37,6 +37,7 @@ function onApplicationQuit()
         profiler:stop()
     end
 
+    Logger.Close()
     log("application quit")
 end
 

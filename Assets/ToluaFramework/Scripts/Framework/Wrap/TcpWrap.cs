@@ -58,10 +58,11 @@ public class TcpWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
+			ToLua.CheckArgsCount(L, 3);
 			Tcp obj = (Tcp)ToLua.CheckObject<Tcp>(L, 1);
 			byte[] arg0 = ToLua.CheckByteBuffer(L, 2);
-			obj.Send(arg0);
+			System.Action arg1 = (System.Action)ToLua.CheckDelegate<System.Action>(L, 3);
+			obj.Send(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)

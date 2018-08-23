@@ -9,6 +9,7 @@ public class HttpWrap
 		L.BeginClass(typeof(Http), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("RequestText", RequestText);
 		L.RegFunction("RequestBytes", RequestBytes);
+		L.RegFunction("Reset", Reset);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -20,12 +21,13 @@ public class HttpWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 4);
+			ToLua.CheckArgsCount(L, 5);
 			Http obj = (Http)ToLua.CheckObject<Http>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
-			System.Action<bool,string> arg2 = (System.Action<bool,string>)ToLua.CheckDelegate<System.Action<bool,string>>(L, 4);
-			obj.RequestText(arg0, arg1, arg2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
+			System.Action<bool,string> arg3 = (System.Action<bool,string>)ToLua.CheckDelegate<System.Action<bool,string>>(L, 5);
+			obj.RequestText(arg0, arg1, arg2, arg3);
 			return 0;
 		}
 		catch (Exception e)
@@ -39,12 +41,29 @@ public class HttpWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 4);
+			ToLua.CheckArgsCount(L, 5);
 			Http obj = (Http)ToLua.CheckObject<Http>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
-			System.Action<bool,byte[]> arg2 = (System.Action<bool,byte[]>)ToLua.CheckDelegate<System.Action<bool,byte[]>>(L, 4);
-			obj.RequestBytes(arg0, arg1, arg2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
+			System.Action<bool,byte[]> arg3 = (System.Action<bool,byte[]>)ToLua.CheckDelegate<System.Action<bool,byte[]>>(L, 5);
+			obj.RequestBytes(arg0, arg1, arg2, arg3);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Reset(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Http obj = (Http)ToLua.CheckObject<Http>(L, 1);
+			obj.Reset();
 			return 0;
 		}
 		catch (Exception e)

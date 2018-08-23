@@ -4,6 +4,8 @@
 
 networkManager = require("network.networkManager")
 
+local soundConfig = require("config.soundConfig")
+
 local clientApp = class("clientApp")
 
 ----------------------------------------------------------------
@@ -22,6 +24,7 @@ function clientApp:start()
     local ui = require("ui.login").new()
     ui:show()
 
+    soundManager.setBGMVolume(soundConfig.defaultBgmVolume)
     soundManager.playBGM()
 end
 

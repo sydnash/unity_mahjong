@@ -182,6 +182,11 @@ namespace LuaInterface
 
             if (!LuaFileUtils.Instance.beZip)
             {
+#if DEBUG_WITH_EXTRA_FILES
+                string curDir = System.IO.Directory.GetCurrentDirectory();
+                AddSearchPath(Path.Combine(curDir, "Lua"));
+#endif
+
 #if UNITY_EDITOR
                 if (!Directory.Exists(LuaConst.luaDir))
                 {
@@ -199,6 +204,7 @@ namespace LuaInterface
                 AddSearchPath(LuaConst.luaDir);
                 AddSearchPath(LuaConst.clientLuaDir);
 #endif
+
                 if (LuaFileUtils.Instance.GetType() == typeof(LuaFileUtils))
                 {
                     AddSearchPath(LuaConst.luaResDir);

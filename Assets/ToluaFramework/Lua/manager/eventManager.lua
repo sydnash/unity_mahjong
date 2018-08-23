@@ -4,14 +4,27 @@
 
 local eventManager = {}
 
-local EventSystem = UnityEngine.EventSystems.EventSystem
+local AnimationEventManager = AnimationEventManager
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function eventManager.setup()
-    eventSystem = GameObject.FindObjectOfType(typeof(EventSystem))
-    assert(eventSystem ~= nil, "can't find ui eventSystem")
+
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function eventManager.registerAnimationTrigger(key, callback)
+    AnimationEventManager.instance:RegisterTrigger(key, callback)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function eventManager.unregisterAnimationTrigger(key)
+    AnimationEventManager.instance:UnregisterTrigger(key)
 end
 
 return eventManager

@@ -109,10 +109,7 @@ public class AssetPool
             return true;
         }
 
-#if UNITY_EDITOR
-        Debug.LogWarningFormat("[{0}] 不是从 assetpool 加载的！", name);
-#endif
-
+        Logger.LogWarning(string.Format("[{0}] didn't load from assetpool！", name));
         return false;
     }
 
@@ -190,12 +187,10 @@ public class AssetPool
                 asset.name = asset.name.Replace("(Clone)", "");
             }
         }
-#if UNITY_EDITOR
         else
         {
-            Debug.LogErrorFormat("加载资源 [{0}] 失败", assetName);
+            Logger.LogError(string.Format("load asset [{0}] failed", assetName));
         }
-#endif
 
         return asset;
     }

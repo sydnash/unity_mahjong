@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114976187728827518}
   - component: {fileID: 114451337740026280}
   m_Layer: 5
-  m_Name: CreateRoom
+  m_Name: CreateDesk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 114064177531652934}
   - component: {fileID: 114263378189815382}
   m_Layer: 5
-  m_Name: EnterRoom
+  m_Name: EnterDesk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -473,11 +473,11 @@ MonoBehaviour:
     widgetType: 2
     gameObject: {fileID: 1154082198680918}
     panelScript: 
-  - variableName: mEnterRoom
+  - variableName: mEnterDesk
     widgetType: 5
     gameObject: {fileID: 1894505757686234}
     panelScript: 
-  - variableName: mCreateRoom
+  - variableName: mCreateDesk
     widgetType: 5
     gameObject: {fileID: 1097390610550512}
     panelScript: 

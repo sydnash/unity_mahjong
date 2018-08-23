@@ -12,9 +12,9 @@ public static class LuaBinder
 		LuaInterface_DebuggerWrap.Register(L);
 		LuaProfilerWrap.Register(L);
 		UIManagerWrap.Register(L);
+		ModelManagerWrap.Register(L);
 		AudioManagerWrap.Register(L);
 		SceneLoaderWrap.Register(L);
-		PatchManagerWrap.Register(L);
 		LuaPanelWrap.Register(L);
 		StingyScrollRectWrap.Register(L);
 		PageViewWrap.Register(L);
@@ -24,6 +24,9 @@ public static class LuaBinder
 		AESWrap.Register(L);
 		Base64Wrap.Register(L);
 		ByteUtilsWrap.Register(L);
+		AnimationEventManagerWrap.Register(L);
+		GameObjectPickerWrap.Register(L);
+		LoggerWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);
 		LuaInterface_InjectTypeWrap.Register(L);

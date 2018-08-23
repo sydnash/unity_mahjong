@@ -40,7 +40,7 @@ public class LuaResLoader : LuaFileUtils
     #if !SIMULATE_RUNTIME_ENVIRONMENT
         byte[] buffer = base.ReadFile(fileName);
         Debug.Assert(buffer != null);
-    #else
+    #else 
         byte[] buffer = ReadResourceFile(fileName);
 
         if (buffer == null)
@@ -50,10 +50,20 @@ public class LuaResLoader : LuaFileUtils
 
         Debug.Assert(buffer != null);
         buffer = MD5.Decrypt(buffer);        
-    #endif
+    #endif //SIMULATE_RUNTIME_ENVIRONMENT
 #else
+    #if DEBUG_WITH_EXTRA_FILES
+        byte[] buffer = base.ReadFile(fileName);
+        if (buffer != null)
+        {
+            return buffer;
+        }
+     
+        buffer = ReadDownLoadFile(fileName);
+    #else
         byte[] buffer = ReadDownLoadFile(fileName);
-
+    #endif //DEBUG_WITH_EXTRA_CONFIGS
+        
         if (buffer == null)
         {
             buffer = ReadResourceFile(fileName);

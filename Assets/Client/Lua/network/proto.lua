@@ -2,6 +2,8 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local networkConfig = require("config.networkConfig")
+
 local proto = class("proto")
 proto.length = 0
 
@@ -25,11 +27,18 @@ function proto.build(command, token, acid, session, payload)
     }
 
     local encrypt = table.tojson(p)
-    encrypt = aes.Encrypt(encrypt .. md5.GetHash(encrypt))
-    encrypt = b64.Encrypt(encrypt, 0, encrypt.Length)
-    local length = cvt.Int32ToBytes(encrypt.Length + INT_BYTES_COUNT)
+    encrypt = encrypt .. md5.GetHash(encrypt)
 
-    return cvt.ConcatBytes(length, length.Length, encrypt, encrypt.Length)
+    if networkConfig.encrypt then
+        encrypt = aes.Encrypt(encrypt)
+        encrypt = b64.Encrypt(encrypt, 0, encrypt.Length)
+        local length = cvt.Int32ToBytes(encrypt.Length + INT_BYTES_COUNT)
+
+        return cvt.ConcatBytes(length, length.Length, encrypt, encrypt.Length)
+    end
+
+    local length = cvt.Int32ToBytes(string.len(encrypt) + INT_BYTES_COUNT)
+    return cvt.ConcatBytes(length, length.Length, cvt.StringToBytes(encrypt), string.len(encrypt))
 end
 
 -------------------------------------------------------------------
@@ -40,8 +49,14 @@ function proto.parse(bytes)
         local length = cvt.BytesToInt32(bytes, 0)
     
         if length <= bytes.Length then
-            local decrypt = b64.Decrypt(bytes, INT_BYTES_COUNT, length - INT_BYTES_COUNT)
-            decrypt = aes.Decrypt(decrypt)
+            local decrypt = nil
+
+            if networkConfig.encrypt then
+                decrypt = b64.Decrypt(bytes, INT_BYTES_COUNT, length - INT_BYTES_COUNT)
+                decrypt = aes.Decrypt(decrypt)
+            else
+                decrypt = cvt.BytesToString(bytes, INT_BYTES_COUNT, length - INT_BYTES_COUNT)
+            end
 
             local size = string.len(decrypt) - CHECKSUM_LENGTH
             local data = string.sub(decrypt, 1, size)

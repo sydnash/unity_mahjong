@@ -66,9 +66,11 @@ public class ByteUtilsWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
+			ToLua.CheckArgsCount(L, 3);
 			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
-			string o = ByteUtils.BytesToString(arg0);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
+			string o = ByteUtils.BytesToString(arg0, arg1, arg2);
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}

@@ -30,6 +30,13 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function object:getInstanceID()
+    return self.gameObject:GetInstanceID()
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function object:setParent(parent)
     self.transform:SetParent(parent.transform, false)
 end
@@ -203,7 +210,7 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function object:setLocalScael(scale)
+function object:setLocalScale(scale)
     self.transform.localScale = scale
 end
 

@@ -170,12 +170,10 @@ public class SceneLoader : MonoBehaviour
 
             bundle.Unload(false);
         }
-#if UNITY_EDITOR
         else
         {
-            Debug.LogErrorFormat("can't load the scene: {0}", sceneName);
+            Logger.LogError(string.Format("can't load the scene: {0}", sceneName));
         }
-#endif
 
         while (Time.realtimeSinceStartup - time < 1.0f) ;
         yield return WAIT_FOR_END_OF_FRAME;

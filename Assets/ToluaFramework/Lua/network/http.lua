@@ -7,15 +7,15 @@ local http = class("http")
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function http.getText(url, callback)
-    Http.instance:RequestText(url, "GET", callback)
+function http.getText(url, timeout, callback)
+    Http.instance:RequestText(url, "GET", timeout, callback)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function http.getBytes(url, callback)
-    Http.instance:RequestBytes(url, "GET", callback)
+function http.getBytes(url, timeout, callback)
+    Http.instance:RequestBytes(url, "GET", timeout, callback)
 end
 
 return http

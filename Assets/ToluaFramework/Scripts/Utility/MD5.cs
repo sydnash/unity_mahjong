@@ -61,7 +61,7 @@ public static class MD5
         }
         catch (Exception ex)
         {
-            Debug.LogError(ex.Message);
+            Logger.LogError(ex.Message);
         }
 
         return null;
@@ -98,7 +98,7 @@ public static class MD5
         }
         catch (Exception ex)
         {
-            Debug.LogError(ex.Message);
+            Logger.LogError(ex.Message);
         }
 
         return null;
@@ -129,7 +129,7 @@ public static class MD5
         }
         catch (Exception ex)
         {
-            Debug.LogError(ex.Message);
+            Logger.LogError(ex.Message);
         }
 
         return null;

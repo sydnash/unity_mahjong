@@ -1,0 +1,14 @@
+ManifestFileVersion: 0
+CRC: 1054304827
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 89294f0e317b1275844d0870a12412bc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+Assets:
+- Assets/Client/Scene/mahjongscene.unity
+Dependencies: []

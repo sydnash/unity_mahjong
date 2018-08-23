@@ -96,12 +96,6 @@ public class PageView : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             mScrollRect.horizontalNormalizedPosition = mPosList[index];
             SetPageIndex(index);
         }
-#if UNITY_EDITOR
-        else
-        {
-            Debug.LogWarning("页码不存在");
-        }
-#endif
     }
 
     /// <summary>

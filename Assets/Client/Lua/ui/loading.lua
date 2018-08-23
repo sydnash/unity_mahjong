@@ -9,7 +9,7 @@ loading.folder = "LoadingUI"
 loading.resource = "LoadingUI"
 
 function loading:onInit()
-
+    self:setProgress(0)
 end
 
 function loading:setProgress(value)
