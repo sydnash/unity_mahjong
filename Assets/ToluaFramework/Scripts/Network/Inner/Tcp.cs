@@ -41,12 +41,12 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private byte[] mReceivedBuffer = new byte[RECEIVED_BUFFER_SIZE];
+    private byte[] mReceivedBuffer = new byte[BUFFER_SIZE];
 
     /// <summary>
     /// 
     /// </summary>
-    private const int RECEIVED_BUFFER_SIZE = 4 * 1024;
+    private const int BUFFER_SIZE = 4 * 1024 * 1024;
 
     #endregion
 
@@ -84,6 +84,8 @@ public class Tcp : MonoBehaviour
 
             mSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             mSocket.Blocking = false;
+            mSocket.SendBufferSize = BUFFER_SIZE;
+            mSocket.ReceiveBufferSize = BUFFER_SIZE;
             mSocket.Connect(host, port);
         }
         catch (Exception ex)
@@ -102,7 +104,7 @@ public class Tcp : MonoBehaviour
         {
             if (mSocket != null)
             {
-                mSocket.Disconnect(false);
+                mSocket.Close();
             }
         }
         catch (Exception ex)
@@ -198,15 +200,16 @@ public class Tcp : MonoBehaviour
                             callback();
                         }
                         
-                        return;
+                        break;
                     }
                 }
             }
 
             //收取数据
+            if (mSocket.Available > 0)
             {
                 SocketError err = SocketError.Success;
-                int receivedSize = mSocket.Receive(mReceivedBuffer, 0, RECEIVED_BUFFER_SIZE, SocketFlags.None, out err);
+                int receivedSize = mSocket.Receive(mReceivedBuffer, 0, BUFFER_SIZE, SocketFlags.None, out err);
 
                 if (err != SocketError.Success)
                 {

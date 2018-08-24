@@ -10,8 +10,8 @@ networkCallbackPool.pool = {}
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkCallbackPool:push(token, callback)
-    self.pool[token] = callback
+function networkCallbackPool:push(token, callback, neverRemove)
+    self.pool[token] = { c = callback, n = neverRemove }
     return token
 end
 
@@ -19,10 +19,19 @@ end
 --
 -------------------------------------------------------------------
 function networkCallbackPool:pop(token)
-    local callback = self.pool[token]
-    self.pool[token] = nil
+    local slot = self.pool[token]
 
-    return callback
+    if slot then
+        local callback = slot.c
+
+        if not slot.n then
+            self.pool[token] = nil
+        end
+
+        return callback
+    end
+
+    return nil
 end
 
 
@@ -44,7 +53,6 @@ local tcp           = require("network.tcp")
 local proto         = require("network.proto")
 local networkConfig = require("config.networkConfig")
 local deviceConfig  = require("config.deviceConfig")
-local gamepref      = require("logic.gamepref")
 local cvt           = ByteUtils
 
 local networkManager = class("networkManager")
@@ -80,7 +88,7 @@ local function receive(bytes, size)
     if bytes == nil and size < 0 then
         return
     end
-
+    
     --缓存收到的数据
     if networkManager.recvbuffer == nil then
         networkManager.recvbuffer = cvt.NewByteArray(bytes, 0, size)
@@ -89,21 +97,22 @@ local function receive(bytes, size)
     end
 
     --解析数据
-    local msg, length = proto.parse(networkManager.recvbuffer)
+    while networkManager.recvbuffer ~= nil do
+        local msg, length = proto.parse(networkManager.recvbuffer)
+        if length == 0 or msg == nil then 
+            break 
+        end
 
-    if length > 0 then
         --剔除已解析过的数据
         networkManager.recvbuffer = cvt.TrimBytes(networkManager.recvbuffer, length)
+        --触发回调
+        local callback = networkCallbackPool:pop(msg.RequestId)
+        if callback == nil then
+            callback = networkCallbackPool:pop(msg.Command)
+        end
 
-        if msg ~= nil then
-            local callback = networkCallbackPool:pop(msg.RequestId)
-            if callback == nil then
-                callback = networkCallbackPool:pop(msg.Command)
-            end
-
-            if callback ~= nil then
-                callback(table.fromjson(msg.Payload))
-            end
+        if callback ~= nil then
+            callback(table.fromjson(msg.Payload))
         end
     end
 end
@@ -127,8 +136,8 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.registerCommandHandler(command, callback)
-    networkCallbackPool:push(command, callback)
+function networkManager.registerCommandHandler(command, callback, neverRemove)
+    networkCallbackPool:push(command, callback, neverRemove)
 end
 
 -------------------------------------------------------------------
@@ -172,8 +181,15 @@ function networkManager.login(callback)
                             log("login msg = " .. table.tostring(msg))
 
                             gamepref.session = msg.Session
-                            app.gamePlayer.acId = msg.AcId
-                            app.gamePlayer.nickname = msg.Nickname
+                            gamepref.acId = msg.AcId
+                            gamepref.nickname = msg.Nickname
+                            gamepref.ip = msg.Ip
+                            gamepref.sex = msg.Sex
+                            gamepref.laolai = msg.IsLaoLai
+                            gamepref.coin = msg.Coin
+                            gamepref.desk = { cityType = msg.DeskInfo.GameType,
+                                              deskId = msg.DeskInfo.DeskId,
+                            }
 
                             callback(true, msg)
                         end

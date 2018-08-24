@@ -59,6 +59,8 @@
     <Compile Include="Lua\network\http.lua" />
     <Compile Include="Lua\network\tcp.lua" />
     <Compile Include="Lua\std.lua" />
+    <Compile Include="Lua\tween\tweenDelay.lua" />
+    <Compile Include="Lua\tween\tweenFunction.lua" />
     <Compile Include="Lua\tween\tweenParallel.lua" />
     <Compile Include="Lua\tween\tweenPosition.lua" />
     <Compile Include="Lua\tween\tweenRotation.lua" />

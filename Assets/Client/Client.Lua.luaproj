@@ -54,10 +54,5 @@
     <Compile Include="Lua\ui\login.lua" />
     <Compile Include="Lua\ui\waiting.lua" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Lua\logic\mahjong\mahjong.lua.meta" />
-    <Content Include="Lua\logic\mahjong\mahjongDesk.lua.meta" />
-    <Content Include="Lua\logic\mahjong\mahjongType.lua.meta" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

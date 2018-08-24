@@ -18,8 +18,7 @@ function main()
     eventManager.setup()
     sceneManager.setup()
 
-    -- global entry: app
-    app = require("clientApp").new()
+    local app = require("clientApp").new()
     app:start()
 end
 

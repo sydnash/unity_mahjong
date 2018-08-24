@@ -17,17 +17,18 @@ end
 --
 -------------------------------------------------------------------
 function table.tojson(tb)
-    return json.encode(tb, false)
+    return json.encode(tb)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function table.fromjson(js)
-    local tb, err = json.decode(js)
-    assert(err == nil, err)
-
-    return tb
+    if string.isNilOrEmpty(js) then
+        return nil 
+    else
+        return json.decode(js)
+    end
 end
 
 -------------------------------------------------------------------

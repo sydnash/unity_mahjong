@@ -4,8 +4,8 @@
 
 local gamePlayer = class("gamePlayer")
 
-function gamePlayer:ctor()
-    self.acId = 0
+function gamePlayer:ctor(acid)
+    self.acId = acid
     self.nickname = string.empty
 end
 

@@ -11,8 +11,8 @@ lobby.folder = "LobbyUI"
 lobby.resource = "LobbyUI"
 
 function lobby:onInit()
-    self.mNickname:setText(app.gamePlayer.nickname)
-    self.mID:setText(app.gamePlayer.acId)
+    self.mNickname:setText(gamepref.nickname)
+    self.mID:setText(gamepref.acId)
 
     self.mEnterDesk:addClickListener(self.onEnterDeskClickedHandler, self)
     self.mCreateDesk:addClickListener(self.onCreateDeskClickedHandler, self)
@@ -74,7 +74,10 @@ function lobby:enterDesk(loading, cityType, deskId)
                 loading:setProgress(progress)
 
                 if completed then
-                    require("logic.mahjong.mahjongDesk").new(4, 108)
+                    msg.Reenter = table.fromjson(msg.Reenter)
+                    msg.Config = table.fromjson(msg.Config)
+
+                    local desk = require("logic.mahjong.mahjongDesk").new(msg)
                     loading:close()
                 end
             end)
