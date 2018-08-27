@@ -14,7 +14,7 @@ function login:onInit()
 end
 
 function login:onGuestLoginClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
 
     local waiting = require("ui.waiting").new()
     waiting:show()

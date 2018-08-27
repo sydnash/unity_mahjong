@@ -19,7 +19,7 @@ function lobby:onInit()
 end
 
 function lobby:onEnterDeskClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
 
     local ui = require("ui.enterDesk").new(function(deskId)
         local cityType = cityType.xxxxx
@@ -33,7 +33,7 @@ function lobby:onEnterDeskClickedHandler()
 end
 
 function lobby:onCreateDeskClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     
     local loading = require("ui.loading").new()
     loading:show()
@@ -77,7 +77,7 @@ function lobby:enterDesk(loading, cityType, deskId)
                     msg.Reenter = table.fromjson(msg.Reenter)
                     msg.Config = table.fromjson(msg.Config)
 
-                    local desk = require("logic.mahjong.mahjongDesk").new(msg)
+                    local desk = require("logic.mahjong.mahjongGame").new(msg)
                     loading:close()
                 end
             end)

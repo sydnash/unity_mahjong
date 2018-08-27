@@ -9,6 +9,7 @@ return {
         checkDesk       = "CmdType.fly.CS.CheckDesk",
         enterGSDesk     = "CmdType.fly.CS.EnterGSDesk",
         ready           = "CmdType.fly.CS.Ready",
+        opChoose        = "CmdType.fly.CS.MJOPChose",
     },
 
     sc = {
@@ -20,6 +21,9 @@ return {
         otherEnterDesk  = "CmdType.fly.SC.OtherEnterDesk",
         start           = "CmdType.fly.SC.MJStart",
         fapai           = "CmdType.fly.SC.MJFaPai",
+        oplist          = "CmdType.fly.SC.MJOPList",
+        opDo            = "CmdType.fly.SC.MJOPDo",
+        mopai           = "CmdType.fly.SC.MJMoPai",
     },
 }
 

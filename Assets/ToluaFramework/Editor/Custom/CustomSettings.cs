@@ -170,6 +170,7 @@ public static class CustomSettings
         _GT(typeof(InputField)),
         _GT(typeof(InputField.OnChangeEvent)),
         _GT(typeof(ScrollRect)),
+        _GT(typeof(HorizontalLayoutGroup)),
 
         //Custom Classes
         _GT(typeof(UIManager)),

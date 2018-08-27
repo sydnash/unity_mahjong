@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 944941245
+CRC: 3421135442
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -207,4 +207,13 @@ AssetBundleManifest:
       Dependencies: {}
     Info_53:
       Name: ui/enterdeskui/enterdeskui
+      Dependencies: {}
+    Info_54:
+      Name: ui/deskui/deskui
+      Dependencies: {}
+    Info_55:
+      Name: ui/deskoperationui/deskoperationui
+      Dependencies: {}
+    Info_56:
+      Name: ui/messageboxui/messagebox
       Dependencies: {}

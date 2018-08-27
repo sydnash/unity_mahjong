@@ -2,6 +2,8 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local opType = require("const.opType")
+
 local networkCallbackPool = class("networkCallbackPool")
 local token = 100
 
@@ -180,16 +182,14 @@ function networkManager.login(callback)
                         else
                             log("login msg = " .. table.tostring(msg))
 
-                            gamepref.session = msg.Session
-                            gamepref.acId = msg.AcId
-                            gamepref.nickname = msg.Nickname
-                            gamepref.ip = msg.Ip
-                            gamepref.sex = msg.Sex
-                            gamepref.laolai = msg.IsLaoLai
-                            gamepref.coin = msg.Coin
-                            gamepref.desk = { cityType = msg.DeskInfo.GameType,
-                                              deskId = msg.DeskInfo.DeskId,
-                            }
+                            gamepref.session    = msg.Session
+                            gamepref.acId       = msg.AcId
+                            gamepref.nickname   = msg.Nickname
+                            gamepref.ip         = msg.Ip
+                            gamepref.sex        = msg.Sex
+                            gamepref.laolai     = msg.IsLaoLai
+                            gamepref.coin       = msg.Coin
+                            gamepref.desk       = { cityType = msg.DeskInfo.GameType, deskId = msg.DeskInfo.DeskId, }
 
                             callback(true, msg)
                         end
@@ -258,9 +258,69 @@ function networkManager.ready(ready, callback)
         if msg == nil then
             callback(false, nil)
         else
-            log("ready msg = " .. table.tostring(msg))
             callback(true, msg)
         end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.chuPai(cards, callback)
+    local data = { Op = opType.chu, Chose = { Cs = cards } }
+    send(protoType.cs.opChoose, data, function(msg)
+        callback(false, nil)
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.chiPai(cards, callback)
+    local data = { Op = opType.chi, Chose = { Cs = cards } }
+    send(protoType.cs.opChoose, data, function(msg)
+        callback(false, nil)
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.pengPai(cards, callback)
+    log("networkManager.pengPai, cards = " ..  table.tostring(cards))
+    local data = { Op = opType.peng, Chose = { Cs = cards } }
+    send(protoType.cs.opChoose, data, function(msg)
+        callback(false, nil)
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.gangPai(cards, callback)
+    local data = { Op = opType.gang, Chose = { Cs = cards } }
+    send(protoType.cs.opChoose, data, function(msg)
+        callback(false, nil)
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.huPai(cards, callback)
+    local data = { Op = opType.hu, Chose = { Cs = cards } }
+    send(protoType.cs.opChoose, data, function(msg)
+        callback(false, nil)
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.guoPai(callback)
+    local data = { Op = opType.guo }
+    send(protoType.cs.opChoose, data, function(msg)
+        callback(false, nil)
     end)
 end
 

@@ -1,0 +1,196 @@
+fileFormatVersion: 2
+guid: 924763139119e2342bf2c28fa8848fcc
+timeCreated: 1535255735
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: game_font_bao
+    21300002: game_font_chi
+    21300004: game_font_gang
+    21300006: game_font_guo
+    21300008: game_font_hu
+    21300010: game_font_peng
+    21300012: game_butn_queding
+    21300014: game_butn_quxiao
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: game_butn_queding
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 386
+        width: 122
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: game_butn_quxiao
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 259
+        width: 122
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: game_font_bao
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 81
+        width: 82
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: game_font_chi
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 170
+        width: 83
+        height: 87
+      alignment: 9
+      pivot: {x: 0.5180723, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: game_font_gang
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 426
+        width: 78
+        height: 85
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5117647}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: game_font_guo
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 172
+        width: 82
+        height: 85
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5117647}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: game_font_hu
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 81
+        width: 82
+        height: 87
+      alignment: 9
+      pivot: {x: 0.5243902, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: game_font_peng
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 85
+        width: 82
+        height: 85
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5117647}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

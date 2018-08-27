@@ -49,13 +49,6 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function soundManager.playButtonClickedSound()
-    AudioManager.instance:PlayUI("click")
-end
-
--------------------------------------------------------------------
---
--------------------------------------------------------------------
 function soundManager.playUISound(soundName)
     AudioManager.instance:PlayUI(soundName)
 end

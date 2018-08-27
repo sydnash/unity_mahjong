@@ -4,6 +4,8 @@
 
 local json = require("utils.json")
 
+table.empty = {}
+
 function table.removeItem(t, o)
     for k, v in pairs(t) do
         if v == o then

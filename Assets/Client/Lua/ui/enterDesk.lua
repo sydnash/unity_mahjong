@@ -40,57 +40,57 @@ function enterDesk:onInit()
 end
 
 function enterDesk:onCloseClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:close()
 end
 
 function enterDesk:onNum0ClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:onNumberClickedHandler(0)
 end
 
 function enterDesk:onNum1ClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:onNumberClickedHandler(1)
 end
 
 function enterDesk:onNum2ClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:onNumberClickedHandler(2)
 end
 
 function enterDesk:onNum3ClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:onNumberClickedHandler(3)
 end
 
 function enterDesk:onNum4ClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:onNumberClickedHandler(4)
 end
 
 function enterDesk:onNum5ClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:onNumberClickedHandler(5)
 end
 
 function enterDesk:onNum6ClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:onNumberClickedHandler(6)
 end
 
 function enterDesk:onNum7ClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:onNumberClickedHandler(7)
 end
 
 function enterDesk:onNum8ClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:onNumberClickedHandler(8)
 end
 
 function enterDesk:onNum9ClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:onNumberClickedHandler(9)
 end
 
@@ -108,7 +108,7 @@ function enterDesk:onNumberClickedHandler(num)
 end
 
 function enterDesk:onDeleteClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
 
     local length = #self.numbers
     self.mDisplayerSlots[length]:setText("")
@@ -117,7 +117,7 @@ function enterDesk:onDeleteClickedHandler()
 end
 
 function enterDesk:onResetClickedHandler()
-    soundManager.playButtonClickedSound()
+    playButtonClickSound()
     self:reset()
 end
 
