@@ -287,7 +287,6 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.pengPai(cards, callback)
-    log("networkManager.pengPai, cards = " ..  table.tostring(cards))
     local data = { Op = opType.peng, Chose = { Cs = cards } }
     send(protoType.cs.opChoose, data, function(msg)
         callback(false, nil)

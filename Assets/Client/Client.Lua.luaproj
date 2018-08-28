@@ -39,6 +39,7 @@
     <Compile Include="Lua\const\cityType.lua" />
     <Compile Include="Lua\const\opType.lua" />
     <Compile Include="Lua\const\retcText.lua" />
+    <Compile Include="Lua\const\sexType.lua" />
     <Compile Include="Lua\globals.lua" />
     <Compile Include="Lua\logic\gamepref.lua" />
     <Compile Include="Lua\logic\mahjong\mahjong.lua" />

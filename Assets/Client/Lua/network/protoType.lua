@@ -24,6 +24,7 @@ return {
         oplist          = "CmdType.fly.SC.MJOPList",
         opDo            = "CmdType.fly.SC.MJOPDo",
         mopai           = "CmdType.fly.SC.MJMoPai",
+        clear           = "CmdType.fly.SC.DSSClear",
     },
 }
 

@@ -28,7 +28,7 @@ function clientApp:start()
     ui:show()
 
     soundManager.setBGMVolume(soundConfig.defaultBgmVolume)
-    soundManager.playBGM()
+    soundManager.playBGM(string.empty, "bgm")
 end
 
 return clientApp

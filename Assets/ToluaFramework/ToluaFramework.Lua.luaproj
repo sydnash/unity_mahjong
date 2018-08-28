@@ -54,6 +54,7 @@
     <Compile Include="Lua\manager\patchManager.lua" />
     <Compile Include="Lua\manager\sceneManager.lua" />
     <Compile Include="Lua\manager\soundManager.lua" />
+    <Compile Include="Lua\manager\textureManager.lua" />
     <Compile Include="Lua\manager\tweenManager.lua" />
     <Compile Include="Lua\manager\viewManager.lua" />
     <Compile Include="Lua\network\http.lua" />

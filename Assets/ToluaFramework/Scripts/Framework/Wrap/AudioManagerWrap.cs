@@ -49,10 +49,11 @@ public class AudioManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
+			ToLua.CheckArgsCount(L, 3);
 			AudioManager obj = (AudioManager)ToLua.CheckObject<AudioManager>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.PlayBGM(arg0);
+			string arg1 = ToLua.CheckString(L, 3);
+			obj.PlayBGM(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)
@@ -82,10 +83,11 @@ public class AudioManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
+			ToLua.CheckArgsCount(L, 3);
 			AudioManager obj = (AudioManager)ToLua.CheckObject<AudioManager>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.PlayUI(arg0);
+			string arg1 = ToLua.CheckString(L, 3);
+			obj.PlayUI(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)
@@ -115,10 +117,11 @@ public class AudioManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
+			ToLua.CheckArgsCount(L, 3);
 			AudioManager obj = (AudioManager)ToLua.CheckObject<AudioManager>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.PlayGfx(arg0);
+			string arg1 = ToLua.CheckString(L, 3);
+			obj.PlayGfx(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)
@@ -148,10 +151,11 @@ public class AudioManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
+			ToLua.CheckArgsCount(L, 3);
 			AudioManager obj = (AudioManager)ToLua.CheckObject<AudioManager>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.PlayVoice(arg0);
+			string arg1 = ToLua.CheckString(L, 3);
+			obj.PlayVoice(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)

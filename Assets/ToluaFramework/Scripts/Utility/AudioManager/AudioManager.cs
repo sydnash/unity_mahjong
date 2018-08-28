@@ -69,9 +69,9 @@ public class AudioManager
     /// 
     /// </summary>
     /// <param name="audioName"></param>
-    public void PlayBGM(string audioName)
+    public void PlayBGM(string audioPath, string audioName)
     {
-        mBGMChannel.Play(audioName, Audio.PlayMode.Loop);
+        mBGMChannel.Play(audioPath, audioName, Audio.PlayMode.Loop);
     }
 
     /// <summary>
@@ -86,9 +86,9 @@ public class AudioManager
     /// 
     /// </summary>
     /// <param name="audioName"></param>
-    public void PlayUI(string audioName)
+    public void PlayUI(string audioPath, string audioName)
     {
-        mUIChannel.Play(audioName, Audio.PlayMode.Once);
+        mUIChannel.Play(audioPath, audioName, Audio.PlayMode.Once);
     }
 
     /// <summary>
@@ -103,9 +103,9 @@ public class AudioManager
     /// 
     /// </summary>
     /// <param name="audioName"></param>
-    public void PlayGfx(string audioName)
+    public void PlayGfx(string audioPath, string audioName)
     {
-        mGfxChannel.Play(audioName, Audio.PlayMode.Once);
+        mGfxChannel.Play(audioPath, audioName, Audio.PlayMode.Once);
     }
 
     /// <summary>
@@ -120,9 +120,9 @@ public class AudioManager
     /// 
     /// </summary>
     /// <param name="audioName"></param>
-    public void PlayVoice(string audioName)
+    public void PlayVoice(string audioPath, string audioName)
     {
-        mVoiceChannel.Play(audioName, Audio.PlayMode.Once);
+        mVoiceChannel.Play(audioPath, audioName, Audio.PlayMode.Once);
     }
 
     /// <summary>

@@ -2,12 +2,12 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local gamePlayer    = require("logic.player.gamePlayer")
-local opType        = require("const.opType")
+local gamePlayer  = require("logic.player.gamePlayer")
+local opType      = require("const.opType")
 
 local mahjongGame = class("mahjongGame")
 
-mahjongGame.siteType = {
+mahjongGame.seatType = {
     mine  = 0,
     right = 1,
     top   = 2,
@@ -32,13 +32,35 @@ function mahjongGame:ctor(data)
     self.players = {}
     self:registerCommandHandlers()
 
+    self:onEnter(data)
+
     self.deskUI = require("ui.desk").new(self)
     self.deskUI:show()
     
     self.operationUI = require("ui.deskOperation").new(self)
     self.operationUI:show()
+    
+    if data.Reenter ~= nil then
+        local count = 0
+        local ready = true
+    
+        for _, v in pairs(self.players) do 
+            count = count + 1
+            ready = ready and v.ready
+        end
 
-    self:onEnter(data)
+        if ready and (count == self.config.RenShu) then
+            self.deskUI:onGameStart()
+            self.operationUI:onGameSync(data.Reenter)
+        else
+            for _, v in pairs(self.players) do
+                self.deskUI:setReady(v.acId, v.ready)
+            end
+        end
+    else
+        local player = self:getPlayerByAcId(gamepref.acId)
+        self.deskUI:setReady(player.acId, player.ready)
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -72,6 +94,10 @@ function mahjongGame:registerCommandHandlers()
     networkManager.registerCommandHandler(protoType.sc.opDo, function(msg)
         self:onOpDoHandler(msg)
     end, true)
+
+    networkManager.registerCommandHandler(protoType.sc.clear, function(msg)
+        self:onClearHandler(msg)
+    end, true)
 end
 
 -------------------------------------------------------------------------------
@@ -94,27 +120,9 @@ function mahjongGame:onEnter(msg)
 
     if msg.Reenter ~= nil then
         self.markerTurn = msg.Reenter.MarkerTurn
-        self:onOpList(msg.Reenter.CurOpList)
+        self.curOpTurn = msg.Reenter.CurOpTurn
+        self.curOpType = msg.Reenter.CurOpType
         self:syncSeats(msg.Reenter.SyncSeatInfos)
-
-        local count = 0
-        local ready = true
-    
-        for _, v in pairs(self.players) do 
-            count = count + 1
-            ready = ready and v.ready
-        end
-
-        if ready and (count == self.config.RenShu) then
-            self.deskUI:onGameStart()
-            self.operationUI:onGameSync()
-        else
-            for _, v in pairs(self.players) do
-                self.deskUI:setReady(v.acId, v.ready)
-            end
-        end
-    else
-        self.deskUI:setReady(player.acId, player.ready)
     end
 end
 
@@ -138,17 +146,16 @@ function mahjongGame:syncOthers(others)
     for _, v in pairs(others) do
         local player = gamePlayer.new(v.AcId)
 
-        player.nickname     = v.Nickname
-        player.ip           = v.Ip
-        player.sex          = v.Sex
-        player.laolai       = v.IsLaoLai
-        player.connected    = v.IsConnected
-        player.ready        = v.Ready
-        player.turn         = v.Turn
-        player.score        = v.Score
+        player.nickname  = v.Nickname
+        player.ip        = v.Ip
+        player.sex       = v.Sex
+        player.laolai    = v.IsLaoLai
+        player.connected = v.IsConnected
+        player.ready     = v.Ready
+        player.turn      = v.Turn
+        player.score     = v.Score
 
         self.players[player.acId] = player
-        self.deskUI:setReady(player.acId, player.ready)
     end
 end
 
@@ -244,7 +251,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onOpListHandler(msg)
     log("oplist, msg = " .. table.tostring(msg))
-    self:onOpList(msg)
+    self.operationUI:onOpList(msg)
 end
 
 -------------------------------------------------------------------------------
@@ -255,21 +262,23 @@ function mahjongGame:onOpDoHandler(msg)
 
     for _, v in pairs(msg.Do) do
         local optype = v.Op
-        local acId = v.AcId
-        local cards = v.Do.Cs
+        local acId   = v.AcId
+        local cards  = v.Do.Cs
+        local beAcId = v.BeAcId
+        local beCard = v.Card
 
         if optype == opType.chu then
             self:onOpDoChu(acId, cards)
         elseif optype == opType.chi then
-            self:onOpDoChi(acId, cards)
+            self:onOpDoChi(acId, cards, beAcId, beCard)
         elseif optype == opType.peng then
-            self:onOpDoPeng(acId, cards)
+            self:onOpDoPeng(acId, cards, beAcId, beCard)
         elseif optype == opType.gang then
-            self:onOpDoGang(acId, cards)
+            self:onOpDoGang(acId, cards, beAcId, beCard)
         elseif optype == opType.hu then
-            self:onOpDoHu(msg)
+            self:onOpDoHu(acId, cards, beAcId, beCard)
         elseif optype == opType.guo then
-            self:onOpDoGuo(acId, cards)
+            self:onOpDoGuo(acId)
         else
             log("unknown optype: " .. tostring(optype))
         end
@@ -277,22 +286,10 @@ function mahjongGame:onOpDoHandler(msg)
 end
 
 -------------------------------------------------------------------------------
--- 操作
+-- 取消所有操作
 -------------------------------------------------------------------------------
-function mahjongGame:onOpList(oplist)
-    log("oplist = " .. table.tostring(oplist))
-    if oplist ~= nil then
-        local infos = oplist.OpInfos
-        local leftTime = oplist.L
-
-        for _, v in pairs(infos) do
-            if v.Op == opType.chu then
-                self.operationUI:beginChuPai()
-            end
-        end
-
-        self.operationUI:showOperations(infos, leftTime)
-    end
+function mahjongGame:onClearHandler(msg)
+    self.operationUI:onClear()
 end
 
 -------------------------------------------------------------------------------
@@ -360,36 +357,36 @@ end
 -------------------------------------------------------------------------------
 -- SC 吃
 -------------------------------------------------------------------------------
-function mahjongGame:onOpDoChi(acId, cards)
+function mahjongGame:onOpDoChi(acId, cards, beAcId, beCard)
 
 end
 
 -------------------------------------------------------------------------------
 -- SC 碰
 -------------------------------------------------------------------------------
-function mahjongGame:onOpDoPeng(acId, cards)
-
+function mahjongGame:onOpDoPeng(acId, cards, beAcId, beCard)
+    self.operationUI:onOpDoPeng(acId, cards, beAcId, beCard)
 end
 
 -------------------------------------------------------------------------------
 -- SC 杠
 -------------------------------------------------------------------------------
-function mahjongGame:onOpDoGang(acId, cards)
-
+function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard)
+    self.operationUI:onOpDoGang(acId, cards, beAcId, beCard)
 end
 
 -------------------------------------------------------------------------------
 -- SC 胡
 -------------------------------------------------------------------------------
-function mahjongGame:onOpDoHu(acId, cards)
-
+function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard)
+    self.operationUI:onOpDoHu(acId, cards, beAcId, beCard)
 end
 
 -------------------------------------------------------------------------------
 -- SC 过
 -------------------------------------------------------------------------------
-function mahjongGame:onOpDoGuo(acId, cards)
-
+function mahjongGame:onOpDoGuo(acId)
+    self.operationUI:onOpDoGuo(acId)
 end
 
 -------------------------------------------------------------------------------

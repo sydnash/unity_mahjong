@@ -15,6 +15,7 @@ public static class LuaBinder
 		ModelManagerWrap.Register(L);
 		AudioManagerWrap.Register(L);
 		SceneLoaderWrap.Register(L);
+		TextureManagerWrap.Register(L);
 		LuaPanelWrap.Register(L);
 		StingyScrollRectWrap.Register(L);
 		PageViewWrap.Register(L);

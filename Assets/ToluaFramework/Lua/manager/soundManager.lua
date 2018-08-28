@@ -21,8 +21,8 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function soundManager.playBGM()
-    AudioManager.instance:PlayBGM("bgm")
+function soundManager.playBGM(audioPath, audioName)
+    AudioManager.instance:PlayBGM(audioPath, audioName)
 end
 
 -------------------------------------------------------------------
@@ -49,8 +49,15 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function soundManager.playUISound(soundName)
-    AudioManager.instance:PlayUI(soundName)
+function soundManager.playUI(audioPath, audioName)
+    AudioManager.instance:PlayUI(audioPath, audioName)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function soundManager.playGfx(audioPath, audioName)
+    AudioManager.instance:PlayGfx(audioPath, audioName)
 end
 
 return soundManager

@@ -48,14 +48,14 @@ public class AudioChannel
     /// </summary>
     /// <param name="audioName"></param>
     /// <param name="type"></param>
-    public void Play(string audioName, Audio.PlayMode playMode = Audio.PlayMode.Once)
+    public void Play(string audioPath, string audioName, Audio.PlayMode playMode = Audio.PlayMode.Once)
     {
         if (string.IsNullOrEmpty(audioName)) 
             return;
 
         if (mAudioList.Count < mCapacity)
         {
-            Audio audio = new Audio(mRoot, audioName, playMode);
+            Audio audio = new Audio(mRoot, audioPath, audioName, playMode);
             audio.volume = mVolume;
             mAudioList.Add(audio);
 

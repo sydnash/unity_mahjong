@@ -40,6 +40,11 @@ public class Audio
     /// <summary>
     /// 
     /// </summary>
+    private string mAudioPath = string.Empty;
+
+    /// <summary>
+    /// 
+    /// </summary>
     private string mAudioName = string.Empty;
 
     /// <summary>
@@ -66,8 +71,9 @@ public class Audio
     /// </summary>
     /// <param name="audioName"></param>
     /// <param name="playMode"></param>
-    public Audio(Transform root, string audioName, PlayMode playMode = PlayMode.Once)
+    public Audio(Transform root, string audioPath, string audioName, PlayMode playMode = PlayMode.Once)
     {
+        mAudioPath = audioPath;
         mAudioName = audioName;
         mPlayMode = playMode;
 
@@ -85,7 +91,7 @@ public class Audio
     /// </summary>
     public void Play()
     {
-        mAudioClip = AssetPoolManager.instance.Alloc(AssetPoolManager.Type.Audio, string.Empty, mAudioName) as AudioClip;
+        mAudioClip = AssetPoolManager.instance.Alloc(AssetPoolManager.Type.Audio, mAudioPath, mAudioName) as AudioClip;
         if (mAudioClip != null)
         {
             mAudioSource.clip = mAudioClip;

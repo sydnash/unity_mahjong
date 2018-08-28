@@ -33,5 +33,6 @@ soundManager    = require("manager.soundManager")
 sceneManager    = require("manager.sceneManager")
 tweenManager    = require("manager.tweenManager")
 modelManager    = require("manager.modelManager")
+textureManager  = require("manager.textureManager")
 
 --endregion

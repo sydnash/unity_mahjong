@@ -157,7 +157,7 @@ public class AssetPoolManager
     {
         mPools[(int)Type.Model]     = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Model]),   false);
         mPools[(int)Type.UI]        = new AssetPool(new AssetLoader(mAssetPath[(int)Type.UI]),      false);
-        mPools[(int)Type.Texture]   = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Texture]), false);
+        mPools[(int)Type.Texture]   = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Texture]), true);
         mPools[(int)Type.Audio]     = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Audio]),   true);
     }
 

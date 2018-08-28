@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 537678106
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5e7a36e9b783f0d93a9451a683fec3dc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Sound/mahjong/girl/fa.mp3
+Dependencies: []

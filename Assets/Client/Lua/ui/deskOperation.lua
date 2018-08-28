@@ -16,32 +16,35 @@ deskOperation.folder = "deskoperationui"
 deskOperation.resource = "deskoperationui"
 
 deskOperation.seats = {
-    [mahjongGame.siteType.mine] = { 
+    [mahjongGame.seatType.mine] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.235, 0.155, -0.268), rot = Quaternion.Euler(180, 0, 0), scl = Vector3.New(1, 1, 1) },
         [mahjongGame.cardType.shou] = { pos = Vector3.New(-0.440, 0.190, -0.540), rot = Quaternion.Euler(-65, 0, 0), scl = Vector3.New(2, 2, 2) },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New(0, 0.155, 0), rot = Quaternion.Euler(0, 0, 0), scl = Vector3.New(1, 1, 1)},
-        [mahjongGame.cardType.chu ] = { pos = Vector3.New(0, 0.155, 0), rot = Quaternion.Euler(0, 0, 0), scl = Vector3.New(1, 1, 1)},
+        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.480, 0.155, -0.520), rot = Quaternion.Euler(0, 0, 0), scl = Vector3.New(1, 1, 1)},
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.180, 0.155, -0.180), rot = Quaternion.Euler(0, 0, 0), scl = Vector3.New(1, 1, 1)},
     },
-    [mahjongGame.siteType.right] = { 
-        [mahjongGame.cardType.idle] = { pos = Vector3.New(0.309, 0.155, 0.27), rot = Quaternion.Euler(180, 90, 0), scl = Vector3.New(1, 1, 1) },
-        [mahjongGame.cardType.shou] = { pos = Vector3.New(0.41, 0.165, -0.165), rot = Quaternion.Euler(-90, 0, -90), scl = Vector3.New(1, 1, 1) },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New(0, 0.155, 0), rot = Quaternion.Euler(0, 90, 0), scl = Vector3.New(1, 1, 1)},
-        [mahjongGame.cardType.chu ] = { pos = Vector3.New(0, 0.155, 0), rot = Quaternion.Euler(0, 90, 0), scl = Vector3.New(1, 1, 1)},
+    [mahjongGame.seatType.right] = { 
+        [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.309, 0.155,  0.270), rot = Quaternion.Euler(180, 90, 0), scl = Vector3.New(1, 1, 1) },
+        [mahjongGame.cardType.shou] = { pos = Vector3.New( 0.410, 0.165, -0.165), rot = Quaternion.Euler(-90, 0, -90), scl = Vector3.New(1, 1, 1) },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.524, 0.155, -0.362), rot = Quaternion.Euler(0, 90, 0), scl = Vector3.New(1, 1, 1)},
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.240, 0.155, -0.075), rot = Quaternion.Euler(0, 90, 0), scl = Vector3.New(1, 1, 1)},
     },
-    [mahjongGame.siteType.top] = { 
-        [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.233, 0.155, 0.33), rot = Quaternion.Euler(180, 0, 0), scl = Vector3.New(1, 1, 1) },
-        [mahjongGame.cardType.shou] = { pos = Vector3.New( 0.204, 0.165, 0.45), rot = Quaternion.Euler(-90, 0, 180), scl = Vector3.New(1, 1, 1) },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New(0, 0.155, 0), rot = Quaternion.Euler(0, 0, 0), scl = Vector3.New(1, 1, 1)},
-        [mahjongGame.cardType.chu ] = { pos = Vector3.New(0, 0.155, 0), rot = Quaternion.Euler(0, 0, 0), scl = Vector3.New(1, 1, 1)},
+    [mahjongGame.seatType.top] = { 
+        [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.233, 0.155,  0.330), rot = Quaternion.Euler(180, 0, 0), scl = Vector3.New(1, 1, 1) },
+        [mahjongGame.cardType.shou] = { pos = Vector3.New( 0.204, 0.165,  0.450), rot = Quaternion.Euler(-90, 0, 180), scl = Vector3.New(1, 1, 1) },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.440, 0.155,  0.480), rot = Quaternion.Euler(0, 0, 0), scl = Vector3.New(1, 1, 1)},
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.180, 0.155,  0.180), rot = Quaternion.Euler(0, 0, 0), scl = Vector3.New(1, 1, 1)},
     },
-    [mahjongGame.siteType.left] = { 
-        [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.31, 0.155, -0.195), rot = Quaternion.Euler(180, 90, 0), scl = Vector3.New(1, 1, 1) },
-        [mahjongGame.cardType.shou] = { pos = Vector3.New(-0.45, 0.165,  0.215), rot = Quaternion.Euler(-90, 0, 90), scl = Vector3.New(1, 1, 1) },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New(0, 0.155, 0), rot = Quaternion.Euler(0, 90, 0), scl = Vector3.New(1, 1, 1)},
-        [mahjongGame.cardType.chu ] = { pos = Vector3.New(0, 0.155, 0), rot = Quaternion.Euler(0, 90, 0), scl = Vector3.New(1, 1, 1)},
+    [mahjongGame.seatType.left] = { 
+        [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.310, 0.155, -0.195), rot = Quaternion.Euler(180, 90, 0), scl = Vector3.New(1, 1, 1) },
+        [mahjongGame.cardType.shou] = { pos = Vector3.New(-0.450, 0.165,  0.215), rot = Quaternion.Euler(-90, 0, 90), scl = Vector3.New(1, 1, 1) },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.520, 0.155,  0.420), rot = Quaternion.Euler(0, 90, 0), scl = Vector3.New(1, 1, 1)},
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.220, 0.155,  0.180), rot = Quaternion.Euler(0, 90, 0), scl = Vector3.New(1, 1, 1)},
     },
 }
 
+-------------------------------------------------------------------------------
+-- 构造函数
+-------------------------------------------------------------------------------
 function deskOperation:ctor(game)
     self.game = game
     self.super.ctor(self)
@@ -51,11 +54,32 @@ end
 -- 初始化
 -------------------------------------------------------------------------------
 function deskOperation:onInit()
+    self.mineTurn = self.game:getTurn(gamepref.acId)
+
     self.plane = find("table_plane")
     self.planeAnim = getComponentU(self.plane, typeof(UnityEngine.Animation))
 
     self.idleMahjongRoot = find("idle_mahjong_root")
     self.idleMahjongRootAnim = getComponentU(self.idleMahjongRoot, typeof(UnityEngine.Animation))
+
+    self.planeRoot = find("planes")
+    self.planeRoot.transform.localRotation = Quaternion.Euler(0, 90 * self.mineTurn, 0)
+
+    local circle = find("planes/circle/Cricle_0")
+    self.circleMat = getComponentU(circle, typeof(UnityEngine.MeshRenderer)).sharedMaterial
+    self.circleMat.mainTexture = textureManager.load("", "deskfw")
+
+    self.planeMats = {}
+    for i=mahjongGame.seatType.mine, mahjongGame.seatType.left do
+        local a = (i + 2 == 5) and 1 or i + 2
+
+        local go = findChild(self.planeRoot.transform, "plane0" .. tostring(a) .. "/plane0" .. tostring(a) .. "_0")
+        local mesh = getComponentU(go, typeof(UnityEngine.MeshRenderer))
+        local mat = mesh.sharedMaterial
+
+        self.planeMats[i] = mat
+    end
+    self:highlightPlaneByTurn(-1)
 
     self.mGuo:addClickListener(self.onGuoClickedHandler, self)
     self.mBao:addClickListener(self.onBaoClickedHandler, self)
@@ -82,7 +106,6 @@ end
 -- 游戏开始
 -------------------------------------------------------------------------------
 function deskOperation:onGameStart()
-    self.mineTurn = self.game:getTurn(gamepref.acId)
     self:createIdleMahjongs(false)
 
     eventManager.registerAnimationTrigger("idle_mahjong_root", function()
@@ -98,13 +121,15 @@ end
 -------------------------------------------------------------------------------
 -- 游戏同步
 -------------------------------------------------------------------------------
-function deskOperation:onGameSync()
-    self.mineTurn = self.game:getTurn(gamepref.acId)
+function deskOperation:onGameSync(reenter)
     self:createIdleMahjongs(true)
 
     for _, v in pairs(self.game.players) do 
         self:createInHandMahjongs(v)
     end
+
+    self:onOpList(reenter.CurOpList)
+    self:highlightPlaneByTurn(reenter.CurOpTurn)
 
     touch.addListener(self.touchHandler, self)
 end
@@ -126,7 +151,7 @@ function deskOperation:createIdleMahjongs(visible)
     self.idleMahjongs = {}
 
     for _, v in pairs(self.game.players) do
-        local turn = (v.turn - self.mineTurn >= 0) and v.turn - self.mineTurn or playerCount + v.turn - self.mineTurn
+        local turn = self:getSeatType(v.turn)
         local seat = self.seats[turn]
 
         local o = seat[mahjongGame.cardType.idle].pos
@@ -141,11 +166,11 @@ function deskOperation:createIdleMahjongs(visible)
             local y = math.abs(f) < 0.01 and o.y or o.y + mahjong.z
             local p = nil
 
-            if turn == mahjongGame.siteType.mine then
+            if turn == mahjongGame.seatType.mine then
                 p = Vector3.New(o.x - (mahjong.w * t), y, o.z)
-            elseif turn == mahjongGame.siteType.left then
+            elseif turn == mahjongGame.seatType.left then
                 p = Vector3.New(o.x, y, o.z + (mahjong.w * t))
-            elseif turn == mahjongGame.siteType.right then
+            elseif turn == mahjongGame.seatType.right then
                 p = Vector3.New(o.x, y, o.z - (mahjong.w * t))
             else
                 p = Vector3.New(o.x + (mahjong.w * t), y, o.z)
@@ -170,8 +195,6 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function deskOperation:OnMahjongDispatched()
-    self.mineTurn = self.game:getTurn(gamepref.acId)
-
     for _, v in pairs(self.game.players) do 
         self:createInHandMahjongs(v)
     end
@@ -187,24 +210,40 @@ function deskOperation:createInHandMahjongs(player)
     
     local playerCount = self.game:getPlayerCount()
     local data = player[mahjongGame.cardType.shou]
---    local turn = (player.turn - self.mineTurn >= 0) and player.turn - self.mineTurn or playerCount + player.turn - self.mineTurn
---    local seat = self.seats[turn]
-
-    
 
     for _, id in pairs(data) do
         local m = mahjong.new(math.max(0, id))
         table.insert(mahjongs, m)
-        
-        
     end
 
     self.inhandMahjongs[player.acId] = mahjongs
     self:relocateInhandMahjongs(player, mahjongs)
 end
 
+-------------------------------------------------------------------------------
+-- 摸牌
+-------------------------------------------------------------------------------
 function deskOperation:onMoPai(acId, cards)
+    self:highlightPlaneByAcId(acId)
     self:increaseInhandMahjongs(acId, cards)
+end
+
+-------------------------------------------------------------------------------
+-- OpList
+-------------------------------------------------------------------------------
+function deskOperation:onOpList(oplist)
+    if oplist ~= nil then
+        local infos = oplist.OpInfos
+        local leftTime = oplist.L
+
+        for _, v in pairs(infos) do
+            if v.Op == opType.chu then
+                self:beginChuPai()
+            end
+        end
+
+        self:showOperations(infos, leftTime)
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -258,15 +297,16 @@ function deskOperation:touchHandler(phase, pos)
             local wpos = camera.main:ScreenToWorldPoint(pos)
             local dpos = wpos - self.selectedOrgPos
         
-            log(dpos.y)
-            log(tostring(self.canChuPai))
-
             if dpos.y < 0.23 or not self.canChuPai then
                 self.selectedMahjong:setPosition(self.selectedOrgPos)
             else
-                networkManager.chuPai({self.selectedMahjong.id}, function(ok, msg)
+                local id = self.selectedMahjong.id
+
+                networkManager.chuPai({ id }, function(ok, msg)
                     log("chu pai failed")
                 end)
+
+                playMahjongSound(id, 1)
             end
         end
     end
@@ -279,8 +319,8 @@ function deskOperation:showOperations(ops, leftTime)
     for _, v in pairs(ops) do 
         if v.Op == opType.guo then
             self.mGuo:show()
---        elseif v.Op == opType.bao then
---            self.mBao:show()
+        elseif v.Op == opType.bao then
+            self.mBao:show()
         elseif v.Op == opType.chi then
             self.mChi:show()
         elseif v.Op == opType.peng then
@@ -288,15 +328,15 @@ function deskOperation:showOperations(ops, leftTime)
             self.mPeng.cs = v.C[1].Cs
         elseif v.Op == opType.gang then
             self.mGang:show()
-            self.mPeng.cs = v.C[1].Cs
+            self.mGang.cs = v.C[1].Cs
         elseif v.Op == opType.hu then
             self.mHu:show()
-            self.mPeng.cs = v.C[1].Cs
+            self.mHu.cs = v.C[1].Cs
         end
     end
 
-    local p = self:getLocalPosition()
     local x = self.layout.preferredWidth * -0.5
+    local p = self:getLocalPosition()
     self:setLocalPosition(Vector3.New(x, p.y, p.z))
 end
 
@@ -317,7 +357,9 @@ end
 -------------------------------------------------------------------------------
 function deskOperation:onGuoClickedHandler()
     playButtonClickSound()
+
     self.game:guo()
+    self:hideOperations()
 end
 
 -------------------------------------------------------------------------------
@@ -325,7 +367,9 @@ end
 -------------------------------------------------------------------------------
 function deskOperation:onBaoClickedHandler()
     playButtonClickSound()
+
     self.game:bao()
+    self:hideOperations()
 end
 
 -------------------------------------------------------------------------------
@@ -333,35 +377,43 @@ end
 -------------------------------------------------------------------------------
 function deskOperation:onChiClickedHandler()
     playButtonClickSound()
+
     self.game:chi()
+    self:hideOperations()
 end
 
 -------------------------------------------------------------------------------
 -- 点击“碰”
 -------------------------------------------------------------------------------
 function deskOperation:onPengClickedHandler()
-    playButtonClickSound()
+    playMahjongOpSound(opType.peng, 1)
+
     self.game:peng(self.mPeng.cs)
+    self:hideOperations()
 end
 
 -------------------------------------------------------------------------------
 -- 点击“杠”
 -------------------------------------------------------------------------------
 function deskOperation:onGangClickedHandler()
-    playButtonClickSound()
+    playMahjongOpSound(opType.gang, 1)
+
     self.game:gang(self.mGang.cs)
+    self:hideOperations()
 end
 
 -------------------------------------------------------------------------------
 -- 点击“胡”
 -------------------------------------------------------------------------------
 function deskOperation:onHuClickedHandler()
-    playButtonClickSound()
+    playMahjongOpSound(opType.hu, 1)
+
     self.game:hu(self.mHu.cs)
+    self:hideOperations()
 end
 
 -------------------------------------------------------------------------------
--- 
+-- 出牌
 -------------------------------------------------------------------------------
 function deskOperation:onOpDoChu(acId, cards)
     self:endChuPai()
@@ -370,20 +422,83 @@ function deskOperation:onOpDoChu(acId, cards)
     for _, m in pairs(mahjongs) do
         self:putMahjongToChu(acId, m)
     end
+
+    if acId ~= gamepref.acId then 
+        playMahjongSound(cards[1], 2)
+    end
 end
 
 -------------------------------------------------------------------------------
--- 
+-- 碰
 -------------------------------------------------------------------------------
 function deskOperation:onOpDoPeng(acId, cards, beAcId, beCard)
+    beAcId = beAcId[1]
+
     local mahjongs = self:decreaseInhandMahjongs(acId, cards)
-    local beMahjong = self.chuMahjongs[beAcId][beCard]
+    local chuMahjongs = self.chuMahjongs[beAcId]
 
-    table.insert(mahjongs, beMahjong)
-
-    for _, m in pairs(mahjongs) do
-        self:putMahjongsToPeng(acId, mahjongs)
+    for k, v in pairs(chuMahjongs) do
+        if v.id == beCard then
+            table.insert(mahjongs, v)
+            table.remove(chuMahjongs, k)
+            break
+        end
     end
+
+    self:putMahjongsToPeng(acId, mahjongs)
+
+    local bePlayer = self.game:getPlayerByAcId(beAcId)
+    self:relocateInhandMahjongs(player, chuMahjongs)
+
+    self:beginChuPai()
+    self:highlightPlaneByAcId(acId)
+
+    if acId ~= gamepref.acId then 
+        playMahjongOpSound(opType.peng, 2)
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 杠
+-------------------------------------------------------------------------------
+function deskOperation:onOpDoGang(acId, cards, beAcId, beCard)
+    beAcId = beAcId[1]
+
+    local mahjongs = self:decreaseInhandMahjongs(acId, cards)
+    local chuMahjongs = self.chuMahjongs[beAcId]
+
+    for k, v in pairs(chuMahjongs) do
+        if v.id == beCard then
+            table.insert(mahjongs, v)
+            table.remove(chuMahjongs, k)
+            break
+        end
+    end
+
+    self:putMahjongsToPeng(acId, mahjongs)
+
+    local bePlayer = self.game:getPlayerByAcId(beAcId)
+    self:relocateInhandMahjongs(player, chuMahjongs)
+
+    if acId ~= gamepref.acId then 
+        playMahjongOpSound(opType.gang, 2)
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 胡
+-------------------------------------------------------------------------------
+function deskOperation:onOpDoHu(acId, cards, beAcId, beCard)
+    if acId ~= gamepref.acId then 
+        playMahjongOpSound(opType.hu, 2)
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 取消所有操作
+-------------------------------------------------------------------------------
+function deskOperation:onClear()
+    self:hideOperations()
 end
 
 -------------------------------------------------------------------------------
@@ -449,7 +564,7 @@ function deskOperation:relocateInhandMahjongs(player, mahjongs)
     end
 
     local playerCount = self.game:getPlayerCount()
-    local turn = (player.turn - self.mineTurn >= 0) and player.turn - self.mineTurn or playerCount + player.turn - self.mineTurn
+    local turn = self:getSeatType(player.turn)
     local seat = self.seats[turn]
 
     local o = seat[mahjongGame.cardType.shou].pos
@@ -459,13 +574,13 @@ function deskOperation:relocateInhandMahjongs(player, mahjongs)
     for k, m in pairs(mahjongs) do
         local p = nil
 
-        if turn == mahjongGame.siteType.mine then
+        if turn == mahjongGame.seatType.mine then
             p = Vector3.New(o.x + (mahjong.w * k) * s.x, o.y, o.z)
             m:setPickabled(true)
-        elseif turn == mahjongGame.siteType.left then
+        elseif turn == mahjongGame.seatType.left then
             p = Vector3.New(o.x, o.y, o.z - (mahjong.w * k) * s.z)
             m:setPickabled(false)
-        elseif turn == mahjongGame.siteType.right then
+        elseif turn == mahjongGame.seatType.right then
             p = Vector3.New(o.x, o.y, o.z + (mahjong.w * k) * s.z)
             m:setPickabled(false)
         else
@@ -504,7 +619,7 @@ function deskOperation:putMahjongToChu(acId, mj)
     end
 
     local playerCount = self.game:getPlayerCount()
-    local turn = (player.turn - self.mineTurn >= 0) and player.turn - self.mineTurn or playerCount + player.turn - self.mineTurn
+    local turn = self:getSeatType(player.turn)
     local seat = self.seats[turn]
 
     local o = seat[mahjongGame.cardType.chu].pos
@@ -512,13 +627,13 @@ function deskOperation:putMahjongToChu(acId, mj)
     local s = seat[mahjongGame.cardType.chu].scl
     local k = #self.chuMahjongs[acId]
 
-    if turn == mahjongGame.siteType.mine then
+    if turn == mahjongGame.seatType.mine then
         local p = Vector3.New(o.x + (mahjong.w * k) * s.x, o.y, o.z)
         mj:setLocalPosition(p)
-    elseif turn == mahjongGame.siteType.left then
+    elseif turn == mahjongGame.seatType.left then
         local p = Vector3.New(o.x, o.y, o.z - (mahjong.w * k) * s.z)
         mj:setLocalPosition(p)
-    elseif turn == mahjongGame.siteType.right then
+    elseif turn == mahjongGame.seatType.right then
         local p = Vector3.New(o.x, o.y, o.z + (mahjong.w * k) * s.z)
         mj:setLocalPosition(p)
     else
@@ -544,7 +659,7 @@ function deskOperation:putMahjongsToPeng(acId, mahjongs)
     end
 
     local playerCount = self.game:getPlayerCount()
-    local turn = (player.turn - self.mineTurn >= 0) and player.turn - self.mineTurn or playerCount + player.turn - self.mineTurn
+    local turn = self:getSeatType(player.turn)
     local seat = self.seats[turn]
 
     local o = seat[mahjongGame.cardType.peng].pos
@@ -561,13 +676,13 @@ function deskOperation:putMahjongsToPeng(acId, mahjongs)
             y = o.y + mahjong.z
         end 
 
-        if turn == mahjongGame.siteType.mine then
+        if turn == mahjongGame.seatType.mine then
             local p = Vector3.New(o.x + (mahjong.w * i) * s.x, o.y, o.z)
             m:setLocalPosition(p)
-        elseif turn == mahjongGame.siteType.left then
+        elseif turn == mahjongGame.seatType.left then
             local p = Vector3.New(o.x, o.y, o.z - (mahjong.w * i) * s.z)
             m:setLocalPosition(p)
-        elseif turn == mahjongGame.siteType.right then
+        elseif turn == mahjongGame.seatType.right then
             local p = Vector3.New(o.x, o.y, o.z + (mahjong.w * i) * s.z)
             m:setLocalPosition(p)
         else
@@ -581,6 +696,45 @@ function deskOperation:putMahjongsToPeng(acId, mahjongs)
     end
 
     table.insert(self.pengMahjongs[acId], mahjongs)
+end
+
+-------------------------------------------------------------------------------
+-- 将当前acid的plane高亮
+-------------------------------------------------------------------------------
+function deskOperation:highlightPlaneByAcId(acId)
+    local player = self.game:getPlayerByAcId(acId)
+    local turn = player and player.turn or -1
+
+    self:highlightPlaneByTurn(turn)
+end
+
+-------------------------------------------------------------------------------
+-- 将当前turn的plane高亮
+-------------------------------------------------------------------------------
+function deskOperation:highlightPlaneByTurn(turn)
+    for t, m in pairs(self.planeMats) do
+        if m.mainTexture ~= nil then
+            textureManager.unload(m.mainTexture)
+        end
+
+        if t == turn then
+            m.mainTexture = textureManager.load("", "deskfw_gl")
+        else
+            m.mainTexture = textureManager.load("", "deskfw")
+        end
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 将当前plane高亮
+-------------------------------------------------------------------------------
+function deskOperation:getSeatType(turn)
+    if turn - self.mineTurn >= 0 then
+        return turn - self.mineTurn
+    end
+    
+    local playerCount = self.game:getPlayerCount()
+    return playerCount + turn - self.mineTurn
 end
 
 return deskOperation
