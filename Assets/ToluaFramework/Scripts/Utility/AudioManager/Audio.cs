@@ -78,6 +78,7 @@ public class Audio
         mPlayMode = playMode;
 
         GameObject go = AssetPoolManager.instance.Alloc(AssetPoolManager.Type.Model, string.Empty, "AudioSource") as GameObject;
+        go.SetActive(true);
         mAudioSource = go.GetComponent<AudioSource>();
 
         if (root != null)

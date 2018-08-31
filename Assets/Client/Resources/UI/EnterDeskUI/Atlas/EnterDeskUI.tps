@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/EnterRoomUI/EnterRoomUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterDeskUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -199,19 +199,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Images/GY_gb_gl.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>18,19,36,37</rect>
-                <key>scale9Paddings</key>
-                <rect>18,19,36,37</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/JRFJ_1zi0.png</key>
             <key type="filename">Images/JRFJ_1zi1.png</key>
             <key type="filename">Images/JRFJ_1zi2.png</key>
@@ -322,19 +309,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/dl_jiazai01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>98,58,195,115</rect>
-                <key>scale9Paddings</key>
-                <rect>98,58,195,115</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/gy_di04.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -392,8 +366,6 @@
             <filename>Images/JRFJ_zics.png</filename>
             <filename>Images/JRFJ_zisc.png</filename>
             <filename>Images/zy_jrfj_di.png</filename>
-            <filename>Images/dl_jiazai01.png</filename>
-            <filename>Images/GY_gb_gl.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

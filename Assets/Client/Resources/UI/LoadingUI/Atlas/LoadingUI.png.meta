@@ -1,12 +1,45 @@
 fileFormatVersion: 2
 guid: a5792710bb1ae4b4ea983ccf407c6c0d
-timeCreated: 1533654242
+timeCreated: 1535695781
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: dl_jindut01
     21300002: dl_jindut02
     21300004: dl_jindut03
+    21300006: bird00
+    21300008: bird01
+    21300010: bird02
+    21300012: bird03
+    21300014: bird04
+    21300016: bird05
+    21300018: bird06
+    21300020: bird07
+    21300022: bird08
+    21300024: bird09
+    21300026: bird10
+    21300028: bird11
+    21300030: bird12
+    21300032: bird13
+    21300034: bird14
+    21300036: bird15
+    21300038: bird16
+    21300040: bird17
+    21300042: bird18
+    21300044: bird19
+    21300046: bird20
+    21300048: bird21
+    21300050: bird22
+    21300052: bird23
+    21300054: bird24
+    21300056: bird25
+    21300058: bird26
+    21300060: bird27
+    21300062: bird28
+    21300064: bird29
+    21300066: DL_jd01
+    21300068: DL_jd02
+    21300070: DL_mengban
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -90,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dl_jindut01
+      name: bird00
       rect:
         serializedVersion: 2
         x: 1
-        y: 2024
-        width: 1163
-        height: 23
+        y: 443
+        width: 68
+        height: 68
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -104,13 +137,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: dl_jindut02
+      name: bird01
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1999
-        width: 1163
-        height: 23
+        x: 351
+        y: 375
+        width: 67
+        height: 66
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,13 +151,433 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: dl_jindut03
+      name: bird02
       rect:
         serializedVersion: 2
-        x: 1166
-        y: 1946
-        width: 107
-        height: 101
+        x: 213
+        y: 374
+        width: 67
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird03
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 373
+        width: 68
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird04
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 443
+        width: 67
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird05
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 374
+        width: 67
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird06
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 375
+        width: 67
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird07
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 374
+        width: 67
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird08
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 303
+        width: 68
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird09
+      rect:
+        serializedVersion: 2
+        x: 419
+        y: 305
+        width: 65
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird10
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 308
+        width: 61
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird11
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 248
+        width: 55
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird12
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 253
+        width: 57
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird13
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 310
+        width: 63
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird14
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 308
+        width: 66
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 233
+        width: 68
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird16
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 163
+        width: 68
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird17
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 93
+        width: 68
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird18
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 23
+        width: 68
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird19
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 443
+        width: 68
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird20
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 373
+        width: 67
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird21
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 443
+        width: 67
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird22
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 443
+        width: 67
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird23
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 444
+        width: 68
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird24
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 309
+        width: 65
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird25
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 248
+        width: 60
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird26
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 251
+        width: 55
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird27
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 311
+        width: 58
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird28
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 241
+        width: 62
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: bird29
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 443
+        width: 67
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_jd01
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 12
+        width: 52
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 0, z: 8, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_jd02
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1
+        width: 52
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 0, z: 8, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_mengban
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 4
+        width: 17
+        height: 17
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

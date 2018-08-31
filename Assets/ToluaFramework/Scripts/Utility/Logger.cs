@@ -25,20 +25,20 @@ public static class Logger
     /// </summary>
     public static void Open()
     {
-#if UNITY_EDITOR
-        Debug.Log("logger is open");
-#else
+#if !UNITY_EDITOR
         if (debug)
         {
-#if UNITY_ANDROID
+    #if UNITY_ANDROID
             string dependencies = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "Log", DateTime.Now.ToString("yyyyMMddHHmmssfff")+".txt");
-#elif UNITY_IOS
+    #elif UNITY_IOS
             string dependencies = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "Log", DateTime.Now.ToString("yyyyMMddHHmmssfff")+".txt");
-#else
+    #else
             string filename = LFS.CombinePath(Directory.GetCurrentDirectory(), "Log", DateTime.Now.ToString("yyyyMMddHHmmssfff")+".txt");
-#endif
+    #endif
             LFS.MakeDir(filename);
             writer = new StreamWriter(filename);
+
+            Application.logMessageReceived += LogReceivedHandler;
         }
 #endif
     }
@@ -48,14 +48,17 @@ public static class Logger
     /// </summary>
     public static void Close()
     {
-        if (writer != null)
+#if !UNITY_EDITOR
+        if (debug)
         {
-            writer.Close();
-        }
-        writer = null;
+            Application.logMessageReceived -= LogReceivedHandler;
 
-#if UNITY_EDITOR
-        Debug.Log("logger is closed");
+            if (writer != null)
+            {
+                writer.Close();
+            }
+            writer = null;
+        }
 #endif
     }
 
@@ -70,9 +73,7 @@ public static class Logger
 #else
         if (debug)
         {
-            string timestamp = DateTime.Now.ToString("HH:mm:ss.fff: ");
-            Debug.Log(timestamp + text);
-            WriteToFile(timestamp, text);
+            WriteToFile(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
         }
 #endif
     }
@@ -88,9 +89,7 @@ public static class Logger
 #else
         if (debug)
         {
-            string timestamp = DateTime.Now.ToString("HH:mm:ss.fff: ");
-            Debug.LogWarning(timestamp + text);
-            WriteToFile(timestamp, text);
+            WriteToFile(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
         }
 #endif
     }
@@ -106,9 +105,7 @@ public static class Logger
 #else
         if (debug)
         {
-            string timestamp = DateTime.Now.ToString("HH:mm:ss.fff: ");
-            Debug.LogError(timestamp + text);
-            WriteToFile(timestamp, text);
+            WriteToFile(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
         }
 #endif
     }
@@ -120,12 +117,23 @@ public static class Logger
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="text"></param>
-    private static void WriteToFile(string timestamp, string text)
+    /// <param name="condition"></param>
+    /// <param name="stackTrace"></param>
+    /// <param name="type"></param>
+    private static void LogReceivedHandler(string condition, string stackTrace, LogType type)
+    {
+        WriteToFile(condition + "\n" + stackTrace);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="content"></param>
+    private static void WriteToFile(string content)
     {
         if (writer != null)
         {
-            writer.WriteLine(timestamp + "\n" + text);
+            writer.WriteLine(content);
             writer.Flush();
         }
     }

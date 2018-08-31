@@ -2,8 +2,10 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local gamePlayer  = require("logic.player.gamePlayer")
-local opType      = require("const.opType")
+local gamePlayer    = require("logic.player.gamePlayer")
+local opType        = require("const.opType")
+local gameStatus    = require("const.gameStatus")
+local sexType       = require("const.sexType")
 
 local mahjongGame = class("mahjongGame")
 
@@ -77,11 +79,11 @@ function mahjongGame:registerCommandHandlers()
 
     networkManager.registerCommandHandler(protoType.sc.start, function(msg)
         self:onGameStartHandler(msg)
-    end, false)
+    end, true)
 
     networkManager.registerCommandHandler(protoType.sc.fapai, function(msg)
         self:onFaPaiHandler(msg)
-    end, false)
+    end, true)
 
     networkManager.registerCommandHandler(protoType.sc.mopai, function(msg)
         self:onMoPaiHandler(msg)
@@ -98,6 +100,50 @@ function mahjongGame:registerCommandHandlers()
     networkManager.registerCommandHandler(protoType.sc.clear, function(msg)
         self:onClearHandler(msg)
     end, true)
+
+    networkManager.registerCommandHandler(protoType.sc.exitDesk, function(msg)
+        self:onExitDeskHandler(msg)
+    end, true)
+
+    networkManager.registerCommandHandler(protoType.sc.otherExitDesk, function(msg)
+        self:onOtherExitHandler(msg)
+    end, true)
+
+    networkManager.registerCommandHandler(protoType.sc.notifyExitVote, function(msg)
+        self:onNotifyExitVoteHandler(msg)
+    end, true)
+
+    networkManager.registerCommandHandler(protoType.sc.notifyExitVoteFailed, function(msg)
+        self:onNotifyExitVoteFailedHandler(msg)
+    end, true)
+
+    networkManager.registerCommandHandler(protoType.sc.exitVote, function(msg)
+        self:onExitVoteHandler(msg)
+    end, true)
+
+    networkManager.registerCommandHandler(protoType.sc.gameEnd, function(msg)
+        self:onGameEndHandler(msg)
+    end, true)
+end
+
+-------------------------------------------------------------------------------
+-- 注销服务器主动推送的消息的处理函数
+-------------------------------------------------------------------------------
+function mahjongGame:unregisterCommandHandlers()
+    networkManager.unregisterCommandHandler(protoType.sc.otherEnterDesk)
+    networkManager.unregisterCommandHandler(protoType.sc.ready)
+    networkManager.unregisterCommandHandler(protoType.sc.start)
+    networkManager.unregisterCommandHandler(protoType.sc.fapai)
+    networkManager.unregisterCommandHandler(protoType.sc.mopai)
+    networkManager.unregisterCommandHandler(protoType.sc.oplist)
+    networkManager.unregisterCommandHandler(protoType.sc.opDo)
+    networkManager.unregisterCommandHandler(protoType.sc.clear)
+    networkManager.unregisterCommandHandler(protoType.sc.exitDesk)
+    networkManager.unregisterCommandHandler(protoType.sc.otherExitDesk)
+    networkManager.unregisterCommandHandler(protoType.sc.notifyExitVote)
+    networkManager.unregisterCommandHandler(protoType.sc.notifyExitVoteFailed)
+    networkManager.unregisterCommandHandler(protoType.sc.exitVote)
+    networkManager.unregisterCommandHandler(protoType.sc.gameEnd)
 end
 
 -------------------------------------------------------------------------------
@@ -108,7 +154,7 @@ function mahjongGame:onEnter(msg)
 
     player.nickname = gamepref.nickname
     player.ip       = gamepref.ip
-    player.sex      = gamepref.sex
+    player.sex      = Mathf.Clamp(gamepref.sex, sexType.box, sexType.girl)
     player.laolai   = gamepref.laolai
     player.conncted = true
     player.ready    = msg.Ready
@@ -124,6 +170,9 @@ function mahjongGame:onEnter(msg)
         self.curOpType = msg.Reenter.CurOpType
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
+
+    self.leftGames = msg.LeftTime
+    self.isPlaying = (msg.Status == gameStatus.playing)
 end
 
 -------------------------------------------------------------------------------
@@ -148,7 +197,7 @@ function mahjongGame:syncOthers(others)
 
         player.nickname  = v.Nickname
         player.ip        = v.Ip
-        player.sex       = v.Sex
+        player.sex       = Mathf.Clamp(v.Sex, sexType.box, sexType.girl)
         player.laolai    = v.IsLaoLai
         player.connected = v.IsConnected
         player.ready     = v.Ready
@@ -165,7 +214,7 @@ end
 function mahjongGame:ready(ready)
     networkManager.ready(ready, function(ok, msg)
         if not ok then
-
+            showMessage("网络繁忙，请稍后再试")
         else
             self:onReadyHandler(msg)
         end
@@ -211,6 +260,7 @@ function mahjongGame:onGameStartHandler(msg)
     log("startGame, msg = " .. table.tostring(msg))
 
     self.markerTurn = msg.Marker
+    self.isPlaying = true
 
     self.deskUI:onGameStart()
     self.operationUI:onGameStart()
@@ -296,7 +346,23 @@ end
 -- 结束一局
 -------------------------------------------------------------------------------
 function mahjongGame:endGame()
-    touch.removeListener()
+    networkManager.destroyDesk(function(ok, msg)
+        log("endGame, msg = " .. table.tostring(msg))
+        if not ok then
+            showMessage("网络繁忙，请稍后再试")
+        else
+            if msg.RetCode ~= retc.Ok then
+                
+            else
+                if msg.LeftTime ~= nil and msg.LeftTime > 0 then
+                    self.exitVoteUI = require("ui.exitVote").new(self)
+                    self.exitVoteUI:show()
+                else
+                    self:exitGame()
+                end
+            end
+        end
+    end)
 end
 
 -------------------------------------------------------------------------------
@@ -429,6 +495,118 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:getMahjongTotalCount()
     return self.mahjongCount
+end
+
+-------------------------------------------------------------------------------
+-- 退出桌子
+-------------------------------------------------------------------------------
+function mahjongGame:exitGame()
+    local loading = require("ui.loading").new()
+    loading:show()
+
+    sceneManager.load("LobbyScene", function(completed, progress)
+        loading:setProgress(progress)
+
+        if completed then
+            local lobby = require("ui.lobby").new()
+            lobby:show()
+
+            loading:close()
+        end
+    end)
+
+    self:unregisterCommandHandlers()
+
+    self.deskUI:close()
+    self.operationUI:close()
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知直接退出
+-------------------------------------------------------------------------------
+function mahjongGame:onExitDeskHandler(msg)
+    log("exit desk, msg = " .. table.tostring(msg))
+
+    local reason = msg.Reason
+
+    self:exitGame()
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知其他玩家退出
+-------------------------------------------------------------------------------
+function mahjongGame:onOtherExitHandler(msg)
+    log("other exit, msg = " .. table.tostring(msg))
+
+    if self.leftGames > 0 then
+
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知发起退出投票
+-------------------------------------------------------------------------------
+function mahjongGame:onNotifyExitVoteHandler(msg)
+    log("notify exit vote, msg = " .. table.tostring(msg))
+
+    self.exitVoteUI = require("ui.exitVote").new(self)
+    self.exitVoteUI:show()
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知投票失败（有人拒绝）
+-------------------------------------------------------------------------------
+function mahjongGame:onNotifyExitVoteFailedHandler(msg)
+    log("notify exit vote failed, msg = " .. table.tostring(msg))
+    self.exitVoteUI:close()
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知有人投票
+-------------------------------------------------------------------------------
+function mahjongGame:onExitVoteHandler(msg)
+    log("exit vote, msg = " .. table.tostring(msg))
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知牌局结束
+-------------------------------------------------------------------------------
+function mahjongGame:onGameEndHandler(msg)
+    log("game end, msg = " .. table.tostring(msg))
+
+    self.leftGames = msg.LeftTime
+
+    local ui = require("ui.gameEnd").new(self)
+    ui:show()
+
+    self.deskUI:reset()
+    self.operationUI:reset()
+end
+
+-------------------------------------------------------------------------------
+-- 同意解散房间
+-------------------------------------------------------------------------------
+function mahjongGame:agreeExit()
+    networkManager.exitVote(true, function(ok, msg)
+        if not ok then
+
+        else
+            log("agree exit, msg = " .. tostring(msg.Agree))
+        end
+    end)
+end
+
+-------------------------------------------------------------------------------
+-- 拒绝解散房间
+-------------------------------------------------------------------------------
+function mahjongGame:rejectExit()
+    networkManager.exitVote(false, function(ok, msg)
+        if not ok then
+
+        else
+            log("agree exit, msg = " .. tostring(msg.Agree))
+        end
+    end)
 end
 
 return mahjongGame

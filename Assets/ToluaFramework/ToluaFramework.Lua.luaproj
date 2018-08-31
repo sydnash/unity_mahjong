@@ -49,6 +49,7 @@
     <Compile Include="Lua\common\object.lua" />
     <Compile Include="Lua\config\appConfig.lua" />
     <Compile Include="Lua\main.lua" />
+    <Compile Include="Lua\manager\animationManager.lua" />
     <Compile Include="Lua\manager\eventManager.lua" />
     <Compile Include="Lua\manager\modelManager.lua" />
     <Compile Include="Lua\manager\patchManager.lua" />

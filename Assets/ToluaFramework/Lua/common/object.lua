@@ -226,6 +226,28 @@ function object:findChild(name)
     return nil
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+local function setLayer(transform, layer, includeChildren)
+    transform.gameObject.layer = layer
+
+    if includeChildren then
+        local childCount = transform.childCount
+        for i=0, childCount-1 do
+            local child = transform:GetChild(i)
+            setLayer(child, layer)
+        end
+    end
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function object:setLayer(layer, includeChildren)
+    setLayer(self.transform, layer, includeChildren)
+end
+
 return object
 
 --endregion

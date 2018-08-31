@@ -11,6 +11,33 @@ TextureImporter:
     21300008: ZY_touxiang
     21300010: ZY_touxiang01
     21300012: xzy_bg01
+    21300014: ZY_an01
+    21300016: ZY_an02
+    21300018: ZY_an03
+    21300020: ZY_an04
+    21300022: ZY_an05
+    21300024: ZY_an06
+    21300026: ZY_an07
+    21300028: ZY_an08
+    21300030: ZY_an09
+    21300032: ZY_an10
+    21300034: ZY_an_cj
+    21300036: ZY_an_fh
+    21300038: ZY_an_jr
+    21300040: ZY_an_qyq
+    21300042: ZY_hb
+    21300044: ZY_qhdy01
+    21300046: ZY_qhdy02
+    21300048: ZY_qhdy_xc
+    21300050: ZY_rw
+    21300052: ZY_tx
+    21300054: ZY_yj
+    21300056: ZY_1
+    21300058: ZY_1_01
+    21300060: GY_fk
+    21300062: GY_fk01
+    21300064: GY_fk02
+    21300066: GY_sd
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -76,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: xzy_an01
+      name: GY_fk
       rect:
         serializedVersion: 2
-        x: 1283
-        y: 1633
-        width: 315
-        height: 414
+        x: 622
+        y: 788
+        width: 75
+        height: 57
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -90,13 +117,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: xzy_an02
+      name: GY_fk01
       rect:
         serializedVersion: 2
-        x: 1600
-        y: 1387
-        width: 249
-        height: 246
+        x: 378
+        y: 2
+        width: 218
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -104,12 +131,250 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: xzy_an03
+      name: GY_fk02
       rect:
         serializedVersion: 2
-        x: 1283
-        y: 1455
-        width: 248
+        x: 267
+        y: 4
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_sd
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 25
+        width: 60
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_1
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 15
+        width: 31
+        height: 85
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_1_01
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 24
+        width: 3
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an01
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 70
+        width: 62
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an02
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 533
+        width: 62
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an03
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 533
+        width: 62
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an04
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 964
+        width: 125
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an05
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 56
+        width: 115
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an06
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 844
+        width: 116
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an07
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 904
+        width: 118
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an08
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 535
+        width: 113
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an09
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 165
+        width: 112
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an10
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 124
+        width: 168
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an_cj
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 231
+        width: 264
+        height: 244
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an_fh
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 598
+        width: 264
+        height: 244
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an_jr
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 289
+        width: 264
+        height: 244
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_an_qyq
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 847
+        width: 510
         height: 176
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -118,13 +383,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: xzy_bg
+      name: ZY_hb
       rect:
         serializedVersion: 2
         x: 1
-        y: 1327
-        width: 1280
-        height: 720
+        y: 102
+        width: 230
+        height: 373
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,13 +397,55 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: xzy_bg01
+      name: ZY_qhdy01
       rect:
         serializedVersion: 2
-        x: 1600
-        y: 1635
-        width: 277
-        height: 412
+        x: 599
+        y: 537
+        width: 192
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_qhdy02
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 135
+        width: 51
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_qhdy_xc
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 18
+        width: 60
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4848485}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_rw
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 477
+        width: 353
+        height: 546
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,8 +456,8 @@ TextureImporter:
       name: ZY_touxiang
       rect:
         serializedVersion: 2
-        x: 1879
-        y: 1968
+        x: 119
+        y: 21
         width: 79
         height: 79
       alignment: 0
@@ -163,12 +470,40 @@ TextureImporter:
       name: ZY_touxiang01
       rect:
         serializedVersion: 2
-        x: 1960
-        y: 1978
+        x: 267
+        y: 53
         width: 69
         height: 69
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_tx
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 17
+        width: 83
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_yj
+      rect:
+        serializedVersion: 2
+        x: 793
+        y: 787
+        width: 188
+        height: 58
+      alignment: 9
+      pivot: {x: 0.50265956, y: 0.5086207}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

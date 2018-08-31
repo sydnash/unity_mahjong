@@ -136,7 +136,7 @@ public class SceneLoader : MonoBehaviour
             if (checkExist && System.IO.File.Exists(bundleName))
             {
                 var request = AssetBundle.LoadFromFileAsync(bundleName);
-                
+
                 while (!request.isDone)
                 {
                     InvokeCallback(callback, false, request.progress * 0.5f);
@@ -151,7 +151,10 @@ public class SceneLoader : MonoBehaviour
             }
         }
 
-        while (Time.realtimeSinceStartup - time < 1.0f) ;
+        while (Time.realtimeSinceStartup - time < 0.4f)
+        {
+            yield return WAIT_FOR_END_OF_FRAME;
+        }
 
         InvokeCallback(callback, false, 0.5f);
         yield return WAIT_FOR_END_OF_FRAME;
@@ -175,15 +178,19 @@ public class SceneLoader : MonoBehaviour
             Logger.LogError(string.Format("can't load the scene: {0}", sceneName));
         }
 
-        while (Time.realtimeSinceStartup - time < 1.0f) ;
-        yield return WAIT_FOR_END_OF_FRAME;
+        while (Time.realtimeSinceStartup - time < 0.4f)
+        {
+            yield return WAIT_FOR_END_OF_FRAME;
+        }
 
         InvokeCallback(callback, false, 1.0f);
         time = Time.realtimeSinceStartup;
         yield return WAIT_FOR_END_OF_FRAME;
 
-        while (Time.realtimeSinceStartup - time < 0.5f) ;
-        yield return WAIT_FOR_END_OF_FRAME;
+        while (Time.realtimeSinceStartup - time < 0.2f)
+        {
+            yield return WAIT_FOR_END_OF_FRAME;
+        }
 
         InvokeCallback(callback, true, 1.0f);
         yield return WAIT_FOR_END_OF_FRAME;

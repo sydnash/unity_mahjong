@@ -65,7 +65,7 @@ public class UIManager
     public void Unload(GameObject ui)
     {
 #if UNITY_EDITOR
-        Debug.Assert(ui != null);
+        Debug.Assert(ui != null, "can't unload a null ui");
 #endif
 
         AssetPoolManager.instance.Dealloc(AssetPoolManager.Type.UI, ui);

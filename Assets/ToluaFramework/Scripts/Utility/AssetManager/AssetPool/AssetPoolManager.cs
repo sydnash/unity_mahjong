@@ -34,6 +34,11 @@ public class AssetPoolManager
         Audio,
 
         /// <summary>
+        /// 动画
+        /// </summary>
+        AnimationClip,
+
+        /// <summary>
         /// 
         /// </summary>
         End
@@ -60,6 +65,7 @@ public class AssetPoolManager
                                                     "UI",
                                                     "Texture",
                                                     "Sound",
+                                                    "Animation",
                                                   };
 
     #endregion
@@ -105,7 +111,15 @@ public class AssetPoolManager
     public Object Alloc(Type type, string assetPath, string assetName)
     {
         AssetPool pool = mPools[(int)type];
-        return pool.Alloc(assetPath, assetName);
+        Object o = pool.Alloc(assetPath, assetName);
+
+        if (type == Type.Model || type == Type.UI)
+        {
+            GameObject go = o as GameObject;
+            go.transform.SetParent(null, false);
+        }
+
+        return o;
     }
 
     /// <summary>
@@ -121,6 +135,7 @@ public class AssetPoolManager
         if (success && (type == Type.Model || type == Type.UI) && mRoot != null)
         {
             GameObject go = asset as GameObject;
+            go.SetActive(false);
             go.transform.SetParent(mRoot, false);
         }
 
@@ -155,10 +170,11 @@ public class AssetPoolManager
     /// </summary>
     private AssetPoolManager()
     {
-        mPools[(int)Type.Model]     = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Model]),   false);
-        mPools[(int)Type.UI]        = new AssetPool(new AssetLoader(mAssetPath[(int)Type.UI]),      false);
-        mPools[(int)Type.Texture]   = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Texture]), true);
-        mPools[(int)Type.Audio]     = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Audio]),   true);
+        mPools[(int)Type.Model]         = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Model]),           false);
+        mPools[(int)Type.UI]            = new AssetPool(new AssetLoader(mAssetPath[(int)Type.UI]),              false);
+        mPools[(int)Type.Texture]       = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Texture]),         true);
+        mPools[(int)Type.Audio]         = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Audio]),           true);
+        mPools[(int)Type.AnimationClip] = new AssetPool(new AssetLoader(mAssetPath[(int)Type.AnimationClip]),   false);
     }
 
     #endregion

@@ -2,8 +2,6 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local opType = require("const.opType")
-
 local networkCallbackPool = class("networkCallbackPool")
 local token = 100
 
@@ -55,6 +53,8 @@ local tcp           = require("network.tcp")
 local proto         = require("network.proto")
 local networkConfig = require("config.networkConfig")
 local deviceConfig  = require("config.deviceConfig")
+local opType        = require("const.opType")
+local sexType       = require("const.sexType")
 local cvt           = ByteUtils
 
 local networkManager = class("networkManager")
@@ -186,7 +186,7 @@ function networkManager.login(callback)
                             gamepref.acId       = msg.AcId
                             gamepref.nickname   = msg.Nickname
                             gamepref.ip         = msg.Ip
-                            gamepref.sex        = msg.Sex
+                            gamepref.sex        = Mathf.Clamp(msg.Sex, sexType.box, sexType.girl)
                             gamepref.laolai     = msg.IsLaoLai
                             gamepref.coin       = msg.Coin
                             gamepref.desk       = { cityType = msg.DeskInfo.GameType, deskId = msg.DeskInfo.DeskId, }
@@ -320,6 +320,33 @@ function networkManager.guoPai(callback)
     local data = { Op = opType.guo }
     send(protoType.cs.opChoose, data, function(msg)
         callback(false, nil)
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.destroyDesk(callback)
+    send(protoType.cs.exitDesk, table.empty, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.exitVote(agree, callback)
+    local data = { Agree = agree }
+    send(protoType.cs.exitVote, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
     end)
 end
 

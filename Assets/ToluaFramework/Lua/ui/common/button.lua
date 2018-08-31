@@ -27,15 +27,15 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function button:setEnabled(enabled)
-    self.component.enabled = enabled
+function button:setInteractabled(interactable)
+    self.component.interactable = interactable
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function button:getEnabled()
-    return self.component.enabled
+function button:getInteractabled()
+    return self.component.interactable
 end
 
 -------------------------------------------------------------------

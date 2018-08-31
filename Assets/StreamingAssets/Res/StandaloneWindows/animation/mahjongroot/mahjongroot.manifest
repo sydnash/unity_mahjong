@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 3089599110
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f4fc3e66e30c4df97fc4b4bf3c6e257d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 07757d18d3ad222c2010babdc7e451ea
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Animation/mahjongroot/mahjongroot.anim
+Dependencies: []

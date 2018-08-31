@@ -1,11 +1,22 @@
 fileFormatVersion: 2
 guid: 07a38030480fa284f8a05ecdb4262947
-timeCreated: 1533657277
+timeCreated: 1535690772
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: DL_weixin
     21300002: DL_yk
+    21300004: DL_dl
+    21300006: DL_dl_h
+    21300008: DL_mengban
+    21300010: DL_qy02
+    21300012: DL_qy03
+    21300014: DL_qy_xc
+    21300016: DL_yhxy01
+    21300018: DL_yhxy02
+    21300020: DL_ykdl
+    21300022: DL_ykdl_h
+    21300024: DL_qy01
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -71,13 +82,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DL_weixin
+      name: DL_dl
       rect:
         serializedVersion: 2
         x: 1
-        y: 168
-        width: 244
-        height: 87
+        y: 412
+        width: 263
+        height: 99
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -85,13 +96,139 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: DL_yk
+      name: DL_dl_h
       rect:
         serializedVersion: 2
         x: 1
-        y: 79
-        width: 244
-        height: 87
+        y: 311
+        width: 263
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_mengban
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 464
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_qy01
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 464
+        width: 43
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 6, y: 6, z: 6, w: 6}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_qy02
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 483
+        width: 97
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_qy03
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 449
+        width: 24
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_qy_xc
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 477
+        width: 62
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_yhxy01
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 478
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_yhxy02
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 444
+        width: 33
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_ykdl
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 210
+        width: 263
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_ykdl_h
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 109
+        width: 263
+        height: 99
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

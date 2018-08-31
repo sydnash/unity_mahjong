@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1739090183
+CRC: 3477976177
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5372eb2efa55423a924a2ba04d14cdbb
+    Hash: 7ba1ab768529fc336bf8c601a1bf79cb
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9c731a90852e1304bbdaf66d4ffa9d4d
@@ -39,4 +39,5 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Client/Resources/UI/EnterDeskUI/EnterDeskUI.prefab
-Dependencies: []
+Dependencies:
+- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common

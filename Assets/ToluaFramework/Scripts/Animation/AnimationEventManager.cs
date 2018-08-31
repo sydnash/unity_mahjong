@@ -40,7 +40,14 @@ public class AnimationEventManager
     /// <param name="callback"></param>
     public void RegisterTrigger(string key, Action callback)
     {
-        mDict.Add(key, callback);
+        if (mDict.ContainsKey(key))
+        {
+            mDict[key] = callback;
+        }
+        else
+        {
+            mDict.Add(key, callback);
+        }
     }
 
     /// <summary>

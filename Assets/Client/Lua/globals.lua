@@ -2,12 +2,13 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local sexType = require("const.sexType")
-local mahjongType = require("logic.mahjong.mahjongType")
-local opType = require("const.opType")
+local messagebox    = require("ui.messagebox")
+local mahjongType   = require("logic.mahjong.mahjongType")
+local opType        = require("const.opType")
+local sexType       = require("const.sexType")
 
 function showMessage(text, confirmCallback, cancelCallback)
-    local ui = require("ui.messageBox").new(text, confirmCallback, cancelCallback)
+    local ui = messagebox.new(text, confirmCallback, cancelCallback)
     ui:show()
 end
 

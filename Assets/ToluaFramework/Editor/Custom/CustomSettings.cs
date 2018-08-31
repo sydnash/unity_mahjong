@@ -155,6 +155,7 @@ public static class CustomSettings
         _GT(typeof(RenderTexture)),
         _GT(typeof(Resources)),     
         _GT(typeof(LuaProfiler)),
+        _GT(typeof(Rect)),
 
         //UGUI
         _GT(typeof(EventSystem)),
@@ -163,6 +164,7 @@ public static class CustomSettings
         _GT(typeof(Button)),
         _GT(typeof(Button.ButtonClickedEvent)),
         _GT(typeof(Image)),
+        _GT(typeof(Image.Type)),
         _GT(typeof(Toggle)),
         _GT(typeof(Toggle.ToggleEvent)),
         _GT(typeof(Slider)),
@@ -178,6 +180,7 @@ public static class CustomSettings
         _GT(typeof(AudioManager)),
         _GT(typeof(SceneLoader)),
         _GT(typeof(TextureManager)),
+        _GT(typeof(AnimationManager)),
         _GT(typeof(LuaPanel)),
         _GT(typeof(LuaPanel.Widget)),
         _GT(typeof(LuaPanel.WidgetType)),

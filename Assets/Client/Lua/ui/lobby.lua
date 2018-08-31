@@ -12,10 +12,48 @@ lobby.resource = "LobbyUI"
 
 function lobby:onInit()
     self.mNickname:setText(gamepref.nickname)
-    self.mID:setText(gamepref.acId)
+    self.mID:setText("编号：" .. gamepref.acId)
 
+    self.mHead:addClickListener(self.onHeadClickedHandler, self)
+    self.mSwitchCity:addClickListener(self.onSwitchCityClickedHandler, self)
+    self.mAddRoomCard:addClickListener(self.onAddRoomCardClickedHandler, self)
+    self.mHelp:addClickListener(self.onHelpClickedHandler, self)
+    self.mSetting:addClickListener(self.onSettingClickedHandler, self)
+    self.mAccuse:addClickListener(self.onAccuseClickedHandler, self)
     self.mEnterDesk:addClickListener(self.onEnterDeskClickedHandler, self)
     self.mCreateDesk:addClickListener(self.onCreateDeskClickedHandler, self)
+    self.mEnterQYQ:addClickListener(self.onEnterQYQClickedHandler, self)
+    self.mShop:addClickListener(self.onShopClickedHandler, self)
+    self.mHistory:addClickListener(self.onHistoryClickedHandler, self)
+    self.mRank:addClickListener(self.onRankClickedHandler, self)
+    self.mActive:addClickListener(self.onActiveClickedHandler, self)
+    self.mShare:addClickListener(self.onShareClickedHandler, self)
+    self.mAuthenticate:addClickListener(self.onAuthenticateClickedHandler, self)
+    self.mMail:addClickListener(self.onMailClickedHandler, self)
+end
+
+function lobby:onHeadClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onSwitchCityClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onAddRoomCardClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onHelpClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onSettingClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onAccuseClickedHandler()
+    playButtonClickSound()
 end
 
 function lobby:onEnterDeskClickedHandler()
@@ -40,8 +78,9 @@ function lobby:onCreateDeskClickedHandler()
 
     networkManager.createDesk(cityType.xxxxx, {}, 0, function(ok, msg)
         if not ok then
-            loading:close()
             log("create desk error")
+            loading:close()
+            showMessage("网络繁忙，请稍后再试")
             return
         end
         
@@ -49,18 +88,52 @@ function lobby:onCreateDeskClickedHandler()
     end)
 end
 
+function lobby:onEnterQYQClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onShopClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onHistoryClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onRankClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onActiveClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onShareClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onAuthenticateClickedHandler()
+    playButtonClickSound()
+end
+
+function lobby:onMailClickedHandler()
+    playButtonClickSound()
+end
+
 function lobby:enterDesk(loading, cityType, deskId)
     networkManager.checkDesk(cityType, deskId, function(ok, msg)
         if not ok then
-            loading:close()
             log("check desk error")
+            loading:close()
+            showMessage("网络繁忙，请稍后再试")
             return
         end
 
         networkManager.enterDesk(cityType, deskId, function(ok, msg)
             if not ok then
-                loading:close()
                 log("enter desk error")
+                loading:close()
+                showMessage("网络繁忙，请稍后再试")
                 return
             end
 

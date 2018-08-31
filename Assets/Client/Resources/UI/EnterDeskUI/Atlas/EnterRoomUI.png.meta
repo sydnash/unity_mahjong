@@ -1,0 +1,526 @@
+fileFormatVersion: 2
+guid: 701bb4a21aca2dc4f9fda076f7315634
+timeCreated: 1535523848
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: dl_jiazai01
+    21300002: gy_di04
+    21300004: GY_gb_gl
+    21300006: JRFJ_1zi0
+    21300008: JRFJ_1zi1
+    21300010: JRFJ_1zi2
+    21300012: JRFJ_1zi3
+    21300014: JRFJ_1zi4
+    21300016: JRFJ_1zi5
+    21300018: JRFJ_1zi6
+    21300020: JRFJ_1zi7
+    21300022: JRFJ_1zi8
+    21300024: JRFJ_1zi9
+    21300026: JRFJ_2zi0
+    21300028: JRFJ_2zi1
+    21300030: JRFJ_2zi2
+    21300032: JRFJ_2zi3
+    21300034: JRFJ_2zi4
+    21300036: JRFJ_2zi5
+    21300038: JRFJ_2zi6
+    21300040: JRFJ_2zi7
+    21300042: JRFJ_2zi8
+    21300044: JRFJ_2zi9
+    21300046: JRFJ_an01
+    21300048: JRFJ_an02
+    21300050: JRFJ_di
+    21300052: JRFJ_jrfj
+    21300054: JRFJ_zics
+    21300056: JRFJ_zisc
+    21300058: zy_jrfj_di
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: dl_jiazai01
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1297
+        width: 391
+        height: 230
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gy_di04
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1429
+        width: 873
+        height: 618
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_gb_gl
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 1866
+        width: 72
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_1zi0
+      rect:
+        serializedVersion: 2
+        x: 1826
+        y: 1793
+        width: 32
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_1zi1
+      rect:
+        serializedVersion: 2
+        x: 2018
+        y: 1850
+        width: 22
+        height: 43
+      alignment: 9
+      pivot: {x: 0.59090906, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_1zi2
+      rect:
+        serializedVersion: 2
+        x: 1860
+        y: 1793
+        width: 32
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_1zi3
+      rect:
+        serializedVersion: 2
+        x: 1723
+        y: 1757
+        width: 32
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_1zi4
+      rect:
+        serializedVersion: 2
+        x: 1688
+        y: 1756
+        width: 32
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_1zi5
+      rect:
+        serializedVersion: 2
+        x: 1757
+        y: 1757
+        width: 32
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_1zi6
+      rect:
+        serializedVersion: 2
+        x: 1791
+        y: 1757
+        width: 32
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_1zi7
+      rect:
+        serializedVersion: 2
+        x: 1894
+        y: 1774
+        width: 32
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_1zi8
+      rect:
+        serializedVersion: 2
+        x: 1825
+        y: 1748
+        width: 32
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_1zi9
+      rect:
+        serializedVersion: 2
+        x: 1859
+        y: 1748
+        width: 32
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_2zi0
+      rect:
+        serializedVersion: 2
+        x: 1844
+        y: 1838
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_2zi1
+      rect:
+        serializedVersion: 2
+        x: 2018
+        y: 1895
+        width: 22
+        height: 45
+      alignment: 9
+      pivot: {x: 0.5681818, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_2zi2
+      rect:
+        serializedVersion: 2
+        x: 1723
+        y: 1802
+        width: 33
+        height: 44
+      alignment: 9
+      pivot: {x: 0.5, y: 0.48863637}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_2zi3
+      rect:
+        serializedVersion: 2
+        x: 1879
+        y: 1838
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_2zi4
+      rect:
+        serializedVersion: 2
+        x: 1914
+        y: 1819
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_2zi5
+      rect:
+        serializedVersion: 2
+        x: 1758
+        y: 1802
+        width: 32
+        height: 44
+      alignment: 9
+      pivot: {x: 0.484375, y: 0.5113636}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_2zi6
+      rect:
+        serializedVersion: 2
+        x: 1984
+        y: 1819
+        width: 32
+        height: 45
+      alignment: 9
+      pivot: {x: 0.484375, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_2zi7
+      rect:
+        serializedVersion: 2
+        x: 1792
+        y: 1802
+        width: 32
+        height: 44
+      alignment: 9
+      pivot: {x: 0.484375, y: 0.5113636}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_2zi8
+      rect:
+        serializedVersion: 2
+        x: 1949
+        y: 1819
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_2zi9
+      rect:
+        serializedVersion: 2
+        x: 1688
+        y: 1801
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_an01
+      rect:
+        serializedVersion: 2
+        x: 1688
+        y: 1967
+        width: 254
+        height: 80
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_an02
+      rect:
+        serializedVersion: 2
+        x: 1688
+        y: 1885
+        width: 254
+        height: 80
+      alignment: 9
+      pivot: {x: 0.5, y: 0.50625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_di
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 1522
+        width: 682
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_jrfj
+      rect:
+        serializedVersion: 2
+        x: 1688
+        y: 1848
+        width: 154
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_zics
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 1995
+        width: 101
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JRFJ_zisc
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 1942
+        width: 100
+        height: 51
+      alignment: 9
+      pivot: {x: 0.495, y: 0.49019608}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: zy_jrfj_di
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 1529
+        width: 810
+        height: 518
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

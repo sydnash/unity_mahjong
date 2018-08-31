@@ -5,8 +5,8 @@
 local base = require("ui.common.view")
 local messageBox = class("messageBox", base)
 
-messageBox.folder = "messagebox"
-messageBox.resource = "messagebox"
+messageBox.folder = "MessageBoxUI"
+messageBox.resource = "MessageBoxUI"
 
 function messageBox:ctor(text, confirmCallback, cancelCallback)
     self.text = text

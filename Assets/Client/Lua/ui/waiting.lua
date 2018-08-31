@@ -9,7 +9,7 @@ waiting.folder = "WaitingUI"
 waiting.resource = "WaitingUI"
 
 function waiting:onInit()
-    self.rotation = tweenRotation.new(self.mCircle, 6000, Vector3.New(0, 0, 0), Vector3.New(0, 0, 432000))
+    self.rotation = tweenRotation.new(self.mCircle, 6000, Vector3.New(0, 0, 0), Vector3.New(0, 0, -432000))
     tweenManager.add(self.rotation)
 
     self.rotation:play()

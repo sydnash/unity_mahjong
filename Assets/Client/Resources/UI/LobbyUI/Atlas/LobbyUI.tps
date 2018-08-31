@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/_Resources/UI/LobbyUI/LobbyUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/LobbyUI/Atlas/LobbyUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -90,16 +90,16 @@
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>2048</int>
+            <int>1024</int>
             <key>height</key>
-            <int>2048</int>
+            <int>1024</int>
         </QSize>
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>2048</int>
+            <int>1024</int>
             <key>height</key>
-            <int>2048</int>
+            <int>1024</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -150,7 +150,7 @@
             <key>datafile</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>Atlas/LobbyUI.tpsheet</filename>
+                <filename>LobbyUI.tpsheet</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -199,7 +199,284 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Atlas/Images/ZY_touxiang.png</key>
+            <key type="filename">Images/GY_fk.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,14,37,29</rect>
+                <key>scale9Paddings</key>
+                <rect>19,14,37,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_fk01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>55,13,109,26</rect>
+                <key>scale9Paddings</key>
+                <rect>55,13,109,26</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_fk02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,12,23,23</rect>
+                <key>scale9Paddings</key>
+                <rect>12,12,23,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_sd.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,19,30,37</rect>
+                <key>scale9Paddings</key>
+                <rect>15,19,30,37</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,24,11,49</rect>
+                <key>scale9Paddings</key>
+                <rect>5,24,11,49</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_1_01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,19,1,38</rect>
+                <key>scale9Paddings</key>
+                <rect>1,19,1,38</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_an01.png</key>
+            <key type="filename">Images/ZY_an02.png</key>
+            <key type="filename">Images/ZY_an03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,16,31,31</rect>
+                <key>scale9Paddings</key>
+                <rect>16,16,31,31</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_an04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>31,15,63,29</rect>
+                <key>scale9Paddings</key>
+                <rect>31,15,63,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_an05.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>29,17,57,33</rect>
+                <key>scale9Paddings</key>
+                <rect>29,17,57,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_an06.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>29,15,58,29</rect>
+                <key>scale9Paddings</key>
+                <rect>29,15,58,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_an07.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>30,15,59,29</rect>
+                <key>scale9Paddings</key>
+                <rect>30,15,59,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_an08.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>28,15,57,31</rect>
+                <key>scale9Paddings</key>
+                <rect>28,15,57,31</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_an09.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>28,16,56,32</rect>
+                <key>scale9Paddings</key>
+                <rect>28,16,56,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_an10.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>42,26,84,53</rect>
+                <key>scale9Paddings</key>
+                <rect>42,26,84,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_an_cj.png</key>
+            <key type="filename">Images/ZY_an_fh.png</key>
+            <key type="filename">Images/ZY_an_jr.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>66,61,132,122</rect>
+                <key>scale9Paddings</key>
+                <rect>66,61,132,122</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_an_qyq.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>128,44,255,88</rect>
+                <key>scale9Paddings</key>
+                <rect>128,44,255,88</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_hb.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>58,93,115,187</rect>
+                <key>scale9Paddings</key>
+                <rect>58,93,115,187</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_qhdy01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>48,15,96,29</rect>
+                <key>scale9Paddings</key>
+                <rect>48,15,96,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_qhdy02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,7,25,14</rect>
+                <key>scale9Paddings</key>
+                <rect>13,7,25,14</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_qhdy_xc.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,9,31,17</rect>
+                <key>scale9Paddings</key>
+                <rect>16,9,31,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_rw.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>88,137,177,273</rect>
+                <key>scale9Paddings</key>
+                <rect>88,137,177,273</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_touxiang.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -212,7 +489,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Atlas/Images/ZY_touxiang01.png</key>
+            <key type="filename">Images/ZY_touxiang01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -225,81 +502,64 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Atlas/Images/xzy_an01.png</key>
+            <key type="filename">Images/ZY_tx.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>79,104,157,207</rect>
+                <rect>21,21,43,43</rect>
                 <key>scale9Paddings</key>
-                <rect>79,104,157,207</rect>
+                <rect>21,21,43,43</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Atlas/Images/xzy_an02.png</key>
+            <key type="filename">Images/ZY_yj.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>62,62,125,123</rect>
+                <rect>47,15,95,29</rect>
                 <key>scale9Paddings</key>
-                <rect>62,62,125,123</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Atlas/Images/xzy_an03.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>62,44,124,88</rect>
-                <key>scale9Paddings</key>
-                <rect>62,44,124,88</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Atlas/Images/xzy_bg.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>320,180,640,360</rect>
-                <key>scale9Paddings</key>
-                <rect>320,180,640,360</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Atlas/Images/xzy_bg01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>69,103,139,206</rect>
-                <key>scale9Paddings</key>
-                <rect>69,103,139,206</rect>
+                <rect>47,15,95,29</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>Atlas/Images/xzy_an01.png</filename>
-            <filename>Atlas/Images/xzy_an02.png</filename>
-            <filename>Atlas/Images/xzy_an03.png</filename>
-            <filename>Atlas/Images/xzy_bg.png</filename>
-            <filename>Atlas/Images/ZY_touxiang.png</filename>
-            <filename>Atlas/Images/ZY_touxiang01.png</filename>
-            <filename>Atlas/Images/xzy_bg01.png</filename>
+            <filename>Images/ZY_an_cj.png</filename>
+            <filename>Images/ZY_an_fh.png</filename>
+            <filename>Images/ZY_an_jr.png</filename>
+            <filename>Images/ZY_an_qyq.png</filename>
+            <filename>Images/ZY_an01.png</filename>
+            <filename>Images/ZY_an02.png</filename>
+            <filename>Images/ZY_an03.png</filename>
+            <filename>Images/ZY_an04.png</filename>
+            <filename>Images/ZY_an05.png</filename>
+            <filename>Images/ZY_an06.png</filename>
+            <filename>Images/ZY_an07.png</filename>
+            <filename>Images/ZY_an08.png</filename>
+            <filename>Images/ZY_an09.png</filename>
+            <filename>Images/ZY_an10.png</filename>
+            <filename>Images/ZY_hb.png</filename>
+            <filename>Images/ZY_qhdy_xc.png</filename>
+            <filename>Images/ZY_qhdy01.png</filename>
+            <filename>Images/ZY_qhdy02.png</filename>
+            <filename>Images/ZY_rw.png</filename>
+            <filename>Images/ZY_touxiang.png</filename>
+            <filename>Images/ZY_touxiang01.png</filename>
+            <filename>Images/ZY_tx.png</filename>
+            <filename>Images/ZY_yj.png</filename>
+            <filename>Images/ZY_1.png</filename>
+            <filename>Images/ZY_1_01.png</filename>
+            <filename>Images/GY_fk.png</filename>
+            <filename>Images/GY_fk01.png</filename>
+            <filename>Images/GY_fk02.png</filename>
+            <filename>Images/GY_sd.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

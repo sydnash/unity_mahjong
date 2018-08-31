@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/_Resources/UI/LoginUI/LoginUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -90,16 +90,16 @@
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>256</int>
+            <int>512</int>
             <key>height</key>
-            <int>256</int>
+            <int>512</int>
         </QSize>
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>256</int>
+            <int>512</int>
             <key>height</key>
-            <int>256</int>
+            <int>512</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -199,25 +199,127 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Atlas/Images/DL_weixin.png</key>
-            <key type="filename">Atlas/Images/DL_yk.png</key>
+            <key type="filename">Images/DL_dl.png</key>
+            <key type="filename">Images/DL_dl_h.png</key>
+            <key type="filename">Images/DL_ykdl.png</key>
+            <key type="filename">Images/DL_ykdl_h.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>61,22,122,43</rect>
+                <rect>66,25,131,49</rect>
                 <key>scale9Paddings</key>
-                <rect>61,22,122,43</rect>
+                <rect>66,25,131,49</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/DL_mengban.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,9,9</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,9,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/DL_qy01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,12,21,23</rect>
+                <key>scale9Paddings</key>
+                <rect>11,12,21,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/DL_qy02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>24,7,49,14</rect>
+                <key>scale9Paddings</key>
+                <rect>24,7,49,14</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/DL_qy03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,8,12,16</rect>
+                <key>scale9Paddings</key>
+                <rect>6,8,12,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/DL_qy_xc.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,9,31,17</rect>
+                <key>scale9Paddings</key>
+                <rect>16,9,31,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/DL_yhxy01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,8,17,17</rect>
+                <key>scale9Paddings</key>
+                <rect>8,8,17,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/DL_yhxy02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,8,17,16</rect>
+                <key>scale9Paddings</key>
+                <rect>8,8,17,16</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>Atlas/Images/DL_weixin.png</filename>
-            <filename>Atlas/Images/DL_yk.png</filename>
+            <filename>Images/DL_dl.png</filename>
+            <filename>Images/DL_dl_h.png</filename>
+            <filename>Images/DL_mengban.png</filename>
+            <filename>Images/DL_qy_xc.png</filename>
+            <filename>Images/DL_qy02.png</filename>
+            <filename>Images/DL_qy03.png</filename>
+            <filename>Images/DL_yhxy01.png</filename>
+            <filename>Images/DL_yhxy02.png</filename>
+            <filename>Images/DL_ykdl.png</filename>
+            <filename>Images/DL_ykdl_h.png</filename>
+            <filename>Images/DL_qy01.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

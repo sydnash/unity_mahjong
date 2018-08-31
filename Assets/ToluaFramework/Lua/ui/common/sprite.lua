@@ -19,21 +19,20 @@ end
 --
 ----------------------------------------------------------------
 function sprite:getWidth()
-    return self.component.preferredWidth
+    return self.rectTransform.rect.width
 end
 
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
 function sprite:getHeight()
-    return self.component.preferredHeight
+    return self.rectTransform.rect.height
 end
 
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
 function sprite:setFillAmount(amount)
-    assert(self.component ~= nil, "")
     self.component.fillAmount = amount
 end
 

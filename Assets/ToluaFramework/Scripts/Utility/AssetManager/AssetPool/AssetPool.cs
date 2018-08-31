@@ -77,7 +77,7 @@ public class AssetPool
             ObjectQueue queue = CreateObjectQueue();
 
             asset = LoadAsset(assetPath, assetName, queue);
-            mDic.Add(asset.name, queue);
+            mDic.Add(assetName, queue);
 
             if (asset != null)
             {

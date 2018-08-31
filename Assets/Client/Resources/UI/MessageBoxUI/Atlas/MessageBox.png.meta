@@ -75,38 +75,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GY_an01_c
-      rect:
-        serializedVersion: 2
-        x: 658
-        y: 934
-        width: 244
-        height: 89
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: GY_an01_l
-      rect:
-        serializedVersion: 2
-        x: 658
-        y: 843
-        width: 244
-        height: 89
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
       name: GY_zi_queding
       rect:
         serializedVersion: 2
-        x: 904
+        x: 658
         y: 980
         width: 92
         height: 43
@@ -120,8 +92,8 @@ TextureImporter:
       name: GY_zi_quxiao
       rect:
         serializedVersion: 2
-        x: 904
-        y: 937
+        x: 752
+        y: 982
         width: 89
         height: 41
       alignment: 9

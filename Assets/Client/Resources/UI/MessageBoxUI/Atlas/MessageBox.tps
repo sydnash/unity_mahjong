@@ -199,20 +199,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Images/GY_an01_c.png</key>
-            <key type="filename">Images/GY_an01_l.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>61,22,122,45</rect>
-                <key>scale9Paddings</key>
-                <rect>61,22,122,45</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/GY_zi_queding.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -255,8 +241,6 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>Images/GY_an01_c.png</filename>
-            <filename>Images/GY_an01_l.png</filename>
             <filename>Images/GY_zi_queding.png</filename>
             <filename>Images/GY_zi_quxiao.png</filename>
             <filename>Images/qita_di01.png</filename>
