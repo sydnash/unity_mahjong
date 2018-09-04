@@ -10,12 +10,13 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: mjpai02_0
+    6400000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: _mjpai02default
-    second: {fileID: 2100000, guid: 8ce7ce0ff9054654c813875c29d332c8, type: 2}
+    second: {fileID: 2100000, guid: e62419335870af941bd022dc1a22cdf3, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -47,7 +48,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1

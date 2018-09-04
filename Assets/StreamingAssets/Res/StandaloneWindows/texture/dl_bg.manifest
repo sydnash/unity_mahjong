@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 916544443
+CRC: 113215298
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 539996b58a4656ed14bbab8538ea36a9
+    Hash: 76d8c5843451fb36478c22858966deec
   TypeTreeHash:
     serializedVersion: 2
     Hash: 21f0dc8ebad690f009368069428e0a1a
@@ -14,5 +14,5 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Texture/DL_bg.png
+- Assets/Client/Resources/Texture/DL_bg.jpg
 Dependencies: []

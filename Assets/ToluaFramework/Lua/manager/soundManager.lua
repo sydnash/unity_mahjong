@@ -49,6 +49,20 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function soundManager.setSfxVolume(volume)
+    AudioManager.instance:SetSEVolume(volume)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function soundManager.getSfxVolume()
+    return AudioManager.instance:GetSEVolume()
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function soundManager.playUI(audioPath, audioName)
     AudioManager.instance:PlayUI(audioPath, audioName)
 end

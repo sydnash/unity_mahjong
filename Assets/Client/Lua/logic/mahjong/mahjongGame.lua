@@ -22,6 +22,7 @@ mahjongGame.cardType = {
     peng = 3,
     chu  = 4,
 }
+
 -------------------------------------------------------------------------------
 -- 构造函数
 -------------------------------------------------------------------------------
@@ -152,27 +153,40 @@ end
 function mahjongGame:onEnter(msg)
     local player = gamePlayer.new(gamepref.acId)
 
-    player.nickname = gamepref.nickname
-    player.ip       = gamepref.ip
-    player.sex      = Mathf.Clamp(gamepref.sex, sexType.box, sexType.girl)
-    player.laolai   = gamepref.laolai
-    player.conncted = true
-    player.ready    = msg.Ready
-    player.turn     = msg.Turn
-    player.score    = msg.Score
+    player.nickname     = gamepref.nickname
+    player.ip           = gamepref.ip
+    player.sex          = Mathf.Clamp(gamepref.sex, sexType.box, sexType.girl)
+    player.laolai       = gamepref.laolai
+    player.conncted     = true
+    player.ready        = msg.Ready
+    player.turn         = msg.Turn
+    player.score        = msg.Score
 
-    self.players[player.acId] = player
+    self.players[player.turn] = player
     self:syncOthers(msg.Others)
 
     if msg.Reenter ~= nil then
         self.markerTurn = msg.Reenter.MarkerTurn
-        self.curOpTurn = msg.Reenter.CurOpTurn
-        self.curOpType = msg.Reenter.CurOpType
+        self.curOpTurn  = msg.Reenter.CurOpTurn
+        self.curOpType  = msg.Reenter.CurOpType
+        self.dices      = { msg.Reenter.Dice1, msg.Reenter.Dice2 }
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
 
     self.leftGames = msg.LeftTime
-    self.isPlaying = (msg.Status == gameStatus.playing)
+
+    if msg.IsInExitVote then
+        self.leftVoteSeconds    = msg.LeftVoteTime
+        self.exitVoteProposer   = msg.ExitVoteProposer
+
+        for _, v in pairs(msg.ExitVoteParams) do
+            local player = self:getPlayerByAcId(v.AcId)
+            player.exitVoteState = v.State
+        end
+
+        self.exitDeskUI = require("ui.exitdesk").new(self)
+        self.exitDeskUI:show()
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -180,7 +194,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:syncSeats(seats)
     for _, v in pairs(seats) do
-        local player = self.players[v.AcId]
+        local player = self:getPlayerByAcId(v.AcId)
 
         player[mahjongGame.cardType.shou] = v.CardsInHand
         player[mahjongGame.cardType.chu]  = v.CardsInChuPai
@@ -204,7 +218,7 @@ function mahjongGame:syncOthers(others)
         player.turn      = v.Turn
         player.score     = v.Score
 
-        self.players[player.acId] = player
+        self.players[player.turn] = player
     end
 end
 
@@ -238,7 +252,7 @@ function mahjongGame:onOtherEnterHandler(msg)
     player.turn         = msg.Turn
     player.score        = msg.Score
 
-    self.players[player.acId] = player
+    self.players[player.turn] = player
 end
 
 -------------------------------------------------------------------------------
@@ -257,8 +271,10 @@ end
 -- 开始游戏
 -------------------------------------------------------------------------------
 function mahjongGame:onGameStartHandler(msg)
-    log("startGame, msg = " .. table.tostring(msg))
+    log("start game, msg = " .. table.tostring(msg))
 
+    self.mahjongCount = msg.TotalMJCnt
+    self.dices = { msg.Dice1, msg.Dice2 }
     self.markerTurn = msg.Marker
     self.isPlaying = true
 
@@ -273,7 +289,7 @@ function mahjongGame:onFaPaiHandler(msg)
     log("fapai, msg = " .. table.tostring(msg))
 
     for _, v in pairs(msg.Seats) do
-        local player = self.players[v.AcId]
+        local player = self:getPlayerByAcId(v.AcId)
         player[mahjongGame.cardType.shou] = v.Cards
     end
 
@@ -347,16 +363,19 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:endGame()
     networkManager.destroyDesk(function(ok, msg)
-        log("endGame, msg = " .. table.tostring(msg))
+        log("end game, msg = " .. table.tostring(msg))
         if not ok then
             showMessage("网络繁忙，请稍后再试")
         else
             if msg.RetCode ~= retc.Ok then
                 
             else
-                if msg.LeftTime ~= nil and msg.LeftTime > 0 then
-                    self.exitVoteUI = require("ui.exitVote").new(self)
-                    self.exitVoteUI:show()
+                self.leftVoteSeconds    = msg.LeftTime
+                self.exitVoteProposer   = msg.Proposer
+
+                if msg.Proposer ~= nil and msg.Proposer > 0 then
+                    self.exitDeskUI = require("ui.exitDesk").new(self)
+                    self.exitDeskUI:show()
                 else
                     self:exitGame()
                 end
@@ -459,20 +478,20 @@ end
 -- 通过acid获取玩家
 -------------------------------------------------------------------------------
 function mahjongGame:getPlayerByAcId(acId)
-    return self.players[acId]
+    for _, v in pairs(self.players) do 
+        if v.acId == acId then
+            return v
+        end
+    end
+
+    return nil
 end
 
 -------------------------------------------------------------------------------
 -- 通过turn获取玩家
 -------------------------------------------------------------------------------
 function mahjongGame:getPlayerByTurn(turn)
-    for _, v in pairs(self.players) do 
-        if v.turn == turn then
-            return v
-        end
-    end
-
-    return nil
+    return self.players[turn]
 end
 
 -------------------------------------------------------------------------------
@@ -498,6 +517,13 @@ function mahjongGame:getMahjongTotalCount()
 end
 
 -------------------------------------------------------------------------------
+-- 获取庄家的Turn
+-------------------------------------------------------------------------------
+function mahjongGame:getMarkerTurn()
+    return self.markerTurn
+end
+
+-------------------------------------------------------------------------------
 -- 退出桌子
 -------------------------------------------------------------------------------
 function mahjongGame:exitGame()
@@ -519,6 +545,11 @@ function mahjongGame:exitGame()
 
     self.deskUI:close()
     self.operationUI:close()
+
+    if self.exitDeskUI ~= nil then
+        self.exitDeskUI:close()
+        self.exitDeskUI = nil
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -549,8 +580,11 @@ end
 function mahjongGame:onNotifyExitVoteHandler(msg)
     log("notify exit vote, msg = " .. table.tostring(msg))
 
-    self.exitVoteUI = require("ui.exitVote").new(self)
-    self.exitVoteUI:show()
+    self.leftVoteSeconds    = msg.LeftTime
+    self.exitVoteProposer   = msg.Proposer
+
+    self.exitDeskUI = require("ui.exitDesk").new(self)
+    self.exitDeskUI:show()
 end
 
 -------------------------------------------------------------------------------
@@ -558,7 +592,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onNotifyExitVoteFailedHandler(msg)
     log("notify exit vote failed, msg = " .. table.tostring(msg))
-    self.exitVoteUI:close()
+    self.exitDeskUI:close()
+    self.exitDeskUI = nil
 end
 
 -------------------------------------------------------------------------------
@@ -566,6 +601,10 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onExitVoteHandler(msg)
     log("exit vote, msg = " .. table.tostring(msg))
+    if self.exitDeskUI~= nil then
+        local player = self:getPlayerByAcId(msg.AcId)
+        self.exitDeskUI:setPlayerState(player)
+    end
 end
 
 -------------------------------------------------------------------------------

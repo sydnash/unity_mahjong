@@ -6,35 +6,13 @@ public class GameObjectPickerWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(GameObjectPicker), typeof(System.Object));
+		L.BeginClass(typeof(GameObjectPicker), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("Pick", Pick);
-		L.RegFunction("New", _CreateGameObjectPicker);
+		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("instance", get_instance, null);
+		L.RegVar("camera", get_camera, null);
 		L.EndClass();
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _CreateGameObjectPicker(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 0)
-			{
-				GameObjectPicker obj = new GameObjectPicker();
-				ToLua.PushObject(L, obj);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: GameObjectPicker.New");
-			}
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -43,15 +21,66 @@ public class GameObjectPickerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.Camera arg0 = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
-			UnityEngine.Vector3 arg1 = ToLua.ToVector3(L, 2);
-			UnityEngine.GameObject o = GameObjectPicker.Pick(arg0, arg1);
+			GameObjectPicker obj = (GameObjectPicker)ToLua.CheckObject<GameObjectPicker>(L, 1);
+			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
+			UnityEngine.GameObject o = obj.Pick(arg0);
 			ToLua.PushSealed(L, o);
 			return 1;
 		}
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int op_Equality(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UnityEngine.Object arg0 = (UnityEngine.Object)ToLua.ToObject(L, 1);
+			UnityEngine.Object arg1 = (UnityEngine.Object)ToLua.ToObject(L, 2);
+			bool o = arg0 == arg1;
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_instance(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, GameObjectPicker.instance);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_camera(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			GameObjectPicker obj = (GameObjectPicker)o;
+			UnityEngine.Camera ret = obj.camera;
+			ToLua.PushSealed(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index camera on a nil value");
 		}
 	}
 }

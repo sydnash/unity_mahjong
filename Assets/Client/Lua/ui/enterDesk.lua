@@ -126,7 +126,6 @@ function enterDesk:enter()
     for _, v in pairs(self.numbers) do
         deskId = deskId * 10 + tonumber(v)
     end
-    log("enter room, deskId = " .. tostring(deskId))
 
     self:close()
 

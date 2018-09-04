@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ad3a954b133ab2841a6dd140248f07b1
-timeCreated: 1535701335
+timeCreated: 1535973673
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -15,6 +15,29 @@ TextureImporter:
     21300016: DL_di03
     21300018: DL_an01
     21300020: DL_an02
+    21300022: GY_di02
+    21300024: GY_gb
+    21300026: GY_title01
+    21300028: GY_title02
+    21300030: mask
+    21300032: JS_tx
+    21300034: GY_di03
+    21300036: GY_xx_01
+    21300038: GY_xx_02
+    21300040: GY_xx_03
+    21300042: GY_xx_04
+    21300044: GY_zi01
+    21300046: GY_zi01_h
+    21300048: GY_zi02
+    21300050: GY_zi02_h
+    21300052: GY_zi03
+    21300054: GY_di04
+    21300056: GY_an_02
+    21300058: GY_an_03
+    21300060: GY_an_h
+    21300062: GY_an_02_h
+    21300064: GY_an_03_h
+    21300066: JS_tx_a
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -102,7 +125,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 166
+        y: 716
         width: 609
         height: 307
       alignment: 0
@@ -112,13 +135,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: GY_an01_c
+      name: GY_an_02
       rect:
         serializedVersion: 2
-        x: 1
-        y: 75
-        width: 244
-        height: 89
+        x: 612
+        y: 940
+        width: 199
+        height: 83
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -126,13 +149,55 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: GY_an01_l
+      name: GY_an_02_h
       rect:
         serializedVersion: 2
-        x: 247
-        y: 75
-        width: 244
-        height: 89
+        x: 813
+        y: 940
+        width: 199
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_an_03
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 855
+        width: 199
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_an_03_h
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 855
+        width: 199
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_an_h
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 770
+        width: 199
+        height: 83
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,10 +208,66 @@ TextureImporter:
       name: GY_di01
       rect:
         serializedVersion: 2
-        x: 1
-        y: 475
-        width: 873
-        height: 548
+        x: 813
+        y: 755
+        width: 115
+        height: 98
+      alignment: 9
+      pivot: {x: 0.49130434, y: 0.49489796}
+      border: {x: 30, y: 30, z: 30, w: 30}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_di02
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 680
+        width: 108
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 30, z: 30, w: 30}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_di03
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 676
+        width: 96
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 30, z: 30, w: 30}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_di04
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 625
+        width: 61
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 15, y: 0, z: 15, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_gb
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 746
+        width: 89
+        height: 107
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,13 +275,195 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: GY_gb_gl
+      name: GY_title01
       rect:
         serializedVersion: 2
-        x: 876
-        y: 949
-        width: 72
-        height: 74
+        x: 1
+        y: 582
+        width: 562
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_title02
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 657
+        width: 577
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 260, y: 0, z: 260, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_xx_01
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 565
+        width: 57
+        height: 58
+      alignment: 9
+      pivot: {x: 0.50877196, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_xx_02
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 561
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_xx_03
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 606
+        width: 56
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_xx_04
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 609
+        width: 50
+        height: 53
+      alignment: 9
+      pivot: {x: 0.56, y: 0.4716981}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_zi01
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 640
+        width: 77
+        height: 39
+      alignment: 9
+      pivot: {x: 0.4935065, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_zi01_h
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 705
+        width: 77
+        height: 39
+      alignment: 9
+      pivot: {x: 0.4935065, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_zi02
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 664
+        width: 77
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_zi02_h
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 635
+        width: 77
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_zi03
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 639
+        width: 76
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JS_tx
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 681
+        width: 87
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: JS_tx_a
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 569
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: mask
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 570
+        width: 65
+        height: 67
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

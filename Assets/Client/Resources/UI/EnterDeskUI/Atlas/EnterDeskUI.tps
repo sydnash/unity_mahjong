@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>2048</int>
+            <int>512</int>
             <key>height</key>
-            <int>2048</int>
+            <int>512</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -150,7 +150,7 @@
             <key>datafile</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>EnterRoomUI.tpsheet</filename>
+                <filename>EnterDeskUI.tpsheet</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -199,173 +199,55 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Images/JRFJ_1zi0.png</key>
-            <key type="filename">Images/JRFJ_1zi1.png</key>
-            <key type="filename">Images/JRFJ_1zi2.png</key>
-            <key type="filename">Images/JRFJ_1zi3.png</key>
-            <key type="filename">Images/JRFJ_1zi4.png</key>
-            <key type="filename">Images/JRFJ_1zi5.png</key>
-            <key type="filename">Images/JRFJ_1zi6.png</key>
-            <key type="filename">Images/JRFJ_1zi7.png</key>
-            <key type="filename">Images/JRFJ_1zi8.png</key>
-            <key type="filename">Images/JRFJ_1zi9.png</key>
+            <key type="filename">Images/JR_01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>8,11,16,21</rect>
+                <rect>16,1,33,3</rect>
                 <key>scale9Paddings</key>
-                <rect>8,11,16,21</rect>
+                <rect>16,1,33,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/JRFJ_2zi0.png</key>
-            <key type="filename">Images/JRFJ_2zi1.png</key>
-            <key type="filename">Images/JRFJ_2zi2.png</key>
-            <key type="filename">Images/JRFJ_2zi3.png</key>
-            <key type="filename">Images/JRFJ_2zi4.png</key>
-            <key type="filename">Images/JRFJ_2zi5.png</key>
-            <key type="filename">Images/JRFJ_2zi6.png</key>
-            <key type="filename">Images/JRFJ_2zi7.png</key>
-            <key type="filename">Images/JRFJ_2zi8.png</key>
-            <key type="filename">Images/JRFJ_2zi9.png</key>
+            <key type="filename">Images/JR_an01.png</key>
+            <key type="filename">Images/JR_an02.png</key>
+            <key type="filename">Images/JR_an03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>8,11,17,23</rect>
+                <rect>58,22,116,43</rect>
                 <key>scale9Paddings</key>
-                <rect>8,11,17,23</rect>
+                <rect>58,22,116,43</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/JRFJ_an01.png</key>
-            <key type="filename">Images/JRFJ_an02.png</key>
+            <key type="filename">Images/JR_di.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>64,21,128,41</rect>
+                <rect>18,17,35,34</rect>
                 <key>scale9Paddings</key>
-                <rect>64,21,128,41</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/JRFJ_di.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>171,1,341,3</rect>
-                <key>scale9Paddings</key>
-                <rect>171,1,341,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/JRFJ_jrfj.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>39,9,77,17</rect>
-                <key>scale9Paddings</key>
-                <rect>39,9,77,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/JRFJ_zics.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>26,14,51,27</rect>
-                <key>scale9Paddings</key>
-                <rect>26,14,51,27</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/JRFJ_zisc.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>25,13,51,26</rect>
-                <key>scale9Paddings</key>
-                <rect>25,13,51,26</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/gy_di04.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>218,155,437,309</rect>
-                <key>scale9Paddings</key>
-                <rect>218,155,437,309</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/zy_jrfj_di.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>203,130,405,259</rect>
-                <key>scale9Paddings</key>
-                <rect>203,130,405,259</rect>
+                <rect>18,17,35,34</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>Images/gy_di04.png</filename>
-            <filename>Images/JRFJ_1zi0.png</filename>
-            <filename>Images/JRFJ_1zi1.png</filename>
-            <filename>Images/JRFJ_1zi2.png</filename>
-            <filename>Images/JRFJ_1zi3.png</filename>
-            <filename>Images/JRFJ_1zi4.png</filename>
-            <filename>Images/JRFJ_1zi5.png</filename>
-            <filename>Images/JRFJ_1zi6.png</filename>
-            <filename>Images/JRFJ_1zi7.png</filename>
-            <filename>Images/JRFJ_1zi8.png</filename>
-            <filename>Images/JRFJ_1zi9.png</filename>
-            <filename>Images/JRFJ_2zi0.png</filename>
-            <filename>Images/JRFJ_2zi1.png</filename>
-            <filename>Images/JRFJ_2zi2.png</filename>
-            <filename>Images/JRFJ_2zi3.png</filename>
-            <filename>Images/JRFJ_2zi4.png</filename>
-            <filename>Images/JRFJ_2zi5.png</filename>
-            <filename>Images/JRFJ_2zi6.png</filename>
-            <filename>Images/JRFJ_2zi7.png</filename>
-            <filename>Images/JRFJ_2zi8.png</filename>
-            <filename>Images/JRFJ_2zi9.png</filename>
-            <filename>Images/JRFJ_an01.png</filename>
-            <filename>Images/JRFJ_an02.png</filename>
-            <filename>Images/JRFJ_di.png</filename>
-            <filename>Images/JRFJ_jrfj.png</filename>
-            <filename>Images/JRFJ_zics.png</filename>
-            <filename>Images/JRFJ_zisc.png</filename>
-            <filename>Images/zy_jrfj_di.png</filename>
+            <filename>Images/JR_01.png</filename>
+            <filename>Images/JR_an01.png</filename>
+            <filename>Images/JR_an02.png</filename>
+            <filename>Images/JR_an03.png</filename>
+            <filename>Images/JR_di.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

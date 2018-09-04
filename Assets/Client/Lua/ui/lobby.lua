@@ -50,6 +50,9 @@ end
 
 function lobby:onSettingClickedHandler()
     playButtonClickSound()
+    
+    local ui = require("ui.setting").new()
+    ui:show()
 end
 
 function lobby:onAccuseClickedHandler()

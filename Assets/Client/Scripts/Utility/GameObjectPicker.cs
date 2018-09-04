@@ -1,17 +1,43 @@
 ﻿using UnityEngine;
 
-public class GameObjectPicker
+public class GameObjectPicker : MonoBehaviour
 {
-    public static GameObject Pick(Camera camera, Vector3 screenPos)
+    private Camera mCamera = null;
+    private Ray mRay;
+
+    private static GameObjectPicker mInstance = null;
+
+    public static GameObjectPicker instance
     {
-        Ray ray = camera.ScreenPointToRay(screenPos);
+        get { return mInstance; }
+    }
+
+    public GameObject Pick(Vector3 screenPos)
+    {
+        mRay = mCamera.ScreenPointToRay(screenPos);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(mRay, out hit, 100, LayerMask.GetMask("InhandMahjong")))
         {
             return hit.collider.gameObject;
         }
 
         return null;
+    }
+
+    public Camera camera
+    {
+        get { return mCamera; }
+    }
+
+    void Awake()
+    {
+        mInstance = this;
+        mCamera = GetComponent<Camera>();
+    }
+
+    void Update()
+    {
+        Debug.DrawRay(mRay.origin, mRay.direction * 100000, Color.red, 3);
     }
 }

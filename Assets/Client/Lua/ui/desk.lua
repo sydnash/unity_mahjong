@@ -5,8 +5,8 @@
 local base = require("ui.common.view")
 local desk = class("desk", base)
 
-desk.folder = "deskui"
-desk.resource = "deskui"
+desk.folder = "DeskUI"
+desk.resource = "DeskUI"
 
 function desk:ctor(game)
     self.game = game

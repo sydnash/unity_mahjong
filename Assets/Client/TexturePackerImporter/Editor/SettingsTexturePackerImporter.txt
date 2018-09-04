@@ -5,11 +5,12 @@ tpsheetFileNames:
 - Assets/Client/Resources/UI/DeskOperationUI/Atlas/DeskOperationUI.tpsheet
 - Assets/Client/Resources/UI/DeskUI/Atlas/DeskUI.tpsheet
 - Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterDeskUI.tpsheet
-- Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterRoomUI.tpsheet
+- Assets/Client/Resources/UI/ExitDeskUI/Atlas/ExxitDeskUI.tpsheet
 - Assets/Client/Resources/UI/LoadingUI/Atlas/LoadingUI.tpsheet
 - Assets/Client/Resources/UI/LobbyUI/Atlas/LobbyUI.tpsheet
 - Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.tpsheet
 - Assets/Client/Resources/UI/MessageBoxUI/Atlas/MessageBox.tpsheet
+- Assets/Client/Resources/UI/SettingUI/Atlas/SettingUI.tpsheet
 - Assets/Client/Resources/UI/UserAgreementUI/Atlas/UserAgreementUI.tpsheet
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.tpsheet
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
@@ -17,16 +18,18 @@ textureFileNames:
 - Assets/Client/Resources/UI/Common/Atlas/Common.png
 - Assets/Client/Resources/UI/DeskOperationUI/Atlas/DeskOperationUI.png
 - Assets/Client/Resources/UI/DeskUI/Atlas/DeskUI.png
-- Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterRoomUI.png
-- Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterRoomUI.png
+- Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterDeskUI.png
+- Assets/Client/Resources/UI/ExitDeskUI/Atlas/ExxitDeskUI.png
 - Assets/Client/Resources/UI/LoadingUI/Atlas/LoadingUI.png
 - Assets/Client/Resources/UI/LobbyUI/Atlas/LobbyUI.png
 - Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.png
 - Assets/Client/Resources/UI/MessageBoxUI/Atlas/MessageBox.png
+- Assets/Client/Resources/UI/SettingUI/Atlas/SettingUI.png
 - Assets/Client/Resources/UI/UserAgreementUI/Atlas/UserAgreementUI.png
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

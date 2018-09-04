@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 41e5551bb98b24f438b133d3f8748ff0
+timeCreated: 1535954303
+licenseType: Pro
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: BDZongYi-A001
+  fontNames:
+  - BDZongYi-A001
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: font/bdzyjt
+  assetBundleVariant: 

@@ -26,7 +26,6 @@ function mahjong:ctor(id)
 end
 
 function mahjong:setPickabled(pickabled)
-    self.collider.enabled = pickabled
     local layer = pickabled and INHAND_MAHJONG_LAYER or DEFAULT_LAYER
     self:setLayer(layer, true)
 end

@@ -1,21 +1,17 @@
 ManifestFileVersion: 0
-CRC: 1263075959
+CRC: 4092621117
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4fc5b89b381f9dd2e659ec412323fb6a
+    Hash: 2b8ed2938ed3574b196edae2824693d9
   TypeTreeHash:
     serializedVersion: 2
-    Hash: be2f58b7c0b816181e151a5ec1ab5ef8
+    Hash: 15223e12a585c7b8c26c057f220bf30e
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
-- Class: 21
-  Script: {instanceID: 0}
 - Class: 28
-  Script: {instanceID: 0}
-- Class: 48
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
@@ -35,4 +31,6 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Client/Resources/UI/WaitingUI/WaitingUI.prefab
-Dependencies: []
+Dependencies:
+- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
+- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt

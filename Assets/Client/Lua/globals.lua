@@ -40,4 +40,27 @@ function playMahjongOpSound(optype, sex)
     return soundManager.playGfx(folder, resource)
 end
 
+local function writeIcon(bytes)
+    return nil
+end
+
+function downloadIcon(url, callback)
+    local hash = MD5.GetHash(url)
+    local path = ""
+    --先本地查找，没找到再从网上下载
+    http.getBytes(path, 5, function(ok, bytes)
+        if not ok then
+            http.getBytes(url, 20, function(ok, bytes)
+                if not ok then
+
+                else
+
+                end
+            end)
+        else
+            
+        end
+    end)
+end
+
 --endregion

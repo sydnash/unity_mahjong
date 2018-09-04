@@ -449,16 +449,16 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/dl_jiazai01.png</key>
+            <key type="filename">Images/mask.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>4,4,9,9</rect>
+                <rect>16,17,33,33</rect>
                 <key>scale9Paddings</key>
-                <rect>4,4,9,9</rect>
+                <rect>16,17,33,33</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -499,7 +499,7 @@
             <filename>Images/bird29.png</filename>
             <filename>Images/DL_di01.png</filename>
             <filename>Images/DL_di02.png</filename>
-            <filename>Images/dl_jiazai01.png</filename>
+            <filename>Images/mask.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

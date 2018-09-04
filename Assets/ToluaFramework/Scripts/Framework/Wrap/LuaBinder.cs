@@ -96,6 +96,9 @@ public static class LuaBinder
 		L.BeginModule("Button");
 		UnityEngine_UI_Button_ButtonClickedEventWrap.Register(L);
 		L.EndModule();
+		L.BeginModule("Image");
+		UnityEngine_UI_Image_TypeWrap.Register(L);
+		L.EndModule();
 		L.BeginModule("Toggle");
 		UnityEngine_UI_Toggle_ToggleEventWrap.Register(L);
 		L.EndModule();

@@ -55,12 +55,13 @@
     <Compile Include="Lua\ui\desk.lua" />
     <Compile Include="Lua\ui\deskOperation.lua" />
     <Compile Include="Lua\ui\enterDesk.lua" />
-    <Compile Include="Lua\ui\exitVote.lua" />
+    <Compile Include="Lua\ui\exitDesk.lua" />
     <Compile Include="Lua\ui\gameEnd.lua" />
     <Compile Include="Lua\ui\loading.lua" />
     <Compile Include="Lua\ui\lobby.lua" />
     <Compile Include="Lua\ui\login.lua" />
     <Compile Include="Lua\ui\messageBox.lua" />
+    <Compile Include="Lua\ui\setting.lua" />
     <Compile Include="Lua\ui\waiting.lua" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
