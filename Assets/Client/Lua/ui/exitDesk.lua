@@ -42,16 +42,20 @@ function exitDesk:onInit()
     if self.game.exitVoteProposer == gamepref.acId then
         self.mAgree:setInteractabled(false)
         self.mReject:setInteractabled(false)
+        self.mAgreeC:setSprite("JS_zi02_h")
+        self.mRejectC:setSprite("JS_zi01_h")
     else
         self.mAgree:setInteractabled(true)
         self.mReject:setInteractabled(true)
+        self.mAgreeC:setSprite("JS_zi02")
+        self.mRejectC:setSprite("JS_zi01")
         self.mAgree:addClickListener(self.onAgreeClickedHandler, self)
         self.mReject:addClickListener(self.onRejectClickedHandler, self)
     end
 end
 
 function exitDesk:setPlayerState(player)
-    local state = self.states[player.acId]
+    local state = self.states[player.turn]
 
     if player.acId == self.game.exitVoteProposer then
         state:setText("申请解散")

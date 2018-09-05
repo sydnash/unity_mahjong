@@ -14,6 +14,7 @@ TextureImporter:
     21300014: SZ_06
     21300016: SZ_zi01
     21300018: SZ_zi02
+    21300020: SZ_tcyx
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -82,8 +83,8 @@ TextureImporter:
       name: SZ_01
       rect:
         serializedVersion: 2
-        x: 372
-        y: 392
+        x: 208
+        y: 391
         width: 120
         height: 37
       alignment: 0
@@ -96,7 +97,7 @@ TextureImporter:
       name: SZ_02
       rect:
         serializedVersion: 2
-        x: 1
+        x: 330
         y: 393
         width: 117
         height: 35
@@ -110,8 +111,8 @@ TextureImporter:
       name: SZ_03
       rect:
         serializedVersion: 2
-        x: 120
-        y: 323
+        x: 1
+        y: 358
         width: 70
         height: 70
       alignment: 0
@@ -152,8 +153,8 @@ TextureImporter:
       name: SZ_04
       rect:
         serializedVersion: 2
-        x: 494
-        y: 419
+        x: 449
+        y: 418
         width: 10
         height: 10
       alignment: 0
@@ -166,8 +167,8 @@ TextureImporter:
       name: SZ_05
       rect:
         serializedVersion: 2
-        x: 120
-        y: 395
+        x: 330
+        y: 358
         width: 117
         height: 33
       alignment: 0
@@ -180,8 +181,8 @@ TextureImporter:
       name: SZ_06
       rect:
         serializedVersion: 2
-        x: 239
-        y: 392
+        x: 208
+        y: 353
         width: 111
         height: 36
       alignment: 0
@@ -191,11 +192,25 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
+      name: SZ_tcyx
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 471
+        width: 135
+        height: 40
+      alignment: 9
+      pivot: {x: 0.4962963, y: 0.4875}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: SZ_zi01
       rect:
         serializedVersion: 2
         x: 376
-        y: 472
+        y: 430
         width: 134
         height: 39
       alignment: 9
@@ -208,8 +223,8 @@ TextureImporter:
       name: SZ_zi02
       rect:
         serializedVersion: 2
-        x: 376
-        y: 431
+        x: 73
+        y: 389
         width: 133
         height: 39
       alignment: 0

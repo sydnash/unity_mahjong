@@ -7,6 +7,7 @@ local panel = class("panel", base)
 
 local text          = require("ui.common.text")
 local sprite        = require("ui.common.sprite")
+local image         = require("ui.common.image")
 local button        = require("ui.common.button")
 local toggle        = require("ui.common.toggle")
 local slider        = require("ui.common.slider")
@@ -42,7 +43,7 @@ local function bind(target, variableName, gameObject, widgetType, panelScript)
     elseif widgetType == LuaPanel.WidgetType.Sprite then 
         widget = sprite.new(gameObject)
     elseif widgetType == LuaPanel.WidgetType.Image then 
-        --
+        widget = image.new(gameObject)
     elseif widgetType == LuaPanel.WidgetType.Button then 
         widget = button.new(gameObject)
     elseif widgetType == LuaPanel.WidgetType.Toggle then 

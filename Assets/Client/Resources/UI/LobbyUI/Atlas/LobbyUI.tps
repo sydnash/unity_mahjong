@@ -238,19 +238,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/GY_sd.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>15,19,30,37</rect>
-                <key>scale9Paddings</key>
-                <rect>15,19,30,37</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/ZY_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -476,32 +463,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/ZY_touxiang.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>20,20,39,39</rect>
-                <key>scale9Paddings</key>
-                <rect>20,20,39,39</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/ZY_touxiang01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>17,17,35,35</rect>
-                <key>scale9Paddings</key>
-                <rect>17,17,35,35</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/ZY_tx.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -550,8 +511,6 @@
             <filename>Images/ZY_qhdy01.png</filename>
             <filename>Images/ZY_qhdy02.png</filename>
             <filename>Images/ZY_rw.png</filename>
-            <filename>Images/ZY_touxiang.png</filename>
-            <filename>Images/ZY_touxiang01.png</filename>
             <filename>Images/ZY_tx.png</filename>
             <filename>Images/ZY_yj.png</filename>
             <filename>Images/ZY_1.png</filename>
@@ -559,7 +518,6 @@
             <filename>Images/GY_fk.png</filename>
             <filename>Images/GY_fk01.png</filename>
             <filename>Images/GY_fk02.png</filename>
-            <filename>Images/GY_sd.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

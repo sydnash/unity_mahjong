@@ -21,17 +21,17 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function time.formatDate(date)
-    date = (date == nil) and time.now() or date
-    return os.date("%Y-%m-%d", date)
+function time.formatDate(d)
+    d = (d == nil) and time.now() or d
+    return os.date("%Y-%m-%d", d)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function time.formatTime(time)
-    time = (time == nil) and time.now() or time
-    return os.date("%H:%M:%S", time)
+function time.formatTime(t)
+    t = (t == nil) and time.now() or t
+    return os.date("%H:%M:%S", t)
 end
 
 -------------------------------------------------------------------

@@ -503,6 +503,20 @@ function mahjongGame:getTurn(acId)
 end
 
 -------------------------------------------------------------------------------
+-- 获取总局数
+-------------------------------------------------------------------------------
+function mahjongGame:getTotalGameCount()
+    return self.config.JuShu
+end
+
+-------------------------------------------------------------------------------
+-- 获取剩余局数
+-------------------------------------------------------------------------------
+function mahjongGame:getLeftGameCount()
+    return self.leftGames
+end
+
+-------------------------------------------------------------------------------
 -- 获取玩家人数
 -------------------------------------------------------------------------------
 function mahjongGame:getPlayerCount()
@@ -512,7 +526,7 @@ end
 -------------------------------------------------------------------------------
 -- 获取麻将总数
 -------------------------------------------------------------------------------
-function mahjongGame:getMahjongTotalCount()
+function mahjongGame:getTotalMahjongCount()
     return self.mahjongCount
 end
 
@@ -521,6 +535,20 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:getMarkerTurn()
     return self.markerTurn
+end
+
+-------------------------------------------------------------------------------
+-- 根据turn获取位置
+-------------------------------------------------------------------------------
+function mahjongGame:getSeatType(turn)
+    local mineTurn = self:getTurn(gamepref.acId)
+
+    if turn - mineTurn >= 0 then
+        return turn - mineTurn
+    end
+
+    local playerCount = self:getPlayerCount()
+    return playerCount + turn - mineTurn
 end
 
 -------------------------------------------------------------------------------
@@ -615,8 +643,13 @@ function mahjongGame:onGameEndHandler(msg)
 
     self.leftGames = msg.LeftTime
 
-    local ui = require("ui.gameEnd").new(self)
-    ui:show()
+    if self.leftGames > 0 then
+        local ui = require("ui.gameEnd").new(self)
+        ui:show()
+    else
+        local ui = require("ui.gameOver").new(self)
+        ui:show()
+    end
 
     self.deskUI:reset()
     self.operationUI:reset()

@@ -291,6 +291,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/SZ_tcyx.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>34,10,68,21</rect>
+                <key>scale9Paddings</key>
+                <rect>34,10,68,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/SZ_zi01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -330,6 +343,7 @@
             <filename>Images/SZ_06.png</filename>
             <filename>Images/SZ_zi01.png</filename>
             <filename>Images/SZ_zi02.png</filename>
+            <filename>Images/SZ_tcyx.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

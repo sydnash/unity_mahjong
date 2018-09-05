@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1487982216
+CRC: 4113722178
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ae4c09cfa5c4549866ada0f325c25b8f
+    Hash: ea492f8b9fc8113ed9d13a7aadf52238
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4a5b0fb856bcff01006297773906649c
@@ -38,6 +38,6 @@ ClassTypes:
 Assets:
 - Assets/Client/Resources/UI/LoginUI/LoginUI.prefab
 Dependencies:
-- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/texture/dl_bg
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt
+- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/texture/dl_logo

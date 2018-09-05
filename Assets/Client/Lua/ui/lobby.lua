@@ -12,7 +12,7 @@ lobby.resource = "LobbyUI"
 
 function lobby:onInit()
     self.mNickname:setText(gamepref.nickname)
-    self.mID:setText("编号：" .. gamepref.acId)
+    self.mID:setText("编号:" .. gamepref.acId)
 
     self.mHead:addClickListener(self.onHeadClickedHandler, self)
     self.mSwitchCity:addClickListener(self.onSwitchCityClickedHandler, self)

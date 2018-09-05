@@ -199,19 +199,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Images/DL_logo.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>152,77,305,153</rect>
-                <key>scale9Paddings</key>
-                <rect>152,77,305,153</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/GY_an_02.png</key>
             <key type="filename">Images/GY_an_02_h.png</key>
             <key type="filename">Images/GY_an_03.png</key>
@@ -226,6 +213,20 @@
                 <rect>50,21,99,41</rect>
                 <key>scale9Paddings</key>
                 <rect>50,21,99,41</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_an_04.png</key>
+            <key type="filename">Images/GY_an_05.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>42,18,83,35</rect>
+                <key>scale9Paddings</key>
+                <rect>42,18,83,35</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -291,6 +292,19 @@
                 <rect>22,27,45,53</rect>
                 <key>scale9Paddings</key>
                 <rect>22,27,45,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_sd.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,19,30,37</rect>
+                <key>scale9Paddings</key>
+                <rect>15,19,30,37</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -379,6 +393,65 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/ZM_xq.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>33,33,66,65</rect>
+                <key>scale9Paddings</key>
+                <rect>33,33,66,65</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/fs1_0.png</key>
+            <key type="filename">Images/fs1_1.png</key>
+            <key type="filename">Images/fs1_2.png</key>
+            <key type="filename">Images/fs1_3.png</key>
+            <key type="filename">Images/fs1_4.png</key>
+            <key type="filename">Images/fs1_5.png</key>
+            <key type="filename">Images/fs1_6.png</key>
+            <key type="filename">Images/fs1_7.png</key>
+            <key type="filename">Images/fs1_8.png</key>
+            <key type="filename">Images/fs1_9.png</key>
+            <key type="filename">Images/fs2_0.png</key>
+            <key type="filename">Images/fs2_1.png</key>
+            <key type="filename">Images/fs2_2.png</key>
+            <key type="filename">Images/fs2_3.png</key>
+            <key type="filename">Images/fs2_4.png</key>
+            <key type="filename">Images/fs2_5.png</key>
+            <key type="filename">Images/fs2_6.png</key>
+            <key type="filename">Images/fs2_7.png</key>
+            <key type="filename">Images/fs2_8.png</key>
+            <key type="filename">Images/fs2_9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,15,21,29</rect>
+                <key>scale9Paddings</key>
+                <rect>11,15,21,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/fs1_j.png</key>
+            <key type="filename">Images/fs2_j.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,15,23,29</rect>
+                <key>scale9Paddings</key>
+                <rect>11,15,23,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/mask.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -396,7 +469,6 @@
         <key>fileList</key>
         <array>
             <filename>Images/GY_di01.png</filename>
-            <filename>Images/DL_logo.png</filename>
             <filename>Images/GY_di02.png</filename>
             <filename>Images/GY_gb.png</filename>
             <filename>Images/GY_title01.png</filename>
@@ -420,6 +492,32 @@
             <filename>Images/GY_an_03_h.png</filename>
             <filename>Images/GY_an_02_h.png</filename>
             <filename>Images/JS_tx_a.png</filename>
+            <filename>Images/GY_sd.png</filename>
+            <filename>Images/fs1_0.png</filename>
+            <filename>Images/fs1_1.png</filename>
+            <filename>Images/fs1_2.png</filename>
+            <filename>Images/fs1_3.png</filename>
+            <filename>Images/fs1_4.png</filename>
+            <filename>Images/fs1_5.png</filename>
+            <filename>Images/fs1_6.png</filename>
+            <filename>Images/fs1_7.png</filename>
+            <filename>Images/fs1_8.png</filename>
+            <filename>Images/fs1_9.png</filename>
+            <filename>Images/fs1_j.png</filename>
+            <filename>Images/fs2_0.png</filename>
+            <filename>Images/fs2_1.png</filename>
+            <filename>Images/fs2_2.png</filename>
+            <filename>Images/fs2_3.png</filename>
+            <filename>Images/fs2_4.png</filename>
+            <filename>Images/fs2_5.png</filename>
+            <filename>Images/fs2_6.png</filename>
+            <filename>Images/fs2_7.png</filename>
+            <filename>Images/fs2_8.png</filename>
+            <filename>Images/fs2_9.png</filename>
+            <filename>Images/fs2_j.png</filename>
+            <filename>Images/GY_an_04.png</filename>
+            <filename>Images/GY_an_05.png</filename>
+            <filename>Images/ZM_xq.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

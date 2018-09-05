@@ -8,6 +8,35 @@ TextureImporter:
     21300002: game_zhunbei
     21300004: game_zhunbei_quxiao
     21300006: game_exit
+    21300008: ZM_1
+    21300010: ZM_2
+    21300012: ZM_3
+    21300014: ZM_an01
+    21300016: ZM_an02
+    21300018: ZM_an03
+    21300020: ZM_an03_1
+    21300022: ZM_an04
+    21300024: ZM_an05
+    21300026: ZM_di
+    21300028: ZM_di02
+    21300030: ZM_di03
+    21300032: ZM_di04
+    21300034: ZM_di05
+    21300036: ZM_tx
+    21300038: ZM_xq
+    21300040: ZM_zi08
+    21300042: ZM_zi10
+    21300044: ZM_zi11
+    21300046: ZM_zi12
+    21300048: ZM_zi13
+    21300050: ZM_zi14
+    21300052: ZM_zi15
+    21300054: ZM_4
+    21300056: ZM_tx01
+    21300058: ZM_zi01
+    21300060: ZM_zi02
+    21300062: ZM_zi03
+    21300064: ZM_ok
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -73,27 +102,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: game_exit
+      name: ZM_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 294
-        width: 75
-        height: 76
-      alignment: 9
-      pivot: {x: 0.5133333, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: game_fangjianghao
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 461
-        width: 449
-        height: 50
+        x: 169
+        y: 144
+        width: 40
+        height: 40
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -101,13 +116,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: game_zhunbei
+      name: ZM_2
       rect:
         serializedVersion: 2
-        x: 1
-        y: 372
-        width: 244
-        height: 87
+        x: 169
+        y: 102
+        width: 40
+        height: 40
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,13 +130,335 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: game_zhunbei_quxiao
+      name: ZM_3
       rect:
         serializedVersion: 2
-        x: 247
-        y: 372
-        width: 244
-        height: 87
+        x: 211
+        y: 118
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_4
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 118
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_an01
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 391
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_an02
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 370
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_an03
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 320
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_an03_1
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 249
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_an04
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 178
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_an05
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 441
+        width: 69
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_di
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 462
+        width: 428
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_di02
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 373
+        width: 121
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_di03
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 160
+        width: 100
+        height: 109
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_di04
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 426
+        width: 355
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_ok
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 102
+        width: 66
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_tx01
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 5
+        width: 95
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_zi01
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 111
+        width: 166
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_zi02
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 54
+        width: 166
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_zi03
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 6
+        width: 166
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_zi08
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 4
+        width: 139
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_zi10
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 263
+        width: 85
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_zi11
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 271
+        width: 104
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_zi12
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 161
+        width: 101
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_zi13
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 265
+        width: 223
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_zi14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 347
+        width: 225
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_zi15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 186
+        width: 220
+        height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

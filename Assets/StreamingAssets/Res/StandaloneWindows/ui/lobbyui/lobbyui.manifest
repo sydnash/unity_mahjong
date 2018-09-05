@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3755310619
+CRC: 2591408931
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 238770b59bd8ff30728776d87571a7fa
+    Hash: af63be9957e5b3e1dba7d6e7df3970c2
   TypeTreeHash:
     serializedVersion: 2
     Hash: f8c6018416399a50ba17cb8eb727196d
@@ -36,4 +36,5 @@ ClassTypes:
 Assets:
 - Assets/Client/Resources/UI/LobbyUI/LobbyUI.prefab
 Dependencies:
+- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt

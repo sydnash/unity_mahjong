@@ -6,10 +6,11 @@ tpsheetFileNames:
 - Assets/Client/Resources/UI/DeskUI/Atlas/DeskUI.tpsheet
 - Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterDeskUI.tpsheet
 - Assets/Client/Resources/UI/ExitDeskUI/Atlas/ExxitDeskUI.tpsheet
+- Assets/Client/Resources/UI/GameEndUI/Atlas/GameEndUI.tpsheet
+- Assets/Client/Resources/UI/GameOverUI/Atlas/GameOverUI.tpsheet
 - Assets/Client/Resources/UI/LoadingUI/Atlas/LoadingUI.tpsheet
 - Assets/Client/Resources/UI/LobbyUI/Atlas/LobbyUI.tpsheet
 - Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.tpsheet
-- Assets/Client/Resources/UI/MessageBoxUI/Atlas/MessageBox.tpsheet
 - Assets/Client/Resources/UI/SettingUI/Atlas/SettingUI.tpsheet
 - Assets/Client/Resources/UI/UserAgreementUI/Atlas/UserAgreementUI.tpsheet
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.tpsheet
@@ -20,15 +21,17 @@ textureFileNames:
 - Assets/Client/Resources/UI/DeskUI/Atlas/DeskUI.png
 - Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterDeskUI.png
 - Assets/Client/Resources/UI/ExitDeskUI/Atlas/ExxitDeskUI.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/GameEndUI.png
+- Assets/Client/Resources/UI/GameOverUI/Atlas/GameOverUI.png
 - Assets/Client/Resources/UI/LoadingUI/Atlas/LoadingUI.png
 - Assets/Client/Resources/UI/LobbyUI/Atlas/LobbyUI.png
 - Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.png
-- Assets/Client/Resources/UI/MessageBoxUI/Atlas/MessageBox.png
 - Assets/Client/Resources/UI/SettingUI/Atlas/SettingUI.png
 - Assets/Client/Resources/UI/UserAgreementUI/Atlas/UserAgreementUI.png
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

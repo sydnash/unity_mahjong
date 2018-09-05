@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2796554600
+CRC: 1618319866
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -11,21 +11,22 @@ AssetBundleManifest:
     Info_2:
       Name: ui/loadingui/loadingui
       Dependencies:
-        Dependency_0: ui/common/common
-        Dependency_1: texture/dl_bg
+        Dependency_0: texture/dl_bg
+        Dependency_1: texture/dl_logo
     Info_3:
       Name: ui/loginui/loginui
       Dependencies:
-        Dependency_0: ui/common/common
-        Dependency_1: texture/dl_bg
-        Dependency_2: font/fzzyjt
+        Dependency_0: texture/dl_bg
+        Dependency_1: font/fzzyjt
+        Dependency_2: texture/dl_logo
     Info_4:
       Name: scene/lobbyscene
       Dependencies: {}
     Info_5:
       Name: ui/lobbyui/lobbyui
       Dependencies:
-        Dependency_0: font/fzzyjt
+        Dependency_0: ui/common/common
+        Dependency_1: font/fzzyjt
     Info_6:
       Name: sound/click
       Dependencies: {}
@@ -218,7 +219,10 @@ AssetBundleManifest:
         Dependency_4: font/fzltzh_gbk
     Info_53:
       Name: ui/deskui/deskui
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: ui/common/common
+        Dependency_1: font/fzzyjt
+        Dependency_2: font/fzcyjt
     Info_54:
       Name: ui/deskoperationui/deskoperationui
       Dependencies: {}
@@ -436,6 +440,7 @@ AssetBundleManifest:
       Name: ui/messageboxui/messageboxui
       Dependencies:
         Dependency_0: ui/common/common
+        Dependency_1: font/fzzyjt
     Info_126:
       Name: animation/deskplane/deskplane
       Dependencies: {}
@@ -449,6 +454,7 @@ AssetBundleManifest:
       Name: ui/gameendui/gameendui
       Dependencies:
         Dependency_0: ui/common/common
+        Dependency_1: font/fzzyjt
     Info_130:
       Name: model/diamond
       Dependencies: {}
@@ -484,3 +490,11 @@ AssetBundleManifest:
       Name: ui/useragreementui/useragreementui
       Dependencies:
         Dependency_0: font/fzzyjt
+    Info_139:
+      Name: texture/dl_logo
+      Dependencies: {}
+    Info_140:
+      Name: ui/gameoverui/gameoverui
+      Dependencies:
+        Dependency_0: ui/common/common
+        Dependency_1: font/fzzyjt

@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 224718362059034796}
   - component: {fileID: 222815209149806252}
   - component: {fileID: 114609972367211944}
+  - component: {fileID: 114537152452020760}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -360,6 +361,7 @@ GameObject:
   - component: {fileID: 224283993148106266}
   - component: {fileID: 222394001492997258}
   - component: {fileID: 114725190425656914}
+  - component: {fileID: 114445222855003680}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -978,7 +980,7 @@ MonoBehaviour:
     gameObject: {fileID: 1570955218275208}
     panelScript: 
   - variableName: mHeaderA
-    widgetType: 3
+    widgetType: 4
     gameObject: {fileID: 1702408728239584}
     panelScript: 
   - variableName: mNicknameA
@@ -990,7 +992,7 @@ MonoBehaviour:
     gameObject: {fileID: 1975423901987258}
     panelScript: 
   - variableName: mHeaderB
-    widgetType: 3
+    widgetType: 4
     gameObject: {fileID: 1433551711029512}
     panelScript: 
   - variableName: mNicknameB
@@ -1002,7 +1004,7 @@ MonoBehaviour:
     gameObject: {fileID: 1167102191244930}
     panelScript: 
   - variableName: mHeaderC
-    widgetType: 3
+    widgetType: 4
     gameObject: {fileID: 1079082115221042}
     panelScript: 
   - variableName: mNicknameC
@@ -1014,7 +1016,7 @@ MonoBehaviour:
     gameObject: {fileID: 1019563313702884}
     panelScript: 
   - variableName: mHeaderD
-    widgetType: 3
+    widgetType: 4
     gameObject: {fileID: 1232552058790320}
     panelScript: 
   - variableName: mNicknameD
@@ -1044,6 +1046,14 @@ MonoBehaviour:
   - variableName: mName
     widgetType: 2
     gameObject: {fileID: 1702283841704054}
+    panelScript: 
+  - variableName: mAgreeC
+    widgetType: 3
+    gameObject: {fileID: 1044966922880376}
+    panelScript: 
+  - variableName: mRejectC
+    widgetType: 3
+    gameObject: {fileID: 1479745384500776}
     panelScript: 
 --- !u!114 &114176614103298652
 MonoBehaviour:
@@ -1382,6 +1392,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114445222855003680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1479745384500776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - key: JS_zi01
+    sprite: {fileID: 21300006, guid: 47d4dc95f6cdf9842a9a1979b7d463dc, type: 3}
+  - key: JS_zi01_h
+    sprite: {fileID: 21300008, guid: 47d4dc95f6cdf9842a9a1979b7d463dc, type: 3}
 --- !u!114 &114473396511325672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1556,6 +1582,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114537152452020760
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1044966922880376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - key: JS_zi02
+    sprite: {fileID: 21300010, guid: 47d4dc95f6cdf9842a9a1979b7d463dc, type: 3}
+  - key: JS_zi02_h
+    sprite: {fileID: 21300012, guid: 47d4dc95f6cdf9842a9a1979b7d463dc, type: 3}
 --- !u!114 &114540565525707070
 MonoBehaviour:
   m_ObjectHideFlags: 1

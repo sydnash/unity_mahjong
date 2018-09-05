@@ -1,0 +1,18 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:ee2b6a1085d850ce23fb963a23eb04be:519fedbfb24366c14495034c36acbf30:b6dc390cf77a9d739b412c317cf63b18$
+#
+:format=40300
+:texture=GameOverUI.png
+:size=512x512
+:pivotpoints=enabled
+:borders=enabled
+
+ZJS_di;345;366;110;145; 0.5;0.5; 29;30;35;32
+ZJS_di02;345;328;64;36; 0.53125;0.58333333; 31;27;9;17
+ZJS_dyj;1;358;342;153; 0.5058479532163743;0.47058823529411764; 0;0;0;0; 15;231;0;54;9;231;13;252;141;342;78;342;10;272;19;234;35;104;35;78;22;0;8;1;77;82;134;143;152;204;153; 11;0;1;2;7;13;14;8;12;13;9;11;12;9;10;11;8;9;12;7;8;13;3;6;7;6;3;4;6;4;5;3;7;14
+ZJS_zi01;1;304;181;52; 0.5;0.5096153846153846; 0;0;0;0; 4;181;0;0;0;0;52;181;52; 2;1;2;3;0;1;3

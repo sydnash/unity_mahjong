@@ -46,21 +46,24 @@ deskOperation.seats = {
 local function swap(ta, ia, tb, ib)
     local a = ta[ia]
     local b = tb[ib]
-    --交换位置
-    local p = a:getLocalPosition()
-    local r = a:getLocalRotation()
-    local s = a:getLocalScale()
 
-    a:setLocalPosition(b:getLocalPosition())
-    a:setLocalRotation(b:getLocalRotation())
-    a:setLocalScale(b:getLocalScale())
+    if a ~= nil and b ~= nil then
+        --交换位置
+        local p = a:getLocalPosition()
+        local r = a:getLocalRotation()
+        local s = a:getLocalScale()
 
-    b:setLocalPosition(p)
-    b:setLocalRotation(r)
-    b:setLocalScale(s)
-    --交换索引
-    ta[ia] = b
-    tb[ib] = a
+        a:setLocalPosition(b:getLocalPosition())
+        a:setLocalRotation(b:getLocalRotation())
+        a:setLocalScale(b:getLocalScale())
+
+        b:setLocalPosition(p)
+        b:setLocalRotation(r)
+        b:setLocalScale(s)
+        --交换索引
+        ta[ia] = b
+        tb[ib] = a
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -75,8 +78,6 @@ end
 -- 初始化
 -------------------------------------------------------------------------------
 function deskOperation:onInit()
-    self.mineTurn = self.game:getTurn(gamepref.acId)
-
     self.plane = find("table_plane")
     self.planeAnim = getComponentU(self.plane, typeof(UnityEngine.Animation))
     local planeClip = animationManager.load("deskplane", "deskplane")
@@ -89,8 +90,9 @@ function deskOperation:onInit()
     self.mahjongsRootAnim:AddClip(mahjongsRootClip, mahjongsRootClip.name)
     self.mahjongsRootAnim.clip = mahjongsRootClip
 
+    local mineTurn = self.game:getTurn(gamepref.acId)
     self.planeRoot = find("planes")
-    self.planeRoot.transform.localRotation = Quaternion.Euler(0, 90 * self.mineTurn, 0)
+    self.planeRoot.transform.localRotation = Quaternion.Euler(0, 90 * mineTurn, 0)
 
     local circle = find("planes/cricle/Cricle_0")
     self.circleMat = getComponentU(circle, typeof(UnityEngine.MeshRenderer)).sharedMaterial
@@ -122,7 +124,7 @@ function deskOperation:onInit()
     self.mGang:hide()
     self.mHu:hide()
 
-    self.layout = getComponentU(self.gameObject, typeof(UnityEngine.UI.HorizontalLayoutGroup))
+    self.layout = getComponentU(self.mDo.gameObject, typeof(UnityEngine.UI.HorizontalLayoutGroup))
     
     self.idleMahjongs = {}
     self.inhandMahjongs = {}
@@ -136,7 +138,7 @@ end
 -- 预加载
 -------------------------------------------------------------------------------
 function deskOperation:preload()
-    for i=0, self.game:getMahjongTotalCount() - 1 do
+    for i=0, self.game:getTotalMahjongCount() - 1 do
         local m = mahjong.new(i)
         m:setParent(self.mahjongsRoot)
         m:hide()
@@ -185,7 +187,7 @@ end
 -- 创建“城墙”
 -------------------------------------------------------------------------------
 function deskOperation:relocateIdleMahjongs(visible)
-    local mahjongCount = self.game:getMahjongTotalCount()
+    local mahjongCount = self.game:getTotalMahjongCount()
     local playerCount  = self.game:getPlayerCount()
     local markerTurn   = self.game:getMarkerTurn()
     local playerStart  = (self.game.dices[1] + self.game.dices[2] + markerTurn) % playerCount - 1
@@ -194,6 +196,9 @@ function deskOperation:relocateIdleMahjongs(visible)
     local i, f = math.modf(c / 2)
 
     local acc = 1
+    table.sort(self.idleMahjongs, function(a, b)
+        return a.id < b.id
+    end)
 
     for t=playerStart, playerStart-playerCount+1, -1 do
         local player = self.game:getPlayerByTurn((playerCount+t) % playerCount)
@@ -202,7 +207,7 @@ function deskOperation:relocateIdleMahjongs(visible)
             i = (player.turn % 2 == 0) and c + 1 or c - 1 
         end
 
-        local turn = self:getSeatType(player.turn)
+        local turn = self.game:getSeatType(player.turn)
         local seat = self.seats[turn]
 
         local o = seat[mahjongGame.cardType.idle].pos
@@ -705,7 +710,7 @@ function deskOperation:relocateInhandMahjongs(player, mahjongs)
         end)
     end
 
-    local turn = self:getSeatType(player.turn)
+    local turn = self.game:getSeatType(player.turn)
     local seat = self.seats[turn]
 
     local o = seat[mahjongGame.cardType.shou].pos
@@ -741,7 +746,7 @@ end
 -------------------------------------------------------------------------------
 function deskOperation:relocateChuMahjongs(player)
     local acId = player.acId
-    local turn = self:getSeatType(player.turn)
+    local turn = self.game:getSeatType(player.turn)
     local seat = self.seats[turn]
 
     local o = seat[mahjongGame.cardType.chu].pos
@@ -778,7 +783,7 @@ end
 -------------------------------------------------------------------------------
 function deskOperation:relocatePengMahjongs(player)
     local acId = player.acId
-    local turn = self:getSeatType(player.turn)
+    local turn = self.game:getSeatType(player.turn)
     local seat = self.seats[turn]
 
     local o = seat[mahjongGame.cardType.peng].pos
@@ -888,55 +893,62 @@ function deskOperation:highlightPlaneByTurn(turn)
 end
 
 -------------------------------------------------------------------------------
--- 将当前plane高亮
--------------------------------------------------------------------------------
-function deskOperation:getSeatType(turn)
-    if turn - self.mineTurn >= 0 then
-        return turn - self.mineTurn
-    end
-
-    local playerCount = self.game:getPlayerCount()
-    return playerCount + turn - self.mineTurn
-end
-
--------------------------------------------------------------------------------
 -- 重置
 -------------------------------------------------------------------------------
 function deskOperation:clear(forceDestroy)
     log("clear, forceDestroy = " .. tostring(forceDestroy))
-
-    for _, p in pairs(self.game.players) do 
-        local inhand = self.inhandMahjongs[p.acId]
-        if inhand ~= nil then
-            for _, v in pairs(inhand) do
-                table.insert(self.idleMahjongs, v)
-            end
-        end
-
-        local peng = self.pengMahjongs[p.acId]
-        if peng ~= nil then
-            for _, v in pairs(peng) do
-                table.insert(self.idleMahjongs, v)
-            end
-        end
-
-        local chu = self.chuMahjongs[p.acId]
-        if chu ~= nil then
-            for _, v in pairs(chu) do
-                table.insert(self.idleMahjongs, v)
-            end
-        end
-
-        self.inhandMahjongs[p.acId] = {}
-        self.chuMahjongs[p.acId] = {}
-        self.pengMahjongs[p.acId] = {}
-    end
 
     if forceDestroy then
         for _, m in pairs(self.idleMahjongs) do
             m:destroy()
         end
         self.idleMahjongs = {}
+    else
+        for _, m in pairs(self.idleMahjongs) do
+            m:hide()
+        end
+    end
+
+    for _, p in pairs(self.game.players) do 
+        local inhand = self.inhandMahjongs[p.acId]
+        if inhand ~= nil then
+            for _, v in pairs(inhand) do
+                if forceDestroy then
+                    v:destroy()
+                else
+                    v:hide()
+                    table.insert(self.idleMahjongs, v)
+                end
+            end
+        end
+
+        local peng = self.pengMahjongs[p.acId]
+        if peng ~= nil then
+            for _, v in pairs(peng) do
+                if forceDestroy then
+                    v:destroy()
+                else
+                    v:hide()
+                    table.insert(self.idleMahjongs, v)
+                end
+            end
+        end
+
+        local chu = self.chuMahjongs[p.acId]
+        if chu ~= nil then
+            for _, v in pairs(chu) do
+                if forceDestroy then
+                    v:destroy()
+                else
+                    v:hide()
+                    table.insert(self.idleMahjongs, v)
+                end
+            end
+        end
+
+        self.inhandMahjongs[p.acId] = {}
+        self.chuMahjongs[p.acId] = {}
+        self.pengMahjongs[p.acId] = {}
     end
 
     log("clear over, idle count = " .. tostring(#self.idleMahjongs))

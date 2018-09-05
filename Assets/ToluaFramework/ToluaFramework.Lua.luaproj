@@ -69,6 +69,7 @@
     <Compile Include="Lua\tween\tweenScale.lua" />
     <Compile Include="Lua\tween\tweenSerial.lua" />
     <Compile Include="Lua\ui\common\button.lua" />
+    <Compile Include="Lua\ui\common\image.lua" />
     <Compile Include="Lua\ui\common\input.lua" />
     <Compile Include="Lua\ui\common\pageview.lua" />
     <Compile Include="Lua\ui\common\panel.lua" />

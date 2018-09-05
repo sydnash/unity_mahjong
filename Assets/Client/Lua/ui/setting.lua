@@ -21,10 +21,22 @@ function setting:onInit()
     self.mBgmVolume:addChangedListener(self.onBGMVolumeChangedHandler, self)
     self.mSfxVolume:addChangedListener(self.onSFXVolumeChangedHandler, self)
 
-    self.mDissolve:addClickListener(self.onDissolveClickedHandler, self)
+    if self.game == nil then
+        self:setLocalPosition(Vector3.New(0, -90, 0))
+        self.mLobby:show()
+        self.mDesk:hide()
+        self.mExit:addClickListener(self.onExitClickedHandler, self)
+    else
+        self:setLocalPosition(Vector3.New(0, -8, 0))
+        self.mLobby:hide()
+        self.mDesk:show()
+
+        self.mDissolve:addClickListener(self.onDissolveClickedHandler, self)
+    end
 end
 
 function setting:onCloseClickedHandler()
+    playButtonClickSound()
     self:close()
 end
 
@@ -36,7 +48,13 @@ function setting:onSFXVolumeChangedHandler(value)
     soundManager.setSfxVolume(value)
 end
 
+function setting:onExitClickedHandler()
+    playButtonClickSound()
+end
+
 function setting:onDissolveClickedHandler()
+    playButtonClickSound()
+
     if self.game ~= nil then
         self.game:endGame()
         self:close()

@@ -1,30 +1,30 @@
 ManifestFileVersion: 0
-CRC: 2172988709
+CRC: 2078243155
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1487cf7fe39b984df233d64fb720b0c3
+    Hash: a2f87d98f4a556c997d1e56059bfdbbe
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 9fefbf0606b21f32115ae13bbd40ad91
+    Hash: 75e574924f5bb4bf036205bf5be8666f
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
-- Class: 21
-  Script: {instanceID: 0}
 - Class: 28
-  Script: {instanceID: 0}
-- Class: 48
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -36,6 +36,100 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_fzhong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_3tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/GameEndUI.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_fbei.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_8tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_2tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_9tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_sju.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mask.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_9tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_5tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_2wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_7tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_4tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_1tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_sqiu.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_5tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_4tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_6tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_sqiu.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_fxi.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/JS_dian.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_7tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_3tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_1tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_1tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_4wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_fbaiban.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_2tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_7tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_9tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_2tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_8wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_smei.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_sdong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_szu.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_5wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_7tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/JS_zi01.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/JS_di01.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_fnan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_ffa.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_3wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_6tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_szu.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_fzhong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_4tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_sxia.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_8wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_schun.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_1wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_8tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_3tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/JS_di01_1.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_sju.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_8tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_4wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_3wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_3tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_2tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_9wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_4tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_schun.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_fdong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_smei.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_5wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_9wan.png
 - Assets/Client/Resources/UI/GameEndUI/GameEndUI.prefab
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_slan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_fxi.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/JS_an_ls.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_6wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_slan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_6tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_9tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_fbaiban.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_7wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_sdong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_fnan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_fbei.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_sxia.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/JS_di02_1.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_5tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_7wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/JS_di02.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_6wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_ffa.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_1wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_1tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_6tong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_fdong.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_su_5tiao.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_2wan.png
+- Assets/Client/Resources/UI/GameEndUI/Atlas/Images/mj_h_8tiao.png
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
+- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt
