@@ -22,10 +22,8 @@ function messageBox:onInit()
     self.mCancel:addClickListener(self.onCancelClickedHandler, self)
 
     if self.confirmCallback == nil or self.cancelCallback == nil then
-        self.mConfirm:setLocalPosition(Vector3.New(0, -90, 0))
         self.mCancel:hide()
     else
-        self.mConfirm:setLocalPosition(Vector3.New(-145, -90, 0))
         self.mCancel:show()
     end
 end

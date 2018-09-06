@@ -183,7 +183,8 @@ public class Tcp : MonoBehaviour
             //发送数据
             if (mSendMessageQueue.Count > 0)
             {
-                byte[] msg = mSendMessageQueue.Dequeue();
+                byte[] msg  = mSendMessageQueue.Dequeue();
+                Action callback = mSendErrorCallbackQueue.Dequeue();
                 int sentSize = 0;
                 SocketError err = SocketError.Success;
 
@@ -192,13 +193,8 @@ public class Tcp : MonoBehaviour
                     sentSize += mSocket.Send(msg, sentSize, msg.Length - sentSize, SocketFlags.None, out err);
                     if (err != SocketError.Success)
                     {
+                        callback();
                         Logger.LogError(string.Format("tcp send data failed, err = {0}", err));
-
-                        if (mSendErrorCallbackQueue.Count > 0)
-                        {
-                            Action callback = mSendErrorCallbackQueue.Dequeue();
-                            callback();
-                        }
                         
                         break;
                     }

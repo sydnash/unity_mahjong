@@ -22,7 +22,18 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+local function local_empty_callback()
+
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function tcp.send(data, callback)
+    if callback == nil then
+        callback = local_empty_callback
+    end
+
     Tcp.instance:Send(data, callback)
 end
 

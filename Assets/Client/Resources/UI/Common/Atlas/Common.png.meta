@@ -64,6 +64,8 @@ TextureImporter:
     21300114: GY_an_04
     21300116: GY_an_05
     21300118: ZM_xq
+    21300120: GY_an_01
+    21300122: GY_an_06
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -150,8 +152,8 @@ TextureImporter:
       name: fs1_0
       rect:
         serializedVersion: 2
-        x: 954
-        y: 545
+        x: 520
+        y: 753
         width: 42
         height: 59
       alignment: 0
@@ -164,8 +166,8 @@ TextureImporter:
       name: fs1_1
       rect:
         serializedVersion: 2
-        x: 854
-        y: 625
+        x: 729
+        y: 675
         width: 31
         height: 59
       alignment: 9
@@ -178,8 +180,8 @@ TextureImporter:
       name: fs1_2
       rect:
         serializedVersion: 2
-        x: 982
-        y: 904
+        x: 89
+        y: 601
         width: 41
         height: 58
       alignment: 9
@@ -192,8 +194,8 @@ TextureImporter:
       name: fs1_3
       rect:
         serializedVersion: 2
-        x: 887
-        y: 522
+        x: 886
+        y: 595
         width: 42
         height: 59
       alignment: 0
@@ -206,8 +208,8 @@ TextureImporter:
       name: fs1_4
       rect:
         serializedVersion: 2
-        x: 325
-        y: 758
+        x: 89
+        y: 661
         width: 42
         height: 58
       alignment: 9
@@ -220,8 +222,8 @@ TextureImporter:
       name: fs1_5
       rect:
         serializedVersion: 2
-        x: 325
-        y: 697
+        x: 220
+        y: 660
         width: 40
         height: 59
       alignment: 0
@@ -234,8 +236,8 @@ TextureImporter:
       name: fs1_6
       rect:
         serializedVersion: 2
-        x: 79
-        y: 704
+        x: 790
+        y: 554
         width: 42
         height: 59
       alignment: 0
@@ -248,8 +250,8 @@ TextureImporter:
       name: fs1_7
       rect:
         serializedVersion: 2
-        x: 159
-        y: 746
+        x: 132
+        y: 601
         width: 41
         height: 58
       alignment: 9
@@ -262,8 +264,8 @@ TextureImporter:
       name: fs1_8
       rect:
         serializedVersion: 2
-        x: 982
-        y: 964
+        x: 177
+        y: 660
         width: 41
         height: 59
       alignment: 9
@@ -276,8 +278,8 @@ TextureImporter:
       name: fs1_9
       rect:
         serializedVersion: 2
-        x: 1
-        y: 663
+        x: 834
+        y: 554
         width: 42
         height: 59
       alignment: 0
@@ -290,8 +292,8 @@ TextureImporter:
       name: fs1_j
       rect:
         serializedVersion: 2
-        x: 960
-        y: 628
+        x: 520
+        y: 836
         width: 43
         height: 53
       alignment: 9
@@ -304,8 +306,8 @@ TextureImporter:
       name: fs2_0
       rect:
         serializedVersion: 2
-        x: 281
-        y: 757
+        x: 878
+        y: 534
         width: 42
         height: 59
       alignment: 0
@@ -318,8 +320,8 @@ TextureImporter:
       name: fs2_1
       rect:
         serializedVersion: 2
-        x: 854
-        y: 564
+        x: 304
+        y: 660
         width: 31
         height: 59
       alignment: 9
@@ -332,8 +334,8 @@ TextureImporter:
       name: fs2_2
       rect:
         serializedVersion: 2
-        x: 413
-        y: 758
+        x: 1
+        y: 600
         width: 41
         height: 58
       alignment: 9
@@ -346,8 +348,8 @@ TextureImporter:
       name: fs2_3
       rect:
         serializedVersion: 2
-        x: 202
-        y: 716
+        x: 922
+        y: 494
         width: 42
         height: 59
       alignment: 0
@@ -360,8 +362,8 @@ TextureImporter:
       name: fs2_4
       rect:
         serializedVersion: 2
-        x: 369
-        y: 758
+        x: 133
+        y: 661
         width: 42
         height: 58
       alignment: 9
@@ -374,8 +376,8 @@ TextureImporter:
       name: fs2_5
       rect:
         serializedVersion: 2
-        x: 246
-        y: 696
+        x: 262
+        y: 660
         width: 40
         height: 59
       alignment: 0
@@ -388,8 +390,8 @@ TextureImporter:
       name: fs2_6
       rect:
         serializedVersion: 2
-        x: 123
-        y: 685
+        x: 966
+        y: 494
         width: 42
         height: 59
       alignment: 0
@@ -402,8 +404,8 @@ TextureImporter:
       name: fs2_7
       rect:
         serializedVersion: 2
-        x: 456
-        y: 758
+        x: 44
+        y: 600
         width: 41
         height: 58
       alignment: 9
@@ -416,8 +418,8 @@ TextureImporter:
       name: fs2_8
       rect:
         serializedVersion: 2
-        x: 45
-        y: 643
+        x: 1
+        y: 660
         width: 42
         height: 59
       alignment: 0
@@ -430,8 +432,8 @@ TextureImporter:
       name: fs2_9
       rect:
         serializedVersion: 2
-        x: 1
-        y: 602
+        x: 45
+        y: 660
         width: 42
         height: 59
       alignment: 0
@@ -444,8 +446,8 @@ TextureImporter:
       name: fs2_j
       rect:
         serializedVersion: 2
-        x: 954
-        y: 606
+        x: 520
+        y: 814
         width: 43
         height: 20
       alignment: 9
@@ -455,41 +457,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: GY_an_02
-      rect:
-        serializedVersion: 2
-        x: 580
-        y: 940
-        width: 199
-        height: 83
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: GY_an_02_h
-      rect:
-        serializedVersion: 2
-        x: 781
-        y: 940
-        width: 199
-        height: 83
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: GY_an_03
+      name: GY_an_01
       rect:
         serializedVersion: 2
         x: 565
-        y: 855
-        width: 199
-        height: 83
+        y: 821
+        width: 263
+        height: 99
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -497,49 +471,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: GY_an_03_h
-      rect:
-        serializedVersion: 2
-        x: 766
-        y: 855
-        width: 199
-        height: 83
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: GY_an_04
-      rect:
-        serializedVersion: 2
-        x: 202
-        y: 818
-        width: 167
-        height: 71
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 70, y: 0, z: 70, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: GY_an_05
-      rect:
-        serializedVersion: 2
-        x: 371
-        y: 818
-        width: 167
-        height: 71
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 70, y: 0, z: 70, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: GY_an_h
+      name: GY_an_02
       rect:
         serializedVersion: 2
         x: 1
@@ -553,11 +485,109 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
+      name: GY_an_02_h
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 806
+        width: 199
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_an_03
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 736
+        width: 199
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_an_03_h
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 721
+        width: 199
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_an_04
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 952
+        width: 167
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 70, y: 0, z: 70, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_an_05
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 879
+        width: 167
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 70, y: 0, z: 70, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_an_06
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 922
+        width: 265
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_an_h
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 721
+        width: 199
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: GY_di01
       rect:
         serializedVersion: 2
-        x: 674
-        y: 755
+        x: 403
+        y: 791
         width: 115
         height: 98
       alignment: 9
@@ -570,8 +600,8 @@ TextureImporter:
       name: GY_di02
       rect:
         serializedVersion: 2
-        x: 791
-        y: 765
+        x: 828
+        y: 656
         width: 108
         height: 88
       alignment: 0
@@ -584,8 +614,8 @@ TextureImporter:
       name: GY_di03
       rect:
         serializedVersion: 2
-        x: 791
-        y: 686
+        x: 403
+        y: 712
         width: 96
         height: 77
       alignment: 0
@@ -598,8 +628,8 @@ TextureImporter:
       name: GY_di04
       rect:
         serializedVersion: 2
-        x: 901
-        y: 800
+        x: 766
+        y: 766
         width: 61
         height: 53
       alignment: 0
@@ -612,8 +642,8 @@ TextureImporter:
       name: GY_gb
       rect:
         serializedVersion: 2
-        x: 674
-        y: 646
+        x: 549
+        y: 627
         width: 89
         height: 107
       alignment: 0
@@ -626,8 +656,8 @@ TextureImporter:
       name: GY_sd
       rect:
         serializedVersion: 2
-        x: 901
-        y: 723
+        x: 766
+        y: 689
         width: 60
         height: 75
       alignment: 0
@@ -669,7 +699,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 964
-        y: 786
+        y: 819
         width: 57
         height: 58
       alignment: 9
@@ -682,8 +712,8 @@ TextureImporter:
       name: GY_xx_02
       rect:
         serializedVersion: 2
-        x: 963
-        y: 683
+        x: 501
+        y: 705
         width: 46
         height: 46
       alignment: 0
@@ -696,8 +726,8 @@ TextureImporter:
       name: GY_xx_03
       rect:
         serializedVersion: 2
-        x: 967
-        y: 846
+        x: 964
+        y: 761
         width: 56
         height: 56
       alignment: 0
@@ -710,8 +740,8 @@ TextureImporter:
       name: GY_xx_04
       rect:
         serializedVersion: 2
-        x: 963
-        y: 731
+        x: 964
+        y: 706
         width: 50
         height: 53
       alignment: 9
@@ -724,8 +754,8 @@ TextureImporter:
       name: GY_zi01
       rect:
         serializedVersion: 2
-        x: 931
-        y: 504
+        x: 938
+        y: 665
         width: 77
         height: 39
       alignment: 9
@@ -738,8 +768,8 @@ TextureImporter:
       name: GY_zi01_h
       rect:
         serializedVersion: 2
-        x: 202
-        y: 777
+        x: 938
+        y: 624
         width: 77
         height: 39
       alignment: 9
@@ -752,8 +782,8 @@ TextureImporter:
       name: GY_zi02
       rect:
         serializedVersion: 2
-        x: 1
-        y: 765
+        x: 729
+        y: 634
         width: 77
         height: 39
       alignment: 0
@@ -766,8 +796,8 @@ TextureImporter:
       name: GY_zi02_h
       rect:
         serializedVersion: 2
-        x: 80
-        y: 765
+        x: 640
+        y: 606
         width: 77
         height: 39
       alignment: 0
@@ -780,8 +810,8 @@ TextureImporter:
       name: GY_zi03
       rect:
         serializedVersion: 2
-        x: 1
-        y: 724
+        x: 808
+        y: 615
         width: 76
         height: 39
       alignment: 0
@@ -794,8 +824,8 @@ TextureImporter:
       name: JS_tx
       rect:
         serializedVersion: 2
-        x: 765
-        y: 597
+        x: 640
+        y: 647
         width: 87
         height: 87
       alignment: 0
@@ -808,8 +838,8 @@ TextureImporter:
       name: JS_tx_a
       rect:
         serializedVersion: 2
-        x: 889
-        y: 652
+        x: 719
+        y: 563
         width: 69
         height: 69
       alignment: 0
@@ -822,8 +852,8 @@ TextureImporter:
       name: mask
       rect:
         serializedVersion: 2
-        x: 887
-        y: 583
+        x: 930
+        y: 555
         width: 65
         height: 67
       alignment: 0
@@ -836,8 +866,8 @@ TextureImporter:
       name: ZM_xq
       rect:
         serializedVersion: 2
-        x: 540
-        y: 722
+        x: 830
+        y: 746
         width: 132
         height: 131
       alignment: 0

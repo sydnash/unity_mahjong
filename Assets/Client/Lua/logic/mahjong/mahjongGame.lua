@@ -27,12 +27,14 @@ mahjongGame.cardType = {
 -- 构造函数
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data)
-    self.mahjongCount   = 108
-    self.deskId         = data.DeskId
-    self.cityType       = data.GameType
-    self.config         = data.Config
+    self.totalMahjongCount  = 108
+    self.leftMahjongCount   = 0
+    self.deskId             = data.DeskId
+    self.cityType           = data.GameType
+    self.config             = data.Config
 
     self.players = {}
+    self.playerCount = 1
     self:registerCommandHandlers()
 
     self:onEnter(data)
@@ -219,6 +221,7 @@ function mahjongGame:syncOthers(others)
         player.score     = v.Score
 
         self.players[player.turn] = player
+        self.playerCount = self.playerCount + 1
     end
 end
 
@@ -253,6 +256,9 @@ function mahjongGame:onOtherEnterHandler(msg)
     player.score        = msg.Score
 
     self.players[player.turn] = player
+    self.playerCount = self.playerCount + 1
+
+    self.deskUI:onPlayerEnter(player)
 end
 
 -------------------------------------------------------------------------------
@@ -273,7 +279,8 @@ end
 function mahjongGame:onGameStartHandler(msg)
     log("start game, msg = " .. table.tostring(msg))
 
-    self.mahjongCount = msg.TotalMJCnt
+    self.totalMahjongCount = msg.TotalMJCnt
+    self.leftMahjongCount = self.totalMahjongCount
     self.dices = { msg.Dice1, msg.Dice2 }
     self.markerTurn = msg.Marker
     self.isPlaying = true
@@ -291,8 +298,13 @@ function mahjongGame:onFaPaiHandler(msg)
     for _, v in pairs(msg.Seats) do
         local player = self:getPlayerByAcId(v.AcId)
         player[mahjongGame.cardType.shou] = v.Cards
+
+        for _, _ in pairs(v.Cards) do
+            self.leftMahjongCount = self.leftMahjongCount - 1
+        end
     end
 
+    self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
     self.operationUI:OnMahjongDispatched()
 end
 
@@ -307,8 +319,10 @@ function mahjongGame:onMoPaiHandler(msg)
 
     for _, v in pairs(msg.Ids) do
         table.insert(inhandMahjongs, v)
+        self.leftMahjongCount = self.leftMahjongCount - 1
     end
 
+    self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
     self.operationUI:onMoPai(msg.AcId, msg.Ids)
 end
 
@@ -464,6 +478,7 @@ end
 -- SC 胡
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard)
+    self.deskUI:onPlayerHu(acId)
     self.operationUI:onOpDoHu(acId, cards, beAcId, beCard)
 end
 
@@ -517,17 +532,31 @@ function mahjongGame:getLeftGameCount()
 end
 
 -------------------------------------------------------------------------------
--- 获取玩家人数
+-- 获取玩家总人数
+-------------------------------------------------------------------------------
+function mahjongGame:getTotalPlayerCount()
+    return self.config.RenShu
+end
+
+-------------------------------------------------------------------------------
+-- 获取加入的玩家人数
 -------------------------------------------------------------------------------
 function mahjongGame:getPlayerCount()
-    return self.config.RenShu
+    return self.playerCount
 end
 
 -------------------------------------------------------------------------------
 -- 获取麻将总数
 -------------------------------------------------------------------------------
 function mahjongGame:getTotalMahjongCount()
-    return self.mahjongCount
+    return self.totalMahjongCount
+end
+
+-------------------------------------------------------------------------------
+-- 获取麻将剩余数
+-------------------------------------------------------------------------------
+function mahjongGame:getLeftMahjongCount()
+    return self.leftMahjongCount
 end
 
 -------------------------------------------------------------------------------
@@ -547,7 +576,23 @@ function mahjongGame:getSeatType(turn)
         return turn - mineTurn
     end
 
-    local playerCount = self:getPlayerCount()
+    local playerCount = self:getTotalPlayerCount()
+    return playerCount + turn - mineTurn
+end
+
+-------------------------------------------------------------------------------
+-- 根据acId获取位置
+-------------------------------------------------------------------------------
+function mahjongGame:getSeatTypeByAcId(acId)
+    local player = self:getPlayerByAcId(acId)
+    local turn = player.turn
+    local mineTurn = self:getTurn(gamepref.acId)
+
+    if turn - mineTurn >= 0 then
+        return turn - mineTurn
+    end
+
+    local playerCount = self:getTotalPlayerCount()
     return playerCount + turn - mineTurn
 end
 
@@ -569,6 +614,7 @@ function mahjongGame:exitGame()
         end
     end)
 
+    self.playerCount = 0
     self:unregisterCommandHandlers()
 
     self.deskUI:close()
@@ -598,7 +644,8 @@ function mahjongGame:onOtherExitHandler(msg)
     log("other exit, msg = " .. table.tostring(msg))
 
     if self.leftGames > 0 then
-
+        self.playerCount = self.playerCount - 1
+        self.deskUI:onPlayerExit(msg.Turn)
     end
 end
 

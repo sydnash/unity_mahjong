@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3741038064
+CRC: 1894089069
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9c4980c9f33d2cbd56ebc86099dbd4c1
+    Hash: 2b97de0495f2ef7a247166086ceba62b
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 2c04bbf50bf667839b80f8a9128cb316
+    Hash: 1a6c243517a6807a9f7b43d0e84f40e3
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -27,6 +27,8 @@ ClassTypes:
   Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 128
@@ -42,4 +44,3 @@ Assets:
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt
-- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzcyjt

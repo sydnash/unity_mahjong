@@ -188,7 +188,7 @@ end
 -------------------------------------------------------------------------------
 function deskOperation:relocateIdleMahjongs(visible)
     local mahjongCount = self.game:getTotalMahjongCount()
-    local playerCount  = self.game:getPlayerCount()
+    local playerCount  = self.game:getTotalPlayerCount()
     local markerTurn   = self.game:getMarkerTurn()
     local playerStart  = (self.game.dices[1] + self.game.dices[2] + markerTurn) % playerCount - 1
 
@@ -218,7 +218,6 @@ function deskOperation:relocateIdleMahjongs(visible)
 
         for k=1, i do
             local m = self.idleMahjongs[acc]
-            log(acc)
             acc = acc + 1
 
             local u, v = math.modf((k - 1) / 2)
@@ -924,12 +923,14 @@ function deskOperation:clear(forceDestroy)
 
         local peng = self.pengMahjongs[p.acId]
         if peng ~= nil then
-            for _, v in pairs(peng) do
-                if forceDestroy then
-                    v:destroy()
-                else
-                    v:hide()
-                    table.insert(self.idleMahjongs, v)
+            for _, u in pairs(peng) do
+                for _, v in pairs(u) do
+                    if forceDestroy then
+                        v:destroy()
+                    else
+                        v:hide()
+                        table.insert(self.idleMahjongs, v)
+                    end
                 end
             end
         end

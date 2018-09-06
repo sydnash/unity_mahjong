@@ -200,6 +200,11 @@ public class Http : MonoBehaviour
         }
         catch (Exception ex)
         {
+            lock (mResponseDict)
+            {
+                mResponseDict.Add(args.url, null);
+            }
+
             Logger.LogError(ex.Message);
         }
         finally

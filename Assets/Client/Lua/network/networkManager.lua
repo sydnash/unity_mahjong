@@ -76,7 +76,6 @@ end
 local function send(command, data, callback)
     token = networkCallbackPool:push(token + 1, callback)
     local msg = proto.build(command, token, gamepref.acId, gamepref.session, data)
-
     tcp.send(msg, function()
         networkCallbackPool:pop(token)
         callback(nil)
@@ -107,6 +106,11 @@ local function receive(bytes, size)
 
         --剔除已解析过的数据
         networkManager.recvbuffer = cvt.TrimBytes(networkManager.recvbuffer, length)
+        --过滤心跳包
+        if msg.Command == protoType.hb then
+            networkManager.timestamp = time.realtimeSinceStartup()
+            return
+        end
         --触发回调
         local callback = networkCallbackPool:pop(msg.RequestId)
         if callback == nil then
@@ -122,8 +126,62 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.setup()
+function networkManager.setup(disconnectedCallback)
+    networkManager.disconnectedCallback = disconnectedCallback
     tcp.registerReceivedCallback(receive)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.release()
+    if networkManager.updateHandler ~= nil then
+         unregisterUpdateListener(networkManager.updateHandler)
+         networkManager.updateHandler = nil
+    end
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.update()
+    local now = time.realtimeSinceStartup()
+    local ping = networkConfig.ping
+    local pong = math.max(ping + 0.5, networkConfig.pong)
+
+    if now - networkManager.pingTick > ping then
+        send(protoType.hb, table.empty, function()
+        end)
+        networkManager.pingTick = time.realtimeSinceStartup()
+    end
+
+    if now - networkManager.timestamp > pong then
+        networkManager.release()
+
+        if networkManager.disconnectedCallback ~= nil then
+            networkManager.disconnectedCallback()
+        end
+    end
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.connect(host, port, callback)
+    tcp.connect(host, port, function(connected)
+        if connected then
+            networkManager.pingTick = time.realtimeSinceStartup()
+            networkManager.timestamp = time.realtimeSinceStartup()
+
+            if networkManager.updateHandler == nil then
+                networkManager.updateHandler = registerUpdateListener(networkManager.update, nil)
+            end
+        end
+
+        if callback ~= nil then
+            callback(connected)
+        end
+    end)
 end
 
 -------------------------------------------------------------------
@@ -131,6 +189,7 @@ end
 -------------------------------------------------------------------
 function networkManager.disconnect()
     log("network disconnect begin: " .. time.now())
+    networkManager.release()
     tcp.disconnect()
     log("network disconnect end: " .. time.now())
 end
@@ -169,8 +228,10 @@ function networkManager.login(callback)
 
             gamepref.acId = acid
             gamepref.session = session
+            gamepref.host = host
+            gamepref.port = port
 
-            tcp.connect(host, port, function(connected)
+            networkManager.connect(host, port, function(connected)
                 if not connected then
                     callback(false, nil)
                 else

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1618319866
+CRC: 748663006
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -222,7 +222,6 @@ AssetBundleManifest:
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
-        Dependency_2: font/fzcyjt
     Info_54:
       Name: ui/deskoperationui/deskoperationui
       Dependencies: {}
@@ -451,50 +450,50 @@ AssetBundleManifest:
       Name: ui/common/common
       Dependencies: {}
     Info_129:
-      Name: ui/gameendui/gameendui
-      Dependencies:
-        Dependency_0: ui/common/common
-        Dependency_1: font/fzzyjt
-    Info_130:
       Name: model/diamond
       Dependencies: {}
-    Info_131:
+    Info_130:
       Name: texture/dl_bg
       Dependencies: {}
-    Info_132:
+    Info_131:
       Name: font/fzzyjt
       Dependencies: {}
-    Info_133:
+    Info_132:
       Name: font/bdzyjt
       Dependencies: {}
-    Info_134:
+    Info_133:
       Name: font/fzcyjt
       Dependencies: {}
-    Info_135:
+    Info_134:
       Name: font/fzltzh_gbk
       Dependencies: {}
-    Info_136:
+    Info_135:
       Name: ui/exitdeskui/exitdeskui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
         Dependency_2: font/bdzyjt
         Dependency_3: font/fzcyjt
-    Info_137:
+    Info_136:
       Name: ui/settingui/settingui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
         Dependency_2: font/bdzyjt
-    Info_138:
+    Info_137:
       Name: ui/useragreementui/useragreementui
       Dependencies:
         Dependency_0: font/fzzyjt
-    Info_139:
+    Info_138:
       Name: texture/dl_logo
       Dependencies: {}
-    Info_140:
+    Info_139:
       Name: ui/gameoverui/gameoverui
+      Dependencies:
+        Dependency_0: ui/common/common
+        Dependency_1: font/fzzyjt
+    Info_140:
+      Name: ui/gameendui/gameendui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt

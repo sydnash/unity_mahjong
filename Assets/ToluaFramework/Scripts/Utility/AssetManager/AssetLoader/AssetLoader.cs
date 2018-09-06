@@ -146,9 +146,6 @@ public class AssetLoader
         foreach (string key in willDeleteKeys)
         {
             mBundles.Remove(key);
-#if UNITY_EDITOR
-            Debug.LogFormat("unload assetbudle: {0}", key);
-#endif
         }
     }
 
@@ -252,9 +249,6 @@ public class AssetLoader
             if (bundle.bundle == null)
             {
                 bundle.bundle = AssetBundle.LoadFromFile(bundleName);
-#if UNITY_EDITOR
-                Debug.LogFormat("load assetbudle: {0}", bundleName);
-#endif
             }
 
             bundle.timestamp = Time.realtimeSinceStartup;

@@ -17,30 +17,35 @@ end
 
 function desk:onInit()
     local players = { 
-        { nickname = self.mNicknameM, score = self.mScoreM, },
-        { nickname = self.mNicknameR, score = self.mScoreR, p = self.mPlayerR_P, u = self.mPlayerR_U, },
-        { nickname = self.mNicknameT, score = self.mScoreT, p = self.mPlayerT_P, u = self.mPlayerT_U, },
-        { nickname = self.mNicknameL, score = self.mScoreL, p = self.mPlayerL_P, u = self.mPlayerL_U, },
+        { nickname = self.mNicknameM, score = self.mScoreM, hu = self.mPlayerM_Hu, marker = self.mMarkerM, que = self.mQueM, },
+        { nickname = self.mNicknameR, score = self.mScoreR, p = self.mPlayerR_P, u = self.mPlayerR_U, ready = self.mPlayerR_Ready, hu = self.mPlayerR_Hu, marker = self.mMarkerR, que = self.mQueR, },
+        { nickname = self.mNicknameT, score = self.mScoreT, p = self.mPlayerT_P, u = self.mPlayerT_U, ready = self.mPlayerT_Ready, hu = self.mPlayerT_Hu, marker = self.mMarkerT, que = self.mQueT, },
+        { nickname = self.mNicknameL, score = self.mScoreL, p = self.mPlayerL_P, u = self.mPlayerL_U, ready = self.mPlayerL_Ready, hu = self.mPlayerL_Hu, marker = self.mMarkerL, que = self.mQueL, },
     }
+    self.players = players
 
-    local playerCount = self.game:getPlayerCount()
+    for _, p in pairs(players) do
+        p.hu:hide()
+        p.marker:hide()
+        p.que:hide()
 
-    for i=2, #players do
-        players[i].p:hide()
+        if p.p ~= nil and p.u ~= nil then
+            p.p:hide()
 
-        if playerCount == 4 then
-            players[i].u:show()
-        elseif playerCount == 3 then
-            if i % 2 == 0 then
-                players[i].u:show()
-            else
-                players[i].u:hide()
-            end
-        elseif playerCount == 2 then
-            if i % 2 == 0 then
-                players[i].u:hide()
-            else
-                players[i].u:show()
+            if playerCount == 4 then
+                p.u:show()
+            elseif playerCount == 3 then
+                if i % 2 == 0 then
+                    p.u:show()
+                else
+                    p.u:hide()
+                end
+            elseif playerCount == 2 then
+                if i % 2 == 0 then
+                    p.u:hide()
+                else
+                    p.u:show()
+                end
             end
         end
     end
@@ -48,6 +53,7 @@ function desk:onInit()
     self.mDeskID:setText("房号:" .. tostring(self.game.deskId))
     self:updateCurrentGameIndex()
     self.mTime:setText(time.formatTime())
+    self:updateLeftMahjongCount()
 
     for _, v in pairs(self.game.players) do
         local s = self.game:getSeatType(v.turn)
@@ -56,15 +62,38 @@ function desk:onInit()
         if s ~= mahjongGame.seatType.mine then
             p.p:show()
             p.u:hide()
+
+            self:setReady(v.acId, v.ready)
         end
 
         p.nickname:setText(v.nickname)
         p.score:setText("分数:" .. tostring(v.score))
+
+        if false then
+            p.hu:show()
+        else
+            p.hu:hide()
+        end
     end
 
+    local playerTotalCount = self.game:getTotalPlayerCount()
+    local playerCount = self.game:getPlayerCount()
+
+    if playerCount == playerTotalCount then
+        self.mInvite:hide()
+        self:showMarker()
+    else
+        self.mInvite:show()
+    end
+
+    self.mInvite:addClickListener(self.onInviteClickedHandler, self)
     self.mReady:addClickListener(self.onReadyClickedHandler, self)
     self.mCancel:addClickListener(self.onCancelClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
+end
+
+function desk:onInviteClickedHandler()
+    playButtonClickSound()
 end
 
 function desk:onReadyClickedHandler()
@@ -94,7 +123,13 @@ function desk:setReady(acId, ready)
             self.mCancel:hide()
         end
     else
-        --其他的准备状态改变
+        local seat = self.game:getSeatTypeByAcId(acId) + 1
+
+        if ready then
+            self.players[seat].ready:show()
+        else
+            self.players[seat].ready:hide()
+        end
     end
 end
 
@@ -111,13 +146,32 @@ function desk:setNickname(seat, nickname)
 end
 
 function desk:onGameStart()
+    self.mInvite:hide()
     self.mReady:hide()
     self.mCancel:hide()
+
+    for _, v in pairs(self.players) do
+        if v.ready ~= nil then
+            v.ready:hide()
+        end
+    end
+
+    self:showMarker()
 end
 
 function desk:reset()
+    self.mInvite:hide()
     self.mReady:show()
     self.mCancel:hide()
+
+    for _, v in pairs(self.players) do
+        v.hu:hide()
+
+        if v.ready ~= nil then
+            v.ready:hide()
+            v.marker:hide()
+        end
+    end
 end
 
 function desk:update()
@@ -130,6 +184,60 @@ function desk:updateCurrentGameIndex()
     local currentGameIndex = totalGameCount - leftGameCount + 1
 
     self.mGameCount:setText("第" .. tostring(currentGameIndex) .. "/" .. tostring(totalGameCount) .. "局")
+end
+
+function desk:onPlayerEnter(player)
+    local playerTotalCount = self.game:getTotalPlayerCount()
+    local playerCount = self.game:getPlayerCount()
+
+    if playerCount == playerTotalCount then
+        self.mInvite:hide()
+    else
+        self.mInvite:show()
+    end
+
+    local s = self.game:getSeatType(player.turn)
+    local p = self.players[s + 1]
+
+    p.p:show()
+    p.u:hide()
+
+    p.ready:hide()
+    p.nickname:setText(player.nickname)
+    p.score:setText("分数:" .. tostring(player.score))
+end
+
+function desk:onPlayerExit(turn)
+    self.mInvite:show()
+
+    local s = self.game:getSeatType(turn)
+    local p = self.players[s + 1]
+
+    p.p:hide()
+    p.u:show()
+end
+
+function desk:onPlayerHu(acId)
+    local s = self.game:getSeatTypeByAcId(acId)
+    local p = self.players[s + 1]
+    p.hu:show()
+end
+
+function desk:showMarker()
+    local marker = self.game:getMarkerTurn()
+
+    if marker ~= nil then
+        local seat = self.game:getSeatType(marker) + 1
+        self.players[seat].marker:show()
+    end
+end
+
+function desk:updateLeftMahjongCount(cnt)
+    if cnt == nil then 
+        cnt = self.game:getLeftMahjongCount()
+    end
+
+    self.mLeftCount:setText(tostring(cnt))
 end
 
 return desk

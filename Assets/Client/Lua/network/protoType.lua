@@ -3,6 +3,9 @@
 --此文件由[BabeLua]插件自动生成
 
 return {
+    -- heart beat
+    hb = "CmdType.fly.Ping",
+    -- client to server
     cs = {
         loginHs         = "CmdType.fly.CS.LoginHs",
         createDesk      = "CmdType.fly.CS.CreateDesk",
@@ -13,7 +16,7 @@ return {
         exitDesk        = "CmdType.fly.CS.ExitGSDesk",
         exitVote        = "CmdType.fly.CS.ExitVote",
     },
-
+    -- server to client
     sc = {
         loginHs                 = "CmdType.fly.SC.LoginHs",
         createDesk              = "CmdType.fly.SC.CreateDesk",

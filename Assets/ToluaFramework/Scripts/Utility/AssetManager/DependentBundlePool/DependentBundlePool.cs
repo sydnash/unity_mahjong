@@ -73,10 +73,6 @@ public class DependentBundlePool
             HashSet<string> set = mAssetDict[assetName];
             set.Add(dependentBundleName);
         }
-
-#if UNITY_EDITOR
-        Debug.LogFormat("load dependent bundle: {0} | {1}", assetName, dependentBundleName);
-#endif
     }
 
     /// <summary>
@@ -92,9 +88,6 @@ public class DependentBundlePool
             foreach (string bundleName in set)
             {
                 LoadBundle(bundleName);
-#if UNITY_EDITOR
-                Debug.LogFormat("reload dependent bundle: {0}", bundleName);
-#endif
             }
         }
     }
@@ -115,10 +108,6 @@ public class DependentBundlePool
                 {
                     DependentBundle dependentBundle = mDependentBundleDict[bundleName];
                     dependentBundle.refCount--;
-
-#if UNITY_EDITOR
-                    Debug.LogFormat("unload dependent bundle: {0}, ref = {1}", bundleName, dependentBundle.refCount);
-#endif
 
                     if (dependentBundle.refCount == 0 && dependentBundle.bundle != null)
                     {
