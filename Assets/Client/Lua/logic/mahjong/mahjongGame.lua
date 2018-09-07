@@ -21,6 +21,7 @@ mahjongGame.cardType = {
     shou = 2,
     peng = 3,
     chu  = 4,
+    hu   = 5,
 }
 
 -------------------------------------------------------------------------------
@@ -66,6 +67,8 @@ function mahjongGame:ctor(data)
         local player = self:getPlayerByAcId(gamepref.acId)
         self.deskUI:setReady(player.acId, player.ready)
     end
+
+    self:syncExitVote(data)
 end
 
 -------------------------------------------------------------------------------
@@ -176,19 +179,6 @@ function mahjongGame:onEnter(msg)
     end
 
     self.leftGames = msg.LeftTime
-
-    if msg.IsInExitVote then
-        self.leftVoteSeconds    = msg.LeftVoteTime
-        self.exitVoteProposer   = msg.ExitVoteProposer
-
-        for _, v in pairs(msg.ExitVoteParams) do
-            local player = self:getPlayerByAcId(v.AcId)
-            player.exitVoteState = v.State
-        end
-
-        self.exitDeskUI = require("ui.exitdesk").new(self)
-        self.exitDeskUI:show()
-    end
 end
 
 -------------------------------------------------------------------------------
@@ -222,6 +212,24 @@ function mahjongGame:syncOthers(others)
 
         self.players[player.turn] = player
         self.playerCount = self.playerCount + 1
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 同步解散房间投票的数据
+-------------------------------------------------------------------------------
+function mahjongGame:syncExitVote(msg)
+    if msg.IsInExitVote then
+        self.leftVoteSeconds    = msg.LeftVoteTime
+        self.exitVoteProposer   = msg.ExitVoteProposer
+
+        for _, v in pairs(msg.ExitVoteParams) do
+            local player = self:getPlayerByAcId(v.AcId)
+            player.exitVoteState = v.Status
+        end
+
+        self.exitDeskUI = require("ui.exitdesk").new(self)
+        self.exitDeskUI:show()
     end
 end
 
@@ -347,17 +355,19 @@ function mahjongGame:onOpDoHandler(msg)
         local beAcId = v.BeAcId
         local beCard = v.Card
 
-        if optype == opType.chu then
+        if optype == opType.chu.id then
             self:onOpDoChu(acId, cards)
-        elseif optype == opType.chi then
+        elseif optype == opType.chi.id then
             self:onOpDoChi(acId, cards, beAcId, beCard)
-        elseif optype == opType.peng then
+        elseif optype == opType.peng.id then
             self:onOpDoPeng(acId, cards, beAcId, beCard)
-        elseif optype == opType.gang then
-            self:onOpDoGang(acId, cards, beAcId, beCard)
-        elseif optype == opType.hu then
-            self:onOpDoHu(acId, cards, beAcId, beCard)
-        elseif optype == opType.guo then
+        elseif optype == opType.gang.id then
+            local t = v.Do.T
+            self:onOpDoGang(acId, cards, beAcId, beCard, t)
+        elseif optype == opType.hu.id then
+            local t = v.Do.T
+            self:onOpDoHu(acId, cards, beAcId, beCard, t)
+        elseif optype == opType.guo.id then
             self:onOpDoGuo(acId)
         else
             log("unknown optype: " .. tostring(optype))
@@ -434,6 +444,7 @@ end
 -- CS 杠
 -------------------------------------------------------------------------------
 function mahjongGame:gang(cards)
+    log("mahjongGame.gang, cards = " .. table.tostring(cards))
     networkManager.gangPai(cards, function(ok, msg)
     end)
 end
@@ -477,9 +488,9 @@ end
 -------------------------------------------------------------------------------
 -- SC 胡
 -------------------------------------------------------------------------------
-function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard)
-    self.deskUI:onPlayerHu(acId)
-    self.operationUI:onOpDoHu(acId, cards, beAcId, beCard)
+function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard, t)
+    self.deskUI:onPlayerHu(acId, t)
+    self.operationUI:onOpDoHu(acId, cards, beAcId, beCard, t)
 end
 
 -------------------------------------------------------------------------------

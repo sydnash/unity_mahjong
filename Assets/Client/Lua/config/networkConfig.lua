@@ -10,10 +10,10 @@ return {
     patchURL    = patchURL,
     gameURL     = gameURL,
     guestURL    = gameURL .. "anonymouslogin",
-    httpTimeout = 20,
-    tcpTimeout  = 20,
-    ping        = 10,
-    pong        = 12,
+    httpTimeout = 10, --秒
+    tcpTimeout  = 10, --秒
+    ping        = 5,  --秒
+    pong        = 7,  --秒
     encrypt     = true,
 }
 

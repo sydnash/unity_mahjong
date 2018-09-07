@@ -7,8 +7,8 @@ local tcp = class("tcp")
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function tcp.connect(host, port, callback)
-    Tcp.instance:Connect(host, port, callback)
+function tcp.connect(host, port, timeout, callback)
+    Tcp.instance:Connect(host, port, timeout, callback)
 end
 
 -------------------------------------------------------------------

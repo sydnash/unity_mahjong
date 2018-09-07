@@ -74,6 +74,7 @@ public static class LuaBinder
 		UnityEngine_RenderSettingsWrap.Register(L);
 		UnityEngine_ResourcesWrap.Register(L);
 		UnityEngine_RectWrap.Register(L);
+		UnityEngine_PlayerPrefsWrap.Register(L);
 		UnityEngine_RectTransformWrap.Register(L);
 		L.BeginModule("EventSystems");
 		UnityEngine_EventSystems_EventSystemWrap.Register(L);

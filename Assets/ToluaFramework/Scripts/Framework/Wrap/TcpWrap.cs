@@ -23,12 +23,13 @@ public class TcpWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 4);
+			ToLua.CheckArgsCount(L, 5);
 			Tcp obj = (Tcp)ToLua.CheckObject<Tcp>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
-			System.Action<bool> arg2 = (System.Action<bool>)ToLua.CheckDelegate<System.Action<bool>>(L, 4);
-			obj.Connect(arg0, arg1, arg2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
+			System.Action<bool> arg3 = (System.Action<bool>)ToLua.CheckDelegate<System.Action<bool>>(L, 5);
+			obj.Connect(arg0, arg1, arg2, arg3);
 			return 0;
 		}
 		catch (Exception e)

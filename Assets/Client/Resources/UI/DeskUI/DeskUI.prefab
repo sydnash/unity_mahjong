@@ -313,7 +313,6 @@ GameObject:
   - component: {fileID: 224187026114515784}
   - component: {fileID: 222074641897118912}
   - component: {fileID: 114948019124749312}
-  - component: {fileID: 114153099016900636}
   m_Layer: 5
   m_Name: Hu
   m_TagString: Untagged
@@ -398,7 +397,6 @@ GameObject:
   - component: {fileID: 224576239907555456}
   - component: {fileID: 222720096739366668}
   - component: {fileID: 114693954788677928}
-  - component: {fileID: 114370273497808624}
   m_Layer: 5
   m_Name: Hu
   m_TagString: Untagged
@@ -520,7 +518,6 @@ GameObject:
   - component: {fileID: 224570672303929152}
   - component: {fileID: 222707159639457930}
   - component: {fileID: 114202321914920312}
-  - component: {fileID: 114887406688633340}
   m_Layer: 5
   m_Name: Hu
   m_TagString: Untagged
@@ -1023,7 +1020,6 @@ GameObject:
   - component: {fileID: 224489572223792344}
   - component: {fileID: 222894244485807980}
   - component: {fileID: 114733220598772768}
-  - component: {fileID: 114975742826832782}
   m_Layer: 5
   m_Name: Hu
   m_TagString: Untagged
@@ -1332,22 +1328,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114153099016900636
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1251603204150068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - key: hu
-    sprite: {fileID: 21300042, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
-  - key: zimo
-    sprite: {fileID: 21300040, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
 --- !u!114 &114173121216097678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1699,22 +1679,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114370273497808624
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1318525303005696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - key: hu
-    sprite: {fileID: 21300042, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
-  - key: zimo
-    sprite: {fileID: 21300040, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
 --- !u!114 &114408716507664742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2125,19 +2089,19 @@ MonoBehaviour:
     gameObject: {fileID: 1519005769807648}
     panelScript: 
   - variableName: mPlayerM_Hu
-    widgetType: 3
+    widgetType: 4
     gameObject: {fileID: 1895101515154072}
     panelScript: 
   - variableName: mPlayerR_Hu
-    widgetType: 3
+    widgetType: 4
     gameObject: {fileID: 1251603204150068}
     panelScript: 
   - variableName: mPlayerT_Hu
-    widgetType: 3
+    widgetType: 4
     gameObject: {fileID: 1412530974274416}
     panelScript: 
   - variableName: mPlayerL_Hu
-    widgetType: 3
+    widgetType: 4
     gameObject: {fileID: 1318525303005696}
     panelScript: 
   - variableName: mMarkerM
@@ -3194,22 +3158,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114887406688633340
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1412530974274416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - key: hu
-    sprite: {fileID: 21300042, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
-  - key: zimo
-    sprite: {fileID: 21300040, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
 --- !u!114 &114889208861955868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3400,22 +3348,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114975742826832782
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1895101515154072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - key: hu
-    sprite: {fileID: 21300042, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
-  - key: zimo
-    sprite: {fileID: 21300040, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
 --- !u!114 &114983015503871764
 MonoBehaviour:
   m_ObjectHideFlags: 1

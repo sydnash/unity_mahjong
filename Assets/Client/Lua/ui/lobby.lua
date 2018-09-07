@@ -86,7 +86,7 @@ function lobby:onCreateDeskClickedHandler()
             showMessage("网络繁忙，请稍后再试")
             return
         end
-        
+        log("create desk, msg = " .. table.tostring(msg))
         self:enterDesk(loading, msg.GameType, msg.DeskId)
     end)
 end
@@ -132,6 +132,9 @@ function lobby:enterDesk(loading, cityType, deskId)
             return
         end
 
+        log("check desk, msg = " .. table.tostring(msg))
+        loading:setProgress(0.2)
+
         networkManager.enterDesk(cityType, deskId, function(ok, msg)
             if not ok then
                 log("enter desk error")
@@ -146,8 +149,11 @@ function lobby:enterDesk(loading, cityType, deskId)
                 return
             end
 
+            log("enter desk, msg = " .. table.tostring(msg))
+            loading:setProgress(0.4)
+
             sceneManager.load("MahjongScene", function(completed, progress)
-                loading:setProgress(progress)
+                loading:setProgress(0.4 + 0.6 * progress)
 
                 if completed then
                     msg.Reenter = table.fromjson(msg.Reenter)

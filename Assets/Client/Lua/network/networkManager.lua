@@ -168,7 +168,9 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.connect(host, port, callback)
-    tcp.connect(host, port, function(connected)
+    local timeout = networkConfig.tcpTimeout * 1000 -- 转为毫秒
+
+    tcp.connect(host, port, timeout, function(connected)
         if connected then
             networkManager.pingTick = time.realtimeSinceStartup()
             networkManager.timestamp = time.realtimeSinceStartup()
@@ -213,12 +215,14 @@ end
 -------------------------------------------------------------------
 function networkManager.login(callback)
     local form = table.toUrlArgs({ mac = getDeviceId() })
-    http.getText(networkConfig.guestURL .. "?" .. form, networkConfig.httpTimeout * 1000, function(ok, text)
+    local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
+
+    http.getText(networkConfig.guestURL .. "?" .. form, timeout, function(ok, text)
         if not ok or string.isNilOrEmpty(text) then
-            log("http response: error")
+--            log("http response: error")
             callback(false, nil)
         else
-            log("http response: ok! text = " .. text)
+--            log("http response: ok! text = " .. text)
             local o = table.fromjson(text)
 
             local host = o.ip
@@ -241,8 +245,6 @@ function networkManager.login(callback)
                         if msg == nil then
                             callback(false, nil)
                         else
-                            log("login msg = " .. table.tostring(msg))
-
                             gamepref.session    = msg.Session
                             gamepref.acId       = msg.AcId
                             gamepref.nickname   = msg.Nickname
@@ -270,7 +272,6 @@ function networkManager.createDesk(cityType, choose, clubId, callback)
         if msg == nil then
             callback(false, nil)
         else
-            log("create desk msg = " .. table.tostring(msg))
             callback(true, msg)
         end
     end)
@@ -285,7 +286,6 @@ function networkManager.checkDesk(cityType, deskId, callback)
         if msg == nil then
             callback(false, nil)
         else
-            log("check desk msg = " .. table.tostring(msg))
             callback(true, msg)
         end
     end)
@@ -304,7 +304,6 @@ function networkManager.enterDesk(cityType, deskId, callback)
         if msg == nil then
             callback(false, nil)
         else
-            log("enter desk msg = " .. table.tostring(msg))
             callback(true, msg)
         end
     end)
@@ -328,7 +327,7 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.chuPai(cards, callback)
-    local data = { Op = opType.chu, Chose = { Cs = cards } }
+    local data = { Op = opType.chu.id, Chose = { Cs = cards } }
     send(protoType.cs.opChoose, data, function(msg)
         callback(false, nil)
     end)
@@ -338,7 +337,7 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.chiPai(cards, callback)
-    local data = { Op = opType.chi, Chose = { Cs = cards } }
+    local data = { Op = opType.chi.id, Chose = { Cs = cards } }
     send(protoType.cs.opChoose, data, function(msg)
         callback(false, nil)
     end)
@@ -348,7 +347,7 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.pengPai(cards, callback)
-    local data = { Op = opType.peng, Chose = { Cs = cards } }
+    local data = { Op = opType.peng.id, Chose = { Cs = cards } }
     send(protoType.cs.opChoose, data, function(msg)
         callback(false, nil)
     end)
@@ -358,7 +357,7 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.gangPai(cards, callback)
-    local data = { Op = opType.gang, Chose = { Cs = cards } }
+    local data = { Op = opType.gang.id, Chose = { Cs = cards } }
     send(protoType.cs.opChoose, data, function(msg)
         callback(false, nil)
     end)
@@ -368,7 +367,7 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.huPai(cards, callback)
-    local data = { Op = opType.hu, Chose = { Cs = cards } }
+    local data = { Op = opType.hu.id, Chose = { Cs = cards } }
     send(protoType.cs.opChoose, data, function(msg)
         callback(false, nil)
     end)
@@ -378,7 +377,7 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.guoPai(callback)
-    local data = { Op = opType.guo }
+    local data = { Op = opType.guo.id }
     send(protoType.cs.opChoose, data, function(msg)
         callback(false, nil)
     end)

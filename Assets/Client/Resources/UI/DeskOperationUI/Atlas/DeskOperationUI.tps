@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>512</int>
+            <int>1024</int>
             <key>height</key>
-            <int>512</int>
+            <int>1024</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -254,6 +254,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/ZM_di06.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>65,33,130,67</rect>
+                <key>scale9Paddings</key>
+                <rect>65,33,130,67</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/ZM_dq01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -371,6 +384,60 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/mj_su_1tiao.png</key>
+            <key type="filename">Images/mj_su_1tong.png</key>
+            <key type="filename">Images/mj_su_1wan.png</key>
+            <key type="filename">Images/mj_su_2tiao.png</key>
+            <key type="filename">Images/mj_su_2tong.png</key>
+            <key type="filename">Images/mj_su_2wan.png</key>
+            <key type="filename">Images/mj_su_3tiao.png</key>
+            <key type="filename">Images/mj_su_3tong.png</key>
+            <key type="filename">Images/mj_su_3wan.png</key>
+            <key type="filename">Images/mj_su_4tiao.png</key>
+            <key type="filename">Images/mj_su_4tong.png</key>
+            <key type="filename">Images/mj_su_4wan.png</key>
+            <key type="filename">Images/mj_su_5tiao.png</key>
+            <key type="filename">Images/mj_su_5tong.png</key>
+            <key type="filename">Images/mj_su_5wan.png</key>
+            <key type="filename">Images/mj_su_6tiao.png</key>
+            <key type="filename">Images/mj_su_6tong.png</key>
+            <key type="filename">Images/mj_su_6wan.png</key>
+            <key type="filename">Images/mj_su_7tiao.png</key>
+            <key type="filename">Images/mj_su_7tong.png</key>
+            <key type="filename">Images/mj_su_7wan.png</key>
+            <key type="filename">Images/mj_su_8tiao.png</key>
+            <key type="filename">Images/mj_su_8tong.png</key>
+            <key type="filename">Images/mj_su_8wan.png</key>
+            <key type="filename">Images/mj_su_9tiao.png</key>
+            <key type="filename">Images/mj_su_9tong.png</key>
+            <key type="filename">Images/mj_su_9wan.png</key>
+            <key type="filename">Images/mj_su_fbaiban.png</key>
+            <key type="filename">Images/mj_su_fbei.png</key>
+            <key type="filename">Images/mj_su_fdong.png</key>
+            <key type="filename">Images/mj_su_ffa.png</key>
+            <key type="filename">Images/mj_su_fnan.png</key>
+            <key type="filename">Images/mj_su_fxi.png</key>
+            <key type="filename">Images/mj_su_fzhong.png</key>
+            <key type="filename">Images/mj_su_schun.png</key>
+            <key type="filename">Images/mj_su_sdong.png</key>
+            <key type="filename">Images/mj_su_sju.png</key>
+            <key type="filename">Images/mj_su_slan.png</key>
+            <key type="filename">Images/mj_su_smei.png</key>
+            <key type="filename">Images/mj_su_sqiu.png</key>
+            <key type="filename">Images/mj_su_sxia.png</key>
+            <key type="filename">Images/mj_su_szu.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,21,27,41</rect>
+                <key>scale9Paddings</key>
+                <rect>14,21,27,41</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -390,6 +457,49 @@
             <filename>Images/ZM_zi07.png</filename>
             <filename>Images/ZM_an08.png</filename>
             <filename>Images/ZM_di05.png</filename>
+            <filename>Images/mj_su_1tiao.png</filename>
+            <filename>Images/mj_su_1tong.png</filename>
+            <filename>Images/mj_su_1wan.png</filename>
+            <filename>Images/mj_su_2tiao.png</filename>
+            <filename>Images/mj_su_2tong.png</filename>
+            <filename>Images/mj_su_2wan.png</filename>
+            <filename>Images/mj_su_3tiao.png</filename>
+            <filename>Images/mj_su_3tong.png</filename>
+            <filename>Images/mj_su_3wan.png</filename>
+            <filename>Images/mj_su_4tiao.png</filename>
+            <filename>Images/mj_su_4tong.png</filename>
+            <filename>Images/mj_su_4wan.png</filename>
+            <filename>Images/mj_su_5tiao.png</filename>
+            <filename>Images/mj_su_5tong.png</filename>
+            <filename>Images/mj_su_5wan.png</filename>
+            <filename>Images/mj_su_6tiao.png</filename>
+            <filename>Images/mj_su_6tong.png</filename>
+            <filename>Images/mj_su_6wan.png</filename>
+            <filename>Images/mj_su_7tiao.png</filename>
+            <filename>Images/mj_su_7tong.png</filename>
+            <filename>Images/mj_su_7wan.png</filename>
+            <filename>Images/mj_su_8tiao.png</filename>
+            <filename>Images/mj_su_8tong.png</filename>
+            <filename>Images/mj_su_8wan.png</filename>
+            <filename>Images/mj_su_9tiao.png</filename>
+            <filename>Images/mj_su_9tong.png</filename>
+            <filename>Images/mj_su_9wan.png</filename>
+            <filename>Images/mj_su_fbaiban.png</filename>
+            <filename>Images/mj_su_fbei.png</filename>
+            <filename>Images/mj_su_fdong.png</filename>
+            <filename>Images/mj_su_ffa.png</filename>
+            <filename>Images/mj_su_fnan.png</filename>
+            <filename>Images/mj_su_fxi.png</filename>
+            <filename>Images/mj_su_fzhong.png</filename>
+            <filename>Images/mj_su_schun.png</filename>
+            <filename>Images/mj_su_sdong.png</filename>
+            <filename>Images/mj_su_sju.png</filename>
+            <filename>Images/mj_su_slan.png</filename>
+            <filename>Images/mj_su_smei.png</filename>
+            <filename>Images/mj_su_sqiu.png</filename>
+            <filename>Images/mj_su_sxia.png</filename>
+            <filename>Images/mj_su_szu.png</filename>
+            <filename>Images/ZM_di06.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

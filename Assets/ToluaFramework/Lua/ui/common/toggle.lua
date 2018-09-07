@@ -13,7 +13,6 @@ local UIToggle = UnityEngine.UI.Toggle
 function toggle:ctor(gameObject)
     self:init(gameObject)
     self.component = getComponentU(gameObject, typeof(UIToggle))
-    self.soundName = "click"
 end
 
 -------------------------------------------------------------------
@@ -33,13 +32,6 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-function toggle:setSoundName(soundName)
-    self.soundName = soundName
-end
-
-----------------------------------------------------------------
---
-----------------------------------------------------------------
 function toggle:addChangedListener(handler, target)
     self.component.onValueChanged:AddListener(function()
         handler(target, self:getSelected()) 
@@ -49,15 +41,15 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function toggle:setEnabled(enabled)
-    self.component.enabled = enabled
+function toggle:setInteractable(interactable)
+    self.component.interactable = interactable
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function toggle:getEnabled()
-    return self.component.enabled
+function toggle:getInteractable()
+    return self.component.interactable
 end
 
 -------------------------------------------------------------------

@@ -76,8 +76,10 @@ public class Tcp : MonoBehaviour
     /// <param name="port"></param>
     /// <param name="callback"></param>
     /// <returns></returns>
-    public void Connect(string host, int port, Action<bool> callback)
+    public void Connect(string host, int port, int timeout, Action<bool> callback)
     {
+        timeout = (timeout > 0) ? Mathf.Max(500, timeout) : timeout;
+        
         try
         {
             mConnectCallback = callback;
@@ -86,6 +88,8 @@ public class Tcp : MonoBehaviour
             mSocket.Blocking = false;
             mSocket.SendBufferSize = BUFFER_SIZE;
             mSocket.ReceiveBufferSize = BUFFER_SIZE;
+            mSocket.SendTimeout = timeout;
+            mSocket.ReceiveTimeout = timeout;
             mSocket.Connect(host, port);
         }
         catch (Exception ex)

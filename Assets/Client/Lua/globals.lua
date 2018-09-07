@@ -33,13 +33,13 @@ function playMahjongSound(mahjongId, sex)
 end
 
 local opsounds = {
-    [opType.mo]   = "",
-    [opType.chu]  = "",
-    [opType.chi]  = "",
-    [opType.peng] = "peng",
-    [opType.gang] = "gang",
-    [opType.hu]   = "hu",
-    [opType.guo]  = "",
+    [opType.mo.id]   = "",
+    [opType.chu.id]  = "",
+    [opType.chi.id]  = "",
+    [opType.peng.id] = "peng",
+    [opType.gang.id] = "gang",
+    [opType.hu.id]   = "hu",
+    [opType.guo.id]  = "",
 }
 
 -------------------------------------------------------------
@@ -103,7 +103,7 @@ function loginServer(callback)
         end
 
         callback(true)
-        --log("login succssfully, acid = " .. tostring(msg.AcId) .. ", nickname = " .. msg.Nickname)
+        log("login, msg = " .. table.tostring(msg))
 
         local loading = require("ui.loading").new()
         loading:show()
@@ -134,6 +134,7 @@ function loginServer(callback)
                     return
                 end
 
+                log("check desk, msg = " .. table.tostring(msg))
                 loading:setProgress(0.2)
 
                 networkManager.enterDesk(cityType, deskId, function(ok, msg)
@@ -154,6 +155,7 @@ function loginServer(callback)
                         return
                     end
 
+                    log("enter desk, msg = " .. table.tostring(msg))
                     loading:setProgress(0.4)
 
                     sceneManager.load("MahjongScene", function(completed, progress)

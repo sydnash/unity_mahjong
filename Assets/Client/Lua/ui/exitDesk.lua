@@ -8,9 +8,9 @@ local exitDesk = class("exitDesk", base)
 exitDesk.folder = "ExitDeskUI"
 exitDesk.resource = "ExitDeskUI"
 
-local WAITING_COLOR = Color.New(165, 82, 27, 255)
-local AGREE_COLOR   = Color.New(71, 146, 37, 255)
-local REJECT_COLOR  = Color.New(226, 54, 50, 255)
+local WAITING_COLOR = Color.New(165 / 255, 82  / 255, 27 / 255, 1)
+local AGREE_COLOR   = Color.New(71  / 255, 146 / 255, 37 / 255, 1)
+local REJECT_COLOR  = Color.New(226 / 255, 54  / 255, 50 / 255, 1)
 
 function exitDesk:ctor(game)
     self.game = game
@@ -28,15 +28,16 @@ function exitDesk:onInit()
                       { icon = self.mHeaderD, nickname = self.mNicknameD, state = self.mStateD },
     }
 
-    local idx = 1
     for k, v in pairs(self.game.players) do
-        local p = players[idx]
-        p.nickname:setText(v.Nickname)
+        local p = players[k+1]
+        p.nickname:setText(v.nickname)
 
-        self.states[k] = p.state
+        self.states[v.turn] = p.state
         self:setPlayerState(v)
 
-        idx = idx + 1
+        if self.game.exitVoteProposer == v.acId then
+            self.mProposer:setText(v.nickname)
+        end
     end
 
     if self.game.exitVoteProposer == gamepref.acId then
@@ -75,10 +76,16 @@ function exitDesk:setPlayerState(player)
 end
 
 function exitDesk:onAgreeClickedHandler()
+    self.mAgree:setInteractabled(false)
+    self.mReject:setInteractabled(false)
+
     self.game:agreeExit()
 end
 
 function exitDesk:onRejectClickedHandler()
+    self.mAgree:setInteractabled(false)
+    self.mReject:setInteractabled(false)
+
     self.game:rejectExit()
 end
 

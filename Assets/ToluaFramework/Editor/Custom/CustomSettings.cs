@@ -156,6 +156,7 @@ public static class CustomSettings
         _GT(typeof(Resources)),     
         _GT(typeof(LuaProfiler)),
         _GT(typeof(Rect)),
+        _GT(typeof(PlayerPrefs)),
 
         //UGUI
         _GT(typeof(EventSystem)),

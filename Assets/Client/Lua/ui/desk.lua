@@ -217,7 +217,7 @@ function desk:onPlayerExit(turn)
     p.u:show()
 end
 
-function desk:onPlayerHu(acId)
+function desk:onPlayerHu(acId, t)
     local s = self.game:getSeatTypeByAcId(acId)
     local p = self.players[s + 1]
     p.hu:show()
