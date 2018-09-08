@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 4251977795
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9e9ed2c45a5b17b26a5cfad8cd4b6e7e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 21f0dc8ebad690f009368069428e0a1a
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/UI/Mahjong/Atlas/Mahjong.png
+Dependencies: []

@@ -8,8 +8,8 @@ local gameOver = class("gameOver", base)
 gameOver.folder = "GameOverUI"
 gameOver.resource = "GameOverUI"
 
-function gameOver:ctor(game)
-    self.game = game
+function gameOver:ctor(datas)
+    self.datas = datas
     self.super.ctor(self)
 end
 

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4167755312
+CRC: 2397281310
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d381225899b54c99b1b9833f16321bed
+    Hash: 396342a17c915b899eb9e9387d8fa74a
   TypeTreeHash:
     serializedVersion: 2
     Hash: c252149692ade3df8177ae94cf03c910
@@ -33,4 +33,5 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Client/Resources/UI/DeskOperationUI/DeskOperationUI.prefab
-Dependencies: []
+Dependencies:
+- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/mahjong/mahjong

@@ -68,18 +68,17 @@ public class LuaPanelInspector : Editor
         }
         GUI.color = Color.white;
 
-        Item needRemoveItem = null;
-
         for (int i = mItemList.Count - 1; i >= 0; i--)
         {
             Item item = mItemList[i];
-            needRemoveItem = DrawItem(item);
-        }
+            Item needRemoveItem = DrawItem(item);
 
-        if (needRemoveItem != null)
-        {
-            mItemList.Remove(needRemoveItem);
-            mPanel.widgets.Remove(needRemoveItem.widget);
+            if (needRemoveItem != null)
+            {
+                mItemList.Remove(needRemoveItem);
+                mPanel.widgets.Remove(needRemoveItem.widget);
+                break;
+            }
         }
 
         Repaint();

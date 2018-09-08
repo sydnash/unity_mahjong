@@ -699,13 +699,43 @@ end
 function mahjongGame:onGameEndHandler(msg)
     log("game end, msg = " .. table.tostring(msg))
 
+    local special = table.fromjson(msg.Special)
+    local specialData = table.fromjson(special.SpecialData)
+    log("game end, specialData = " .. table.tostring(specialData))
+    local datas = {}
+
+    for _, v in pairs(specialData.PlayerInfos) do
+        local p = self:getPlayerByAcId(v.AcId)
+        local d = { acId = v.AcId, 
+                    nickname = p.nickname, 
+                    score = v.Score, 
+                    turn = p.turn, 
+                    seat = self:getSeatType(p.turn),
+        }
+        d.inhand = v.ShouPai
+        d.hu = v.Hu
+
+        local peng = v.ChiChe
+        if peng ~= nil then
+            for _, u in pairs(peng) do
+                if d[u.Op] == nil then
+                    d[u.Op] = {}
+                end
+
+                table.insert(d[u.Op], u.Cs)
+            end
+        end
+
+        datas[v.AcId] = d
+    end
+
     self.leftGames = msg.LeftTime
 
     if self.leftGames > 0 then
-        local ui = require("ui.gameEnd").new(self)
+        local ui = require("ui.gameEnd").new(self, datas)
         ui:show()
     else
-        local ui = require("ui.gameOver").new(self)
+        local ui = require("ui.gameOver").new(datas)
         ui:show()
     end
 

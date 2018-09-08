@@ -30,6 +30,7 @@
     <Folder Include="Lua\const\" />
     <Folder Include="Lua\config\" />
     <Folder Include="Lua\ui\" />
+    <Folder Include="Lua\ui\gameEnd\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
@@ -39,7 +40,6 @@
     <Compile Include="Lua\const\cityType.lua" />
     <Compile Include="Lua\const\gameStatus.lua" />
     <Compile Include="Lua\const\headerType.lua" />
-    <Compile Include="Lua\const\huType.lua" />
     <Compile Include="Lua\const\language.lua" />
     <Compile Include="Lua\const\opType.lua" />
     <Compile Include="Lua\const\retcText.lua" />
@@ -60,6 +60,9 @@
     <Compile Include="Lua\ui\enterDesk.lua" />
     <Compile Include="Lua\ui\exitDesk.lua" />
     <Compile Include="Lua\ui\gameEnd.lua" />
+    <Compile Include="Lua\ui\gameEnd\gameEndGangPai.lua" />
+    <Compile Include="Lua\ui\gameEnd\gameEndPai.lua" />
+    <Compile Include="Lua\ui\gameEnd\gameEndPengPai.lua" />
     <Compile Include="Lua\ui\gameOver.lua" />
     <Compile Include="Lua\ui\loading.lua" />
     <Compile Include="Lua\ui\lobby.lua" />

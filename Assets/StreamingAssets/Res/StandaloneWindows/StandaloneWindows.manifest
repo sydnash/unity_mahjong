@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1115260673
+CRC: 524682611
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -222,9 +222,11 @@ AssetBundleManifest:
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
+        Dependency_2: font/fzcyjt
     Info_54:
       Name: ui/deskoperationui/deskoperationui
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: ui/mahjong/mahjong
     Info_55:
       Name: texture/deskfw_gl
       Dependencies: {}
@@ -497,3 +499,18 @@ AssetBundleManifest:
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
+    Info_141:
+      Name: ui/gameendui/gameendui_gangpai
+      Dependencies:
+        Dependency_0: ui/mahjong/mahjong
+    Info_142:
+      Name: ui/gameendui/gameendui_pengpai
+      Dependencies:
+        Dependency_0: ui/mahjong/mahjong
+    Info_143:
+      Name: ui/gameendui/gameendui_pai
+      Dependencies:
+        Dependency_0: ui/mahjong/mahjong
+    Info_144:
+      Name: ui/mahjong/mahjong
+      Dependencies: {}

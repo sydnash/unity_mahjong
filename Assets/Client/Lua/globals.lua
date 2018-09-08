@@ -175,4 +175,46 @@ function loginServer(callback)
     end)
 end
 
+--
+local mahjongIdToSprite = {
+    [0]  = "1tiao",
+    [1]  = "2tiao",
+    [2]  = "3tiao",
+    [3]  = "4tiao",
+    [4]  = "5tiao",
+    [5]  = "6tiao",
+    [6]  = "7tiao",
+    [7]  = "8tiao",
+    [8]  = "9tiao",
+    [9]  = "1tong",
+    [10] = "2tong",
+    [11] = "3tong",
+    [12] = "4tong",
+    [13] = "5tong",
+    [14] = "6tong",
+    [15] = "7tong",
+    [16] = "8tong",
+    [17] = "9tong",
+    [18] = "1wan",
+    [19] = "2wan",
+    [20] = "3wan",
+    [21] = "4wan",
+    [22] = "5wan",
+    [23] = "6wan",
+    [24] = "7wan",
+    [25] = "8wan",
+    [26] = "9wan",
+    [27] = "hongzhong",
+    [28] = "facai",
+    [29] = "baiban",
+}
+
+-------------------------------------------------------------
+-- 麻将Id转sprite名字
+-------------------------------------------------------------
+function convertMahjongIdToSpriteName(mahjongId)
+    mahjongId = math.floor(mahjongId / 4)
+    return mahjongIdToSprite[mahjongId]
+end
+
 --endregion

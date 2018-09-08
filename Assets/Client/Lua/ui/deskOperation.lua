@@ -6,7 +6,6 @@ local opType        = require("const.opType")
 local mahjongGame   = require("logic.mahjong.mahjongGame")
 local mahjong       = require("logic.mahjong.mahjong")
 local touch         = require("logic.touch")
-local huType        = require("const.huType")
 
 local base = require("ui.common.view")
 local deskOperation = class("deskOperation", base)
@@ -49,39 +48,6 @@ local mopaiConfig = {
     position = Vector3.New(0.255, 0.175, -0.355),
     rotation = Quaternion.Euler(-100, 0, 0),
     scale    = Vector3.New(1, 1, 1),
-}
-
-local mahjongIdToSprite = {
-    [0]  = "1tiao",
-    [1]  = "2tiao",
-    [2]  = "3tiao",
-    [3]  = "4tiao",
-    [4]  = "5tiao",
-    [5]  = "6tiao",
-    [6]  = "7tiao",
-    [7]  = "8tiao",
-    [8]  = "9tiao",
-    [9]  = "1tong",
-    [10] = "2tong",
-    [11] = "3tong",
-    [12] = "4tong",
-    [13] = "5tong",
-    [14] = "6tong",
-    [15] = "7tong",
-    [16] = "8tong",
-    [17] = "9tong",
-    [18] = "1wan",
-    [19] = "2wan",
-    [20] = "3wan",
-    [21] = "4wan",
-    [22] = "5wan",
-    [23] = "6wan",
-    [24] = "7wan",
-    [25] = "8wan",
-    [26] = "9wan",
-    [27] = "hongzhong",
-    [28] = "facai",
-    [29] = "baiban",
 }
 
 -------------------------------------------------------------------------------
@@ -581,7 +547,7 @@ function deskOperation:onGangClickedHandler()
             local cs = c.Cs
             buttons[i].cs = cs
             local id = math.floor(cs[1] / 4)
-            sprites[i]:setSprite(mahjongIdToSprite[id])
+            sprites[i]:setSprite(convertMahjongIdToSpriteName(id))
 
             buttons[i]:show()
         end
@@ -735,18 +701,7 @@ function deskOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
             hu = inhand[1]
             table.remove(inhand, 1)
         else
-            if self.mo ~= nil then
-                self:insertMahjongToInhand(self.mo)
-            end
-
-            for k, v in pairs(inhand) do
-                if v.id == beCard then
-                    hu = v
-                    table.remove(inhand, k)
-                    break
-                end
-            end
-
+            hu = self.mo
             self.mo = nil
         end
     else
@@ -805,33 +760,26 @@ function deskOperation:getMahjongFromIdle(mid)
         return self.idleMahjongs[index]
     end
 
-    local m = nil
-
+    --现在“城墙”里面查找
     for k, v in pairs(self.idleMahjongs) do
         if v.id == mid then
-            m = v
             swap(self.idleMahjongs, k, self.idleMahjongs, index)
-            break
+            return v
         end
     end
-
-    if m == nil then
-        for _, h in pairs(self.inhandMahjongs) do
+    --如果没有，就在其他玩家的手牌里查找（都是从“城墙”里面临时借出的）
+    for acid, h in pairs(self.inhandMahjongs) do
+        if acid ~= gamepref.acId then
             for k, v in pairs(h) do
                 if v.id == mid then
-                    m = v
                     swap(h, k, self.idleMahjongs, index)
-                    break
+                    return v
                 end
-            end
-
-            if m ~= nil then
-                break
             end
         end
     end
         
-    return m
+    return nil
 end
 
 -------------------------------------------------------------------------------
