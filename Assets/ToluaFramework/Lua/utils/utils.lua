@@ -121,10 +121,10 @@ end
 --
 -------------------------------------------------------------------
 function findChild(transform, name)
-    assert(transform ~= nil)
+    assert(transform ~= nil, "can't find a child for nil")
 
     local child = transform:Find(name)
-    return (child ~= nil) and child.gameObject or nil
+    return (child ~= nil) and child or nil
 end
 
 -------------------------------------------------------------------

@@ -313,7 +313,7 @@ function mahjongGame:onFaPaiHandler(msg)
     end
 
     self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
-    self.operationUI:OnMahjongDispatched()
+    self.operationUI:OnFaPai()
 end
 
 -------------------------------------------------------------------------------

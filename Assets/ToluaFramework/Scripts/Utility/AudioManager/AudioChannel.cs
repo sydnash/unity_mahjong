@@ -29,6 +29,11 @@ public class AudioChannel
     /// </summary>
     private List<Audio> mAudioList = new List<Audio>();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    private Queue<Audio> mUnusedAudios = new Queue<Audio>();
+
     #endregion
 
     #region Public
@@ -55,11 +60,21 @@ public class AudioChannel
 
         if (mAudioList.Count < mCapacity)
         {
-            Audio audio = new Audio(mRoot, audioPath, audioName, playMode);
+            Audio audio = null;
+
+            if (mUnusedAudios.Count > 0)
+            {
+                audio = mUnusedAudios.Dequeue();
+            }
+            else
+            {
+                audio = new Audio(mRoot);
+            }
+            
             audio.volume = mVolume;
             mAudioList.Add(audio);
 
-            audio.Play();
+            audio.Play(audioPath, audioName, playMode);
         }
     }
 
@@ -71,6 +86,7 @@ public class AudioChannel
         foreach (Audio audio in mAudioList)
         {
             audio.Stop();
+            mUnusedAudios.Enqueue(audio);
         }
 
         mAudioList.Clear();
@@ -89,6 +105,7 @@ public class AudioChannel
             if (audio.finished)
             {
                 mAudioList.RemoveAt(i);
+                mUnusedAudios.Enqueue(audio);
             }
         }
     }

@@ -3,11 +3,13 @@
 --此文件由[BabeLua]插件自动生成
 
 local soundManager = {}
+local assetType = 0
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.setup()
+    AssetPoolManager.instance:AddPool(assetType, "Sound", true)
     AudioManager.instance:Setup()
 end
 

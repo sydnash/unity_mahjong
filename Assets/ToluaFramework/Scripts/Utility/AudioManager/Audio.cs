@@ -40,16 +40,6 @@ public class Audio
     /// <summary>
     /// 
     /// </summary>
-    private string mAudioPath = string.Empty;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private string mAudioName = string.Empty;
-
-    /// <summary>
-    /// 
-    /// </summary>
     private PlayMode mPlayMode = PlayMode.Once;
 
     /// <summary>
@@ -71,15 +61,10 @@ public class Audio
     /// </summary>
     /// <param name="audioName"></param>
     /// <param name="playMode"></param>
-    public Audio(Transform root, string audioPath, string audioName, PlayMode playMode = PlayMode.Once)
+    public Audio(Transform root)
     {
-        mAudioPath = audioPath;
-        mAudioName = audioName;
-        mPlayMode = playMode;
-
-        GameObject go = AssetPoolManager.instance.Alloc(AssetPoolManager.Type.Model, string.Empty, "AudioSource") as GameObject;
-        go.SetActive(true);
-        mAudioSource = go.GetComponent<AudioSource>();
+        GameObject go = new GameObject("AudioSource");
+        mAudioSource = go.AddComponent<AudioSource>();
 
         if (root != null)
         {
@@ -90,11 +75,13 @@ public class Audio
     /// <summary>
     /// 
     /// </summary>
-    public void Play()
+    public void Play(string audioPath, string audioName, PlayMode playMode = PlayMode.Once)
     {
-        mAudioClip = AssetPoolManager.instance.Alloc(AssetPoolManager.Type.Audio, mAudioPath, mAudioName) as AudioClip;
+        mAudioClip = AssetPoolManager.instance.Alloc(0, audioPath, audioName) as AudioClip;
         if (mAudioClip != null)
         {
+            mPlayMode = playMode;
+
             mAudioSource.clip = mAudioClip;
             mAudioSource.loop = (mPlayMode == PlayMode.Loop);
             mAudioSource.Play();
@@ -114,14 +101,11 @@ public class Audio
         {
             mAudioSource.Stop();
             mAudioSource.clip = null;
-
-            AssetPoolManager.instance.Dealloc(AssetPoolManager.Type.Model, mAudioSource.gameObject);
-            mAudioSource = null;
         }
 
         if (mAudioClip != null)
         {
-            AssetPoolManager.instance.Dealloc(AssetPoolManager.Type.Audio, mAudioClip);
+            AssetPoolManager.instance.Dealloc(0, mAudioClip);
             mAudioClip = null;
         }
 

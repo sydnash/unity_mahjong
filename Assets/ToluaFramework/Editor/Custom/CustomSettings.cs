@@ -176,12 +176,9 @@ public static class CustomSettings
         _GT(typeof(HorizontalLayoutGroup)),
 
         //Custom Classes
-        _GT(typeof(UIManager)),
-        _GT(typeof(ModelManager)),
+        _GT(typeof(AssetPoolManager)),
         _GT(typeof(AudioManager)),
         _GT(typeof(SceneLoader)),
-        _GT(typeof(TextureManager)),
-        _GT(typeof(AnimationManager)),
         _GT(typeof(LuaPanel)),
         _GT(typeof(LuaPanel.Widget)),
         _GT(typeof(LuaPanel.WidgetType)),

@@ -6,67 +6,57 @@ using System.Collections.Generic;
 /// </summary>
 public class AssetPoolManager
 {
-    #region Enum
+    //#region Enum
 
-    /// <summary>
-    /// AssetPool类型
-    /// </summary>
-    public enum Type
-    {
-        /// <summary>
-        /// 模型
-        /// </summary>
-        Model = 0,
+    ///// <summary>
+    ///// AssetPool类型
+    ///// </summary>
+    //public enum Type
+    //{
+    //    /// <summary>
+    //    /// 模型
+    //    /// </summary>
+    //    Model = 0,
 
-        /// <summary>
-        /// 界面
-        /// </summary>
-        UI,
+    //    /// <summary>
+    //    /// 界面
+    //    /// </summary>
+    //    UI,
 
-        /// <summary>
-        /// 贴图
-        /// </summary>
-        Texture,
+    //    /// <summary>
+    //    /// 贴图
+    //    /// </summary>
+    //    Texture,
 
-        /// <summary>
-        /// 音效
-        /// </summary>
-        Audio,
+    //    /// <summary>
+    //    /// 音效
+    //    /// </summary>
+    //    Audio,
 
-        /// <summary>
-        /// 动画
-        /// </summary>
-        AnimationClip,
+    //    /// <summary>
+    //    /// 动画
+    //    /// </summary>
+    //    AnimationClip,
 
-        /// <summary>
-        /// 
-        /// </summary>
-        End
-    }
+    //    /// <summary>
+    //    /// 
+    //    /// </summary>
+    //    End
+    //}
 
-    #endregion
+    //#endregion
 
     #region Data
 
     /// <summary>
     /// 资源池列表
     /// </summary>
-    private AssetPool[] mPools = new AssetPool[(int)Type.End];
+    private Dictionary<int, AssetPool> mPools = new Dictionary<int, AssetPool>();
 
     /// <summary>
     /// 
     /// </summary>
     private Transform mRoot = null;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private readonly static string[] mAssetPath = { "Model",
-                                                    "UI",
-                                                    "Texture",
-                                                    "Sound",
-                                                    "Animation",
-                                                  };
 
     #endregion
 
@@ -103,19 +93,39 @@ public class AssetPoolManager
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="assetType"></param>
+    /// <param name="assetPath"></param>
+    /// <param name="isRefrence"></param>
+    /// <returns></returns>
+    public AssetPool AddPool(int assetType, string assetPath, bool isRefrence)
+    {
+        if (mPools.ContainsKey(assetType))
+        {
+            return null;
+        }
+
+        AssetPool pool = new AssetPool(new AssetLoader(assetPath), isRefrence);
+        mPools.Add(assetType, pool);
+
+        return pool;
+    }
+
+    /// <summary>
     /// 从指定的pool中获取固有名称的资源对象
     /// </summary>
     /// <param name="type">pool类型</param>
     /// <param name="assetName">资源名称</param>
     /// <returns></returns>
-    public Object Alloc(Type type, string assetPath, string assetName)
+    public Object Alloc(int assetType, string assetPath, string assetName)
     {
-        AssetPool pool = mPools[(int)type];
+        AssetPool pool = mPools[assetType];
         Object o = pool.Alloc(assetPath, assetName);
 
-        if (type == Type.Model || type == Type.UI)
+        GameObject go = o as GameObject;
+        if (go != null)
         {
-            GameObject go = o as GameObject;
             go.transform.SetParent(null, false);
         }
 
@@ -127,16 +137,19 @@ public class AssetPoolManager
     /// </summary>
     /// <param name="type">pool类型</param>
     /// <param name="asset">资源对象</param>
-    public bool Dealloc(Type type, Object asset)
+    public bool Dealloc(int assetType, Object asset)
     {
-        AssetPool pool = mPools[(int)type];
+        AssetPool pool = mPools[assetType];
         bool success = pool.Dealloc(asset);
 
-        if (success && (type == Type.Model || type == Type.UI) && mRoot != null)
+        if (success && mRoot != null)
         {
             GameObject go = asset as GameObject;
-            go.SetActive(false);
-            go.transform.SetParent(mRoot, false);
+            if (go != null)
+            {
+                go.SetActive(false);
+                go.transform.SetParent(mRoot, false);
+            }
         }
 
         return success;
@@ -147,9 +160,9 @@ public class AssetPoolManager
     /// </summary>
     public void Update()
     {
-        foreach (AssetPool pool in mPools)
+        foreach (KeyValuePair<int, AssetPool> kvp in mPools)
         {
-            pool.Update();
+            kvp.Value.Update();
         }
     }
 
@@ -170,11 +183,11 @@ public class AssetPoolManager
     /// </summary>
     private AssetPoolManager()
     {
-        mPools[(int)Type.Model]         = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Model]),           false);
-        mPools[(int)Type.UI]            = new AssetPool(new AssetLoader(mAssetPath[(int)Type.UI]),              false);
-        mPools[(int)Type.Texture]       = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Texture]),         true);
-        mPools[(int)Type.Audio]         = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Audio]),           true);
-        mPools[(int)Type.AnimationClip] = new AssetPool(new AssetLoader(mAssetPath[(int)Type.AnimationClip]),   false);
+        //mPools[(int)Type.Model]         = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Model]),           false);
+        //mPools[(int)Type.UI]            = new AssetPool(new AssetLoader(mAssetPath[(int)Type.UI]),              false);
+        //mPools[(int)Type.Texture]       = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Texture]),         true);
+        //mPools[(int)Type.Audio]         = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Audio]),           true);
+        //mPools[(int)Type.AnimationClip] = new AssetPool(new AssetLoader(mAssetPath[(int)Type.AnimationClip]),   false);
     }
 
     #endregion

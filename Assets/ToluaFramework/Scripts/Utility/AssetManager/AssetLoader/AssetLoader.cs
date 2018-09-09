@@ -87,7 +87,8 @@ public class AssetLoader
     /// 
     /// </summary>
     /// <param name="path"></param>
-    public AssetLoader(string path, float unloadDelayTime = 0.2f)
+    /// <param name="unloadDelayTime"></param>
+    public AssetLoader(string path, float unloadDelayTime = 0.5f)
     {
         mPath = path.ToLower();
         mUnloadDelayTime = Mathf.Max(0.1f, unloadDelayTime);

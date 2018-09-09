@@ -1,215 +1,212 @@
 ManifestFileVersion: 0
-CRC: 524682611
+CRC: 823752701
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: model/audiosource
-      Dependencies: {}
-    Info_1:
       Name: sound/bgm
       Dependencies: {}
-    Info_2:
+    Info_1:
       Name: ui/loadingui/loadingui
       Dependencies:
         Dependency_0: texture/dl_bg
         Dependency_1: texture/dl_logo
-    Info_3:
+    Info_2:
       Name: ui/loginui/loginui
       Dependencies:
         Dependency_0: texture/dl_bg
         Dependency_1: font/fzzyjt
         Dependency_2: texture/dl_logo
-    Info_4:
+    Info_3:
       Name: scene/lobbyscene
       Dependencies: {}
-    Info_5:
+    Info_4:
       Name: ui/lobbyui/lobbyui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
-    Info_6:
+    Info_5:
       Name: sound/click
       Dependencies: {}
-    Info_7:
+    Info_6:
       Name: ui/waitingui/waitingui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
-    Info_8:
+    Info_7:
       Name: scene/mahjongscene
       Dependencies: {}
-    Info_9:
+    Info_8:
       Name: model/mjpai01
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_10:
+    Info_9:
       Name: model/mjpai02
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_11:
+    Info_10:
       Name: model/mjpai03
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_12:
+    Info_11:
       Name: model/mjpai04
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_13:
+    Info_12:
       Name: model/mjpai05
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_14:
+    Info_13:
       Name: model/mjpai06
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_15:
+    Info_14:
       Name: model/mjpai07
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_16:
+    Info_15:
       Name: model/mjpai08
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_17:
+    Info_16:
       Name: model/mjpai09
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_18:
+    Info_17:
       Name: model/mjpai10
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_19:
+    Info_18:
       Name: model/mjpai11
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_20:
+    Info_19:
       Name: model/mjpai12
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_21:
+    Info_20:
       Name: model/mjpai13
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_22:
+    Info_21:
       Name: model/mjpai14
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_23:
+    Info_22:
       Name: model/mjpai15
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_24:
+    Info_23:
       Name: model/mjpai16
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_25:
+    Info_24:
       Name: model/mjpai17
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_26:
+    Info_25:
       Name: model/mjpai18
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_27:
+    Info_26:
       Name: model/mjpai19
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_28:
+    Info_27:
       Name: model/mjpai20
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_29:
+    Info_28:
       Name: model/mjpai21
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_30:
+    Info_29:
       Name: model/mjpai22
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_31:
+    Info_30:
       Name: model/mjpai23
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_32:
+    Info_31:
       Name: model/mjpai24
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_33:
+    Info_32:
       Name: model/mjpai25
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_34:
+    Info_33:
       Name: model/mjpai26
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_35:
+    Info_34:
       Name: model/mjpai27
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_36:
+    Info_35:
       Name: model/mjpai28
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_37:
+    Info_36:
       Name: model/mjpai29
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_38:
+    Info_37:
       Name: model/mjpai30
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_39:
+    Info_38:
       Name: model/mjpai31
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_40:
+    Info_39:
       Name: model/mjpai32
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_41:
+    Info_40:
       Name: model/mjpai33
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_42:
+    Info_41:
       Name: model/mjpai34
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_43:
+    Info_42:
       Name: model/mjpai35
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_44:
+    Info_43:
       Name: model/mjpai36
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_45:
+    Info_44:
       Name: model/mjpai37
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_46:
+    Info_45:
       Name: model/mjpai38
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_47:
+    Info_46:
       Name: model/mjpai39
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_48:
+    Info_47:
       Name: model/mjpai40
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_49:
+    Info_48:
       Name: model/mjpai41
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_50:
+    Info_49:
       Name: model/mjpai42
       Dependencies:
         Dependency_0: texture/mj_dif
-    Info_51:
+    Info_50:
       Name: texture/mj_dif
       Dependencies: {}
-    Info_52:
+    Info_51:
       Name: ui/enterdeskui/enterdeskui
       Dependencies:
         Dependency_0: ui/common/common
@@ -217,300 +214,303 @@ AssetBundleManifest:
         Dependency_2: font/bdzyjt
         Dependency_3: font/fzcyjt
         Dependency_4: font/fzltzh_gbk
-    Info_53:
+    Info_52:
       Name: ui/deskui/deskui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
         Dependency_2: font/fzcyjt
-    Info_54:
+    Info_53:
       Name: ui/deskoperationui/deskoperationui
       Dependencies:
         Dependency_0: ui/mahjong/mahjong
-    Info_55:
+    Info_54:
       Name: texture/deskfw_gl
       Dependencies: {}
-    Info_56:
+    Info_55:
       Name: texture/deskfw
       Dependencies: {}
-    Info_57:
+    Info_56:
       Name: sound/mahjong/boy/1tiao
       Dependencies: {}
-    Info_58:
+    Info_57:
       Name: sound/mahjong/boy/1tong
       Dependencies: {}
-    Info_59:
+    Info_58:
       Name: sound/mahjong/boy/1wan
       Dependencies: {}
-    Info_60:
+    Info_59:
       Name: sound/mahjong/boy/2tiao
       Dependencies: {}
-    Info_61:
+    Info_60:
       Name: sound/mahjong/boy/2tong
       Dependencies: {}
-    Info_62:
+    Info_61:
       Name: sound/mahjong/boy/2wan
       Dependencies: {}
-    Info_63:
+    Info_62:
       Name: sound/mahjong/boy/3tiao
       Dependencies: {}
-    Info_64:
+    Info_63:
       Name: sound/mahjong/boy/3tong
       Dependencies: {}
-    Info_65:
+    Info_64:
       Name: sound/mahjong/boy/3wan
       Dependencies: {}
-    Info_66:
+    Info_65:
       Name: sound/mahjong/boy/4tiao
       Dependencies: {}
-    Info_67:
+    Info_66:
       Name: sound/mahjong/boy/4tong
       Dependencies: {}
-    Info_68:
+    Info_67:
       Name: sound/mahjong/boy/4wan
       Dependencies: {}
-    Info_69:
+    Info_68:
       Name: sound/mahjong/boy/5tiao
       Dependencies: {}
-    Info_70:
+    Info_69:
       Name: sound/mahjong/boy/5tong
       Dependencies: {}
-    Info_71:
+    Info_70:
       Name: sound/mahjong/boy/5wan
       Dependencies: {}
-    Info_72:
+    Info_71:
       Name: sound/mahjong/boy/6tiao
       Dependencies: {}
-    Info_73:
+    Info_72:
       Name: sound/mahjong/boy/6tong
       Dependencies: {}
-    Info_74:
+    Info_73:
       Name: sound/mahjong/boy/6wan
       Dependencies: {}
-    Info_75:
+    Info_74:
       Name: sound/mahjong/boy/7tiao
       Dependencies: {}
-    Info_76:
+    Info_75:
       Name: sound/mahjong/boy/7tong
       Dependencies: {}
-    Info_77:
+    Info_76:
       Name: sound/mahjong/boy/7wan
       Dependencies: {}
-    Info_78:
+    Info_77:
       Name: sound/mahjong/boy/8tiao
       Dependencies: {}
-    Info_79:
+    Info_78:
       Name: sound/mahjong/boy/8tong
       Dependencies: {}
-    Info_80:
+    Info_79:
       Name: sound/mahjong/boy/8wan
       Dependencies: {}
-    Info_81:
+    Info_80:
       Name: sound/mahjong/boy/9tiao
       Dependencies: {}
-    Info_82:
+    Info_81:
       Name: sound/mahjong/boy/9tong
       Dependencies: {}
-    Info_83:
+    Info_82:
       Name: sound/mahjong/boy/9wan
       Dependencies: {}
-    Info_84:
+    Info_83:
       Name: sound/mahjong/boy/bai
       Dependencies: {}
-    Info_85:
+    Info_84:
       Name: sound/mahjong/boy/fa
       Dependencies: {}
-    Info_86:
+    Info_85:
       Name: sound/mahjong/boy/hongzhong
       Dependencies: {}
-    Info_87:
+    Info_86:
       Name: sound/mahjong/girl/1tiao
       Dependencies: {}
-    Info_88:
+    Info_87:
       Name: sound/mahjong/girl/1tong
       Dependencies: {}
-    Info_89:
+    Info_88:
       Name: sound/mahjong/girl/1wan
       Dependencies: {}
-    Info_90:
+    Info_89:
       Name: sound/mahjong/girl/2tiao
       Dependencies: {}
-    Info_91:
+    Info_90:
       Name: sound/mahjong/girl/2tong
       Dependencies: {}
-    Info_92:
+    Info_91:
       Name: sound/mahjong/girl/2wan
       Dependencies: {}
-    Info_93:
+    Info_92:
       Name: sound/mahjong/girl/3tiao
       Dependencies: {}
-    Info_94:
+    Info_93:
       Name: sound/mahjong/girl/3tong
       Dependencies: {}
-    Info_95:
+    Info_94:
       Name: sound/mahjong/girl/3wan
       Dependencies: {}
-    Info_96:
+    Info_95:
       Name: sound/mahjong/girl/4tiao
       Dependencies: {}
-    Info_97:
+    Info_96:
       Name: sound/mahjong/girl/4tong
       Dependencies: {}
-    Info_98:
+    Info_97:
       Name: sound/mahjong/girl/4wan
       Dependencies: {}
-    Info_99:
+    Info_98:
       Name: sound/mahjong/girl/5tiao
       Dependencies: {}
-    Info_100:
+    Info_99:
       Name: sound/mahjong/girl/5tong
       Dependencies: {}
-    Info_101:
+    Info_100:
       Name: sound/mahjong/girl/5wan
       Dependencies: {}
-    Info_102:
+    Info_101:
       Name: sound/mahjong/girl/6tiao
       Dependencies: {}
-    Info_103:
+    Info_102:
       Name: sound/mahjong/girl/6tong
       Dependencies: {}
-    Info_104:
+    Info_103:
       Name: sound/mahjong/girl/6wan
       Dependencies: {}
-    Info_105:
+    Info_104:
       Name: sound/mahjong/girl/7tiao
       Dependencies: {}
-    Info_106:
+    Info_105:
       Name: sound/mahjong/girl/7tong
       Dependencies: {}
-    Info_107:
+    Info_106:
       Name: sound/mahjong/girl/7wan
       Dependencies: {}
-    Info_108:
+    Info_107:
       Name: sound/mahjong/girl/8tiao
       Dependencies: {}
-    Info_109:
+    Info_108:
       Name: sound/mahjong/girl/8tong
       Dependencies: {}
-    Info_110:
+    Info_109:
       Name: sound/mahjong/girl/8wan
       Dependencies: {}
-    Info_111:
+    Info_110:
       Name: sound/mahjong/girl/9tiao
       Dependencies: {}
-    Info_112:
+    Info_111:
       Name: sound/mahjong/girl/9tong
       Dependencies: {}
-    Info_113:
+    Info_112:
       Name: sound/mahjong/girl/9wan
       Dependencies: {}
-    Info_114:
+    Info_113:
       Name: sound/mahjong/girl/bai
       Dependencies: {}
-    Info_115:
+    Info_114:
       Name: sound/mahjong/girl/fa
       Dependencies: {}
-    Info_116:
+    Info_115:
       Name: sound/mahjong/girl/hongzhong
       Dependencies: {}
-    Info_117:
+    Info_116:
       Name: sound/mahjong/girl/gang
       Dependencies: {}
-    Info_118:
+    Info_117:
       Name: sound/mahjong/girl/peng
       Dependencies: {}
-    Info_119:
+    Info_118:
       Name: sound/mahjong/girl/hu_zimo
       Dependencies: {}
-    Info_120:
+    Info_119:
       Name: sound/mahjong/girl/hu
       Dependencies: {}
-    Info_121:
+    Info_120:
       Name: sound/mahjong/girl/gang1
       Dependencies: {}
-    Info_122:
+    Info_121:
       Name: sound/mahjong/girl/hu1
       Dependencies: {}
-    Info_123:
+    Info_122:
       Name: sound/mahjong/girl/hu_zimo1
       Dependencies: {}
-    Info_124:
+    Info_123:
       Name: sound/mahjong/girl/peng1
       Dependencies: {}
-    Info_125:
+    Info_124:
       Name: ui/messageboxui/messageboxui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
-    Info_126:
+    Info_125:
       Name: animation/deskplane/deskplane
       Dependencies: {}
-    Info_127:
+    Info_126:
       Name: animation/mahjongroot/mahjongroot
       Dependencies: {}
-    Info_128:
+    Info_127:
       Name: ui/common/common
       Dependencies: {}
-    Info_129:
+    Info_128:
       Name: model/diamond
       Dependencies: {}
-    Info_130:
+    Info_129:
       Name: texture/dl_bg
       Dependencies: {}
-    Info_131:
+    Info_130:
       Name: font/fzzyjt
       Dependencies: {}
-    Info_132:
+    Info_131:
       Name: font/bdzyjt
       Dependencies: {}
-    Info_133:
+    Info_132:
       Name: font/fzcyjt
       Dependencies: {}
-    Info_134:
+    Info_133:
       Name: font/fzltzh_gbk
       Dependencies: {}
-    Info_135:
+    Info_134:
       Name: ui/exitdeskui/exitdeskui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
         Dependency_2: font/bdzyjt
         Dependency_3: font/fzcyjt
-    Info_136:
+    Info_135:
       Name: ui/settingui/settingui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
         Dependency_2: font/bdzyjt
-    Info_137:
+    Info_136:
       Name: ui/useragreementui/useragreementui
       Dependencies:
         Dependency_0: font/fzzyjt
-    Info_138:
+    Info_137:
       Name: texture/dl_logo
       Dependencies: {}
-    Info_139:
+    Info_138:
       Name: ui/gameoverui/gameoverui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
-    Info_140:
+    Info_139:
       Name: ui/gameendui/gameendui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
-    Info_141:
+    Info_140:
       Name: ui/gameendui/gameendui_gangpai
       Dependencies:
         Dependency_0: ui/mahjong/mahjong
-    Info_142:
+    Info_141:
       Name: ui/gameendui/gameendui_pengpai
       Dependencies:
         Dependency_0: ui/mahjong/mahjong
-    Info_143:
+    Info_142:
       Name: ui/gameendui/gameendui_pai
       Dependencies:
         Dependency_0: ui/mahjong/mahjong
-    Info_144:
+    Info_143:
       Name: ui/mahjong/mahjong
+      Dependencies: {}
+    Info_144:
+      Name: animation/diceroot/diceroot
       Dependencies: {}

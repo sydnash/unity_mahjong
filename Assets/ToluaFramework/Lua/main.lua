@@ -15,6 +15,9 @@ function main()
 
     soundManager.setup()
     viewManager.setup()
+    modelManager.setup()
+    textureManager.setup()
+    animationManager.setup()
     eventManager.setup()
     sceneManager.setup()
 
@@ -24,7 +27,7 @@ end
 
 --场景切换通知
 function onLevelWasLoaded(level)
-    Resources.UnloadUnusedAssets()
+    AssetPoolManager.instance:UnloadUnused()
     collectgarbage("collect")
     Time.timeSinceLevelLoad = 0
 end

@@ -88,12 +88,13 @@ end
 -- 初始化
 -------------------------------------------------------------------------------
 function deskOperation:onInit()
+    --麻将出口的板子节点
     self.plane = find("table_plane")
     self.planeAnim = getComponentU(self.plane, typeof(UnityEngine.Animation))
     local planeClip = animationManager.load("deskplane", "deskplane")
     self.planeAnim:AddClip(planeClip, planeClip.name)
     self.planeAnim.clip = planeClip
-
+    --麻将根节点
     self.mahjongsRoot = find("mahjongs_root")
     self.mahjongsRootAnim = getComponentU(self.mahjongsRoot, typeof(UnityEngine.Animation))
     local mahjongsRootClip = animationManager.load("mahjongroot", "mahjongroot")
@@ -103,11 +104,11 @@ function deskOperation:onInit()
     local mineTurn = self.game:getTurn(gamepref.acId)
     self.planeRoot = find("planes")
     self.planeRoot.transform.localRotation = Quaternion.Euler(0, 90 * mineTurn, 0)
-
+    --圆盘
     local circle = find("planes/cricle/Cricle_0")
     self.circleMat = getComponentU(circle, typeof(UnityEngine.MeshRenderer)).sharedMaterial
     self.circleMat.mainTexture = textureManager.load("", "deskfw")
-
+    --方向指示节点
     self.planeMats = {}
     for i=mahjongGame.seatType.mine, mahjongGame.seatType.left do
         local a = (i + 2 == 5) and 1 or i + 2
@@ -119,6 +120,12 @@ function deskOperation:onInit()
         self.planeMats[i] = mat
     end
     self:highlightPlaneByTurn(-1)
+    --骰子节点和动画
+    self.diceRoot = find("shaizi")
+    self.diceRootAnim = getComponentU(self.diceRoot, typeof(UnityEngine.Animation))
+    local diceRootClip = animationManager.load("diceroot", "diceroot")
+    self.diceRootAnim:AddClip(diceRootClip, diceRootClip.name)
+    self.diceRootAnim.clip = diceRootClip
 
     self.mGuo:addClickListener(self.onGuoClickedHandler, self)
     self.mBao:addClickListener(self.onBaoClickedHandler, self)
@@ -175,8 +182,17 @@ function deskOperation:onGameStart()
         end
     end)
 
+    eventManager.registerAnimationTrigger("table_plane_up", function()
+        for _, v in pairs(self.inhandMahjongs) do
+            for _, m in pairs(v) do
+                m:show()
+            end
+        end
+    end)
+
     self.planeAnim:Play()
     self.mahjongsRootAnim:Play()
+    self.diceRootAnim:Play()
 end
 
 -------------------------------------------------------------------------------
@@ -189,7 +205,7 @@ function deskOperation:onGameSync(reenter)
     for _, v in pairs(self.game.players) do 
         self:createPengMahjongs(v)
         self:createChuMahjongs(v)
-        self:createInHandMahjongs(v)
+        self:createInHandMahjongs(v, true)
     end
 
     self:onOpList(reenter.CurOpList)
@@ -247,8 +263,11 @@ function deskOperation:relocateIdleMahjongs(visible)
             else
                 x = (o.x + d) + w * s.x
             end
+            
+            local p = m:getLocalPosition()
+            p:Set(x, y, z)
 
-            m:setLocalPosition(Vector3.New(x, y, z))
+            m:setLocalPosition(p)
             m:setLocalRotation(r)
             m:setLocalScale(s)
             m:setPickabled(false)
@@ -265,11 +284,11 @@ end
 -------------------------------------------------------------------------------
 -- 发牌
 -------------------------------------------------------------------------------
-function deskOperation:OnMahjongDispatched()
+function deskOperation:OnFaPai()
     self:highlightPlaneByTurn(self.game.markerTurn)
 
     for _, player in pairs(self.game.players) do
-        self:createInHandMahjongs(player)
+        self:createInHandMahjongs(player, false)
     end
 
     touch.addListener(self.touchHandler, self)
@@ -278,11 +297,11 @@ end
 -------------------------------------------------------------------------------
 -- 创建手牌
 -------------------------------------------------------------------------------
-function deskOperation:createInHandMahjongs(player)
+function deskOperation:createInHandMahjongs(player, visible)
     local datas = player[mahjongGame.cardType.shou]
 
     self.inhandMahjongs[player.acId] = {}
-    self:increaseInhandMahjongs(player.acId, datas)
+    self:increaseInhandMahjongs(player.acId, datas, visible)
 end
 
 -------------------------------------------------------------------------------
@@ -329,7 +348,7 @@ function deskOperation:onMoPai(acId, cards)
     self:highlightPlaneByAcId(acId)
     
     if acId ~= gamepref.acId then
-        self:increaseInhandMahjongs(acId, cards)
+        self:increaseInhandMahjongs(acId, cards, true)
     else
         self.mo = self:getMahjongFromIdle(cards[1])
         local index = self:getIdleStart()
@@ -785,15 +804,20 @@ end
 -------------------------------------------------------------------------------
 -- 增加手牌
 -------------------------------------------------------------------------------
-function deskOperation:increaseInhandMahjongs(acId, datas)
+function deskOperation:increaseInhandMahjongs(acId, datas, visible)
     local mahjongs = self.inhandMahjongs[acId]
+    local index = self:getIdleStart()
 
     for _, id in pairs(datas) do
         local m = self:getMahjongFromIdle(id)
-        m:show()
         table.insert(mahjongs, m)
-        local index = self:getIdleStart()
         table.remove(self.idleMahjongs, index)
+
+        if visible then
+            m:show()
+        else
+            m:hide()
+        end
     end
 
     local player = self.game:getPlayerByAcId(acId)
