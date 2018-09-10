@@ -13,32 +13,30 @@ gameEnd.folder = "GameEndUI"
 gameEnd.resource = "GameEndUI"
 
 function gameEnd:ctor(game, datas)
-    self.game = game
+    self.game  = game
     self.datas = datas
-    self.pai = {}
+    self.pai   = {}
 
     self.super.ctor(self)
 end
 
 function gameEnd:onInit()
     local items = {
-        { icon = self.mIconM, nickname = self.mNicknameM, id = self.mIdM, pai = self.mPaiM, score = { s = self.mScoreM_S, n = { self.mScoreM_D, self.mScoreM_C, self.mScoreM_B, self.mScoreM_A }} },
-        { icon = self.mIconR, nickname = self.mNicknameR, id = self.mIdR, pai = self.mPaiR, score = { s = self.mScoreR_S, n = { self.mScoreR_D, self.mScoreR_C, self.mScoreR_B, self.mScoreR_A }} },
-        { icon = self.mIconT, nickname = self.mNicknameT, id = self.mIdT, pai = self.mPaiT, score = { s = self.mScoreT_S, n = { self.mScoreT_D, self.mScoreT_C, self.mScoreT_B, self.mScoreT_A }} },
-        { icon = self.mIconL, nickname = self.mNicknameL, id = self.mIdL, pai = self.mPaiL, score = { s = self.mScoreL_S, n = { self.mScoreL_D, self.mScoreL_C, self.mScoreL_B, self.mScoreL_A }} },
+        { icon = self.mIconM, nickname = self.mNicknameM, id = self.mIdM, pai = self.mPaiM, score = { s = self.mScoreM_S, n = { self.mScoreM_D, self.mScoreM_C, self.mScoreM_B, self.mScoreM_A }}, fz = self.mFzM, },
+        { icon = self.mIconR, nickname = self.mNicknameR, id = self.mIdR, pai = self.mPaiR, score = { s = self.mScoreR_S, n = { self.mScoreR_D, self.mScoreR_C, self.mScoreR_B, self.mScoreR_A }}, fz = self.mFzR, },
+        { icon = self.mIconT, nickname = self.mNicknameT, id = self.mIdT, pai = self.mPaiT, score = { s = self.mScoreT_S, n = { self.mScoreT_D, self.mScoreT_C, self.mScoreT_B, self.mScoreT_A }}, fz = self.mFzT, },
+        { icon = self.mIconL, nickname = self.mNicknameL, id = self.mIdL, pai = self.mPaiL, score = { s = self.mScoreL_S, n = { self.mScoreL_D, self.mScoreL_C, self.mScoreL_B, self.mScoreL_A }}, fz = self.mFzL, },
     }
 
     for _, u in pairs(items) do
         for _, v in pairs(u.score.n) do
             v:hide()
         end
+
+        u.fz:hide()
     end
 
-    self.mNext:addClickListener(self.onNextClickedHandler, self)
-    self.mShare:addClickListener(self.onShareClickedHandler, self)
-    self.mRecord:addClickListener(self.onRecordClickedHandler, self)
-
-    for _, v in pairs(self.datas) do
+    for _, v in pairs(self.datas.players) do
         local item = items[v.seat + 1]
 
         item.nickname:setText(v.nickname)
@@ -74,6 +72,11 @@ function gameEnd:onInit()
                 table.insert(self.pai, p)
             end
         end
+
+        --先把手牌进行排序
+        table.sort(v.inhand, function(a, b)
+            return a < b
+        end)
 
         for _, u in pairs(v.inhand) do
             local p = require("ui.gameEnd.gameEndPai").new()
@@ -116,7 +119,42 @@ function gameEnd:onInit()
                 score = math.floor(score / 10)
             end
         end
+
+        if v.isCreator then
+            item.fz:show()
+        else
+            item.fz:hide()
+        end
     end
+
+    if self.datas.totalGameCount > self.datas.finishGameCount then
+        self.mOk:hide()
+        self.mNext:show()
+    else
+        self.mOk:show()
+        self.mNext:hide()
+    end
+
+    self.mOk:addClickListener(self.onOkClickedHandler, self)
+    self.mNext:addClickListener(self.onNextClickedHandler, self)
+    self.mShare:addClickListener(self.onShareClickedHandler, self)
+    self.mRecord:addClickListener(self.onRecordClickedHandler, self)
+end
+
+function gameEnd:endAll()
+    if self.gameObject ~= nil then
+        self.mOk:show()
+        self.mNext:hide()
+    end
+end
+
+function gameEnd:onOkClickedHandler()
+    playButtonClickSound()
+
+    local ui = require("ui.gameOver").new(self.game, self.datas)
+    ui:show()
+
+    self:close() 
 end
 
 function gameEnd:onNextClickedHandler()

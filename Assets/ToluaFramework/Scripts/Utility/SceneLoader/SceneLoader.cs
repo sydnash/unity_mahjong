@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class SceneLoader : MonoBehaviour
 {
@@ -57,11 +60,11 @@ public class SceneLoader : MonoBehaviour
     /// 
     /// </summary>
 #if UNITY_ANDROID
-    private const string SUB_PATH = "Res/Android/scene";
+    private const string SUB_PATH = "Res/Android";
 #elif UNITY_IOS
-    private const string SUB_PATH = "Res/iOS/scene";
+    private const string SUB_PATH = "Res/iOS";
 #else
-    private const string SUB_PATH = "Res/StandaloneWindows/scene";
+    private const string SUB_PATH = "Res/StandaloneWindows";
 #endif
 
     #endregion
@@ -89,16 +92,32 @@ public class SceneLoader : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="sceneName"></param>
-    public void Load(string sceneName, Action<bool, float> callback)
+    public void Load(string scenePath, string sceneName, Action<bool, float> callback)
     {
+        scenePath = scenePath.ToLower();
         sceneName = sceneName.ToLower();
 
-        SceneBundle[] sceneBundles = { new SceneBundle(LFS.CombinePath(mDownloadPath,  sceneName), false),
-                                       new SceneBundle(LFS.CombinePath(mLocalizedPath, sceneName), true)
+        SceneBundle[] sceneBundles = null;
+
+#if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
+        sceneName = LFS.CombinePath(scenePath, sceneName + ".unity");
+
+        foreach(EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
+        {
+            if (scene.path.EndsWith(sceneName, StringComparison.OrdinalIgnoreCase))
+            {
+                sceneName = scene.path;
+                break;
+            }
+        }
+#else
+        sceneBundles = { new SceneBundle(LFS.CombinePath(mDownloadPath,  sceneName), false),
+                         new SceneBundle(LFS.CombinePath(mLocalizedPath, sceneName), true)
         };
+#endif
 
         StartCoroutine(LoadCoroutine(sceneBundles, sceneName, callback));
-    }
+}
 
     #endregion
 
@@ -126,6 +145,8 @@ public class SceneLoader : MonoBehaviour
     private IEnumerator LoadCoroutine(SceneBundle[] bundleInfos, string sceneName, Action<bool, float> callback)
     {
         float time = Time.realtimeSinceStartup;
+
+#if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
         AssetBundle bundle = null;
 
         foreach (SceneBundle sb in bundleInfos)
@@ -155,14 +176,17 @@ public class SceneLoader : MonoBehaviour
         {
             yield return WAIT_FOR_END_OF_FRAME;
         }
+#endif
 
         InvokeCallback(callback, false, 0.5f);
         yield return WAIT_FOR_END_OF_FRAME;
 
         time = Time.realtimeSinceStartup;
 
+#if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
         if (bundle != null)
         {
+#endif
             AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
 
             while (!op.isDone)
@@ -170,13 +194,14 @@ public class SceneLoader : MonoBehaviour
                 InvokeCallback(callback, false, 0.5f + op.progress * 0.5f);
                 yield return WAIT_FOR_END_OF_FRAME;
             }
-
+#if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
             bundle.Unload(false);
         }
         else
         {
             Logger.LogError(string.Format("can't load the scene: {0}", sceneName));
         }
+#endif
 
         while (Time.realtimeSinceStartup - time < 0.4f)
         {

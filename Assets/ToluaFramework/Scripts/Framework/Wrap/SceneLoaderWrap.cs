@@ -19,11 +19,12 @@ public class SceneLoaderWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
+			ToLua.CheckArgsCount(L, 4);
 			SceneLoader obj = (SceneLoader)ToLua.CheckObject<SceneLoader>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			System.Action<bool,float> arg1 = (System.Action<bool,float>)ToLua.CheckDelegate<System.Action<bool,float>>(L, 3);
-			obj.Load(arg0, arg1);
+			string arg1 = ToLua.CheckString(L, 3);
+			System.Action<bool,float> arg2 = (System.Action<bool,float>)ToLua.CheckDelegate<System.Action<bool,float>>(L, 4);
+			obj.Load(arg0, arg1, arg2);
 			return 0;
 		}
 		catch (Exception e)

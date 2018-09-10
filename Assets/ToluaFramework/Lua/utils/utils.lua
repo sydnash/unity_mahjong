@@ -141,8 +141,8 @@ end
 --
 -------------------------------------------------------------------
 function addComponentU(gameObject, componentType)
-    assert(gameObject ~= nil)
-    assert(componentType ~= nil)
+    assert(gameObject ~= nil, "the gameobject is nil")
+    assert(componentType ~= nil, "the component is nil")
 
     return gameObject:AddComponent(componentType)
 end
@@ -151,8 +151,8 @@ end
 --
 -------------------------------------------------------------------
 function getComponentU(gameObject, componentType)
-    assert(gameObject ~= nil)
-    assert(componentType ~= nil)
+    assert(gameObject ~= nil, "the gameobject is nil")
+    assert(componentType ~= nil, "the component is nil")
 
     return gameObject:GetComponent(componentType)
 end
@@ -161,8 +161,8 @@ end
 --
 -------------------------------------------------------------------
 function removeComponentU(gameObject, componentType)
-    assert(gameObject ~= nil)
-    assert(componentType ~= nil)
+    assert(gameObject ~= nil, "the gameobject is nil")
+    assert(componentType ~= nil, "the component is nil")
 
     local component = gameObject:GetComponent(componentType)
 
@@ -240,26 +240,6 @@ function unregisterUpdateListener(handler)
     if handler ~= nil then
         UpdateBeat:RemoveListener(handler)
     end
-end
-
-local K = 1024
-local M = K * K
-local G = K * M
-local T = G * K
-
-----------------------------------------------------------------
---
-----------------------------------------------------------------
-function BKMGT(bytes)
-    assert(type(bytes) == "number")
-
-    if bytes == nil then bytes = 0 end
-    if bytes < K then return string.format("%dB",   bytes) end
-    if bytes < M then return string.format("%.1fKB", bytes / K) end
-    if bytes < G then return string.format("%.1fMB", bytes / M) end
-    if bytes < T then return string.format("%.1fGB", bytes / G) end
-
-    return string.format("%.1fT", bytes / T)
 end
 
 --endregion

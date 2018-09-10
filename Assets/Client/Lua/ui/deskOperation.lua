@@ -50,6 +50,8 @@ local mopaiConfig = {
     scale    = Vector3.New(1, 1, 1),
 }
 
+local totalCountdown = 20
+
 -------------------------------------------------------------------------------
 -- 交换两个牌
 -------------------------------------------------------------------------------
@@ -88,6 +90,8 @@ end
 -- 初始化
 -------------------------------------------------------------------------------
 function deskOperation:onInit()
+    self.turnStartTime = -1
+
     --麻将出口的板子节点
     self.plane = find("table_plane")
     self.planeAnim = getComponentU(self.plane, typeof(UnityEngine.Animation))
@@ -127,6 +131,19 @@ function deskOperation:onInit()
     self.diceRootAnim:AddClip(diceRootClip, diceRootClip.name)
     self.diceRootAnim.clip = diceRootClip
 
+    self.diceMats = {}
+    for i=1, 2 do
+        local go = findChild(self.diceRoot.transform, "shaizi0" .. tostring(i) .. "/shaizi0".. tostring(i) ..  "_0")
+        local mesh = getComponentU(go, typeof(UnityEngine.MeshRenderer))
+        local mat = mesh.sharedMaterial
+
+        self.diceMats[i] = mat
+    end
+
+    self.centerGlass = find("planes/glass")
+    self:setCountdownVisible(false)
+
+    --按钮
     self.mGuo:addClickListener(self.onGuoClickedHandler, self)
     self.mBao:addClickListener(self.onBaoClickedHandler, self)
     self.mChi:addClickListener(self.onChiClickedHandler, self)
@@ -170,9 +187,37 @@ function deskOperation:preload()
 end
 
 -------------------------------------------------------------------------------
+-- 主要处理中间的倒计时
+-------------------------------------------------------------------------------
+function deskOperation:update()
+    if self.turnStartTime ~= nil and self.turnStartTime > 0 then
+        local delta = math.floor(time.realtimeSinceStartup() - self.turnStartTime)
+        local countdown = math.max(0, totalCountdown - delta)
+
+        self.mCountdownA:setSprite(tostring(math.floor(countdown / 10)))
+        self.mCountdownB:setSprite(tostring(math.floor(countdown % 10)))
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 设置倒计时的可见性
+-------------------------------------------------------------------------------
+function deskOperation:setCountdownVisible(visible)
+    if visible then
+        self.centerGlass:SetActive(true)
+        self.mCountdown:show()
+    else
+        self.centerGlass:SetActive(false)
+        self.mCountdown:hide()
+    end
+end
+
+-------------------------------------------------------------------------------
 -- 游戏开始
 -------------------------------------------------------------------------------
 function deskOperation:onGameStart()
+    self:setCountdownVisible(false)
+
     self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
     self:relocateIdleMahjongs(false)
 
@@ -193,6 +238,18 @@ function deskOperation:onGameStart()
     self.planeAnim:Play()
     self.mahjongsRootAnim:Play()
     self.diceRootAnim:Play()
+
+    local diceMat1 = self.diceMats[1]
+    if diceMat1.mainTexture ~= nil then
+        textureManager.unload(diceMat1.mainTexture)
+    end
+    diceMat1.mainTexture = textureManager.load("dice", "dice" .. self.game.dices[1])
+
+    local diceMat2 = self.diceMats[2]
+    if diceMat1.mainTexture ~= nil then
+        textureManager.unload(diceMat2.mainTexture)
+    end
+    diceMat2.mainTexture = textureManager.load("dice", "dice" .. self.game.dices[2])
 end
 
 -------------------------------------------------------------------------------
@@ -210,6 +267,8 @@ function deskOperation:onGameSync(reenter)
 
     self:onOpList(reenter.CurOpList)
     self:highlightPlaneByTurn(reenter.CurOpTurn)
+    self.turnStartTime = time.realtimeSinceStartup()
+    self:setCountdownVisible(true)
 
     touch.addListener(self.touchHandler, self)
 end
@@ -285,11 +344,13 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function deskOperation:OnFaPai()
-    self:highlightPlaneByTurn(self.game.markerTurn)
-
     for _, player in pairs(self.game.players) do
         self:createInHandMahjongs(player, false)
     end
+
+    self:highlightPlaneByTurn(self.game:getMarkerTurn())
+    self.turnStartTime = time.realtimeSinceStartup()
+    self:setCountdownVisible(true)
 
     touch.addListener(self.touchHandler, self)
 end
@@ -345,6 +406,7 @@ end
 -- 摸牌
 -------------------------------------------------------------------------------
 function deskOperation:onMoPai(acId, cards)
+    self.turnStartTime = time.realtimeSinceStartup()
     self:highlightPlaneByAcId(acId)
     
     if acId ~= gamepref.acId then
@@ -1198,6 +1260,18 @@ end
 function deskOperation:onDestroy()
     touch.removeListener()
     self:clear(true)
+
+    for _, v in pairs(self.diceMats) do
+        if v.mainTexture ~= nil then
+            textureManager.unload(v.mainTexture)
+        end
+    end
+
+    for _, v in pairs(self.planeMats) do
+        if v.mainTexture ~= nil then
+            textureManager.unload(v.mainTexture)
+        end
+    end
 end
 
 return deskOperation

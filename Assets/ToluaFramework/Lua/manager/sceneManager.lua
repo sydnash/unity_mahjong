@@ -14,8 +14,8 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function sceneManager.load(sceneName, completedCallback)
-    SceneLoader.instance:Load(sceneName, completedCallback)
+function sceneManager.load(scenePath, sceneName, completedCallback)
+    SceneLoader.instance:Load(scenePath, sceneName, completedCallback)
 end
 
 -------------------------------------------------------------------

@@ -71,6 +71,16 @@ TextureImporter:
     21300128: mj_su_sxia
     21300130: mj_su_szu
     21300132: ZM_di06
+    21300134: djs_0
+    21300136: djs_1
+    21300138: djs_2
+    21300140: djs_3
+    21300142: djs_4
+    21300144: djs_5
+    21300146: djs_6
+    21300148: djs_7
+    21300150: djs_8
+    21300152: djs_9
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -135,6 +145,146 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites:
+    - serializedVersion: 2
+      name: djs_0
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 479
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: djs_1
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 176
+        width: 15
+        height: 32
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: djs_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 88
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: djs_3
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 14
+        width: 27
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5185185, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: djs_4
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 16
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: djs_5
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 16
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: djs_6
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 16
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: djs_7
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 142
+        width: 26
+        height: 32
+      alignment: 9
+      pivot: {x: 0.53846157, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: djs_8
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 16
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: djs_9
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 304
+        width: 28
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
     - serializedVersion: 2
       name: ZM_an06
       rect:

@@ -7,6 +7,26 @@ local mahjongType   = require("logic.mahjong.mahjongType")
 local opType        = require("const.opType")
 local sexType       = require("const.sexType")
 
+local K = 1024
+local M = K * K
+local G = K * M
+local T = G * K
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function BKMGT(bytes)
+    assert(type(bytes) == "number")
+
+    if bytes == nil then bytes = 0 end
+    if bytes < K then return string.format("%dB",   bytes) end
+    if bytes < M then return string.format("%.1fKB", bytes / K) end
+    if bytes < G then return string.format("%.1fMB", bytes / M) end
+    if bytes < T then return string.format("%.1fGB", bytes / G) end
+
+    return string.format("%.1fT", bytes / T)
+end
+
 -------------------------------------------------------------
 -- 显示消息界面
 -------------------------------------------------------------
@@ -111,7 +131,7 @@ function loginServer(callback)
         local deskInfo = msg.DeskInfo
 
         if deskInfo == nil or deskInfo.DeskId == 0 then
-            sceneManager.load("LobbyScene", function(completed, progress)
+            sceneManager.load("scene", "LobbyScene", function(completed, progress)
                 loading:setProgress(progress)
 
                 if completed then
@@ -158,7 +178,7 @@ function loginServer(callback)
                     log("enter desk, msg = " .. table.tostring(msg))
                     loading:setProgress(0.4)
 
-                    sceneManager.load("MahjongScene", function(completed, progress)
+                    sceneManager.load("scene", "MahjongScene", function(completed, progress)
                         loading:setProgress(0.4 + 0.6 * progress)
 
                         if completed then

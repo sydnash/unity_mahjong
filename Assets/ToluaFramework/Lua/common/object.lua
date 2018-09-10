@@ -93,13 +93,14 @@ end
 function object:destroy()
     unregisterUpdateListener(self.updateHandler)
     self.updateHandler = nil
+    
 
     if self.onDestroy ~= nil and type(self.onDestroy) == "function" then
         self:onDestroy()
     end
 
     self.gameObject = nil
-    self.transform = nil
+    self.transform  = nil
 end
 
 -------------------------------------------------------------------

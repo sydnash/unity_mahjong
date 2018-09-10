@@ -384,6 +384,28 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/djs_0.png</key>
+            <key type="filename">Images/djs_1.png</key>
+            <key type="filename">Images/djs_2.png</key>
+            <key type="filename">Images/djs_3.png</key>
+            <key type="filename">Images/djs_4.png</key>
+            <key type="filename">Images/djs_5.png</key>
+            <key type="filename">Images/djs_6.png</key>
+            <key type="filename">Images/djs_7.png</key>
+            <key type="filename">Images/djs_8.png</key>
+            <key type="filename">Images/djs_9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,8,14,16</rect>
+                <key>scale9Paddings</key>
+                <rect>7,8,14,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -404,6 +426,16 @@
             <filename>Images/ZM_an08.png</filename>
             <filename>Images/ZM_di05.png</filename>
             <filename>Images/ZM_di06.png</filename>
+            <filename>Images/djs_0.png</filename>
+            <filename>Images/djs_1.png</filename>
+            <filename>Images/djs_2.png</filename>
+            <filename>Images/djs_3.png</filename>
+            <filename>Images/djs_4.png</filename>
+            <filename>Images/djs_5.png</filename>
+            <filename>Images/djs_6.png</filename>
+            <filename>Images/djs_7.png</filename>
+            <filename>Images/djs_8.png</filename>
+            <filename>Images/djs_9.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

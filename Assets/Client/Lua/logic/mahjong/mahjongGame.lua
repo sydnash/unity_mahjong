@@ -156,6 +156,9 @@ end
 -- 进入房间
 -------------------------------------------------------------------------------
 function mahjongGame:onEnter(msg)
+    self.leftGames = msg.LeftTime
+    self.creator = msg.Creator
+
     local player = gamePlayer.new(gamepref.acId)
 
     player.nickname     = gamepref.nickname
@@ -166,6 +169,7 @@ function mahjongGame:onEnter(msg)
     player.ready        = msg.Ready
     player.turn         = msg.Turn
     player.score        = msg.Score
+    player.isCreator    = self:isCreator(player.acId)
 
     self.players[player.turn] = player
     self:syncOthers(msg.Others)
@@ -177,8 +181,6 @@ function mahjongGame:onEnter(msg)
         self.dices      = { msg.Reenter.Dice1, msg.Reenter.Dice2 }
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
-
-    self.leftGames = msg.LeftTime
 end
 
 -------------------------------------------------------------------------------
@@ -209,6 +211,8 @@ function mahjongGame:syncOthers(others)
         player.ready     = v.Ready
         player.turn      = v.Turn
         player.score     = v.Score
+        player.hu        = v.Hu
+        player.isCreator = self:isCreator(player.acId)
 
         self.players[player.turn] = player
         self.playerCount = self.playerCount + 1
@@ -262,6 +266,7 @@ function mahjongGame:onOtherEnterHandler(msg)
     player.ready        = msg.Ready
     player.turn         = msg.Turn
     player.score        = msg.Score
+    player.hu           = -1
 
     self.players[player.turn] = player
     self.playerCount = self.playerCount + 1
@@ -614,7 +619,7 @@ function mahjongGame:exitGame()
     local loading = require("ui.loading").new()
     loading:show()
 
-    sceneManager.load("LobbyScene", function(completed, progress)
+    sceneManager.load("scene", "LobbyScene", function(completed, progress)
         loading:setProgress(progress)
 
         if completed then
@@ -645,7 +650,9 @@ function mahjongGame:onExitDeskHandler(msg)
 
     local reason = msg.Reason
 
-    self:exitGame()
+    if self.exitDeskUI ~= nil then
+        self.exitDeskUI:endAll()
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -698,22 +705,30 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onGameEndHandler(msg)
     log("game end, msg = " .. table.tostring(msg))
+    self.leftGames = msg.LeftTime
+
+    local datas = { deskId          = self.deskId,
+                    totalGameCount  = self:getTotalGameCount(),
+                    finishGameCount = self:getTotalGameCount() - self:getLeftGameCount(),
+                    players         = {},
+    }
 
     local special = table.fromjson(msg.Special)
     local specialData = table.fromjson(special.SpecialData)
     log("game end, specialData = " .. table.tostring(specialData))
-    local datas = {}
 
     for _, v in pairs(specialData.PlayerInfos) do
         local p = self:getPlayerByAcId(v.AcId)
-        local d = { acId = v.AcId, 
-                    nickname = p.nickname, 
-                    score = v.Score, 
-                    turn = p.turn, 
-                    seat = self:getSeatType(p.turn),
+        local d = { acId            = v.AcId, 
+                    nickname        = p.nickname, 
+                    score           = v.Score, 
+                    turn            = p.turn, 
+                    seat            = self:getSeatType(p.turn),
+                    inhand          = v.ShouPai,
+                    hu              = v.Hu,
+                    isCreator       = self:isCreator(v.AcId),
+                    isWinner        = false,
         }
-        d.inhand = v.ShouPai
-        d.hu = v.Hu
 
         local peng = v.ChiChe
         if peng ~= nil then
@@ -726,17 +741,12 @@ function mahjongGame:onGameEndHandler(msg)
             end
         end
 
-        datas[v.AcId] = d
+        datas.players[p.turn] = d
     end
 
-    self.leftGames = msg.LeftTime
-
     if self.leftGames > 0 then
-        local ui = require("ui.gameEnd").new(self, datas)
-        ui:show()
-    else
-        local ui = require("ui.gameOver").new(datas)
-        ui:show()
+        self.gameEndUI = require("ui.gameEnd").new(self, datas)
+        self.gameEndUI:show()
     end
 
     self.deskUI:reset()
@@ -767,6 +777,13 @@ function mahjongGame:rejectExit()
             log("agree exit, msg = " .. tostring(msg.Agree))
         end
     end)
+end
+
+-------------------------------------------------------------------------------
+-- 是否是房主
+-------------------------------------------------------------------------------
+function mahjongGame:isCreator(acId)
+    return self.creator == acId
 end
 
 return mahjongGame
