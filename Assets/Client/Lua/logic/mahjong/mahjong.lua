@@ -20,9 +20,10 @@ function mahjong:ctor(id)
     local mtype = mahjongType[id]
     local go = modelManager.load(mtype.folder, mtype.resource)
     self:init(go)
-    self.collider = getComponentU(go, typeof(BoxCollider))
-
     self:show()
+
+    self.name  = mtype.name
+    self.class = mtype.class
 end
 
 function mahjong:setPickabled(pickabled)

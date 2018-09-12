@@ -22,10 +22,10 @@ end
 
 function gameEnd:onInit()
     local items = {
-        { icon = self.mIconM, nickname = self.mNicknameM, id = self.mIdM, pai = self.mPaiM, score = { s = self.mScoreM_S, n = { self.mScoreM_D, self.mScoreM_C, self.mScoreM_B, self.mScoreM_A }}, fz = self.mFzM, },
-        { icon = self.mIconR, nickname = self.mNicknameR, id = self.mIdR, pai = self.mPaiR, score = { s = self.mScoreR_S, n = { self.mScoreR_D, self.mScoreR_C, self.mScoreR_B, self.mScoreR_A }}, fz = self.mFzR, },
-        { icon = self.mIconT, nickname = self.mNicknameT, id = self.mIdT, pai = self.mPaiT, score = { s = self.mScoreT_S, n = { self.mScoreT_D, self.mScoreT_C, self.mScoreT_B, self.mScoreT_A }}, fz = self.mFzT, },
-        { icon = self.mIconL, nickname = self.mNicknameL, id = self.mIdL, pai = self.mPaiL, score = { s = self.mScoreL_S, n = { self.mScoreL_D, self.mScoreL_C, self.mScoreL_B, self.mScoreL_A }}, fz = self.mFzL, },
+        { icon = self.mIconM, nickname = self.mNicknameM, id = self.mIdM, pai = self.mPaiM, score = { s = self.mScoreM_S, n = { self.mScoreM_D, self.mScoreM_C, self.mScoreM_B, self.mScoreM_A }}, fz = self.mFzM, result = self.mResultM, marker = self.mMarkerM, que = self.mQueM, },
+        { icon = self.mIconR, nickname = self.mNicknameR, id = self.mIdR, pai = self.mPaiR, score = { s = self.mScoreR_S, n = { self.mScoreR_D, self.mScoreR_C, self.mScoreR_B, self.mScoreR_A }}, fz = self.mFzR, result = self.mResultR, marker = self.mMarkerR, que = self.mQueR, },
+        { icon = self.mIconT, nickname = self.mNicknameT, id = self.mIdT, pai = self.mPaiT, score = { s = self.mScoreT_S, n = { self.mScoreT_D, self.mScoreT_C, self.mScoreT_B, self.mScoreT_A }}, fz = self.mFzT, result = self.mResultT, marker = self.mMarkerT, que = self.mQueT, },
+        { icon = self.mIconL, nickname = self.mNicknameL, id = self.mIdL, pai = self.mPaiL, score = { s = self.mScoreL_S, n = { self.mScoreL_D, self.mScoreL_C, self.mScoreL_B, self.mScoreL_A }}, fz = self.mFzL, result = self.mResultL, marker = self.mMarkerL, que = self.mQueL, },
     }
 
     for _, u in pairs(items) do
@@ -34,13 +34,25 @@ function gameEnd:onInit()
         end
 
         u.fz:hide()
+        u.result:hide()
+        u.marker:hide()
+        u.que:hide()
     end
 
     for _, v in pairs(self.datas.players) do
         local item = items[v.seat + 1]
 
         item.nickname:setText(v.nickname)
-        item.id:setText("编号:" .. tostring(v.acId))
+        item.id:setText(string.format("编号:%d", v.acId))
+
+        if v.que ~= nil then
+            item.que:setSprite(getMahjongClassName(v.que))
+            item.que:show()
+        end
+
+        if v.turn == self.game:getMarkerTurn() then
+            item.marker:show()
+        end
 
         -- 牌
         local x = 0
@@ -91,9 +103,13 @@ function gameEnd:onInit()
 
         local hu = v.hu
         if hu ~= nil and hu >= 0 then
-            local p = require("ui.gameEnd.gameEndPai").new(hu)
+            item.result:setSprite("hu")
+            item.result:show()
+
+            local p = require("ui.gameEnd.gameEndPai").new()
             p:setParent(item.pai)
             p:show()
+            p:setMahjongId(hu)
             p:setLocalPosition(Vector3.New(x + 6, 0, 0))
             p:setHighlight(true)
 
@@ -126,6 +142,9 @@ function gameEnd:onInit()
             item.fz:hide()
         end
     end
+
+    local info = string.format("第%d/%d局  房号:%d", self.datas.finishGameCount, self.datas.totalGameCount, self.datas.deskId)
+    self.mInfo:setText(info)
 
     if self.datas.totalGameCount > self.datas.finishGameCount then
         self.mOk:hide()

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 4250067644
+CRC: 141734273
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -10,5 +10,5 @@ Hashes:
 HashAppended: 0
 ClassTypes: []
 Assets:
-- Assets/Client/Scene/lobbyscene.unity
+- Assets/Client/Resources/Scene/lobbyscene.unity
 Dependencies: []

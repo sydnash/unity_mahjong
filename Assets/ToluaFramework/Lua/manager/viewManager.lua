@@ -12,8 +12,8 @@ function viewManager.setup()
     AssetPoolManager.instance:AddPool(assetType, "UI", false)
 
     local root = find("UIRoot")
-    GameObject.DontDestroyOnLoad(root);
-    viewManager.canvas = findChild(root.transform, "Canvas")
+    GameObject.DontDestroyOnLoad(root.gameObject);
+    viewManager.canvas = root:findChild("Canvas")
 end
 
 -------------------------------------------------------------------

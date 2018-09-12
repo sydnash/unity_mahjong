@@ -114,7 +114,13 @@ local GameObject = UnityEngine.GameObject
 --
 -------------------------------------------------------------------
 function find(name)
-    return GameObject.Find(name)
+    local go = GameObject.Find(name)
+
+    if go ~= nil then
+        return object.new(go)
+    end
+
+    return nil
 end
 
 -------------------------------------------------------------------
@@ -124,7 +130,11 @@ function findChild(transform, name)
     assert(transform ~= nil, "can't find a child for nil")
 
     local child = transform:Find(name)
-    return (child ~= nil) and child or nil
+    if child ~= nil then
+        return object.new(child.gameObject)
+    end
+
+    return nil
 end
 
 -------------------------------------------------------------------
@@ -183,7 +193,12 @@ local logErrorD      = Logger.LogError
 -------------------------------------------------------------------
 function log(message)
     if appConfig.debug then
-        if type(message) ~= "string" then message = tostring(message) end
+        if type(message) == "table" then
+            message = table.tostring(message)
+        elseif type(message) ~= "string" then 
+            message = tostring(message) 
+        end
+
         logInfoD(message)
     end
 end
@@ -193,7 +208,12 @@ end
 -------------------------------------------------------------------
 function logWarning(message)
     if appConfig.debug then
-        if type(message) ~= "string" then message = tostring(message) end
+        if type(message) == "table" then
+            message = table.tostring(message)
+        elseif type(message) ~= "string" then 
+            message = tostring(message) 
+        end
+
         logWarningD(message)
     end
 end
@@ -203,7 +223,12 @@ end
 -------------------------------------------------------------------
 function logError(message)
     if appConfig.debug then
-        if type(message) ~= "string" then message = tostring(message) end
+        if type(message) == "table" then
+            message = table.tostring(message)
+        elseif type(message) ~= "string" then 
+            message = tostring(message) 
+        end
+
         logErrorD(message)
     end
 end

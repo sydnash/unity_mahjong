@@ -156,7 +156,8 @@ function networkManager.update()
     end
 
     if now - networkManager.timestamp > pong then
-        networkManager.release()
+        log("now = " .. tostring(now) .. ", ts = " .. tostring(networkManager.timestamp))
+        networkManager.disconnect()
 
         if networkManager.disconnectedCallback ~= nil then
             networkManager.disconnectedCallback()
@@ -190,10 +191,8 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.disconnect()
-    log("network disconnect begin: " .. time.now())
     networkManager.release()
     tcp.disconnect()
-    log("network disconnect end: " .. time.now())
 end
 
 -------------------------------------------------------------------

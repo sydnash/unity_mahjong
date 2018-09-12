@@ -21,6 +21,7 @@ public class LuaPanel : MonoBehaviour
         ScrollView, //
         ScrollRect, //
         PageView,   //
+        Animation,  //
     }
 
     /// <summary>

@@ -3,6 +3,7 @@
 --此文件由[BabeLua]插件自动生成
 
 local opType        = require("const.opType")
+local mahjongType   = require("logic.mahjong.mahjongType")
 local mahjongGame   = require("logic.mahjong.mahjongGame")
 local mahjong       = require("logic.mahjong.mahjong")
 local touch         = require("logic.touch")
@@ -93,14 +94,14 @@ function deskOperation:onInit()
     self.turnStartTime = -1
 
     --麻将出口的板子节点
-    self.plane = find("table_plane")
-    self.planeAnim = getComponentU(self.plane, typeof(UnityEngine.Animation))
+    local plane = find("table_plane")
+    self.planeAnim = getComponentU(plane.gameObject, typeof(UnityEngine.Animation))
     local planeClip = animationManager.load("deskplane", "deskplane")
     self.planeAnim:AddClip(planeClip, planeClip.name)
     self.planeAnim.clip = planeClip
     --麻将根节点
     self.mahjongsRoot = find("mahjongs_root")
-    self.mahjongsRootAnim = getComponentU(self.mahjongsRoot, typeof(UnityEngine.Animation))
+    self.mahjongsRootAnim = getComponentU(self.mahjongsRoot.gameObject, typeof(UnityEngine.Animation))
     local mahjongsRootClip = animationManager.load("mahjongroot", "mahjongroot")
     self.mahjongsRootAnim:AddClip(mahjongsRootClip, mahjongsRootClip.name)
     self.mahjongsRootAnim.clip = mahjongsRootClip
@@ -110,15 +111,15 @@ function deskOperation:onInit()
     self.planeRoot.transform.localRotation = Quaternion.Euler(0, 90 * mineTurn, 0)
     --圆盘
     local circle = find("planes/cricle/Cricle_0")
-    self.circleMat = getComponentU(circle, typeof(UnityEngine.MeshRenderer)).sharedMaterial
-    self.circleMat.mainTexture = textureManager.load("", "deskfw")
+    local circleMat = getComponentU(circle.gameObject, typeof(UnityEngine.MeshRenderer)).sharedMaterial
+    circleMat.mainTexture = textureManager.load("", "deskfw")
     --方向指示节点
     self.planeMats = {}
     for i=mahjongGame.seatType.mine, mahjongGame.seatType.left do
         local a = (i + 2 == 5) and 1 or i + 2
 
-        local go = findChild(self.planeRoot.transform, "plane0" .. tostring(a) .. "/plane0" .. tostring(a) .. "_0")
-        local mesh = getComponentU(go, typeof(UnityEngine.MeshRenderer))
+        local go = findChild(self.planeRoot.transform, string.format("plane0%d/plane0%d_0", a, a))
+        local mesh = getComponentU(go.gameObject, typeof(UnityEngine.MeshRenderer))
         local mat = mesh.sharedMaterial
 
         self.planeMats[i] = mat
@@ -126,22 +127,55 @@ function deskOperation:onInit()
     self:highlightPlaneByTurn(-1)
     --骰子节点和动画
     self.diceRoot = find("shaizi")
-    self.diceRootAnim = getComponentU(self.diceRoot, typeof(UnityEngine.Animation))
+    self.diceRootAnim = getComponentU(self.diceRoot.gameObject, typeof(UnityEngine.Animation))
     local diceRootClip = animationManager.load("diceroot", "diceroot")
     self.diceRootAnim:AddClip(diceRootClip, diceRootClip.name)
     self.diceRootAnim.clip = diceRootClip
 
     self.diceMats = {}
     for i=1, 2 do
-        local go = findChild(self.diceRoot.transform, "shaizi0" .. tostring(i) .. "/shaizi0".. tostring(i) ..  "_0")
-        local mesh = getComponentU(go, typeof(UnityEngine.MeshRenderer))
+        local go = findChild(self.diceRoot.transform, string.format("shaizi0%d/shaizi0%d_0", i, i))
+        local mesh = getComponentU(go.gameObject, typeof(UnityEngine.MeshRenderer))
         local mat = mesh.sharedMaterial
 
         self.diceMats[i] = mat
     end
 
     self.centerGlass = find("planes/glass")
+    self.countdown = find("countdown")
+    self.countdownNumbders = { 
+        a = { self.countdown:findChild("a/0"),
+              self.countdown:findChild("a/1"),
+              self.countdown:findChild("a/2"),
+              self.countdown:findChild("a/3"),
+              self.countdown:findChild("a/4"),
+              self.countdown:findChild("a/5"),
+              self.countdown:findChild("a/6"),
+              self.countdown:findChild("a/7"),
+              self.countdown:findChild("a/8"),
+              self.countdown:findChild("a/9"),    
+        },
+        b = { self.countdown:findChild("b/0"),
+              self.countdown:findChild("b/1"),
+              self.countdown:findChild("b/2"),
+              self.countdown:findChild("b/3"),
+              self.countdown:findChild("b/4"),
+              self.countdown:findChild("b/5"),
+              self.countdown:findChild("b/6"),
+              self.countdown:findChild("b/7"),
+              self.countdown:findChild("b/8"),
+              self.countdown:findChild("b/9"),  
+        },
+    }
     self:setCountdownVisible(false)
+
+    self.chupaiPtr = find("chupaiPtr")
+    local chupaiPtrD = self.chupaiPtr:findChild("mesh_diamond2")
+    local chupaiPtrAnim = getComponentU(chupaiPtrD.gameObject, typeof(UnityEngine.Animation))
+    local chupaiPtrClip = animationManager.load("chupaiptr", "chupaiptr")
+    chupaiPtrAnim:AddClip(chupaiPtrClip, chupaiPtrClip.name)
+    chupaiPtrAnim.clip = chupaiPtrClip
+    self.chupaiPtr:hide()
 
     --按钮
     self.mGuo:addClickListener(self.onGuoClickedHandler, self)
@@ -158,17 +192,19 @@ function deskOperation:onInit()
     self.mGang:hide()
     self.mHu:hide()
 
-    self.mGang_MS:hide()
-
     self.mGang_MS_ButtonA:addClickListener(self.onGangAClickedHandler, self)
     self.mGang_MS_ButtonB:addClickListener(self.onGangBClickedHandler, self)
     self.mGang_MS_ButtonC:addClickListener(self.onGangCClickedHandler, self)
 
-    self.idleMahjongs = {}
+    self.mGang_MS:hide()
+    self.mOp:hide()
+    self.mQue:hide()
+
+    self.idleMahjongs   = {}
     self.inhandMahjongs = {}
-    self.chuMahjongs = {}
-    self.pengMahjongs = {}
-    self.huMahjongs = {}
+    self.chuMahjongs    = {}
+    self.pengMahjongs   = {}
+    self.huMahjongs     = {}
 
     self:preload()
 end
@@ -194,8 +230,25 @@ function deskOperation:update()
         local delta = math.floor(time.realtimeSinceStartup() - self.turnStartTime)
         local countdown = math.max(0, totalCountdown - delta)
 
-        self.mCountdownA:setSprite(tostring(math.floor(countdown / 10)))
-        self.mCountdownB:setSprite(tostring(math.floor(countdown % 10)))
+        local a = math.floor(countdown / 10)
+        
+        for k, v in pairs(self.countdownNumbders.a) do
+            if k == a + 1 then
+                v:show()
+            else
+                v:hide()
+            end
+        end
+
+        local b = math.floor(countdown % 10)
+
+        for k, v in pairs(self.countdownNumbders.b) do
+            if k == b + 1 then
+                v:show()
+            else
+                v:hide()
+            end
+        end
     end
 end
 
@@ -204,11 +257,13 @@ end
 -------------------------------------------------------------------------------
 function deskOperation:setCountdownVisible(visible)
     if visible then
-        self.centerGlass:SetActive(true)
-        self.mCountdown:show()
+        self.diceRoot:hide()
+        self.centerGlass:show()
+        self.countdown:show()
     else
-        self.centerGlass:SetActive(false)
-        self.mCountdown:hide()
+        self.diceRoot:show()
+        self.centerGlass:hide()
+        self.countdown:hide()
     end
 end
 
@@ -217,6 +272,7 @@ end
 -------------------------------------------------------------------------------
 function deskOperation:onGameStart()
     self:setCountdownVisible(false)
+    self.chupaiPtr:hide()
 
     self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
     self:relocateIdleMahjongs(false)
@@ -235,9 +291,9 @@ function deskOperation:onGameStart()
         end
     end)
 
-    self.planeAnim:Play()
-    self.mahjongsRootAnim:Play()
-    self.diceRootAnim:Play()
+    self:playAnimation(self.planeAnim)
+    self:playAnimation(self.mahjongsRootAnim)
+    self:playAnimation(self.diceRootAnim)
 
     local diceMat1 = self.diceMats[1]
     if diceMat1.mainTexture ~= nil then
@@ -253,24 +309,80 @@ function deskOperation:onGameStart()
 end
 
 -------------------------------------------------------------------------------
+-- 播放动画
+-------------------------------------------------------------------------------
+function deskOperation:playAnimation(animation)
+    animation:Stop()
+    animation:Rewind()
+    animation:Play()
+end
+
+-------------------------------------------------------------------------------
 -- 游戏同步
 -------------------------------------------------------------------------------
 function deskOperation:onGameSync(reenter)
     self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
-    self:relocateIdleMahjongs(true)
+    self:relocateIdleMahjongs(true)    
 
     for _, v in pairs(self.game.players) do 
+        if v.hu ~= nil and v.hu[1].HuCard >= 0 then
+            local m = self:getMahjongFromIdle(v.hu[1].HuCard)
+            self:removeFromIdle()
+
+            local s = self.game:getSeatType(v.turn)
+            local c = self.seats[s][mahjongGame.cardType.hu]
+
+            m:setLocalPosition(c.pos)
+            m:setLocalRotation(c.rot)
+            m:setLocalScale(c.scl)
+
+            self.huMahjongs[v.acId] = m
+        end
+
         self:createPengMahjongs(v)
         self:createChuMahjongs(v)
         self:createInHandMahjongs(v, true)
+    end
+
+    local chu = nil
+
+    for _, u in pairs(self.chuMahjongs) do
+        for _, v in pairs(u) do
+            if v.id == reenter.CurDiPai then
+                chu = v
+                break
+            end
+        end
+
+        if chu ~= nil then
+            local c = chu:getLocalPosition()
+            local p = self.chupaiPtr:getLocalPosition()
+            p:Set(c.x, c.y + mahjong.z * 0.55 + 0.025, c.z)
+            self.chupaiPtr:setLocalPosition(p)
+            self.chupaiPtr:show()
+
+            break
+        end
     end
 
     self:onOpList(reenter.CurOpList)
     self:highlightPlaneByTurn(reenter.CurOpTurn)
     self.turnStartTime = time.realtimeSinceStartup()
     self:setCountdownVisible(true)
+    self.mOp:show()
 
     touch.addListener(self.touchHandler, self)
+end
+
+-------------------------------------------------------------------------------
+-- 从idle列表中删除指定索引的数据，默认删除start index的数据
+-------------------------------------------------------------------------------
+function deskOperation:removeFromIdle(index)
+    if index == nil then
+        index = self:getIdleStart()
+    end
+
+    table.remove(self.idleMahjongs, index)
 end
 
 -------------------------------------------------------------------------------
@@ -351,6 +463,7 @@ function deskOperation:OnFaPai()
     self:highlightPlaneByTurn(self.game:getMarkerTurn())
     self.turnStartTime = time.realtimeSinceStartup()
     self:setCountdownVisible(true)
+    self.mOp:show()
 
     touch.addListener(self.touchHandler, self)
 end
@@ -375,8 +488,7 @@ function deskOperation:createChuMahjongs(player)
         local m = self:getMahjongFromIdle(id)
         m:show()
         self:putMahjongToChu(player.acId, m)
-        local index = self:getIdleStart()
-        table.remove(self.idleMahjongs, index)
+        self:removeFromIdle()
     end    
 end
 
@@ -394,8 +506,7 @@ function deskOperation:createPengMahjongs(player)
             local m = self:getMahjongFromIdle(id)
             m:show()
             table.insert(mahjongs, m)
-            local index = self:getIdleStart()
-            table.remove(self.idleMahjongs, index)
+            self:removeFromIdle()
         end
 
         self:putMahjongsToPeng(player.acId, mahjongs)
@@ -413,8 +524,7 @@ function deskOperation:onMoPai(acId, cards)
         self:increaseInhandMahjongs(acId, cards, true)
     else
         self.mo = self:getMahjongFromIdle(cards[1])
-        local index = self:getIdleStart()
-        table.remove(self.idleMahjongs, index)
+        self:removeFromIdle()
 
         self.mo:setLocalPosition(mopaiConfig.position)
         self.mo:setLocalRotation(mopaiConfig.rotation)
@@ -627,8 +737,7 @@ function deskOperation:onGangClickedHandler()
         for i, c in pairs(self.mGang.c) do
             local cs = c.Cs
             buttons[i].cs = cs
-            local id = math.floor(cs[1] / 4)
-            sprites[i]:setSprite(convertMahjongIdToSpriteName(id))
+            sprites[i]:setSprite(mahjongType[cs[1]].name)
 
             buttons[i]:show()
         end
@@ -677,16 +786,29 @@ end
 -------------------------------------------------------------------------------
 function deskOperation:onOpDoChu(acId, cards)
     self:endChuPai()
+    local chu = nil
 
     if acId == gamepref.acId and self.mo ~= nil and cards[1] == self.mo.id then
         self:putMahjongToChu(acId, self.mo)
+        chu = self.mo
     else
         self:insertMahjongToInhand(self.mo)
 
         local mahjongs = self:decreaseInhandMahjongs(acId, cards)
         for _, m in pairs(mahjongs) do
             self:putMahjongToChu(acId, m)
+            chu = m
         end
+    end
+
+    if chu ~= nil then
+        self.chupaiPtr.mahjongId = chu.id
+
+        local c = chu:getLocalPosition()
+        local p = self.chupaiPtr:getLocalPosition()
+        p:Set(c.x, c.y + mahjong.z * 0.55 + 0.025, c.z)
+        self.chupaiPtr:setLocalPosition(p)
+        self.chupaiPtr:show()
     end
 
     self.mo = nil
@@ -716,8 +838,9 @@ function deskOperation:onOpDoPeng(acId, cards, beAcId, beCard)
 
     self:putMahjongsToPeng(acId, pengMahjongs)
 
-    local bePlayer = self.game:getPlayerByAcId(beAcId)
-    self:relocateChuMahjongs(bePlayer, chuMahjongs)
+    if self.chupaiPtr.mahjongId == beCard then
+        self.chupaiPtr:hide()
+    end
 
     self:beginChuPai()
     self:highlightPlaneByAcId(acId)
@@ -732,7 +855,6 @@ end
 -- 杠
 -------------------------------------------------------------------------------
 function deskOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
-    
     local detail = opType.gang.detail
 
     if t == detail.minggang then
@@ -751,8 +873,9 @@ function deskOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
 
         self:putMahjongsToPeng(acId, mahjongs)
 
-        local bePlayer = self.game:getPlayerByAcId(beAcId)
-        self:relocateChuMahjongs(bePlayer, chuMahjongs)
+        if self.chupaiPtr.mahjongId == beCard then
+            self.chupaiPtr:hide()
+        end
     else
         if self.mo ~= nil then
             self:insertMahjongToInhand(self.mo)
@@ -795,6 +918,10 @@ function deskOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
                 table.remove(chu, k)
                 break
             end
+        end
+
+        if self.chupaiPtr.mahjongId == beCard then
+            self.chupaiPtr:hide()
         end
     end
 
@@ -868,12 +995,11 @@ end
 -------------------------------------------------------------------------------
 function deskOperation:increaseInhandMahjongs(acId, datas, visible)
     local mahjongs = self.inhandMahjongs[acId]
-    local index = self:getIdleStart()
 
     for _, id in pairs(datas) do
         local m = self:getMahjongFromIdle(id)
         table.insert(mahjongs, m)
-        table.remove(self.idleMahjongs, index)
+        self:removeFromIdle()
 
         if visible then
             m:show()

@@ -19,6 +19,7 @@ end
 --
 ----------------------------------------------------------------
 function animation:play()
+    self.component:Rewind()
     self.component:Play()
 end
 
@@ -26,6 +27,7 @@ end
 --
 ----------------------------------------------------------------
 function animation:playAnimation(animationName)
+    self.component:Rewind()
     self.component:Play(animationName)
 end
 

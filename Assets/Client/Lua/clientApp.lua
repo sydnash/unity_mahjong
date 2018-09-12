@@ -26,6 +26,7 @@ local function networkDisconnectedCallback()
     waiting:show()
 
     networkManager.connect(gamepref.host, gamepref.port, function(connected)
+        log("networkDisconnectedCallback, c = " .. tostring(connected))
         waiting:close()
 
         if not connected then

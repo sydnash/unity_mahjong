@@ -21,7 +21,17 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    private float mTimeout = 0.5f;
+
+    /// <summary>
+    /// 
+    /// </summary>
     private Action<bool> mConnectCallback = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private float mStartConnectTime = 0;
 
     /// <summary>
     /// 
@@ -83,6 +93,9 @@ public class Tcp : MonoBehaviour
         try
         {
             mConnectCallback = callback;
+            mTimeout = timeout / 1000.0f;
+            mStartConnectTime = Time.realtimeSinceStartup;
+            mConnected = false;
 
             mSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             mSocket.Blocking = false;
@@ -110,10 +123,18 @@ public class Tcp : MonoBehaviour
             {
                 mSocket.Close();
             }
+
+            mSendMessageQueue.Clear();
+            mSendErrorCallbackQueue.Clear();
         }
         catch (Exception ex)
         {
             Logger.LogError(ex.Message);
+        }
+        finally
+        {
+            mConnected = false;
+            mSocket = null;
         }
     }
 
@@ -160,75 +181,85 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private void Close()
-    {
-        mSendMessageQueue.Clear();
-        mSendErrorCallbackQueue.Clear();
-
-        Disconnect();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     private void Update()
     {
         if (mSocket == null)
             return;
-
-        if (mSocket.Connected)
+        try
         {
-            if (!mConnected && mConnectCallback != null)
+            if (mSocket.Connected)
             {
-                mConnectCallback(true);
-                mConnected = true;
-            }
-
-            //发送数据
-            if (mSendMessageQueue.Count > 0)
-            {
-                byte[] msg  = mSendMessageQueue.Dequeue();
-                Action callback = mSendErrorCallbackQueue.Dequeue();
-                int sentSize = 0;
-                SocketError err = SocketError.Success;
-
-                while (sentSize < msg.Length)
+                if (!mConnected)
                 {
-                    sentSize += mSocket.Send(msg, sentSize, msg.Length - sentSize, SocketFlags.None, out err);
+                    if (mConnectCallback != null)
+                    {
+                        mConnectCallback(true);
+                    }
+                    mConnected = true;
+                }
+
+                //发送数据
+                if (mConnected && mSendMessageQueue.Count > 0)
+                {
+                    byte[] msg = mSendMessageQueue.Dequeue();
+                    Action callback = mSendErrorCallbackQueue.Dequeue();
+                    int sentSize = 0;
+                    SocketError err = SocketError.Success;
+
+                    while (sentSize < msg.Length)
+                    {
+                        sentSize += mSocket.Send(msg, sentSize, msg.Length - sentSize, SocketFlags.None, out err);
+                        if (err != SocketError.Success)
+                        {
+                            callback();
+                            Logger.LogError(string.Format("tcp send data failed, err = {0}", err));
+
+                            break;
+                        }
+                    }
+                }
+
+                //收取数据
+                if (mConnected && mSocket.Available > 0)
+                {
+                    SocketError err = SocketError.Success;
+                    int receivedSize = mSocket.Receive(mReceivedBuffer, 0, BUFFER_SIZE, SocketFlags.None, out err);
+
                     if (err != SocketError.Success)
                     {
-                        callback();
-                        Logger.LogError(string.Format("tcp send data failed, err = {0}", err));
-                        
-                        break;
+                        Logger.LogError(string.Format("tcp recv data failed, err = {0}", err));
+                        mReceivedCallback(null, -1);
+                    }
+                    else if (receivedSize > 0 && mReceivedCallback != null)
+                    {
+                        mReceivedCallback(mReceivedBuffer, receivedSize);
                     }
                 }
             }
-
-            //收取数据
-            if (mSocket.Available > 0)
+            else if (mConnected)
             {
-                SocketError err = SocketError.Success;
-                int receivedSize = mSocket.Receive(mReceivedBuffer, 0, BUFFER_SIZE, SocketFlags.None, out err);
-
-                if (err != SocketError.Success)
+                Logger.Log("tcp disconnect");
+                if (mConnectCallback != null)
                 {
-                    Logger.LogError(string.Format("tcp recv data failed, err = {0}", err));
-                    mReceivedCallback(null, -1);
+                    mConnectCallback(false);
                 }
-                else if (receivedSize > 0 && mReceivedCallback != null)
+                mConnected = false;
+            }
+            else
+            {
+                if (Time.realtimeSinceStartup - mStartConnectTime > mTimeout)
                 {
-                    mReceivedCallback(mReceivedBuffer, receivedSize);
+                    Logger.Log("tcp connect timeout");
+                    if (mConnectCallback != null)
+                    {
+                        mConnectCallback(false);
+                    }
                 }
             }
         }
-        else if (mConnected)
+        catch (Exception ex)
         {
-            if (mConnectCallback != null)
-            {
-                mConnectCallback(false);
-                mConnected = false;
-            }
+            Logger.LogError(ex.Message);
         }
     }
 

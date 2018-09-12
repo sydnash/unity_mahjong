@@ -102,7 +102,7 @@ public class SceneLoader : MonoBehaviour
 #if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
         sceneName = LFS.CombinePath(scenePath, sceneName + ".unity");
 
-        foreach(EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
+        foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
         {
             if (scene.path.EndsWith(sceneName, StringComparison.OrdinalIgnoreCase))
             {
@@ -111,8 +111,8 @@ public class SceneLoader : MonoBehaviour
             }
         }
 #else
-        sceneBundles = { new SceneBundle(LFS.CombinePath(mDownloadPath,  sceneName), false),
-                         new SceneBundle(LFS.CombinePath(mLocalizedPath, sceneName), true)
+        sceneBundles = new SceneBundle[2]{ new SceneBundle(LFS.CombinePath(mDownloadPath,  scenePath, sceneName), false),
+                                           new SceneBundle(LFS.CombinePath(mLocalizedPath, scenePath, sceneName), true)
         };
 #endif
 

@@ -63,6 +63,8 @@ function mahjongGame:ctor(data)
                 self.deskUI:setReady(v.acId, v.ready)
             end
         end
+
+        self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
     else
         local player = self:getPlayerByAcId(gamepref.acId)
         self.deskUI:setReady(player.acId, player.ready)
@@ -175,10 +177,12 @@ function mahjongGame:onEnter(msg)
     self:syncOthers(msg.Others)
 
     if msg.Reenter ~= nil then
-        self.markerTurn = msg.Reenter.MarkerTurn
-        self.curOpTurn  = msg.Reenter.CurOpTurn
-        self.curOpType  = msg.Reenter.CurOpType
-        self.dices      = { msg.Reenter.Dice1, msg.Reenter.Dice2 }
+        self.markerTurn         = msg.Reenter.MarkerTurn
+        self.curOpTurn          = msg.Reenter.CurOpTurn
+        self.curOpType          = msg.Reenter.CurOpType
+        self.dices              = { msg.Reenter.Dice1, msg.Reenter.Dice2 }
+        self.totalMahjongCount  = msg.Reenter.TotalMJCnt
+        self.leftMahjongCount   = msg.Reenter.LeftMJCnt
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
 end
@@ -189,6 +193,7 @@ end
 function mahjongGame:syncSeats(seats)
     for _, v in pairs(seats) do
         local player = self:getPlayerByAcId(v.AcId)
+        player.hu = v.HuInfo
 
         player[mahjongGame.cardType.shou] = v.CardsInHand
         player[mahjongGame.cardType.chu]  = v.CardsInChuPai
@@ -211,7 +216,6 @@ function mahjongGame:syncOthers(others)
         player.ready     = v.Ready
         player.turn      = v.Turn
         player.score     = v.Score
-        player.hu        = v.Hu
         player.isCreator = self:isCreator(player.acId)
 
         self.players[player.turn] = player
@@ -266,7 +270,6 @@ function mahjongGame:onOtherEnterHandler(msg)
     player.ready        = msg.Ready
     player.turn         = msg.Turn
     player.score        = msg.Score
-    player.hu           = -1
 
     self.players[player.turn] = player
     self.playerCount = self.playerCount + 1
@@ -480,6 +483,7 @@ end
 -- SC 碰
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoPeng(acId, cards, beAcId, beCard)
+    self.deskUI:onPlayerPeng(acId)
     self.operationUI:onOpDoPeng(acId, cards, beAcId, beCard)
 end
 
@@ -487,6 +491,7 @@ end
 -- SC 杠
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard)
+    self.deskUI:onPlayerGang(acId)
     self.operationUI:onOpDoGang(acId, cards, beAcId, beCard)
 end
 
@@ -714,20 +719,29 @@ function mahjongGame:onGameEndHandler(msg)
     }
 
     local special = table.fromjson(msg.Special)
+
+    local totalScores = {}
+    local preData = table.fromjson(special.PreData)
+    
+    for _, v in pairs(preData.TotalResuts) do
+        totalScores[v.AcId] = v.Score
+    end
+
     local specialData = table.fromjson(special.SpecialData)
-    log("game end, specialData = " .. table.tostring(specialData))
 
     for _, v in pairs(specialData.PlayerInfos) do
         local p = self:getPlayerByAcId(v.AcId)
         local d = { acId            = v.AcId, 
                     nickname        = p.nickname, 
-                    score           = v.Score, 
+                    score           = v.Score,
+                    totalScore      = totalScores[v.AcId], 
                     turn            = p.turn, 
                     seat            = self:getSeatType(p.turn),
                     inhand          = v.ShouPai,
                     hu              = v.Hu,
                     isCreator       = self:isCreator(v.AcId),
                     isWinner        = false,
+--                    que             = 1,
         }
 
         local peng = v.ChiChe
@@ -744,10 +758,8 @@ function mahjongGame:onGameEndHandler(msg)
         datas.players[p.turn] = d
     end
 
-    if self.leftGames > 0 then
-        self.gameEndUI = require("ui.gameEnd").new(self, datas)
-        self.gameEndUI:show()
-    end
+    self.gameEndUI = require("ui.gameEnd").new(self, datas)
+    self.gameEndUI:show()
 
     self.deskUI:reset()
     self.operationUI:reset()

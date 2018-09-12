@@ -12,8 +12,8 @@ return {
     guestURL    = gameURL .. "anonymouslogin",
     httpTimeout = 10, --秒
     tcpTimeout  = 10, --秒
-    ping        = 5,  --秒
-    pong        = 7,  --秒
+    ping        = 10,  --秒
+    pong        = 15,  --秒
     encrypt     = true,
 }
 

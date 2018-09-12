@@ -16,21 +16,30 @@ end
 
 function gameOver:onInit()
     local items = {
-        { icon = self.mIconA, nickname = self.mNicknameA, id = self.mIdA, score = { s = self.mScoreA_S, n = { self.mScoreA_A, self.mScoreA_B, self.mScoreA_C, self.mScoreA_D, }, }, winnerFlag = self.mWinnerFlagA, fz = self.mFzA, },
-        { icon = self.mIconB, nickname = self.mNicknameB, id = self.mIdB, score = { s = self.mScoreB_S, n = { self.mScoreB_A, self.mScoreB_B, self.mScoreB_C, self.mScoreB_D, }, }, winnerFlag = self.mWinnerFlagB, fz = self.mFzB, },
-        { icon = self.mIconC, nickname = self.mNicknameC, id = self.mIdC, score = { s = self.mScoreC_S, n = { self.mScoreC_A, self.mScoreC_B, self.mScoreC_C, self.mScoreC_D, }, }, winnerFlag = self.mWinnerFlagC, fz = self.mFzC, },
-        { icon = self.mIconD, nickname = self.mNicknameD, id = self.mIdD, score = { s = self.mScoreD_S, n = { self.mScoreD_A, self.mScoreD_B, self.mScoreD_C, self.mScoreD_D, }, }, winnerFlag = self.mWinnerFlagD, fz = self.mFzD, },
+        { icon = self.mIconA, nickname = self.mNicknameA, id = self.mIdA, score = { s = self.mScoreA_S, n = { self.mScoreA_D, self.mScoreA_C, self.mScoreA_B, self.mScoreA_A, }, }, winnerFlag = self.mWinnerFlagA, fz = self.mFzA, },
+        { icon = self.mIconB, nickname = self.mNicknameB, id = self.mIdB, score = { s = self.mScoreB_S, n = { self.mScoreB_D, self.mScoreB_C, self.mScoreB_B, self.mScoreB_A, }, }, winnerFlag = self.mWinnerFlagB, fz = self.mFzB, },
+        { icon = self.mIconC, nickname = self.mNicknameC, id = self.mIdC, score = { s = self.mScoreC_S, n = { self.mScoreC_D, self.mScoreC_C, self.mScoreC_B, self.mScoreC_A, }, }, winnerFlag = self.mWinnerFlagC, fz = self.mFzC, },
+        { icon = self.mIconD, nickname = self.mNicknameD, id = self.mIdD, score = { s = self.mScoreD_S, n = { self.mScoreD_D, self.mScoreD_C, self.mScoreD_B, self.mScoreD_A, }, }, winnerFlag = self.mWinnerFlagD, fz = self.mFzD, },
     }
 
-    self.mDeskId:setText("房号:" .. tostring(self.datas.deskId))
-    self.mFinishCount:setText("已打" .. tostring(self.datas.finishGameCount) .. "/" .. tostring(self.datas.totalGameCount) .. "局")
+    self.mDeskId:setText(string.format("房号:%d", self.datas.deskId))
+    self.mFinishCount:setText(string.format("已打%d/%d局", self.datas.finishGameCount, self.datas.totalGameCount))
     self.mDateTime:setText(time.formatDateTime())
+
+    for _, u in pairs(items) do
+        for _, v in pairs(u.score.n) do
+            v:hide()
+        end
+
+        u.winnerFlag:hide()
+        u.fz:hide()
+    end
 
     for k, v in pairs(self.datas.players) do
         local item = items[k + 1]
 
         item.nickname:setText(v.nickname)
-        item.id:setText("编号:" .. tostring(v.acId))
+        item.id:setText(string.format("编号:%d", v.acId))
 
         if v.isWinner then
             item.winnerFlag:show()
@@ -44,7 +53,7 @@ function gameOver:onInit()
             item.fz:hide()
         end
 
-        local score = math.abs(v.score)
+        local score = math.abs(v.totalScore)
         local sign  = (v.score < 0) and "-" or "+"
         local digit = 1
 

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 108233278
+CRC: 3117379363
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -34,7 +34,10 @@ AssetBundleManifest:
         Dependency_1: font/fzzyjt
     Info_7:
       Name: scene/mahjongscene
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: texture/deskfw_gl
+        Dependency_1: texture/deskfw
+        Dependency_2: texture/dice/dice1
     Info_8:
       Name: model/mjpai01
       Dependencies:
@@ -449,68 +452,86 @@ AssetBundleManifest:
       Name: ui/common/common
       Dependencies: {}
     Info_128:
-      Name: model/diamond
-      Dependencies: {}
-    Info_129:
       Name: texture/dl_bg
       Dependencies: {}
-    Info_130:
+    Info_129:
       Name: font/fzzyjt
       Dependencies: {}
-    Info_131:
+    Info_130:
       Name: font/bdzyjt
       Dependencies: {}
-    Info_132:
+    Info_131:
       Name: font/fzcyjt
       Dependencies: {}
-    Info_133:
+    Info_132:
       Name: font/fzltzh_gbk
       Dependencies: {}
-    Info_134:
+    Info_133:
       Name: ui/exitdeskui/exitdeskui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
         Dependency_2: font/bdzyjt
         Dependency_3: font/fzcyjt
-    Info_135:
+    Info_134:
       Name: ui/settingui/settingui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
         Dependency_2: font/bdzyjt
-    Info_136:
+    Info_135:
       Name: ui/useragreementui/useragreementui
       Dependencies:
         Dependency_0: font/fzzyjt
-    Info_137:
+    Info_136:
       Name: texture/dl_logo
       Dependencies: {}
-    Info_138:
+    Info_137:
       Name: ui/gameoverui/gameoverui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
-    Info_139:
+    Info_138:
       Name: ui/gameendui/gameendui
       Dependencies:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
-    Info_140:
+    Info_139:
       Name: ui/gameendui/gameendui_gangpai
       Dependencies:
         Dependency_0: ui/mahjong/mahjong
-    Info_141:
+    Info_140:
       Name: ui/gameendui/gameendui_pengpai
       Dependencies:
         Dependency_0: ui/mahjong/mahjong
-    Info_142:
+    Info_141:
       Name: ui/gameendui/gameendui_pai
       Dependencies:
         Dependency_0: ui/mahjong/mahjong
-    Info_143:
+    Info_142:
       Name: ui/mahjong/mahjong
       Dependencies: {}
-    Info_144:
+    Info_143:
       Name: animation/diceroot/diceroot
+      Dependencies: {}
+    Info_144:
+      Name: texture/dice/dice3
+      Dependencies: {}
+    Info_145:
+      Name: texture/dice/dice4
+      Dependencies: {}
+    Info_146:
+      Name: texture/dice/dice5
+      Dependencies: {}
+    Info_147:
+      Name: texture/dice/dice6
+      Dependencies: {}
+    Info_148:
+      Name: texture/dice/dice2
+      Dependencies: {}
+    Info_149:
+      Name: texture/dice/dice1
+      Dependencies: {}
+    Info_150:
+      Name: animation/chupaiptr/chupaiptr
       Dependencies: {}

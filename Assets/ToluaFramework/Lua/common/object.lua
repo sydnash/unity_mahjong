@@ -219,12 +219,7 @@ end
 --
 -------------------------------------------------------------------
 function object:findChild(name)
-    local child = findChild(self.transform, name)
-    if child ~= nil then
-        return object.new(child)
-    end
-
-    return nil
+    return findChild(self.transform, name)
 end
 
 -------------------------------------------------------------------

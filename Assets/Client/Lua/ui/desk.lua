@@ -3,6 +3,7 @@
 --此文件由[BabeLua]插件自动生成
 
 local mahjongGame   = require("logic.mahjong.mahjongGame")
+local opType        = require("const.opType")
 
 local base = require("ui.common.view")
 local desk = class("desk", base)
@@ -17,10 +18,10 @@ end
 
 function desk:onInit()
     local players = { 
-        { nickname = self.mNicknameM, score = self.mScoreM, hu = self.mPlayerM_Hu, marker = self.mMarkerM, que = self.mQueM, fz = self.mFzM, },
-        { nickname = self.mNicknameR, score = self.mScoreR, p = self.mPlayerR_P, u = self.mPlayerR_U, ready = self.mPlayerR_Ready, hu = self.mPlayerR_Hu, marker = self.mMarkerR, que = self.mQueR, fz = self.mFzR, },
-        { nickname = self.mNicknameT, score = self.mScoreT, p = self.mPlayerT_P, u = self.mPlayerT_U, ready = self.mPlayerT_Ready, hu = self.mPlayerT_Hu, marker = self.mMarkerT, que = self.mQueT, fz = self.mFzT, },
-        { nickname = self.mNicknameL, score = self.mScoreL, p = self.mPlayerL_P, u = self.mPlayerL_U, ready = self.mPlayerL_Ready, hu = self.mPlayerL_Hu, marker = self.mMarkerL, que = self.mQueL, fz = self.mFzL, },
+        { nickname = self.mNicknameM, score = self.mScoreM, hu = self.mPlayerM_Hu, marker = self.mMarkerM, que = self.mQueM, fz = self.mFzM, gfx = self.mGfxM, gfxAnim = self.mGfxAnimM, },
+        { nickname = self.mNicknameR, score = self.mScoreR, p = self.mPlayerR_P, u = self.mPlayerR_U, ready = self.mPlayerR_Ready, hu = self.mPlayerR_Hu, marker = self.mMarkerR, que = self.mQueR, fz = self.mFzR, gfx = self.mGfxR, gfxAnim = self.mGfxAnimR, },
+        { nickname = self.mNicknameT, score = self.mScoreT, p = self.mPlayerT_P, u = self.mPlayerT_U, ready = self.mPlayerT_Ready, hu = self.mPlayerT_Hu, marker = self.mMarkerT, que = self.mQueT, fz = self.mFzT, gfx = self.mGfxT, gfxAnim = self.mGfxAnimT, },
+        { nickname = self.mNicknameL, score = self.mScoreL, p = self.mPlayerL_P, u = self.mPlayerL_U, ready = self.mPlayerL_Ready, hu = self.mPlayerL_Hu, marker = self.mMarkerL, que = self.mQueL, fz = self.mFzL, gfx = self.mGfxL, gfxAnim = self.mGfxAnimL, },
     }
     self.players = players
 
@@ -29,6 +30,7 @@ function desk:onInit()
         p.marker:hide()
         p.que:hide()
         p.fz:hide()
+        p.gfx:hide()
 
         if p.p ~= nil and p.u ~= nil then
             p.p:hide()
@@ -51,7 +53,7 @@ function desk:onInit()
         end
     end
 
-    self.mDeskID:setText("房号:" .. tostring(self.game.deskId))
+    self.mDeskID:setText(string.format("房号:%d", self.game.deskId))
     self:updateCurrentGameIndex()
     self.mTime:setText(time.formatTime())
     self:updateLeftMahjongCount()
@@ -60,7 +62,7 @@ function desk:onInit()
         local s = self.game:getSeatType(v.turn)
         local p = players[s + 1]
 
-        if s ~= mahjongGame.seatType.mine then
+        if v.acId ~= gamepref.acId then
             p.p:show()
             p.u:hide()
 
@@ -68,9 +70,9 @@ function desk:onInit()
         end
 
         p.nickname:setText(v.nickname)
-        p.score:setText("分数:" .. tostring(v.score))
+        p.score:setText(string.format("分数:%d", v.score))
 
-        if v.hu ~= nil and v.hu >= 0 then
+        if v.hu ~= nil and v.hu[1].HuCard >= 0 then
             p.hu:show()
         else
             p.hu:hide()
@@ -164,6 +166,7 @@ function desk:onGameStart()
     end
 
     self:showMarker()
+    self:updateCurrentGameIndex()
 end
 
 function desk:reset()
@@ -190,7 +193,7 @@ function desk:updateCurrentGameIndex()
     local leftGameCount = self.game:getLeftGameCount()
     local currentGameIndex = totalGameCount - leftGameCount + 1
 
-    self.mGameCount:setText("第" .. tostring(currentGameIndex) .. "/" .. tostring(totalGameCount) .. "局")
+    self.mGameCount:setText(string.format("第%d/%d局", currentGameIndex, totalGameCount))
 end
 
 function desk:onPlayerEnter(player)
@@ -211,7 +214,7 @@ function desk:onPlayerEnter(player)
 
     p.ready:hide()
     p.nickname:setText(player.nickname)
-    p.score:setText("分数:" .. tostring(player.score))
+    p.score:setText(string.format("分数:%d", player.score))
 end
 
 function desk:onPlayerExit(turn)
@@ -224,10 +227,36 @@ function desk:onPlayerExit(turn)
     p.u:show()
 end
 
+function desk:onPlayerPeng(acId)
+    local s = self.game:getSeatTypeByAcId(acId)
+    local p = self.players[s + 1]
+    p.gfx:setSprite("peng")
+    p.gfx:show()
+    p.gfxAnim:play()
+end
+
+function desk:onPlayerGang(acId)
+    local s = self.game:getSeatTypeByAcId(acId)
+    local p = self.players[s + 1]
+    p.gfx:setSprite("gang")
+    p.gfx:show()
+    p.gfxAnim:play()
+end
+
 function desk:onPlayerHu(acId, t)
     local s = self.game:getSeatTypeByAcId(acId)
     local p = self.players[s + 1]
+
+    local detail = opType.hu.detail
+
+    if t == detail.zimo then
+        p.gfx:setSprite("zimo")
+    else
+        p.gfx:setSprite("hu")
+    end
+
     p.hu:show()
+    p.gfxAnim:play()
 end
 
 function desk:showMarker()

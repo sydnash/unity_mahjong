@@ -19,6 +19,7 @@ public class LuaPanel_WidgetTypeWrap
 		L.RegVar("ScrollView", get_ScrollView, null);
 		L.RegVar("ScrollRect", get_ScrollRect, null);
 		L.RegVar("PageView", get_PageView, null);
+		L.RegVar("Animation", get_Animation, null);
 		L.RegFunction("IntToEnum", IntToEnum);
 		L.EndEnum();
 		TypeTraits<LuaPanel.WidgetType>.Check = CheckType;
@@ -116,6 +117,13 @@ public class LuaPanel_WidgetTypeWrap
 	static int get_PageView(IntPtr L)
 	{
 		ToLua.Push(L, LuaPanel.WidgetType.PageView);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Animation(IntPtr L)
+	{
+		ToLua.Push(L, LuaPanel.WidgetType.Animation);
 		return 1;
 	}
 

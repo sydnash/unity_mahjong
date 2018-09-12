@@ -2,6 +2,8 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local mahjongType = require("logic.mahjong.mahjongType")
+
 local base = require("ui.common.view")
 local gameEndGangPai = class("gameEndGangPai", base)
 
@@ -17,7 +19,7 @@ function gameEndGangPai:onInit()
 end
 
 function gameEndGangPai:setMahjongId(mahjongId)
-    local spriteName = convertMahjongIdToSpriteName(mahjongId)
+    local spriteName = mahjongType[mahjongId].name
     self.mA:setSprite(spriteName)
     self.mB:setSprite(spriteName)
     self.mC:setSprite(spriteName)
