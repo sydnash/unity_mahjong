@@ -27,6 +27,7 @@ function gameEnd:onInit()
         { icon = self.mIconT, nickname = self.mNicknameT, id = self.mIdT, pai = self.mPaiT, score = { s = self.mScoreT_S, n = { self.mScoreT_D, self.mScoreT_C, self.mScoreT_B, self.mScoreT_A }}, fz = self.mFzT, result = self.mResultT, marker = self.mMarkerT, que = self.mQueT, },
         { icon = self.mIconL, nickname = self.mNicknameL, id = self.mIdL, pai = self.mPaiL, score = { s = self.mScoreL_S, n = { self.mScoreL_D, self.mScoreL_C, self.mScoreL_B, self.mScoreL_A }}, fz = self.mFzL, result = self.mResultL, marker = self.mMarkerL, que = self.mQueL, },
     }
+    self.items = items
 
     for _, u in pairs(items) do
         for _, v in pairs(u.score.n) do
@@ -42,6 +43,7 @@ function gameEnd:onInit()
     for _, v in pairs(self.datas.players) do
         local item = items[v.seat + 1]
 
+        item.icon:setTexture(v.headerTex)
         item.nickname:setText(v.nickname)
         item.id:setText(string.format("编号:%d", v.acId))
 
@@ -192,6 +194,10 @@ function gameEnd:onRecordClickedHandler()
 end
 
 function gameEnd:onDestroy()
+    for _, v in pairs(self.items) do
+        v.icon:setTexture(nil)
+    end
+
     for _, v in pairs(self.pai) do
         v:close()
     end

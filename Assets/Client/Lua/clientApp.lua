@@ -15,7 +15,7 @@ local clientApp = class("clientApp")
 --
 ----------------------------------------------------------------
 function clientApp:ctor()
-    self.gamePlayer = require("logic.player.gamePlayer").new()
+
 end
 
 ----------------------------------------------------------------

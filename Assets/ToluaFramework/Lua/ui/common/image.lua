@@ -5,14 +5,14 @@
 local base = require("common.object")
 local image = class("image", base)
 
-local UIImage = UnityEngine.UI.Image
+local UIRawImage = UnityEngine.UI.RawImage
 
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
 function image:ctor(gameObject)
     self:init(gameObject)
-    self.component = getComponentU(gameObject, typeof(UIImage))
+    self.component = getComponentU(gameObject, typeof(UIRawImage))
 end
 
 ----------------------------------------------------------------
@@ -32,8 +32,15 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-function image:setFillAmount(amount)
-    self.component.fillAmount = amount
+function image:setTexture(texture)
+    self.component.texture = texture
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function image:getTexture()
+    return self.component.texture
 end
 
 return image

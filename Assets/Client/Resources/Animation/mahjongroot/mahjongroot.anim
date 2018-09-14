@@ -162,7 +162,7 @@ AnimationClip:
   m_Events:
   - time: 0.6666667
     functionName: OnTrigger
-    data: idle_mahjong_root
+    data: table_plane_down
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

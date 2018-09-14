@@ -246,12 +246,16 @@ function networkManager.login(callback)
                         else
                             gamepref.session    = msg.Session
                             gamepref.acId       = msg.AcId
-                            gamepref.nickname   = msg.Nickname
-                            gamepref.ip         = msg.Ip
-                            gamepref.sex        = Mathf.Clamp(msg.Sex, sexType.box, sexType.girl)
-                            gamepref.laolai     = msg.IsLaoLai
-                            gamepref.coin       = msg.Coin
                             gamepref.desk       = { cityType = msg.DeskInfo.GameType, deskId = msg.DeskInfo.DeskId, }
+                            gamepref.player     = require("logic.player.gamePlayer").new(msg.AcId)
+                            
+                            gamepref.player.headerUrl  = msg.HeadUrl
+                            gamepref.player:loadHeaderTex()
+                            gamepref.player.nickname   = msg.Nickname
+                            gamepref.player.ip         = msg.Ip
+                            gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.box, sexType.girl)
+                            gamepref.player.laolai     = msg.IsLaoLai
+                            gamepref.player.coin       = msg.Coin
 
                             callback(true, msg)
                         end

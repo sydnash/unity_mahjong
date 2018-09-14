@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
@@ -59,6 +60,11 @@ public class Http : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    private Dictionary<string, Action<bool, Texture2D, byte[]>> mTextureCallbackDict = new Dictionary<string, Action<bool, Texture2D, byte[]>>();
+
+    /// <summary>
+    /// 
+    /// </summary>
     private Dictionary<string, byte[]> mResponseDict = new Dictionary<string, byte[]>();
 
     #endregion
@@ -111,6 +117,17 @@ public class Http : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="url"></param>
+    /// <param name="callback"></param>
+    public void RequestTexture(string url, Action<bool, Texture2D, byte[]> callback)
+    {
+        mTextureCallbackDict.Add(url, callback);
+        StartCoroutine(LoadTextureCoroutine(url));
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public void Reset()
     {
         mTextCallbackDict.Clear();
@@ -146,10 +163,13 @@ public class Http : MonoBehaviour
             {
                 string k = p.Key;
                 byte[] v = p.Value;
-                //文本回调
-                if (mTextCallbackDict.ContainsKey(k))
+               
+                if (mTextCallbackDict.ContainsKey(k))//文本回调
                 {
                     Action<bool, string> callback = mTextCallbackDict[k];
+
+                    mResponseDict.Remove(k);
+                    mTextCallbackDict.Remove(k);
 
                     if (v != null)
                     {
@@ -160,20 +180,16 @@ public class Http : MonoBehaviour
                         callback(false, string.Empty);
                     }
 
-                    mResponseDict.Remove(k);
-                    mTextCallbackDict.Remove(k);
-
                     break;
                 }
-                //字节回调
-                if (mByteCallbackDict.ContainsKey(k))
+                else if (mByteCallbackDict.ContainsKey(k))//字节回调
                 {
                     Action<bool, byte[]> callback = mByteCallbackDict[k];
-                    callback(v != null, v);
 
                     mResponseDict.Remove(k);
                     mByteCallbackDict.Remove(k);
 
+                    callback(v != null, v);
                     break;
                 }
             }
@@ -191,21 +207,24 @@ public class Http : MonoBehaviour
 
         try
         {
-            request.Method = args.method;
-            request.Timeout = args.timeout;
-            request.ReadWriteTimeout = args.timeout;
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            if (request == null)
+            {
+                AddReqponse(args.url);
+            }
+            else
+            {
+                request.Method = args.method;
+                request.Timeout = args.timeout;
+                request.ReadWriteTimeout = args.timeout;
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 
-            OnResponse(response, args.url);
+                OnResponse(response, args.url);
+            }
         }
         catch (Exception ex)
         {
-            lock (mResponseDict)
-            {
-                mResponseDict.Add(args.url, null);
-            }
-
-            Logger.LogError(ex.Message);
+            AddReqponse(args.url);
+            Logger.LogError(ex.Message + "\n" + ex.StackTrace);
         }
         finally
         {
@@ -235,30 +254,18 @@ public class Http : MonoBehaviour
                 }
 
                 responseStream.Close();
-
-                lock (mResponseDict)
-                {
-                    mResponseDict.Add(url, bytes);
-                }
+                AddReqponse(url, bytes);
             }
             else
             {
-                lock (mResponseDict)
-                {
-                    mResponseDict.Add(url, null);
-                }
-
+                AddReqponse(url);
                 Logger.LogError("http failed: " + response.StatusDescription);
             }
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex.Message);
-
-            lock (mResponseDict)
-            {
-                mResponseDict.Add(url, null);
-            }
+            AddReqponse(url);
+            Logger.LogError(ex.Message + "\n" + ex.StackTrace);
         }
         finally
         {
@@ -267,6 +274,49 @@ public class Http : MonoBehaviour
                 response.Close();
             }
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="url"></param>
+    private void AddReqponse(string url, byte[] bytes = null)
+    {
+        lock (mResponseDict)
+        {
+            mResponseDict.Add(url, bytes);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns></returns>
+    private IEnumerator LoadTextureCoroutine(string url)
+    {
+        WWW www = new WWW(url);
+
+        while (!www.isDone)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (mTextureCallbackDict.ContainsKey(url))
+        {
+            Action<bool, Texture2D, byte[]> callback = mTextureCallbackDict[url];
+
+            if (string.IsNullOrEmpty(www.error))
+            {
+                callback(true, www.texture, www.bytes);
+            }
+            else
+            {
+                callback(false, null, null);
+            }
+        }
+
+        yield return new WaitForEndOfFrame();
     }
 
     #endregion

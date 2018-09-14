@@ -27,9 +27,12 @@ function exitDesk:onInit()
                       { icon = self.mHeaderC, nickname = self.mNicknameC, state = self.mStateC },
                       { icon = self.mHeaderD, nickname = self.mNicknameD, state = self.mStateD },
     }
+    self.players = players
 
     for k, v in pairs(self.game.players) do
         local p = players[k+1]
+
+        p.icon:setTexture(v.headerTex)
         p.nickname:setText(v.nickname)
 
         self.states[v.turn] = p.state
@@ -103,6 +106,12 @@ function exitDesk:update()
     if countdown <= 0 then
         self.game:agreeExit()
         self:close()
+    end
+end
+
+function exitDesk:onDestroy()
+    for _, v in pairs(self.players) do
+        v.icon:setTexture(nil)
     end
 end
 

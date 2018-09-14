@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mWidgets:
   - variableName: mProgress
-    widgetType: 4
+    widgetType: 3
     gameObject: {fileID: 1352542650840298}
     panelScript: 
   - variableName: mDot

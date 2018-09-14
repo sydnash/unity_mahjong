@@ -21,6 +21,7 @@ function gameOver:onInit()
         { icon = self.mIconC, nickname = self.mNicknameC, id = self.mIdC, score = { s = self.mScoreC_S, n = { self.mScoreC_D, self.mScoreC_C, self.mScoreC_B, self.mScoreC_A, }, }, winnerFlag = self.mWinnerFlagC, fz = self.mFzC, },
         { icon = self.mIconD, nickname = self.mNicknameD, id = self.mIdD, score = { s = self.mScoreD_S, n = { self.mScoreD_D, self.mScoreD_C, self.mScoreD_B, self.mScoreD_A, }, }, winnerFlag = self.mWinnerFlagD, fz = self.mFzD, },
     }
+    self.items = items
 
     self.mDeskId:setText(string.format("房号:%d", self.datas.deskId))
     self.mFinishCount:setText(string.format("已打%d/%d局", self.datas.finishGameCount, self.datas.totalGameCount))
@@ -38,6 +39,7 @@ function gameOver:onInit()
     for k, v in pairs(self.datas.players) do
         local item = items[k + 1]
 
+        item.icon:setTexture(v.headerTex)
         item.nickname:setText(v.nickname)
         item.id:setText(string.format("编号:%d", v.acId))
 
@@ -86,6 +88,12 @@ end
 
 function gameOver:onShareClickedHandler()
     playButtonClickSound()
+end
+
+function gameOver:onDestroy()
+    for _, v in pairs(self.items) do
+        v.icon:setTexture(nil)
+    end
 end
 
 return gameOver

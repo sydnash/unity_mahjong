@@ -55,8 +55,8 @@
     <Compile Include="Lua\logic\player\gamePlayer.lua" />
     <Compile Include="Lua\network\networkManager.lua" />
     <Compile Include="Lua\network\protoType.lua" />
-    <Compile Include="Lua\ui\desk.lua" />
-    <Compile Include="Lua\ui\deskOperation.lua" />
+    <Compile Include="Lua\ui\mahjongDesk.lua" />
+    <Compile Include="Lua\ui\mahjongOperation.lua" />
     <Compile Include="Lua\ui\enterDesk.lua" />
     <Compile Include="Lua\ui\exitDesk.lua" />
     <Compile Include="Lua\ui\gameEnd.lua" />

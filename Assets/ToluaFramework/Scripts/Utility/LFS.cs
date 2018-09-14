@@ -37,7 +37,7 @@ public static class LFS
     /// </summary>
     /// <param name="filename"></param>
     /// <param name="content"></param>
-    public static void WriteFile(string filename, string content, Encoding encode)
+    public static void WriteText(string filename, string content, Encoding encode)
     {
         try
         {
@@ -60,7 +60,7 @@ public static class LFS
     /// </summary>
     /// <param name="filename"></param>
     /// <param name="content"></param>
-    public static void WriteFile(string filename, byte[] content)
+    public static void WriteBytes(string filename, byte[] content)
     {
         try
         {

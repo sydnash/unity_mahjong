@@ -5,6 +5,7 @@
 local base = require("common.object")
 local sprite = class("sprite", base)
 
+local UIImage  = UnityEngine.UI.Image
 local UISprite = UnityEngine.UI.Sprite
 
 ----------------------------------------------------------------
@@ -12,7 +13,8 @@ local UISprite = UnityEngine.UI.Sprite
 ----------------------------------------------------------------
 function sprite:ctor(gameObject)
     self:init(gameObject)
-    self.component = getComponentU(gameObject, typeof(UISprite))
+    self.component = getComponentU(gameObject, typeof(UIImage))
+    self.sprite = getComponentU(gameObject, typeof(UISprite))
 end
 
 ----------------------------------------------------------------
@@ -33,7 +35,14 @@ end
 --
 ----------------------------------------------------------------
 function sprite:setSprite(spriteName)
-    self.component.spriteName = spriteName
+    self.sprite.spriteName = spriteName
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function sprite:setFillAmount(amount)
+    self.component.fillAmount = amount
 end
 
 return sprite

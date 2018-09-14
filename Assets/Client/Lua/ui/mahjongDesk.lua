@@ -6,22 +6,22 @@ local mahjongGame   = require("logic.mahjong.mahjongGame")
 local opType        = require("const.opType")
 
 local base = require("ui.common.view")
-local desk = class("desk", base)
+local mahjongDesk = class("mahjongDesk", base)
 
-desk.folder = "DeskUI"
-desk.resource = "DeskUI"
+mahjongDesk.folder = "DeskUI"
+mahjongDesk.resource = "DeskUI"
 
-function desk:ctor(game)
+function mahjongDesk:ctor(game)
     self.game = game
     self.super.ctor(self)
 end
 
-function desk:onInit()
+function mahjongDesk:onInit()
     local players = { 
-        { nickname = self.mNicknameM, score = self.mScoreM, hu = self.mPlayerM_Hu, marker = self.mMarkerM, que = self.mQueM, fz = self.mFzM, gfx = self.mGfxM, gfxAnim = self.mGfxAnimM, },
-        { nickname = self.mNicknameR, score = self.mScoreR, p = self.mPlayerR_P, u = self.mPlayerR_U, ready = self.mPlayerR_Ready, hu = self.mPlayerR_Hu, marker = self.mMarkerR, que = self.mQueR, fz = self.mFzR, gfx = self.mGfxR, gfxAnim = self.mGfxAnimR, },
-        { nickname = self.mNicknameT, score = self.mScoreT, p = self.mPlayerT_P, u = self.mPlayerT_U, ready = self.mPlayerT_Ready, hu = self.mPlayerT_Hu, marker = self.mMarkerT, que = self.mQueT, fz = self.mFzT, gfx = self.mGfxT, gfxAnim = self.mGfxAnimT, },
-        { nickname = self.mNicknameL, score = self.mScoreL, p = self.mPlayerL_P, u = self.mPlayerL_U, ready = self.mPlayerL_Ready, hu = self.mPlayerL_Hu, marker = self.mMarkerL, que = self.mQueL, fz = self.mFzL, gfx = self.mGfxL, gfxAnim = self.mGfxAnimL, },
+        { icon = self.mPlayerM_Icon, nickname = self.mNicknameM, score = self.mScoreM, hu = self.mPlayerM_Hu, marker = self.mMarkerM, que = self.mQueM, fz = self.mFzM, gfx = self.mGfxM, gfxAnim = self.mGfxAnimM, },
+        { icon = self.mPlayerR_Icon, nickname = self.mNicknameR, score = self.mScoreR, p = self.mPlayerR_P, u = self.mPlayerR_U, ready = self.mPlayerR_Ready, hu = self.mPlayerR_Hu, marker = self.mMarkerR, que = self.mQueR, fz = self.mFzR, gfx = self.mGfxR, gfxAnim = self.mGfxAnimR, },
+        { icon = self.mPlayerT_Icon, nickname = self.mNicknameT, score = self.mScoreT, p = self.mPlayerT_P, u = self.mPlayerT_U, ready = self.mPlayerT_Ready, hu = self.mPlayerT_Hu, marker = self.mMarkerT, que = self.mQueT, fz = self.mFzT, gfx = self.mGfxT, gfxAnim = self.mGfxAnimT, },
+        { icon = self.mPlayerL_Icon, nickname = self.mNicknameL, score = self.mScoreL, p = self.mPlayerL_P, u = self.mPlayerL_U, ready = self.mPlayerL_Ready, hu = self.mPlayerL_Hu, marker = self.mMarkerL, que = self.mQueL, fz = self.mFzL, gfx = self.mGfxL, gfxAnim = self.mGfxAnimL, },
     }
     self.players = players
 
@@ -68,6 +68,8 @@ function desk:onInit()
 
             self:setReady(v.acId, v.ready)
         end
+        --先显示默认头像
+        p.icon:setTexture(v.headerTex)
 
         p.nickname:setText(v.nickname)
         p.score:setText(string.format("分数:%d", v.score))
@@ -101,28 +103,28 @@ function desk:onInit()
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
 end
 
-function desk:onInviteClickedHandler()
+function mahjongDesk:onInviteClickedHandler()
     playButtonClickSound()
 end
 
-function desk:onReadyClickedHandler()
+function mahjongDesk:onReadyClickedHandler()
     playButtonClickSound()
     self.game:ready(true)
 end
 
-function desk:onCancelClickedHandler()
+function mahjongDesk:onCancelClickedHandler()
     playButtonClickSound()
     self.game:ready(false)
 end
 
-function desk:onSettingClickedHandler()
+function mahjongDesk:onSettingClickedHandler()
     playButtonClickSound()
 
     local ui = require("ui.setting").new(self.game)
     ui:show()
 end
 
-function desk:setReady(acId, ready)
+function mahjongDesk:setReady(acId, ready)
     if acId == gamepref.acId then
         if ready then
             self.mReady:hide()
@@ -142,19 +144,7 @@ function desk:setReady(acId, ready)
     end
 end
 
-function desk:setNickname(seat, nickname)
-    if seat == mahjongGame.seatType.mine then
-        self.mNicknameM:setText(nickname)
-    elseif seat == mahjongGame.seatType.right then
-        self.mNicknameR:setText(nickname)
-    elseif seat == mahjongGame.seatType.top then
-        self.mNicknameT:setText(nickname)
-    else
-        self.mNicknameL:setText(nickname)
-    end
-end
-
-function desk:onGameStart()
+function mahjongDesk:onGameStart()
     self.mInvite:hide()
     self.mReady:hide()
     self.mCancel:hide()
@@ -169,7 +159,7 @@ function desk:onGameStart()
     self:updateCurrentGameIndex()
 end
 
-function desk:reset()
+function mahjongDesk:reset()
     self.mInvite:hide()
     self.mReady:show()
     self.mCancel:hide()
@@ -184,11 +174,11 @@ function desk:reset()
     end
 end
 
-function desk:update()
+function mahjongDesk:update()
     self.mTime:setText(time.formatTime())
 end
 
-function desk:updateCurrentGameIndex()
+function mahjongDesk:updateCurrentGameIndex()
     local totalGameCount = self.game:getTotalGameCount()
     local leftGameCount = self.game:getLeftGameCount()
     local currentGameIndex = totalGameCount - leftGameCount + 1
@@ -196,7 +186,7 @@ function desk:updateCurrentGameIndex()
     self.mGameCount:setText(string.format("第%d/%d局", currentGameIndex, totalGameCount))
 end
 
-function desk:onPlayerEnter(player)
+function mahjongDesk:onPlayerEnter(player)
     local playerTotalCount = self.game:getTotalPlayerCount()
     local playerCount = self.game:getPlayerCount()
 
@@ -213,11 +203,12 @@ function desk:onPlayerEnter(player)
     p.u:hide()
 
     p.ready:hide()
+    p.icon:setTexture(player.headerTex)
     p.nickname:setText(player.nickname)
     p.score:setText(string.format("分数:%d", player.score))
 end
 
-function desk:onPlayerExit(turn)
+function mahjongDesk:onPlayerExit(turn)
     self.mInvite:show()
 
     local s = self.game:getSeatType(turn)
@@ -227,7 +218,7 @@ function desk:onPlayerExit(turn)
     p.u:show()
 end
 
-function desk:onPlayerPeng(acId)
+function mahjongDesk:onPlayerPeng(acId)
     local s = self.game:getSeatTypeByAcId(acId)
     local p = self.players[s + 1]
     p.gfx:setSprite("peng")
@@ -235,7 +226,7 @@ function desk:onPlayerPeng(acId)
     p.gfxAnim:play()
 end
 
-function desk:onPlayerGang(acId)
+function mahjongDesk:onPlayerGang(acId)
     local s = self.game:getSeatTypeByAcId(acId)
     local p = self.players[s + 1]
     p.gfx:setSprite("gang")
@@ -243,7 +234,7 @@ function desk:onPlayerGang(acId)
     p.gfxAnim:play()
 end
 
-function desk:onPlayerHu(acId, t)
+function mahjongDesk:onPlayerHu(acId, t)
     local s = self.game:getSeatTypeByAcId(acId)
     local p = self.players[s + 1]
 
@@ -259,7 +250,7 @@ function desk:onPlayerHu(acId, t)
     p.gfxAnim:play()
 end
 
-function desk:showMarker()
+function mahjongDesk:showMarker()
     local marker = self.game:getMarkerTurn()
 
     if marker ~= nil then
@@ -268,7 +259,7 @@ function desk:showMarker()
     end
 end
 
-function desk:updateLeftMahjongCount(cnt)
+function mahjongDesk:updateLeftMahjongCount(cnt)
     if cnt == nil then 
         cnt = self.game:getLeftMahjongCount()
     end
@@ -276,6 +267,12 @@ function desk:updateLeftMahjongCount(cnt)
     self.mLeftCount:setText(tostring(cnt))
 end
 
-return desk
+function mahjongDesk:onDestroy()
+    for _, v in pairs(self.players) do
+        v.icon:setTexture(nil)
+    end
+end
+
+return mahjongDesk
 
 --endregion

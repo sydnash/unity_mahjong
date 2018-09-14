@@ -19,6 +19,7 @@ public static class LuaBinder
 		PageViewWrap.Register(L);
 		HttpWrap.Register(L);
 		TcpWrap.Register(L);
+		LFSWrap.Register(L);
 		MD5Wrap.Register(L);
 		AESWrap.Register(L);
 		Base64Wrap.Register(L);
@@ -47,6 +48,7 @@ public static class LuaBinder
 		UnityEngine_TimeWrap.Register(L);
 		UnityEngine_TextureWrap.Register(L);
 		UnityEngine_Texture2DWrap.Register(L);
+		UnityEngine_TextureFormatWrap.Register(L);
 		UnityEngine_ShaderWrap.Register(L);
 		UnityEngine_RendererWrap.Register(L);
 		UnityEngine_WWWWrap.Register(L);
@@ -81,6 +83,7 @@ public static class LuaBinder
 		UnityEngine_UI_TextWrap.Register(L);
 		UnityEngine_UI_ButtonWrap.Register(L);
 		UnityEngine_UI_ImageWrap.Register(L);
+		UnityEngine_UI_RawImageWrap.Register(L);
 		UnityEngine_UI_ToggleWrap.Register(L);
 		UnityEngine_UI_SliderWrap.Register(L);
 		UnityEngine_UI_InputFieldWrap.Register(L);
@@ -150,6 +153,7 @@ public static class LuaBinder
 		L.RegFunction("Action_bool_float", System_Action_bool_float);
 		L.RegFunction("Action_bool_string", System_Action_bool_string);
 		L.RegFunction("Action_bool_bytes", System_Action_bool_bytes);
+		L.RegFunction("Action_bool_UnityEngine_Texture2D_bytes", System_Action_bool_UnityEngine_Texture2D_bytes);
 		L.RegFunction("Action_bool", System_Action_bool);
 		L.RegFunction("Action_bytes_int", System_Action_bytes_int);
 		L.EndModule();
@@ -728,6 +732,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateTraits<System.Action<bool,byte[]>>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_bool_UnityEngine_Texture2D_bytes(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

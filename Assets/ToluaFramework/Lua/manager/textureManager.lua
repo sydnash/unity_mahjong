@@ -22,8 +22,12 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function textureManager.unload(tex)
-    AssetPoolManager.instance:Dealloc(assetType, tex)
+function textureManager.unload(tex, destroy)
+    local suc = AssetPoolManager.instance:Dealloc(assetType, tex)
+
+    if (not suc) and destroy then
+        GameObject.Destroy(tex)
+    end
 end
 
 return textureManager

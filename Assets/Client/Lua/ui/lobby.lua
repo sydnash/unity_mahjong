@@ -11,8 +11,9 @@ lobby.folder = "LobbyUI"
 lobby.resource = "LobbyUI"
 
 function lobby:onInit()
-    self.mNickname:setText(gamepref.nickname)
-    self.mID:setText("编号:" .. gamepref.acId)
+    self.mHeadIcon:setTexture(gamepref.player.headerTex)
+    self.mNickname:setText(gamepref.player.nickname)
+    self.mID:setText("编号:" .. gamepref.player.acId)
 
     self.mHead:addClickListener(self.onHeadClickedHandler, self)
     self.mSwitchCity:addClickListener(self.onSwitchCityClickedHandler, self)
@@ -167,6 +168,10 @@ function lobby:enterDesk(loading, cityType, deskId)
             self:close()
         end)
     end)
+end
+
+function lobby:onDestroy()
+    self.mHeadIcon:setTexture(nil)
 end
 
 return lobby

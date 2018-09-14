@@ -40,10 +40,10 @@ function mahjongGame:ctor(data)
 
     self:onEnter(data)
 
-    self.deskUI = require("ui.desk").new(self)
+    self.deskUI = require("ui.mahjongDesk").new(self)
     self.deskUI:show()
     
-    self.operationUI = require("ui.deskOperation").new(self)
+    self.operationUI = require("ui.mahjongOperation").new(self)
     self.operationUI:show()
     
     if data.Reenter ~= nil then
@@ -161,12 +161,7 @@ function mahjongGame:onEnter(msg)
     self.leftGames = msg.LeftTime
     self.creator = msg.Creator
 
-    local player = gamePlayer.new(gamepref.acId)
-
-    player.nickname     = gamepref.nickname
-    player.ip           = gamepref.ip
-    player.sex          = Mathf.Clamp(gamepref.sex, sexType.box, sexType.girl)
-    player.laolai       = gamepref.laolai
+    local player = gamepref.player
     player.conncted     = true
     player.ready        = msg.Ready
     player.turn         = msg.Turn
@@ -188,26 +183,14 @@ function mahjongGame:onEnter(msg)
 end
 
 -------------------------------------------------------------------------------
--- 同步各个位置的数据
--------------------------------------------------------------------------------
-function mahjongGame:syncSeats(seats)
-    for _, v in pairs(seats) do
-        local player = self:getPlayerByAcId(v.AcId)
-        player.hu = v.HuInfo
-
-        player[mahjongGame.cardType.shou] = v.CardsInHand
-        player[mahjongGame.cardType.chu]  = v.CardsInChuPai
-        player[mahjongGame.cardType.peng] = v.ChiCheInfos
-    end
-end
-
--------------------------------------------------------------------------------
 -- 同步其他玩家的数据
 -------------------------------------------------------------------------------
 function mahjongGame:syncOthers(others)
     for _, v in pairs(others) do
         local player = gamePlayer.new(v.AcId)
 
+        player.headerUrl = v.HeadUrl
+        player:loadHeaderTex()
         player.nickname  = v.Nickname
         player.ip        = v.Ip
         player.sex       = Mathf.Clamp(v.Sex, sexType.box, sexType.girl)
@@ -220,6 +203,20 @@ function mahjongGame:syncOthers(others)
 
         self.players[player.turn] = player
         self.playerCount = self.playerCount + 1
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 同步各个位置的数据
+-------------------------------------------------------------------------------
+function mahjongGame:syncSeats(seats)
+    for _, v in pairs(seats) do
+        local player = self:getPlayerByAcId(v.AcId)
+        player.hu = v.HuInfo
+
+        player[mahjongGame.cardType.shou] = v.CardsInHand
+        player[mahjongGame.cardType.chu]  = v.CardsInChuPai
+        player[mahjongGame.cardType.peng] = v.ChiCheInfos
     end
 end
 
@@ -262,6 +259,8 @@ function mahjongGame:onOtherEnterHandler(msg)
 
     local player = gamePlayer.new(msg.AcId)
 
+    player.headerUrl    = msg.HeadUrl
+    player:loadHeaderTex()
     player.nickname     = msg.Nickname
     player.ip           = msg.Ip
     player.sex          = msg.Sex
@@ -644,6 +643,12 @@ function mahjongGame:exitGame()
     if self.exitDeskUI ~= nil then
         self.exitDeskUI:close()
         self.exitDeskUI = nil
+    end
+
+    for _, v in pairs(self.players) do
+        if v.acId ~= gamepref.acId then
+            v:destroy()
+        end
     end
 end
 

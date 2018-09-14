@@ -38,6 +38,7 @@ public class DelegateFactory
 		dict.Add(typeof(System.Action<bool,float>), factory.System_Action_bool_float);
 		dict.Add(typeof(System.Action<bool,string>), factory.System_Action_bool_string);
 		dict.Add(typeof(System.Action<bool,byte[]>), factory.System_Action_bool_bytes);
+		dict.Add(typeof(System.Action<bool,UnityEngine.Texture2D,byte[]>), factory.System_Action_bool_UnityEngine_Texture2D_bytes);
 		dict.Add(typeof(System.Action<bool>), factory.System_Action_bool);
 		dict.Add(typeof(System.Action<byte[],int>), factory.System_Action_bytes_int);
 
@@ -62,6 +63,7 @@ public class DelegateFactory
 		DelegateTraits<System.Action<bool,float>>.Init(factory.System_Action_bool_float);
 		DelegateTraits<System.Action<bool,string>>.Init(factory.System_Action_bool_string);
 		DelegateTraits<System.Action<bool,byte[]>>.Init(factory.System_Action_bool_bytes);
+		DelegateTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Init(factory.System_Action_bool_UnityEngine_Texture2D_bytes);
 		DelegateTraits<System.Action<bool>>.Init(factory.System_Action_bool);
 		DelegateTraits<System.Action<byte[],int>>.Init(factory.System_Action_bytes_int);
 
@@ -86,6 +88,7 @@ public class DelegateFactory
 		TypeTraits<System.Action<bool,float>>.Init(factory.Check_System_Action_bool_float);
 		TypeTraits<System.Action<bool,string>>.Init(factory.Check_System_Action_bool_string);
 		TypeTraits<System.Action<bool,byte[]>>.Init(factory.Check_System_Action_bool_bytes);
+		TypeTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Init(factory.Check_System_Action_bool_UnityEngine_Texture2D_bytes);
 		TypeTraits<System.Action<bool>>.Init(factory.Check_System_Action_bool);
 		TypeTraits<System.Action<byte[],int>>.Init(factory.Check_System_Action_bytes_int);
 
@@ -110,6 +113,7 @@ public class DelegateFactory
 		StackTraits<System.Action<bool,float>>.Push = factory.Push_System_Action_bool_float;
 		StackTraits<System.Action<bool,string>>.Push = factory.Push_System_Action_bool_string;
 		StackTraits<System.Action<bool,byte[]>>.Push = factory.Push_System_Action_bool_bytes;
+		StackTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Push = factory.Push_System_Action_bool_UnityEngine_Texture2D_bytes;
 		StackTraits<System.Action<bool>>.Push = factory.Push_System_Action_bool;
 		StackTraits<System.Action<byte[],int>>.Push = factory.Push_System_Action_bytes_int;
 	}
@@ -1440,6 +1444,67 @@ public class DelegateFactory
 	}
 
 	void Push_System_Action_bool_bytes(IntPtr L, System.Action<bool,byte[]> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_bool_UnityEngine_Texture2D_bytes_Event : LuaDelegate
+	{
+		public System_Action_bool_UnityEngine_Texture2D_bytes_Event(LuaFunction func) : base(func) { }
+		public System_Action_bool_UnityEngine_Texture2D_bytes_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(bool param0, UnityEngine.Texture2D param1, byte[] param2)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PushSealed(param1);
+			func.Push(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(bool param0, UnityEngine.Texture2D param1, byte[] param2)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PushSealed(param1);
+			func.Push(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<bool,UnityEngine.Texture2D,byte[]> System_Action_bool_UnityEngine_Texture2D_bytes(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<bool,UnityEngine.Texture2D,byte[]> fn = delegate(bool param0, UnityEngine.Texture2D param1, byte[] param2) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_bool_UnityEngine_Texture2D_bytes_Event target = new System_Action_bool_UnityEngine_Texture2D_bytes_Event(func);
+			System.Action<bool,UnityEngine.Texture2D,byte[]> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_bool_UnityEngine_Texture2D_bytes_Event target = new System_Action_bool_UnityEngine_Texture2D_bytes_Event(func, self);
+			System.Action<bool,UnityEngine.Texture2D,byte[]> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_bool_UnityEngine_Texture2D_bytes(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<bool,UnityEngine.Texture2D,byte[]>), L, pos);
+	}
+
+	void Push_System_Action_bool_UnityEngine_Texture2D_bytes(IntPtr L, System.Action<bool,UnityEngine.Texture2D,byte[]> o)
 	{
 		ToLua.Push(L, o);
 	}

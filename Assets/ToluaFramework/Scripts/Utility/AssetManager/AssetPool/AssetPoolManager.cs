@@ -6,46 +6,6 @@ using System.Collections.Generic;
 /// </summary>
 public class AssetPoolManager
 {
-    //#region Enum
-
-    ///// <summary>
-    ///// AssetPool类型
-    ///// </summary>
-    //public enum Type
-    //{
-    //    /// <summary>
-    //    /// 模型
-    //    /// </summary>
-    //    Model = 0,
-
-    //    /// <summary>
-    //    /// 界面
-    //    /// </summary>
-    //    UI,
-
-    //    /// <summary>
-    //    /// 贴图
-    //    /// </summary>
-    //    Texture,
-
-    //    /// <summary>
-    //    /// 音效
-    //    /// </summary>
-    //    Audio,
-
-    //    /// <summary>
-    //    /// 动画
-    //    /// </summary>
-    //    AnimationClip,
-
-    //    /// <summary>
-    //    /// 
-    //    /// </summary>
-    //    End
-    //}
-
-    //#endregion
-
     #region Data
 
     /// <summary>
@@ -183,11 +143,6 @@ public class AssetPoolManager
     /// </summary>
     private AssetPoolManager()
     {
-        //mPools[(int)Type.Model]         = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Model]),           false);
-        //mPools[(int)Type.UI]            = new AssetPool(new AssetLoader(mAssetPath[(int)Type.UI]),              false);
-        //mPools[(int)Type.Texture]       = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Texture]),         true);
-        //mPools[(int)Type.Audio]         = new AssetPool(new AssetLoader(mAssetPath[(int)Type.Audio]),           true);
-        //mPools[(int)Type.AnimationClip] = new AssetPool(new AssetLoader(mAssetPath[(int)Type.AnimationClip]),   false);
     }
 
     #endregion

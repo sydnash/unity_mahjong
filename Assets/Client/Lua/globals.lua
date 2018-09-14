@@ -6,6 +6,7 @@ local messagebox    = require("ui.messagebox")
 local mahjongType   = require("logic.mahjong.mahjongType")
 local opType        = require("const.opType")
 local sexType       = require("const.sexType")
+local http          = require("network.http")
 
 local K = 1024
 local M = K * K
@@ -47,7 +48,7 @@ end
 -------------------------------------------------------------
 function playMahjongSound(mahjongId, sex)
     local folder = (sex == sexType.boy) and "mahjong/boy" or "mahjong/girl"
-    local resource = mahjongType[mahjongId].audio
+    local resource = gamepref.getLanguage() .. mahjongType[mahjongId].audio
 
     return soundManager.playGfx(folder, resource)
 end
@@ -80,20 +81,31 @@ end
 -- 下载玩家头像
 -------------------------------------------------------------
 function downloadIcon(url, callback)
+    if string.isNilOrEmpty(url) then
+        return
+    end
+
     local hash = MD5.GetHash(url)
-    local path = ""
+    local path = LFS.CombinPath(LFS.DOWNLOAD_DATA_PATH, "wxicons", hash .. ".jpg")
+
     --先本地查找，没找到再从网上下载
-    http.getBytes(path, 5, function(ok, bytes)
-        if not ok then
-            http.getBytes(url, 20, function(ok, bytes)
-                if not ok then
+    http.getTexture2D("file:///" .. path, function(ok, tex, bytes)
+        if ok and tex ~= nil then
+            LFS.WriteBytes(path, bytes)
 
-                else
+            if callback ~= nil then
+                callback(tex)
+            end
+        else
+            http.getTexture2D(url, function(ok, tex, bytes)
+                if ok and tex ~= nil then
+                    LFS.WriteBytes(path, bytes)
 
+                    if callback ~= nil then
+                        callback(tex)
+                    end
                 end
             end)
-        else
-            
         end
     end)
 end

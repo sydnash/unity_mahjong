@@ -9,12 +9,12 @@ local mahjong       = require("logic.mahjong.mahjong")
 local touch         = require("logic.touch")
 
 local base = require("ui.common.view")
-local deskOperation = class("deskOperation", base)
+local mahjongOperation = class("mahjongOperation", base)
 
-deskOperation.folder = "DeskOperationUI"
-deskOperation.resource = "DeskOperationUI"
+mahjongOperation.folder = "DeskOperationUI"
+mahjongOperation.resource = "DeskOperationUI"
 
-deskOperation.seats = {
+mahjongOperation.seats = {
     [mahjongGame.seatType.mine] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.235, 0.156, -0.268), rot = Quaternion.Euler(180, 0, 0),   scl = Vector3.New(1.0, 1.0, 1.0), len = 0.50 },
         [mahjongGame.cardType.shou] = { pos = Vector3.New( 0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0),  scl = Vector3.New(1.0, 1.0, 1.0) },
@@ -82,7 +82,7 @@ end
 -------------------------------------------------------------------------------
 -- 构造函数
 -------------------------------------------------------------------------------
-function deskOperation:ctor(game)
+function mahjongOperation:ctor(game)
     self.game = game
     self.super.ctor(self)
 end
@@ -90,7 +90,7 @@ end
 -------------------------------------------------------------------------------
 -- 初始化
 -------------------------------------------------------------------------------
-function deskOperation:onInit()
+function mahjongOperation:onInit()
     self.turnStartTime = -1
 
     --麻将出口的板子节点
@@ -212,7 +212,7 @@ end
 -------------------------------------------------------------------------------
 -- 预加载
 -------------------------------------------------------------------------------
-function deskOperation:preload()
+function mahjongOperation:preload()
     for i=0, self.game:getTotalMahjongCount() - 1 do
         local m = mahjong.new(i)
         m:setParent(self.mahjongsRoot)
@@ -225,7 +225,7 @@ end
 -------------------------------------------------------------------------------
 -- 主要处理中间的倒计时
 -------------------------------------------------------------------------------
-function deskOperation:update()
+function mahjongOperation:update()
     if self.turnStartTime ~= nil and self.turnStartTime > 0 then
         local delta = math.floor(time.realtimeSinceStartup() - self.turnStartTime)
         local countdown = math.max(0, totalCountdown - delta)
@@ -255,7 +255,7 @@ end
 -------------------------------------------------------------------------------
 -- 设置倒计时的可见性
 -------------------------------------------------------------------------------
-function deskOperation:setCountdownVisible(visible)
+function mahjongOperation:setCountdownVisible(visible)
     if visible then
         self.diceRoot:hide()
         self.centerGlass:show()
@@ -270,14 +270,14 @@ end
 -------------------------------------------------------------------------------
 -- 游戏开始
 -------------------------------------------------------------------------------
-function deskOperation:onGameStart()
+function mahjongOperation:onGameStart()
     self:setCountdownVisible(false)
     self.chupaiPtr:hide()
 
     self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
     self:relocateIdleMahjongs(false)
 
-    eventManager.registerAnimationTrigger("idle_mahjong_root", function()
+    eventManager.registerAnimationTrigger("table_plane_down", function()
         for _, m in pairs(self.idleMahjongs) do
             m:show()
         end
@@ -289,7 +289,11 @@ function deskOperation:onGameStart()
                 m:show()
             end
         end
+
+        self.mOp:show()
     end)
+
+    soundManager.playGfx("mahjong", "shaizi")
 
     self:playAnimation(self.planeAnim)
     self:playAnimation(self.mahjongsRootAnim)
@@ -311,7 +315,7 @@ end
 -------------------------------------------------------------------------------
 -- 播放动画
 -------------------------------------------------------------------------------
-function deskOperation:playAnimation(animation)
+function mahjongOperation:playAnimation(animation)
     animation:Stop()
     animation:Rewind()
     animation:Play()
@@ -320,7 +324,7 @@ end
 -------------------------------------------------------------------------------
 -- 游戏同步
 -------------------------------------------------------------------------------
-function deskOperation:onGameSync(reenter)
+function mahjongOperation:onGameSync(reenter)
     self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
     self:relocateIdleMahjongs(true)    
 
@@ -369,7 +373,7 @@ function deskOperation:onGameSync(reenter)
     self:highlightPlaneByTurn(reenter.CurOpTurn)
     self.turnStartTime = time.realtimeSinceStartup()
     self:setCountdownVisible(true)
-    self.mOp:show()
+--    self.mOp:show()
 
     touch.addListener(self.touchHandler, self)
 end
@@ -377,7 +381,7 @@ end
 -------------------------------------------------------------------------------
 -- 从idle列表中删除指定索引的数据，默认删除start index的数据
 -------------------------------------------------------------------------------
-function deskOperation:removeFromIdle(index)
+function mahjongOperation:removeFromIdle(index)
     if index == nil then
         index = self:getIdleStart()
     end
@@ -388,7 +392,7 @@ end
 -------------------------------------------------------------------------------
 -- 创建“城墙”
 -------------------------------------------------------------------------------
-function deskOperation:relocateIdleMahjongs(visible)
+function mahjongOperation:relocateIdleMahjongs(visible)
     local mahjongCount = self.game:getTotalMahjongCount()
     local playerCount  = self.game:getTotalPlayerCount()
     local markerTurn   = self.game:getMarkerTurn()
@@ -455,7 +459,9 @@ end
 -------------------------------------------------------------------------------
 -- 发牌
 -------------------------------------------------------------------------------
-function deskOperation:OnFaPai()
+function mahjongOperation:OnFaPai()
+    soundManager.playGfx("mahjong", "fapai")
+
     for _, player in pairs(self.game.players) do
         self:createInHandMahjongs(player, false)
     end
@@ -471,7 +477,7 @@ end
 -------------------------------------------------------------------------------
 -- 创建手牌
 -------------------------------------------------------------------------------
-function deskOperation:createInHandMahjongs(player, visible)
+function mahjongOperation:createInHandMahjongs(player, visible)
     local datas = player[mahjongGame.cardType.shou]
 
     self.inhandMahjongs[player.acId] = {}
@@ -481,7 +487,7 @@ end
 -------------------------------------------------------------------------------
 -- 创建出牌
 -------------------------------------------------------------------------------
-function deskOperation:createChuMahjongs(player)
+function mahjongOperation:createChuMahjongs(player)
     local datas = player[mahjongGame.cardType.chu]
 
     for _, id in pairs(datas) do
@@ -495,7 +501,7 @@ end
 -------------------------------------------------------------------------------
 -- 创建碰/杠牌
 -------------------------------------------------------------------------------
-function deskOperation:createPengMahjongs(player)
+function mahjongOperation:createPengMahjongs(player)
     local mahjongs = {}
     local datas = player[mahjongGame.cardType.peng]
 
@@ -516,7 +522,7 @@ end
 -------------------------------------------------------------------------------
 -- 摸牌
 -------------------------------------------------------------------------------
-function deskOperation:onMoPai(acId, cards)
+function mahjongOperation:onMoPai(acId, cards)
     self.turnStartTime = time.realtimeSinceStartup()
     self:highlightPlaneByAcId(acId)
     
@@ -538,7 +544,7 @@ end
 -------------------------------------------------------------------------------
 -- OpList
 -------------------------------------------------------------------------------
-function deskOperation:onOpList(oplist)
+function mahjongOperation:onOpList(oplist)
     if oplist ~= nil then
         local infos = oplist.OpInfos
         local leftTime = oplist.L
@@ -556,21 +562,21 @@ end
 -------------------------------------------------------------------------------
 -- 可以出牌
 -------------------------------------------------------------------------------
-function deskOperation:beginChuPai()
+function mahjongOperation:beginChuPai()
     self.canChuPai = true
 end
 
 -------------------------------------------------------------------------------
 -- 不能出牌
 -------------------------------------------------------------------------------
-function deskOperation:endChuPai()
+function mahjongOperation:endChuPai()
     self.canChuPai = false
 end
 
 -------------------------------------------------------------------------------
 -- 处理鼠标/手指拖拽
 -------------------------------------------------------------------------------
-function deskOperation:touchHandler(phase, pos)
+function mahjongOperation:touchHandler(phase, pos)
     local camera = GameObjectPicker.instance.camera
 
     if phase == touch.phaseType.began then
@@ -633,7 +639,7 @@ end
 -------------------------------------------------------------------------------
 -- 显示操作按钮
 -------------------------------------------------------------------------------
-function deskOperation:showOperations(ops, leftTime)
+function mahjongOperation:showOperations(ops, leftTime)
     for _, v in pairs(ops) do 
         if v.Op == opType.guo.id then
             self.mGuo:show()
@@ -657,7 +663,7 @@ end
 -------------------------------------------------------------------------------
 -- 隐藏操作按钮
 -------------------------------------------------------------------------------
-function deskOperation:hideOperations()
+function mahjongOperation:hideOperations()
     self.mGuo:hide()
     self.mBao:hide()
     self.mChi:hide()
@@ -671,7 +677,7 @@ end
 -------------------------------------------------------------------------------
 -- 点击“过”
 -------------------------------------------------------------------------------
-function deskOperation:onGuoClickedHandler()
+function mahjongOperation:onGuoClickedHandler()
     playButtonClickSound()
 
     self.game:guo()
@@ -681,7 +687,7 @@ end
 -------------------------------------------------------------------------------
 -- 点击“报”
 -------------------------------------------------------------------------------
-function deskOperation:onBaoClickedHandler()
+function mahjongOperation:onBaoClickedHandler()
     playButtonClickSound()
 
     self.game:bao()
@@ -691,7 +697,7 @@ end
 -------------------------------------------------------------------------------
 -- 点击“吃”
 -------------------------------------------------------------------------------
-function deskOperation:onChiClickedHandler()
+function mahjongOperation:onChiClickedHandler()
     playButtonClickSound()
 
     self.game:chi()
@@ -701,7 +707,7 @@ end
 -------------------------------------------------------------------------------
 -- 点击“碰”
 -------------------------------------------------------------------------------
-function deskOperation:onPengClickedHandler()
+function mahjongOperation:onPengClickedHandler()
     local player = self.game:getPlayerByAcId(gamepref.acId)
     playMahjongOpSound(opType.peng.id, player.sex)
 
@@ -722,7 +728,7 @@ end
 -------------------------------------------------------------------------------
 -- 点击“杠”
 -------------------------------------------------------------------------------
-function deskOperation:onGangClickedHandler()
+function mahjongOperation:onGangClickedHandler()
     if #self.mGang.c == 1 then
         opGang(self.game, self.mGang.c[1].Cs)
         self:hideOperations()
@@ -749,7 +755,7 @@ end
 -------------------------------------------------------------------------------
 -- 点击“杠A”
 -------------------------------------------------------------------------------
-function deskOperation:onGangAClickedHandler()
+function mahjongOperation:onGangAClickedHandler()
     opGang(self.game, self.mGang_MS_ButtonA.cs)
     self:hideOperations()
 end
@@ -757,7 +763,7 @@ end
 -------------------------------------------------------------------------------
 -- 点击“杠B”
 -------------------------------------------------------------------------------
-function deskOperation:onGangBClickedHandler()
+function mahjongOperation:onGangBClickedHandler()
     opGang(self.game, self.mGang_MS_ButtonB.cs)
     self:hideOperations()
 end
@@ -765,7 +771,7 @@ end
 -------------------------------------------------------------------------------
 -- 点击“杠C”
 -------------------------------------------------------------------------------
-function deskOperation:onGangCClickedHandler()
+function mahjongOperation:onGangCClickedHandler()
     opGang(self.game, self.mGang_MS_ButtonC.cs)
     self:hideOperations()
 end
@@ -773,7 +779,7 @@ end
 -------------------------------------------------------------------------------
 -- 点击“胡”
 -------------------------------------------------------------------------------
-function deskOperation:onHuClickedHandler()
+function mahjongOperation:onHuClickedHandler()
     local player = self.game:getPlayerByAcId(gamepref.acId)
     playMahjongOpSound(opType.hu.id, player.sex)
 
@@ -784,7 +790,7 @@ end
 -------------------------------------------------------------------------------
 -- 出牌
 -------------------------------------------------------------------------------
-function deskOperation:onOpDoChu(acId, cards)
+function mahjongOperation:onOpDoChu(acId, cards)
     self:endChuPai()
     local chu = nil
 
@@ -812,6 +818,7 @@ function deskOperation:onOpDoChu(acId, cards)
     end
 
     self.mo = nil
+    soundManager.playGfx("mahjong", "chupai")
 
     if acId ~= gamepref.acId then 
         local player = self.game:getPlayerByAcId(acId)
@@ -822,7 +829,7 @@ end
 -------------------------------------------------------------------------------
 -- 碰
 -------------------------------------------------------------------------------
-function deskOperation:onOpDoPeng(acId, cards, beAcId, beCard)
+function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
     beAcId = beAcId[1]
 
     local pengMahjongs = self:decreaseInhandMahjongs(acId, cards)
@@ -854,7 +861,7 @@ end
 -------------------------------------------------------------------------------
 -- 杠
 -------------------------------------------------------------------------------
-function deskOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
+function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
     local detail = opType.gang.detail
 
     if t == detail.minggang then
@@ -894,7 +901,7 @@ end
 -------------------------------------------------------------------------------
 -- 胡
 -------------------------------------------------------------------------------
-function deskOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
+function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
     local hu = nil
     local detail = opType.hu.detail
 
@@ -947,21 +954,21 @@ end
 -------------------------------------------------------------------------------
 -- 取消所有操作
 -------------------------------------------------------------------------------
-function deskOperation:onClear()
+function mahjongOperation:onClear()
     self:hideOperations()
 end
 
 -------------------------------------------------------------------------------
 -- 获取从idle列表拿牌的索引值
 -------------------------------------------------------------------------------
-function deskOperation:getIdleStart()
+function mahjongOperation:getIdleStart()
     return (self.idleMahjongStart <= #self.idleMahjongs) and self.idleMahjongStart or 1
 end
 
 -------------------------------------------------------------------------------
 -- 从idle列表或者其他玩家手牌中获取一张由mid指定的牌，并将它放在idle列表第一位
 -------------------------------------------------------------------------------
-function deskOperation:getMahjongFromIdle(mid)
+function mahjongOperation:getMahjongFromIdle(mid)
     local index = self:getIdleStart()
 
     if mid < 0 then
@@ -993,7 +1000,7 @@ end
 -------------------------------------------------------------------------------
 -- 增加手牌
 -------------------------------------------------------------------------------
-function deskOperation:increaseInhandMahjongs(acId, datas, visible)
+function mahjongOperation:increaseInhandMahjongs(acId, datas, visible)
     local mahjongs = self.inhandMahjongs[acId]
 
     for _, id in pairs(datas) do
@@ -1015,7 +1022,7 @@ end
 -------------------------------------------------------------------------------
 -- 将麻将m插入到手牌中
 -------------------------------------------------------------------------------
-function deskOperation:insertMahjongToInhand(m)
+function mahjongOperation:insertMahjongToInhand(m)
     local mahjongs = self.inhandMahjongs[gamepref.acId]
     table.insert(mahjongs, m)
 
@@ -1026,7 +1033,7 @@ end
 -------------------------------------------------------------------------------
 -- 减少手牌
 -------------------------------------------------------------------------------
-function deskOperation:decreaseInhandMahjongs(acId, datas)
+function mahjongOperation:decreaseInhandMahjongs(acId, datas)
     local decreaseMahjongs = {}
     local mahjongs = self.inhandMahjongs[acId]
     
@@ -1059,7 +1066,7 @@ end
 -------------------------------------------------------------------------------
 -- 调整手牌位置
 -------------------------------------------------------------------------------
-function deskOperation:relocateInhandMahjongs(player, mahjongs)
+function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
     if mahjongs == nil then
         return
     end
@@ -1104,7 +1111,7 @@ end
 -------------------------------------------------------------------------------
 -- 调整出牌位置
 -------------------------------------------------------------------------------
-function deskOperation:relocateChuMahjongs(player)
+function mahjongOperation:relocateChuMahjongs(player)
     local acId = player.acId
     local turn = self.game:getSeatType(player.turn)
     local seat = self.seats[turn]
@@ -1144,7 +1151,7 @@ end
 -------------------------------------------------------------------------------
 -- 调整碰/杠牌位置
 -------------------------------------------------------------------------------
-function deskOperation:relocatePengMahjongs(player)
+function mahjongOperation:relocatePengMahjongs(player)
     local acId = player.acId
     local turn = self.game:getSeatType(player.turn)
     local seat = self.seats[turn]
@@ -1190,7 +1197,7 @@ end
 -------------------------------------------------------------------------------
 -- 获取mahjong对象
 -------------------------------------------------------------------------------
-function deskOperation:getMahjongByGo(mahjongs, gameObject)
+function mahjongOperation:getMahjongByGo(mahjongs, gameObject)
     for _, m in pairs(mahjongs) do
         if m.gameObject == gameObject then
             return m
@@ -1203,7 +1210,7 @@ end
 -------------------------------------------------------------------------------
 -- 将mahjong放到出牌区
 -------------------------------------------------------------------------------
-function deskOperation:putMahjongToChu(acId, mj)
+function mahjongOperation:putMahjongToChu(acId, mj)
     if self.chuMahjongs[acId] == nil then
         self.chuMahjongs[acId] = {}
     end
@@ -1217,7 +1224,7 @@ end
 -------------------------------------------------------------------------------
 -- 将mahjong放到出牌区
 -------------------------------------------------------------------------------
-function deskOperation:putMahjongsToPeng(acId, mahjongs)
+function mahjongOperation:putMahjongsToPeng(acId, mahjongs)
     if self.pengMahjongs[acId] == nil then
         self.pengMahjongs[acId] = {}
     end
@@ -1231,7 +1238,7 @@ end
 -------------------------------------------------------------------------------
 -- 将当前acid的plane高亮
 -------------------------------------------------------------------------------
-function deskOperation:highlightPlaneByAcId(acId)
+function mahjongOperation:highlightPlaneByAcId(acId)
     local player = self.game:getPlayerByAcId(acId)
     local turn = player and player.turn or -1
 
@@ -1241,7 +1248,7 @@ end
 -------------------------------------------------------------------------------
 -- 将当前turn的plane高亮
 -------------------------------------------------------------------------------
-function deskOperation:highlightPlaneByTurn(turn)
+function mahjongOperation:highlightPlaneByTurn(turn)
     for t, m in pairs(self.planeMats) do
         if m.mainTexture ~= nil then
             textureManager.unload(m.mainTexture)
@@ -1258,7 +1265,7 @@ end
 -------------------------------------------------------------------------------
 -- 重置
 -------------------------------------------------------------------------------
-function deskOperation:clear(forceDestroy)
+function mahjongOperation:clear(forceDestroy)
     log("clear, forceDestroy = " .. tostring(forceDestroy))
 
     if forceDestroy then
@@ -1367,13 +1374,14 @@ function deskOperation:clear(forceDestroy)
     end
 
     self.mo = nil
+    self.chupaiPtr:hide()
     log("clear over, idle count = " .. tostring(#self.idleMahjongs))
 end
 
 -------------------------------------------------------------------------------
 -- 重置
 -------------------------------------------------------------------------------
-function deskOperation:reset()
+function mahjongOperation:reset()
     touch.removeListener()
 
     self:clear(false)
@@ -1383,7 +1391,7 @@ end
 -------------------------------------------------------------------------------
 -- 销毁
 -------------------------------------------------------------------------------
-function deskOperation:onDestroy()
+function mahjongOperation:onDestroy()
     touch.removeListener()
     self:clear(true)
 
@@ -1400,6 +1408,6 @@ function deskOperation:onDestroy()
     end
 end
 
-return deskOperation
+return mahjongOperation
 
 --endregion
