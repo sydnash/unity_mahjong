@@ -175,7 +175,7 @@ public class LuaPanelInspector : Editor
 
                         if (!string.IsNullOrEmpty(path) && System.IO.Path.GetExtension(path).ToLower() == ".lua")
                         {
-                            string rootPath = "Assets/Lua/";
+                            string rootPath = "Assets/Client/Lua/";
                             scriptName = path.Substring(rootPath.Length, path.Length - rootPath.Length - 4).Replace("/", ".");
                         }
                     }

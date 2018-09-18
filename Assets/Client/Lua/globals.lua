@@ -2,6 +2,7 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local waiting       = require("ui.waiting")
 local messagebox    = require("ui.messagebox")
 local mahjongType   = require("logic.mahjong.mahjongType")
 local opType        = require("const.opType")
@@ -28,10 +29,35 @@ function BKMGT(bytes)
     return string.format("%.1fT", bytes / T)
 end
 
+local waiting_ui = nil
+
+-------------------------------------------------------------
+-- 显示等待界面
+-------------------------------------------------------------
+function showWaitingUI(text)
+    if waiting_ui == nil then
+        waiting_ui = waiting.new(text)
+    else
+        waiting_ui:setText(text)
+    end
+
+    waiting_ui:show()
+end
+
+-------------------------------------------------------------
+-- 关闭等待界面
+-------------------------------------------------------------
+function closeWaitingUI()
+    if waiting_ui~= nil then
+        waiting_ui:close()
+        waiting_ui = nil
+    end
+end
+
 -------------------------------------------------------------
 -- 显示消息界面
 -------------------------------------------------------------
-function showMessage(text, confirmCallback, cancelCallback)
+function showMessageUI(text, confirmCallback, cancelCallback)
     local ui = messagebox.new(text, confirmCallback, cancelCallback)
     ui:show()
 end
@@ -113,22 +139,53 @@ end
 -------------------------------------------------------------
 -- 登录服务器
 -------------------------------------------------------------
+function enterDesk(gameType, deskId, callback)
+    networkManager.checkDesk(gameType, deskId, function(ok, msg)
+        if not ok then
+            callback(false, "网络繁忙，请稍后再试", 0, nil)
+            return
+        end
+
+        log("check desk, msg = " .. table.tostring(msg))
+        callback(true, string.empty, 0.5, nil)
+
+        networkManager.enterDesk(gameType, deskId, function(ok, msg)
+            if not ok then
+                log("enter desk error")
+                callback(false, "网络繁忙，请稍后再试", 0.5, nil)
+                return
+            end
+
+            if msg.RetCode ~= retc.Ok then
+                log("enter desk error")
+                callback(false, retcText[msg.RetCode], 0.5, nil)
+                return
+            end
+
+            log("enter desk, msg = " .. table.tostring(msg))
+            callback(true, string.empty, 1, msg)
+        end)
+    end)
+end
+
+-------------------------------------------------------------
+-- 登录服务器
+-------------------------------------------------------------
 function loginServer(callback)
-    local waiting = require("ui.waiting").new("正在登录中，请稍候...")
-    waiting:show()
+    showWaitingUI("正在登录中，请稍候...")
 
     networkManager.login(function(ok, msg)
-        waiting:close()
+        closeWaitingUI()
 
         if not ok then
-            showMessage("网络繁忙，请稍后再试", function()
+            showMessageUI("网络繁忙，请稍后再试", function()
                 callback(false)
             end)
             return
         end
 
         if msg.RetCode ~= retc.Ok then
-            showMessage(retText[msg.RetCode], function()
+            showMessageUI(retText[msg.RetCode], function()
                 callback(false)
             end)
             return
@@ -157,51 +214,36 @@ function loginServer(callback)
             local cityType = deskInfo.GameType
             local deskId = deskInfo.DeskId
 
-            networkManager.checkDesk(cityType, deskId, function(ok, msg)
+            enterDesk(cityType, deskId, function(ok, errText, progress, msg)
                 if not ok then
                     loading:close()
-                    showMessage("网络繁忙，请稍后再试", function()
+                    showMessageUI(errText)
+                    if callback ~= nil then
                         callback(false)
-                    end)
-                    return
+                    end
+                else
+                    if msg == nil then
+                        loading:setProgress(progress * 0.4)
+                    else
+                        loading:setProgress(0.4)
+
+                        sceneManager.load("scene", "MahjongScene", function(completed, progress)
+                            loading:setProgress(0.4 + 0.6 * progress)
+
+                            if completed then
+                                msg.Reenter = table.fromjson(msg.Reenter)
+                                msg.Config = table.fromjson(msg.Config)
+
+                                local desk = require("logic.mahjong.mahjongGame").new(msg)
+                                loading:close()
+                            end
+                        end)
+                    end
+
+                    if callback ~= nil then
+                        callback(true)
+                    end
                 end
-
-                log("check desk, msg = " .. table.tostring(msg))
-                loading:setProgress(0.2)
-
-                networkManager.enterDesk(cityType, deskId, function(ok, msg)
-                    if not ok then
-                        log("enter desk error")
-                        loading:close()
-                        showMessage("网络繁忙，请稍后再试", function()
-                            callback(false)
-                        end)
-                        return
-                    end
-
-                    if msg.RetCode ~= retc.Ok then
-                        loading:close()
-                        showMessage(retcText[msg.RetCode], function()
-                            callback(false)
-                        end)
-                        return
-                    end
-
-                    log("enter desk, msg = " .. table.tostring(msg))
-                    loading:setProgress(0.4)
-
-                    sceneManager.load("scene", "MahjongScene", function(completed, progress)
-                        loading:setProgress(0.4 + 0.6 * progress)
-
-                        if completed then
-                            msg.Reenter = table.fromjson(msg.Reenter)
-                            msg.Config = table.fromjson(msg.Config)
-
-                            local desk = require("logic.mahjong.mahjongGame").new(msg)
-                            loading:close()
-                        end
-                    end)
-                end)
             end)
         end
     end)

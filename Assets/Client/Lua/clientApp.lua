@@ -22,14 +22,11 @@ end
 -- 断开连接后的回调
 ----------------------------------------------------------------
 local function networkDisconnectedCallback()
-    local waiting = require("ui.waiting").new("正在尝试重连，请稍候...")
-    waiting:show()
+    showWaitingUI("正在尝试重连，请稍候...")
 
-    networkManager.connect(gamepref.host, gamepref.port, function(connected)
-        log("networkDisconnectedCallback, c = " .. tostring(connected))
-        waiting:close()
-
+    networkManager.reconnect(gamepref.host, gamepref.port, function(connected, curCoin, cityType, deskId)
         if not connected then
+            closeWaitingUI()
             local ui = require("ui.messageBox").new("与服务器失去连接，是否重新登录？", 
                                                     function()--确定：重新登录
                                                         loginServer(function(ok)
@@ -45,6 +42,36 @@ local function networkDisconnectedCallback()
                                                     end)
 
             ui:show()
+        else
+            if deskId <= 0 then
+                closeWaitingUI()
+            else
+                enterDesk(cityType, deskId, function(ok, errText, progress, msg)
+                    if not ok then
+                        closeWaitingUI()
+                        showMessageUI(errText)
+                        return
+                    end
+
+                    if msg ~= nil then
+                        closeWaitingUI()
+
+--                        if false then
+--                            sceneManager.load("scene", "MahjongScene", function(completed, progress)
+--                                loading:setProgress(0.4 + 0.6 * progress)
+
+--                                if completed then
+--                                    msg.Reenter = table.fromjson(msg.Reenter)
+--                                    msg.Config = table.fromjson(msg.Config)
+
+--                                    local desk = require("logic.mahjong.mahjongGame").new(msg)
+--                                    loading:close()
+--                                end
+--                            end)
+--                        end
+                    end
+                end)
+            end
         end
     end)
 end

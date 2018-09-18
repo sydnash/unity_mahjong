@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 224677163090137746}
   - component: {fileID: 222229566820586964}
   - component: {fileID: 114698663594625064}
+  - component: {fileID: 114197914561293842}
   m_Layer: 5
   m_Name: T
   m_TagString: Untagged
@@ -143,6 +144,7 @@ GameObject:
   - component: {fileID: 224626416136215784}
   - component: {fileID: 222806641044622606}
   - component: {fileID: 114354919709572334}
+  - component: {fileID: 114879863421610116}
   m_Layer: 5
   m_Name: M
   m_TagString: Untagged
@@ -199,6 +201,23 @@ GameObject:
   - component: {fileID: 111256147453644182}
   m_Layer: 5
   m_Name: Gfx
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1138541582293654
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224175822769665682}
+  - component: {fileID: 222313028919525582}
+  - component: {fileID: 114994550605192276}
+  m_Layer: 5
+  m_Name: U
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -525,6 +544,7 @@ GameObject:
   - component: {fileID: 224254116192464798}
   - component: {fileID: 222092355621488714}
   - component: {fileID: 114687621341217438}
+  - component: {fileID: 114919049130609386}
   m_Layer: 5
   m_Name: R
   m_TagString: Untagged
@@ -1005,6 +1025,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1736514261488482
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224354170043644874}
+  m_Layer: 5
+  m_Name: P
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1742400385908484
 GameObject:
   m_ObjectHideFlags: 1
@@ -1015,6 +1050,7 @@ GameObject:
   - component: {fileID: 224458353611181114}
   - component: {fileID: 222601593198687704}
   - component: {fileID: 114369478527666186}
+  - component: {fileID: 114468777848978066}
   m_Layer: 5
   m_Name: L
   m_TagString: Untagged
@@ -1705,6 +1741,66 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114197914561293842
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1039334487583812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mU
+    widgetType: 0
+    gameObject: {fileID: 1607422523976762}
+    panelScript: 
+  - variableName: mP
+    widgetType: 0
+    gameObject: {fileID: 1442808315753548}
+    panelScript: 
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1923643426627164}
+    panelScript: 
+  - variableName: mNickname
+    widgetType: 2
+    gameObject: {fileID: 1100940579698460}
+    panelScript: 
+  - variableName: mScore
+    widgetType: 2
+    gameObject: {fileID: 1246938368085456}
+    panelScript: 
+  - variableName: mZhuang
+    widgetType: 0
+    gameObject: {fileID: 1706097817435670}
+    panelScript: 
+  - variableName: mQue
+    widgetType: 3
+    gameObject: {fileID: 1236107275797228}
+    panelScript: 
+  - variableName: mHu
+    widgetType: 0
+    gameObject: {fileID: 1412530974274416}
+    panelScript: 
+  - variableName: mFz
+    widgetType: 0
+    gameObject: {fileID: 1491454768416744}
+    panelScript: 
+  - variableName: mGfx
+    widgetType: 3
+    gameObject: {fileID: 1813790063261716}
+    panelScript: 
+  - variableName: mReady
+    widgetType: 0
+    gameObject: {fileID: 1934557708886064}
+    panelScript: 
+  - variableName: mGfxAnim
+    widgetType: 12
+    gameObject: {fileID: 1813790063261716}
+    panelScript: 
 --- !u!114 &114202321914920312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2214,6 +2310,66 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114468777848978066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742400385908484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mU
+    widgetType: 0
+    gameObject: {fileID: 1124385011865904}
+    panelScript: 
+  - variableName: mP
+    widgetType: 0
+    gameObject: {fileID: 1503449105344946}
+    panelScript: 
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1713945204568208}
+    panelScript: 
+  - variableName: mNickname
+    widgetType: 2
+    gameObject: {fileID: 1001286601035822}
+    panelScript: 
+  - variableName: mScore
+    widgetType: 2
+    gameObject: {fileID: 1611799961565894}
+    panelScript: 
+  - variableName: mZhuang
+    widgetType: 0
+    gameObject: {fileID: 1679953015565496}
+    panelScript: 
+  - variableName: mQue
+    widgetType: 3
+    gameObject: {fileID: 1338034434346150}
+    panelScript: 
+  - variableName: mHu
+    widgetType: 0
+    gameObject: {fileID: 1318525303005696}
+    panelScript: 
+  - variableName: mFz
+    widgetType: 0
+    gameObject: {fileID: 1535870330419928}
+    panelScript: 
+  - variableName: mGfx
+    widgetType: 3
+    gameObject: {fileID: 1134630984194264}
+    panelScript: 
+  - variableName: mReady
+    widgetType: 0
+    gameObject: {fileID: 1519005769807648}
+    panelScript: 
+  - variableName: mGfxAnim
+    widgetType: 12
+    gameObject: {fileID: 1134630984194264}
+    panelScript: 
 --- !u!114 &114506981034578800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2404,22 +2560,6 @@ MonoBehaviour:
     widgetType: 5
     gameObject: {fileID: 1106385980594380}
     panelScript: 
-  - variableName: mNicknameM
-    widgetType: 2
-    gameObject: {fileID: 1761335520051882}
-    panelScript: 
-  - variableName: mNicknameR
-    widgetType: 2
-    gameObject: {fileID: 1189956255910210}
-    panelScript: 
-  - variableName: mNicknameT
-    widgetType: 2
-    gameObject: {fileID: 1100940579698460}
-    panelScript: 
-  - variableName: mNicknameL
-    widgetType: 2
-    gameObject: {fileID: 1001286601035822}
-    panelScript: 
   - variableName: mLeftCount
     widgetType: 2
     gameObject: {fileID: 1193367707944770}
@@ -2432,158 +2572,6 @@ MonoBehaviour:
     widgetType: 2
     gameObject: {fileID: 1775367877507402}
     panelScript: 
-  - variableName: mScoreM
-    widgetType: 2
-    gameObject: {fileID: 1359709370935580}
-    panelScript: 
-  - variableName: mScoreR
-    widgetType: 2
-    gameObject: {fileID: 1420522032325572}
-    panelScript: 
-  - variableName: mScoreT
-    widgetType: 2
-    gameObject: {fileID: 1246938368085456}
-    panelScript: 
-  - variableName: mScoreL
-    widgetType: 2
-    gameObject: {fileID: 1611799961565894}
-    panelScript: 
-  - variableName: mPlayerR_P
-    widgetType: 0
-    gameObject: {fileID: 1427658873613630}
-    panelScript: 
-  - variableName: mPlayerR_U
-    widgetType: 0
-    gameObject: {fileID: 1533502659712454}
-    panelScript: 
-  - variableName: mPlayerT_P
-    widgetType: 0
-    gameObject: {fileID: 1442808315753548}
-    panelScript: 
-  - variableName: mPlayerT_U
-    widgetType: 0
-    gameObject: {fileID: 1607422523976762}
-    panelScript: 
-  - variableName: mPlayerL_P
-    widgetType: 0
-    gameObject: {fileID: 1503449105344946}
-    panelScript: 
-  - variableName: mPlayerL_U
-    widgetType: 0
-    gameObject: {fileID: 1124385011865904}
-    panelScript: 
-  - variableName: mInvite
-    widgetType: 5
-    gameObject: {fileID: 1380082434053140}
-    panelScript: 
-  - variableName: mPlayerR_Ready
-    widgetType: 0
-    gameObject: {fileID: 1944708726175022}
-    panelScript: 
-  - variableName: mPlayerT_Ready
-    widgetType: 0
-    gameObject: {fileID: 1934557708886064}
-    panelScript: 
-  - variableName: mPlayerL_Ready
-    widgetType: 0
-    gameObject: {fileID: 1519005769807648}
-    panelScript: 
-  - variableName: mPlayerM_Hu
-    widgetType: 4
-    gameObject: {fileID: 1895101515154072}
-    panelScript: 
-  - variableName: mPlayerR_Hu
-    widgetType: 4
-    gameObject: {fileID: 1251603204150068}
-    panelScript: 
-  - variableName: mPlayerT_Hu
-    widgetType: 4
-    gameObject: {fileID: 1412530974274416}
-    panelScript: 
-  - variableName: mPlayerL_Hu
-    widgetType: 4
-    gameObject: {fileID: 1318525303005696}
-    panelScript: 
-  - variableName: mMarkerM
-    widgetType: 0
-    gameObject: {fileID: 1784838078909344}
-    panelScript: 
-  - variableName: mMarkerR
-    widgetType: 0
-    gameObject: {fileID: 1316662760469304}
-    panelScript: 
-  - variableName: mMarkerT
-    widgetType: 0
-    gameObject: {fileID: 1706097817435670}
-    panelScript: 
-  - variableName: mMarkerL
-    widgetType: 0
-    gameObject: {fileID: 1679953015565496}
-    panelScript: 
-  - variableName: mQueM
-    widgetType: 0
-    gameObject: {fileID: 1660098115829472}
-    panelScript: 
-  - variableName: mQueR
-    widgetType: 0
-    gameObject: {fileID: 1997249487564164}
-    panelScript: 
-  - variableName: mQueT
-    widgetType: 0
-    gameObject: {fileID: 1236107275797228}
-    panelScript: 
-  - variableName: mQueL
-    widgetType: 0
-    gameObject: {fileID: 1338034434346150}
-    panelScript: 
-  - variableName: mFzM
-    widgetType: 0
-    gameObject: {fileID: 1769183013429918}
-    panelScript: 
-  - variableName: mFzR
-    widgetType: 0
-    gameObject: {fileID: 1031378799012502}
-    panelScript: 
-  - variableName: mFzT
-    widgetType: 0
-    gameObject: {fileID: 1491454768416744}
-    panelScript: 
-  - variableName: mFzL
-    widgetType: 0
-    gameObject: {fileID: 1535870330419928}
-    panelScript: 
-  - variableName: mGfxM
-    widgetType: 3
-    gameObject: {fileID: 1467721276202108}
-    panelScript: 
-  - variableName: mGfxR
-    widgetType: 3
-    gameObject: {fileID: 1030746890169980}
-    panelScript: 
-  - variableName: mGfxT
-    widgetType: 3
-    gameObject: {fileID: 1813790063261716}
-    panelScript: 
-  - variableName: mGfxL
-    widgetType: 3
-    gameObject: {fileID: 1134630984194264}
-    panelScript: 
-  - variableName: mGfxAnimM
-    widgetType: 12
-    gameObject: {fileID: 1467721276202108}
-    panelScript: 
-  - variableName: mGfxAnimR
-    widgetType: 12
-    gameObject: {fileID: 1030746890169980}
-    panelScript: 
-  - variableName: mGfxAnimT
-    widgetType: 12
-    gameObject: {fileID: 1813790063261716}
-    panelScript: 
-  - variableName: mGfxAnimL
-    widgetType: 12
-    gameObject: {fileID: 1134630984194264}
-    panelScript: 
   - variableName: mPosition
     widgetType: 5
     gameObject: {fileID: 1000819311664758}
@@ -2592,22 +2580,26 @@ MonoBehaviour:
     widgetType: 5
     gameObject: {fileID: 1140740735945126}
     panelScript: 
-  - variableName: mPlayerM_Icon
-    widgetType: 4
-    gameObject: {fileID: 1464945251337354}
+  - variableName: mInvite
+    widgetType: 5
+    gameObject: {fileID: 1380082434053140}
     panelScript: 
-  - variableName: mPlayerR_Icon
-    widgetType: 4
-    gameObject: {fileID: 1305743632274734}
-    panelScript: 
-  - variableName: mPlayerT_Icon
-    widgetType: 4
-    gameObject: {fileID: 1923643426627164}
-    panelScript: 
-  - variableName: mPlayerL_Icon
-    widgetType: 4
-    gameObject: {fileID: 1713945204568208}
-    panelScript: 
+  - variableName: mPlayerM
+    widgetType: 1
+    gameObject: {fileID: 1102979357897126}
+    panelScript: ui.mahjongDesk.mahjongDeskHeader
+  - variableName: mPlayerR
+    widgetType: 1
+    gameObject: {fileID: 1377636502237284}
+    panelScript: ui.mahjongDesk.mahjongDeskHeader
+  - variableName: mPlayerT
+    widgetType: 1
+    gameObject: {fileID: 1039334487583812}
+    panelScript: ui.mahjongDesk.mahjongDeskHeader
+  - variableName: mPlayerL
+    widgetType: 1
+    gameObject: {fileID: 1742400385908484}
+    panelScript: ui.mahjongDesk.mahjongDeskHeader
 --- !u!114 &114558863019693692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3789,6 +3781,62 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114879863421610116
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102979357897126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mU
+    widgetType: 0
+    gameObject: {fileID: 1533502659712454}
+    panelScript: 
+  - variableName: mP
+    widgetType: 0
+    gameObject: {fileID: 1736514261488482}
+    panelScript: 
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1464945251337354}
+    panelScript: 
+  - variableName: mNickname
+    widgetType: 2
+    gameObject: {fileID: 1761335520051882}
+    panelScript: 
+  - variableName: mScore
+    widgetType: 2
+    gameObject: {fileID: 1359709370935580}
+    panelScript: 
+  - variableName: mZhuang
+    widgetType: 0
+    gameObject: {fileID: 1784838078909344}
+    panelScript: 
+  - variableName: mQue
+    widgetType: 3
+    gameObject: {fileID: 1660098115829472}
+    panelScript: 
+  - variableName: mHu
+    widgetType: 0
+    gameObject: {fileID: 1895101515154072}
+    panelScript: 
+  - variableName: mFz
+    widgetType: 0
+    gameObject: {fileID: 1769183013429918}
+    panelScript: 
+  - variableName: mGfx
+    widgetType: 3
+    gameObject: {fileID: 1467721276202108}
+    panelScript: 
+  - variableName: mGfxAnim
+    widgetType: 12
+    gameObject: {fileID: 1467721276202108}
+    panelScript: 
 --- !u!114 &114889208861955868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3884,6 +3932,66 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114919049130609386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1377636502237284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mU
+    widgetType: 0
+    gameObject: {fileID: 1138541582293654}
+    panelScript: 
+  - variableName: mP
+    widgetType: 0
+    gameObject: {fileID: 1427658873613630}
+    panelScript: 
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1305743632274734}
+    panelScript: 
+  - variableName: mNickname
+    widgetType: 2
+    gameObject: {fileID: 1189956255910210}
+    panelScript: 
+  - variableName: mScore
+    widgetType: 2
+    gameObject: {fileID: 1420522032325572}
+    panelScript: 
+  - variableName: mZhuang
+    widgetType: 0
+    gameObject: {fileID: 1316662760469304}
+    panelScript: 
+  - variableName: mQue
+    widgetType: 3
+    gameObject: {fileID: 1997249487564164}
+    panelScript: 
+  - variableName: mHu
+    widgetType: 0
+    gameObject: {fileID: 1251603204150068}
+    panelScript: 
+  - variableName: mFz
+    widgetType: 0
+    gameObject: {fileID: 1031378799012502}
+    panelScript: 
+  - variableName: mGfx
+    widgetType: 3
+    gameObject: {fileID: 1030746890169980}
+    panelScript: 
+  - variableName: mReady
+    widgetType: 0
+    gameObject: {fileID: 1944708726175022}
+    panelScript: 
+  - variableName: mGfxAnim
+    widgetType: 12
+    gameObject: {fileID: 1030746890169980}
+    panelScript: 
 --- !u!114 &114942453075934112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4086,6 +4194,33 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114994550605192276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1138541582293654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300056, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114999810541859360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4234,6 +4369,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1660098115829472}
+--- !u!222 &222313028919525582
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1138541582293654}
 --- !u!222 &222316584328139048
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -4534,8 +4675,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 224359041997213492}
   - {fileID: 224947771680786878}
+  - {fileID: 224359041997213492}
   - {fileID: 224922533558860068}
   - {fileID: 224121249736134422}
   - {fileID: 224187026114515784}
@@ -4598,7 +4739,7 @@ RectTransform:
   - {fileID: 224916745751597732}
   - {fileID: 224715603652769674}
   m_Father: {fileID: 224917055064326000}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4669,8 +4810,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 224718265106225986}
   - {fileID: 224239556062797814}
+  - {fileID: 224718265106225986}
   - {fileID: 224013766495711390}
   - {fileID: 224999655070112478}
   - {fileID: 224576239907555456}
@@ -4683,6 +4824,24 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224175822769665682
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1138541582293654}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224254116192464798}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 95, y: 95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224187026114515784
 RectTransform:
@@ -4731,7 +4890,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224164863948522424}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4748,7 +4907,7 @@ RectTransform:
   m_LocalPosition: {x: 576, y: 76, z: 0}
   m_LocalScale: {x: 0.99910116, y: 0.99910116, z: 0.99910116}
   m_Children:
-  - {fileID: 224329345196510654}
+  - {fileID: 224175822769665682}
   - {fileID: 224052374111961206}
   m_Father: {fileID: 224570315568445872}
   m_RootOrder: 1
@@ -4820,17 +4979,41 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1533502659712454}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9991013, y: 0.9991013, z: 0.9991013}
   m_Children: []
-  m_Father: {fileID: 224254116192464798}
+  m_Father: {fileID: 224626416136215784}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 95, y: 95}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224354170043644874
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1736514261488482}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 224806797748782362}
+  - {fileID: 224867646899192910}
+  - {fileID: 224568161346243112}
+  - {fileID: 224489572223792344}
+  - {fileID: 224773486770883284}
+  - {fileID: 224610519451686698}
+  m_Father: {fileID: 224626416136215784}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224359041997213492
 RectTransform:
@@ -4845,7 +5028,7 @@ RectTransform:
   - {fileID: 224032548746165102}
   - {fileID: 224937160918401144}
   m_Father: {fileID: 224052374111961206}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4970,7 +5153,7 @@ RectTransform:
   m_GameObject: {fileID: 1742400385908484}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -576, y: 76, z: 0}
-  m_LocalScale: {x: 0.99910116, y: 0.99910116, z: 0.99910116}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224156340313577760}
   - {fileID: 224164863948522424}
@@ -4988,11 +5171,11 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1895101515154072}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 62.901672, y: 0.007873535, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 224626416136215784}
+  m_Father: {fileID: 224354170043644874}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5060,13 +5243,13 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1798929611258160}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -50, y: 71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224515377823383234}
   - {fileID: 224073411089977990}
-  m_Father: {fileID: 224626416136215784}
+  m_Father: {fileID: 224354170043644874}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5174,11 +5357,11 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1467721276202108}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 576, y: 120, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 224626416136215784}
+  m_Father: {fileID: 224354170043644874}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5234,12 +5417,8 @@ RectTransform:
   m_LocalPosition: {x: -578, y: -275, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 224867646899192910}
-  - {fileID: 224806797748782362}
-  - {fileID: 224568161346243112}
-  - {fileID: 224489572223792344}
-  - {fileID: 224773486770883284}
-  - {fileID: 224610519451686698}
+  - {fileID: 224329345196510654}
+  - {fileID: 224354170043644874}
   m_Father: {fileID: 224570315568445872}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5406,7 +5585,7 @@ RectTransform:
   m_GameObject: {fileID: 1039334487583812}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 245, z: 0}
-  m_LocalScale: {x: 0.99910116, y: 0.99910116, z: 0.99910116}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224402047849393722}
   - {fileID: 224917055064326000}
@@ -5449,7 +5628,7 @@ RectTransform:
   - {fileID: 224366360147100718}
   - {fileID: 224975663692907880}
   m_Father: {fileID: 224164863948522424}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5505,11 +5684,11 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1769183013429918}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -30, y: 30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 224626416136215784}
+  m_Father: {fileID: 224354170043644874}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5523,12 +5702,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1464945251337354}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.70000076, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 224626416136215784}
-  m_RootOrder: 1
+  m_Father: {fileID: 224354170043644874}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5577,14 +5756,14 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1335056935520122}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 114, y: -70, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224595545775265802}
   - {fileID: 224968794742668728}
-  m_Father: {fileID: 224626416136215784}
-  m_RootOrder: 0
+  m_Father: {fileID: 224354170043644874}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5637,8 +5816,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 224114009684677972}
   - {fileID: 224926941964572148}
+  - {fileID: 224114009684677972}
   - {fileID: 224277684725780164}
   - {fileID: 224974113471537890}
   - {fileID: 224570672303929152}
@@ -5683,7 +5862,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224917055064326000}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5756,7 +5935,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224052374111961206}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

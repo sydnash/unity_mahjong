@@ -106,20 +106,8 @@ local function receive(bytes, size)
 
         --剔除已解析过的数据
         networkManager.recvbuffer = cvt.TrimBytes(networkManager.recvbuffer, length)
-        --过滤心跳包
-        if msg.Command == protoType.hb then
-            networkManager.timestamp = time.realtimeSinceStartup()
-            return
-        end
         --触发回调
-        local callback = networkCallbackPool:pop(msg.RequestId)
-        if callback == nil then
-            callback = networkCallbackPool:pop(msg.Command)
-        end
-
-        if callback ~= nil then
-            callback(table.fromjson(msg.Payload))
-        end
+        table.insert(networkManager.messageQueue, msg)
     end
 end
 
@@ -127,8 +115,9 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.setup(disconnectedCallback)
+    networkManager.messageQueue = {}
+    networkManager.messageDeadline = time.realtimeSinceStartup()
     networkManager.disconnectedCallback = disconnectedCallback
-    tcp.registerReceivedCallback(receive)
 end
 
 -------------------------------------------------------------------
@@ -148,19 +137,38 @@ function networkManager.update()
     local now = time.realtimeSinceStartup()
     local ping = networkConfig.ping
     local pong = math.max(ping + 0.5, networkConfig.pong)
-
+    --发送心跳包
     if now - networkManager.pingTick > ping then
-        send(protoType.hb, table.empty, function()
+        send(protoType.hb, table.empty, function(msg)
+            networkManager.pongTick = time.realtimeSinceStartup()
         end)
         networkManager.pingTick = time.realtimeSinceStartup()
     end
-
-    if now - networkManager.timestamp > pong then
-        log("now = " .. tostring(now) .. ", ts = " .. tostring(networkManager.timestamp))
+    --检查心跳是否超时
+    if now - networkManager.pongTick > pong then
         networkManager.disconnect()
 
         if networkManager.disconnectedCallback ~= nil then
             networkManager.disconnectedCallback()
+        end
+    end
+    --处理消息队列
+    if now >= networkManager.messageDeadline and #networkManager.messageQueue > 0 then
+        networkManager.messageDeadline = now 
+
+        local msg = networkManager.messageQueue[1]
+        table.remove(networkManager.messageQueue, 1)
+
+        local callback = networkCallbackPool:pop(msg.RequestId)
+        if callback == nil then
+            callback = networkCallbackPool:pop(msg.Command)
+        end
+
+        if callback ~= nil then
+            local duration = callback(table.fromjson(msg.Payload))
+            if duration ~= nil and duration > 0 then
+                networkManager.messageDeadline = now + duration
+            end
         end
     end
 end
@@ -173,8 +181,10 @@ function networkManager.connect(host, port, callback)
 
     tcp.connect(host, port, timeout, function(connected)
         if connected then
+            tcp.registerReceivedCallback(receive)
+
             networkManager.pingTick = time.realtimeSinceStartup()
-            networkManager.timestamp = time.realtimeSinceStartup()
+            networkManager.pongTick = time.realtimeSinceStartup()
 
             if networkManager.updateHandler == nil then
                 networkManager.updateHandler = registerUpdateListener(networkManager.update, nil)
@@ -183,6 +193,33 @@ function networkManager.connect(host, port, callback)
 
         if callback ~= nil then
             callback(connected)
+        end
+    end)
+end
+
+function networkManager.reconnect(host, port, callback)
+    local timeout = networkConfig.tcpTimeout * 1000 -- 转为毫秒
+
+    tcp.connect(host, port, timeout, function(connected)
+        log("reconnect = " .. tostring(connected))
+        if not connected then
+            callback(false, -1, -1, -1)
+        else
+            tcp.registerReceivedCallback(receive)
+
+            local data = { Session = gamepref.session, AcId = gamepref.acId, Level = 1, }
+            send(protoType.cs.reconnect, data, function(msg)
+                if msg.Ok then
+                    networkManager.pingTick = time.realtimeSinceStartup()
+                    networkManager.pongTick = time.realtimeSinceStartup()
+
+                    if networkManager.updateHandler == nil then
+                        networkManager.updateHandler = registerUpdateListener(networkManager.update, nil)
+                    end
+                end
+               
+                callback(msg.Ok, msg.CurCoin, msg.GameType, msg.DeskId)
+            end)
         end
     end)
 end
@@ -218,10 +255,8 @@ function networkManager.login(callback)
 
     http.getText(networkConfig.guestURL .. "?" .. form, timeout, function(ok, text)
         if not ok or string.isNilOrEmpty(text) then
---            log("http response: error")
             callback(false, nil)
         else
---            log("http response: ok! text = " .. text)
             local o = table.fromjson(text)
 
             local host = o.ip
@@ -410,6 +445,16 @@ function networkManager.exitVote(agree, callback)
         else
             callback(true, msg)
         end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.dingque(mahjongClass, callback)
+    local data = { MJType = mahjongClass }
+    send(protoType.cs.dpChoose, data, function(msg)
+        callback(false, nil)
     end)
 end
 

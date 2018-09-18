@@ -4,7 +4,7 @@
 
 local patchURL = "file:///D:/xx"
 local gameURL = "http://test.cdbshy.com:17776/"
---local gameURL = "http://192.168.0.80:17776/"
+local gameURL = "http://192.168.0.80:17776/"
 
 return {
     patchURL    = patchURL,

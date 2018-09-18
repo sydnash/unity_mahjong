@@ -31,6 +31,9 @@
     <Folder Include="Lua\config\" />
     <Folder Include="Lua\ui\" />
     <Folder Include="Lua\ui\gameEnd\" />
+    <Folder Include="Lua\ui\mahjongDesk\" />
+    <Folder Include="Lua\ui\gameOver\" />
+    <Folder Include="Lua\ui\exitDesk\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
@@ -38,9 +41,11 @@
     <Compile Include="Lua\config\networkConfig.lua" />
     <Compile Include="Lua\config\soundConfig.lua" />
     <Compile Include="Lua\const\cityType.lua" />
+    <Compile Include="Lua\const\exitDeskState.lua" />
     <Compile Include="Lua\const\gameStatus.lua" />
     <Compile Include="Lua\const\headerType.lua" />
     <Compile Include="Lua\const\language.lua" />
+    <Compile Include="Lua\const\mahjongClass.lua" />
     <Compile Include="Lua\const\opType.lua" />
     <Compile Include="Lua\const\retcText.lua" />
     <Compile Include="Lua\const\sexType.lua" />
@@ -55,7 +60,12 @@
     <Compile Include="Lua\logic\player\gamePlayer.lua" />
     <Compile Include="Lua\network\networkManager.lua" />
     <Compile Include="Lua\network\protoType.lua" />
+    <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
+    <Compile Include="Lua\ui\gameEnd\gameEndItem.lua" />
+    <Compile Include="Lua\ui\gameEnd\gameEndScore.lua" />
+    <Compile Include="Lua\ui\gameOver\gameOverItem.lua" />
     <Compile Include="Lua\ui\mahjongDesk.lua" />
+    <Compile Include="Lua\ui\mahjongDesk\mahjongDeskHeader.lua" />
     <Compile Include="Lua\ui\mahjongOperation.lua" />
     <Compile Include="Lua\ui\enterDesk.lua" />
     <Compile Include="Lua\ui\exitDesk.lua" />

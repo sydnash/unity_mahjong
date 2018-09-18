@@ -7,6 +7,7 @@ return {
     hb = "CmdType.fly.Ping",
     -- client to server
     cs = {
+        reconnect       = "CmdType.fly.CS.Reconnect",
         loginHs         = "CmdType.fly.CS.LoginHs",
         createDesk      = "CmdType.fly.CS.CreateDesk",
         checkDesk       = "CmdType.fly.CS.CheckDesk",
@@ -15,6 +16,7 @@ return {
         opChoose        = "CmdType.fly.CS.MJOPChose",
         exitDesk        = "CmdType.fly.CS.ExitGSDesk",
         exitVote        = "CmdType.fly.CS.ExitVote",
+        dpChoose        = "CmdType.fly.CS_MJDQChose",
     },
     -- server to client
     sc = {
@@ -35,7 +37,9 @@ return {
         notifyExitVote          = "CmdType.fly.SC.NotifyExitVote",
         notifyExitVoteFailed    = "CmdType.fly.SC.NotifyExitVoteFailed",
         exitVote                = "CmdType.fly.SC.ExitVote",
-        gameEnd                 = "CmdType.fly.SC.GameEnd"
+        gameEnd                 = "CmdType.fly.SC.GameEnd",
+        dqHint                  = "CmdType.fly.SC_MJDQHint",
+        dqDo                    = "CmdType.fly.SC.MJDQDo",
     },
 }
 

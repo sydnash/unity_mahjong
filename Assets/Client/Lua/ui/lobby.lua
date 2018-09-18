@@ -84,7 +84,7 @@ function lobby:onCreateDeskClickedHandler()
         if not ok then
             log("create desk error")
             loading:close()
-            showMessage("网络繁忙，请稍后再试")
+            showMessageUI("网络繁忙，请稍后再试")
             return
         end
         log("create desk, msg = " .. table.tostring(msg))
@@ -125,48 +125,31 @@ function lobby:onMailClickedHandler()
 end
 
 function lobby:enterDesk(loading, cityType, deskId)
-    networkManager.checkDesk(cityType, deskId, function(ok, msg)
+    enterDesk(cityType, deskId, function(ok, errText, progress, msg)
         if not ok then
-            log("check desk error")
             loading:close()
-            showMessage("网络繁忙，请稍后再试")
-            return
+            showMessageUI(errText)
+        else
+            if msg == nil then
+                loading:setProgress(progress * 0.4)
+            else
+                loading:setProgress(0.4)
+
+                sceneManager.load("scene", "MahjongScene", function(completed, progress)
+                    loading:setProgress(0.4 + 0.6 * progress)
+
+                    if completed then
+                        msg.Reenter = table.fromjson(msg.Reenter)
+                        msg.Config = table.fromjson(msg.Config)
+
+                        local desk = require("logic.mahjong.mahjongGame").new(msg)
+                        loading:close()
+                    end
+                end)
+
+                self:close()
+            end
         end
-
-        log("check desk, msg = " .. table.tostring(msg))
-        loading:setProgress(0.2)
-
-        networkManager.enterDesk(cityType, deskId, function(ok, msg)
-            if not ok then
-                log("enter desk error")
-                loading:close()
-                showMessage("网络繁忙，请稍后再试")
-                return
-            end
-
-            if msg.RetCode ~= retc.Ok then
-                loading:close()
-                log(retcText[msg.RetCode])
-                return
-            end
-
-            log("enter desk, msg = " .. table.tostring(msg))
-            loading:setProgress(0.4)
-
-            sceneManager.load("scene", "MahjongScene", function(completed, progress)
-                loading:setProgress(0.4 + 0.6 * progress)
-
-                if completed then
-                    msg.Reenter = table.fromjson(msg.Reenter)
-                    msg.Config = table.fromjson(msg.Config)
-
-                    local desk = require("logic.mahjong.mahjongGame").new(msg)
-                    loading:close()
-                end
-            end)
-
-            self:close()
-        end)
     end)
 end
 

@@ -132,6 +132,14 @@ function mahjongGame:registerCommandHandlers()
     networkManager.registerCommandHandler(protoType.sc.gameEnd, function(msg)
         self:onGameEndHandler(msg)
     end, true)
+
+    networkManager.registerCommandHandler(protoType.sc.dqHint, function(msg)
+        self:onDingQueHintHandler(msg)
+    end, true)
+
+    networkManager.registerCommandHandler(protoType.sc.dqDo, function(msg)
+        self:onDingQueDoHandler(msg)
+    end, true)
 end
 
 -------------------------------------------------------------------------------
@@ -244,7 +252,7 @@ end
 function mahjongGame:ready(ready)
     networkManager.ready(ready, function(ok, msg)
         if not ok then
-            showMessage("网络繁忙，请稍后再试")
+            showMessageUI("网络繁忙，请稍后再试")
         else
             self:onReadyHandler(msg)
         end
@@ -396,7 +404,7 @@ function mahjongGame:endGame()
     networkManager.destroyDesk(function(ok, msg)
         log("end game, msg = " .. table.tostring(msg))
         if not ok then
-            showMessage("网络繁忙，请稍后再试")
+            showMessageUI("网络繁忙，请稍后再试")
         else
             if msg.RetCode ~= retc.Ok then
                 
@@ -653,15 +661,68 @@ function mahjongGame:exitGame()
 end
 
 -------------------------------------------------------------------------------
+-- 退出房间的原因
+-------------------------------------------------------------------------------
+local exitReason = {
+    voteExit = 5,
+}
+
+-------------------------------------------------------------------------------
 -- 服务器通知直接退出
 -------------------------------------------------------------------------------
 function mahjongGame:onExitDeskHandler(msg)
     log("exit desk, msg = " .. table.tostring(msg))
 
-    local reason = msg.Reason
+    if msg.Reason == exitReason.voteExit then
+        --投票解散房间，关闭投票界面并显示大结算界面
+        if self.exitDeskUI ~= nil then
+            self.exitDeskUI:close()
+        end
 
-    if self.exitDeskUI ~= nil then
-        self.exitDeskUI:endAll()
+        local datas = { deskId          = self.deskId,
+                        totalGameCount  = self:getTotalGameCount(),
+                        finishGameCount = self:getTotalGameCount() - self:getLeftGameCount(),
+                        players         = {},
+        }
+
+        local totalScores = { }
+
+        if string.isNilOrEmpty(msg.Special) then
+            for _, p in pairs(self.players) do
+                totalScores[p.acId] = 0
+            end
+        else
+            local special = table.fromjson(msg.Special)
+            local preData = table.fromjson(special.PreData)
+
+            for _, v in pairs(preData.TotalResuts) do
+                totalScores[v.AcId] = v.Score
+            end
+        end
+
+        for _, p in pairs(self.players) do
+            local d = { acId            = p.acId, 
+                        headerTex       = self.players[p.turn].headerTex,
+                        nickname        = p.nickname, 
+                        totalScore      = totalScores[p.acId], 
+                        turn            = p.turn, 
+                        seat            = self:getSeatType(p.turn),
+                        isCreator       = self:isCreator(p.acId),
+                        isWinner        = false,
+            }
+
+            datas.players[p.turn] = d
+        end
+
+        local ui = require("ui.gameOver").new(self, datas)
+        ui:show()
+
+        self.deskUI:reset()
+        self.operationUI:reset()
+    else
+        if self.gameEndUI ~= nil then
+            self.gameEndUI:endAll()
+        end
     end
 end
 
@@ -706,6 +767,7 @@ function mahjongGame:onExitVoteHandler(msg)
     log("exit vote, msg = " .. table.tostring(msg))
     if self.exitDeskUI~= nil then
         local player = self:getPlayerByAcId(msg.AcId)
+        player.exitVoteState = 1
         self.exitDeskUI:setPlayerState(player)
     end
 end
@@ -737,6 +799,7 @@ function mahjongGame:onGameEndHandler(msg)
     for _, v in pairs(specialData.PlayerInfos) do
         local p = self:getPlayerByAcId(v.AcId)
         local d = { acId            = v.AcId, 
+                    headerTex       = self.players[p.turn].headerTex,
                     nickname        = p.nickname, 
                     score           = v.Score,
                     totalScore      = totalScores[v.AcId], 
@@ -768,6 +831,22 @@ function mahjongGame:onGameEndHandler(msg)
 
     self.deskUI:reset()
     self.operationUI:reset()
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知定缺信息
+-------------------------------------------------------------------------------
+function mahjongGame:onDingQueHintHandler(msg)
+    log("ding que hint, msg = " .. table.tostring(msg))
+    self.operationUI:onDingQueHint()
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知定缺具体信息
+-------------------------------------------------------------------------------
+function mahjongGame:onDingQueDoHandler(msg)
+    log("ding que do, msg = " .. table.tostring(msg))
+    self.deskUI:onDingQueDo(msg)
 end
 
 -------------------------------------------------------------------------------

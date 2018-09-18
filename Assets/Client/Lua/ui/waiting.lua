@@ -14,10 +14,15 @@ function waiting:ctor(text)
 end
 
 function waiting:onInit()
-    self.rotation = tweenRotation.new(self.mCircle, 6000, Vector3.New(0, 0, 0), Vector3.New(0, 0, -432000))
+    self.rotation = tweenRotation.new(self.mCircle, 60000, Vector3.New(0, 0, 0), Vector3.New(0, 0, -4320000))
     tweenManager.add(self.rotation)
 
     self.rotation:play()
+    self:setText(self.text)
+end
+
+function waiting:setText(text)
+    self.text = text
     self.mText:setText(self.text)
 end
 

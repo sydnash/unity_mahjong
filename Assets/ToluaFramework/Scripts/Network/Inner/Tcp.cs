@@ -185,6 +185,7 @@ public class Tcp : MonoBehaviour
     {
         if (mSocket == null)
             return;
+
         try
         {
             if (mSocket.Connected)
@@ -250,6 +251,8 @@ public class Tcp : MonoBehaviour
                 if (Time.realtimeSinceStartup - mStartConnectTime > mTimeout)
                 {
                     Logger.Log("tcp connect timeout");
+                    Disconnect();
+
                     if (mConnectCallback != null)
                     {
                         mConnectCallback(false);

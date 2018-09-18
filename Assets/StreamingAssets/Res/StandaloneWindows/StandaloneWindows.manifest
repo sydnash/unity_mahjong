@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3117379363
+CRC: 2368385500
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -35,9 +35,9 @@ AssetBundleManifest:
     Info_7:
       Name: scene/mahjongscene
       Dependencies:
-        Dependency_0: texture/deskfw_gl
-        Dependency_1: texture/deskfw
-        Dependency_2: texture/dice/dice1
+        Dependency_0: texture/deskfw
+        Dependency_1: texture/dice/dice6
+        Dependency_2: texture/dice/dice2
     Info_8:
       Name: model/mjpai01
       Dependencies:
@@ -534,4 +534,19 @@ AssetBundleManifest:
       Dependencies: {}
     Info_150:
       Name: animation/chupaiptr/chupaiptr
+      Dependencies: {}
+    Info_151:
+      Name: sound/mahjong/chupai
+      Dependencies: {}
+    Info_152:
+      Name: sound/mahjong/fapai
+      Dependencies: {}
+    Info_153:
+      Name: sound/mahjong/shaizi
+      Dependencies: {}
+    Info_154:
+      Name: sound/mahjong/table_timer
+      Dependencies: {}
+    Info_155:
+      Name: texture/js_tx_a
       Dependencies: {}

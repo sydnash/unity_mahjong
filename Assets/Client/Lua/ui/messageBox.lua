@@ -29,6 +29,8 @@ function messageBox:onInit()
 end
 
 function messageBox:onConfirmClickedHandler()
+    playButtonClickSound()
+
     if self.confirmCallback ~= nil then
         self.confirmCallback()
     end
@@ -37,6 +39,8 @@ function messageBox:onConfirmClickedHandler()
 end
 
 function messageBox:onCancelClickedHandler()
+    playButtonClickSound()
+
     if self.cancelCallback ~= nil then
         self.cancelCallback()
     end

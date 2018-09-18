@@ -64,7 +64,7 @@ public class AssetPool
             }
             else
             {
-                asset = LoadAsset(assetPath, assetName, queue);
+                asset = LoadAsset(assetPath, assetName);
             }
 
             if (asset != null)
@@ -76,7 +76,7 @@ public class AssetPool
         {
             ObjectQueue queue = CreateObjectQueue();
 
-            asset = LoadAsset(assetPath, assetName, queue);
+            asset = LoadAsset(assetPath, assetName);
             mDic.Add(asset.name, queue);
 
             if (asset != null)
@@ -86,6 +86,29 @@ public class AssetPool
         }
 
         return asset;
+    }
+
+    /// <summary>
+    /// 预加载
+    /// </summary>
+    /// <param name="assetPath"></param>
+    /// <param name="assetName"></param>
+    public void PreAlloc(string assetPath, string assetName)
+    {
+        Object asset = LoadAsset(assetPath, assetName);
+        if (asset != null)
+        {
+            ObjectQueue queue = mDic.ContainsKey(assetName) ? mDic[assetName] : null;
+
+            if (queue == null)
+            {
+                queue = CreateObjectQueue();
+                mDic.Add(asset.name, queue);
+            }
+
+            queue.Push(asset);
+            mDependentBundlePool.Unload(asset.name);
+        }
     }
 
     /// <summary>
@@ -175,7 +198,7 @@ public class AssetPool
     /// </summary>
     /// <param name="assetName"></param>
     /// <returns></returns>
-    protected Object LoadAsset(string assetPath, string assetName, ObjectQueue queue)
+    protected Object LoadAsset(string assetPath, string assetName)
     {
         Object asset = mLoader.Load(assetPath, assetName);
 

@@ -3,6 +3,7 @@
 --此文件由[BabeLua]插件自动生成
 
 local opType        = require("const.opType")
+local mahjongClass  = require("const.mahjongClass")
 local mahjongType   = require("logic.mahjong.mahjongType")
 local mahjongGame   = require("logic.mahjong.mahjongGame")
 local mahjong       = require("logic.mahjong.mahjong")
@@ -178,6 +179,10 @@ function mahjongOperation:onInit()
     self.chupaiPtr:hide()
 
     --按钮
+    self.mTiao:addClickListener(self.onTiaoClickedHandler, self)
+    self.mTong:addClickListener(self.onTongClickedHandler, self)
+    self.mWan:addClickListener(self.onWanClickedHandler, self)
+
     self.mGuo:addClickListener(self.onGuoClickedHandler, self)
     self.mBao:addClickListener(self.onBaoClickedHandler, self)
     self.mChi:addClickListener(self.onChiClickedHandler, self)
@@ -197,8 +202,8 @@ function mahjongOperation:onInit()
     self.mGang_MS_ButtonC:addClickListener(self.onGangCClickedHandler, self)
 
     self.mGang_MS:hide()
-    self.mOp:hide()
     self.mQue:hide()
+    self:hideOperations()
 
     self.idleMahjongs   = {}
     self.inhandMahjongs = {}
@@ -283,33 +288,11 @@ function mahjongOperation:onGameStart()
         end
     end)
 
-    eventManager.registerAnimationTrigger("table_plane_up", function()
-        for _, v in pairs(self.inhandMahjongs) do
-            for _, m in pairs(v) do
-                m:show()
-            end
-        end
-
-        self.mOp:show()
-    end)
-
-    soundManager.playGfx("mahjong", "shaizi")
-
     self:playAnimation(self.planeAnim)
     self:playAnimation(self.mahjongsRootAnim)
-    self:playAnimation(self.diceRootAnim)
+    self:playDiceAnim()
 
-    local diceMat1 = self.diceMats[1]
-    if diceMat1.mainTexture ~= nil then
-        textureManager.unload(diceMat1.mainTexture)
-    end
-    diceMat1.mainTexture = textureManager.load("dice", "dice" .. self.game.dices[1])
-
-    local diceMat2 = self.diceMats[2]
-    if diceMat1.mainTexture ~= nil then
-        textureManager.unload(diceMat2.mainTexture)
-    end
-    diceMat2.mainTexture = textureManager.load("dice", "dice" .. self.game.dices[2])
+    return 2
 end
 
 -------------------------------------------------------------------------------
@@ -345,7 +328,7 @@ function mahjongOperation:onGameSync(reenter)
 
         self:createPengMahjongs(v)
         self:createChuMahjongs(v)
-        self:createInHandMahjongs(v, true)
+        self:createInHandMahjongs(v)
     end
 
     local chu = nil
@@ -373,7 +356,6 @@ function mahjongOperation:onGameSync(reenter)
     self:highlightPlaneByTurn(reenter.CurOpTurn)
     self.turnStartTime = time.realtimeSinceStartup()
     self:setCountdownVisible(true)
---    self.mOp:show()
 
     touch.addListener(self.touchHandler, self)
 end
@@ -460,28 +442,49 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongOperation:OnFaPai()
-    soundManager.playGfx("mahjong", "fapai")
+    soundManager.playGfx("mahjong", "shaizi")
 
     for _, player in pairs(self.game.players) do
-        self:createInHandMahjongs(player, false)
+        self:createInHandMahjongs(player)
     end
-
-    self:highlightPlaneByTurn(self.game:getMarkerTurn())
-    self.turnStartTime = time.realtimeSinceStartup()
-    self:setCountdownVisible(true)
-    self.mOp:show()
 
     touch.addListener(self.touchHandler, self)
 end
 
 -------------------------------------------------------------------------------
+-- 播放骰子动画
+-------------------------------------------------------------------------------
+function mahjongOperation:playDiceAnim()
+    self:playAnimation(self.diceRootAnim)
+
+    local diceMat1 = self.diceMats[1]
+    if diceMat1.mainTexture ~= nil then
+        textureManager.unload(diceMat1.mainTexture)
+    end
+    diceMat1.mainTexture = textureManager.load("dice", "dice" .. self.game.dices[1])
+
+    local diceMat2 = self.diceMats[2]
+    if diceMat1.mainTexture ~= nil then
+        textureManager.unload(diceMat2.mainTexture)
+    end
+    diceMat2.mainTexture = textureManager.load("dice", "dice" .. self.game.dices[2])
+end
+
+-------------------------------------------------------------------------------
+-- 定缺提示
+-------------------------------------------------------------------------------
+function mahjongOperation:onDingQueHint()
+    self.mQue:show()
+end
+
+-------------------------------------------------------------------------------
 -- 创建手牌
 -------------------------------------------------------------------------------
-function mahjongOperation:createInHandMahjongs(player, visible)
+function mahjongOperation:createInHandMahjongs(player)
     local datas = player[mahjongGame.cardType.shou]
 
     self.inhandMahjongs[player.acId] = {}
-    self:increaseInhandMahjongs(player.acId, datas, visible)
+    self:increaseInhandMahjongs(player.acId, datas)
 end
 
 -------------------------------------------------------------------------------
@@ -527,7 +530,7 @@ function mahjongOperation:onMoPai(acId, cards)
     self:highlightPlaneByAcId(acId)
     
     if acId ~= gamepref.acId then
-        self:increaseInhandMahjongs(acId, cards, true)
+        self:increaseInhandMahjongs(acId, cards)
     else
         self.mo = self:getMahjongFromIdle(cards[1])
         self:removeFromIdle()
@@ -554,6 +557,10 @@ function mahjongOperation:onOpList(oplist)
                 self:beginChuPai()
             end
         end
+
+        self:highlightPlaneByTurn(self.game:getMarkerTurn())
+        self.turnStartTime = time.realtimeSinceStartup()
+        self:setCountdownVisible(true)
 
         self:showOperations(infos, leftTime)
     end
@@ -672,6 +679,41 @@ function mahjongOperation:hideOperations()
     self.mHu:hide()
 
     self.mGang_MS:hide()
+end
+
+-------------------------------------------------------------------------------
+-- 点击“条”
+-------------------------------------------------------------------------------
+function mahjongOperation:onTiaoClickedHandler()
+    playButtonClickSound()
+
+    networkManager.dingque(mahjongClass.tiao, function(ok, msg)
+    end)
+    self.mQue:hide()
+end
+
+-------------------------------------------------------------------------------
+-- 点击“筒”
+-------------------------------------------------------------------------------
+function mahjongOperation:onTongClickedHandler()
+    playButtonClickSound()
+
+    networkManager.dingque(mahjongClass.tong, function(ok, msg)
+    end)
+
+    self.mQue:hide()
+end
+
+-------------------------------------------------------------------------------
+-- 点击“万”
+-------------------------------------------------------------------------------
+function mahjongOperation:onWanClickedHandler()
+    playButtonClickSound()
+
+    networkManager.dingque(mahjongClass.wan, function(ok, msg)
+    end)
+
+    self.mQue:hide()
 end
 
 -------------------------------------------------------------------------------
@@ -975,7 +1017,7 @@ function mahjongOperation:getMahjongFromIdle(mid)
         return self.idleMahjongs[index]
     end
 
-    --现在“城墙”里面查找
+    --先在“城墙”里面查找
     for k, v in pairs(self.idleMahjongs) do
         if v.id == mid then
             swap(self.idleMahjongs, k, self.idleMahjongs, index)
@@ -1000,19 +1042,14 @@ end
 -------------------------------------------------------------------------------
 -- 增加手牌
 -------------------------------------------------------------------------------
-function mahjongOperation:increaseInhandMahjongs(acId, datas, visible)
+function mahjongOperation:increaseInhandMahjongs(acId, datas)
     local mahjongs = self.inhandMahjongs[acId]
 
     for _, id in pairs(datas) do
         local m = self:getMahjongFromIdle(id)
+        m:show()
         table.insert(mahjongs, m)
         self:removeFromIdle()
-
-        if visible then
-            m:show()
-        else
-            m:hide()
-        end
     end
 
     local player = self.game:getPlayerByAcId(acId)
