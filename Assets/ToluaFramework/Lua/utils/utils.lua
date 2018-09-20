@@ -144,7 +144,7 @@ function findChildByIndex(transform, index)
     assert(transform ~= nil)
 
     local child = transform:GetChild(index)
-    return (child ~= nil) and child.gameObject or nil
+    return (child ~= nil) and object.new(child.gameObject) or nil
 end
 
 -------------------------------------------------------------------

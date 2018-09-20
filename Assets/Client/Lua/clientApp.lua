@@ -9,13 +9,13 @@ networkManager = require("network.networkManager")
 
 local soundConfig = require("config.soundConfig")
 
-local clientApp = class("clientApp")
+clientApp = class("clientApp")
 
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
 function clientApp:ctor()
-
+    self.currentDesk = nil
 end
 
 ----------------------------------------------------------------
@@ -27,6 +27,12 @@ local function networkDisconnectedCallback()
     networkManager.reconnect(gamepref.host, gamepref.port, function(connected, curCoin, cityType, deskId)
         if not connected then
             closeWaitingUI()
+
+            if clientApp.currentDesk ~= nil then
+                clientApp.currentDesk:destroy()
+                clientApp.currentDesk = nil
+            end
+
             local ui = require("ui.messageBox").new("与服务器失去连接，是否重新登录？", 
                                                     function()--确定：重新登录
                                                         loginServer(function(ok)
@@ -49,26 +55,40 @@ local function networkDisconnectedCallback()
                 enterDesk(cityType, deskId, function(ok, errText, progress, msg)
                     if not ok then
                         closeWaitingUI()
-                        showMessageUI(errText)
+                        showMessageUI(errText, function()
+                            --销毁当前游戏对象
+                            if clientApp.currentDesk ~= nil then
+                                clientApp.currentDesk:destroy()
+                                clientApp.currentDesk = nil
+                            end
+                            --返回登录界面
+                            local ui = require("ui.login").new()
+                            ui:show()
+                        end)
                         return
                     end
 
                     if msg ~= nil then
                         closeWaitingUI()
 
---                        if false then
---                            sceneManager.load("scene", "MahjongScene", function(completed, progress)
---                                loading:setProgress(0.4 + 0.6 * progress)
+                        msg.Config  = table.fromjson(msg.Config)
+                        msg.Reenter = table.fromjson(msg.Reenter)
+                        
+                        if clientApp.currentDesk ~= nil then
+                            clientApp.currentDesk:onEnter(msg)
+                        else
+                            local loading = require("ui.loading").new()
+                            loading:show()
 
---                                if completed then
---                                    msg.Reenter = table.fromjson(msg.Reenter)
---                                    msg.Config = table.fromjson(msg.Config)
+                            sceneManager.load("scene", "mahjongscene", function(completed, progress)
+                                loading:setProgress(progress)
 
---                                    local desk = require("logic.mahjong.mahjongGame").new(msg)
---                                    loading:close()
---                                end
---                            end)
---                        end
+                                if completed then
+                                    clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
+                                    loading:close()
+                                end
+                            end)
+                        end
                     end
                 end)
             end

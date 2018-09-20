@@ -81,6 +81,9 @@ TextureImporter:
     21300148: djs_7
     21300150: djs_8
     21300152: djs_9
+    21300154: ZM_an09_1
+    21300156: ZM_an10_1
+    21300158: ZM_an11_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -149,8 +152,8 @@ TextureImporter:
       name: djs_0
       rect:
         serializedVersion: 2
-        x: 479
-        y: 479
+        x: 403
+        y: 928
         width: 28
         height: 32
       alignment: 0
@@ -163,8 +166,8 @@ TextureImporter:
       name: djs_1
       rect:
         serializedVersion: 2
-        x: 461
-        y: 176
+        x: 1007
+        y: 991
         width: 15
         height: 32
       alignment: 9
@@ -177,8 +180,8 @@ TextureImporter:
       name: djs_2
       rect:
         serializedVersion: 2
-        x: 380
-        y: 88
+        x: 433
+        y: 928
         width: 28
         height: 32
       alignment: 0
@@ -191,8 +194,8 @@ TextureImporter:
       name: djs_3
       rect:
         serializedVersion: 2
-        x: 111
-        y: 14
+        x: 433
+        y: 826
         width: 27
         height: 32
       alignment: 9
@@ -205,8 +208,8 @@ TextureImporter:
       name: djs_4
       rect:
         serializedVersion: 2
-        x: 140
-        y: 16
+        x: 403
+        y: 894
         width: 28
         height: 32
       alignment: 0
@@ -219,8 +222,8 @@ TextureImporter:
       name: djs_5
       rect:
         serializedVersion: 2
-        x: 170
-        y: 16
+        x: 433
+        y: 894
         width: 28
         height: 32
       alignment: 0
@@ -233,8 +236,8 @@ TextureImporter:
       name: djs_6
       rect:
         serializedVersion: 2
-        x: 200
-        y: 16
+        x: 403
+        y: 860
         width: 28
         height: 32
       alignment: 0
@@ -247,8 +250,8 @@ TextureImporter:
       name: djs_7
       rect:
         serializedVersion: 2
-        x: 461
-        y: 142
+        x: 558
+        y: 723
         width: 26
         height: 32
       alignment: 9
@@ -261,8 +264,8 @@ TextureImporter:
       name: djs_8
       rect:
         serializedVersion: 2
-        x: 230
-        y: 16
+        x: 433
+        y: 860
         width: 28
         height: 32
       alignment: 0
@@ -275,8 +278,8 @@ TextureImporter:
       name: djs_9
       rect:
         serializedVersion: 2
-        x: 475
-        y: 304
+        x: 403
+        y: 826
         width: 28
         height: 32
       alignment: 0
@@ -289,8 +292,8 @@ TextureImporter:
       name: ZM_an06
       rect:
         serializedVersion: 2
-        x: 135
-        y: 183
+        x: 1
+        y: 695
         width: 131
         height: 131
       alignment: 0
@@ -303,8 +306,8 @@ TextureImporter:
       name: ZM_an07
       rect:
         serializedVersion: 2
-        x: 135
-        y: 50
+        x: 134
+        y: 695
         width: 131
         height: 131
       alignment: 0
@@ -317,8 +320,8 @@ TextureImporter:
       name: ZM_an08
       rect:
         serializedVersion: 2
-        x: 268
-        y: 87
+        x: 267
+        y: 716
         width: 110
         height: 110
       alignment: 0
@@ -331,8 +334,22 @@ TextureImporter:
       name: ZM_an09
       rect:
         serializedVersion: 2
-        x: 1
-        y: 182
+        x: 739
+        y: 891
+        width: 132
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_an09_1
+      rect:
+        serializedVersion: 2
+        x: 873
+        y: 891
         width: 132
         height: 132
       alignment: 0
@@ -345,8 +362,22 @@ TextureImporter:
       name: ZM_an10
       rect:
         serializedVersion: 2
-        x: 261
-        y: 316
+        x: 1
+        y: 828
+        width: 132
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_an10_1
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 828
         width: 132
         height: 132
       alignment: 0
@@ -359,8 +390,22 @@ TextureImporter:
       name: ZM_an11
       rect:
         serializedVersion: 2
-        x: 1
-        y: 48
+        x: 269
+        y: 828
+        width: 132
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_an11_1
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 757
         width: 132
         height: 132
       alignment: 0
@@ -374,7 +419,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 450
+        y: 962
         width: 476
         height: 61
       alignment: 0
@@ -387,8 +432,8 @@ TextureImporter:
       name: ZM_di06
       rect:
         serializedVersion: 2
-        x: 1
-        y: 316
+        x: 479
+        y: 891
         width: 258
         height: 132
       alignment: 9
@@ -401,8 +446,8 @@ TextureImporter:
       name: ZM_dq01
       rect:
         serializedVersion: 2
-        x: 1
-        y: 2
+        x: 597
+        y: 845
         width: 108
         height: 44
       alignment: 0
@@ -415,8 +460,8 @@ TextureImporter:
       name: ZM_dq02
       rect:
         serializedVersion: 2
-        x: 347
-        y: 1
+        x: 1007
+        y: 980
         width: 8
         height: 9
       alignment: 9
@@ -429,8 +474,8 @@ TextureImporter:
       name: ZM_zi01
       rect:
         serializedVersion: 2
-        x: 380
-        y: 122
+        x: 379
+        y: 738
         width: 79
         height: 86
       alignment: 9
@@ -443,8 +488,8 @@ TextureImporter:
       name: ZM_zi02
       rect:
         serializedVersion: 2
-        x: 268
-        y: 199
+        x: 707
+        y: 774
         width: 107
         height: 115
       alignment: 0
@@ -457,8 +502,8 @@ TextureImporter:
       name: ZM_zi03
       rect:
         serializedVersion: 2
-        x: 377
-        y: 210
+        x: 460
+        y: 651
         width: 96
         height: 104
       alignment: 0
@@ -471,54 +516,12 @@ TextureImporter:
       name: ZM_zi04
       rect:
         serializedVersion: 2
-        x: 395
-        y: 338
+        x: 597
+        y: 733
         width: 105
         height: 110
       alignment: 9
       pivot: {x: 0.5, y: 0.49545455}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: ZM_zi05
-      rect:
-        serializedVersion: 2
-        x: 347
-        y: 12
-        width: 70
-        height: 73
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: ZM_zi06
-      rect:
-        serializedVersion: 2
-        x: 268
-        y: 4
-        width: 77
-        height: 81
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: ZM_zi07
-      rect:
-        serializedVersion: 2
-        x: 419
-        y: 33
-        width: 52
-        height: 87
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

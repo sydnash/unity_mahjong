@@ -4,7 +4,6 @@
 
 local gamePlayer    = require("logic.player.gamePlayer")
 local opType        = require("const.opType")
-local gameStatus    = require("const.gameStatus")
 local sexType       = require("const.sexType")
 
 local mahjongGame = class("mahjongGame")
@@ -33,6 +32,7 @@ function mahjongGame:ctor(data)
     self.deskId             = data.DeskId
     self.cityType           = data.GameType
     self.config             = data.Config
+    self.status             = data.Status
 
     self.players = {}
     self.playerCount = 1
@@ -56,7 +56,7 @@ function mahjongGame:ctor(data)
         end
 
         if ready and (count == self.config.RenShu) then
-            self.deskUI:onGameStart()
+            self.deskUI:onGameSync()
             self.operationUI:onGameSync(data.Reenter)
         else
             for _, v in pairs(self.players) do
@@ -80,63 +80,48 @@ function mahjongGame:registerCommandHandlers()
     networkManager.registerCommandHandler(protoType.sc.otherEnterDesk, function(msg)
         self:onOtherEnterHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.ready, function(msg)
         self:onReadyHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.start, function(msg)
         self:onGameStartHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.fapai, function(msg)
         self:onFaPaiHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.mopai, function(msg)
         self:onMoPaiHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.oplist, function(msg)
         self:onOpListHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.opDo, function(msg)
         self:onOpDoHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.clear, function(msg)
         self:onClearHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.exitDesk, function(msg)
         self:onExitDeskHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.otherExitDesk, function(msg)
         self:onOtherExitHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.notifyExitVote, function(msg)
         self:onNotifyExitVoteHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.notifyExitVoteFailed, function(msg)
         self:onNotifyExitVoteFailedHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.exitVote, function(msg)
         self:onExitVoteHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.gameEnd, function(msg)
         self:onGameEndHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.dqHint, function(msg)
         self:onDingQueHintHandler(msg)
     end, true)
-
     networkManager.registerCommandHandler(protoType.sc.dqDo, function(msg)
         self:onDingQueDoHandler(msg)
     end, true)
@@ -160,6 +145,8 @@ function mahjongGame:unregisterCommandHandlers()
     networkManager.unregisterCommandHandler(protoType.sc.notifyExitVoteFailed)
     networkManager.unregisterCommandHandler(protoType.sc.exitVote)
     networkManager.unregisterCommandHandler(protoType.sc.gameEnd)
+    networkManager.unregisterCommandHandler(protoType.sc.dqHint)
+    networkManager.unregisterCommandHandler(protoType.sc.dqDo)
 end
 
 -------------------------------------------------------------------------------
@@ -175,8 +162,10 @@ function mahjongGame:onEnter(msg)
     player.turn         = msg.Turn
     player.score        = msg.Score
     player.isCreator    = self:isCreator(player.acId)
+    player.isMarker     = self:isMarker(player.turn)
 
     self.players[player.turn] = player
+    self.playerCount = 1
     self:syncOthers(msg.Others)
 
     if msg.Reenter ~= nil then
@@ -186,8 +175,11 @@ function mahjongGame:onEnter(msg)
         self.dices              = { msg.Reenter.Dice1, msg.Reenter.Dice2 }
         self.totalMahjongCount  = msg.Reenter.TotalMJCnt
         self.leftMahjongCount   = msg.Reenter.LeftMJCnt
+        self.deskStatus         = msg.Reenter.DeskStatus
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
+
+    self:refreshUI()
 end
 
 -------------------------------------------------------------------------------
@@ -195,7 +187,12 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:syncOthers(others)
     for _, v in pairs(others) do
-        local player = gamePlayer.new(v.AcId)
+        local player = self.players[v.Turn]
+
+        if player == nil or player.acId ~= v.AcId then
+            player = gamePlayer.new(v.AcId)
+            self.players[v.Turn] = player
+        end
 
         player.headerUrl = v.HeadUrl
         player:loadHeaderTex()
@@ -208,8 +205,8 @@ function mahjongGame:syncOthers(others)
         player.turn      = v.Turn
         player.score     = v.Score
         player.isCreator = self:isCreator(player.acId)
+        player.isMarker  = self:isMarker(player.turn)
 
-        self.players[player.turn] = player
         self.playerCount = self.playerCount + 1
     end
 end
@@ -220,6 +217,7 @@ end
 function mahjongGame:syncSeats(seats)
     for _, v in pairs(seats) do
         local player = self:getPlayerByAcId(v.AcId)
+        player.que = v.QueType
         player.hu = v.HuInfo
 
         player[mahjongGame.cardType.shou] = v.CardsInHand
@@ -309,7 +307,9 @@ function mahjongGame:onGameStartHandler(msg)
     self.isPlaying = true
 
     self.deskUI:onGameStart()
-    self.operationUI:onGameStart()
+    local duration = self.operationUI:onGameStart()
+
+    return duration
 end
 
 -------------------------------------------------------------------------------
@@ -595,6 +595,13 @@ function mahjongGame:getMarkerTurn()
 end
 
 -------------------------------------------------------------------------------
+-- 获取庄家的Turn
+-------------------------------------------------------------------------------
+function mahjongGame:isMarker(turn)
+    return self.markerTurn == turn
+end
+
+-------------------------------------------------------------------------------
 -- 根据turn获取位置
 -------------------------------------------------------------------------------
 function mahjongGame:getSeatType(turn)
@@ -631,7 +638,7 @@ function mahjongGame:exitGame()
     local loading = require("ui.loading").new()
     loading:show()
 
-    sceneManager.load("scene", "LobbyScene", function(completed, progress)
+    sceneManager.load("scene", "lobbyscene", function(completed, progress)
         loading:setProgress(progress)
 
         if completed then
@@ -642,22 +649,7 @@ function mahjongGame:exitGame()
         end
     end)
 
-    self.playerCount = 0
-    self:unregisterCommandHandlers()
-
-    self.deskUI:close()
-    self.operationUI:close()
-
-    if self.exitDeskUI ~= nil then
-        self.exitDeskUI:close()
-        self.exitDeskUI = nil
-    end
-
-    for _, v in pairs(self.players) do
-        if v.acId ~= gamepref.acId then
-            v:destroy()
-        end
-    end
+    self:destroy()
 end
 
 -------------------------------------------------------------------------------
@@ -693,9 +685,9 @@ function mahjongGame:onExitDeskHandler(msg)
             end
         else
             local special = table.fromjson(msg.Special)
-            local preData = table.fromjson(special.PreData)
+--            local preData = table.fromjson(special.PreData)
 
-            for _, v in pairs(preData.TotalResuts) do
+            for _, v in pairs(special.TotalResuts) do
                 totalScores[v.AcId] = v.Score
             end
         end
@@ -838,7 +830,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onDingQueHintHandler(msg)
     log("ding que hint, msg = " .. table.tostring(msg))
-    self.operationUI:onDingQueHint()
+    self.operationUI:onDingQueHint(msg)
 end
 
 -------------------------------------------------------------------------------
@@ -846,7 +838,14 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onDingQueDoHandler(msg)
     log("ding que do, msg = " .. table.tostring(msg))
+
+    for _, v in pairs(msg.Dos) do
+        local player = self:getPlayerByAcId(v.AcId)
+        player.que = v.Q
+    end
+
     self.deskUI:onDingQueDo(msg)
+    self.operationUI:onDingQueDo(msg)
 end
 
 -------------------------------------------------------------------------------
@@ -870,7 +869,7 @@ function mahjongGame:rejectExit()
         if not ok then
 
         else
-            log("agree exit, msg = " .. tostring(msg.Agree))
+            log("reject exit, msg = " .. tostring(msg.Agree))
         end
     end)
 end
@@ -880,6 +879,52 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:isCreator(acId)
     return self.creator == acId
+end
+
+-------------------------------------------------------------------------------
+-- 销毁游戏对象
+-------------------------------------------------------------------------------
+function mahjongGame:destroy()
+    log("mahjongGame:destroy")
+    self.playerCount = 0
+    self:unregisterCommandHandlers()
+
+    if self.deskUI ~= nil then
+        self.deskUI:close()
+        self.deskUI = nil
+    end
+
+    if self.operationUI ~= nil then
+        self.operationUI:reset()
+        self.deskUI = nil
+    end
+
+    if self.exitDeskUI ~= nil then
+        self.exitDeskUI:close()
+        self.exitDeskUI = nil
+    end
+
+    for _, v in pairs(self.players) do
+        if v.acId ~= gamepref.acId then
+            v:destroy()
+        end
+    end
+
+    clientApp.currentDesk = nil
+end
+
+function mahjongGame:refreshUI()
+    if self.deskUI ~= nil then
+        self.deskUI:refreshUI()
+    end
+
+    if self.operationUI ~= nil then
+        self.operationUI:refreshUI()
+    end
+
+    if self.exitDeskUI ~= nil then
+
+    end
 end
 
 return mahjongGame

@@ -16,12 +16,27 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    private string mHost = string.Empty;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private int mPort = 0;
+
+    /// <summary>
+    /// 
+    /// </summary>
     private bool mConnected = false;
 
     /// <summary>
     /// 
     /// </summary>
     private float mTimeout = 0.5f;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private float mConnectTimestamp = 0;
 
     /// <summary>
     /// 
@@ -88,6 +103,8 @@ public class Tcp : MonoBehaviour
     /// <returns></returns>
     public void Connect(string host, int port, int timeout, Action<bool> callback)
     {
+        mHost = host;
+        mPort = port;
         timeout = (timeout > 0) ? Mathf.Max(500, timeout) : timeout;
         
         try
@@ -103,11 +120,12 @@ public class Tcp : MonoBehaviour
             mSocket.ReceiveBufferSize = BUFFER_SIZE;
             mSocket.SendTimeout = timeout;
             mSocket.ReceiveTimeout = timeout;
-            mSocket.Connect(host, port);
+
+            Connect();
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex.Message);
+            //Logger.LogError(ex.Message);
         }
     }
 
@@ -248,7 +266,11 @@ public class Tcp : MonoBehaviour
             }
             else
             {
-                if (Time.realtimeSinceStartup - mStartConnectTime > mTimeout)
+                if (Time.realtimeSinceStartup - mStartConnectTime < mTimeout)
+                {
+                    Connect();
+                }
+                else
                 {
                     Logger.Log("tcp connect timeout");
                     Disconnect();
@@ -262,7 +284,19 @@ public class Tcp : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex.Message);
+            //Logger.LogError(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void Connect()
+    {
+        if (Time.realtimeSinceStartup - mConnectTimestamp > 0.5f)
+        {
+            mSocket.Connect(mHost, mPort);
+            mConnectTimestamp = Time.realtimeSinceStartup;
         }
     }
 

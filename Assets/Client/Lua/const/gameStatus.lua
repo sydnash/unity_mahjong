@@ -3,7 +3,8 @@
 --此文件由[BabeLua]插件自动生成
 
 return {
-    playing = 2,
+    notBegin = 1,
+    playing  = 2,
 }
 
 --endregion

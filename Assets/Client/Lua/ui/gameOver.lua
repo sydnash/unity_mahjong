@@ -44,7 +44,7 @@ end
 
 function gameOver:onDestroy()
     for _, v in pairs(self.items) do
-        v.icon:setTexture(nil)
+        v.mIcon:setTexture(nil)
     end
 end
 

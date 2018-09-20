@@ -4,6 +4,7 @@
 
 local mahjongGame   = require("logic.mahjong.mahjongGame")
 local opType        = require("const.opType")
+local gameStatus    = require("const.gameStatus")
 
 local base = require("ui.common.view")
 local mahjongDesk = class("mahjongDesk", base)
@@ -17,10 +18,17 @@ function mahjongDesk:ctor(game)
 end
 
 function mahjongDesk:onInit()
-    local players = { self.mPlayerM, self.mPlayerR, self.mPlayerT, self.mPlayerL, }
-    self.players = players
+    self.players = { self.mPlayerM, self.mPlayerR, self.mPlayerT, self.mPlayerL, }
+    self:refreshUI()
 
-    for _, p in pairs(players) do
+    self.mInvite:addClickListener(self.onInviteClickedHandler, self)
+    self.mReady:addClickListener(self.onReadyClickedHandler, self)
+    self.mCancel:addClickListener(self.onCancelClickedHandler, self)
+    self.mSetting:addClickListener(self.onSettingClickedHandler, self)
+end
+
+function mahjongDesk:refreshUI()
+    for _, p in pairs(self.players) do
         
     end
 
@@ -31,8 +39,12 @@ function mahjongDesk:onInit()
 
     for _, v in pairs(self.game.players) do
         local s = self.game:getSeatType(v.turn)
-        local p = players[s + 1]
+        local p = self.players[s + 1]
         p:setPlayerInfo(v)
+
+        if self.game.status == gameStatus.playing then
+            p:setReady(false)
+        end
     end
 
     local playerTotalCount = self.game:getTotalPlayerCount()
@@ -43,11 +55,6 @@ function mahjongDesk:onInit()
     else
         self.mInvite:show()
     end
-
-    self.mInvite:addClickListener(self.onInviteClickedHandler, self)
-    self.mReady:addClickListener(self.onReadyClickedHandler, self)
-    self.mCancel:addClickListener(self.onCancelClickedHandler, self)
-    self.mSetting:addClickListener(self.onSettingClickedHandler, self)
 end
 
 function mahjongDesk:onInviteClickedHandler()
@@ -94,6 +101,14 @@ function mahjongDesk:onGameStart()
     for _, v in pairs(self.players) do
         v:reset()
     end
+
+    self:updateCurrentGameIndex()
+end
+
+function mahjongDesk:onGameSync()
+    self.mInvite:hide()
+    self.mReady:hide()
+    self.mCancel:hide()
 
     self:updateCurrentGameIndex()
 end
@@ -168,6 +183,8 @@ function mahjongDesk:onPlayerHu(acId, t)
     else
         p:playGfx("hu")
     end
+
+    p:setHu(true)
 end
 
 function mahjongDesk:updateLeftMahjongCount(cnt)

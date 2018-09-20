@@ -128,6 +128,8 @@ function networkManager.release()
          unregisterUpdateListener(networkManager.updateHandler)
          networkManager.updateHandler = nil
     end
+
+    networkManager.updateTick = 0
 end
 
 -------------------------------------------------------------------
@@ -135,6 +137,11 @@ end
 -------------------------------------------------------------------
 function networkManager.update()
     local now = time.realtimeSinceStartup()
+
+    if now - networkManager.updateTick < 0.2 then
+        return
+    end
+
     local ping = networkConfig.ping
     local pong = math.max(ping + 0.5, networkConfig.pong)
     --发送心跳包
@@ -183,10 +190,12 @@ function networkManager.connect(host, port, callback)
         if connected then
             tcp.registerReceivedCallback(receive)
 
-            networkManager.pingTick = time.realtimeSinceStartup()
-            networkManager.pongTick = time.realtimeSinceStartup()
+            local now = time.realtimeSinceStartup()
+            networkManager.pingTick = now
+            networkManager.pongTick = now
 
             if networkManager.updateHandler == nil then
+                networkManager.updateTick = now
                 networkManager.updateHandler = registerUpdateListener(networkManager.update, nil)
             end
         end
@@ -198,26 +207,13 @@ function networkManager.connect(host, port, callback)
 end
 
 function networkManager.reconnect(host, port, callback)
-    local timeout = networkConfig.tcpTimeout * 1000 -- 转为毫秒
-
-    tcp.connect(host, port, timeout, function(connected)
-        log("reconnect = " .. tostring(connected))
+    networkManager.connect(host, port, function(connected)
         if not connected then
             callback(false, -1, -1, -1)
         else
-            tcp.registerReceivedCallback(receive)
-
             local data = { Session = gamepref.session, AcId = gamepref.acId, Level = 1, }
             send(protoType.cs.reconnect, data, function(msg)
-                if msg.Ok then
-                    networkManager.pingTick = time.realtimeSinceStartup()
-                    networkManager.pongTick = time.realtimeSinceStartup()
-
-                    if networkManager.updateHandler == nil then
-                        networkManager.updateHandler = registerUpdateListener(networkManager.update, nil)
-                    end
-                end
-               
+                log("reconnect, msg = " ..  table.tostring(msg))
                 callback(msg.Ok, msg.CurCoin, msg.GameType, msg.DeskId)
             end)
         end
@@ -452,7 +448,7 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.dingque(mahjongClass, callback)
-    local data = { MJType = mahjongClass }
+    local data = { Q = mahjongClass }
     send(protoType.cs.dpChoose, data, function(msg)
         callback(false, nil)
     end)

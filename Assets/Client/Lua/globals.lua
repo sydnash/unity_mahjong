@@ -194,55 +194,70 @@ function loginServer(callback)
         callback(true)
         log("login, msg = " .. table.tostring(msg))
 
-        local loading = require("ui.loading").new()
-        loading:show()
-
         local deskInfo = msg.DeskInfo
 
         if deskInfo == nil or deskInfo.DeskId == 0 then
-            sceneManager.load("scene", "LobbyScene", function(completed, progress)
-                loading:setProgress(progress)
+            local sceneName = sceneManager.getActivedSceneName()
 
-                if completed then
-                    local lobby = require("ui.lobby").new()
-                    lobby:show()
+            if sceneName ~= "lobbyscene" then
+                local loading = require("ui.loading").new()
+                loading:show()
 
-                    loading:close()
-                end
-            end)
+                sceneManager.load("scene", "lobbyscene", function(completed, progress)
+                    loading:setProgress(progress)
+
+                    if completed then
+                        local lobby = require("ui.lobby").new()
+                        lobby:show()
+
+                        loading:close()
+                    end
+                end)
+            end
         else -- 如有在房间内则跳过大厅直接进入房间
             local cityType = deskInfo.GameType
             local deskId = deskInfo.DeskId
 
+            local loading = require("ui.loading").new()
+            loading:show()
+
             enterDesk(cityType, deskId, function(ok, errText, progress, msg)
                 if not ok then
                     loading:close()
-                    showMessageUI(errText)
-                    if callback ~= nil then
-                        callback(false)
-                    end
+                    showMessageUI(errText, function()
+                        if callback ~= nil then
+                            callback(false)
+                        end
+                    end)
+                    return
+                end
+
+                if msg == nil then
+                    loading:setProgress(progress * 0.4)
+                    return
+                end
+
+                msg.Config  = table.fromjson(msg.Config)
+                msg.Reenter = table.fromjson(msg.Reenter)
+
+                if clientApp.currentDesk ~= nil then
+                    clientApp.currentDesk:onEnter(msg)
+                    loading:close()
                 else
-                    if msg == nil then
-                        loading:setProgress(progress * 0.4)
-                    else
-                        loading:setProgress(0.4)
+                    sceneManager.load("scene", "mahjongscene", function(completed, progress)
+                        loading:setProgress(0.4 + 0.6 * progress)
 
-                        sceneManager.load("scene", "MahjongScene", function(completed, progress)
-                            loading:setProgress(0.4 + 0.6 * progress)
+                        if completed then
+                            clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
+                            loading:close()
+                        end
+                    end)
 
-                            if completed then
-                                msg.Reenter = table.fromjson(msg.Reenter)
-                                msg.Config = table.fromjson(msg.Config)
+                    loading:setProgress(0.4)
+                end
 
-                                local desk = require("logic.mahjong.mahjongGame").new(msg)
-                                loading:close()
-                            end
-                        end)
-                    end
-
-                    if callback ~= nil then
-                        callback(true)
-                    end
+                if callback ~= nil then
+                    callback(true)
                 end
             end)
         end

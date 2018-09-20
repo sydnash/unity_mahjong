@@ -8,6 +8,7 @@ local mahjongType   = require("logic.mahjong.mahjongType")
 local mahjongGame   = require("logic.mahjong.mahjongGame")
 local mahjong       = require("logic.mahjong.mahjong")
 local touch         = require("logic.touch")
+local deskStatus    = require("const.deskStatus")
 
 local base = require("ui.common.view")
 local mahjongOperation = class("mahjongOperation", base)
@@ -52,7 +53,7 @@ local mopaiConfig = {
     scale    = Vector3.New(1, 1, 1),
 }
 
-local totalCountdown = 20
+local COUNTDOWN_SECONDS_C = 20
 
 -------------------------------------------------------------------------------
 -- 交换两个牌
@@ -92,7 +93,8 @@ end
 -- 初始化
 -------------------------------------------------------------------------------
 function mahjongOperation:onInit()
-    self.turnStartTime = -1
+    self.turnCountdown = COUNTDOWN_SECONDS_C
+    self.countdownTick = -1
 
     --麻将出口的板子节点
     local plane = find("table_plane")
@@ -203,6 +205,7 @@ function mahjongOperation:onInit()
 
     self.mGang_MS:hide()
     self.mQue:hide()
+    self.mStatus:hide()
     self:hideOperations()
 
     self.idleMahjongs   = {}
@@ -227,32 +230,40 @@ function mahjongOperation:preload()
     end
 end
 
+function mahjongOperation:refreshUI()
+
+end
+
 -------------------------------------------------------------------------------
 -- 主要处理中间的倒计时
 -------------------------------------------------------------------------------
 function mahjongOperation:update()
-    if self.turnStartTime ~= nil and self.turnStartTime > 0 then
-        local delta = math.floor(time.realtimeSinceStartup() - self.turnStartTime)
-        local countdown = math.max(0, totalCountdown - delta)
-
-        local a = math.floor(countdown / 10)
+    if self.countdownTick ~= nil and self.countdownTick > 0 and self.turnCountdown > 0 then
+        local now = time.realtimeSinceStartup()
+        local delta = math.floor(now - self.countdownTick)
         
-        for k, v in pairs(self.countdownNumbders.a) do
-            if k == a + 1 then
-                v:show()
-            else
-                v:hide()
-            end
-        end
+        if delta >= 1 then
+            self.turnCountdown = math.max(0, self.turnCountdown - delta)
 
-        local b = math.floor(countdown % 10)
-
-        for k, v in pairs(self.countdownNumbders.b) do
-            if k == b + 1 then
-                v:show()
-            else
-                v:hide()
+            local a = math.floor(self.turnCountdown / 10)
+            for k, v in pairs(self.countdownNumbders.a) do
+                if k == a + 1 then
+                    v:show()
+                else
+                    v:hide()
+                end
             end
+
+            local b = math.floor(self.turnCountdown % 10)
+            for k, v in pairs(self.countdownNumbders.b) do
+                if k == b + 1 then
+                    v:show()
+                else
+                    v:hide()
+                end
+            end
+
+            self.countdownTick = now
         end
     end
 end
@@ -276,6 +287,8 @@ end
 -- 游戏开始
 -------------------------------------------------------------------------------
 function mahjongOperation:onGameStart()
+    self.countdownTick = -1
+    self:highlightPlaneByTurn(-1)
     self:setCountdownVisible(false)
     self.chupaiPtr:hide()
 
@@ -292,7 +305,7 @@ function mahjongOperation:onGameStart()
     self:playAnimation(self.mahjongsRootAnim)
     self:playDiceAnim()
 
-    return 2
+    return 3
 end
 
 -------------------------------------------------------------------------------
@@ -352,10 +365,20 @@ function mahjongOperation:onGameSync(reenter)
         end
     end
 
-    self:onOpList(reenter.CurOpList)
-    self:highlightPlaneByTurn(reenter.CurOpTurn)
-    self.turnStartTime = time.realtimeSinceStartup()
-    self:setCountdownVisible(true)
+    if self.game.deskStatus == deskStatus.dingque then
+        self.mStatus:show()
+
+        local player = self.game:getPlayerByAcId(gamepref.acId)
+        if player.que < 0 then
+            self.mQue:show()
+        end
+    elseif self.game.deskStatus == deskStatus.playing then
+        self:onOpList(reenter.CurOpList)
+        self:highlightPlaneByTurn(reenter.CurOpTurn)
+        self.turnCountdown = COUNTDOWN_SECONDS_C
+        self.countdownTick = time.realtimeSinceStartup()
+        self:setCountdownVisible(true)
+    end
 
     touch.addListener(self.touchHandler, self)
 end
@@ -473,8 +496,30 @@ end
 -------------------------------------------------------------------------------
 -- 定缺提示
 -------------------------------------------------------------------------------
-function mahjongOperation:onDingQueHint()
+function mahjongOperation:onDingQueHint(msg)
+    self.mStatus:show()
     self.mQue:show()
+end
+
+-------------------------------------------------------------------------------
+-- 定缺结束
+-------------------------------------------------------------------------------
+function mahjongOperation:onDingQueDo(msg)
+    local player = self.game:getPlayerByAcId(gamepref.acId)
+    local mahjongs = self.inhandMahjongs[gamepref.acId]
+
+    for _, v in pairs(mahjongs) do
+        if v.class == player.que then
+            v:dart()
+        else
+            v:light()
+        end  
+    end
+
+    self:sortInhand(player, mahjongs)
+
+    self.mStatus:hide()
+    self.mQue:hide()
 end
 
 -------------------------------------------------------------------------------
@@ -526,18 +571,27 @@ end
 -- 摸牌
 -------------------------------------------------------------------------------
 function mahjongOperation:onMoPai(acId, cards)
-    self.turnStartTime = time.realtimeSinceStartup()
+    self.turnCountdown = COUNTDOWN_SECONDS_C
+    self.countdownTick = time.realtimeSinceStartup()
     self:highlightPlaneByAcId(acId)
     
     if acId ~= gamepref.acId then
         self:increaseInhandMahjongs(acId, cards)
     else
+        local player = self.game:getPlayerByAcId(acId)
+
         self.mo = self:getMahjongFromIdle(cards[1])
         self:removeFromIdle()
 
         self.mo:setLocalPosition(mopaiConfig.position)
         self.mo:setLocalRotation(mopaiConfig.rotation)
         self.mo:setLocalScale(mopaiConfig.scale)
+
+        if self.mo.class == player.que then
+            self.mo:dark()
+        else
+            self.mo:light()
+        end
 
         self.mo:setPickabled(true)
         self.mo:show()
@@ -558,8 +612,9 @@ function mahjongOperation:onOpList(oplist)
             end
         end
 
-        self:highlightPlaneByTurn(self.game:getMarkerTurn())
-        self.turnStartTime = time.realtimeSinceStartup()
+        self:highlightPlaneByAcId(gamepref.acId)
+        self.turnCountdown = COUNTDOWN_SECONDS_C
+        self.countdownTick = time.realtimeSinceStartup()
         self:setCountdownVisible(true)
 
         self:showOperations(infos, leftTime)
@@ -689,6 +744,7 @@ function mahjongOperation:onTiaoClickedHandler()
 
     networkManager.dingque(mahjongClass.tiao, function(ok, msg)
     end)
+
     self.mQue:hide()
 end
 
@@ -857,6 +913,10 @@ function mahjongOperation:onOpDoChu(acId, cards)
         p:Set(c.x, c.y + mahjong.z * 0.55 + 0.025, c.z)
         self.chupaiPtr:setLocalPosition(p)
         self.chupaiPtr:show()
+
+        if acId == gamepref.acId then
+            chu:light()
+        end 
     end
 
     self.mo = nil
@@ -1050,6 +1110,15 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
         m:show()
         table.insert(mahjongs, m)
         self:removeFromIdle()
+
+        if acId == gamepref.acId then
+            local player = self.game:getPlayerByAcId(acId)
+            if m.class == player.que then
+                m:dark()
+            else
+                m:light()
+            end
+        end
     end
 
     local player = self.game:getPlayerByAcId(acId)
@@ -1108,11 +1177,7 @@ function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
         return
     end
 
-    if player.acId == gamepref.acId then
-        table.sort(mahjongs, function(a, b)
-            return a.id > b.id
-        end)
-    end
+    self:sortInhand(player, mahjongs)
 
     local turn = self.game:getSeatType(player.turn)
     local seat = self.seats[turn]
@@ -1442,6 +1507,25 @@ function mahjongOperation:onDestroy()
         if v.mainTexture ~= nil then
             textureManager.unload(v.mainTexture)
         end
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 手牌排序
+-------------------------------------------------------------------------------
+function mahjongOperation:sortInhand(player, mahjongs)
+    if player.acId == gamepref.acId then
+        table.sort(mahjongs, function(a, b)
+            if a.class == player.que and b.class ~= player.que then
+                return true
+            end
+
+            if b.class == player.que and a.class ~= player.que then
+                return false
+            end
+
+            return a.id > b.id
+        end)
     end
 end
 

@@ -226,6 +226,10 @@ end
 --
 -------------------------------------------------------------------
 local function setLayer(transform, layer, includeChildren)
+    if transform.gameObject.layer == layer then
+        return
+    end
+
     transform.gameObject.layer = layer
 
     if includeChildren then

@@ -15,7 +15,14 @@ end
 --
 -------------------------------------------------------------------
 function sceneManager.load(scenePath, sceneName, completedCallback)
-    SceneLoader.instance:Load(scenePath, sceneName, completedCallback)
+    SceneManager.instance:Load(scenePath, sceneName, completedCallback)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function sceneManager.getActivedSceneName()
+    return SceneManager.instance:GetActivedSceneName()
 end
 
 -------------------------------------------------------------------

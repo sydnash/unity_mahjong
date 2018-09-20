@@ -180,7 +180,7 @@ public static class CustomSettings
         //Custom Classes
         _GT(typeof(AssetPoolManager)),
         _GT(typeof(AudioManager)),
-        _GT(typeof(SceneLoader)),
+        _GT(typeof(SceneManager)),
         _GT(typeof(LuaPanel)),
         _GT(typeof(LuaPanel.Widget)),
         _GT(typeof(LuaPanel.WidgetType)),

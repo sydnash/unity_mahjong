@@ -25,34 +25,49 @@ function mahjongDeskHeader:setPlayerInfo(player)
 
         self.mNickname:setText(player.nickname)
         self.mScore:setText(string.format("分数:%d", player.score))
+        self:setReady(player.ready)
 
-        if self.mReady ~= nil and player.ready then
-            self.mReady:show()
-        end
-
-        if player.que ~= nil then
+        if player.que ~= nil and player.que >= 0 then
             self:showDingQue(player.que)
+        else
+            self.mQue:hide()
         end
 
         if player.hu ~= nil and player.hu[1].HuCard >= 0 then
-            self.mHu:show()
+            self:setHu(true)
+        else
+            self:setHu(false)
         end
 
         if player.isCreator then
             self.mFz:show()
+        else
+            self.mFz:hide()
+        end
+
+        if player.isMarker then
+            self.mZhuang:show()
+        else
+            self.mZhuang:hide()
         end
     end
 end
 
 function mahjongDeskHeader:setReady(ready)
-    if ready then
-        if self.mReady ~= nil then
+    if self.mReady ~= nil then
+        if ready then
             self.mReady:show()
-        end
-    else
-        if self.mReady ~= nil then
+        else
             self.mReady:hide()
         end
+    end
+end
+
+function mahjongDeskHeader:setHu(hu)
+    if hu then
+        self.mHu:show()
+    else
+        self.mHu:hide()
     end
 end
 
@@ -68,13 +83,12 @@ function mahjongDeskHeader:showDingQue(mjtype)
 end
 
 function mahjongDeskHeader:reset()
-    if self.mReady ~= nil then
-        self.mReady:hide()
-    end
-
+    self:setReady(false)
     self.mHu:hide()
     self.mGfx:hide()
     self.mQue:hide()
+    self.mFz:hide()
+    self.mZhuang:hide()
 end
 
 function mahjongDeskHeader:onDestroy()

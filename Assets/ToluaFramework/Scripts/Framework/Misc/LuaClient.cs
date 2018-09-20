@@ -176,7 +176,7 @@ public class LuaClient : MonoBehaviour
         Init();
 
 #if UNITY_5_4_OR_NEWER
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 #endif
     }
 
@@ -221,7 +221,7 @@ public class LuaClient : MonoBehaviour
         if (luaState != null)
         {
 #if UNITY_5_4_OR_NEWER
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
 #endif    
             luaState.Call("onApplicationQuit", false);
             //DetachProfiler();

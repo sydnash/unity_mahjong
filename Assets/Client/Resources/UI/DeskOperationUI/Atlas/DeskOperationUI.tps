@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>512</int>
+            <int>1024</int>
             <key>height</key>
-            <int>512</int>
+            <int>1024</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -227,8 +227,11 @@
                 <false/>
             </struct>
             <key type="filename">Images/ZM_an09.png</key>
+            <key type="filename">Images/ZM_an09_1.png</key>
             <key type="filename">Images/ZM_an10.png</key>
+            <key type="filename">Images/ZM_an10_1.png</key>
             <key type="filename">Images/ZM_an11.png</key>
+            <key type="filename">Images/ZM_an11_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -345,45 +348,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/ZM_zi05.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>18,18,35,37</rect>
-                <key>scale9Paddings</key>
-                <rect>18,18,35,37</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/ZM_zi06.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>19,20,39,41</rect>
-                <key>scale9Paddings</key>
-                <rect>19,20,39,41</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/ZM_zi07.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>13,22,26,43</rect>
-                <key>scale9Paddings</key>
-                <rect>13,22,26,43</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/djs_0.png</key>
             <key type="filename">Images/djs_1.png</key>
             <key type="filename">Images/djs_2.png</key>
@@ -414,18 +378,12 @@
             <filename>Images/ZM_an09.png</filename>
             <filename>Images/ZM_an10.png</filename>
             <filename>Images/ZM_an11.png</filename>
-            <filename>Images/ZM_dq01.png</filename>
             <filename>Images/ZM_dq02.png</filename>
             <filename>Images/ZM_zi01.png</filename>
             <filename>Images/ZM_zi02.png</filename>
             <filename>Images/ZM_zi03.png</filename>
             <filename>Images/ZM_zi04.png</filename>
-            <filename>Images/ZM_zi05.png</filename>
-            <filename>Images/ZM_zi06.png</filename>
-            <filename>Images/ZM_zi07.png</filename>
             <filename>Images/ZM_an08.png</filename>
-            <filename>Images/ZM_di05.png</filename>
-            <filename>Images/ZM_di06.png</filename>
             <filename>Images/djs_0.png</filename>
             <filename>Images/djs_1.png</filename>
             <filename>Images/djs_2.png</filename>
@@ -436,6 +394,12 @@
             <filename>Images/djs_7.png</filename>
             <filename>Images/djs_8.png</filename>
             <filename>Images/djs_9.png</filename>
+            <filename>Images/ZM_an09_1.png</filename>
+            <filename>Images/ZM_an10_1.png</filename>
+            <filename>Images/ZM_an11_1.png</filename>
+            <filename>Images/ZM_di05.png</filename>
+            <filename>Images/ZM_di06.png</filename>
+            <filename>Images/ZM_dq01.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

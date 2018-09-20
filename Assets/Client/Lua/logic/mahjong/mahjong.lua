@@ -14,6 +14,10 @@ mahjong.z = 0.024 --厚度
 local DEFAULT_LAYER         = 0
 local INHAND_MAHJONG_LAYER  = 8
 
+local d = 150 / 255
+local DARK_COLOR  = Color.New(d, d, d, 1)
+local LIGHT_COLOR = Color.New(1, 1, 1, 1)
+
 function mahjong:ctor(id)
     self.id = id
 
@@ -22,8 +26,24 @@ function mahjong:ctor(id)
     self:init(go)
     self:show()
 
+    local c = self:findChild(go.name .. "_0")
+    local r = getComponentU(c.gameObject, typeof(UnityEngine.MeshRenderer))
+    self.mat = r.material
+
     self.name  = mtype.name
     self.class = mtype.class
+end
+
+function mahjong:dark()
+    if self.mat ~= nil then
+        self.mat.color = DARK_COLOR
+    end
+end
+
+function mahjong:light()
+    if self.mat ~= nil then
+        self.mat.color = LIGHT_COLOR
+    end
 end
 
 function mahjong:setPickabled(pickabled)

@@ -41,6 +41,7 @@
     <Compile Include="Lua\config\networkConfig.lua" />
     <Compile Include="Lua\config\soundConfig.lua" />
     <Compile Include="Lua\const\cityType.lua" />
+    <Compile Include="Lua\const\deskStatus.lua" />
     <Compile Include="Lua\const\exitDeskState.lua" />
     <Compile Include="Lua\const\gameStatus.lua" />
     <Compile Include="Lua\const\headerType.lua" />
