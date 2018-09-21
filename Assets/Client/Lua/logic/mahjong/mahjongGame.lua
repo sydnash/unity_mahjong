@@ -497,9 +497,9 @@ end
 -------------------------------------------------------------------------------
 -- SC 杠
 -------------------------------------------------------------------------------
-function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard)
+function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
     self.deskUI:onPlayerGang(acId)
-    self.operationUI:onOpDoGang(acId, cards, beAcId, beCard)
+    self.operationUI:onOpDoGang(acId, cards, beAcId, beCard, t)
 end
 
 -------------------------------------------------------------------------------

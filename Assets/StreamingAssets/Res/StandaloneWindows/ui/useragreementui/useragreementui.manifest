@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3922474504
+CRC: 3472086472
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fe9f7e82abe73a041982c61aa3abdfa1
+    Hash: 2dba9966753797f9dff502a48e386f96
   TypeTreeHash:
     serializedVersion: 2
     Hash: 160a757ebd9ff92da70c294760c3b1cd
@@ -38,6 +38,6 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/UI/UserAgreementUI/UserAgreementUI.prefab
+- Assets/Client/_Resources/UI/UserAgreementUI/UserAgreementUI.prefab
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt

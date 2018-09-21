@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2564962754
+CRC: 1014567046
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d8050de8fff2216e18cc666ba1637742
+    Hash: 65103ae3e973d94bd5e3529e0d16d349
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4cd0a5558493b0679e071c141fc729a3
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 28
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Texture/dice/dice5.png
+- Assets/Client/_Resources/Texture/dice/dice5.png
 Dependencies: []

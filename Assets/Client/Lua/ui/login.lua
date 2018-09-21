@@ -19,7 +19,7 @@ function login:onGuestLoginClickedHandler()
 
     self.mWechatLogin:setInteractabled(false)
     self.mGuestLogin:setInteractabled(false)
-
+    --登录服务器
     loginServer(function(ok)
         self.mWechatLogin:setInteractabled(true)
         self.mGuestLogin:setInteractabled(true)

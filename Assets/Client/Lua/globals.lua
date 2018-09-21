@@ -174,6 +174,15 @@ end
 function loginServer(callback)
     showWaitingUI("正在登录中，请稍候...")
 
+    --开始预加载资源
+    local token = modelManager.preload_begin()
+
+    for _, v in pairs(mahjongType) do
+        modelManager.preload_push(token, v.folder, v.resource, 4)
+    end
+    modelManager.preload(token)
+
+    --登录服务器
     networkManager.login(function(ok, msg)
         closeWaitingUI()
 
@@ -248,6 +257,8 @@ function loginServer(callback)
                         loading:setProgress(0.4 + 0.6 * progress)
 
                         if completed then
+                            modelManager.preload_end(token)
+
                             clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
                             loading:close()
                         end

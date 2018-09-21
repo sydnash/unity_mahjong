@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1776570856
+CRC: 2936738395
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -35,10 +35,9 @@ AssetBundleManifest:
     Info_7:
       Name: scene/mahjongscene
       Dependencies:
-        Dependency_0: texture/deskfw_gl
-        Dependency_1: texture/deskfw
+        Dependency_0: texture/deskfw
+        Dependency_1: texture/dice/dice6
         Dependency_2: texture/dice/dice2
-        Dependency_3: texture/dice/dice1
     Info_8:
       Name: model/mjpai01
       Dependencies:

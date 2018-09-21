@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 453973480
+CRC: 3591942908
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 68f0cea5a6f8d5ea50847613f0f98077
+    Hash: 86fcdf3f814da010df58a544ce7b947e
   TypeTreeHash:
     serializedVersion: 2
     Hash: db8e8973606ba53380be258b19324669
@@ -26,6 +26,6 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/UI/GameEndUI/GameEndUI_Pai.prefab
+- Assets/Client/_Resources/UI/GameEndUI/GameEndUI_Pai.prefab
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/mahjong/mahjong

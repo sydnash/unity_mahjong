@@ -14,6 +14,7 @@ public class LFSWrap
 		L.RegFunction("CopyFile", CopyFile);
 		L.RegFunction("RemoveFile", RemoveFile);
 		L.RegFunction("MakeDir", MakeDir);
+		L.RegFunction("MoveDir", MoveDir);
 		L.RegFunction("CopyDir", CopyDir);
 		L.RegFunction("RemoveDir", RemoveDir);
 		L.RegVar("UTF8_WITHOUT_BOM", get_UTF8_WITHOUT_BOM, null);
@@ -150,6 +151,23 @@ public class LFSWrap
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
 			LFS.MakeDir(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int MoveDir(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			string arg1 = ToLua.CheckString(L, 2);
+			LFS.MoveDir(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)

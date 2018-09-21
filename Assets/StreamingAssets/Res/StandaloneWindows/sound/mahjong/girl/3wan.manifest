@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1047176128
+CRC: 201060451
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6a8f823bd8f4cd913e97410cde5dd89b
+    Hash: bab5c39f700431beb4a3aebe5bf4289c
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 83
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Sound/mahjong/girl/3wan.mp3
+- Assets/Client/_Resources/Sound/mahjong/girl/3wan.mp3
 Dependencies: []

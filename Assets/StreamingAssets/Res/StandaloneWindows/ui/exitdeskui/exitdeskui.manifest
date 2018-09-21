@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2939098877
+CRC: 4238376316
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 31e7f164eb887a33075fc435e86f676a
+    Hash: 6e5d02b73442e38a44c539308216528c
   TypeTreeHash:
     serializedVersion: 2
     Hash: 79b9e47fc4bba91081e83ae792dfe087
@@ -46,7 +46,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/UI/ExitDeskUI/ExitDeskUI.prefab
+- Assets/Client/_Resources/UI/ExitDeskUI/ExitDeskUI.prefab
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt

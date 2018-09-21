@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3571817342
+CRC: 2590968054
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a2e2b3de6e37a65f53bf19d390dfd24f
+    Hash: 15d124bf926a2db2630fa5d12dab31cf
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 83
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Sound/mahjong/girl/4tiao.mp3
+- Assets/Client/_Resources/Sound/mahjong/girl/4tiao.mp3
 Dependencies: []

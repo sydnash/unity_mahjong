@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4231319567
+CRC: 273535298
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 30dba5a9a6b7744f97a30104286d253b
+    Hash: 21c909fb029a7d6cd8f27dbe82958225
   TypeTreeHash:
     serializedVersion: 2
     Hash: 092ba80f70afb03dd2cd4a6540fc2c67
@@ -40,7 +40,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/UI/SettingUI/SettingUI.prefab
+- Assets/Client/_Resources/UI/SettingUI/SettingUI.prefab
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt

@@ -92,7 +92,10 @@ namespace AssetBundleBrowser
         }
         internal void OnEnable(EditorWindow parent)
         {
-            m_InspectTab = (parent as AssetBundleBrowserMain).m_InspectTab;
+            if (parent != null)
+            {
+                m_InspectTab = (parent as AssetBundleBrowserMain).m_InspectTab;
+            }
 
             //LoadData...
             var dataPath = System.IO.Path.GetFullPath(".");
@@ -290,7 +293,7 @@ namespace AssetBundleBrowser
             EditorGUILayout.EndScrollView();
         }
 
-        private void ExecuteBuild()
+        public void ExecuteBuild()
         {
             LFS.RemoveDir(m_UserData.m_OutputPath);
 

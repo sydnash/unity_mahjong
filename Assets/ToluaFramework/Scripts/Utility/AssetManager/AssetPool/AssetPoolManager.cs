@@ -72,6 +72,22 @@ public class AssetPoolManager
         return pool;
     }
 
+    public void Preload(int assetType, string assetPath, string assetName, int maxCount = 1)
+    {
+        AssetPool pool = mPools[assetType];
+#if UNITY_EDITOR
+        Debug.AssertFormat(pool != null, "can't find pool of assetType:[{0}]", assetType);
+#endif
+        Object o = pool.Preload(assetPath, assetName, maxCount);
+
+        GameObject go = o as GameObject;
+        if (go != null)
+        {
+            go.SetActive(false);
+            go.transform.SetParent(mRoot, false);
+        }
+    }
+
     /// <summary>
     /// 从指定的pool中获取固有名称的资源对象
     /// </summary>
@@ -81,6 +97,9 @@ public class AssetPoolManager
     public Object Alloc(int assetType, string assetPath, string assetName)
     {
         AssetPool pool = mPools[assetType];
+#if UNITY_EDITOR
+        Debug.AssertFormat(pool != null, "can't find pool of assetType:[{0}]", assetType);
+#endif
         Object o = pool.Alloc(assetPath, assetName);
 
         GameObject go = o as GameObject;

@@ -93,22 +93,29 @@ public class AssetPool
     /// </summary>
     /// <param name="assetPath"></param>
     /// <param name="assetName"></param>
-    public void PreAlloc(string assetPath, string assetName)
+    public Object Preload(string assetPath, string assetName, int maxCount = 1)
     {
-        Object asset = LoadAsset(assetPath, assetName);
-        if (asset != null)
-        {
-            ObjectQueue queue = mDic.ContainsKey(assetName) ? mDic[assetName] : null;
+        ObjectQueue queue = mDic.ContainsKey(assetName) ? mDic[assetName] : null;
 
-            if (queue == null)
+        if (queue == null)
+        {
+            queue = CreateObjectQueue();
+            mDic.Add(assetName, queue);
+        }
+
+        if (queue.count < maxCount)
+        {
+            Object asset = LoadAsset(assetPath, assetName);
+            if (asset != null)
             {
-                queue = CreateObjectQueue();
-                mDic.Add(asset.name, queue);
+                queue.Push(asset);
+                mDependentBundlePool.Unload(asset.name);
             }
 
-            queue.Push(asset);
-            mDependentBundlePool.Unload(asset.name);
+            return asset;
         }
+
+        return null;
     }
 
     /// <summary>

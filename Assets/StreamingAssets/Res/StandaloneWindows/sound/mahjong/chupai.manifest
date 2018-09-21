@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 440553928
+CRC: 207114692
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 93c4469eaafbea00f77aa059438f4557
+    Hash: d60802620ee2667cc683e2bb63f9c7ab
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 83
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Sound/mahjong/chupai.wav
+- Assets/Client/_Resources/Sound/mahjong/chupai.wav
 Dependencies: []

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2405017322
+CRC: 2424446216
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 867e6b453230f00f87e3460ac1cb4206
+    Hash: bd304400d3c06d68b5d1c852c3bc4831
   TypeTreeHash:
     serializedVersion: 2
     Hash: 8c35b0368407c5a1684d348247d98302
@@ -48,7 +48,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/UI/DeskUI/DeskUI.prefab
+- Assets/Client/_Resources/UI/DeskUI/DeskUI.prefab
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2776515184
+CRC: 2096682464
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a01928f0b3ecf5fd6c412df410b43b0d
+    Hash: 479a3e90ede458dab504c90147af138b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 83
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Sound/mahjong/boy/6tong.mp3
+- Assets/Client/_Resources/Sound/mahjong/boy/6tong.mp3
 Dependencies: []

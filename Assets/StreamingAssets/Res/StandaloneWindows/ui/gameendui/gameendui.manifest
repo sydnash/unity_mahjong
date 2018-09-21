@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2198566248
+CRC: 1148360677
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d4a8cdc715f5d64b68de742bb986f0a2
+    Hash: 8ab61dbdc6b4ab1559036ab8da56635a
   TypeTreeHash:
     serializedVersion: 2
     Hash: ebf67c1cfa6898f642b04f9e28aeba79
@@ -40,7 +40,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/UI/GameEndUI/GameEndUI.prefab
+- Assets/Client/_Resources/UI/GameEndUI/GameEndUI.prefab
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt

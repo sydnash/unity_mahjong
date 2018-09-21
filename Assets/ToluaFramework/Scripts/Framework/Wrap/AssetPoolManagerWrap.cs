@@ -9,6 +9,7 @@ public class AssetPoolManagerWrap
 		L.BeginClass(typeof(AssetPoolManager), typeof(System.Object));
 		L.RegFunction("Setup", Setup);
 		L.RegFunction("AddPool", AddPool);
+		L.RegFunction("Preload", Preload);
 		L.RegFunction("Alloc", Alloc);
 		L.RegFunction("Dealloc", Dealloc);
 		L.RegFunction("Update", Update);
@@ -47,6 +48,43 @@ public class AssetPoolManagerWrap
 			AssetPool o = obj.AddPool(arg0, arg1, arg2);
 			ToLua.PushObject(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Preload(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 4)
+			{
+				AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
+				int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				string arg2 = ToLua.CheckString(L, 4);
+				obj.Preload(arg0, arg1, arg2);
+				return 0;
+			}
+			else if (count == 5)
+			{
+				AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
+				int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				string arg2 = ToLua.CheckString(L, 4);
+				int arg3 = (int)LuaDLL.luaL_checknumber(L, 5);
+				obj.Preload(arg0, arg1, arg2, arg3);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: AssetPoolManager.Preload");
+			}
 		}
 		catch (Exception e)
 		{

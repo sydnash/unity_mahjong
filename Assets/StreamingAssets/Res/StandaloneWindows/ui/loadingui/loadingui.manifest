@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2304041146
+CRC: 2208587330
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3aed3cc5dc86e00859d03b2a683854f2
+    Hash: 7ef3655f3d4bea14cbb20dfdcc50d828
   TypeTreeHash:
     serializedVersion: 2
     Hash: ab4d78bb8d2e54454eb22d1e481f11dc
@@ -38,7 +38,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/UI/LoadingUI/LoadingUI.prefab
+- Assets/Client/_Resources/UI/LoadingUI/LoadingUI.prefab
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/texture/dl_bg
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/texture/dl_logo

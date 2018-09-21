@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1742791595
+CRC: 3868572132
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 444edd63c2f0a5f2dc80db1b3335e978
+    Hash: 1c9eb4a3fd878aba3cdcbe46c847bf25
   TypeTreeHash:
     serializedVersion: 2
     Hash: 528c589e1e3c5e5fa1d248f0259ce117
@@ -28,6 +28,6 @@ ClassTypes:
 - Class: 65
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Model/mjpai40.prefab
+- Assets/Client/_Resources/Model/mjpai40.prefab
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/texture/mj_dif

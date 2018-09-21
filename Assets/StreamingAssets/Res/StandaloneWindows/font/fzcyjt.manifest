@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1773994315
+CRC: 3629658495
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c8f97d68365651c6e230cfae4da80ad1
+    Hash: 5809a932427ef7786815ffc971d90868
   TypeTreeHash:
     serializedVersion: 2
     Hash: b461ed877bd666e82c334b0768962aed
@@ -18,5 +18,5 @@ ClassTypes:
 - Class: 128
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Font/FZCYJT.TTF
+- Assets/Client/_Resources/Font/FZCYJT.TTF
 Dependencies: []

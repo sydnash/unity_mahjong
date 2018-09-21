@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2350025271
+CRC: 4063051189
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: effa032427f9b9b2022284def9d0242f
+    Hash: 711042a40691a16fbab3fb3849f77d68
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1a7fdcb733a617b07875621208cf8f10
@@ -32,7 +32,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/UI/MessageBoxUI/MessageBoxUI.prefab
+- Assets/Client/_Resources/UI/MessageBoxUI/MessageBoxUI.prefab
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt

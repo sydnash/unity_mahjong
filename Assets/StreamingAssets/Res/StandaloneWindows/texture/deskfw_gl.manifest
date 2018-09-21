@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1421530298
+CRC: 2576745663
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a4a57c6527b5646b3e8fe0a94dc9660f
+    Hash: 2bf2b2f93a64775fe5246dd0bed2fbe3
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4cd0a5558493b0679e071c141fc729a3
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 28
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Texture/deskfw_gl.png
+- Assets/Client/_Resources/Texture/deskfw_gl.png
 Dependencies: []

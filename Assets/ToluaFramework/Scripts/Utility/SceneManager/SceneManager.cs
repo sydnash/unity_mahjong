@@ -196,12 +196,11 @@ public class SceneManager : MonoBehaviour
         {
 #endif
         AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
-
-            while (!op.isDone)
-            {
-                InvokeCallback(callback, false, 0.5f + op.progress * 0.5f);
-                yield return WAIT_FOR_END_OF_FRAME;
-            }
+        while (!op.isDone)
+        {
+            InvokeCallback(callback, false, 0.5f + op.progress * 0.5f);
+            yield return WAIT_FOR_END_OF_FRAME;
+        }
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
             bundle.Unload(false);
         }

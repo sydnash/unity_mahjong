@@ -612,11 +612,6 @@ function mahjongOperation:onOpList(oplist)
             end
         end
 
-        self:highlightPlaneByAcId(gamepref.acId)
-        self.turnCountdown = COUNTDOWN_SECONDS_C
-        self.countdownTick = time.realtimeSinceStartup()
-        self:setCountdownVisible(true)
-
         self:showOperations(infos, leftTime)
     end
 end
@@ -626,6 +621,11 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:beginChuPai()
     self.canChuPai = true
+
+    self:highlightPlaneByAcId(gamepref.acId)
+    self.turnCountdown = COUNTDOWN_SECONDS_C
+    self.countdownTick = time.realtimeSinceStartup()
+    self:setCountdownVisible(true)
 end
 
 -------------------------------------------------------------------------------
@@ -910,7 +910,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
 
         local c = chu:getLocalPosition()
         local p = self.chupaiPtr:getLocalPosition()
-        p:Set(c.x, c.y + mahjong.z * 0.55 + 0.025, c.z)
+        p:Set(c.x, c.y + mahjong.z * 0.55 + 0.035, c.z)
         self.chupaiPtr:setLocalPosition(p)
         self.chupaiPtr:show()
 
@@ -1064,7 +1064,7 @@ end
 -- 获取从idle列表拿牌的索引值
 -------------------------------------------------------------------------------
 function mahjongOperation:getIdleStart()
-    return (self.idleMahjongStart <= #self.idleMahjongs) and self.idleMahjongStart or 1
+    return (self.idleMahjongStart <= self.game:getLeftMahjongCount()) and self.idleMahjongStart or 1
 end
 
 -------------------------------------------------------------------------------
@@ -1188,19 +1188,19 @@ function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
 
     for k, m in pairs(mahjongs) do
         k = k - 1
-        local p = nil
+        local p = m:getLocalPosition()
 
         if turn == mahjongGame.seatType.mine then
-            p = Vector3.New(o.x - (mahjong.w * k) * s.x, o.y, o.z)
+            p:Set(o.x - (mahjong.w * k) * s.x, o.y, o.z)
             m:setPickabled(true)
         elseif turn == mahjongGame.seatType.left then
-            p = Vector3.New(o.x, o.y, o.z + (mahjong.w * k) * s.z)
+            p:Set(o.x, o.y, o.z + (mahjong.w * k) * s.z)
             m:setPickabled(false)
         elseif turn == mahjongGame.seatType.right then
-            p = Vector3.New(o.x, o.y, o.z - (mahjong.w * k) * s.z)
+            p:Set(o.x, o.y, o.z - (mahjong.w * k) * s.z)
             m:setPickabled(false)
         else
-            p = Vector3.New(o.x + (mahjong.w * k) * s.x, o.y, o.z)
+            p:Set(o.x + (mahjong.w * k) * s.x, o.y, o.z)
             m:setPickabled(false)
         end
 
@@ -1500,12 +1500,14 @@ function mahjongOperation:onDestroy()
     for _, v in pairs(self.diceMats) do
         if v.mainTexture ~= nil then
             textureManager.unload(v.mainTexture)
+            v.mainTexture = nil
         end
     end
 
     for _, v in pairs(self.planeMats) do
         if v.mainTexture ~= nil then
             textureManager.unload(v.mainTexture)
+            v.mainTexture = nil
         end
     end
 end

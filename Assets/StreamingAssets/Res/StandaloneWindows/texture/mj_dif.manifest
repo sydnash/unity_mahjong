@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3355604680
+CRC: 831963730
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 87024eeed6bd9ecc439930677859e9c3
+    Hash: 7ed90adc388bb1937b881e0a116ffd8e
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4cd0a5558493b0679e071c141fc729a3
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 28
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/FBX/Texture/mj_dif.png
+- Assets/Client/_Resources/FBX/Texture/mj_dif.png
 Dependencies: []

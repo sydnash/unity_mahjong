@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2979237991
+CRC: 3487493475
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 374bacbc3419a7dc3df6e2f52cdea51b
+    Hash: abc21fe4c82ea2c4783f8524e5039e09
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 83
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Sound/mahjong/girl/hu_zimo.mp3
+- Assets/Client/_Resources/Sound/mahjong/girl/hu_zimo.mp3
 Dependencies: []

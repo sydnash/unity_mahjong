@@ -1,14 +1,14 @@
 ManifestFileVersion: 0
-CRC: 141734273
+CRC: 1188117320
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3a76cd576f1c9d108721950539de7098
+    Hash: 8739419b14f5e9523ee6a7b6ab9b068c
   TypeTreeHash:
     serializedVersion: 2
     Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
 HashAppended: 0
 ClassTypes: []
 Assets:
-- Assets/Client/Resources/Scene/lobbyscene.unity
+- Assets/Client/_Resources/Scene/lobbyscene.unity
 Dependencies: []

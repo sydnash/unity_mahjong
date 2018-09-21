@@ -49,7 +49,7 @@ namespace AssetBundleBrowser
         const float k_ToolbarPadding = 15;
         const float k_MenubarPadding = 32;
 
-        [MenuItem("Window/AssetBundle Browser", priority = 2050)]
+        [MenuItem("Window/AssetBundle Browser #&M", priority = 2050)]
         static void ShowWindow()
         {
             s_instance = null;
@@ -65,6 +65,14 @@ namespace AssetBundleBrowser
             instance.m_Mode = Mode.Builder;
 
             instance.Show();
+        }
+
+        public static void ExecuteBuild()
+        {
+            AssetBundleBuildTab build = new AssetBundleBuildTab();
+            build.OnEnable(null);
+
+            build.ExecuteBuild();
         }
 
         [SerializeField]

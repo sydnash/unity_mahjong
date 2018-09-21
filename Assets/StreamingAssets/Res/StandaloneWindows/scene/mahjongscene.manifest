@@ -1,18 +1,17 @@
 ManifestFileVersion: 0
-CRC: 2550155906
+CRC: 2964971752
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1e3d7ff3e86e18ef3df30ffafabc49db
+    Hash: 4e53647a64d270a6c0b92b4da4ded4ff
   TypeTreeHash:
     serializedVersion: 2
     Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
 HashAppended: 0
 ClassTypes: []
 Assets:
-- Assets/Client/Resources/Scene/mahjongscene.unity
+- Assets/Client/_Resources/Scene/mahjongscene.unity
 Dependencies:
-- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/texture/deskfw_gl
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/texture/deskfw
+- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/texture/dice/dice6
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/texture/dice/dice2
-- D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/texture/dice/dice1

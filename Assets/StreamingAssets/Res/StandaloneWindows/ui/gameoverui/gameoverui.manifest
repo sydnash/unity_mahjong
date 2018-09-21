@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1805016465
+CRC: 2207456246
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 50073cf5f8e2ac68ad486812d252133b
+    Hash: fb8e9222f0f42f2878a6d63d0c5486bc
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1c52259801031592b8a61df2671e5e8e
@@ -38,7 +38,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/UI/GameOverUI/GameOverUI.prefab
+- Assets/Client/_Resources/UI/GameOverUI/GameOverUI.prefab
 Dependencies:
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/ui/common/common
 - D:/Works/CompanyProjects/tdqp/Patch/Res/StandaloneWindows/font/fzzyjt

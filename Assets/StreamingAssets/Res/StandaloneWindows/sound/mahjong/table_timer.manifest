@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1846182519
+CRC: 1589161500
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 845e2c25b79443021028db6e9db2dbda
+    Hash: b988b4c569ecad76d2e100c9b20795e3
   TypeTreeHash:
     serializedVersion: 2
     Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 83
   Script: {instanceID: 0}
 Assets:
-- Assets/Client/Resources/Sound/mahjong/table_timer.wav
+- Assets/Client/_Resources/Sound/mahjong/table_timer.wav
 Dependencies: []

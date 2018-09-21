@@ -85,7 +85,11 @@ public static class LFS
         try
         {
             MakeDir(dst);
-            if (File.Exists(src)) File.Move(src, dst);
+            if (File.Exists(src))
+            {
+                File.Copy(src, dst, true);
+                File.Delete(src);
+            }
         }
         catch (Exception ex)
         {
@@ -164,6 +168,29 @@ public static class LFS
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
+    public static void MoveDir(string from, string to)
+    {
+        try
+        {
+            if (Directory.Exists(from))
+            {
+                CopyDir(from, to);
+                RemoveDir(from);
+            }
+        }
+        catch (Exception ex)
+        {
+#if UNITY_EDITOR
+            Debug.LogError(ex.Message);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
     public static void CopyDir(string from, string to)
     {
         try
@@ -175,12 +202,16 @@ public static class LFS
                 string[] pathes = Directory.GetFiles(from, "*.*", SearchOption.AllDirectories);
                 foreach (string path in pathes)
                 {
+                    string src = path;
+                    string dst = path.Replace(from, to);
+
                     if (!IsDirectory(path))
                     {
-                        string src = path;
-                        string dst = path.Replace(from, to);
-
                         CopyFile(src, dst);
+                    }
+                    else
+                    {
+                        CopyDir(src, dst);
                     }
                 }
             }
