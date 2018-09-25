@@ -88,15 +88,6 @@ public class PreloadManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <returns></returns>
-    public int Begin()
-    {
-        return mToken++;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="assetPath"></param>
     /// <param name="assetName"></param>
     public void Push(int token, int assetType, string assetPath, string assetName, int maxCount)

@@ -7,7 +7,6 @@ public class PreloadManagerWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(PreloadManager), typeof(UnityEngine.MonoBehaviour));
-		L.RegFunction("Begin", Begin);
 		L.RegFunction("Push", Push);
 		L.RegFunction("Load", Load);
 		L.RegFunction("End", End);
@@ -15,23 +14,6 @@ public class PreloadManagerWrap
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
 		L.EndClass();
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Begin(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			PreloadManager obj = (PreloadManager)ToLua.CheckObject<PreloadManager>(L, 1);
-			int o = obj.Begin();
-			LuaDLL.lua_pushinteger(L, o);
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

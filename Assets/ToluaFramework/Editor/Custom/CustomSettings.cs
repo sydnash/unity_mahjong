@@ -198,6 +198,7 @@ public static class CustomSettings
         _GT(typeof(GameObjectPicker)),
         _GT(typeof(Logger)),
         _GT(typeof(UnityEngine.UI.Sprite)),
+        _GT(typeof(SpriteRD)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

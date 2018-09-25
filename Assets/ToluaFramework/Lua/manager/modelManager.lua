@@ -6,38 +6,17 @@ local modelManager = { }
 modelManager.assetType = 2
 
 -------------------------------------------------------------------
---
+-- 全局初始化
 -------------------------------------------------------------------
 function modelManager.setup()
     AssetPoolManager.instance:AddPool(modelManager.assetType, "Model", false)
 end
 
 -------------------------------------------------------------------
--- 开始预加载
+-- 获取预加载token
 -------------------------------------------------------------------
-function modelManager.preload_begin()
-    return PreloadManager.instance:Begin()
-end
-
--------------------------------------------------------------------
--- 压入预加载的资源参数
--------------------------------------------------------------------
-function modelManager.preload_push(token, assetPath, assetName, maxCount)
-    PreloadManager.instance:Push(token, modelManager.assetType, assetPath, assetName, maxCount)
-end
-
--------------------------------------------------------------------
--- 执行预加载
--------------------------------------------------------------------
-function modelManager.preload(token)
-    PreloadManager.instance:Load(token, appConfig.loadCountPreFrame)
-end
-
--------------------------------------------------------------------
--- 停止预加载
--------------------------------------------------------------------
-function modelManager.preload_end(token)
-    return PreloadManager.instance:End(token)
+function modelManager.preload()
+    return preloadManager.createToken(modelManager.assetType)
 end
 
 -------------------------------------------------------------------

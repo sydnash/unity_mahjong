@@ -5,8 +5,7 @@
 local base = require("ui.common.view")
 local waiting = class("waiting", base)
 
-waiting.folder = "WaitingUI"
-waiting.resource = "WaitingUI"
+_RES_(waiting, "WaitingUI", "WaitingUI")
 
 function waiting:ctor(text)
     self.text = string.isNilOrEmpty(text) and "请稍候..." or text

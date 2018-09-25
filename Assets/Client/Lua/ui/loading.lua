@@ -5,8 +5,7 @@
 local base = require("ui.common.view")
 local loading = class("loading", base)
 
-loading.folder = "LoadingUI"
-loading.resource = "LoadingUI"
+_RES_(loading, "LoadingUI", "LoadingUI")
 
 function loading:onInit()
     self:setProgress(0)

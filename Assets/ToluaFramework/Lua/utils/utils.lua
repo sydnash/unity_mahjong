@@ -5,6 +5,14 @@
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function _RES_(cls, folder, resource)
+    cls._folder = folder
+    cls._resource = resource
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 local setmetatableindex_ = function(t, index)
     if type(t) == "userdata" then
         local peer = tolua.getpeer(t)

@@ -4,7 +4,7 @@
 
 local appConfig = {
     debug = true,
-    loadCountPreFrame = 3,--每帧预加载的数量
+    loadCountPreFrame = 6,--每帧预加载的数量
 }
 
 return appConfig

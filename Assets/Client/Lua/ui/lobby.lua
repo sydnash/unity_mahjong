@@ -7,8 +7,7 @@ local cityType = require("const.cityType")
 local base = require("ui.common.view")
 local lobby = class("lobby", base)
 
-lobby.folder = "LobbyUI"
-lobby.resource = "LobbyUI"
+_RES_(lobby, "LobbyUI", "LobbyUI")
 
 function lobby:onInit()
     self.mHeadIcon:setTexture(gamepref.player.headerTex)
@@ -125,7 +124,7 @@ function lobby:onMailClickedHandler()
 end
 
 function lobby:enterDesk(loading, cityType, deskId)
-    enterDesk(cityType, deskId, function(ok, errText, progress, msg)
+    enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
         if not ok then
             loading:close()
             showMessageUI(errText)
@@ -139,6 +138,10 @@ function lobby:enterDesk(loading, cityType, deskId)
                     loading:setProgress(0.4 + 0.6 * progress)
 
                     if completed then
+                        if preload ~= nil then
+                            preload:stop()
+                        end
+
                         msg.Reenter = table.fromjson(msg.Reenter)
                         msg.Config = table.fromjson(msg.Config)
 

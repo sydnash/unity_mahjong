@@ -886,6 +886,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:destroy()
     log("mahjongGame:destroy")
+
     self.playerCount = 0
     self:unregisterCommandHandlers()
 
@@ -895,8 +896,8 @@ function mahjongGame:destroy()
     end
 
     if self.operationUI ~= nil then
-        self.operationUI:reset()
-        self.deskUI = nil
+        self.operationUI:close()
+        self.operationUI = nil
     end
 
     if self.exitDeskUI ~= nil then

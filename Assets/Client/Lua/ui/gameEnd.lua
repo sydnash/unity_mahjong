@@ -5,8 +5,7 @@
 local base = require("ui.common.view")
 local gameEnd = class("gameEnd", base)
 
-gameEnd.folder = "GameEndUI"
-gameEnd.resource = "GameEndUI"
+_RES_(gameEnd, "GameEndUI", "GameEndUI")
 
 function gameEnd:ctor(game, datas)
     self.game  = game

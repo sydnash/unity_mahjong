@@ -7,8 +7,7 @@ local exitDeskState = require("const.exitDeskState")
 local base = require("ui.common.view")
 local exitDesk = class("exitDesk", base)
 
-exitDesk.folder = "ExitDeskUI"
-exitDesk.resource = "ExitDeskUI"
+_RES_(exitDesk, "ExitDeskUI", "ExitDeskUI")
 
 function exitDesk:ctor(game)
     self.game = game

@@ -5,8 +5,7 @@
 local base = require("ui.common.view")
 local login = class("login", base)
 
-login.folder = "LoginUI"
-login.resource = "LoginUI"
+_RES_(login, "LoginUI", "LoginUI")
 
 function login:onInit()
     self.mWechatLogin:hide()

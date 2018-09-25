@@ -41,7 +41,7 @@ namespace UnityEngine.UI
         /// 
         /// </summary>
         [SerializeField]
-        private List<SpriteItem> items = new List<SpriteItem>();
+        private List<SpriteItem> mItems = new List<SpriteItem>();
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace UnityEngine.UI
         {
             set
             {
-                foreach (SpriteItem item in items)
+                foreach (SpriteItem item in mItems)
                 {
                     if (item.key == value)
                     {

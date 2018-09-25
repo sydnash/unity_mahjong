@@ -28,6 +28,7 @@ public static class LuaBinder
 		AnimationEventManagerWrap.Register(L);
 		GameObjectPickerWrap.Register(L);
 		LoggerWrap.Register(L);
+		SpriteRDWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);
 		LuaInterface_InjectTypeWrap.Register(L);

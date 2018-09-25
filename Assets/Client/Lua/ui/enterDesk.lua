@@ -5,8 +5,7 @@
 local base = require("ui.common.view")
 local enterDesk = class("enterDesk", base)
 
-enterDesk.folder = "EnterDeskUI"
-enterDesk.resource = "EnterDeskUI"
+_RES_(gameEndGangPai, "EnterDeskUI", "EnterDeskUI")
 
 function enterDesk:ctor(callback)
     self.super.ctor(self)

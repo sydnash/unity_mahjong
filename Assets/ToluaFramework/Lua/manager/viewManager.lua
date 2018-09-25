@@ -3,13 +3,13 @@
 --此文件由[BabeLua]插件自动生成
 
 local viewManager = {}
-local assetType = 1
+viewManager.assetType = 1
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function viewManager.setup()
-    AssetPoolManager.instance:AddPool(assetType, "UI", false)
+    AssetPoolManager.instance:AddPool(viewManager.assetType, "UI", false)
 
     local root = find("UIRoot")
     GameObject.DontDestroyOnLoad(root.gameObject);
@@ -17,17 +17,24 @@ function viewManager.setup()
 end
 
 -------------------------------------------------------------------
+-- 获取预加载token
+-------------------------------------------------------------------
+function viewManager.preload()
+    return preloadManager.createToken(viewManager.assetType)
+end
+
+-------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function viewManager.load(assetPath, assetName)
-    return AssetPoolManager.instance:Alloc(assetType, assetPath, assetName)
+    return AssetPoolManager.instance:Alloc(viewManager.assetType, assetPath, assetName)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function viewManager.unload(view)
-    AssetPoolManager.instance:Dealloc(assetType, view.gameObject)
+    AssetPoolManager.instance:Dealloc(viewManager.assetType, view.gameObject)
 end
 
 return viewManager

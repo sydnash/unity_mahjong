@@ -8,8 +8,7 @@ local headerType = require("const.headerType")
 local base = require("ui.common.view")
 local setting = class("setting", base)
 
-setting.folder = "SettingUI"
-setting.resource = "SettingUI"
+_RES_(setting, "SettingUI", "SettingUI")
 
 function setting:ctor(game)
     self.game = game

@@ -109,7 +109,7 @@ public class AssetPool
             if (asset != null)
             {
                 queue.Push(asset);
-                mDependentBundlePool.Unload(asset.name);
+                mDependentBundlePool.Unload(assetName);
             }
 
             return asset;

@@ -52,7 +52,7 @@ local function networkDisconnectedCallback()
             if deskId <= 0 then
                 closeWaitingUI()
             else
-                enterDesk(cityType, deskId, function(ok, errText, progress, msg)
+                enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
                     if not ok then
                         closeWaitingUI()
                         showMessageUI(errText, function()
@@ -84,6 +84,10 @@ local function networkDisconnectedCallback()
                                 loading:setProgress(progress)
 
                                 if completed then
+                                    if preload ~= nil then
+                                        preload:stop()
+                                    end
+
                                     clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
                                     loading:close()
                                 end

@@ -9,8 +9,7 @@ local gameStatus    = require("const.gameStatus")
 local base = require("ui.common.view")
 local mahjongDesk = class("mahjongDesk", base)
 
-mahjongDesk.folder = "DeskUI"
-mahjongDesk.resource = "DeskUI"
+_RES_(mahjongDesk, "DeskUI", "DeskUI")
 
 function mahjongDesk:ctor(game)
     self.game = game

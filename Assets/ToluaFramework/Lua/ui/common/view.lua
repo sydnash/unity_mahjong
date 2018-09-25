@@ -9,7 +9,7 @@ local view = class("view", base)
 --
 -------------------------------------------------------------------
 function view:ctor()
-    local gameObject = viewManager.load(self.folder, self.resource)
+    local gameObject = viewManager.load(self._folder, self._resource)
 
     self:bind(gameObject)
     self:init(gameObject)

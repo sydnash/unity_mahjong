@@ -5,8 +5,7 @@
 local base = require("ui.common.view")
 local gameOver = class("gameOver", base)
 
-gameOver.folder = "GameOverUI"
-gameOver.resource = "GameOverUI"
+_RES_(gameOver, "GameOverUI", "GameOverUI")
 
 function gameOver:ctor(game, datas)
     self.game  = game

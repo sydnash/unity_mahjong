@@ -13,8 +13,7 @@ local deskStatus    = require("const.deskStatus")
 local base = require("ui.common.view")
 local mahjongOperation = class("mahjongOperation", base)
 
-mahjongOperation.folder = "DeskOperationUI"
-mahjongOperation.resource = "DeskOperationUI"
+_RES_(mahjongOperation, "DeskOperationUI", "DeskOperationUI")
 
 mahjongOperation.seats = {
     [mahjongGame.seatType.mine] = { 
@@ -146,30 +145,10 @@ function mahjongOperation:onInit()
 
     self.centerGlass = find("planes/glass")
     self.countdown = find("countdown")
-    self.countdownNumbders = { 
-        a = { self.countdown:findChild("a/0"),
-              self.countdown:findChild("a/1"),
-              self.countdown:findChild("a/2"),
-              self.countdown:findChild("a/3"),
-              self.countdown:findChild("a/4"),
-              self.countdown:findChild("a/5"),
-              self.countdown:findChild("a/6"),
-              self.countdown:findChild("a/7"),
-              self.countdown:findChild("a/8"),
-              self.countdown:findChild("a/9"),    
-        },
-        b = { self.countdown:findChild("b/0"),
-              self.countdown:findChild("b/1"),
-              self.countdown:findChild("b/2"),
-              self.countdown:findChild("b/3"),
-              self.countdown:findChild("b/4"),
-              self.countdown:findChild("b/5"),
-              self.countdown:findChild("b/6"),
-              self.countdown:findChild("b/7"),
-              self.countdown:findChild("b/8"),
-              self.countdown:findChild("b/9"),  
-        },
-    }
+    local a = self.countdown:findChild("a")
+    local b = self.countdown:findChild("b")
+    self.countdown.a = getComponentU(a.gameObject, typeof(SpriteRD))
+    self.countdown.b = getComponentU(b.gameObject, typeof(SpriteRD))
     self:setCountdownVisible(false)
 
     self.chupaiPtr = find("chupaiPtr")
@@ -214,22 +193,25 @@ function mahjongOperation:onInit()
     self.pengMahjongs   = {}
     self.huMahjongs     = {}
 
-    self:preload()
+    self:loadMahjongs()
 end
 
 -------------------------------------------------------------------------------
 -- 预加载
 -------------------------------------------------------------------------------
-function mahjongOperation:preload()
+function mahjongOperation:loadMahjongs()
     for i=0, self.game:getTotalMahjongCount() - 1 do
         local m = mahjong.new(i)
-        m:setParent(self.mahjongsRoot)
         m:hide()
+        m:setParent(self.mahjongsRoot)
 
         table.insert(self.idleMahjongs, m)
     end
 end
 
+-------------------------------------------------------------------------------
+--刷新UI
+-------------------------------------------------------------------------------
 function mahjongOperation:refreshUI()
 
 end
@@ -246,22 +228,9 @@ function mahjongOperation:update()
             self.turnCountdown = math.max(0, self.turnCountdown - delta)
 
             local a = math.floor(self.turnCountdown / 10)
-            for k, v in pairs(self.countdownNumbders.a) do
-                if k == a + 1 then
-                    v:show()
-                else
-                    v:hide()
-                end
-            end
-
+            self.countdown.a.spriteName = tostring(a)
             local b = math.floor(self.turnCountdown % 10)
-            for k, v in pairs(self.countdownNumbders.b) do
-                if k == b + 1 then
-                    v:show()
-                else
-                    v:hide()
-                end
-            end
+            self.countdown.b.spriteName = tostring(b)
 
             self.countdownTick = now
         end
@@ -510,7 +479,7 @@ function mahjongOperation:onDingQueDo(msg)
 
     for _, v in pairs(mahjongs) do
         if v.class == player.que then
-            v:dart()
+            v:dark()
         else
             v:light()
         end  

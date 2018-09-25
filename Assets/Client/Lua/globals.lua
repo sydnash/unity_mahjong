@@ -140,30 +140,36 @@ end
 -- 登录服务器
 -------------------------------------------------------------
 function enterDesk(gameType, deskId, callback)
+    --开始预加载资源
+    local preload = modelManager.preload()
+
+    for _, v in pairs(mahjongType) do
+        preload:push(v.folder, v.resource, 4)
+    end
+    preload:start()
+
     networkManager.checkDesk(gameType, deskId, function(ok, msg)
         if not ok then
-            callback(false, "网络繁忙，请稍后再试", 0, nil)
+            callback(false, "网络繁忙，请稍后再试", preload, 0, nil)
             return
         end
 
         log("check desk, msg = " .. table.tostring(msg))
-        callback(true, string.empty, 0.5, nil)
+        callback(true, string.empty, preload, 0.5, nil)
 
         networkManager.enterDesk(gameType, deskId, function(ok, msg)
             if not ok then
-                log("enter desk error")
-                callback(false, "网络繁忙，请稍后再试", 0.5, nil)
+                callback(false, "网络繁忙，请稍后再试", preload, 0.5, nil)
                 return
             end
 
             if msg.RetCode ~= retc.Ok then
-                log("enter desk error")
-                callback(false, retcText[msg.RetCode], 0.5, nil)
+                callback(false, retcText[msg.RetCode], preload, 0.5, nil)
                 return
             end
 
             log("enter desk, msg = " .. table.tostring(msg))
-            callback(true, string.empty, 1, msg)
+            callback(true, string.empty, preload, 1, msg)
         end)
     end)
 end
@@ -173,14 +179,6 @@ end
 -------------------------------------------------------------
 function loginServer(callback)
     showWaitingUI("正在登录中，请稍候...")
-
-    --开始预加载资源
-    local token = modelManager.preload_begin()
-
-    for _, v in pairs(mahjongType) do
-        modelManager.preload_push(token, v.folder, v.resource, 4)
-    end
-    modelManager.preload(token)
 
     --登录服务器
     networkManager.login(function(ok, msg)
@@ -230,7 +228,7 @@ function loginServer(callback)
             local loading = require("ui.loading").new()
             loading:show()
 
-            enterDesk(cityType, deskId, function(ok, errText, progress, msg)
+            enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
                 if not ok then
                     loading:close()
                     showMessageUI(errText, function()
@@ -257,7 +255,9 @@ function loginServer(callback)
                         loading:setProgress(0.4 + 0.6 * progress)
 
                         if completed then
-                            modelManager.preload_end(token)
+                            if preload ~= nil then
+                                preload:stop()
+                            end
 
                             clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
                             loading:close()
