@@ -4,10 +4,13 @@
 
 require("globals")
 
-gamepref       = require("logic.gamepref")
-networkManager = require("network.networkManager")
+gamepref        = require("logic.gamepref")
+wechatHelper    = require("sdk.wechat.wechatHelper")
+networkManager  = require("network.networkManager")
 
-local soundConfig = require("config.soundConfig")
+local soundConfig   = require("config.soundConfig")
+local input         = UnityEngine.Input
+local keycode       = UnityEngine.KeyCode
 
 clientApp = class("clientApp")
 
@@ -111,6 +114,23 @@ function clientApp:start()
 
     soundManager.setBGMVolume(soundConfig.defaultBgmVolume)
     soundManager.playBGM(string.empty, "bgm")
+
+    registerUpdateListener(self.update, self)
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function clientApp:update()
+    if input.GetKeyDown(keycode.Escape) then
+        showMessageUI("确定要退出游戏吗？", 
+                      function() --confirm
+                          Application.Quit()
+                      end,
+                      function() --cancel
+                          --
+                      end)
+    end
 end
 
 return clientApp

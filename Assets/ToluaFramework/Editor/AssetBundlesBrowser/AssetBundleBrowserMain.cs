@@ -67,12 +67,12 @@ namespace AssetBundleBrowser
             instance.Show();
         }
 
-        public static void ExecuteBuild()
+        public static void ExecuteBuild(BuildTarget buidlTarget, string outputPath)
         {
             AssetBundleBuildTab build = new AssetBundleBuildTab();
             build.OnEnable(null);
 
-            build.ExecuteBuild();
+            build.ExecuteBuild(buidlTarget, outputPath);
         }
 
         [SerializeField]

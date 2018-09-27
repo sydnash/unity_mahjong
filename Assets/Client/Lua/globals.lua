@@ -8,6 +8,7 @@ local mahjongType   = require("logic.mahjong.mahjongType")
 local opType        = require("const.opType")
 local sexType       = require("const.sexType")
 local http          = require("network.http")
+local deviceConfig  = require("config.deviceConfig")
 
 local K = 1024
 local M = K * K
@@ -181,7 +182,9 @@ function loginServer(callback)
     showWaitingUI("正在登录中，请稍候...")
 
     --登录服务器
-    networkManager.login(function(ok, msg)
+    local loginImp = deviceConfig.ismobile and networkManager.loginWx or networkManager.login
+
+    loginImp(function(ok, msg)
         closeWaitingUI()
 
         if not ok then

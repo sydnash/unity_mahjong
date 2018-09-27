@@ -245,55 +245,103 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.login(callback)
-    local form = table.toUrlArgs({ mac = getDeviceId() })
-    local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
+local function loginC(text, callback)
+    local o = table.fromjson(text)
+    log("loginC, o = " .. table.tostring(o))
 
-    http.getText(networkConfig.guestURL .. "?" .. form, timeout, function(ok, text)
-        if not ok or string.isNilOrEmpty(text) then
+    if o.retcode ~= retc.Ok then
+        callback(false, nil)
+        return
+    end
+
+    local host       = o.ip
+    local port       = o.port
+    local acid       = o.acid
+    local session    = o.session
+
+    gamepref.acId    = acid
+    gamepref.session = session
+    gamepref.host    = host
+    gamepref.port    = port
+
+    networkManager.connect(host, port, function(connected)
+        if not connected then
             callback(false, nil)
         else
-            local o = table.fromjson(text)
-
-            local host = o.ip
-            local port = o.port
-            local acid = o.acid
-            local session = o.session
-
-            gamepref.acId = acid
-            gamepref.session = session
-            gamepref.host = host
-            gamepref.port = port
-
-            networkManager.connect(host, port, function(connected)
-                if not connected then
+            local loginType = 1
+            local data = { AcId = acid, Session = session, LoginType = loginType }
+            send(protoType.cs.loginHs, data, function(msg)
+                if msg == nil then
                     callback(false, nil)
                 else
-                    local loginType = 1
-                    local data = { AcId = acid, Session = session, LoginType = loginType }
-                    send(protoType.cs.loginHs, data, function(msg)
-                        if msg == nil then
-                            callback(false, nil)
-                        else
-                            gamepref.session    = msg.Session
-                            gamepref.acId       = msg.AcId
-                            gamepref.desk       = { cityType = msg.DeskInfo.GameType, deskId = msg.DeskInfo.DeskId, }
-                            gamepref.player     = require("logic.player.gamePlayer").new(msg.AcId)
+                    gamepref.session    = msg.Session
+                    gamepref.acId       = msg.AcId
+                    gamepref.desk       = { cityType = msg.DeskInfo.GameType, deskId = msg.DeskInfo.DeskId, }
+                    gamepref.player     = require("logic.player.gamePlayer").new(msg.AcId)
                             
-                            gamepref.player.headerUrl  = msg.HeadUrl
-                            gamepref.player:loadHeaderTex()
-                            gamepref.player.nickname   = msg.Nickname
-                            gamepref.player.ip         = msg.Ip
-                            gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.box, sexType.girl)
-                            gamepref.player.laolai     = msg.IsLaoLai
-                            gamepref.player.coin       = msg.Coin
+                    gamepref.player.headerUrl  = msg.HeadUrl
+                    gamepref.player:loadHeaderTex()
+                    gamepref.player.nickname   = msg.Nickname
+                    gamepref.player.ip         = msg.Ip
+                    gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.box, sexType.girl)
+                    gamepref.player.laolai     = msg.IsLaoLai
+                    gamepref.player.coin       = msg.Coin
 
-                            callback(true, msg)
-                        end
-                    end)
+                    callback(true, msg)
                 end
             end)
         end
+    end)
+end 
+
+-------------------------------------------------------------------
+-- 游客登录
+-------------------------------------------------------------------
+function networkManager.login(callback)
+    log("networkManager.login")
+
+    local form = table.toUrlArgs({ mac = getDeviceId() })
+    local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
+
+    http.getText(networkConfig.gameURL .. "?" .. form, timeout, function(ok, text)
+        if not ok or string.isNilOrEmpty(text) then
+            callback(false, nil)
+            return
+        end
+        
+        loginC(text, callback)
+    end)
+end
+
+-------------------------------------------------------------------
+-- 微信登录
+-------------------------------------------------------------------
+function networkManager.loginWx(callback)  
+    log("networkManager.loginWx")
+
+    wechatHelper.login(function(json)
+        if string.isNilOrEmpty(json) then
+            callback(false, nil)
+            return
+        end
+
+        local resp = table.fromjson(json)
+        log("networkManager.loginWx, resp = " .. table.tostring(resp))
+        local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
+        local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
+
+        http.getText(accessUrl, timeout, function(ok, text)
+            if not ok or string.isNilOrEmpty(text) then
+                callback(false, nil)
+                return
+            end
+
+            local p = table.fromjson(text)
+            local form = table.toUrlArgs({ wxtoken = p.refresh_token, appclass = "mj" })
+            http.getText(networkConfig.gameURL .. "?" .. form, timeout, function(ok, text)
+                loginC(text, callback)
+            end)
+        end)
     end)
 end
 

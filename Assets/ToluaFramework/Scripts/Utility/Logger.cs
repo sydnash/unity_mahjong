@@ -29,9 +29,9 @@ public static class Logger
         if (debug)
         {
     #if UNITY_ANDROID
-            string dependencies = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "Log", DateTime.Now.ToString("yyyyMMddHHmmssfff")+".txt");
+            string filename = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "Log", DateTime.Now.ToString("yyyyMMddHHmmssfff")+".txt");
     #elif UNITY_IOS
-            string dependencies = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "Log", DateTime.Now.ToString("yyyyMMddHHmmssfff")+".txt");
+            string filename = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "Log", DateTime.Now.ToString("yyyyMMddHHmmssfff")+".txt");
     #else
             string filename = LFS.CombinePath(Directory.GetCurrentDirectory(), "Log", DateTime.Now.ToString("yyyyMMddHHmmssfff")+".txt");
     #endif
@@ -73,7 +73,8 @@ public static class Logger
 #else
         if (debug)
         {
-            WriteToFile(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
+            Debug.Log(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
+            //WriteToFile(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
         }
 #endif
     }
@@ -89,7 +90,8 @@ public static class Logger
 #else
         if (debug)
         {
-            WriteToFile(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
+            Debug.LogWarning(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
+            //WriteToFile(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
         }
 #endif
     }
@@ -105,7 +107,8 @@ public static class Logger
 #else
         if (debug)
         {
-            WriteToFile(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
+            Debug.LogError(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
+            //WriteToFile(DateTime.Now.ToString("HH:mm:ss.fff: ") + text);
         }
 #endif
     }

@@ -158,6 +158,7 @@ public static class CustomSettings
         _GT(typeof(LuaProfiler)),
         _GT(typeof(Rect)),
         _GT(typeof(PlayerPrefs)),
+        _GT(typeof(RuntimePlatform)),
 
         //UGUI
         _GT(typeof(EventSystem)),
@@ -199,6 +200,7 @@ public static class CustomSettings
         _GT(typeof(Logger)),
         _GT(typeof(UnityEngine.UI.Sprite)),
         _GT(typeof(SpriteRD)),
+        _GT(typeof(WechatHelper)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

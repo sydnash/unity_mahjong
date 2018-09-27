@@ -15,7 +15,8 @@ public class BuildManager : EditorWindow
     private BuildTarget mTargetPlatform = BuildTarget.StandaloneWindows64;
 #endif
 
-    private bool mDevelopment = false;
+    private bool mDevelopment = true;
+    private bool mProcessResources = false;
 
     [MenuItem("Window/Build Manager #&B", priority = 2051)]
     private static void Init()
@@ -33,6 +34,7 @@ public class BuildManager : EditorWindow
 
         mTargetPlatform = (BuildTarget)EditorGUILayout.EnumPopup("Platform", mTargetPlatform);
         mDevelopment = EditorGUILayout.Toggle("Development", mDevelopment);
+        mProcessResources = EditorGUILayout.Toggle("Process resources", mProcessResources);
 
         string suffix = "exe";
         switch (mTargetPlatform)
@@ -47,24 +49,26 @@ public class BuildManager : EditorWindow
 
         GUILayout.Space(10);
 
-        if (GUILayout.Button("Build"))
+        if (GUILayout.Button("Build Lua"))
+        {
+            Build.BuildLuaFiles();
+        }
+
+        if (GUILayout.Button("Build Bundle"))
+        {
+            Build.BuildAssetBundles(mTargetPlatform);
+        }
+
+        if (GUILayout.Button("Build Package"))
         {
             string targetName = mDevelopment ? "debug." + suffix : "release." + suffix;
             var targetPath = EditorUtility.SaveFilePanel( "Build", "", targetName, suffix);
 
             if (!string.IsNullOrEmpty(targetPath))
             {
-                Build.PrepareRes();
-
-                Build.BuildLuaFiles();
-                Build.CopyLuaToResources();
-
-                Build.BuildAssetBundles();
-                Build.CopyBundlesToStreamingAssets();
-
+                if (mProcessResources) Build.PrepareRes();
                 string err = Build.BuildPackage(targetPath, mTargetPlatform, mDevelopment);
-
-                Build.ResetRes();
+                if (mProcessResources) Build.ResetRes();
 
                 EditorUtility.DisplayDialog("Build", string.IsNullOrEmpty(err) ? "Build succeeded" : "Build failed", "OK");
             }

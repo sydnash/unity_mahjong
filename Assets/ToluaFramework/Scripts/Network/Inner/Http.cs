@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
+using System.Net.Security;
 using System.Threading;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class Http : MonoBehaviour
@@ -205,6 +207,12 @@ public class Http : MonoBehaviour
         RequestArgs args = obj as RequestArgs;
         HttpWebRequest request = WebRequest.Create(args.url) as HttpWebRequest;
 
+        if (args.url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+        {
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+            request.ProtocolVersion = HttpVersion.Version10;
+        }
+
         try
         {
             if (request == null)
@@ -319,6 +327,18 @@ public class Http : MonoBehaviour
         yield return new WaitForEndOfFrame();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="certificate"></param>
+    /// <param name="chain"></param>
+    /// <param name="errors"></param>
+    /// <returns></returns>
+    private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+    {
+        return true; //总是接受  
+    }
     #endregion
 }
 

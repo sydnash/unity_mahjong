@@ -41,6 +41,7 @@ public class DelegateFactory
 		dict.Add(typeof(System.Action<bool,UnityEngine.Texture2D,byte[]>), factory.System_Action_bool_UnityEngine_Texture2D_bytes);
 		dict.Add(typeof(System.Action<bool>), factory.System_Action_bool);
 		dict.Add(typeof(System.Action<byte[],int>), factory.System_Action_bytes_int);
+		dict.Add(typeof(System.Action<string>), factory.System_Action_string);
 
 		DelegateTraits<System.Action>.Init(factory.System_Action);
 		DelegateTraits<UnityEngine.Events.UnityAction>.Init(factory.UnityEngine_Events_UnityAction);
@@ -66,6 +67,7 @@ public class DelegateFactory
 		DelegateTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Init(factory.System_Action_bool_UnityEngine_Texture2D_bytes);
 		DelegateTraits<System.Action<bool>>.Init(factory.System_Action_bool);
 		DelegateTraits<System.Action<byte[],int>>.Init(factory.System_Action_bytes_int);
+		DelegateTraits<System.Action<string>>.Init(factory.System_Action_string);
 
 		TypeTraits<System.Action>.Init(factory.Check_System_Action);
 		TypeTraits<UnityEngine.Events.UnityAction>.Init(factory.Check_UnityEngine_Events_UnityAction);
@@ -91,6 +93,7 @@ public class DelegateFactory
 		TypeTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Init(factory.Check_System_Action_bool_UnityEngine_Texture2D_bytes);
 		TypeTraits<System.Action<bool>>.Init(factory.Check_System_Action_bool);
 		TypeTraits<System.Action<byte[],int>>.Init(factory.Check_System_Action_bytes_int);
+		TypeTraits<System.Action<string>>.Init(factory.Check_System_Action_string);
 
 		StackTraits<System.Action>.Push = factory.Push_System_Action;
 		StackTraits<UnityEngine.Events.UnityAction>.Push = factory.Push_UnityEngine_Events_UnityAction;
@@ -116,6 +119,7 @@ public class DelegateFactory
 		StackTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Push = factory.Push_System_Action_bool_UnityEngine_Texture2D_bytes;
 		StackTraits<System.Action<bool>>.Push = factory.Push_System_Action_bool;
 		StackTraits<System.Action<byte[],int>>.Push = factory.Push_System_Action_bytes_int;
+		StackTraits<System.Action<string>>.Push = factory.Push_System_Action_string;
 	}
     
     public static Delegate CreateDelegate(Type t, LuaFunction func = null)
@@ -1621,6 +1625,63 @@ public class DelegateFactory
 	}
 
 	void Push_System_Action_bytes_int(IntPtr L, System.Action<byte[],int> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_string_Event : LuaDelegate
+	{
+		public System_Action_string_Event(LuaFunction func) : base(func) { }
+		public System_Action_string_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(string param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(string param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<string> System_Action_string(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<string> fn = delegate(string param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_string_Event target = new System_Action_string_Event(func);
+			System.Action<string> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_string_Event target = new System_Action_string_Event(func, self);
+			System.Action<string> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_string(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<string>), L, pos);
+	}
+
+	void Push_System_Action_string(IntPtr L, System.Action<string> o)
 	{
 		ToLua.Push(L, o);
 	}

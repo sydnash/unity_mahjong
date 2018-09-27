@@ -29,6 +29,8 @@
     <Folder Include="Lua\logic\" />
     <Folder Include="Lua\const\" />
     <Folder Include="Lua\config\" />
+    <Folder Include="Lua\sdk\" />
+    <Folder Include="Lua\sdk\wechat\" />
     <Folder Include="Lua\ui\" />
     <Folder Include="Lua\ui\gameEnd\" />
     <Folder Include="Lua\ui\mahjongDesk\" />
@@ -61,6 +63,7 @@
     <Compile Include="Lua\logic\player\gamePlayer.lua" />
     <Compile Include="Lua\network\networkManager.lua" />
     <Compile Include="Lua\network\protoType.lua" />
+    <Compile Include="Lua\sdk\wechat\wechatHelper.lua" />
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
     <Compile Include="Lua\ui\gameEnd\gameEndItem.lua" />
     <Compile Include="Lua\ui\gameEnd\gameEndScore.lua" />

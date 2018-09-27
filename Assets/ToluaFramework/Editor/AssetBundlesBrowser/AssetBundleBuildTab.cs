@@ -293,7 +293,7 @@ namespace AssetBundleBrowser
             EditorGUILayout.EndScrollView();
         }
 
-        public void ExecuteBuild()
+        private void ExecuteBuild()
         {
             LFS.RemoveDir(m_UserData.m_OutputPath);
 
@@ -367,6 +367,49 @@ namespace AssetBundleBrowser
 
             if(m_CopyToStreaming.state)
                 DirectoryCopy(m_UserData.m_OutputPath, m_streamingPath);
+        }
+
+        public void ExecuteBuild(BuildTarget buildTarget, string outputPath)
+        {
+            LFS.RemoveDir(outputPath);
+
+            if (AssetBundleModel.Model.DataSource.CanSpecifyBuildOutputDirectory)
+            {
+                if (string.IsNullOrEmpty(outputPath)) //in case they hit "cancel" on the open browser
+                {
+                    Debug.LogError("AssetBundle Build: No valid output path for build.");
+                    return;
+                }
+
+                if (!Directory.Exists(outputPath))
+                {
+                    Directory.CreateDirectory(outputPath);
+                }
+            }
+
+            BuildAssetBundleOptions opt = BuildAssetBundleOptions.None;
+
+            if (AssetBundleModel.Model.DataSource.CanSpecifyBuildOptions)
+            {
+                opt |= BuildAssetBundleOptions.ChunkBasedCompression;
+            }
+
+            ABBuildInfo buildInfo = new ABBuildInfo();
+
+            buildInfo.outputDirectory = outputPath;
+            buildInfo.options = opt;
+            buildInfo.buildTarget = buildTarget;
+            buildInfo.onBuild = (assetBundleName) =>
+            {
+                if (m_InspectTab == null)
+                    return;
+                m_InspectTab.AddBundleFolder(buildInfo.outputDirectory);
+                m_InspectTab.RefreshBundles();
+            };
+
+            AssetBundleModel.Model.DataSource.BuildAssetBundles(buildInfo);
+
+            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
         }
 
         private static void DirectoryCopy(string sourceDirName, string destDirName)

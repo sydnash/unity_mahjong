@@ -2,8 +2,14 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local platform = UnityEngine.RuntimePlatform
+
+local function ismobile()
+    return (Application.platform == platform.Android) or (Application.platform == platform.IPhonePlayer)
+end
+
 return {
-    usemouse = true,
+    ismobile = ismobile(),
     deviceId = "xieheng001",
 }
 

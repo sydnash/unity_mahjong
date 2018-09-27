@@ -134,7 +134,7 @@ function lobby:enterDesk(loading, cityType, deskId)
             else
                 loading:setProgress(0.4)
 
-                sceneManager.load("scene", "MahjongScene", function(completed, progress)
+                sceneManager.load("scene", "mahjongscene", function(completed, progress)
                     loading:setProgress(0.4 + 0.6 * progress)
 
                     if completed then

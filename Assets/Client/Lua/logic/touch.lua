@@ -19,12 +19,12 @@ local phaseCallbackTarget = nil
 local updateHandler = nil
 
 local function position()
-    return deviceConfig.usemouse and Input.mousePosition or Input.GetTouch(0).position
+    return deviceConfig.ismobile and Input.mousePosition or Input.GetTouch(0).position
 end
 
 local function update()
     if phase == touch.phaseType.ended then
-        if deviceConfig.usemouse then
+        if deviceConfig.ismobile then
             if Input.GetMouseButtonDown(0) then
                 phase = touch.phaseType.began
                 phaseCallback(phaseCallbackTarget, phase, position())
@@ -39,7 +39,7 @@ local function update()
             end
         end
     else
-        if deviceConfig.usemouse then
+        if deviceConfig.ismobile then
             if Input.GetMouseButtonUp(0) then
                 phase = touch.phaseType.ended
             else

@@ -110,8 +110,8 @@ public class SceneManager : MonoBehaviour
             }
         }
 #else
-        sceneBundles = new SceneBundle[2]{ new SceneBundle(LFS.CombinePath(mDownloadPath,  scenePath, sceneName), false),
-                                           new SceneBundle(LFS.CombinePath(mLocalizedPath, scenePath, sceneName), true)
+        sceneBundles = new SceneBundle[2]{ new SceneBundle(LFS.CombinePath(mDownloadPath,  scenePath, sceneName), true),
+                                           new SceneBundle(LFS.CombinePath(mLocalizedPath, scenePath, sceneName), false)
         };
 #endif
 
@@ -162,7 +162,7 @@ public class SceneManager : MonoBehaviour
             string bundleName = sb.bundleName;
             bool checkExist = sb.checkExists;
 
-            if (checkExist && System.IO.File.Exists(bundleName))
+            if (!checkExist || System.IO.File.Exists(bundleName))
             {
                 var request = AssetBundle.LoadFromFileAsync(bundleName);
 
@@ -195,12 +195,12 @@ public class SceneManager : MonoBehaviour
         if (bundle != null)
         {
 #endif
-        AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
-        while (!op.isDone)
-        {
-            InvokeCallback(callback, false, 0.5f + op.progress * 0.5f);
-            yield return WAIT_FOR_END_OF_FRAME;
-        }
+            AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            while (!op.isDone)
+            {
+                InvokeCallback(callback, false, 0.5f + op.progress * 0.5f);
+                yield return WAIT_FOR_END_OF_FRAME;
+            }
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
             bundle.Unload(false);
         }
