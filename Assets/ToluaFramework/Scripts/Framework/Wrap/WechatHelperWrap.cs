@@ -102,10 +102,11 @@ public class WechatHelperWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
+			ToLua.CheckArgsCount(L, 3);
 			WechatHelper obj = (WechatHelper)ToLua.CheckObject<WechatHelper>(L, 1);
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			obj.ShareImage(arg0);
+			string arg0 = ToLua.CheckString(L, 2);
+			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
+			obj.ShareImage(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)

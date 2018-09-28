@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 2350775627
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a4fb2ecdd8a73ae0b969d181a50ab738
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Sound/mahjong/girl/7tiao.mp3
+Dependencies: []

@@ -247,7 +247,7 @@ end
 -------------------------------------------------------------------
 local function loginC(text, callback)
     local o = table.fromjson(text)
-    log("loginC, o = " .. table.tostring(o))
+    --log("loginC, o = " .. table.tostring(o))
 
     if o.retcode ~= retc.Ok then
         callback(false, nil)
@@ -326,7 +326,7 @@ function networkManager.loginWx(callback)
         end
 
         local resp = table.fromjson(json)
-        log("networkManager.loginWx, resp = " .. table.tostring(resp))
+        --log("networkManager.loginWx, resp = " .. table.tostring(resp))
         local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
         local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 

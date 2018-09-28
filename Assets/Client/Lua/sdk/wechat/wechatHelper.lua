@@ -25,6 +25,14 @@ function wechatHelper.shareUrl(title, desc, url, pyq)
     WechatHelper.instance:ShareUrl(title, desc, url, pyq)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function wechatHelper.shareImage(imgname, pyq)
+    local imgpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "ShareImages", imgname)
+    WechatHelper.instance:ShareImage(imgpath, pyq)
+end
+
 return wechatHelper
 
 --endregion

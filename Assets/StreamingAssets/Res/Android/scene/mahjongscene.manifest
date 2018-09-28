@@ -1,0 +1,15 @@
+ManifestFileVersion: 0
+CRC: 1272542254
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 371e09f53e59c8feeb51f2b7f6bd68aa
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+Assets:
+- Assets/Client/Scene/mahjongscene.unity
+Dependencies:
+- D:/Works/CompanyProjects/tdqp_android/Assets/StreamingAssets/Res/Android/texture/deskfw

@@ -72,9 +72,9 @@ public class WechatHelper
     /// <summary>
     /// 
     /// </summary>
-    public void ShareImage(bool timeline)
+    public void ShareImage(string imagePath, bool timeline)
     {
-        
+        javaObject.Call("ShareImageWx", imagePath, timeline);
     }
 
     /// <summary>

@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 2249739337
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 121a15514b3e908832b374dfcef3aeb6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4cd0a5558493b0679e071c141fc729a3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Texture/dice/dice5.png
+Dependencies: []

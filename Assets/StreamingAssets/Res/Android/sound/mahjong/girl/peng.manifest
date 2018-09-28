@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1544459730
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 528533a9c5a3fedbf568db6df2b9dc72
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Sound/mahjong/boy/peng.mp3
+Dependencies: []

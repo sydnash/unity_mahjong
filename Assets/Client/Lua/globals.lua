@@ -108,18 +108,18 @@ end
 -- 下载玩家头像
 -------------------------------------------------------------
 function downloadIcon(url, callback)
+    log("downloadIcon, url = " .. url)
+
     if string.isNilOrEmpty(url) then
         return
     end
 
     local hash = MD5.GetHash(url)
-    local path = LFS.CombinPath(LFS.DOWNLOAD_DATA_PATH, "wxicons", hash .. ".jpg")
+    local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "wxicons", hash .. ".jpg")
 
     --先本地查找，没找到再从网上下载
     http.getTexture2D("file:///" .. path, function(ok, tex, bytes)
         if ok and tex ~= nil then
-            LFS.WriteBytes(path, bytes)
-
             if callback ~= nil then
                 callback(tex)
             end
@@ -202,7 +202,7 @@ function loginServer(callback)
         end
 
         callback(true)
-        log("login, msg = " .. table.tostring(msg))
+        --log("login, msg = " .. table.tostring(msg))
 
         local deskInfo = msg.DeskInfo
 

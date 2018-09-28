@@ -1,0 +1,45 @@
+ManifestFileVersion: 0
+CRC: 173377873
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0badd893fbcb93247340d4154c7ba0f2
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 6f0b2af296611b3060c576d53b1a4245
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: -1254083943, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/UI/LoginUI/LoginUI.prefab
+Dependencies:
+- D:/Works/CompanyProjects/tdqp_android/Assets/StreamingAssets/Res/Android/texture/dl_bg
+- D:/Works/CompanyProjects/tdqp_android/Assets/StreamingAssets/Res/Android/font/fzzyjt
+- D:/Works/CompanyProjects/tdqp_android/Assets/StreamingAssets/Res/Android/texture/dl_logo

@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 3805020063
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0a656242e986c8eea795e34a4bf5810e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Sound/mahjong/boy/8wan.mp3
+Dependencies: []

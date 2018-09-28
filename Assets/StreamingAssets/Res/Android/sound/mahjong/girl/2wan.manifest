@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 345679215
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 485944913e0264c2ecc8105ff44dbf7f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Sound/mahjong/girl/2wan.mp3
+Dependencies: []

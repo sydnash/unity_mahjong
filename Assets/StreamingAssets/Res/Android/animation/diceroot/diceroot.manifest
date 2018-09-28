@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 3046611241
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 23384143803a9d0b80a3a8dce41cf25e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 07757d18d3ad222c2010babdc7e451ea
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Animation/diceroot/diceroot.anim
+Dependencies: []

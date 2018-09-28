@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1547210690
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 09f1a037c015e63c369c0cccf61cd177
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 07757d18d3ad222c2010babdc7e451ea
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Animation/chupaiptr/chupaiptr.anim
+Dependencies: []
