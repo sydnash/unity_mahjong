@@ -113,8 +113,8 @@ end
 
 function lobby:onShareClickedHandler()
     playButtonClickSound()
-    --wechatHelper.shareUrl("幺九麻将", "房号：123456", "http://www.cdbshy.com/", true)
-    wechatHelper.shareImage("1.jpg", true)
+    --androidHelper.shareUrlWx("幺九麻将", "房号：123456", "http://www.cdbshy.com/", true)
+    androidHelper.shareImageWx("1.jpg", true)
 end
 
 function lobby:onAuthenticateClickedHandler()

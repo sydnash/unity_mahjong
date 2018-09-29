@@ -4,21 +4,40 @@
 
 require("globals")
 
-gamepref        = require("logic.gamepref")
-wechatHelper    = require("sdk.wechat.wechatHelper")
-networkManager  = require("network.networkManager")
 
 local soundConfig   = require("config.soundConfig")
 local input         = UnityEngine.Input
 local keycode       = UnityEngine.KeyCode
 
-clientApp = class("clientApp")
+gamepref        = require("logic.gamepref")
+androidHelper   = require("platform.androidHelper")
+networkManager  = require("network.networkManager")
+
+-------------------------------------------------------------------
+-- 禁止定义全局变量
+-------------------------------------------------------------------
+local function disableGlobalVariableDeclaration()
+    setmetatable(_G, {
+        __newindex = function(_, name, value)
+            local msg = "Can't declare global variable: %s"
+            error(string.format(msg, name), 0)
+        end
+    })
+end
 
 ----------------------------------------------------------------
---
+-- 检测返回键状态
 ----------------------------------------------------------------
-function clientApp:ctor()
-    self.currentDesk = nil
+local function checkEscapeState()
+    if input.GetKeyDown(keycode.Escape) then
+        showMessageUI("确定要退出游戏吗？", 
+                      function() --confirm
+                          Application.Quit()
+                      end,
+                      function() --cancel
+                          --
+                      end)
+    end
 end
 
 ----------------------------------------------------------------
@@ -36,71 +55,98 @@ local function networkDisconnectedCallback()
                 clientApp.currentDesk = nil
             end
 
-            local ui = require("ui.messageBox").new("与服务器失去连接，是否重新登录？", 
-                                                    function()--确定：重新登录
-                                                        loginServer(function(ok)
-                                                            if not ok then
-                                                                local ui = require("ui.login").new()
-                                                                ui:show()
-                                                            end
-                                                        end)
-                                                    end,
-                                                    function()--取消：回到登录界面
-                                                        local ui = require("ui.login").new()
-                                                        ui:show()
-                                                    end)
+            local ui = showMessageUI("与服务器失去连接，是否重新登录？", 
+                                     function()--确定：重新登录
+                                         loginServer(function(ok)
+                                             if not ok then
+                                                 local ui = require("ui.login").new()
+                                                 ui:show()
+                                             end
+                                         end)
+                                     end,
+                                     function()--取消：回到登录界面
+                                         local ui = require("ui.login").new()
+                                         ui:show()
+                                     end)
+            return
+        end
 
-            ui:show()
-        else
-            if deskId <= 0 then
+        if deskId <= 0 then
+            closeWaitingUI()
+            return
+        end
+
+        enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
+            if not ok then
                 closeWaitingUI()
-            else
-                enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
-                    if not ok then
-                        closeWaitingUI()
-                        showMessageUI(errText, function()
-                            --销毁当前游戏对象
-                            if clientApp.currentDesk ~= nil then
-                                clientApp.currentDesk:destroy()
-                                clientApp.currentDesk = nil
-                            end
-                            --返回登录界面
-                            local ui = require("ui.login").new()
-                            ui:show()
-                        end)
-                        return
+                showMessageUI(errText, function()
+                    --销毁当前游戏对象
+                    if clientApp.currentDesk ~= nil then
+                        clientApp.currentDesk:destroy()
+                        clientApp.currentDesk = nil
                     end
+                    --返回登录界面
+                    local ui = require("ui.login").new()
+                    ui:show()
+                end)
+                return
+            end
 
-                    if msg ~= nil then
-                        closeWaitingUI()
+            if msg ~= nil then
+                closeWaitingUI()
 
-                        msg.Config  = table.fromjson(msg.Config)
-                        msg.Reenter = table.fromjson(msg.Reenter)
+                msg.Config  = table.fromjson(msg.Config)
+                msg.Reenter = table.fromjson(msg.Reenter)
                         
-                        if clientApp.currentDesk ~= nil then
-                            clientApp.currentDesk:onEnter(msg)
-                        else
-                            local loading = require("ui.loading").new()
-                            loading:show()
+                if clientApp.currentDesk ~= nil then
+                    clientApp.currentDesk:onEnter(msg)
+                    return
+                end
 
-                            sceneManager.load("scene", "mahjongscene", function(completed, progress)
-                                loading:setProgress(progress)
+                local loading = require("ui.loading").new()
+                loading:show()
 
-                                if completed then
-                                    if preload ~= nil then
-                                        preload:stop()
-                                    end
+                sceneManager.load("scene", "mahjongscene", function(completed, progress)
+                    loading:setProgress(progress)
 
-                                    clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
-                                    loading:close()
-                                end
-                            end)
+                    if completed then
+                        if preload ~= nil then
+                            preload:stop()
                         end
+
+                        clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
+                        loading:close()
                     end
                 end)
             end
-        end
+        end)
     end)
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+local function tracebackHandler(errorMessage)
+    logError(errorMessage)
+
+    local ui = require("ui.errorMessage").new()
+    ui:show()
+
+    if appConfig.debug and not deviceConfig.isMobile then
+        ui:setErrorMessage(errorMessage)
+    end
+
+    --断开网络，主要是中断消息接收和处理的过程
+    networkManager.disconnect()
+end
+
+clientApp = class("clientApp")
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function clientApp:ctor()
+    self.currentDesk = nil
 end
 
 ----------------------------------------------------------------
@@ -115,22 +161,10 @@ function clientApp:start()
     soundManager.setBGMVolume(soundConfig.defaultBgmVolume)
     soundManager.playBGM(string.empty, "bgm")
 
-    registerUpdateListener(self.update, self)
-end
+    registerUpdateListener(checkEscapeState, nil)
+    registerTracebackCallback(tracebackHandler)
 
-----------------------------------------------------------------
---
-----------------------------------------------------------------
-function clientApp:update()
-    if input.GetKeyDown(keycode.Escape) then
-        showMessageUI("确定要退出游戏吗？", 
-                      function() --confirm
-                          Application.Quit()
-                      end,
-                      function() --cancel
-                          --
-                      end)
-    end
+    disableGlobalVariableDeclaration()
 end
 
 return clientApp

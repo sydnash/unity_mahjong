@@ -52,7 +52,6 @@ local http          = require("network.http")
 local tcp           = require("network.tcp")
 local proto         = require("network.proto")
 local networkConfig = require("config.networkConfig")
-local deviceConfig  = require("config.deviceConfig")
 local opType        = require("const.opType")
 local sexType       = require("const.sexType")
 local cvt           = ByteUtils
@@ -319,7 +318,7 @@ end
 function networkManager.loginWx(callback)  
     log("networkManager.loginWx")
 
-    wechatHelper.login(function(json)
+    androidHelper.loginWx(function(json)
         if string.isNilOrEmpty(json) then
             callback(false, nil)
             return

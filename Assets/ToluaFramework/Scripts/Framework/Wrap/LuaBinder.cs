@@ -29,7 +29,7 @@ public static class LuaBinder
 		GameObjectPickerWrap.Register(L);
 		LoggerWrap.Register(L);
 		SpriteRDWrap.Register(L);
-		WechatHelperWrap.Register(L);
+		AndroidHelperWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);
 		LuaInterface_InjectTypeWrap.Register(L);

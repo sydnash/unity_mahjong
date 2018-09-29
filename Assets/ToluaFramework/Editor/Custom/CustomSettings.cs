@@ -200,7 +200,7 @@ public static class CustomSettings
         _GT(typeof(Logger)),
         _GT(typeof(UnityEngine.UI.Sprite)),
         _GT(typeof(SpriteRD)),
-        _GT(typeof(WechatHelper)),
+        _GT(typeof(AndroidHelper)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

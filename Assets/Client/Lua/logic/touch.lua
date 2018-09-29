@@ -2,8 +2,6 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local deviceConfig = require("config.deviceConfig")
-
 local touch = class("touch")
 local Input = UnityEngine.Input
 
@@ -19,12 +17,12 @@ local phaseCallbackTarget = nil
 local updateHandler = nil
 
 local function position()
-    return deviceConfig.ismobile and Input.mousePosition or Input.GetTouch(0).position
+    return deviceConfig.isMobile and Input.mousePosition or Input.GetTouch(0).position
 end
 
 local function update()
     if phase == touch.phaseType.ended then
-        if deviceConfig.ismobile then
+        if deviceConfig.isMobile then
             if Input.GetMouseButtonDown(0) then
                 phase = touch.phaseType.began
                 phaseCallback(phaseCallbackTarget, phase, position())
@@ -39,7 +37,7 @@ local function update()
             end
         end
     else
-        if deviceConfig.ismobile then
+        if deviceConfig.isMobile then
             if Input.GetMouseButtonUp(0) then
                 phase = touch.phaseType.ended
             else

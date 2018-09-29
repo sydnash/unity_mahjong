@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3346194671
+CRC: 1947978245
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -548,3 +548,11 @@ AssetBundleManifest:
       Name: model/mjpai01
       Dependencies:
         Dependency_0: texture/mj_dif
+    Info_156:
+      Name: ui/errorcommitui/errorcommitui
+      Dependencies:
+        Dependency_0: ui/common/common
+        Dependency_1: font/fzzyjt
+    Info_157:
+      Name: ui/chatui/chatui
+      Dependencies: {}

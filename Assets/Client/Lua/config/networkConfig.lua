@@ -2,8 +2,6 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local deviceConfig = require("config.deviceConfig")
-
 local patchURL = "file:///D:/xx"
 local gameURL  = "http://login.cdbshy.com:17776/"
 local gameURL  = "http://test.cdbshy.com:17776/"
@@ -11,7 +9,7 @@ local gameURL  = "http://test.cdbshy.com:17776/"
 
 return {
     patchURL    = patchURL,
-    gameURL     = gameURL .. (deviceConfig.ismobile and "wechatlogin" or "anonymouslogin"),
+    gameURL     = gameURL .. (deviceConfig.isMobile and "wechatlogin" or "anonymouslogin"),
     httpTimeout = 10,  --秒
     tcpTimeout  = 10,  --秒
     ping        = 10,  --秒

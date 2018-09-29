@@ -245,11 +245,26 @@ end
 --
 -------------------------------------------------------------------
 function callstack()
-    if appConfig.debug then
-        return debug.traceback()
-    end
+    return appConfig.debug and debug.traceback() or string.empty
+end
 
-    return string.empty
+local _gdb_tracebackk_callback_ = nil
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function registerTracebackCallback(callback)
+    _gdb_tracebackk_callback_ = callback
+end
+
+-------------------------------------------------------------------
+--全局错误/异常处理函数
+-------------------------------------------------------------------
+function _GDB_TRACKBACK_(errorMessage)
+    if _gdb_tracebackk_callback_ ~= nil then
+        local msg = string.format("Lua error: %s%s", tostring(errorMessage), debug.traceback("", 2))
+        _gdb_tracebackk_callback_(msg)
+    end
 end
 
 -------------------------------------------------------------------

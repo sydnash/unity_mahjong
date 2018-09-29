@@ -20,10 +20,23 @@ function mahjongDesk:onInit()
     self.players = { self.mPlayerM, self.mPlayerR, self.mPlayerT, self.mPlayerL, }
     self:refreshUI()
 
-    self.mInvite:addClickListener(self.onInviteClickedHandler, self)
+    if deviceConfig.isMobile then
+        self.mInvite:show()
+        self.mInvite:addClickListener(self.onInviteClickedHandler, self)
+    else
+        self.mInvite:hide()
+    end
+
+    self.mGameDesc:hide()
+    self.mGameInfoS:show()
+    self.mGameInfoH:hide()
+
     self.mReady:addClickListener(self.onReadyClickedHandler, self)
     self.mCancel:addClickListener(self.onCancelClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
+    self.mChat:addClickListener(self.onChatClickedHandler, self)
+    self.mGameInfoS:addClickListener(self.onGameInfoSClickedHandler, self)
+    self.mGameInfoH:addClickListener(self.onGameInfoHClickedHandler, self)
 end
 
 function mahjongDesk:refreshUI()
@@ -49,15 +62,27 @@ function mahjongDesk:refreshUI()
     local playerTotalCount = self.game:getTotalPlayerCount()
     local playerCount = self.game:getPlayerCount()
 
-    if playerCount == playerTotalCount then
-        self.mInvite:hide()
-    else
-        self.mInvite:show()
+    if deviceConfig.isMobile then
+        if playerCount == playerTotalCount then
+            self.mInvite:setInteractabled(false)
+        else
+            self.mInvite:setInteractabled(true)
+        end
     end
 end
 
 function mahjongDesk:onInviteClickedHandler()
     playButtonClickSound()
+
+    if deviceConfig.isAndroid then
+        androidHelper.shareUrlWx("好友邀请", self:getInvitationInfo(), "http://www.cdbshy.com/", false)
+    end
+end
+
+function mahjongDesk:getInvitationInfo()
+    return string.format("房号：%d，类型：血战到底，人数：%d", 
+                         self.game.deskId, 
+                         self.game:getPlayerCount())
 end
 
 function mahjongDesk:onReadyClickedHandler()
@@ -74,6 +99,13 @@ function mahjongDesk:onSettingClickedHandler()
     playButtonClickSound()
 
     local ui = require("ui.setting").new(self.game)
+    ui:show()
+end
+
+function mahjongDesk:onChatClickedHandler()
+    playButtonClickSound()
+
+    local ui = require("ui.chat").new()
     ui:show()
 end
 
@@ -120,6 +152,10 @@ function mahjongDesk:reset()
     for _, v in pairs(self.players) do
         v:reset()
     end
+
+    self.mGameDesc:hide()
+    self.mGameInfoS:show()
+    self.mGameInfoH:hide()
 end
 
 function mahjongDesk:update()
@@ -138,10 +174,8 @@ function mahjongDesk:onPlayerEnter(player)
     local playerTotalCount = self.game:getTotalPlayerCount()
     local playerCount = self.game:getPlayerCount()
 
-    if playerCount == playerTotalCount then
-        self.mInvite:hide()
-    else
-        self.mInvite:show()
+    if deviceConfig.isMobile and playerCount == playerTotalCount then
+        self.mInvite:setInteractabled(false)
     end
 
     local s = self.game:getSeatType(player.turn)
@@ -151,7 +185,9 @@ function mahjongDesk:onPlayerEnter(player)
 end
 
 function mahjongDesk:onPlayerExit(turn)
-    self.mInvite:show()
+    if deviceConfig.isMobile then
+        self.mInvite:setInteractabled(true)
+    end
 
     local s = self.game:getSeatType(turn)
     local p = self.players[s + 1]
@@ -200,6 +236,22 @@ function mahjongDesk:onDingQueDo(msg)
         local seat = self.game:getSeatType(player.turn)
         self.players[seat + 1]:showDingQue(v.Q)
     end
+end
+
+function mahjongDesk:onGameInfoSClickedHandler()
+    playButtonClickSound()
+
+    self.mGameDesc:show()
+    self.mGameInfoS:hide()
+    self.mGameInfoH:show()
+end
+
+function mahjongDesk:onGameInfoHClickedHandler()
+    playButtonClickSound()
+
+    self.mGameDesc:hide()
+    self.mGameInfoS:show()
+    self.mGameInfoH:hide()
 end
 
 return mahjongDesk

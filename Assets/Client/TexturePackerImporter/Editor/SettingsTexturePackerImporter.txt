@@ -1,6 +1,7 @@
 version: 2
 importPivots: 1
 tpsheetFileNames:
+- Assets/Client/Resources/UI/ChatUI/Atlas/ChatUI.tpsheet
 - Assets/Client/Resources/UI/Common/Atlas/Common.tpsheet
 - Assets/Client/Resources/UI/CreateDeskUI/Atlas/CreateDeskUI.tpsheet
 - Assets/Client/Resources/UI/DeskOperationUI/Atlas/DeskOperationUI.tpsheet
@@ -18,6 +19,7 @@ tpsheetFileNames:
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.tpsheet
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
 textureFileNames:
+- Assets/Client/Resources/UI/ChatUI/Atlas/ChatUI.png
 - Assets/Client/Resources/UI/Common/Atlas/Common.png
 - Assets/Client/Resources/UI/CreateDeskUI/Atlas/CreateDeskUI.png
 - Assets/Client/Resources/UI/DeskOperationUI/Atlas/DeskOperationUI.png
@@ -35,6 +37,7 @@ textureFileNames:
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

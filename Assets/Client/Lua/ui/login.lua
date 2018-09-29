@@ -2,15 +2,13 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local deviceConfig  = require("config.deviceConfig")
-
 local base = require("ui.common.view")
 local login = class("login", base)
 
 _RES_(login, "LoginUI", "LoginUI")
 
 function login:onInit()
-    if deviceConfig.ismobile then
+    if deviceConfig.isMobile then
         self.mWechatLogin:show()
         self.mGuestLogin:hide()
     else

@@ -4,13 +4,19 @@
 
 local platform = UnityEngine.RuntimePlatform
 
-local function ismobile()
-    return (Application.platform == platform.Android) or (Application.platform == platform.IPhonePlayer)
+local function isAndroid()
+    return Application.platform == platform.Android
+end
+
+local function isApple()
+    return Application.platform == platform.IPhonePlayer
 end
 
 return {
-    ismobile = ismobile(),
-    deviceId = "xieheng001",
+    isAndroid = isAndroid(),
+    isApple   = isApple(),
+    isMobile  = isAndroid() or isApple(),
+    deviceId  = "xieheng001",
 }
 
 --endregion

@@ -756,12 +756,49 @@ namespace LuaInterface
         }
 
         public void PCall(int args, int oldTop)
-        {            
-            if (LuaDLL.lua_pcall(L, args, LuaDLL.LUA_MULTRET, oldTop) != 0)
+        {   //-------------------------------------------------------------------       
+            //if (LuaDLL.lua_pcall(L, args, LuaDLL.LUA_MULTRET, oldTop) != 0)
+            //{
+            //    string error = LuaToString(-1);
+            //    throw new LuaException(error, LuaException.GetLastError());
+            //} 
+            //-------------------------------------------------------------------
+            
+            int funcIndex = -(args + 1); //funcIndex就等价于oldTop反向索引
+            if (!LuaDLL.lua_isfunction(L, funcIndex))
             {
-                string error = LuaToString(-1);
-                throw new LuaException(error, LuaException.GetLastError());
-            }            
+                return;// 如果堆栈中funcIndex不是待调用的 函数，则返回
+            }
+            int traceback = 0;
+
+            LuaDLL.lua_getglobal(L, "_GDB_TRACKBACK_");//自定义的错误追踪函数_GDB_TRACKBACK_定义在utils/utils.lua中
+ 
+            if (!LuaDLL.lua_isfunction(L, -1))
+            {
+                LuaDLL.lua_pop(L, 1);
+            }
+            else
+            {
+                traceback = funcIndex - 1;
+                LuaDLL.lua_insert(L, traceback); //压入错误处理函数_GDB_TRACKBACK_
+            }
+
+            if (LuaDLL.lua_pcall(L, args, LuaDLL.LUA_MULTRET, traceback) != 0)
+            {
+                if (traceback != 0)
+                {
+                    //移除错误处理函数_GDB_TRACKBACK_和error message，
+                    //其实不处理也行，反正最后EndPCall都会恢复栈顶
+                    LuaDLL.lua_pop(L, 2);
+                }
+                else
+                {
+                    string error = LuaDLL.lua_tostring(L, -1);
+                    Exception last = LuaException.luaStack;
+                    LuaException.luaStack = null;
+                    throw new LuaException(error, last);
+                }
+            }
         }
 
         public void EndPCall(int oldTop)

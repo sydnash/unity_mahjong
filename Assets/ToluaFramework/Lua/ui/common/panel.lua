@@ -62,7 +62,7 @@ local function bind(target, variableName, gameObject, widgetType, panelScript)
     elseif widgetType == LuaPanel.WidgetType.Animation then 
         widget = animation.new(gameObject)
     else
-        logError("unknown widget type: " .. tostring(widgetType))
+        error("unknown widget type: " .. tostring(widgetType))
         return
     end
     

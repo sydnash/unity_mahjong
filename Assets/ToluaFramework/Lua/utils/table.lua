@@ -71,11 +71,12 @@ function table.tostring(t, _n)
 
 		str[#str+1] = '{\n'
 		if type(t) ~= 'table' then
-			logError('not table' .. debug.traceback())
+			error('not table' .. debug.traceback())
 		end
 
 		for k,v in pairs(t) do
 			if type(v) == 'table' and not self[v] then
+                local key
 				if type(k) == 'number' then
 					key = "[" .. tostring(k) .. "]"
 				else
