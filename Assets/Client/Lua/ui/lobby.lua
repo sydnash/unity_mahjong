@@ -2,8 +2,6 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local cityType = require("const.cityType")
-
 local base = require("ui.common.view")
 local lobby = class("lobby", base)
 

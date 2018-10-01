@@ -6,6 +6,7 @@ tpsheetFileNames:
 - Assets/Client/Resources/UI/CreateDeskUI/Atlas/CreateDeskUI.tpsheet
 - Assets/Client/Resources/UI/DeskOperationUI/Atlas/DeskOperationUI.tpsheet
 - Assets/Client/Resources/UI/DeskUI/Atlas/DeskUI.tpsheet
+- Assets/Client/Resources/UI/Emoji/Atlas/ChatUI.tpsheet
 - Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterDeskUI.tpsheet
 - Assets/Client/Resources/UI/ExitDeskUI/Atlas/ExxitDeskUI.tpsheet
 - Assets/Client/Resources/UI/GameEndUI/Atlas/GameEndUI.tpsheet
@@ -24,6 +25,7 @@ textureFileNames:
 - Assets/Client/Resources/UI/CreateDeskUI/Atlas/CreateDeskUI.png
 - Assets/Client/Resources/UI/DeskOperationUI/Atlas/DeskOperationUI.png
 - Assets/Client/Resources/UI/DeskUI/Atlas/DeskUI.png
+- Assets/Client/Resources/UI/Emoji/Atlas/ChatUI.png
 - Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterDeskUI.png
 - Assets/Client/Resources/UI/ExitDeskUI/Atlas/ExxitDeskUI.png
 - Assets/Client/Resources/UI/GameEndUI/Atlas/GameEndUI.png
@@ -37,6 +39,7 @@ textureFileNames:
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

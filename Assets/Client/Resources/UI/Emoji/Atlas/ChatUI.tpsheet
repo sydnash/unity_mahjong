@@ -1,0 +1,30 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:f02ba9c161a7ff2acb8687c64026fe6a:b023d3e7b7d8e2b3ad3ccd3fefb39bc6:e3a5d9ad5c392bc236cd999520ace042$
+#
+:format=40300
+:texture=ChatUI.png
+:size=512x512
+:pivotpoints=enabled
+:borders=disabled
+
+HF_bq01;1;430;80;81; 0.5;0.5; 0;0;0;0
+HF_bq02;1;347;80;81; 0.5;0.5; 0;0;0;0
+HF_bq03;1;264;80;81; 0.5;0.5; 0;0;0;0
+HF_bq04;1;181;80;81; 0.5;0.5; 0;0;0;0
+HF_bq05;1;98;80;81; 0.5;0.5; 0;0;0;0
+HF_bq06;1;15;80;81; 0.5;0.5; 0;0;0;0
+HF_bq07;83;430;80;81; 0.5;0.5; 0;0;0;0
+HF_bq08;165;430;80;81; 0.5;0.5; 0;0;0;0
+HF_bq09;247;430;80;81; 0.5;0.5; 0;0;0;0
+HF_bq10;329;430;80;81; 0.5;0.5; 0;0;0;0
+HF_bq11;411;430;80;81; 0.5;0.5; 0;0;0;0
+HF_bq12;83;347;80;81; 0.5;0.5; 0;0;0;0
+HF_bq13;83;264;80;81; 0.5;0.5; 0;0;0;0
+HF_bq14;83;181;80;81; 0.5;0.5; 0;0;0;0
+HF_bq15;83;98;80;81; 0.5;0.5; 0;0;0;0
+HF_bq16;83;15;80;81; 0.5;0.5; 0;0;0;0

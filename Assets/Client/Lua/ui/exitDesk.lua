@@ -2,8 +2,6 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local exitDeskState = require("const.exitDeskState")
-
 local base = require("ui.common.view")
 local exitDesk = class("exitDesk", base)
 
@@ -64,7 +62,7 @@ function exitDesk:onAgreeClickedHandler()
     self.mRejectC:setSprite("JS_zi01_h")
 
     local player = self.game:getPlayerByAcId(gamepref.acId)
-    self.items[player.turn]:setState(exitDeskState.agree)
+    self.items[player.turn]:setState(exitDeskStatus.agree)
 
     self.game:agreeExit()
 end
@@ -76,7 +74,7 @@ function exitDesk:onRejectClickedHandler()
     self.mRejectC:setSprite("JS_zi01_h")
 
     local player = self.game:getPlayerByAcId(gamepref.acId)
-    self.items[player.turn]:setState(exitDeskState.reject)
+    self.items[player.turn]:setState(exitDeskStatus.reject)
 
     self.game:rejectExit()
 end

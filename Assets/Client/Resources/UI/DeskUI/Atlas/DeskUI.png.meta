@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8b67b6a3be3a02c4faecd31caeb2fabe
-timeCreated: 1536196073
+timeCreated: 1538278205
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -38,6 +38,7 @@ TextureImporter:
     21300062: ZM_zi03
     21300064: ZM_ok
     21300066: ZM_an12
+    21300068: HF_di02
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -103,11 +104,25 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+      name: HF_di02
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 426
+        width: 129
+        height: 85
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 66, y: 41, z: 41, w: 26}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: ZM_an01
       rect:
         serializedVersion: 2
-        x: 432
-        y: 244
+        x: 104
+        y: 206
         width: 69
         height: 69
       alignment: 0
@@ -120,8 +135,8 @@ TextureImporter:
       name: ZM_an02
       rect:
         serializedVersion: 2
-        x: 432
-        y: 173
+        x: 175
+        y: 206
         width: 69
         height: 69
       alignment: 0
@@ -134,8 +149,8 @@ TextureImporter:
       name: ZM_an03
       rect:
         serializedVersion: 2
-        x: 69
-        y: 181
+        x: 246
+        y: 175
         width: 69
         height: 69
       alignment: 0
@@ -148,8 +163,8 @@ TextureImporter:
       name: ZM_an03_1
       rect:
         serializedVersion: 2
-        x: 140
-        y: 224
+        x: 317
+        y: 175
         width: 69
         height: 69
       alignment: 0
@@ -162,8 +177,8 @@ TextureImporter:
       name: ZM_an04
       rect:
         serializedVersion: 2
-        x: 140
-        y: 153
+        x: 104
+        y: 135
         width: 69
         height: 69
       alignment: 0
@@ -176,8 +191,8 @@ TextureImporter:
       name: ZM_an05
       rect:
         serializedVersion: 2
-        x: 268
-        y: 354
+        x: 434
+        y: 275
         width: 69
         height: 70
       alignment: 0
@@ -218,8 +233,8 @@ TextureImporter:
       name: ZM_di02
       rect:
         serializedVersion: 2
-        x: 358
-        y: 460
+        x: 266
+        y: 246
         width: 121
         height: 51
       alignment: 0
@@ -260,8 +275,8 @@ TextureImporter:
       name: ZM_ok
       rect:
         serializedVersion: 2
-        x: 1
-        y: 176
+        x: 175
+        y: 130
         width: 66
         height: 74
       alignment: 0
@@ -274,8 +289,8 @@ TextureImporter:
       name: ZM_tx01
       rect:
         serializedVersion: 2
-        x: 211
-        y: 155
+        x: 169
+        y: 277
         width: 95
         height: 95
       alignment: 0
@@ -288,8 +303,8 @@ TextureImporter:
       name: ZM_zi01
       rect:
         serializedVersion: 2
-        x: 340
-        y: 411
+        x: 1
+        y: 325
         width: 166
         height: 47
       alignment: 0
@@ -302,8 +317,8 @@ TextureImporter:
       name: ZM_zi02
       rect:
         serializedVersion: 2
-        x: 339
-        y: 363
+        x: 1
+        y: 277
         width: 166
         height: 46
       alignment: 0
@@ -316,8 +331,8 @@ TextureImporter:
       name: ZM_zi03
       rect:
         serializedVersion: 2
-        x: 339
-        y: 315
+        x: 266
+        y: 299
         width: 166
         height: 46
       alignment: 0
@@ -330,8 +345,8 @@ TextureImporter:
       name: ZM_zi11
       rect:
         serializedVersion: 2
-        x: 223
-        y: 252
+        x: 389
+        y: 173
         width: 104
         height: 100
       alignment: 0
@@ -344,8 +359,8 @@ TextureImporter:
       name: ZM_zi12
       rect:
         serializedVersion: 2
-        x: 329
-        y: 213
+        x: 1
+        y: 175
         width: 101
         height: 100
       alignment: 0
@@ -358,8 +373,8 @@ TextureImporter:
       name: ZM_zi15
       rect:
         serializedVersion: 2
-        x: 1
-        y: 295
+        x: 268
+        y: 347
         width: 220
         height: 77
       alignment: 0

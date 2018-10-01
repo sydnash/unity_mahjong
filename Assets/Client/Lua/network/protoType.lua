@@ -17,6 +17,7 @@ return {
         exitDesk        = "CmdType.fly.CS.ExitGSDesk",
         exitVote        = "CmdType.fly.CS.ExitVote",
         dpChoose        = "CmdType.fly.CS_MJDQChose",
+        chatMessage     = "CmdType.fly.CS.ChatMsg",
     },
     -- server to client
     sc = {
@@ -40,6 +41,7 @@ return {
         gameEnd                 = "CmdType.fly.SC.GameEnd",
         dqHint                  = "CmdType.fly.SC_MJDQHint",
         dqDo                    = "CmdType.fly.SC.MJDQDo",
+        chatMessage             = "CmdType.fly.SC.ChatMsg",
     },
 }
 

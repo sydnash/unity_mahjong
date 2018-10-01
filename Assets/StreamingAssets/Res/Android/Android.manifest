@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1947978245
+CRC: 1269402437
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -217,6 +217,7 @@ AssetBundleManifest:
         Dependency_0: ui/common/common
         Dependency_1: font/fzzyjt
         Dependency_2: font/fzcyjt
+        Dependency_3: ui/emoji/chatui
     Info_52:
       Name: ui/deskoperationui/deskoperationui
       Dependencies:
@@ -555,4 +556,8 @@ AssetBundleManifest:
         Dependency_1: font/fzzyjt
     Info_157:
       Name: ui/chatui/chatui
+      Dependencies:
+        Dependency_0: ui/emoji/chatui
+    Info_158:
+      Name: ui/emoji/chatui
       Dependencies: {}

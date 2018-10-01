@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/DeskUI/Atlas/DeskUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Resources/UI/DeskUI/Atlas/DeskUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -199,6 +199,19 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Images/HF_di02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,21,65,43</rect>
+                <key>scale9Paddings</key>
+                <rect>32,21,65,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/ZM_an01.png</key>
             <key type="filename">Images/ZM_an02.png</key>
             <key type="filename">Images/ZM_an03.png</key>
@@ -408,6 +421,7 @@
             <filename>Images/ZM_ok.png</filename>
             <filename>Images/ZM_an12.png</filename>
             <filename>Images/ZM_di.png</filename>
+            <filename>Images/HF_di02.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

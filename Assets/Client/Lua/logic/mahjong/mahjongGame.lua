@@ -2,10 +2,7 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local gamePlayer    = require("logic.player.gamePlayer")
-local opType        = require("const.opType")
-local sexType       = require("const.sexType")
-
+local gamePlayer  = require("logic.player.gamePlayer")
 local mahjongGame = class("mahjongGame")
 
 mahjongGame.seatType = {

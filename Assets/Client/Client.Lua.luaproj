@@ -38,19 +38,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
+    <Compile Include="Lua\config\chatConfig.lua" />
     <Compile Include="Lua\config\deviceConfig.lua" />
     <Compile Include="Lua\config\networkConfig.lua" />
     <Compile Include="Lua\config\soundConfig.lua" />
-    <Compile Include="Lua\const\cityType.lua" />
-    <Compile Include="Lua\const\deskStatus.lua" />
-    <Compile Include="Lua\const\exitDeskState.lua" />
-    <Compile Include="Lua\const\gameStatus.lua" />
-    <Compile Include="Lua\const\headerType.lua" />
-    <Compile Include="Lua\const\language.lua" />
     <Compile Include="Lua\const\mahjongClass.lua" />
-    <Compile Include="Lua\const\opType.lua" />
-    <Compile Include="Lua\const\retcText.lua" />
-    <Compile Include="Lua\const\sexType.lua" />
+    <Compile Include="Lua\const\statusDef.lua" />
+    <Compile Include="Lua\const\textDef.lua" />
+    <Compile Include="Lua\const\typeDef.lua" />
     <Compile Include="Lua\globals.lua" />
     <Compile Include="Lua\logic\gamepref.lua" />
     <Compile Include="Lua\logic\mahjong\mahjong.lua" />

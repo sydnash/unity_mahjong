@@ -2,13 +2,11 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local opType        = require("const.opType")
 local mahjongClass  = require("const.mahjongClass")
 local mahjongType   = require("logic.mahjong.mahjongType")
 local mahjongGame   = require("logic.mahjong.mahjongGame")
 local mahjong       = require("logic.mahjong.mahjong")
 local touch         = require("logic.touch")
-local deskStatus    = require("const.deskStatus")
 
 local base = require("ui.common.view")
 local mahjongOperation = class("mahjongOperation", base)

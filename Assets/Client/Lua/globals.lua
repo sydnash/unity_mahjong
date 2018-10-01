@@ -2,15 +2,19 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-deviceConfig  = require("config.deviceConfig")
+require("const.typeDef")
+require("const.textDef")
+require("const.statusDef")
+
+deviceConfig    = require("config.deviceConfig")
+gamepref        = require("logic.gamepref")
+androidHelper   = require("platform.androidHelper")
+networkManager  = require("network.networkManager")
 
 local waiting       = require("ui.waiting")
 local messagebox    = require("ui.messagebox")
 local mahjongType   = require("logic.mahjong.mahjongType")
-local opType        = require("const.opType")
-local sexType       = require("const.sexType")
 local http          = require("network.http")
-
 
 local K = 1024
 local M = K * K
@@ -110,7 +114,7 @@ end
 -- 下载玩家头像
 -------------------------------------------------------------
 function downloadIcon(url, callback)
-    log("downloadIcon, url = " .. url)
+    --log("downloadIcon, url = " .. url)
 
     if string.isNilOrEmpty(url) then
         return

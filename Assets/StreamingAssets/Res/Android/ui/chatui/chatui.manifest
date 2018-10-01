@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2385061512
+CRC: 3543052456
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9042e720ed1cc44adbfe221155ece504
+    Hash: 7163880b52ccbab7e8c270f29a8dc23a
   TypeTreeHash:
     serializedVersion: 2
     Hash: cf3f0d9a20596c7f79a2ebbf92fc309e
@@ -51,4 +51,5 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/Client/Resources/UI/ChatUI/ChatUI.prefab
-Dependencies: []
+Dependencies:
+- D:/Works/CompanyProjects/tdqp_android/Assets/StreamingAssets/Res/Android/ui/emoji/chatui

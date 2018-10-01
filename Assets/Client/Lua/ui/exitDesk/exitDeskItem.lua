@@ -2,8 +2,6 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local exitDeskState = require("const.exitDeskState")
-
 local base = require("ui.common.panel")
 local exitDeskItem = class("exitDeskItem", base)
 
@@ -22,13 +20,13 @@ function exitDeskItem:setPlayerInfo(player)
 end
 
 function exitDeskItem:setState(state)
-    if state == exitDeskState.proposer then
+    if state == exitDeskStatus.proposer then
         self.mState:setText("申请解散")
         self.mState:setColor(AGREE_COLOR)
-    elseif state == exitDeskState.agree then
+    elseif state == exitDeskStatus.agree then
         self.mState:setText("同意解散")
         self.mState:setColor(AGREE_COLOR)
-    elseif state == exitDeskState.reject then
+    elseif state == exitDeskStatus.reject then
         self.mState:setText("拒绝解散")
         self.mState:setColor(REJECT_COLOR)
     else

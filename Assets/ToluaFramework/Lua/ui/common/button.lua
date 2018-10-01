@@ -20,7 +20,7 @@ end
 ----------------------------------------------------------------
 function button:addClickListener(handler, target)
     self.component.onClick:AddListener(function() 
-        handler(target) 
+        handler(target, self.component) 
     end)
 end
 

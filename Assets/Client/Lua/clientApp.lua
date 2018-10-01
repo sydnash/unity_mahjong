@@ -4,14 +4,9 @@
 
 require("globals")
 
-
 local soundConfig   = require("config.soundConfig")
 local input         = UnityEngine.Input
 local keycode       = UnityEngine.KeyCode
-
-gamepref        = require("logic.gamepref")
-androidHelper   = require("platform.androidHelper")
-networkManager  = require("network.networkManager")
 
 -------------------------------------------------------------------
 -- 禁止定义全局变量

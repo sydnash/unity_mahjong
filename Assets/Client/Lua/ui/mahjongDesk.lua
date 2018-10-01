@@ -3,8 +3,7 @@
 --此文件由[BabeLua]插件自动生成
 
 local mahjongGame   = require("logic.mahjong.mahjongGame")
-local opType        = require("const.opType")
-local gameStatus    = require("const.gameStatus")
+local chatConfig    = require("config.chatConfig")
 
 local base = require("ui.common.view")
 local mahjongDesk = class("mahjongDesk", base)
@@ -35,8 +34,39 @@ function mahjongDesk:onInit()
     self.mCancel:addClickListener(self.onCancelClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
     self.mChat:addClickListener(self.onChatClickedHandler, self)
+    self.mVoice:addClickListener(self.onVoiceClickedHandler, self)
     self.mGameInfoS:addClickListener(self.onGameInfoSClickedHandler, self)
     self.mGameInfoH:addClickListener(self.onGameInfoHClickedHandler, self)
+
+    networkManager.registerCommandHandler(protoType.sc.chatMessage, function(msg)
+        self:onChatMessageHandler(msg)
+    end, true)
+
+    signalManager.registerSignalHandler(signalType.chatTextSignal,  self.onChatTextSignalHandler,  self)
+    signalManager.registerSignalHandler(signalType.chatEmojiSignal, self.onChatEmojiSignalHandler, self)
+end
+
+function mahjongDesk:update()
+    for _, v in pairs(self.players) do
+        v:update()
+    end
+end
+
+function mahjongDesk:onDestroy()
+    networkManager.unregisterCommandHandler(protoType.sc.chatMessage)
+
+    signalManager.unregisterSignalHandler(signalType.chatTextSignal,  self.onChatTextSignalHandler,  self)
+    signalManager.unregisterSignalHandler(signalType.chatEmojiSignal, self.onChatEmojiSignalHandler, self)
+
+    if self.settingUI ~= nil then
+        self.settingUI:close()
+        self.settingUI = nil
+    end
+
+    if self.chatUI ~= nil then
+        self.chatUI:close()
+        self.chatUI = nil
+    end
 end
 
 function mahjongDesk:refreshUI()
@@ -80,9 +110,10 @@ function mahjongDesk:onInviteClickedHandler()
 end
 
 function mahjongDesk:getInvitationInfo()
-    return string.format("房号：%d，类型：血战到底，人数：%d", 
+    return string.format("房号：%d，类型：血战到底，人数：%d/%d", 
                          self.game.deskId, 
-                         self.game:getPlayerCount())
+                         self.game:getPlayerCount(),
+                         self.game:getTotalPlayerCount())
 end
 
 function mahjongDesk:onReadyClickedHandler()
@@ -98,15 +129,19 @@ end
 function mahjongDesk:onSettingClickedHandler()
     playButtonClickSound()
 
-    local ui = require("ui.setting").new(self.game)
+    self.settingUI = require("ui.setting").new(self.game)
     ui:show()
 end
 
 function mahjongDesk:onChatClickedHandler()
     playButtonClickSound()
 
-    local ui = require("ui.chat").new()
+    self.chatUI = require("ui.chat").new()
     ui:show()
+end
+
+function mahjongDesk:onVoiceClickedHandler()
+    playButtonClickSound()
 end
 
 function mahjongDesk:setReady(acId, ready)
@@ -252,6 +287,57 @@ function mahjongDesk:onGameInfoHClickedHandler()
     self.mGameDesc:hide()
     self.mGameInfoS:show()
     self.mGameInfoH:hide()
+end
+
+function mahjongDesk:onChatMessageHandler(msg)
+    log("chat message, msg = " .. table.tostring(msg))
+    
+    local seat = self.game:getSeatTypeByAcId(msg.AcId)
+    local player = self.players[seat]
+
+    if msg.Type == chatType.text then
+        local content = chatConfig.text[msg.Data].content
+        local audio = chatConfig.text[msg.Data].audio
+
+        player:showChatText(content)
+
+        if not string.isNilOrEmpty(audio) then
+
+        end
+    elseif msg.Type == chatType.emoji then
+        local content = chatConfig.emoji[msg.Data].content
+        local audio = chatConfig.emoji[msg.Data].audio
+
+        player:showChatEmoji(msg.Data)
+
+        if not string.isNilOrEmpty(audio) then
+
+        end
+    end
+end
+
+function mahjongDesk:onChatTextSignalHandler(key)
+    local content = chatConfig.text[key].content
+    local audio = chatConfig.text[key].audio
+
+    local player = self.players[mahjongGame.seatType.mine]
+    player:showChatText(content)
+
+    if not string.isNilOrEmpty(audio) then
+
+    end
+end
+
+function mahjongDesk:onChatEmojiSignalHandler(key)
+    local content = chatConfig.emoji[key].content
+    local audio = chatConfig.emoji[key].audio
+
+    local player = self.players[mahjongGame.seatType.mine]
+    player:showChatEmoji(content)
+
+    if not string.isNilOrEmpty(audio) then
+
+    end
 end
 
 return mahjongDesk

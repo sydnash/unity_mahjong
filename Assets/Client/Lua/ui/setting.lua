@@ -2,9 +2,6 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local language = require("const.language")
-local headerType = require("const.headerType")
-
 local base = require("ui.common.view")
 local setting = class("setting", base)
 

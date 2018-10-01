@@ -46,14 +46,11 @@ end
 
 protoType           = require("network.protoType")
 retc                = require("network.retc")
-retcText            = require("const.retcText")
 
 local http          = require("network.http")
 local tcp           = require("network.tcp")
 local proto         = require("network.proto")
 local networkConfig = require("config.networkConfig")
-local opType        = require("const.opType")
-local sexType       = require("const.sexType")
 local cvt           = ByteUtils
 
 local networkManager = class("networkManager")
@@ -497,6 +494,16 @@ end
 function networkManager.dingque(mahjongClass, callback)
     local data = { Q = mahjongClass }
     send(protoType.cs.dpChoose, data, function(msg)
+        callback(false, nil)
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.sendChatMessage(chatType, chatContent)
+    local data = { Type = chatType, Data = chatContent }
+    send(protoType.cs.chatMessage, data, function(msg)
         callback(false, nil)
     end)
 end

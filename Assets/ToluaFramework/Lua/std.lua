@@ -36,5 +36,6 @@ modelManager        = require("manager.modelManager")
 textureManager      = require("manager.textureManager")
 animationManager    = require("manager.animationManager")
 preloadManager      = require("manager.preloadManager")
+signalManager       = require("manager.signalManager")
 
 --endregion
