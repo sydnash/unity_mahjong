@@ -111,12 +111,16 @@ end
 
 function lobby:onShareClickedHandler()
     playButtonClickSound()
-    --androidHelper.shareUrlWx("幺九麻将", "房号：123456", "http://www.cdbshy.com/", true)
-    androidHelper.shareImageWx("1.jpg", true)
+    
+    local ui = require("ui.share").new()
+    ui:show()
 end
 
 function lobby:onAuthenticateClickedHandler()
     playButtonClickSound()
+
+    local ui = require("ui.authentication").new()
+    ui:show()
 end
 
 function lobby:onMailClickedHandler()

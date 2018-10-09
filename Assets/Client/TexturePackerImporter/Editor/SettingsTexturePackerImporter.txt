@@ -1,6 +1,7 @@
 version: 2
 importPivots: 1
 tpsheetFileNames:
+- Assets/Client/Resources/UI/AuthenticationUI/Atlas/AuthenticationUI.tpsheet
 - Assets/Client/Resources/UI/ChatUI/Atlas/ChatUI.tpsheet
 - Assets/Client/Resources/UI/Common/Atlas/Common.tpsheet
 - Assets/Client/Resources/UI/CreateDeskUI/Atlas/CreateDeskUI.tpsheet
@@ -16,10 +17,12 @@ tpsheetFileNames:
 - Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.tpsheet
 - Assets/Client/Resources/UI/Mahjong/Atlas/Mahjong.tpsheet
 - Assets/Client/Resources/UI/SettingUI/Atlas/SettingUI.tpsheet
+- Assets/Client/Resources/UI/ShareUI/Atlas/ShareUI.tpsheet
 - Assets/Client/Resources/UI/UserAgreementUI/Atlas/UserAgreementUI.tpsheet
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.tpsheet
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
 textureFileNames:
+- Assets/Client/Resources/UI/AuthenticationUI/Atlas/AuthenticationUI.png
 - Assets/Client/Resources/UI/ChatUI/Atlas/ChatUI.png
 - Assets/Client/Resources/UI/Common/Atlas/Common.png
 - Assets/Client/Resources/UI/CreateDeskUI/Atlas/CreateDeskUI.png
@@ -35,10 +38,13 @@ textureFileNames:
 - Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.png
 - Assets/Client/Resources/UI/Mahjong/Atlas/Mahjong.png
 - Assets/Client/Resources/UI/SettingUI/Atlas/SettingUI.png
+- Assets/Client/Resources/UI/ShareUI/Atlas/ShareUI.png
 - Assets/Client/Resources/UI/UserAgreementUI/Atlas/UserAgreementUI.png
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
+- 
 - 
 - 
 - 

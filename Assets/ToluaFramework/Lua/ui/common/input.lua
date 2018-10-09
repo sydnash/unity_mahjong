@@ -5,7 +5,7 @@
 local base = require("common.object")
 local input = class("input", base)
 
-local UIInput = UnityEngine.UI.InputFiled
+local UIInput = UnityEngine.UI.InputField
 
 -------------------------------------------------------------------
 --
@@ -32,9 +32,9 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function input:addChangedListener(hander, target)
+function input:addChangedListener(handler, target)
     self.component.onValueChanged:AddListener(function()
-        handler(target)
+        handler(target, self:getText())
     end)
 end
 

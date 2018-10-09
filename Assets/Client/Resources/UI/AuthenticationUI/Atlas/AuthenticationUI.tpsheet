@@ -1,0 +1,16 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:dbdaa119acb5adb024f4a43010fe8e89:d69db462fb33472456962db79bff30cf:9dfc36bbab0af3970e48de179e27a185$
+#
+:format=40300
+:texture=AuthenticationUI.png
+:size=128x128
+:pivotpoints=enabled
+:borders=disabled
+
+SM_tj;1;88;77;39; 0.5;0.5; 0;0;0;0; 4;77;0;0;0;0;39;77;39; 2;1;2;3;0;1;3
+SM_tj_h;1;49;75;37; 0.5;0.5; 0;0;0;0; 5;75;0;0;0;0;33;4;37;75;37; 3;0;3;4;1;2;3;0;1;3

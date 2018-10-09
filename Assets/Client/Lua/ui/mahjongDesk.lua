@@ -130,14 +130,14 @@ function mahjongDesk:onSettingClickedHandler()
     playButtonClickSound()
 
     self.settingUI = require("ui.setting").new(self.game)
-    ui:show()
+    self.settingUI:show()
 end
 
 function mahjongDesk:onChatClickedHandler()
     playButtonClickSound()
 
     self.chatUI = require("ui.chat").new()
-    ui:show()
+    self.chatUI:show()
 end
 
 function mahjongDesk:onVoiceClickedHandler()

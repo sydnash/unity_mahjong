@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ad3a954b133ab2841a6dd140248f07b1
-timeCreated: 1538238896
+timeCreated: 1539070024
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -79,6 +79,7 @@ TextureImporter:
     21300144: ZM_zi10_s
     21300146: ZM_zi13_s
     21300148: ZM_zi14_s
+    21300150: GY_di_shuru
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -193,8 +194,8 @@ TextureImporter:
       name: fs1_2
       rect:
         serializedVersion: 2
-        x: 921
-        y: 440
+        x: 118
+        y: 541
         width: 41
         height: 58
       alignment: 9
@@ -221,8 +222,8 @@ TextureImporter:
       name: fs1_4
       rect:
         serializedVersion: 2
-        x: 833
-        y: 478
+        x: 921
+        y: 432
         width: 42
         height: 58
       alignment: 9
@@ -235,8 +236,8 @@ TextureImporter:
       name: fs1_5
       rect:
         serializedVersion: 2
-        x: 962
-        y: 379
+        x: 283
+        y: 578
         width: 40
         height: 59
       alignment: 0
@@ -263,8 +264,8 @@ TextureImporter:
       name: fs1_7
       rect:
         serializedVersion: 2
-        x: 876
-        y: 406
+        x: 1
+        y: 482
         width: 41
         height: 58
       alignment: 9
@@ -277,8 +278,8 @@ TextureImporter:
       name: fs1_8
       rect:
         serializedVersion: 2
-        x: 833
-        y: 417
+        x: 197
+        y: 578
         width: 41
         height: 59
       alignment: 9
@@ -291,8 +292,8 @@ TextureImporter:
       name: fs1_9
       rect:
         serializedVersion: 2
-        x: 933
-        y: 500
+        x: 657
+        y: 525
         width: 42
         height: 59
       alignment: 0
@@ -319,8 +320,8 @@ TextureImporter:
       name: fs2_0
       rect:
         serializedVersion: 2
-        x: 977
-        y: 500
+        x: 701
+        y: 525
         width: 42
         height: 59
       alignment: 0
@@ -347,8 +348,8 @@ TextureImporter:
       name: fs2_2
       rect:
         serializedVersion: 2
-        x: 964
-        y: 440
+        x: 44
+        y: 482
         width: 41
         height: 58
       alignment: 9
@@ -359,76 +360,6 @@ TextureImporter:
       tessellationDetail: -1
     - serializedVersion: 2
       name: fs2_3
-      rect:
-        serializedVersion: 2
-        x: 657
-        y: 525
-        width: 42
-        height: 59
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: fs2_4
-      rect:
-        serializedVersion: 2
-        x: 877
-        y: 466
-        width: 42
-        height: 58
-      alignment: 9
-      pivot: {x: 0.5, y: 0.49137932}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: fs2_5
-      rect:
-        serializedVersion: 2
-        x: 197
-        y: 578
-        width: 40
-        height: 59
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: fs2_6
-      rect:
-        serializedVersion: 2
-        x: 701
-        y: 525
-        width: 42
-        height: 59
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: fs2_7
-      rect:
-        serializedVersion: 2
-        x: 919
-        y: 380
-        width: 41
-        height: 58
-      alignment: 9
-      pivot: {x: 0.4878049, y: 0.49137932}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: fs2_8
       rect:
         serializedVersion: 2
         x: 745
@@ -442,11 +373,81 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: fs2_9
+      name: fs2_4
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 432
+        width: 42
+        height: 58
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49137932}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: fs2_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 518
+        width: 40
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: fs2_6
       rect:
         serializedVersion: 2
         x: 789
         y: 477
+        width: 42
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: fs2_7
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 579
+        width: 41
+        height: 58
+      alignment: 9
+      pivot: {x: 0.4878049, y: 0.49137932}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: fs2_8
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 477
+        width: 42
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: fs2_9
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 465
         width: 42
         height: 59
       alignment: 0
@@ -648,6 +649,20 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 15, y: 0, z: 15, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GY_di_shuru
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 538
+        width: 65
+        height: 67
+      alignment: 9
+      pivot: {x: 0.50769234, y: 0.5}
+      border: {x: 24, y: 20, z: 23, w: 24}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -865,8 +880,8 @@ TextureImporter:
       name: mask
       rect:
         serializedVersion: 2
-        x: 822
-        y: 538
+        x: 933
+        y: 492
         width: 65
         height: 67
       alignment: 0
@@ -879,8 +894,8 @@ TextureImporter:
       name: ZM_1
       rect:
         serializedVersion: 2
-        x: 118
-        y: 559
+        x: 325
+        y: 597
         width: 40
         height: 40
       alignment: 0
@@ -893,8 +908,8 @@ TextureImporter:
       name: ZM_2
       rect:
         serializedVersion: 2
-        x: 239
-        y: 597
+        x: 161
+        y: 536
         width: 40
         height: 40
       alignment: 0
@@ -907,8 +922,8 @@ TextureImporter:
       name: ZM_3
       rect:
         serializedVersion: 2
-        x: 281
-        y: 597
+        x: 87
+        y: 499
         width: 40
         height: 40
       alignment: 0
@@ -921,8 +936,8 @@ TextureImporter:
       name: ZM_4
       rect:
         serializedVersion: 2
-        x: 323
-        y: 597
+        x: 367
+        y: 574
         width: 40
         height: 40
       alignment: 0

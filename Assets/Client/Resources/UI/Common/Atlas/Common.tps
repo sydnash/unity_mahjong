@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/Common/Atlas/Common.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Resources/UI/Common/Atlas/Common.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -305,6 +305,19 @@
                 <rect>15,13,31,27</rect>
                 <key>scale9Paddings</key>
                 <rect>15,13,31,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_di_shuru.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,17,34,35</rect>
+                <key>scale9Paddings</key>
+                <rect>17,17,34,35</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -692,6 +705,7 @@
             <filename>Images/ZM_zi10_s.png</filename>
             <filename>Images/ZM_zi13_s.png</filename>
             <filename>Images/ZM_zi14_s.png</filename>
+            <filename>Images/GY_di_shuru.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

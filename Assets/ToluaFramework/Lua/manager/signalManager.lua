@@ -7,7 +7,7 @@ local slots = {}
 -------------------------------------------------------------------
 -- 注册信号处理函数
 -------------------------------------------------------------------
-local function registerSignalHandler(signalName, func, target)
+local function register(signalName, func, target)
     if slots[signalName] == nil then
         slots[signalName] = {}
     end
@@ -19,7 +19,7 @@ end
 -------------------------------------------------------------------
 -- 注销信号处理函数
 -------------------------------------------------------------------
-local function unregisterSignalHandler(signalName, func, target)
+local function unregister(signalName, func, target)
     local slot = slots[signalName]
 
     if slot ~= nil then
