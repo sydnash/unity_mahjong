@@ -34,7 +34,7 @@ end
 ----------------------------------------------------------------
 function toggle:addChangedListener(handler, target)
     self.component.onValueChanged:AddListener(function()
-        handler(target, self:getSelected()) 
+        handler(target, self:getSelected(), self) 
     end)
 end
 

@@ -52,11 +52,14 @@ public abstract class StingyScrollRect : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="item"></param>
-    public void Init(int capacity, LuaFunction itemInstantiateCallback,  LuaFunction itemRefreshCallback)
+    public void Init(int capacity, LuaFunction itemInstantiateCallback, LuaFunction itemRefreshCallback)
     {
         mItemRefreshCallback = itemRefreshCallback;
 
-        mScrollRect = GetComponent<ScrollRect>();
+        if (mScrollRect == null)
+        {
+            mScrollRect = GetComponent<ScrollRect>();
+        }
         mScrollRect.onValueChanged.AddListener(OnScrollRectValueChangedHandler);
 
         mCapacity = capacity;
@@ -81,6 +84,9 @@ public abstract class StingyScrollRect : MonoBehaviour
                 item.SetParent(scrollContent, false);
                 SetItemPosition(item, i);
 
+                LuaFunction func = lua.GetLuaFunction("show");
+                func.Call(lua);
+
                 mLuaList.Add(lua);
                 InvokeItemRefreshCallback(lua, i);
             }
@@ -92,6 +98,10 @@ public abstract class StingyScrollRect : MonoBehaviour
     /// </summary>
     public void Reset()
     {
+        mCapacity = 0;
+        mHeadIndex = -1;
+        mTailIndex = -1;
+
         foreach (LuaTable lua in mLuaList)
         {
             LuaFunction func = lua.GetLuaFunction("close");
@@ -99,7 +109,11 @@ public abstract class StingyScrollRect : MonoBehaviour
         }
         mLuaList.Clear();
 
-        mScrollRect.content.anchoredPosition = Vector2.zero;
+        if (mScrollRect != null)
+        {
+            mScrollRect.content.anchoredPosition = Vector2.zero;
+            mScrollRect.onValueChanged.RemoveAllListeners();
+        }
     }
 
     #endregion

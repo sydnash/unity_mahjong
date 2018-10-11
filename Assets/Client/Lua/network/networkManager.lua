@@ -501,10 +501,65 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.sendChatMessage(chatType, chatContent)
+function networkManager.sendChatMessage(chatType, chatContent, callback)
     local data = { Type = chatType, Data = chatContent }
     send(protoType.cs.chatMessage, data, function(msg)
         callback(false, nil)
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.queryFriendsterList(callback)
+    send(protoType.cs.queryFriendsterList, table.empty, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.createFriendster(city, name, callback)
+    local data = { ClubName = name, ClubDesc = string.empty, GameType = city, ClubIcon = string.empty }
+    send(protoType.cs.createFriendster, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.queryFriendsterMembers(friendserId, callback)
+    local data = { ClubId = friendserId }
+    send(protoType.cs.queryFriendserMembers, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.queryFriendsterDesks(friendserId, callback)
+    local data = { ClubId = friendserId }
+    send(protoType.cs.queryFriendserDesks, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
     end)
 end
 

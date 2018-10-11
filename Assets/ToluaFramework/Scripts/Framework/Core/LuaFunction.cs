@@ -939,7 +939,13 @@ namespace LuaInterface
         {
             try
             {
-                return luaState.CheckValue<T>(stackPos++);
+                //@Modified by Heng Xie
+                //return luaState.CheckValue<T>(stackPos++);
+                stackPos++;
+
+                int top = luaState.LuaGetTop();
+                return luaState.CheckValue<T>(top);
+                //@End
             }
             catch (Exception e)
             {

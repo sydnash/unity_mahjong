@@ -24,7 +24,7 @@ function lobby:onInit()
     self.mShop:addClickListener(self.onShopClickedHandler, self)
     self.mHistory:addClickListener(self.onHistoryClickedHandler, self)
     self.mRank:addClickListener(self.onRankClickedHandler, self)
-    self.mActive:addClickListener(self.onActiveClickedHandler, self)
+    self.mActivity:addClickListener(self.onActivityClickedHandler, self)
     self.mShare:addClickListener(self.onShareClickedHandler, self)
     self.mAuthenticate:addClickListener(self.onAuthenticateClickedHandler, self)
     self.mMail:addClickListener(self.onMailClickedHandler, self)
@@ -55,6 +55,7 @@ end
 
 function lobby:onAccuseClickedHandler()
     playButtonClickSound()
+    showMessageUI("功能尚未开放，敬请期待")
 end
 
 function lobby:onEnterDeskClickedHandler()
@@ -91,22 +92,44 @@ end
 
 function lobby:onEnterQYQClickedHandler()
     playButtonClickSound()
+    
+    showWaitingUI("正在获取亲友圈数据，请稍候...")
+    networkManager.queryFriendsterList(function(ok, msg)
+        closeWaitingUI()
+
+        if not ok then
+            showMessageUI("获取亲友圈数据失败")
+            return
+        end
+
+        log("query friendster list, msg = " .. table.tostring(msg))
+
+        local ui = require("ui.friendster.friendster").new()
+        ui:set(msg.Clubs)
+        ui:show()
+    end)
 end
 
 function lobby:onShopClickedHandler()
     playButtonClickSound()
+    showMessageUI("功能尚未开放，敬请期待")
 end
 
 function lobby:onHistoryClickedHandler()
     playButtonClickSound()
+    showMessageUI("功能尚未开放，敬请期待")
 end
 
 function lobby:onRankClickedHandler()
     playButtonClickSound()
+    showMessageUI("功能尚未开放，敬请期待")
 end
 
-function lobby:onActiveClickedHandler()
+function lobby:onActivityClickedHandler()
     playButtonClickSound()
+
+    local ui = require("ui.activity").new()
+    ui:show()
 end
 
 function lobby:onShareClickedHandler()
@@ -125,6 +148,7 @@ end
 
 function lobby:onMailClickedHandler()
     playButtonClickSound()
+    showMessageUI("功能尚未开放，敬请期待")
 end
 
 function lobby:enterDesk(loading, cityType, deskId)

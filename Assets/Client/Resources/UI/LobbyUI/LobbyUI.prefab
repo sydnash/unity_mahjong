@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 114571161026166222}
   - component: {fileID: 114159092769175844}
   m_Layer: 5
-  m_Name: Active
+  m_Name: Activity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1975,7 +1975,7 @@ MonoBehaviour:
     widgetType: 5
     gameObject: {fileID: 1247317884941460}
     panelScript: 
-  - variableName: mActive
+  - variableName: mActivity
     widgetType: 5
     gameObject: {fileID: 1907483173568906}
     panelScript: 

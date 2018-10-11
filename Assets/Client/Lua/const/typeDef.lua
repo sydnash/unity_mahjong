@@ -78,4 +78,13 @@ signalType = {
     chatEmojiSignal = "chat.emoji.signal",
 }
 
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
+cityType = {
+    chengdu = 1001,
+    wenjiang = 1,
+    pidu = 2,
+}
+
 --endregion

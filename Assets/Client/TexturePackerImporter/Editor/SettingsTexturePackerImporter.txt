@@ -10,6 +10,7 @@ tpsheetFileNames:
 - Assets/Client/Resources/UI/Emoji/Atlas/ChatUI.tpsheet
 - Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterDeskUI.tpsheet
 - Assets/Client/Resources/UI/ExitDeskUI/Atlas/ExxitDeskUI.tpsheet
+- Assets/Client/Resources/UI/FriendsterUI/Atlas/FriendsterUI.tpsheet
 - Assets/Client/Resources/UI/GameEndUI/Atlas/GameEndUI.tpsheet
 - Assets/Client/Resources/UI/GameOverUI/Atlas/GameOverUI.tpsheet
 - Assets/Client/Resources/UI/LoadingUI/Atlas/LoadingUI.tpsheet
@@ -31,6 +32,7 @@ textureFileNames:
 - Assets/Client/Resources/UI/Emoji/Atlas/ChatUI.png
 - Assets/Client/Resources/UI/EnterDeskUI/Atlas/EnterDeskUI.png
 - Assets/Client/Resources/UI/ExitDeskUI/Atlas/ExxitDeskUI.png
+- Assets/Client/Resources/UI/FriendsterUI/Atlas/FriendsterUI.png
 - Assets/Client/Resources/UI/GameEndUI/Atlas/GameEndUI.png
 - Assets/Client/Resources/UI/GameOverUI/Atlas/GameOverUI.png
 - Assets/Client/Resources/UI/LoadingUI/Atlas/LoadingUI.png
@@ -43,6 +45,7 @@ textureFileNames:
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

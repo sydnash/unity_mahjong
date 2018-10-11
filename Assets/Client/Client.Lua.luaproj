@@ -35,6 +35,7 @@
     <Folder Include="Lua\ui\mahjongDesk\" />
     <Folder Include="Lua\ui\gameOver\" />
     <Folder Include="Lua\ui\exitDesk\" />
+    <Folder Include="Lua\ui\friendster\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
@@ -58,9 +59,17 @@
     <Compile Include="Lua\network\networkManager.lua" />
     <Compile Include="Lua\network\protoType.lua" />
     <Compile Include="Lua\platform\androidHelper.lua" />
+    <Compile Include="Lua\ui\activity.lua" />
+    <Compile Include="Lua\ui\authentication.lua" />
     <Compile Include="Lua\ui\chat.lua" />
     <Compile Include="Lua\ui\errorMessage.lua" />
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
+    <Compile Include="Lua\ui\friendster\createFriendster.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterDetail.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterDetailDeskItem.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterDetailMemberItem.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterItem.lua" />
+    <Compile Include="Lua\ui\friendster\friendster.lua" />
     <Compile Include="Lua\ui\gameEnd\gameEndItem.lua" />
     <Compile Include="Lua\ui\gameEnd\gameEndScore.lua" />
     <Compile Include="Lua\ui\gameOver\gameOverItem.lua" />
@@ -79,6 +88,7 @@
     <Compile Include="Lua\ui\login.lua" />
     <Compile Include="Lua\ui\messageBox.lua" />
     <Compile Include="Lua\ui\setting.lua" />
+    <Compile Include="Lua\ui\share.lua" />
     <Compile Include="Lua\ui\waiting.lua" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />

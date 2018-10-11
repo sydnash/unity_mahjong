@@ -256,6 +256,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/GY_an_07.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>65,24,131,49</rect>
+                <key>scale9Paddings</key>
+                <rect>65,24,131,49</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/GY_di01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -331,6 +344,20 @@
                 <rect>22,27,45,53</rect>
                 <key>scale9Paddings</key>
                 <rect>22,27,45,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_qieye_an01.png</key>
+            <key type="filename">Images/GY_qieye_an02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>62,17,123,35</rect>
+                <key>scale9Paddings</key>
+                <rect>62,17,123,35</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -706,6 +733,9 @@
             <filename>Images/ZM_zi13_s.png</filename>
             <filename>Images/ZM_zi14_s.png</filename>
             <filename>Images/GY_di_shuru.png</filename>
+            <filename>Images/GY_an_07.png</filename>
+            <filename>Images/GY_qieye_an01.png</filename>
+            <filename>Images/GY_qieye_an02.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

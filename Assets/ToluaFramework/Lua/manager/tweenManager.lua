@@ -26,6 +26,8 @@ end
 --
 -------------------------------------------------------------------
 local function update()
+    if queue == nil or #queue <= 0 then return end
+
     local finishedTweens = {}
 
     for _, v in pairs(queue) do

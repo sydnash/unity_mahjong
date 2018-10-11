@@ -22,17 +22,23 @@ retcText = {
     [retc.TransferToSelf]                  = "",
     [retc.WillClose]                       = "",
     [retc.NotSupportGameType]              = "",
-    [retc.NotInClub]                       = "",
+    [retc.NotInClub]                       = "您不是亲友圈的成员",
     [retc.PlayerHasTooMuchClub]            = "",
-    [retc.ClubIsFull]                      = "",
-    [retc.ClubNotFound]                    = "",
-    [retc.ClubPermision]                   = "",
+    [retc.ClubIsFull]                      = "亲友圈已经满员了",
+    [retc.ClubNotFound]                    = "没有找到指定的亲友圈",
+    [retc.ClubPermision]                   = "您没有亲友圈的权限",
     [retc.ClubCoinNotEnough]               = "",
     [retc.PlayerNotFound]                  = "",
     [retc.ClubCardNegative]                = "",
     [retc.ClubPlayerInDesk]                = "",
     [retc.ApplyInfoNotFound]               = "",
     [retc.PlayerIsAlreadyInClub]           = "",
+}
+
+cityName = {
+    [cityType.chengdu]  = "成都",
+    [cityType.wenjiang] = "温江", 
+    [cityType.pidu]     = "郫都",
 }
 
 --endregion
