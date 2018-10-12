@@ -64,6 +64,9 @@
     <Compile Include="Lua\ui\chat.lua" />
     <Compile Include="Lua\ui\errorMessage.lua" />
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterDesk.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterMemberManager.lua" />
+    <Compile Include="Lua\ui\friendster\joinFriendster.lua" />
     <Compile Include="Lua\ui\friendster\createFriendster.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDetail.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDetailDeskItem.lua" />
@@ -74,6 +77,7 @@
     <Compile Include="Lua\ui\gameEnd\gameEndScore.lua" />
     <Compile Include="Lua\ui\gameOver\gameOverItem.lua" />
     <Compile Include="Lua\ui\mahjongDesk.lua" />
+    <Compile Include="Lua\ui\createDesk.lua" />
     <Compile Include="Lua\ui\mahjongDesk\mahjongDeskHeader.lua" />
     <Compile Include="Lua\ui\mahjongOperation.lua" />
     <Compile Include="Lua\ui\enterDesk.lua" />

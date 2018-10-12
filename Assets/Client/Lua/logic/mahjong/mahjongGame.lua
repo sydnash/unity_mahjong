@@ -24,6 +24,8 @@ mahjongGame.cardType = {
 -- 构造函数
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data)
+    gamepref.deskId = data.DeskId
+
     self.totalMahjongCount  = 108
     self.leftMahjongCount   = 0
     self.deskId             = data.DeskId
@@ -402,20 +404,24 @@ function mahjongGame:endGame()
         log("end game, msg = " .. table.tostring(msg))
         if not ok then
             showMessageUI("网络繁忙，请稍后再试")
-        else
-            if msg.RetCode ~= retc.Ok then
-                
-            else
-                self.leftVoteSeconds    = msg.LeftTime
-                self.exitVoteProposer   = msg.Proposer
+            return
+        end
 
-                if msg.Proposer ~= nil and msg.Proposer > 0 then
-                    self.exitDeskUI = require("ui.exitDesk").new(self)
-                    self.exitDeskUI:show()
-                else
-                    self:exitGame()
-                end
-            end
+        if msg.RetCode ~= retc.Ok then
+            showMessageUI(retcText[msg.RetCode])
+            return
+        end
+
+        gamepref.deskId = 0
+
+        self.leftVoteSeconds    = msg.LeftTime
+        self.exitVoteProposer   = msg.Proposer
+
+        if msg.Proposer ~= nil and msg.Proposer > 0 then
+            self.exitDeskUI = require("ui.exitDesk").new(self)
+            self.exitDeskUI:show()
+        else
+            self:exitGame()
         end
     end)
 end

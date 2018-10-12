@@ -7,16 +7,13 @@ local friendster = class("friendster", base)
 
 _RES_(friendster, "FriendsterUI", "FriendsterUI")
 
-local function createItem()
-    return require("ui.friendster.friendsterItem").new()
-end
-
 function friendster:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mTabMyU:addClickListener(self.onMyClickedHandler, self)
     self.mTabJoinedU:addClickListener(self.onJoinedClickedHandler, self)
     self.mTabGuideU:addClickListener(self.onGuideClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
+    self.mJoin:addClickListener(self.onJoinClickedHandler, self)
     
     self.mTabMyS:show()
     self.mTabMyU:hide()
@@ -96,11 +93,24 @@ function friendster:onCreateClickedHandler()
     ui:show()
 end
 
-function friendster:set(datas)
+function friendster:onJoinClickedHandler()
+    playButtonClickSound()
+
+    local ui = require("ui.friendster.joinFriendster").new()
+    ui:show()
+end
+
+function friendster:set(data, enterDeskCallback)
+    self.enterDeskCallback = enterDeskCallback
+
+    table.sort(data, function(a, b)
+        return a.ClubId < b.ClubId
+    end)
+
     self.my = {}
     self.joined = {}
 
-    for _, d in pairs(datas) do 
+    for _, d in pairs(data) do 
         if d.AcId == gamepref.acId then
             table.insert(self.my, d)
         else
@@ -113,11 +123,24 @@ end
 
 function friendster:refreshList(data)
     self.mList:reset()
+
     local count = data ~= nil and #data or 0
+    local createItem = function()
+        return require("ui.friendster.friendsterItem").new(function(cityType, deskId, loading)
+            if self.enterDeskCallback ~= nil then
+                self.enterDeskCallback(cityType, deskId, loading)
+            end
+            self:close()
+        end)
+    end
     
     self.mList:set(count, createItem, function(item, index)
         item:set(data[index + 1])
     end)
+end
+
+function friendster:onDestroy()
+    self.mList:reset()
 end
 
 return friendster

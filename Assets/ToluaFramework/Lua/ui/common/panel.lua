@@ -86,6 +86,18 @@ function panel:bind(gameObject)
     LP:Bind(self, bind)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function panel:onDestroy()
+    if self.widgets ~= nil then 
+        for _, v in pairs(self.widgets) do 
+            v:destroy()
+        end
+        self.widgets = nil
+    end
+end
+
 return panel
 
 --endregion

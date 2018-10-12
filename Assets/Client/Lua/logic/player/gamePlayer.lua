@@ -5,8 +5,10 @@
 local gamePlayer = class("gamePlayer")
 
 function gamePlayer:ctor(acid)
-    self.acId = acid
-    self.nickname = string.empty
+    self.acId       = acid
+    self.nickname   = string.empty
+    self.headerUrl  = string.empty
+    self.headerTex  = nil
 end
 
 function gamePlayer:loadHeaderTex()
@@ -15,9 +17,14 @@ function gamePlayer:loadHeaderTex()
     --先显示默认头像
     self.headerTex = textureManager.load(string.empty, "JS_tx_a")
     --同时开始下载真实头像
-    downloadIcon(self.headerUrl, function(tex)
-        self.headerTex = tex
-    end)
+    if not string.isNilOrEmpty(self.headerUrl) then 
+        downloadIcon(self.headerUrl, function(tex)
+            if self.headerTex ~= nil then
+                textureManager.unload(self.headerTex, false)
+            end
+            self.headerTex = tex
+        end)
+    end
 end
 
 function gamePlayer:destroy()

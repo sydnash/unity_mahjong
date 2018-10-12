@@ -540,7 +540,7 @@ end
 -------------------------------------------------------------------
 function networkManager.queryFriendsterMembers(friendserId, callback)
     local data = { ClubId = friendserId }
-    send(protoType.cs.queryFriendserMembers, data, function(msg)
+    send(protoType.cs.queryFriendsterMembers, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else
@@ -554,7 +554,63 @@ end
 -------------------------------------------------------------------
 function networkManager.queryFriendsterDesks(friendserId, callback)
     local data = { ClubId = friendserId }
-    send(protoType.cs.queryFriendserDesks, data, function(msg)
+    send(protoType.cs.queryFriendsterDesks, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.queryFriendsterInfo(friendserId, verificationCode, callback)
+    local data = { ClubId = friendserId, Code = verificationCode }
+    send(protoType.cs.queryFriendsterDesks, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.queryAcId(acId, callback)
+    local data = { AcId = acId }
+    send(protoType.cs.queryAcId, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.addAcIdToFriendster(friendserId, acId, callback)
+    local data = { ClubId = friendserId, AcId = acId }
+    send(protoType.cs.addAcIdToFriendster, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.deleteAcIdFromFriendster(friendserId, acId, callback)
+    local data = { ClubId = friendserId, AcId = acId }
+    send(protoType.cs.deleteAcIdFromFriendster, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else

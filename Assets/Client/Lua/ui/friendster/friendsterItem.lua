@@ -7,6 +7,11 @@ local friendsterItem = class("friendsterItem", base)
 
 _RES_(friendsterItem, "FriendsterUI", "FriendsterItem")
 
+function friendsterItem:ctor(enterDeskCallback)
+    self.enterDeskCallback = enterDeskCallback
+    self.super.ctor(self)
+end
+
 function friendsterItem:onInit()
     self.mThis:addClickListener(self.onClickedHandler, self)
 end
@@ -45,20 +50,15 @@ function friendsterItem:onClickedHandler()
             log("query friendster desks, msg = " .. table.tostring(msg))
             local desks = msg.Desks
 
-            local ui = require("ui.friendster.friendsterDetail").new()
+            local ui = require("ui.friendster.friendsterDetail").new(self.enterDeskCallback)
             ui:set(self.data, members, desks)
             ui:show()
         end)
     end)
-
-    if self.callback ~= nil then
-        self.callback()
-    end
 end
 
-function friendsterItem:set(data, callback)
+function friendsterItem:set(data)
     self.data = data
-    self.callback = callback
 
     self.mName:setText(data.ClubName)
     self.mId:setText(string.format("编号:%d", data.ClubId))

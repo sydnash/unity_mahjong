@@ -19,6 +19,7 @@ function lobby:onInit()
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
     self.mAccuse:addClickListener(self.onAccuseClickedHandler, self)
     self.mEnterDesk:addClickListener(self.onEnterDeskClickedHandler, self)
+    self.mReturnDesk:addClickListener(self.onReturnDeskClickedHandler, self)
     self.mCreateDesk:addClickListener(self.onCreateDeskClickedHandler, self)
     self.mEnterQYQ:addClickListener(self.onEnterQYQClickedHandler, self)
     self.mShop:addClickListener(self.onShopClickedHandler, self)
@@ -28,6 +29,14 @@ function lobby:onInit()
     self.mShare:addClickListener(self.onShareClickedHandler, self)
     self.mAuthenticate:addClickListener(self.onAuthenticateClickedHandler, self)
     self.mMail:addClickListener(self.onMailClickedHandler, self)
+
+    if gamepref.deskId ~= nil and gamepref.deskId > 0 then
+        self.mReturnDesk:show()
+        self.mCreateDesk:hide()
+    else
+        self.mReturnDesk:hide()
+        self.mCreateDesk:show()
+    end
 end
 
 function lobby:onHeadClickedHandler()
@@ -55,14 +64,14 @@ end
 
 function lobby:onAccuseClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能尚未开放，敬请期待")
+    showMessageUI("功能暂未开放，敬请期待")
 end
 
 function lobby:onEnterDeskClickedHandler()
     playButtonClickSound()
 
     local ui = require("ui.enterDesk").new(function(deskId)
-        local cityType = cityType.xxxxx
+        local cityType = cityType.chengdu
 
         local loading = require("ui.loading").new()
         loading:show()
@@ -72,22 +81,24 @@ function lobby:onEnterDeskClickedHandler()
     ui:show()
 end
 
-function lobby:onCreateDeskClickedHandler()
+function lobby:onReturnDeskClickedHandler()
     playButtonClickSound()
-    
+
     local loading = require("ui.loading").new()
     loading:show()
 
-    networkManager.createDesk(cityType.xxxxx, {}, 0, function(ok, msg)
-        if not ok then
-            log("create desk error")
-            loading:close()
-            showMessageUI("网络繁忙，请稍后再试")
-            return
-        end
-        log("create desk, msg = " .. table.tostring(msg))
-        self:enterDesk(loading, msg.GameType, msg.DeskId)
+    local cityType = cityType.chengdu
+    self:enterDesk(loading, cityType, gamepref.deskId)
+end
+
+function lobby:onCreateDeskClickedHandler()
+    playButtonClickSound()
+    
+    local ui = require("ui.createDesk").new(function(cityType, deskId, loading)
+        self:enterDesk(loading, cityType, deskId)
     end)
+    ui:set(cityType.chengdu, 0)
+    ui:show()
 end
 
 function lobby:onEnterQYQClickedHandler()
@@ -105,24 +116,26 @@ function lobby:onEnterQYQClickedHandler()
         log("query friendster list, msg = " .. table.tostring(msg))
 
         local ui = require("ui.friendster.friendster").new()
-        ui:set(msg.Clubs)
+        ui:set(msg.Clubs, function(cityType, deskId, loading)
+            self:enterDesk(loading, cityType, deskId)
+        end)
         ui:show()
     end)
 end
 
 function lobby:onShopClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能尚未开放，敬请期待")
+    showMessageUI("功能暂未开放，敬请期待")
 end
 
 function lobby:onHistoryClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能尚未开放，敬请期待")
+    showMessageUI("功能暂未开放，敬请期待")
 end
 
 function lobby:onRankClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能尚未开放，敬请期待")
+    showMessageUI("功能暂未开放，敬请期待")
 end
 
 function lobby:onActivityClickedHandler()
@@ -148,7 +161,7 @@ end
 
 function lobby:onMailClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能尚未开放，敬请期待")
+    showMessageUI("功能暂未开放，敬请期待")
 end
 
 function lobby:enterDesk(loading, cityType, deskId)

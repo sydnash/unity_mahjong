@@ -43,6 +43,13 @@ function image:getTexture()
     return self.component.texture
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function image:onDestroy()
+    self.component.texture = nil
+end
+
 return image
 
 --endregion

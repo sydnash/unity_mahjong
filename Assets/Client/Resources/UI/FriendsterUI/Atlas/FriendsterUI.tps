@@ -493,6 +493,32 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/QYQ_zi07.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,10,39,20</rect>
+                <key>scale9Paddings</key>
+                <rect>20,10,39,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_zi08.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,10,40,20</rect>
+                <key>scale9Paddings</key>
+                <rect>20,10,40,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -526,6 +552,8 @@
             <filename>Images/QYQ_zi04.png</filename>
             <filename>Images/QYQ_zi05.png</filename>
             <filename>Images/QYQ_zi06.png</filename>
+            <filename>Images/QYQ_zi07.png</filename>
+            <filename>Images/QYQ_zi08.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

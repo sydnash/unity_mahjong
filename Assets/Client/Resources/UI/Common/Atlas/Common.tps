@@ -361,6 +361,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/GY_qieye_di.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>129,23,257,46</rect>
+                <key>scale9Paddings</key>
+                <rect>129,23,257,46</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/GY_sd.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -430,6 +443,20 @@
                 <rect>20,10,39,21</rect>
                 <key>scale9Paddings</key>
                 <rect>20,10,39,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_zi04.png</key>
+            <key type="filename">Images/GY_zi04_h.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,8,31,16</rect>
+                <key>scale9Paddings</key>
+                <rect>15,8,31,16</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -736,6 +763,9 @@
             <filename>Images/GY_an_07.png</filename>
             <filename>Images/GY_qieye_an01.png</filename>
             <filename>Images/GY_qieye_an02.png</filename>
+            <filename>Images/GY_zi04.png</filename>
+            <filename>Images/GY_zi04_h.png</filename>
+            <filename>Images/GY_qieye_di.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

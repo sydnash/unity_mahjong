@@ -119,7 +119,12 @@ function setting:onDissolveClickedHandler()
 end
 
 function setting:onBackClickedHandler()
-
+    playButtonClickSound()
+    
+    if self.game ~= nil then
+        self.game:exitGame()
+        self:close()
+    end
 end
 
 return setting

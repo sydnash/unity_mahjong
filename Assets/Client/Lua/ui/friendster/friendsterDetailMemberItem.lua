@@ -15,14 +15,15 @@ end
 function friendsterDetailMemberItem:set(managerId, data)
     self.data = data
 
-    self.mNickname:setText(data.Nickname)
-    self.mID:setText(string.format("账号:%d", data.AcId))
+    self.mIcon:setTexture(data.headerTex)
+    self.mNickname:setText(data.nickname)
+    self.mID:setText(string.format("账号:%d", data.acId))
 
-    if data.IsOnline then
+    if data.online then
         self.mState:setSprite("online")
     end
 
-    if data.AcId == managerId then
+    if data.acId == managerId then
         self.mQZ:show()
     end
 end

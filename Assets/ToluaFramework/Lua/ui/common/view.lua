@@ -20,14 +20,7 @@ end
 --
 -------------------------------------------------------------------
 function view:close()
-    if self.widgets ~= nil then 
-        for _, v in pairs(self.widgets) do 
-            v:destroy()
-        end
-        self.widgets = nil
-    end
     viewManager.unload(self)
-
     self:destroy()
 end
 

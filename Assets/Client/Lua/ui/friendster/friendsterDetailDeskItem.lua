@@ -7,12 +7,24 @@ local friendsterDetailDeskItem = class("friendsterDetailDeskItem", base)
 
 _RES_(friendsterDetailDeskItem, "FriendsterUI", "FriendsterDetailDeskItem")
 
-function friendsterDetailDeskItem:onInit()
+function friendsterDetailDeskItem:ctor(callback)
+    self.callback = callback
+    self.super.ctor(self)
+end
 
+function friendsterDetailDeskItem:onInit()
+    
 end
 
 function friendsterDetailDeskItem:set(data)
-    self.data = data
+    self.mL:set(data.L, self.callback)
+
+    if data.R == nil then
+        self.mR:hide()
+    else
+        self.mR:set(data.R, self.callback)
+        self.mR:show()
+    end
 end
 
 return friendsterDetailDeskItem
