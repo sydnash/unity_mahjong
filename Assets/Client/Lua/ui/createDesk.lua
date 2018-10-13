@@ -46,10 +46,7 @@ function createDesk:onCreateClickedHandler()
             return
         end
 
-        if self.callback ~= nil then
-            self.callback(msg.GameType, msg.DeskId, loading)
-        end
-
+        signalManager.signal(signalType.enterDeskSignal, { cityType = msg.GameType, deskId = msg.DeskId, loading = loading })
         self:close()
     end)
 end

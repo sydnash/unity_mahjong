@@ -2085,6 +2085,10 @@ MonoBehaviour:
     widgetType: 5
     gameObject: {fileID: 1097390610550512}
     panelScript: 
+  - variableName: mCards
+    widgetType: 2
+    gameObject: {fileID: 1568994333604928}
+    panelScript: 
 --- !u!114 &114665417465221094
 MonoBehaviour:
   m_ObjectHideFlags: 1

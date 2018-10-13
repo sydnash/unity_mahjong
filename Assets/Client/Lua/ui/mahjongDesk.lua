@@ -67,6 +67,8 @@ function mahjongDesk:onDestroy()
         self.chatUI:close()
         self.chatUI = nil
     end
+
+    self.super.onDestroy(self)
 end
 
 function mahjongDesk:refreshUI()

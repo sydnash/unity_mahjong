@@ -281,7 +281,7 @@ local function loginC(text, callback)
                     gamepref.player.ip         = msg.Ip
                     gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.box, sexType.girl)
                     gamepref.player.laolai     = msg.IsLaoLai
-                    gamepref.player.coin       = msg.Coin
+                    gamepref.player.cards      = msg.Coin
 
                     callback(true, msg)
                 end
@@ -611,6 +611,48 @@ end
 function networkManager.deleteAcIdFromFriendster(friendserId, acId, callback)
     local data = { ClubId = friendserId, AcId = acId }
     send(protoType.cs.deleteAcIdFromFriendster, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.depositToFriendsterBank(friendsterId, value, callback)
+    local data = { ClubId = friendsterId, Count = value }
+    send(protoType.depositToFriendsterBank, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.takeoutFromFriendsterBank(friendsterId, value, callback)
+    local data = { ClubId = friendsterId, Count = value }
+    send(protoType.takeoutFromFriendsterBank, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.queryFriendsterStatistics(friendsterId, startTime, callback)
+    local data = { ClubId = friendsterId, StartTime = startTime }
+    send(protoType.queryFriendsterStatistics, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else

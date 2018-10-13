@@ -7,6 +7,11 @@ local createFriendster = class("createFriendster", base)
 
 _RES_(createFriendster, "FriendsterUI", "CreateFriendsterUI")
 
+function createFriendster:ctor(callback)
+    self.callback = callback
+    self.super.ctor(self)
+end
+
 function createFriendster:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mExpand:addClickListener(self.onExpandClickedHandler, self)
@@ -60,6 +65,12 @@ function createFriendster:onCreateClickedHandler()
         if msg.RetCode ~= retc.Ok then
             showMessageUI(retcText[msg.RetCode])
             return
+        end
+
+        log("friendster created, msg = " .. table.tostring(msg))
+        if self.callback ~= nil then
+            msg.RetCode = nil
+            self.callback(msg)
         end
 
         self:close()

@@ -1477,6 +1477,8 @@ function mahjongOperation:onDestroy()
             v.mainTexture = nil
         end
     end
+
+    self.super.onDestroy(self)
 end
 
 -------------------------------------------------------------------------------

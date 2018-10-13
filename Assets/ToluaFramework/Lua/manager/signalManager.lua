@@ -8,6 +8,8 @@ local slots = {}
 -- 注册信号处理函数
 -------------------------------------------------------------------
 local function register(signalName, func, target)
+--    log(string.format("register, signalName = %s, target = %s", signalName, target.name))
+
     if slots[signalName] == nil then
         slots[signalName] = {}
     end
@@ -25,7 +27,8 @@ local function unregister(signalName, func, target)
     if slot ~= nil then
         for k, v in pairs(slot) do
             if v.t == target and v.f == func then
-                table.remove(slot, k)
+--                log(string.format("unregister, signalName = %s, target = %s", signalName, target.name))
+                slot[k] = nil
                 break
             end
         end
@@ -42,6 +45,7 @@ local function signal(signalName, args)
         logError(string.format("handler of signal [%s] is not found in signalManager", name))
     else
         for _, v in pairs(slot) do
+            log(v.t.name)
             if v.t == nil then
                 v.f(args)
             else

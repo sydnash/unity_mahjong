@@ -13,7 +13,7 @@ function friendsterDesk:onInit()
     }
 end
 
-function friendsterDesk:set(data, callback)
+function friendsterDesk:set(data)
     self.cityType = data.GameType
     self.deskId = data.DeskId
 
@@ -48,20 +48,15 @@ function friendsterDesk:set(data, callback)
             end
         end
     end
-
-    self.callback = callback
 end
 
 function friendsterDesk:onAddClickedHandler()
     playButtonClickSound()
-    log("friendsterDesk:onAddClickedHandler")
 
-    if self.callback ~= nil then
-        local loading = require("ui.loading").new()
-        loading:show()
+    local loading = require("ui.loading").new()
+    loading:show()
 
-        self.callback(self.cityType, self.deskId, loading)
-    end
+    signalManager.signal(signalType.enterDeskSignal, { cityType = self.cityType, deskId = self.deskId, loading = loading })
 end
 
 function friendsterDesk:onDestroy()

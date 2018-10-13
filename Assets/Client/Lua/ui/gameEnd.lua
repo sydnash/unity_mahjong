@@ -70,9 +70,6 @@ function gameEnd:onRecordClickedHandler()
     playButtonClickSound()
 end
 
-function gameEnd:onDestroy()
-end
-
 return gameEnd
 
 --endregion

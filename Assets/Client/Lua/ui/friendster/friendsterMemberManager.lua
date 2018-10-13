@@ -7,6 +7,11 @@ local friendsterMemberManager = class("friendsterMemberManager", base)
 
 _RES_(friendsterMemberManager, "FriendsterUI", "FriendsterMemberManagerUI")
 
+function friendsterMemberManager:ctor(callback)
+    self.callback = callback
+    self.super.ctor(self)
+end
+
 function friendsterMemberManager:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mQuery:addClickListener(self.onQueryClickedHandler, self)
@@ -43,6 +48,7 @@ function friendsterMemberManager:onQueryClickedHandler()
             return
         end
 
+        log("query player info, msg = " .. table.tostring(msg))
         self.mName:setText(msg.Nickname)
     end)
 end
@@ -91,8 +97,14 @@ function friendsterMemberManager:onAddClickedHandler()
             return
         end
 
-        log(msg)
+        log("add player to friendster, msg = " .. table.tostring(msg))
         showMessageUI("玩家已经添加到亲友圈")
+
+        if self.callback ~= nil then
+            msg.RetCode = nil
+            self.callback("add", msg)
+        end
+
         self:close()
     end)
 end
@@ -111,8 +123,14 @@ function friendsterMemberManager:onDeleteClickedHandler()
             return
         end
 
-        log(msg)
+        log("delete player from friendster, msg = " .. table.tostring(msg))
         showMessageUI("玩家已经从亲友圈中删除")
+
+        if self.callback ~= nil then
+            msg.RetCode = nil
+            self.callback("delete", acid)
+        end
+
         self:close()
     end)
 end

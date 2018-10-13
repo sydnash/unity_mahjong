@@ -7,6 +7,11 @@ local joinFriendster = class("joinFriendster", base)
 
 _RES_(joinFriendster, "FriendsterUI", "JoinFriendsterUI")
 
+function joinFriendster:ctor(callback)
+    self.callback = callback
+    self.super.ctor(self)
+end
+
 function joinFriendster:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mQuery:addClickListener(self.onQueryClickedHandler, self)
@@ -36,7 +41,13 @@ function joinFriendster:onQueryClickedHandler()
             showMessageUI(retcText[msg.RetCode])
             return
         end
-        log(msg)
+        
+        log("friendster jioned, msg = " .. table.tostring(msg))
+        if self.callback ~= nil then
+            msg.RetCode = nil
+            self.callback(msg)
+        end
+
         self:close()
     end)
 end

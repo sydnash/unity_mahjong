@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>512</int>
+            <int>1024</int>
             <key>height</key>
-            <int>512</int>
+            <int>1024</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -438,6 +438,170 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/QYQ_tj_an01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>61,39,122,77</rect>
+                <key>scale9Paddings</key>
+                <rect>61,39,122,77</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_an02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>29,12,59,25</rect>
+                <key>scale9Paddings</key>
+                <rect>29,12,59,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_an03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,13,21,25</rect>
+                <key>scale9Paddings</key>
+                <rect>11,13,21,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_biaoti.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>205,12,411,25</rect>
+                <key>scale9Paddings</key>
+                <rect>205,12,411,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_di01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>63,27,126,54</rect>
+                <key>scale9Paddings</key>
+                <rect>63,27,126,54</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_di02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>57,37,113,75</rect>
+                <key>scale9Paddings</key>
+                <rect>57,37,113,75</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_di02_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>49,30,98,59</rect>
+                <key>scale9Paddings</key>
+                <rect>49,30,98,59</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_di02_2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>123,15,245,29</rect>
+                <key>scale9Paddings</key>
+                <rect>123,15,245,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_zi01.png</key>
+            <key type="filename">Images/QYQ_tj_zi01_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>50,11,101,21</rect>
+                <key>scale9Paddings</key>
+                <rect>50,11,101,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_zi02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>40,10,81,21</rect>
+                <key>scale9Paddings</key>
+                <rect>40,10,81,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_zi02_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>40,11,81,21</rect>
+                <key>scale9Paddings</key>
+                <rect>40,11,81,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_tj_zi03.png</key>
+            <key type="filename">Images/QYQ_tj_zi03_1.png</key>
+            <key type="filename">Images/QYQ_tj_zi04.png</key>
+            <key type="filename">Images/QYQ_tj_zi04_1.png</key>
+            <key type="filename">Images/QYQ_tj_zi05.png</key>
+            <key type="filename">Images/QYQ_tj_zi05_1.png</key>
+            <key type="filename">Images/QYQ_tj_zi06.png</key>
+            <key type="filename">Images/QYQ_tj_zi06_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>35,9,71,18</rect>
+                <key>scale9Paddings</key>
+                <rect>35,9,71,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/QYQ_tx_tj.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -494,6 +658,8 @@
                 <false/>
             </struct>
             <key type="filename">Images/QYQ_zi07.png</key>
+            <key type="filename">Images/QYQ_zi11.png</key>
+            <key type="filename">Images/QYQ_zi12.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -516,6 +682,45 @@
                 <rect>20,10,40,20</rect>
                 <key>scale9Paddings</key>
                 <rect>20,10,40,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_zi09.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,8,31,16</rect>
+                <key>scale9Paddings</key>
+                <rect>16,8,31,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_zi10.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,9,31,17</rect>
+                <key>scale9Paddings</key>
+                <rect>16,9,31,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZY_1_01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,19,1,38</rect>
+                <key>scale9Paddings</key>
+                <rect>1,19,1,38</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -554,6 +759,31 @@
             <filename>Images/QYQ_zi06.png</filename>
             <filename>Images/QYQ_zi07.png</filename>
             <filename>Images/QYQ_zi08.png</filename>
+            <filename>Images/QYQ_zi11.png</filename>
+            <filename>Images/QYQ_zi12.png</filename>
+            <filename>Images/QYQ_zi09.png</filename>
+            <filename>Images/QYQ_zi10.png</filename>
+            <filename>Images/QYQ_tj_an01.png</filename>
+            <filename>Images/QYQ_tj_an02.png</filename>
+            <filename>Images/QYQ_tj_an03.png</filename>
+            <filename>Images/QYQ_tj_biaoti.png</filename>
+            <filename>Images/QYQ_tj_di01.png</filename>
+            <filename>Images/QYQ_tj_di02.png</filename>
+            <filename>Images/QYQ_tj_di02_1.png</filename>
+            <filename>Images/QYQ_tj_di02_2.png</filename>
+            <filename>Images/QYQ_tj_zi01.png</filename>
+            <filename>Images/QYQ_tj_zi01_1.png</filename>
+            <filename>Images/QYQ_tj_zi02.png</filename>
+            <filename>Images/QYQ_tj_zi02_1.png</filename>
+            <filename>Images/QYQ_tj_zi03.png</filename>
+            <filename>Images/QYQ_tj_zi03_1.png</filename>
+            <filename>Images/QYQ_tj_zi04.png</filename>
+            <filename>Images/QYQ_tj_zi04_1.png</filename>
+            <filename>Images/QYQ_tj_zi05.png</filename>
+            <filename>Images/QYQ_tj_zi05_1.png</filename>
+            <filename>Images/QYQ_tj_zi06.png</filename>
+            <filename>Images/QYQ_tj_zi06_1.png</filename>
+            <filename>Images/ZY_1_01.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -67,8 +67,10 @@ chatType = {
 --
 --------------------------------------------------------------
 signalType = {
-    chatTextSignal  = "chat.text.signal",
-    chatEmojiSignal = "chat.emoji.signal",
+    chatTextSignal      = "chatText",
+    chatEmojiSignal     = "chatEmoji",
+    cardsChangedSignal  = "cardsChanged",
+    enterDeskSignal     = "enterDesk",
 }
 
 --------------------------------------------------------------

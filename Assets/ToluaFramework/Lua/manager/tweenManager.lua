@@ -19,7 +19,7 @@ local function destroyUpdateHandler()
     unregisterUpdateListener(handler)
     handler = nil
     queue = nil
-    log("tween manager has been remove the update listener")
+--    log("tween manager has been remove the update listener")
 end
 
 -------------------------------------------------------------------

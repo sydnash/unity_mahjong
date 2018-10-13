@@ -13,7 +13,7 @@ end
 function gameEndItem:setPlayerInfo(player)
     self.mIcon:setTexture(player.headerTex)
     self.mNickname:setText(player.nickname)
-    self.mId:setText(string.format("编号:%d", player.acId))
+    self.mId:setText(string.format("帐号:%d", player.acId))
     self.mScore:setScore(player.score)
 
     if player.que ~= nil then
@@ -109,6 +109,8 @@ function gameEndItem:onDestroy()
         v:close()
     end
     self.pai = nil
+
+    self.super.onDestroy(self)
 end
 
 return gameEndItem

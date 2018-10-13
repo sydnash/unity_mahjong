@@ -28,6 +28,8 @@ end
 function waiting:onDestroy()
     self.rotation:stop()
     tweenManager.remove(self.rotation)
+
+    self.super.onDestroy(self)
 end
 
 return waiting

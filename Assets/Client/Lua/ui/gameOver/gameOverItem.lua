@@ -12,7 +12,7 @@ end
 function gameOverItem:setPlayerInfo(player)
     self.mIcon:setTexture(player.headerTex)
     self.mNickname:setText(player.nickname)
-    self.mId:setText(string.format("编号:%d", player.acId))
+    self.mId:setText(string.format("帐号:%d", player.acId))
     self.mScore:setScore(player.totalScore)
 
     if player.isCreator then
@@ -31,6 +31,7 @@ end
 
 function gameOverItem:onDestroy()
     self.mIcon:setTexture(nil)
+    self.super.onDestroy(self)
 end
 
 return gameOverItem

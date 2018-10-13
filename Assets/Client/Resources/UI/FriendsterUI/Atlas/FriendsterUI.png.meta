@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 67fc405719d5c58469c1103798ba0875
-timeCreated: 1539152675
+timeCreated: 1539424986
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -36,6 +36,31 @@ TextureImporter:
     21300058: QYQ_zi06
     21300060: QYQ_zi07
     21300062: QYQ_zi08
+    21300064: QYQ_zi11
+    21300066: QYQ_zi12
+    21300068: QYQ_zi09
+    21300070: QYQ_zi10
+    21300072: QYQ_tj_an01
+    21300074: QYQ_tj_an02
+    21300076: QYQ_tj_an03
+    21300078: QYQ_tj_biaoti
+    21300080: QYQ_tj_di01
+    21300082: QYQ_tj_di02
+    21300084: QYQ_tj_di02_1
+    21300086: QYQ_tj_di02_2
+    21300088: QYQ_tj_zi01
+    21300090: QYQ_tj_zi01_1
+    21300092: QYQ_tj_zi02
+    21300094: QYQ_tj_zi02_1
+    21300096: QYQ_tj_zi03
+    21300098: QYQ_tj_zi03_1
+    21300100: QYQ_tj_zi04
+    21300102: QYQ_tj_zi04_1
+    21300104: QYQ_tj_zi05
+    21300106: QYQ_tj_zi05_1
+    21300108: QYQ_tj_zi06
+    21300110: QYQ_tj_zi06_1
+    21300112: ZY_1_01
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -104,8 +129,8 @@ TextureImporter:
       name: CJ_dian
       rect:
         serializedVersion: 2
-        x: 494
-        y: 385
+        x: 480
+        y: 902
         width: 10
         height: 10
       alignment: 0
@@ -118,8 +143,8 @@ TextureImporter:
       name: GY_an_fh
       rect:
         serializedVersion: 2
-        x: 1
-        y: 108
+        x: 932
+        y: 597
         width: 62
         height: 63
       alignment: 0
@@ -132,8 +157,8 @@ TextureImporter:
       name: QYQ_an01
       rect:
         serializedVersion: 2
-        x: 330
-        y: 333
+        x: 707
+        y: 630
         width: 112
         height: 53
       alignment: 9
@@ -146,8 +171,8 @@ TextureImporter:
       name: QYQ_an02
       rect:
         serializedVersion: 2
-        x: 195
-        y: 231
+        x: 230
+        y: 651
         width: 87
         height: 39
       alignment: 9
@@ -160,8 +185,8 @@ TextureImporter:
       name: QYQ_an03
       rect:
         serializedVersion: 2
-        x: 1
-        y: 43
+        x: 932
+        y: 532
         width: 62
         height: 63
       alignment: 0
@@ -174,8 +199,8 @@ TextureImporter:
       name: QYQ_an04
       rect:
         serializedVersion: 2
-        x: 65
-        y: 39
+        x: 705
+        y: 565
         width: 62
         height: 63
       alignment: 0
@@ -188,8 +213,8 @@ TextureImporter:
       name: QYQ_an05
       rect:
         serializedVersion: 2
-        x: 129
-        y: 39
+        x: 624
+        y: 563
         width: 62
         height: 63
       alignment: 0
@@ -202,8 +227,8 @@ TextureImporter:
       name: QYQ_an06
       rect:
         serializedVersion: 2
-        x: 466
-        y: 397
+        x: 813
+        y: 524
         width: 42
         height: 30
       alignment: 0
@@ -216,8 +241,8 @@ TextureImporter:
       name: QYQ_an06_di
       rect:
         serializedVersion: 2
-        x: 357
-        y: 169
+        x: 169
+        y: 654
         width: 59
         height: 56
       alignment: 0
@@ -230,8 +255,8 @@ TextureImporter:
       name: QYQ_cy_01
       rect:
         serializedVersion: 2
-        x: 172
-        y: 117
+        x: 748
+        y: 903
         width: 74
         height: 69
       alignment: 0
@@ -244,8 +269,8 @@ TextureImporter:
       name: QYQ_cy_02
       rect:
         serializedVersion: 2
-        x: 90
-        y: 104
+        x: 748
+        y: 832
         width: 74
         height: 69
       alignment: 0
@@ -258,8 +283,8 @@ TextureImporter:
       name: QYQ_di01
       rect:
         serializedVersion: 2
-        x: 418
-        y: 195
+        x: 230
+        y: 776
         width: 90
         height: 85
       alignment: 0
@@ -272,8 +297,8 @@ TextureImporter:
       name: QYQ_di01_1
       rect:
         serializedVersion: 2
-        x: 90
-        y: 175
+        x: 625
+        y: 669
         width: 80
         height: 37
       alignment: 0
@@ -286,8 +311,8 @@ TextureImporter:
       name: QYQ_di01_2
       rect:
         serializedVersion: 2
-        x: 1
-        y: 309
+        x: 824
+        y: 751
         width: 193
         height: 151
       alignment: 0
@@ -300,8 +325,8 @@ TextureImporter:
       name: QYQ_di01_3
       rect:
         serializedVersion: 2
-        x: 307
-        y: 227
+        x: 821
+        y: 556
         width: 109
         height: 104
       alignment: 0
@@ -314,8 +339,8 @@ TextureImporter:
       name: QYQ_di02
       rect:
         serializedVersion: 2
-        x: 1
-        y: 173
+        x: 230
+        y: 692
         width: 87
         height: 82
       alignment: 0
@@ -328,8 +353,8 @@ TextureImporter:
       name: QYQ_di02_1
       rect:
         serializedVersion: 2
-        x: 466
-        y: 347
+        x: 596
+        y: 615
         width: 26
         height: 48
       alignment: 0
@@ -343,7 +368,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 462
+        y: 863
         width: 334
         height: 49
       alignment: 0
@@ -356,8 +381,8 @@ TextureImporter:
       name: QYQ_kf_di
       rect:
         serializedVersion: 2
-        x: 196
-        y: 272
+        x: 1
+        y: 439
         width: 109
         height: 105
       alignment: 0
@@ -370,8 +395,8 @@ TextureImporter:
       name: QYQ_qizi01
       rect:
         serializedVersion: 2
-        x: 248
-        y: 136
+        x: 769
+        y: 579
         width: 50
         height: 49
       alignment: 9
@@ -384,8 +409,8 @@ TextureImporter:
       name: QYQ_qizi02
       rect:
         serializedVersion: 2
-        x: 444
-        y: 282
+        x: 164
+        y: 557
         width: 63
         height: 63
       alignment: 9
@@ -398,8 +423,8 @@ TextureImporter:
       name: QYQ_qizi03
       rect:
         serializedVersion: 2
-        x: 1
-        y: 283
+        x: 726
+        y: 806
         width: 96
         height: 24
       alignment: 0
@@ -412,10 +437,290 @@ TextureImporter:
       name: QYQ_qizi04
       rect:
         serializedVersion: 2
-        x: 1
-        y: 257
+        x: 726
+        y: 780
         width: 96
         height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_an01
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 708
+        width: 244
+        height: 154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_an02
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 556
+        width: 117
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_an03
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 526
+        width: 42
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_biaoti
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 974
+        width: 821
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_di01
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 864
+        width: 252
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_di02
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 712
+        width: 227
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 65, y: 44, z: 77, w: 46}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_di02_1
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 904
+        width: 196
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 43, y: 33, z: 55, w: 38}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_di02_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 914
+        width: 491
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi01
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 662
+        width: 201
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi01_1
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 706
+        width: 201
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi02
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 665
+        width: 161
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi02_1
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 584
+        width: 161
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi03
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 876
+        width: 141
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi03_1
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 648
+        width: 140
+        height: 36
+      alignment: 9
+      pivot: {x: 0.50357145, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi04
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 838
+        width: 141
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi04_1
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 546
+        width: 140
+        height: 36
+      alignment: 9
+      pivot: {x: 0.50357145, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi05
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 800
+        width: 141
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi05_1
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 762
+        width: 141
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi06
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 724
+        width: 141
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_tj_zi06_1
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 686
+        width: 141
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -426,8 +731,8 @@ TextureImporter:
       name: QYQ_tx_tj
       rect:
         serializedVersion: 2
-        x: 99
-        y: 214
+        x: 726
+        y: 685
         width: 94
         height: 93
       alignment: 9
@@ -440,8 +745,8 @@ TextureImporter:
       name: QYQ_zi01
       rect:
         serializedVersion: 2
-        x: 331
-        y: 388
+        x: 312
+        y: 607
         width: 133
         height: 39
       alignment: 0
@@ -454,8 +759,8 @@ TextureImporter:
       name: QYQ_zi02
       rect:
         serializedVersion: 2
-        x: 196
-        y: 420
+        x: 461
+        y: 623
         width: 133
         height: 40
       alignment: 9
@@ -468,8 +773,8 @@ TextureImporter:
       name: QYQ_zi03
       rect:
         serializedVersion: 2
-        x: 337
-        y: 470
+        x: 1
+        y: 669
         width: 166
         height: 41
       alignment: 9
@@ -482,8 +787,8 @@ TextureImporter:
       name: QYQ_zi04
       rect:
         serializedVersion: 2
-        x: 337
-        y: 429
+        x: 1
+        y: 628
         width: 165
         height: 39
       alignment: 0
@@ -496,8 +801,8 @@ TextureImporter:
       name: QYQ_zi05
       rect:
         serializedVersion: 2
-        x: 196
-        y: 379
+        x: 447
+        y: 582
         width: 132
         height: 39
       alignment: 0
@@ -510,8 +815,8 @@ TextureImporter:
       name: QYQ_zi06
       rect:
         serializedVersion: 2
-        x: 195
-        y: 188
+        x: 230
+        y: 608
         width: 80
         height: 41
       alignment: 0
@@ -524,8 +829,8 @@ TextureImporter:
       name: QYQ_zi07
       rect:
         serializedVersion: 2
-        x: 418
-        y: 154
+        x: 229
+        y: 527
         width: 76
         height: 39
       alignment: 9
@@ -538,10 +843,80 @@ TextureImporter:
       name: QYQ_zi08
       rect:
         serializedVersion: 2
-        x: 277
-        y: 187
+        x: 229
+        y: 568
         width: 78
         height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_zi09
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 622
+        width: 60
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_zi10
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 530
+        width: 61
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4848485}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_zi11
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 628
+        width: 78
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4871795}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_zi12
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 517
+        width: 76
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZY_1_01
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 826
+        width: 3
+        height: 76
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

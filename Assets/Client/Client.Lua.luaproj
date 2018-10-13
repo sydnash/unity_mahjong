@@ -24,6 +24,7 @@
   <ItemGroup>
     <Folder Include="Lua\" />
     <Folder Include="Lua\logic\mahjong\" />
+    <Folder Include="Lua\logic\friendster\" />
     <Folder Include="Lua\logic\player\" />
     <Folder Include="Lua\network\" />
     <Folder Include="Lua\logic\" />
@@ -48,6 +49,7 @@
     <Compile Include="Lua\const\textDef.lua" />
     <Compile Include="Lua\const\typeDef.lua" />
     <Compile Include="Lua\globals.lua" />
+    <Compile Include="Lua\logic\friendster\friendster.lua" />
     <Compile Include="Lua\logic\gamepref.lua" />
     <Compile Include="Lua\logic\mahjong\mahjong.lua" />
     <Compile Include="Lua\logic\mahjong\mahjongGame.lua" />
@@ -65,7 +67,11 @@
     <Compile Include="Lua\ui\errorMessage.lua" />
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDesk.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterBank.lua" />
     <Compile Include="Lua\ui\friendster\friendsterMemberManager.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterStatistics.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterMessageItem.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterMessage.lua" />
     <Compile Include="Lua\ui\friendster\joinFriendster.lua" />
     <Compile Include="Lua\ui\friendster\createFriendster.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDetail.lua" />

@@ -26,6 +26,9 @@ return {
         queryAcId                   = "CmdType.fly.CS.CheckAcId",
         addAcIdToFriendster         = "CmdType.fly.CS_InviteIntoClub",
         deleteAcIdFromFriendster    = "CmdType.fly.CS_KickOutClub",
+        depositToFriendsterBank     = "CmdType.fly.CS.TopUpToClub",
+        takeoutFromFriendsterBank   = "CmdType.fly.CS.WithdrawFromClub",
+        queryFriendsterStatistics   = "CmdType.fly.CS_GetClubDeskHistory",
     },
     -- server to client
     sc = {

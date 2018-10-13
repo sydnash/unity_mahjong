@@ -2,6 +2,8 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local friendster_Lc = require("logic.friendster.friendster")
+
 local base = require("ui.common.view")
 local friendster = class("friendster", base)
 
@@ -27,6 +29,8 @@ function friendster:onInit()
 
     self.mCreate:show()
     self.mJoin:hide()
+
+    signalManager.registerSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
 end
 
 function friendster:onCloseClickedHandler()
@@ -89,29 +93,61 @@ end
 function friendster:onCreateClickedHandler()
     playButtonClickSound()
 
-    local ui = require("ui.friendster.createFriendster").new()
+    local ui = require("ui.friendster.createFriendster").new(function(friendster)
+        table.insert(self.my, friendster)
+
+        table.sort(self.my, function(a, b)
+            return a.ClubId < b.ClubId
+        end)
+
+        self:refreshList(self.my)
+    end)
     ui:show()
 end
 
 function friendster:onJoinClickedHandler()
     playButtonClickSound()
 
-    local ui = require("ui.friendster.joinFriendster").new()
+    local ui = require("ui.friendster.joinFriendster").new(function(friendster)
+        table.insert(self.joined, friendster)
+
+        table.sort(self.joined, function(a, b)
+            return a.ClubId < b.ClubId
+        end)
+
+        self:refreshList(self.joined)
+    end)
     ui:show()
 end
 
 function friendster:set(data, enterDeskCallback)
-    self.enterDeskCallback = enterDeskCallback
+    self.friendsters = {}
 
-    table.sort(data, function(a, b)
-        return a.ClubId < b.ClubId
+    for _, v in pairs(data) do
+        local lc = friendster_Lc.new(v.ClubId)
+
+        lc.name             = v.ClubName
+        lc.headerUrl        = v.HeadUrl
+        lc:loadHeaderTex()
+        lc.cards            = v.CurCardNum
+        lc.maxMemberCount   = v.MaxMemberCnt
+        lc.curMemberCount   = v.CurMemberCnt
+        lc.applyCode        = v.ApplyCode
+        lc.managerAcId      = v.AcId
+        lc.managerNickname  = v.NickName
+
+        table.insert(self.friendsters, lc)
+    end
+
+    table.sort(self.friendsters, function(a, b)
+        return a.id < b.id
     end)
 
     self.my = {}
     self.joined = {}
 
-    for _, d in pairs(data) do 
-        if d.AcId == gamepref.acId then
+    for _, d in pairs(self.friendsters) do 
+        if d.managerAcId == gamepref.acId then
             table.insert(self.my, d)
         else
             table.insert(self.joined, d)
@@ -119,12 +155,12 @@ function friendster:set(data, enterDeskCallback)
     end 
     
     self:refreshList(self.my)
+    self.enterDeskCallback = enterDeskCallback
 end
 
 function friendster:refreshList(data)
     self.mList:reset()
 
-    local count = data ~= nil and #data or 0
     local createItem = function()
         return require("ui.friendster.friendsterItem").new(function(cityType, deskId, loading)
             if self.enterDeskCallback ~= nil then
@@ -133,14 +169,29 @@ function friendster:refreshList(data)
             self:close()
         end)
     end
-    
-    self.mList:set(count, createItem, function(item, index)
+
+    local refreshItem = function(item, index)
         item:set(data[index + 1])
-    end)
+    end
+    
+    local count = data ~= nil and #data or 0
+    self.mList:set(count, createItem, refreshItem)
+end
+
+function friendster:onEnterDeskHandler()
+    self:close()
 end
 
 function friendster:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
+
     self.mList:reset()
+
+    for _, v in pairs(self.friendsters) do
+        v:destory()
+    end
+
+    self.super.onDestroy(self)
 end
 
 return friendster

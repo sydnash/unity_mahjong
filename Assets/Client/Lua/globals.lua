@@ -208,7 +208,7 @@ function loginServer(callback)
         end
 
         callback(true)
-        --log("login, msg = " .. table.tostring(msg))
+        log("login, msg = " .. table.tostring(msg))
 
         local deskInfo = msg.DeskInfo
 

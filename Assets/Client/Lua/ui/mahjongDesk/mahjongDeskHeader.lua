@@ -128,6 +128,7 @@ end
 
 function mahjongDeskHeader:onDestroy()
     self.mIcon:setTexture(nil)
+    self.super.onDestroy(self)
 end
 
 return mahjongDeskHeader

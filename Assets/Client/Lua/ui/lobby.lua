@@ -10,7 +10,8 @@ _RES_(lobby, "LobbyUI", "LobbyUI")
 function lobby:onInit()
     self.mHeadIcon:setTexture(gamepref.player.headerTex)
     self.mNickname:setText(gamepref.player.nickname)
-    self.mID:setText("编号:" .. gamepref.player.acId)
+    self.mID:setText("帐号:" .. gamepref.player.acId)
+    self.mCards:setText(tostring(gamepref.player.cards))
 
     self.mHead:addClickListener(self.onHeadClickedHandler, self)
     self.mSwitchCity:addClickListener(self.onSwitchCityClickedHandler, self)
@@ -37,6 +38,9 @@ function lobby:onInit()
         self.mReturnDesk:hide()
         self.mCreateDesk:show()
     end
+
+    signalManager.registerSignalHandler(signalType.cardsChangedSignal, self.onCardsChangedHandler, self)
+    signalManager.registerSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
 end
 
 function lobby:onHeadClickedHandler()
@@ -94,9 +98,7 @@ end
 function lobby:onCreateDeskClickedHandler()
     playButtonClickSound()
     
-    local ui = require("ui.createDesk").new(function(cityType, deskId, loading)
-        self:enterDesk(loading, cityType, deskId)
-    end)
+    local ui = require("ui.createDesk").new()
     ui:set(cityType.chengdu, 0)
     ui:show()
 end
@@ -197,8 +199,24 @@ function lobby:enterDesk(loading, cityType, deskId)
     end)
 end
 
+function lobby:onCardsChangedHandler()
+    self.mCards:setText(tostring(gamepref.player.cards))
+end
+
+function lobby:onEnterDeskHandler(args)
+    local loading = args.loading
+    local cityType = args.cityType
+    local deskId = args.deskId
+
+    self:enterDesk(loading, cityType, deskId)
+end
+
 function lobby:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.cardsChangedSignal, self.onCardsChangedHandler, self)
+    signalManager.unregisterSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
+
     self.mHeadIcon:setTexture(nil)
+    self.super.onDestroy(self)
 end
 
 return lobby
