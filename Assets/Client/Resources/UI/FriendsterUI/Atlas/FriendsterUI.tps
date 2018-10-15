@@ -199,6 +199,19 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Images/CJ_di02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>42,5,83,9</rect>
+                <key>scale9Paddings</key>
+                <rect>42,5,83,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/CJ_dian.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -784,6 +797,7 @@
             <filename>Images/QYQ_tj_zi06.png</filename>
             <filename>Images/QYQ_tj_zi06_1.png</filename>
             <filename>Images/ZY_1_01.png</filename>
+            <filename>Images/CJ_di02.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

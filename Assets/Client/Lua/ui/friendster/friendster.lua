@@ -121,7 +121,7 @@ function friendster:onJoinClickedHandler()
 end
 
 function friendster:set(data, enterDeskCallback)
-    self.friendsters = {}
+    local friendsters = {}
 
     for _, v in pairs(data) do
         local lc = friendster_Lc.new(v.ClubId)
@@ -136,17 +136,17 @@ function friendster:set(data, enterDeskCallback)
         lc.managerAcId      = v.AcId
         lc.managerNickname  = v.NickName
 
-        table.insert(self.friendsters, lc)
+        table.insert(friendsters, lc)
     end
 
-    table.sort(self.friendsters, function(a, b)
+    table.sort(friendsters, function(a, b)
         return a.id < b.id
     end)
 
     self.my = {}
     self.joined = {}
 
-    for _, d in pairs(self.friendsters) do 
+    for _, d in pairs(friendsters) do 
         if d.managerAcId == gamepref.acId then
             table.insert(self.my, d)
         else
@@ -187,9 +187,16 @@ function friendster:onDestroy()
 
     self.mList:reset()
 
-    for _, v in pairs(self.friendsters) do
-        v:destory()
+    for _, v in pairs(self.my) do
+        v:destroy()
     end
+
+    for _, v in pairs(self.joined) do
+        v:destroy()
+    end
+
+    self.my = nil
+    self.joined = nil
 
     self.super.onDestroy(self)
 end

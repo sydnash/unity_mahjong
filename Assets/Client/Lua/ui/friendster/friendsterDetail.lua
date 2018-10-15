@@ -231,7 +231,9 @@ function friendsterDetail:onStatisticsClickedHandler()
     playButtonClickSound()
 
     showWaitingUI("正在获取亲友圈统计数据，请稍候")
-    networkManager.queryFriendsterStatistics(self.data.id, 0, function(ok, msg)
+    local startTime = time.today() - time.SECONDS_PER_DAY
+
+    networkManager.queryFriendsterStatistics(self.data.id, startTime, function(ok, msg)
         closeWaitingUI()
 
         if not ok then
@@ -242,6 +244,7 @@ function friendsterDetail:onStatisticsClickedHandler()
         log("query friendster history, msg = " .. table.tostring(msg))
 
         local ui = require("ui.friendster.friendsterStatistics").new()
+        ui:set(msg)
         ui:show()
     end)
 end

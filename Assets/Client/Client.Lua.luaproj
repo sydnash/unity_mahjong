@@ -72,6 +72,8 @@
     <Compile Include="Lua\ui\friendster\friendsterStatistics.lua" />
     <Compile Include="Lua\ui\friendster\friendsterMessageItem.lua" />
     <Compile Include="Lua\ui\friendster\friendsterMessage.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterStatisticsHistoryItem.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterStatisticsRankItem.lua" />
     <Compile Include="Lua\ui\friendster\joinFriendster.lua" />
     <Compile Include="Lua\ui\friendster\createFriendster.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDetail.lua" />

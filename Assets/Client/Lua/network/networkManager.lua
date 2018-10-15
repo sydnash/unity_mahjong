@@ -71,6 +71,7 @@ end
 -------------------------------------------------------------------
 local function send(command, data, callback)
     token = networkCallbackPool:push(token + 1, callback)
+--    log("send msg, command = " .. command)
     local msg = proto.build(command, token, gamepref.acId, gamepref.session, data)
     tcp.send(msg, function()
         networkCallbackPool:pop(token)
@@ -624,7 +625,7 @@ end
 -------------------------------------------------------------------
 function networkManager.depositToFriendsterBank(friendsterId, value, callback)
     local data = { ClubId = friendsterId, Count = value }
-    send(protoType.depositToFriendsterBank, data, function(msg)
+    send(protoType.cs.depositToFriendsterBank, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else
@@ -638,7 +639,7 @@ end
 -------------------------------------------------------------------
 function networkManager.takeoutFromFriendsterBank(friendsterId, value, callback)
     local data = { ClubId = friendsterId, Count = value }
-    send(protoType.takeoutFromFriendsterBank, data, function(msg)
+    send(protoType.cs.takeoutFromFriendsterBank, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else
@@ -652,7 +653,7 @@ end
 -------------------------------------------------------------------
 function networkManager.queryFriendsterStatistics(friendsterId, startTime, callback)
     local data = { ClubId = friendsterId, StartTime = startTime }
-    send(protoType.queryFriendsterStatistics, data, function(msg)
+    send(protoType.cs.queryFriendsterStatistics, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else
