@@ -374,6 +374,32 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/GY_rw.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>47,75,93,151</rect>
+                <key>scale9Paddings</key>
+                <rect>47,75,93,151</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_rw_dh.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>59,34,118,67</rect>
+                <key>scale9Paddings</key>
+                <rect>59,34,118,67</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/GY_sd.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -780,6 +806,8 @@
             <filename>Images/GY_zi04_h.png</filename>
             <filename>Images/GY_qieye_di.png</filename>
             <filename>../../FriendsterUI/Atlas/Images/GY_dyj.png</filename>
+            <filename>Images/GY_rw.png</filename>
+            <filename>Images/GY_rw_dh.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

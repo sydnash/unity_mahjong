@@ -45,6 +45,7 @@ end
 
 function friendsterDetail:onInit()
     self.mReturn:addClickListener(self.onReturnClickedHandler, self)
+    self.mShare:addClickListener(self.onShareClickedHandler, self)
     self.mManage:addClickListener(self.onManageClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
 
@@ -59,6 +60,15 @@ end
 function friendsterDetail:onReturnClickedHandler()
     playButtonClickSound()
     self:close()
+end
+
+function friendsterDetail:onShareClickedHandler()
+    playButtonClickSound()
+
+    if deviceConfig.isAndroid then 
+        local desc = string.format("编号：%d, 邀请码：%d", self.data.id, self.data.applyCode)
+        androidHelper.shareUrlWx("亲友圈信息", desc, "www.cdbshy.com", false)
+    end
 end
 
 function friendsterDetail:onManageClickedHandler()
@@ -123,9 +133,9 @@ function friendsterDetail:set(data, members, desks)
         return a.SeatCnt - a.PlayerCnt < b.SeatCnt - b.PlayerCnt
     end)
     
-    local deskCount = #desks
+    self.deskCount = #desks
 
-    for i=1, deskCount, 2 do
+    for i=1, self.deskCount, 2 do
         local L = desks[i]
         local config = table.fromjson(L.Config)
         L.Config = config
@@ -138,7 +148,7 @@ function friendsterDetail:set(data, members, desks)
         end
 
         local R = nil 
-        if i + 1 <= deskCount then
+        if i + 1 <= self.deskCount then
             R = desks[i + 1]
 
             local config = table.fromjson(R.Config)
@@ -171,6 +181,15 @@ function friendsterDetail:refreshUI()
 
     self.mName:setText(self.data.name)
     self.mCards:setText(tostring(self.data.cards))
+    self.mDeskCount:setText(string.format("当前房间:%d", self.deskCount))
+    self.mId:setText(string.format("编号:%d", self.data.id))
+    self.mPlayerCount:setText(string.format("人数:%d/%d", self.data.curMemberCount, self.data.maxMemberCount))
+
+    local onlineCount = 0
+    for _, v in pairs(self.players) do
+        if v.online then onlineCount = onlineCount + 1 end
+    end
+    self.mOnlineCount:setText(string.format("在线:%d", onlineCount))
 
     self:refreshMemberList()
     self:refreshDeskList()
@@ -193,23 +212,32 @@ function friendsterDetail:refreshMemberList()
 end
 
 function friendsterDetail:refreshDeskList()
-    self.mDeskList:reset()
+    local count = #self.desks
 
-    local createDeskItem = function()
-        return require("ui.friendster.friendsterDetailDeskItem").new(function(cityType, deskId, loading)
-            if self.enterDeskCallback ~= nil then
-                self.enterDeskCallback(cityType, deskId, loading)
-            end
+    if count <= 0 then
+        self.mDeskEmpty:show()
+        self.mDeskList:hide()
+    else
+        self.mDeskEmpty:hide()
+        self.mDeskList:show()
 
-            self:close()
-        end)
+        local createDeskItem = function()
+            return require("ui.friendster.friendsterDetailDeskItem").new(function(cityType, deskId, loading)
+                if self.enterDeskCallback ~= nil then
+                    self.enterDeskCallback(cityType, deskId, loading)
+                end
+
+                self:close()
+            end)
+        end
+
+        local refreshDeskItem = function(item, index)
+            item:set(self.desks[index + 1])
+        end
+
+        self.mDeskList:reset()
+        self.mDeskList:set(#self.desks, createDeskItem, refreshDeskItem)
     end
-
-    local refreshDeskItem = function(item, index)
-        item:set(self.desks[index + 1])
-    end
-
-    self.mDeskList:set(#self.desks, createDeskItem, refreshDeskItem)
 end
 
 function friendsterDetail:onMailClickedHandler()

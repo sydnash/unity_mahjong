@@ -12,6 +12,7 @@ function friendsterItem:onInit()
 end
 
 function friendsterItem:onClickedHandler()
+    playButtonClickSound()
     local friendsterId = self.data.id
 
     showWaitingUI("正在获取亲友圈数据，请稍候...")

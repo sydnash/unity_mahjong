@@ -21,12 +21,18 @@ end
 
 function share:onHyClickedHandler()
     playButtonClickSound()
-    androidHelper.shareImageWx(imgname, false)
+
+    if deviceConfig.isAndroid then 
+        androidHelper.shareImageWx(imgname, false)
+    end
 end
 
 function share:onPyqClickedHandler()
     playButtonClickSound()
-    androidHelper.shareImageWx(imgname, true)
+
+    if deviceConfig.isAndroid then 
+        androidHelper.shareImageWx(imgname, true)
+    end
 end
 
 return share
