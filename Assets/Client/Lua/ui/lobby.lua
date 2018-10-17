@@ -53,6 +53,7 @@ end
 
 function lobby:onAddRoomCardClickedHandler()
     playButtonClickSound()
+    showMessageUI("功能暂未开放，敬请期待")
 end
 
 function lobby:onHelpClickedHandler()

@@ -58,6 +58,7 @@ end
 function friendsterItem:set(data)
     self.data = data
 
+    self.mIcon:setTexture(data.headerTex)
     self.mName:setText(data.name)
     self.mId:setText(string.format("编号:%d", data.id))
     self.mCount:setText(string.format("人数:%d/%d", data.curMemberCount, data.maxMemberCount))

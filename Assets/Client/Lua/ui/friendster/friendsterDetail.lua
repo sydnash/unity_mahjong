@@ -10,13 +10,16 @@ local friendsterDetail = class("friendsterDetail", base)
 _RES_(friendsterDetail, "FriendsterUI", "FriendsterDetailUI")
 
 local function createPlayer(data)
+    log(data)
     local player = gamePlayer.new(data.AcId)
 
-    player.nickname           = data.Nickname
-    player.headerUrl          = data.HeadUrl
-    player:loadHeaderTex()      
-    player.online             = data.IsOnline
-    player.lastOnlineTime     = data.LastOnlineTime
+    player.nickname         = data.Nickname
+    player.headerUrl        = data.HeadUrl
+    player:loadHeaderTex()    
+    player.online           = data.IsOnline
+    player.lastOnlineTime   = data.LastOnlineTime
+    player.totalPlayTimes   = data.TotalPlayTimes
+    player.winPlayTimes     = data.WinPlayTimes
 
     return player
 end
@@ -50,6 +53,7 @@ function friendsterDetail:onInit()
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
 
     self.mMail:hide()
+    self.mMailRP:hide()
     self.mBank:hide()
     self.mStatistics:hide()
 
@@ -204,7 +208,7 @@ function friendsterDetail:refreshMemberList()
 
     local refreshMemberItem = function(item, index)
         local m = self.members[index + 1]
-        item:set(self.data.AcId, m)
+        item:set(self.data.managerAcId, m)
         item.acId = m.AcId
     end
 

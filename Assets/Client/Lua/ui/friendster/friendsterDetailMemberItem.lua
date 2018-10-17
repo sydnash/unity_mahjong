@@ -8,11 +8,22 @@ local friendsterDetailMemberItem = class("friendsterDetailMemberItem", base)
 _RES_(friendsterDetailMemberItem, "FriendsterUI", "FriendsterDetailMemberItem")
 
 function friendsterDetailMemberItem:onInit()
+    self.mHead:addClickListener(self.onHeadClickedHandler, self)
+
     self.mQZ:hide()
     self.mState:setSprite("offline")
 end
 
+function friendsterDetailMemberItem:onHeadClickedHandler()
+    playButtonClickSound()
+
+    local ui = require("ui.friendster.friendsterMemberInfo").new()
+    ui:set(self.managerId, self.data)
+    ui:show()
+end
+
 function friendsterDetailMemberItem:set(managerId, data)
+    self.managerId = managerId
     self.data = data
 
     self.mIcon:setTexture(data.headerTex)

@@ -68,6 +68,7 @@
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDesk.lua" />
     <Compile Include="Lua\ui\friendster\friendsterBank.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterMemberInfo.lua" />
     <Compile Include="Lua\ui\friendster\friendsterMemberManager.lua" />
     <Compile Include="Lua\ui\friendster\friendsterStatistics.lua" />
     <Compile Include="Lua\ui\friendster\friendsterMessageItem.lua" />
