@@ -5,7 +5,6 @@
 require("std")
 
 local profiler  = require("UnityEngine.Profiler")
-local Resources =  UnityEngine.Resources
 
 --主入口函数。从这里开始lua逻辑
 function main()
