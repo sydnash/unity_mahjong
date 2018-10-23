@@ -67,10 +67,11 @@ chatType = {
 --
 --------------------------------------------------------------
 signalType = {
-    chatTextSignal      = "chatText",
-    chatEmojiSignal     = "chatEmoji",
-    cardsChangedSignal  = "cardsChanged",
-    enterDeskSignal     = "enterDesk",
+    chatTextSignal              = "chatText",
+    chatEmojiSignal             = "chatEmoji",
+    cardsChangedSignal          = "cardsChanged",
+    enterDeskSignal             = "enterDesk",
+    friendsterMessageOptSignal  = "friendsterMessageOpt",
 }
 
 --------------------------------------------------------------
@@ -80,6 +81,29 @@ cityType = {
     chengdu     = 1000,
     wenjiang    = 1001,
     pidu        = 1002,
+}
+
+friendsterNotifyType = {
+    createDesk          = 0,
+    deskPlayerChanged   = 1,
+    deskStart        	= 2,
+    deskDestroy      	= 3,
+    deskPlayerEnter  	= 4,
+    deskPlayerExit   	= 5,
+    cardsChanged       	= 6,
+    friendsterDestroy   = 7,
+    removeMember    	= 8,
+    addMember  	        = 9,
+    playerOffline 	    = 10,
+    playerOnline  	    = 11,
+    applyEnterRequest   = 12,
+    playerPlayInClub    = 13,
+    playerPlayEndClub   = 14,
+}
+
+deskState = {
+    waiting = 0,
+    playing = 1,
 }
 
 --endregion

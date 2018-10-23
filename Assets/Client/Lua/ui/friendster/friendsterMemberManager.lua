@@ -7,11 +7,6 @@ local friendsterMemberManager = class("friendsterMemberManager", base)
 
 _RES_(friendsterMemberManager, "FriendsterUI", "FriendsterMemberManagerUI")
 
-function friendsterMemberManager:ctor(callback)
-    self.callback = callback
-    self.super.ctor(self)
-end
-
 function friendsterMemberManager:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mQuery:addClickListener(self.onQueryClickedHandler, self)
@@ -98,13 +93,13 @@ function friendsterMemberManager:onAddClickedHandler()
         end
 
         log("add player to friendster, msg = " .. table.tostring(msg))
-        showMessageUI("玩家已经添加到亲友圈")
 
-        if self.callback ~= nil then
-            msg.RetCode = nil
-            self.callback("add", msg)
+        if msg.RetCode ~= retc.Ok then
+            showMessageUI(retcText[msg.RetCode])
+            return
         end
 
+        showMessageUI("玩家已经添加到亲友圈")
         self:close()
     end)
 end
@@ -124,13 +119,13 @@ function friendsterMemberManager:onDeleteClickedHandler()
         end
 
         log("delete player from friendster, msg = " .. table.tostring(msg))
-        showMessageUI("玩家已经从亲友圈中删除")
 
-        if self.callback ~= nil then
-            msg.RetCode = nil
-            self.callback("delete", acid)
+        if msg.RetCode ~= retc.Ok then
+            showMessageUI(retcText[msg.RetCode])
+            return
         end
 
+        showMessageUI("玩家已经从亲友圈中删除")
         self:close()
     end)
 end

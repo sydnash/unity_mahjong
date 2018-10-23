@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 2216304884
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d2a2cd4f8db5f58862221ead92beb9b7
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4cd0a5558493b0679e071c141fc729a3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Texture/DT_bg.png
+Dependencies: []

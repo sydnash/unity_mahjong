@@ -45,7 +45,7 @@ local function signal(signalName, args)
         logError(string.format("handler of signal [%s] is not found in signalManager", name))
     else
         for _, v in pairs(slot) do
-            log(v.t.name)
+--            log(v.t.name)
             if v.t == nil then
                 v.f(args)
             else

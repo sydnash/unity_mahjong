@@ -119,9 +119,7 @@ function lobby:onEnterQYQClickedHandler()
         log("query friendster list, msg = " .. table.tostring(msg))
 
         local ui = require("ui.friendster.friendster").new()
-        ui:set(msg.Clubs, function(cityType, deskId, loading)
-            self:enterDesk(loading, cityType, deskId)
-        end)
+        ui:set(msg.Clubs)
         ui:show()
     end)
 end

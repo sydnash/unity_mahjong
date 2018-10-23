@@ -12,9 +12,12 @@ function friendsterDetailDeskItem:onInit()
 end
 
 function friendsterDetailDeskItem:set(data)
+    self.data = data 
+
     self.mL:set(data.L)
 
     if data.R == nil then
+        self.mR:set(nil)
         self.mR:hide()
     else
         self.mR:set(data.R)

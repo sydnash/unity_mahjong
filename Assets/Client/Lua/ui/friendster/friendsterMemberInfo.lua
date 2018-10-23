@@ -25,15 +25,26 @@ end
 
 function friendsterMemberInfo:onExitClickedHandler()
     playButtonClickSound()
-    self:close()
+    
+    networkManager.exitFriendster(self.friendsterId, function(msg)
+        log("exit friendster, msg = " .. table.tostring(msg))
+        signalManager.signal(signalType.friendsterExitedSignal, self.friendsterId)
+        self:close()
+    end)
 end
 
 function friendsterMemberInfo:onDissolveClickedHandler()
     playButtonClickSound()
-    self:close()
+
+    networkManager.dissolveFriendster(self.friendsterId, function(msg)
+        log("dissolve friendster, msg = " .. table.tostring(msg))
+        self:close()
+    end)
 end
 
-function friendsterMemberInfo:set(managerId, data)
+function friendsterMemberInfo:set(friendsterId, managerId, data)
+    self.friendsterId = friendsterId
+
     self.mIcon:setTexture(data.headerTex)
     self.mSex:setSprite("boy")
     self.mNickname:setText(data.nickname)

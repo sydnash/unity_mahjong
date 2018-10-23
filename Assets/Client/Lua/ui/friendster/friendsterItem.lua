@@ -7,6 +7,11 @@ local friendsterItem = class("friendsterItem", base)
 
 _RES_(friendsterItem, "FriendsterUI", "FriendsterItem")
 
+function friendsterItem:ctor(callback)
+    self.callback = callback
+    self.super.ctor(self)
+end
+
 function friendsterItem:onInit()
     self.mThis:addClickListener(self.onClickedHandler, self)
 end
@@ -30,7 +35,7 @@ function friendsterItem:onClickedHandler()
         end
 
         log("query friendster members, msg = " .. table.tostring(msg))
-        local members = msg.Players
+        self.data:setMembers(msg.Players)
 
         networkManager.queryFriendsterDesks(friendsterId, function(ok, msg)
             closeWaitingUI()
@@ -46,11 +51,14 @@ function friendsterItem:onClickedHandler()
             end
 
             log("query friendster desks, msg = " .. table.tostring(msg))
-            local desks = msg.Desks
+            self.data:setDesks(msg.Desks)
 
-            local ui = require("ui.friendster.friendsterDetail").new()
-            ui:set(self.data, members, desks)
-            ui:show()
+--            local ui = require("ui.friendster.friendsterDetail").new()
+--            ui:set(self.data)
+--            ui:show()
+            if self.callback ~= nil then
+                self.callback(self.data)
+            end
         end)
     end)
 end

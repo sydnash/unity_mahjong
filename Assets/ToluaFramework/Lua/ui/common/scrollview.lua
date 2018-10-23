@@ -29,6 +29,13 @@ function scrollview:reset()
     self.component:Reset()
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function scrollview:getItems()
+    return self.component.items
+end
+
 return scrollview
 
 --endregion

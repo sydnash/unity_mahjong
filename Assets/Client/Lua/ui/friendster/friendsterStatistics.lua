@@ -2,6 +2,8 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local gamePlayer = require("logic.player.gamePlayer")
+
 local base = require("ui.common.view")
 local friendsterStatistics = class("friendsterStatistics", base)
 
@@ -94,9 +96,6 @@ function friendsterStatistics:onRankTabYestoadyClickedHandler()
 end
 
 function friendsterStatistics:set(data)
-    self.mCastCount:setText(string.format("消耗房卡:%d", 123))
-    self.mTotalCount:setText(string.format("建房总数:%d", 456))
-
     self.mPageHistory:show()
     self.mPageRank:hide()
 
@@ -109,9 +108,62 @@ function friendsterStatistics:set(data)
         [filter.yestoday] = {},
     }
 
-    for _, v in pairs(data) do
-        
+    local today = time.today()
+    local yestoday = today - time.SECONDS_PER_DAY
+
+    local fillRankData = function(filter, players, scores)
+        local r = self.rank[filter]
+
+        local max = -100000000
+        for _, s in pairs(scores) do
+            if s > max then 
+                max = s
+            end
+        end
+
+        for k, p in pairs(players) do
+            local g = nil
+            
+            for _, v in pairs(r) do
+                if v.acId == p.AcId then
+                    g = v
+                    break
+                end
+            end
+
+            if g == nil then
+                local g = gamePlayer.new(p.AcId)
+                g.headerUrl = p.HeadUrl
+                g:loadHeaderTex()
+                g.nickname = p.Nickname
+                g.score = scores[k]
+                g.playTimes = 1
+                g.winnerTimes = (scores[k] == max) and 1 or 0
+
+                table.insert(r, g)
+            else
+                g.score = g.score + scores[k]
+                g.playTimes = g.playTimes + ((scores[k] == max) and 1 or 0)
+            end
+        end
     end
+
+    local totalCost = 0
+
+    for _, v in pairs(data) do
+        totalCost = totalCost + v.Cost
+
+        if v.EndTime >= today then
+            table.insert(self.history[filter.today], v)
+            fillRankData(filter.today, v.Players, v.Scores)
+        elseif v.EndTime >= yestoday then
+            table.insert(self.history[filter.yestoday], v)
+            fillRankData(filter.yestoday, v.Players, v.Scores)
+        end
+    end
+
+    self.mCastCount:setText(string.format("消耗房卡:%d", totalCost))
+    self.mTotalCount:setText(string.format("建房总数:%d", #data))
 
     self.filter = filter.today
     self:refreshHistory()
@@ -145,7 +197,7 @@ function friendsterStatistics:refreshHistory()
         end
 
         local refreshItem = function(item, index)
-
+            item:set(histories[index + 1])
         end
 
         self.mHistoryList:reset()
@@ -181,7 +233,7 @@ function friendsterStatistics:refreshRank()
         end
 
         local refreshItem = function(item, index)
-
+            item:set(ranks[index + 1])
         end
 
         self.mRankList:reset()

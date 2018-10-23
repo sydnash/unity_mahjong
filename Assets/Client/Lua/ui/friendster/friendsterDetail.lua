@@ -2,30 +2,18 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local gamePlayer = require("logic.player.gamePlayer")
-
 local base = require("ui.common.view")
 local friendsterDetail = class("friendsterDetail", base)
 
 _RES_(friendsterDetail, "FriendsterUI", "FriendsterDetailUI")
 
-local function createPlayer(data)
-    log(data)
-    local player = gamePlayer.new(data.AcId)
+local function getSortedMembers(acId, members)
+    local m = {}
+    for _, v in pairs(members) do
+        table.insert(m, v)
+    end
 
-    player.nickname         = data.Nickname
-    player.headerUrl        = data.HeadUrl
-    player:loadHeaderTex()    
-    player.online           = data.IsOnline
-    player.lastOnlineTime   = data.LastOnlineTime
-    player.totalPlayTimes   = data.TotalPlayTimes
-    player.winPlayTimes     = data.WinPlayTimes
-
-    return player
-end
-
-local function sortMembers(acId, members)
-    table.sort(members, function(a, b)
+    table.sort(m, function(a, b)
         --群主在最前面
         if acId == a.acId then 
             return true
@@ -44,6 +32,34 @@ local function sortMembers(acId, members)
         --离线时间越短越靠前
         return b.lastOnlineTime < a.lastOnlineTime
     end)
+
+    return m
+end
+
+local function getSoredDesks(desks)
+    local d = {}
+
+    for _, v in pairs(desks) do
+        table.insert(d, v)
+    end
+
+    table.sort(d, function(a, b)
+        --没开始游戏的排在前面
+        if a.state == deskState.waiting and a.state == deskState.playing then
+            return true
+        elseif a.state == deskState.playing and a.state == deskState.waiting then
+            return false
+        end
+
+        return (a.seatCount - a.playerCount) < (b.seatCount - b.playerCount)
+    end)
+
+    return d
+end
+
+function friendsterDetail:ctor(callback)
+    self.callback = callback
+    self.super.ctor(self)
 end
 
 function friendsterDetail:onInit()
@@ -51,6 +67,9 @@ function friendsterDetail:onInit()
     self.mShare:addClickListener(self.onShareClickedHandler, self)
     self.mManage:addClickListener(self.onManageClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
+    self.mMail:addClickListener(self.onMailClickedHandler, self)
+    self.mBank:addClickListener(self.onBankClickedHandler, self)
+    self.mStatistics:addClickListener(self.onStatisticsClickedHandler, self)
 
     self.mMail:hide()
     self.mMailRP:hide()
@@ -59,10 +78,16 @@ function friendsterDetail:onInit()
 
     signalManager.registerSignalHandler(signalType.cardsChangedSignal, self.onCardsChangedHandler, self)
     signalManager.registerSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
+    signalManager.registerSignalHandler(signalType.friendsterMessageOptSignal, self.onMessageOptHandler, self)
 end
 
 function friendsterDetail:onReturnClickedHandler()
     playButtonClickSound()
+
+    if self.callback ~= nil then
+        self.callback()
+    end
+
     self:close()
 end
 
@@ -78,27 +103,8 @@ end
 function friendsterDetail:onManageClickedHandler()
     playButtonClickSound()
 
-    local ui = require("ui.friendster.friendsterMemberManager").new(function(op, data)
-        if op == "add" then
-            local player = createPlayer(data)
-
-            self.players[data.AcId] = player
-            table.insert(self.members, player)
-            sortMembers(self.data.AcId, self.members)
-        else -- op == "delete"
-            self.players[data] = nil
-
-            for k, v in pairs(self.members) do
-                if v.acId == data then
-                    table.remove(self.members, k)
-                    break
-                end
-            end
-        end
-
-        self:refreshMemberList()
-    end)
-    ui:set(self.data.ClubId)
+    local ui = require("ui.friendster.friendsterMemberManager").new()
+    ui:set(self.data.id)
     ui:show()
 end
 
@@ -106,70 +112,16 @@ function friendsterDetail:onCreateClickedHandler()
     playButtonClickSound()
 
     local ui = require("ui.createDesk").new()
-    ui:set(cityType.chengdu, self.data.ClubId)
+    ui:set(cityType.chengdu, self.data.id)
     ui:show()
 end
 
-function friendsterDetail:set(data, members, desks)
+function friendsterDetail:set(data)
     self.data = data
 
-    self.players = {}
-    for _, v in pairs(members) do
-        self.players[v.AcId] = createPlayer(v)
-    end
-
-    self.members = {}
-    for _, v in pairs(self.players) do
-        table.insert(self.members, v)
-    end
-
-    sortMembers(self.data.AcId, self.members)
-
-    self.desks = {}
-    table.sort(desks, function(a, b)
-        --没开始游戏的排在前面
-        if a.CurJu == 0 and b.CurJu > 0 then
-            return true
-        elseif a.CurJu > 0 and b.CurJu == 0 then
-            return false
-        end
-
-        return a.SeatCnt - a.PlayerCnt < b.SeatCnt - b.PlayerCnt
-    end)
-    
-    self.deskCount = #desks
-
-    for i=1, self.deskCount, 2 do
-        local L = desks[i]
-        local config = table.fromjson(L.Config)
-        L.Config = config
-        local players = L.Players
-        L.Players = {}
-        for _, p in pairs(players) do
-            if p > 0 then
-                table.insert(L.Players, self.players[p])
-            end
-        end
-
-        local R = nil 
-        if i + 1 <= self.deskCount then
-            R = desks[i + 1]
-
-            local config = table.fromjson(R.Config)
-            R.Config = config
-            local players = L.Players
-            L.Players = {}
-            for _, p in pairs(players) do
-                if p > 0 then
-                    table.insert(L.Players, self.players[p])
-                end
-            end
-        end
-
-        table.insert(self.desks, { L = L, R = R })
-    end
-
     self:refreshUI()
+    self:refreshMemberList()
+    self:refreshDeskList()
 end
 
 function friendsterDetail:refreshUI()
@@ -178,28 +130,30 @@ function friendsterDetail:refreshUI()
         self.mBank:show()
         self.mStatistics:show()
 
-        self.mMail:addClickListener(self.onMailClickedHandler, self)
-        self.mBank:addClickListener(self.onBankClickedHandler, self)
-        self.mStatistics:addClickListener(self.onStatisticsClickedHandler, self)
+        if self.data.applyList ~= nil and #self.data.applyList > 0 then
+            self.mMailRP:show()
+        end
     end
 
     self.mName:setText(self.data.name)
     self.mCards:setText(tostring(self.data.cards))
-    self.mDeskCount:setText(string.format("当前房间:%d", self.deskCount))
+    self.mDeskCount:setText(string.format("当前房间:%d", self.data.curDeskCount))
     self.mId:setText(string.format("编号:%d", self.data.id))
     self.mPlayerCount:setText(string.format("人数:%d/%d", self.data.curMemberCount, self.data.maxMemberCount))
+    self.mOnlineCount:setText(string.format("在线:%d", self:getOnlineCount()))
+end
 
+function friendsterDetail:getOnlineCount()
     local onlineCount = 0
-    for _, v in pairs(self.players) do
+    for _, v in pairs(self.data.members) do
         if v.online then onlineCount = onlineCount + 1 end
     end
-    self.mOnlineCount:setText(string.format("在线:%d", onlineCount))
 
-    self:refreshMemberList()
-    self:refreshDeskList()
+    return onlineCount
 end
 
 function friendsterDetail:refreshMemberList()
+    local members = getSortedMembers(self.data.managerAcId, self.data.members)
     self.mMemberList:reset()
 
     local createMemberItem = function()
@@ -207,16 +161,31 @@ function friendsterDetail:refreshMemberList()
     end
 
     local refreshMemberItem = function(item, index)
-        local m = self.members[index + 1]
-        item:set(self.data.managerAcId, m)
-        item.acId = m.AcId
+        local m = members[index + 1]
+        item:set(self.data.id, self.data.managerAcId, m)
     end
 
-    self.mMemberList:set(#self.members, createMemberItem, refreshMemberItem)
+    self.mMemberList:set(#members, createMemberItem, refreshMemberItem)
 end
 
 function friendsterDetail:refreshDeskList()
-    local count = #self.desks
+    local desks = getSoredDesks(self.data.desks)
+    
+    local deskRows = {}
+    local deskCount = #desks
+
+    for i=1, deskCount, 2 do
+        local L = desks[i]
+
+        local R = nil 
+        if i + 1 <= deskCount then
+            R = desks[i + 1]
+        end
+
+        table.insert(deskRows, { L = L, R = R })
+    end
+
+    local count = #deskRows
 
     if count <= 0 then
         self.mDeskEmpty:show()
@@ -236,19 +205,20 @@ function friendsterDetail:refreshDeskList()
         end
 
         local refreshDeskItem = function(item, index)
-            item:set(self.desks[index + 1])
+            item:set(deskRows[index + 1])
         end
 
         self.mDeskList:reset()
-        self.mDeskList:set(#self.desks, createDeskItem, refreshDeskItem)
+        self.mDeskList:set(#deskRows, createDeskItem, refreshDeskItem)
     end
 end
 
 function friendsterDetail:onMailClickedHandler()
     playButtonClickSound()
     
-    local ui = require("ui.friendster.friendsterMessage").new()
-    ui:show()
+    self.messageUI = require("ui.friendster.friendsterMessage").new()
+    self.messageUI:set(self.data.id, self.data.applyList)
+    self.messageUI:show()
 end
 
 function friendsterDetail:onBankClickedHandler()
@@ -289,16 +259,45 @@ function friendsterDetail:onEnterDeskHandler()
     self:close()
 end
 
+function friendsterDetail:onMessageOptHandler(args)
+    local acId = args.acId
+
+    for k, v in pairs(self.data.applyList) do
+        if v.AcId == acId then
+            table.remove(self.data.applyList, k)
+            break
+        end
+    end
+
+    if self.messageUI ~= nil then
+        self.messageUI:set(self.data.id, self.data.applyList)
+    end
+
+    if #self.data.applyList <= 0 then 
+        self.mMailRP:hide()
+    end
+end
+
+function friendsterDetail:onDissolvedHandler(friendsterId)
+    self:close()
+end
+
+function friendsterDetail:onExitedHandler(friendsterId)
+    self:close()
+end
+
 function friendsterDetail:onDestroy()
     signalManager.unregisterSignalHandler(signalType.cardsChangedSignal, self.onCardsChangedHandler, self)
     signalManager.unregisterSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
-
-    for _, p in pairs(self.players) do
-        p:destroy()
-    end
-
+    signalManager.unregisterSignalHandler(signalType.friendsterMessageOptSignal, self.onMessageOptHandler, self)
+    
     self.mMemberList:reset()
     self.mDeskList:reset()
+
+    if self.messageUI ~= nil then
+        self.messageUI:close()
+        self.messageUI = nil
+    end
 
     self.super.onDestroy(self)
 end

@@ -116,6 +116,14 @@ public abstract class StingyScrollRect : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public List<LuaTable> items
+    {
+        get { return mLuaList; }
+    }
+
     #endregion
 
     #region Private 

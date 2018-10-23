@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 830668308
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 07f0ef23d51824e1ce87f55b30ed19f0
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Sound/mahjong/boy/fa.mp3
+Dependencies: []

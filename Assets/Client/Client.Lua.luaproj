@@ -50,6 +50,7 @@
     <Compile Include="Lua\const\typeDef.lua" />
     <Compile Include="Lua\globals.lua" />
     <Compile Include="Lua\logic\friendster\friendster.lua" />
+    <Compile Include="Lua\logic\friendster\friendsterDesk.lua" />
     <Compile Include="Lua\logic\gamepref.lua" />
     <Compile Include="Lua\logic\mahjong\mahjong.lua" />
     <Compile Include="Lua\logic\mahjong\mahjongGame.lua" />

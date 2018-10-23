@@ -7,14 +7,14 @@ local joinFriendster = class("joinFriendster", base)
 
 _RES_(joinFriendster, "FriendsterUI", "JoinFriendsterUI")
 
-function joinFriendster:ctor(callback)
-    self.callback = callback
+function joinFriendster:ctor()
     self.super.ctor(self)
 end
 
 function joinFriendster:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mQuery:addClickListener(self.onQueryClickedHandler, self)
+    self.mJoin:addClickListener(self.onJoinClickedHandler, self)
 end
 
 function joinFriendster:onCloseClickedHandler()
@@ -37,26 +37,25 @@ function joinFriendster:onQueryClickedHandler()
             return
         end
 
+        log("query friendster info, msg = " .. table.tostring(msg))
+
         if msg.RetCode ~= retc.Ok then
             showMessageUI(retcText[msg.RetCode])
             return
         end
         
-        log("friendster jioned, msg = " .. table.tostring(msg))
-        if self.callback ~= nil then
-            msg.RetCode = nil
-            self.callback(msg)
-        end
-
-        self:close()
+        self.mName:setText(msg.ClubName)
     end)
 end
 
 function joinFriendster:onJoinClickedHandler()
     playButtonClickSound()
 
-    showWaitingUI("正在创建亲友圈，请稍候")
-    networkManager.createFriendster(self.cityId, self.mName:getText(), function(ok, msg)
+    local id = tonumber(self.mId:getText())
+    local vc = self.mVerification:getText()
+
+    showWaitingUI("正在加入亲友圈，请稍候")
+    networkManager.joinFriendster(id, vc, function(ok, msg)
         closeWaitingUI()
 
         if not ok then
@@ -64,12 +63,9 @@ function joinFriendster:onJoinClickedHandler()
             return
         end
 
-        if msg.RetCode ~= retc.Ok then
-            showMessageUI(retcText[msg.RetCode])
-            return
-        end
+        log("join friendster, msg = " .. table.tostring(msg))
 
-        showMessageUI("亲友圈创建成功，快拉亲友们进圈吧")
+        showMessageUI("加入亲友圈申请发送成功，等待群主审核")
         self:close()
     end)
 end

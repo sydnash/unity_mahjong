@@ -18,11 +18,12 @@ function friendsterDetailMemberItem:onHeadClickedHandler()
     playButtonClickSound()
 
     local ui = require("ui.friendster.friendsterMemberInfo").new()
-    ui:set(self.managerId, self.data)
+    ui:set(self.friendsterId, self.managerId, self.data)
     ui:show()
 end
 
-function friendsterDetailMemberItem:set(managerId, data)
+function friendsterDetailMemberItem:set(friendsterId, managerId, data)
+    self.friendsterId = friendsterId
     self.managerId = managerId
     self.data = data
 
@@ -30,12 +31,18 @@ function friendsterDetailMemberItem:set(managerId, data)
     self.mNickname:setText(data.nickname)
     self.mID:setText(string.format("账号:%d", data.acId))
 
-    if data.online then
-        self.mState:setSprite("online")
-    end
+    self:setOnline(data.online)
 
     if data.acId == managerId then
         self.mQZ:show()
+    end
+end
+
+function friendsterDetailMemberItem:setOnline(online)
+    if online then
+        self.mState:setSprite("online")
+    else
+        self.mState:setSprite("offline")
     end
 end
 

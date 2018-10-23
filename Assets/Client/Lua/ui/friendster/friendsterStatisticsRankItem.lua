@@ -16,7 +16,12 @@ function friendsterStatisticsRankItem:onSearchClickedHandler()
 end
 
 function friendsterStatisticsRankItem:set(data)
-
+    self.mIcon:setTexture(data.headerTex)
+    self.mNickname:setText(data.nickname)
+    self.mId:setText(tostring(data.acId))
+    self.mWinner:setText(string.format("%d次", data.winnerTimes))
+    self.mScore:setText(string.format("%d分", data.score))
+    self.mTimes:setText(string.format("%d次", data.playTimes))
 end
 
 function friendsterStatisticsRankItem:onDestroy()

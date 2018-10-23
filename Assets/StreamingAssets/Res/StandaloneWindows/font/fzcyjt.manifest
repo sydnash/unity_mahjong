@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 678149236
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b7a343ee3b0303c0f4885532ae58a471
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b461ed877bd666e82c334b0768962aed
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Font/FZCYJT.TTF
+Dependencies: []

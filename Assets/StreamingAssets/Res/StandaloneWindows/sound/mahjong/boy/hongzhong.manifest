@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 3948952576
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 52370ebbce5e15406eec13b9af3c2863
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Sound/mahjong/boy/hongzhong.mp3
+Dependencies: []

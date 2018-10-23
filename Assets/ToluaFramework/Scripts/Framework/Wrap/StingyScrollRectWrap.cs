@@ -11,6 +11,7 @@ public class StingyScrollRectWrap
 		L.RegFunction("Reset", Reset);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("items", get_items, null);
 		L.EndClass();
 	}
 
@@ -64,6 +65,25 @@ public class StingyScrollRectWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_items(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			StingyScrollRect obj = (StingyScrollRect)o;
+			System.Collections.Generic.List<LuaInterface.LuaTable> ret = obj.items;
+			ToLua.PushSealed(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index items on a nil value");
 		}
 	}
 }

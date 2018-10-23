@@ -40,7 +40,7 @@ end
 -------------------------------------------------------------------
 function time.formatDate(d)
     d = (d == nil) and time.now() or d
-    return os.date("%Y-%m-%d", d)
+    return os.date("%Y.%m.%d", d)
 end
 
 -------------------------------------------------------------------
@@ -56,7 +56,7 @@ end
 -------------------------------------------------------------------
 function time.formatDateTime(dt)
     dt = (dt == nil) and time.now() or dt
-    return os.date("%Y-%m-%d %H:%M:%S", dt)
+    return os.date("%Y.%m.%d %H:%M:%S", dt)
 end
 
 return time

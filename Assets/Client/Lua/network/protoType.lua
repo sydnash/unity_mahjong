@@ -20,6 +20,9 @@ return {
         chatMessage                 = "CmdType.fly.CS.ChatMsg",
         queryFriendsterList         = "CmdType.fly.CS_GetClubList",
         createFriendster            = "CmdType.fly.CS.CreateClub",
+        dissolveFriendster          = "CmdType.fly.CS.DeleteClub",
+        joinFriendster              = "CmdType.fly.CS.ApplyEnterClub",
+        exitFriendster              = "CmdType.fly.CS_ExitClub",
         queryFriendsterMembers      = "CmdType.fly.CS_GetClubPlayerList",
         queryFriendsterDesks        = "CmdType.fly.CS_GetClubDeskList",
         queryFriendsterInfo         = "CmdType.fly.CS.CheckClubInfo",
@@ -29,6 +32,7 @@ return {
         depositToFriendsterBank     = "CmdType.fly.CS.TopUpToClub",
         takeoutFromFriendsterBank   = "CmdType.fly.CS.WithdrawFromClub",
         queryFriendsterStatistics   = "CmdType.fly.CS_GetClubDeskHistory",
+        replyFriendsterRequest      = "CmdType.fly.CS.ManageApplyRequest",
     },
     -- server to client
     sc = {
@@ -53,6 +57,7 @@ return {
         dqHint                      = "CmdType.fly.SC_MJDQHint",
         dqDo                        = "CmdType.fly.SC.MJDQDo",
         chatMessage                 = "CmdType.fly.SC.ChatMsg",
+        notifyFriendster            = "CmdType.fly.SC_NotifyClubInfo",
     },
 }
 

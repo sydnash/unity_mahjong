@@ -14,39 +14,38 @@ function friendsterDesk:onInit()
 end
 
 function friendsterDesk:set(data)
-    self.cityType = data.GameType
-    self.deskId = data.DeskId
+    self.data = data
 
-    table.sort(data.Players, function(a, b)
-        return a == data.Creator
-    end)
+    if self.data ~= nil then
+        self.mNum:setText(string.format("（第%d/%d局）", self.data.playedCount, self.data.totalCount))
+        self:setState(self.data.state)
 
-    self.mNum:setText(string.format("（第%d/%d局）", data.CurJu, data.Config.JuShu))
-
-    if data.CurJu == 0 then
-        self.mState:setText("等待中")
-    else
-        self.mState:setText("游戏中")
-    end
-
-    for k, v in pairs(self.slots) do 
-        if k > data.SeatCnt then
-            v.root:hide()
-        else
-            v.root:show()
-            local p = data.Players[k]
-
-            if p == nil then
-                v.head:hide()
-                v.add:show()
-
-                v.add:addClickListener(self.onAddClickedHandler, self)
+        for k, v in pairs(self.slots) do 
+            if k > self.data.seatCount then
+                v.root:hide()
             else
-                v.head:show()
-                v.add:hide()
-                v.icon:setTexture(p.headerTex)
+                v.root:show()
+                local p = self.data.players[k]
+
+                if p == nil then
+                    v.head:hide()
+                    v.add:show()
+
+                    v.add:addClickListener(self.onAddClickedHandler, self)
+                else
+                    v.head:show()
+                    v.add:hide()
+                    v.icon:setTexture(p.headerTex)
+                end
             end
         end
+    end
+end
+
+function friendsterDesk:setState(state)
+    if self.data ~= nil then
+        self.data.state = state
+        self.mState:setText((state == 1) and "游戏中" or "等待中")
     end
 end
 
@@ -56,7 +55,7 @@ function friendsterDesk:onAddClickedHandler()
     local loading = require("ui.loading").new()
     loading:show()
 
-    signalManager.signal(signalType.enterDeskSignal, { cityType = self.cityType, deskId = self.deskId, loading = loading })
+    signalManager.signal(signalType.enterDeskSignal, { cityType = self.data.cityType, deskId = self.data.deskId, loading = loading })
 end
 
 function friendsterDesk:onDestroy()

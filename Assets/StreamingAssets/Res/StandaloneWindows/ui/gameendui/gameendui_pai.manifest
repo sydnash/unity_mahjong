@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 2435306203
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 57453657af559e229c0a221e06aa6a9d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a023981f690c8d6dbaf8af0d6dd04d83
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/UI/GameEndUI/GameEndUI_Pai.prefab
+Dependencies:
+- D:/Works/CompanyProjects/tdqp/Assets/StreamingAssets/Res/StandaloneWindows/ui/atlas/mahjong

@@ -18,13 +18,13 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkCallbackPool:pop(token)
+function networkCallbackPool:pop(token, force)
     local slot = self.pool[token]
 
     if slot then
         local callback = slot.c
 
-        if not slot.n then
+        if force or not slot.n then
             self.pool[token] = nil
         end
 
@@ -74,7 +74,7 @@ local function send(command, data, callback)
 --    log("send msg, command = " .. command)
     local msg = proto.build(command, token, gamepref.acId, gamepref.session, data)
     tcp.send(msg, function()
-        networkCallbackPool:pop(token)
+        networkCallbackPool:pop(token, false)
         callback(nil)
     end)
 end
@@ -165,7 +165,7 @@ function networkManager.update()
 
         local callback = networkCallbackPool:pop(msg.RequestId)
         if callback == nil then
-            callback = networkCallbackPool:pop(msg.Command)
+            callback = networkCallbackPool:pop(msg.Command, false)
         end
 
         if callback ~= nil then
@@ -236,7 +236,7 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.unregisterCommandHandler(command)
-    networkCallbackPool:pop(command)
+    networkCallbackPool:pop(command, true)
 end
 
 -------------------------------------------------------------------
@@ -539,6 +539,48 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function networkManager.dissolveFriendster(friendsterId, callback)
+    local data = { ClubId = friendsterId }
+    send(protoType.cs.dissolveFriendster, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.joinFriendster(friendsterId, verificationCode, callback)
+    local data = { ClubId = friendsterId, Code = verificationCode }
+    send(protoType.cs.joinFriendster, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.exitFriendster(friendsterId, callback)
+    local data = { ClubId = friendsterId }
+    send(protoType.cs.exitFriendster, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function networkManager.queryFriendsterMembers(friendserId, callback)
     local data = { ClubId = friendserId }
     send(protoType.cs.queryFriendsterMembers, data, function(msg)
@@ -569,7 +611,7 @@ end
 -------------------------------------------------------------------
 function networkManager.queryFriendsterInfo(friendserId, verificationCode, callback)
     local data = { ClubId = friendserId, Code = verificationCode }
-    send(protoType.cs.queryFriendsterDesks, data, function(msg)
+    send(protoType.cs.queryFriendsterInfo, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else
@@ -654,6 +696,20 @@ end
 function networkManager.queryFriendsterStatistics(friendsterId, startTime, callback)
     local data = { ClubId = friendsterId, StartTime = startTime }
     send(protoType.cs.queryFriendsterStatistics, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.replyFriendsterRequest(friendsterId, acId, agree, callback)
+    local data = { ClubId = friendsterId, AcId = acId, Agree = agree }
+    send(protoType.cs.replyFriendsterRequest, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else

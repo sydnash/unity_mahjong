@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 2622852945
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 768ebee5c41841de4191ef187232b7c9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b461ed877bd666e82c334b0768962aed
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+Assets:
+- Assets/Client/Resources/Font/BDZYJT.ttf
+Dependencies: []

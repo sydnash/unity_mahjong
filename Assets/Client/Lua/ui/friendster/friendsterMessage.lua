@@ -16,8 +16,10 @@ function friendsterMessage:onCloseClickedHandler()
     self:close()
 end
 
-function friendsterMessage:set(data)
+function friendsterMessage:set(friendsterId, data)
+    self.friendsterId = friendsterId
     self.data = data
+
     self:refreshList()
 end
 
@@ -36,7 +38,7 @@ function friendsterMessage:refreshList()
         end
 
         local refreshItem = function(item, index)
-
+            item:set(self.friendsterId, self.data[index + 1])
         end
 
         self.mList:reset()

@@ -9,6 +9,29 @@ local friendster = class("friendster", base)
 
 _RES_(friendster, "FriendsterUI", "FriendsterUI")
 
+local filter = {
+    none    = 0,
+    my      = 1,
+    joined  = 2,
+}
+
+local function createFriendsterLC(friendster)
+    local lc = friendster_Lc.new(friendster.ClubId)
+
+    lc.name             = friendster.ClubName
+    lc.headerUrl        = friendster.HeadUrl
+    lc:loadHeaderTex()
+    lc.cards            = friendster.CurCardNum
+    lc.maxMemberCount   = friendster.MaxMemberCnt
+    lc.curMemberCount   = friendster.CurMemberCnt
+    lc.applyCode        = friendster.ApplyCode
+    lc.managerAcId      = friendster.AcId
+    lc.managerNickname  = friendster.NickName
+    lc.applyList        = friendster.ApplyList or {}
+
+    return lc
+end
+
 function friendster:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mTabMyU:addClickListener(self.onMyClickedHandler, self)
@@ -29,6 +52,12 @@ function friendster:onInit()
 
     self.mCreate:show()
     self.mJoin:hide()
+
+    self.filter = filter.none
+
+    networkManager.registerCommandHandler(protoType.sc.notifyFriendster, function(msg) 
+        self:onNotifyFriendster(msg)
+    end, true)
 
     signalManager.registerSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
 end
@@ -54,7 +83,8 @@ function friendster:onMyClickedHandler()
     self.mCreate:show()
     self.mJoin:hide()
 
-    self:refreshList(self.my)
+    self.filter = filter.my
+    self:refreshList()
 end
 
 function friendster:onJoinedClickedHandler()
@@ -73,7 +103,8 @@ function friendster:onJoinedClickedHandler()
     self.mCreate:hide()
     self.mJoin:show()
 
-    self:refreshList(self.joined)
+    self.filter = filter.joined
+    self:refreshList()
 end
 
 function friendster:onGuideClickedHandler()
@@ -88,19 +119,23 @@ function friendster:onGuideClickedHandler()
 
     self.mPageRows:hide()
     self.mPageGuide:show()
+
+    self.filter = filter.none
 end
 
 function friendster:onCreateClickedHandler()
     playButtonClickSound()
 
     local ui = require("ui.friendster.createFriendster").new(function(friendster)
-        table.insert(self.my, friendster)
+        local lc = createFriendsterLC(friendster)
+        self.friendsters[lc.id] = lc
+        table.insert(self.my, lc)
 
         table.sort(self.my, function(a, b)
-            return a.ClubId < b.ClubId
+            return a.id < b.id
         end)
 
-        self:refreshList(self.my)
+        self:refreshList()
     end)
     ui:show()
 end
@@ -108,81 +143,205 @@ end
 function friendster:onJoinClickedHandler()
     playButtonClickSound()
 
-    local ui = require("ui.friendster.joinFriendster").new(function(friendster)
-        table.insert(self.joined, friendster)
-
-        table.sort(self.joined, function(a, b)
-            return a.ClubId < b.ClubId
-        end)
-
-        self:refreshList(self.joined)
-    end)
+    local ui = require("ui.friendster.joinFriendster").new()
     ui:show()
 end
 
-function friendster:set(data, enterDeskCallback)
-    local friendsters = {}
+function friendster:set(data)
+    self.friendsters = {}
 
     for _, v in pairs(data) do
-        local lc = friendster_Lc.new(v.ClubId)
-
-        lc.name             = v.ClubName
-        lc.headerUrl        = v.HeadUrl
-        lc:loadHeaderTex()
-        lc.cards            = v.CurCardNum
-        lc.maxMemberCount   = v.MaxMemberCnt
-        lc.curMemberCount   = v.CurMemberCnt
-        lc.applyCode        = v.ApplyCode
-        lc.managerAcId      = v.AcId
-        lc.managerNickname  = v.NickName
-
-        table.insert(friendsters, lc)
+        local lc = createFriendsterLC(v)
+        self.friendsters[lc.id] = lc
     end
-
-    table.sort(friendsters, function(a, b)
-        return a.id < b.id
-    end)
 
     self.my = {}
     self.joined = {}
 
-    for _, d in pairs(friendsters) do 
+    for _, d in pairs(self.friendsters) do 
         if d.managerAcId == gamepref.acId then
             table.insert(self.my, d)
         else
             table.insert(self.joined, d)
         end
     end 
+
+    table.sort(self.my, function(a, b)
+        return a.id < b.id
+    end)
+
+    table.sort(self.joined, function(a, b)
+        return a.id < b.id
+    end)
     
-    self:refreshList(self.my)
-    self.enterDeskCallback = enterDeskCallback
+    self.filter = filter.my
+    self:refreshList()
 end
 
-function friendster:refreshList(data)
+function friendster:refreshList()
     self.mList:reset()
-
-    local createItem = function()
-        return require("ui.friendster.friendsterItem").new(function(cityType, deskId, loading)
-            if self.enterDeskCallback ~= nil then
-                self.enterDeskCallback(cityType, deskId, loading)
-            end
-            self:close()
-        end)
-    end
-
-    local refreshItem = function(item, index)
-        item:set(data[index + 1])
+    
+    local data = nil
+    if self.filter == filter.my then
+        data = self.my
+    elseif self.filter == filter.joined then
+        data = self.joined
     end
     
-    local count = data ~= nil and #data or 0
-    self.mList:set(count, createItem, refreshItem)
+    if data ~= nil then
+        local createItem = function()
+            return require("ui.friendster.friendsterItem").new(function(data)
+                self.detailUI = require("ui.friendster.friendsterDetail").new(function()
+                    if self.detailUI ~= nil then
+                        self.detailUI:close()
+                        self.detailUI = nil
+                    end
+                end)
+                self.detailUI:set(data)
+                self.detailUI:show()
+            end)
+        end
+
+        local refreshItem = function(item, index)
+            item:set(data[index + 1])
+        end
+    
+        local count = data ~= nil and #data or 0
+        self.mList:set(count, createItem, refreshItem)
+    end
 end
 
 function friendster:onEnterDeskHandler()
     self:close()
 end
 
+function friendster:onNotifyFriendster(msg)
+    log("friendster:onNotifyFriendster, msg = " .. table.tostring(msg))
+    local t = msg.Type
+    local d = table.fromjson(msg.Msg) 
+
+    local lc = self.friendsters[d.ClubId]
+
+    if t == friendsterNotifyType.createDesk then
+        if lc ~= nil then
+            lc:addDesk(d.DeskInfo)
+
+            if self.detailUI ~= nil then
+                self.detailUI:refreshUI()
+                self.detailUI:refreshDeskList()
+            end
+        end
+    elseif t == friendsterNotifyType.deskStart then
+        if lc ~= nil then
+            local desk = lc.desks[d.DeskId]
+            if desk ~= nil then
+                desk.state = deskState.playing
+            end
+
+            if self.detailUI ~= nil then
+                self.detailUI:refreshDeskList()
+            end
+        end
+    elseif t == friendsterNotifyType.deskDestroy then
+        if lc ~= nil then
+            lc:removeDesk(d.DeskId)
+            if self.detailUI ~= nil then
+                self.detailUI:refreshUI()
+                self.detailUI:refreshDeskList()
+            end
+        end
+    elseif t == friendsterNotifyType.deskPlayerEnter then
+        if lc ~= nil then
+            local desk = lc:addPlayerToDesk(d.AcId, d.DeskId)
+            if self.detailUI ~= nil then
+                self.detailUI:refreshDeskList()
+            end
+        end
+    elseif t == friendsterNotifyType.deskPlayerExit then
+        if lc ~= nil then
+            local desk = lc:removePlayerFromDesk(d.AcId, d.DeskId)
+            if self.detailUI ~= nil then
+                self.detailUI:refreshDeskList()
+            end
+        end
+    elseif t == friendsterNotifyType.cardsChanged then
+        if self.detailUI ~= nil then
+            self.detailUI:refreshUI()
+        end
+    elseif t == friendsterNotifyType.friendsterDestroy then
+        self.friendsters[d.ClubId] = nil
+
+        for k, v in pairs(self.my) do
+            if v.id == d.ClubId then
+                table.remove(self.my, k)
+                break
+            end
+        end
+
+        for k, v in pairs(self.joined) do
+            if v.id == d.ClubId then
+                table.remove(self.joined, k)
+                break
+            end
+        end
+
+        self:refreshList()
+
+        if self.detailUI ~= nil then
+            if self.detailUI.data.id == d.ClubId then
+                self.detailUI:close()
+                self.detailUI = nil
+            end
+        end
+    elseif t == friendsterNotifyType.removeMember then
+        if lc ~= nil then
+            lc:removeMember(d.AcId)
+            if self.detailUI ~= nil then
+                self.detailUI:refreshUI()
+                self.detailUI:refreshMemberList()
+            end
+        end
+    elseif t == friendsterNotifyType.addMember then
+        if lc ~= nil then
+            lc:addMember(d.PlayerInfo)
+            if self.detailUI ~= nil then
+                self.detailUI:refreshUI()
+                self.detailUI:refreshMemberList()
+            end
+        end
+    elseif t == friendsterNotifyType.playerOffline then
+        if lc ~= nil then
+            lc:setMemberOnlineState(d.AcId, false)
+            if self.detailUI ~= nil then
+                self.detailUI:refreshUI()
+                self.detailUI:refreshMemberList()
+            end
+        end
+    elseif t == friendsterNotifyType.playerOnline then
+        if lc ~= nil then
+            lc:setMemberOnlineState(d.AcId, true)
+            if self.detailUI ~= nil then
+                self.detailUI:refreshUI()
+                self.detailUI:refreshMemberList()
+            end
+        end
+    elseif t == friendsterNotifyType.applyEnterRequest then
+        if lc ~= nil then
+            for _, v in pairs(lc.applyList) do
+                if v.acId == d.Info.AcId then return end
+            end
+
+            table.insert(lc.applyList, d.Info)
+
+            if self.detailUI ~= nil then
+                self.detailUI:refreshUI()
+            end
+        end
+    end
+end
+
 function friendster:onDestroy()
+    networkManager.unregisterCommandHandler(protoType.sc.notifyFriendster)
     signalManager.unregisterSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
 
     self.mList:reset()
@@ -197,6 +356,11 @@ function friendster:onDestroy()
 
     self.my = nil
     self.joined = nil
+
+    if self.detailUI ~= nil then
+        self.detailUI:close()
+        self.detailUI = nil
+    end
 
     self.super.onDestroy(self)
 end
