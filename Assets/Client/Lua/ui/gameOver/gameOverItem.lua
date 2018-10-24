@@ -11,7 +11,7 @@ end
 
 function gameOverItem:setPlayerInfo(player)
     self.mIcon:setTexture(player.headerTex)
-    self.mNickname:setText(player.nickname)
+    self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
     self.mId:setText(string.format("帐号:%d", player.acId))
     self.mScore:setScore(player.totalScore)
 

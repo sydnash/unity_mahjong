@@ -15,7 +15,7 @@ end
 
 function exitDeskItem:setPlayerInfo(player)
     self.mIcon:setTexture(player.headerTex)
-    self.mNickname:setText(player.nickname)
+    self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
     self:setState(player.exitVoteState)
 end
 

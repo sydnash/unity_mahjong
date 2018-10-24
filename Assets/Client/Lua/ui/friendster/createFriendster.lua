@@ -24,6 +24,8 @@ function createFriendster:onInit()
 
     self.mUnexpand:hide()
     self.mCityList:hide()
+
+    self.mName:setCharacterLimit(gameConfig.friendsterNameMaxLength)
     
     self.mCityList_ChengDu.id   = cityType.chengdu
     self.mCityList_WenJiang.id  = cityType.wenjiang

@@ -44,7 +44,7 @@ function friendsterMemberManager:onQueryClickedHandler()
         end
 
         log("query player info, msg = " .. table.tostring(msg))
-        self.mName:setText(msg.Nickname)
+        self.mName:setText(cutoutString(msg.Nickname, gameConfig.nicknameMaxLength))
     end)
 end
 

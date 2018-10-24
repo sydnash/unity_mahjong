@@ -7,6 +7,7 @@ require("const.textDef")
 require("const.statusDef")
 
 deviceConfig    = require("config.deviceConfig")
+gameConfig      = require("config.gameConfig")
 gamepref        = require("logic.gamepref")
 androidHelper   = require("platform.androidHelper")
 networkManager  = require("network.networkManager")
@@ -282,6 +283,74 @@ function loginServer(callback)
             end)
         end
     end)
+end
+
+-------------------------------------------------------------
+-- 
+-------------------------------------------------------------
+local function stringToChars(str)
+	--[[ 
+        主要用了Unicode(UTF-8)编码的原理分隔字符串
+	    简单来说就是每个字符的第一位定义了该字符占据了多少字节
+	    UTF-8的编码：它是一种变长的编码方式
+	    对于单字节的符号，字节的第一位设为0，后面7位为这个符号的unicode码。因此对于英语字母，UTF-8编码和ASCII码是相同的。
+	    对于n字节的符号（n>1），第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10。
+	    剩下的没有提及的二进制位，全部为这个符号的unicode码。
+    --]]
+    local list = {}
+    local len = string.len(str)
+    local i = 1 
+
+    while i <= len do
+        local c = string.byte(str, i)
+        local shift = 1
+        if c > 0 and c <= 127 then
+            shift = 1
+        elseif (c >= 192 and c <= 223) then
+            shift = 2
+        elseif (c >= 224 and c <= 239) then
+            shift = 3
+        elseif (c >= 240 and c <= 247) then
+            shift = 4
+        end
+        local char = string.sub(str, i, i+shift-1)
+        i = i + shift
+        table.insert(list, {char, shift})
+    end
+
+	return list, len
+end
+
+-------------------------------------------------------------
+-- 按给定长度截断字符串并在最后连接“...”
+-------------------------------------------------------------
+function cutoutString(str, maxLen)
+	local tmp = stringToChars(str)
+    if #tmp <= maxLen then
+        return str
+    end
+    local ret = ""
+    local i = 1
+    local maxLen = 2 * maxLen
+    local curLen = 0
+    while(true) do
+        if i > #tmp then
+            break
+        end
+        if tmp[i][2] > 1 then
+            curLen = curLen + 2
+        else
+            curLen = curLen + 1
+        end
+        if curLen > maxLen then 
+            ret = ret .. "..."
+            break
+        end
+        ret = ret .. tmp[i][1]
+        i = i + 1
+    end
+
+    return ret
 end
 
 --endregion

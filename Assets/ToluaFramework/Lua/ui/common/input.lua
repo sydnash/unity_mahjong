@@ -29,6 +29,11 @@ function input:getText()
     return self.component.text
 end
 
+function input:setCharacterLimit(limit)
+    limit = math.max(0, limit)
+    self.component.characterLimit = limit
+end
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------

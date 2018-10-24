@@ -9,7 +9,7 @@ _RES_(lobby, "LobbyUI", "LobbyUI")
 
 function lobby:onInit()
     self.mHeadIcon:setTexture(gamepref.player.headerTex)
-    self.mNickname:setText(gamepref.player.nickname)
+    self.mNickname:setText(cutoutString(gamepref.player.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText("帐号:" .. gamepref.player.acId)
     self.mCards:setText(tostring(gamepref.player.cards))
 

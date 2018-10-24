@@ -17,7 +17,7 @@ end
 
 function friendsterStatisticsRankItem:set(data)
     self.mIcon:setTexture(data.headerTex)
-    self.mNickname:setText(data.nickname)
+    self.mNickname:setText(cutoutString(data.nickname, gameConfig.nicknameMaxLength))
     self.mId:setText(tostring(data.acId))
     self.mWinner:setText(string.format("%d次", data.winnerTimes))
     self.mScore:setText(string.format("%d分", data.score))

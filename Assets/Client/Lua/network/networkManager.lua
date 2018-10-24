@@ -59,7 +59,7 @@ local networkManager = class("networkManager")
 --
 -------------------------------------------------------------------
 local function getDeviceId()
-    if appConfig.debug and deviceConfig.deviceId ~= nil then
+    if appConfig.debug and (not deviceConfig.isMobile) then
         return deviceConfig.deviceId
     end
 
@@ -163,7 +163,7 @@ function networkManager.update()
         local msg = networkManager.messageQueue[1]
         table.remove(networkManager.messageQueue, 1)
 
-        local callback = networkCallbackPool:pop(msg.RequestId)
+        local callback = networkCallbackPool:pop(msg.RequestId, true)
         if callback == nil then
             callback = networkCallbackPool:pop(msg.Command, false)
         end

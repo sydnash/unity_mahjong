@@ -42,6 +42,7 @@
     <Compile Include="Lua\clientApp.lua" />
     <Compile Include="Lua\config\chatConfig.lua" />
     <Compile Include="Lua\config\deviceConfig.lua" />
+    <Compile Include="Lua\config\gameConfig.lua" />
     <Compile Include="Lua\config\networkConfig.lua" />
     <Compile Include="Lua\config\soundConfig.lua" />
     <Compile Include="Lua\const\mahjongClass.lua" />

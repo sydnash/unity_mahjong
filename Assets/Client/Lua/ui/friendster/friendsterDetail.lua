@@ -135,7 +135,7 @@ function friendsterDetail:refreshUI()
         end
     end
 
-    self.mName:setText(self.data.name)
+    self.mName:setText(cutoutString(self.data.name, gameConfig.friendsterNameMaxLength))
     self.mCards:setText(tostring(self.data.cards))
     self.mDeskCount:setText(string.format("当前房间:%d", self.data.curDeskCount))
     self.mId:setText(string.format("编号:%d", self.data.id))

@@ -34,7 +34,7 @@ function friendsterMessageItem:set(friendsterId, data)
     self.friendsterId = friendsterId
     self.acId = data.AcId
 
-    self.mName:setText(data.Nickname)
+    self.mName:setText(cutoutString(data.Nickname, gameConfig.nicknameMaxLength))
 end
 
 return friendsterMessageItem

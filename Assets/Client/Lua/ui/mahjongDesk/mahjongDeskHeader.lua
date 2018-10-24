@@ -23,7 +23,7 @@ function mahjongDeskHeader:setPlayerInfo(player)
 
         self.mIcon:setTexture(player.headerTex)
 
-        self.mNickname:setText(player.nickname)
+        self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
         self.mScore:setText(string.format("分数:%d", player.score))
         self:setReady(player.ready)
 

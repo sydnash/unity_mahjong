@@ -53,9 +53,6 @@ function friendsterItem:onClickedHandler()
             log("query friendster desks, msg = " .. table.tostring(msg))
             self.data:setDesks(msg.Desks)
 
---            local ui = require("ui.friendster.friendsterDetail").new()
---            ui:set(self.data)
---            ui:show()
             if self.callback ~= nil then
                 self.callback(self.data)
             end
@@ -67,7 +64,7 @@ function friendsterItem:set(data)
     self.data = data
 
     self.mIcon:setTexture(data.headerTex)
-    self.mName:setText(data.name)
+    self.mName:setText(cutoutString(data.name, gameConfig.friendsterNameMaxLength))
     self.mId:setText(string.format("编号:%d", data.id))
     self.mCount:setText(string.format("人数:%d/%d", data.curMemberCount, data.maxMemberCount))
 end
