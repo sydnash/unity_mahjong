@@ -106,4 +106,12 @@ deskState = {
     playing = 1,
 }
 
+userType = {
+    normal      = 0,--普通玩家
+    proxy       = 1,--代理
+    club        = 2,--仅可开亲友圈
+    transfer    = 3,--仅可转账
+    operation   = 4,--1、2、3
+}
+
 --endregion

@@ -103,48 +103,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GY_fk
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 51
-        width: 75
-        height: 57
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: GY_fk01
-      rect:
-        serializedVersion: 2
-        x: 241
-        y: 4
-        width: 218
-        height: 52
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: GY_fk02
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 2
-        width: 47
-        height: 47
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
       name: ZY_1
       rect:
         serializedVersion: 2
@@ -205,7 +163,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 419
-        y: 66
+        y: 101
         width: 62
         height: 63
       alignment: 0
@@ -274,8 +232,8 @@ TextureImporter:
       name: ZY_an08
       rect:
         serializedVersion: 2
-        x: 461
-        y: 3
+        x: 467
+        y: 168
         width: 113
         height: 61
       alignment: 0
@@ -386,8 +344,8 @@ TextureImporter:
       name: ZY_qhdy01
       rect:
         serializedVersion: 2
-        x: 467
-        y: 170
+        x: 419
+        y: 40
         width: 192
         height: 59
       alignment: 0
@@ -414,8 +372,8 @@ TextureImporter:
       name: ZY_qhdy_xc
       rect:
         serializedVersion: 2
-        x: 403
-        y: 131
+        x: 241
+        y: 23
         width: 60
         height: 33
       alignment: 9
@@ -457,7 +415,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 483
-        y: 110
+        y: 108
         width: 188
         height: 58
       alignment: 9

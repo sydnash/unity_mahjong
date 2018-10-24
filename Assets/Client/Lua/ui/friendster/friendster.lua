@@ -40,20 +40,33 @@ function friendster:onInit()
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
     self.mJoin:addClickListener(self.onJoinClickedHandler, self)
     
-    self.mTabMyS:show()
-    self.mTabMyU:hide()
-    self.mTabJoinedS:hide()
-    self.mTabJoinedU:show()
+    if gamepref.player.userType == userType.normal then
+        self.mTabMyS:hide()
+        self.mTabMyU:show()
+        self.mTabJoinedS:show()
+        self.mTabJoinedU:hide()
+
+        self.mCreate:hide()
+        self.mJoin:show()
+
+        self.filter = filter.joined
+    elseif gamepref.player.userType == userType.proxy or gamepref.player.userType == userType.operation then
+        self.mTabMyS:show()
+        self.mTabMyU:hide()
+        self.mTabJoinedS:hide()
+        self.mTabJoinedU:show()
+
+        self.mCreate:show()
+        self.mJoin:hide()
+
+        self.filter = filter.my
+    end
+
     self.mTabGuideS:hide()
     self.mTabGuideU:show()
 
     self.mPageRows:show()
     self.mPageGuide:hide()
-
-    self.mCreate:show()
-    self.mJoin:hide()
-
-    self.filter = filter.none
 
     networkManager.registerCommandHandler(protoType.sc.notifyFriendster, function(msg) 
         self:onNotifyFriendster(msg)
@@ -126,18 +139,22 @@ end
 function friendster:onCreateClickedHandler()
     playButtonClickSound()
 
-    local ui = require("ui.friendster.createFriendster").new(function(friendster)
-        local lc = createFriendsterLC(friendster)
-        self.friendsters[lc.id] = lc
-        table.insert(self.my, lc)
+    if gamepref.player.userType == userType.proxy or gamepref.player.userType == userType.operation then
+        local ui = require("ui.friendster.createFriendster").new(function(friendster)
+            local lc = createFriendsterLC(friendster)
+            self.friendsters[lc.id] = lc
+            table.insert(self.my, lc)
 
-        table.sort(self.my, function(a, b)
-            return a.id < b.id
+            table.sort(self.my, function(a, b)
+                return a.id < b.id
+            end)
+
+            self:refreshList()
         end)
-
-        self:refreshList()
-    end)
-    ui:show()
+        ui:show()
+    else
+        showMessageUI("您不是代理没有创建亲友圈的权限，\n可以联系客服成为代理哦")
+    end
 end
 
 function friendster:onJoinClickedHandler()
@@ -174,7 +191,6 @@ function friendster:set(data)
         return a.id < b.id
     end)
     
-    self.filter = filter.my
     self:refreshList()
 end
 
@@ -189,25 +205,34 @@ function friendster:refreshList()
     end
     
     if data ~= nil then
-        local createItem = function()
-            return require("ui.friendster.friendsterItem").new(function(data)
-                self.detailUI = require("ui.friendster.friendsterDetail").new(function()
-                    if self.detailUI ~= nil then
-                        self.detailUI:close()
-                        self.detailUI = nil
-                    end
-                end)
-                self.detailUI:set(data)
-                self.detailUI:show()
-            end)
-        end
+        local count = #data
 
-        local refreshItem = function(item, index)
-            item:set(data[index + 1])
-        end
+        if count <= 0 then
+            self.mEmpty:show()
+            self.mList:hide()
+        else
+            self.mEmpty:hide()
+            self.mList:show()
+
+            local createItem = function()
+                return require("ui.friendster.friendsterItem").new(function(data)
+                    self.detailUI = require("ui.friendster.friendsterDetail").new(function()
+                        if self.detailUI ~= nil then
+                            self.detailUI:close()
+                            self.detailUI = nil
+                        end
+                    end)
+                    self.detailUI:set(data)
+                    self.detailUI:show()
+                end)
+            end
+
+            local refreshItem = function(item, index)
+                item:set(data[index + 1])
+            end
     
-        local count = data ~= nil and #data or 0
-        self.mList:set(count, createItem, refreshItem)
+            self.mList:set(count, createItem, refreshItem)
+        end
     end
 end
 

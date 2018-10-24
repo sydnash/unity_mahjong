@@ -199,45 +199,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Images/GY_fk.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>19,14,37,29</rect>
-                <key>scale9Paddings</key>
-                <rect>19,14,37,29</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/GY_fk01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>55,13,109,26</rect>
-                <key>scale9Paddings</key>
-                <rect>55,13,109,26</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/GY_fk02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,12,23,23</rect>
-                <key>scale9Paddings</key>
-                <rect>12,12,23,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/ZY_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -515,9 +476,6 @@
             <filename>Images/ZY_yj.png</filename>
             <filename>Images/ZY_1.png</filename>
             <filename>Images/ZY_1_01.png</filename>
-            <filename>Images/GY_fk.png</filename>
-            <filename>Images/GY_fk01.png</filename>
-            <filename>Images/GY_fk02.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

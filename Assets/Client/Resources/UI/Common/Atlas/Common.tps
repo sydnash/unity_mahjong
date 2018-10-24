@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Resources/UI/Common/Atlas/Common.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/Common/Atlas/Common.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -331,6 +331,45 @@
                 <rect>17,17,34,35</rect>
                 <key>scale9Paddings</key>
                 <rect>17,17,34,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_fk.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,14,37,29</rect>
+                <key>scale9Paddings</key>
+                <rect>19,14,37,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_fk01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>55,13,109,26</rect>
+                <key>scale9Paddings</key>
+                <rect>55,13,109,26</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/GY_fk02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,12,23,23</rect>
+                <key>scale9Paddings</key>
+                <rect>12,12,23,23</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -822,6 +861,9 @@
             <filename>Images/GY_rw.png</filename>
             <filename>Images/GY_rw_dh.png</filename>
             <filename>Images/GY_ts.png</filename>
+            <filename>Images/GY_fk.png</filename>
+            <filename>Images/GY_fk01.png</filename>
+            <filename>Images/GY_fk02.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
