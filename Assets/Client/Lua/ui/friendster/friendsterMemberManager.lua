@@ -9,6 +9,7 @@ _RES_(friendsterMemberManager, "FriendsterUI", "FriendsterMemberManagerUI")
 
 function friendsterMemberManager:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+    self.mId:addChangedListener(self.onIdChangedHandler, self)
     self.mQuery:addClickListener(self.onQueryClickedHandler, self)
     self.mTabAdd:addClickListener(self.onTabAddClickedHandler, self)
     self.mTabDelete:addClickListener(self.onTabDeleteClickedHandler, self)
@@ -22,11 +23,21 @@ function friendsterMemberManager:onInit()
 
     self.mAdd:show()
     self.mDelete:hide()
+
+    self.mId:setText(string.empty)
+    self.mName:setText(string.empty)
+
+    self:refreshAddState()
 end
 
 function friendsterMemberManager:onCloseClickedHandler()
     playButtonClickSound()
     self:close()
+end
+
+function friendsterMemberManager:onIdChangedHandler()
+    self:refreshAddState()
+    self:refreshDeleteState()
 end
 
 function friendsterMemberManager:onQueryClickedHandler()
@@ -61,6 +72,8 @@ function friendsterMemberManager:onTabAddClickedHandler()
 
     self.mId:setText(string.empty)
     self.mName:setText(string.empty)
+
+    self:refreshAddState()
 end
 
 function friendsterMemberManager:onTabDeleteClickedHandler()
@@ -76,6 +89,8 @@ function friendsterMemberManager:onTabDeleteClickedHandler()
 
     self.mId:setText(string.empty)
     self.mName:setText(string.empty)
+
+    self:refreshDeleteState()
 end
 
 function friendsterMemberManager:onAddClickedHandler()
@@ -132,6 +147,30 @@ end
 
 function friendsterMemberManager:set(friendsterId)
     self.friendsterId = friendsterId
+end
+
+function friendsterMemberManager:refreshAddState()
+    local acid = self.mId:getText()
+
+    if string.isNilOrEmpty(acid) then
+        self.mAdd:setInteractabled(false)    
+        self.mAddZ:setSprite("gray")
+    else
+        self.mAdd:setInteractabled(true)
+        self.mAddZ:setSprite("light")
+    end
+end
+
+function friendsterMemberManager:refreshDeleteState()
+    local acid = self.mId:getText()
+
+    if string.isNilOrEmpty(acid) then
+        self.mDelete:setInteractabled(false)  
+        self.mDeleteZ:setSprite("gray")  
+    else
+        self.mDelete:setInteractabled(true)
+        self.mDeleteZ:setSprite("light")  
+    end
 end
 
 return friendsterMemberManager

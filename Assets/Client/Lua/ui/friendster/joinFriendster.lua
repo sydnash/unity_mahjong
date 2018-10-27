@@ -15,6 +15,13 @@ function joinFriendster:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mQuery:addClickListener(self.onQueryClickedHandler, self)
     self.mJoin:addClickListener(self.onJoinClickedHandler, self)
+    self.mId:addChangedListener(self.onIdChangedHandler, self)
+    self.mVerification:addChangedListener(self.onVerificationChangedHandler, self)
+
+    self.mId:setText(string.empty)
+    self.mVerification:setText(string.empty)
+
+    self:refreshJoinState()
 end
 
 function joinFriendster:onCloseClickedHandler()
@@ -68,6 +75,27 @@ function joinFriendster:onJoinClickedHandler()
         showMessageUI("加入亲友圈申请发送成功，等待群主审核")
         self:close()
     end)
+end
+
+function joinFriendster:onIdChangedHandler()
+    self:refreshJoinState()
+end
+
+function joinFriendster:onVerificationChangedHandler()
+    self:refreshJoinState()
+end
+
+function joinFriendster:refreshJoinState()
+    local id = self.mId:getText()
+    local code = self.mVerification:getText()
+
+    if string.isNilOrEmpty(id) or string.isNilOrEmpty(code) then
+        self.mJoin:setInteractabled(false)
+        self.mJoinZ:setSprite("gray")
+    else
+        self.mJoin:setInteractabled(true)
+        self.mJoinZ:setSprite("light")
+    end
 end
 
 return joinFriendster

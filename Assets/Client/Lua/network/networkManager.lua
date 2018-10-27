@@ -284,6 +284,7 @@ local function loginC(text, callback)
                     gamepref.player.laolai     = msg.IsLaoLai
                     gamepref.player.cards      = msg.Coin
                     gamepref.player.userType   = msg.UserType
+                    gamepref.player:setMails(msg.Mails)
 
                     callback(true, msg)
                 end
@@ -302,7 +303,7 @@ function networkManager.login(callback)
     local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
     http.getText(networkConfig.gameURL .. "?" .. form, timeout, function(ok, text)
-        if not ok or string.isNilOrEmpty(text) then
+        if (not ok) or string.isNilOrEmpty(text) then
             callback(false, nil)
             return
         end
@@ -329,7 +330,7 @@ function networkManager.loginWx(callback)
         local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
         http.getText(accessUrl, timeout, function(ok, text)
-            if not ok or string.isNilOrEmpty(text) then
+            if (not ok) or string.isNilOrEmpty(text) then
                 callback(false, nil)
                 return
             end

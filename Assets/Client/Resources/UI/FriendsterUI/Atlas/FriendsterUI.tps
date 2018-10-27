@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Resources/UI/FriendsterUI/Atlas/FriendsterUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/FriendsterUI/Atlas/FriendsterUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -737,7 +737,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/QYQ_zi05_h.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>39,10,77,21</rect>
+                <key>scale9Paddings</key>
+                <rect>39,10,77,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/QYQ_zi06.png</key>
+            <key type="filename">Images/QYQ_zi06_h.png</key>
+            <key type="filename">Images/QYQ_zi07_h.png</key>
+            <key type="filename">Images/QYQ_zi08_h.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -886,6 +902,10 @@
             <filename>Images/QYQ_woman.png</filename>
             <filename>Images/QYQ_zi13.png</filename>
             <filename>Images/QYQ_zi14.png</filename>
+            <filename>Images/QYQ_zi05_h.png</filename>
+            <filename>Images/QYQ_zi06_h.png</filename>
+            <filename>Images/QYQ_zi07_h.png</filename>
+            <filename>Images/QYQ_zi08_h.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

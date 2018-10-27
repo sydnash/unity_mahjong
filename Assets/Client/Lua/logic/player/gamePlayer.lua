@@ -27,6 +27,34 @@ function gamePlayer:loadHeaderTex()
     end
 end
 
+function gamePlayer:setMails(data)
+    self.mails = {}
+
+    for _, v in pairs(data) do
+        self:addMail(v)
+    end
+end
+
+function gamePlayer:addMail(data)
+    local mail = {
+        id      = data.Id,
+        time    = data.CreateTime,
+        title   = data.Title,
+        content = data.Msg,
+        extra   = table.fromjson(data.ExtraMsg),
+    }
+    table.insert(self.mails, mail)
+end
+
+function gamePlayer:removeMail(mailId)
+    for k, v in pairs(self.mails) do
+        if v.id == mailId then
+            table.remove(self.mails, k)
+            break
+        end
+    end
+end
+
 function gamePlayer:destroy()
     if self.headerTex ~= nil then
         textureManager.unload(self.headerTex, true)

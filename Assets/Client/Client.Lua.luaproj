@@ -37,6 +37,7 @@
     <Folder Include="Lua\ui\gameOver\" />
     <Folder Include="Lua\ui\exitDesk\" />
     <Folder Include="Lua\ui\friendster\" />
+    <Folder Include="Lua\ui\mail\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
@@ -70,6 +71,9 @@
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDesk.lua" />
     <Compile Include="Lua\ui\friendster\friendsterBank.lua" />
+    <Compile Include="Lua\ui\mail\mail.lua" />
+    <Compile Include="Lua\ui\mail\mailItem.lua" />
+    <Compile Include="Lua\ui\playerInfo.lua" />
     <Compile Include="Lua\ui\friendster\friendsterMemberInfo.lua" />
     <Compile Include="Lua\ui\friendster\friendsterMemberManager.lua" />
     <Compile Include="Lua\ui\friendster\friendsterStatistics.lua" />

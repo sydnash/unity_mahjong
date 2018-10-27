@@ -17,6 +17,7 @@ function createFriendster:onInit()
     self.mExpand:addClickListener(self.onExpandClickedHandler, self)
     self.mUnexpand:addClickListener(self.onUnexpandClickedHandler, self)
     self.mCityListMask:addClickListener(self.onUnexpandClickedHandler, self)
+    self.mName:addChangedListener(self.onNameChangedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
     self.mCityList_ChengDu:addChangedListener(self.onCityChangedHandler, self)
     self.mCityList_WenJiang:addChangedListener(self.onCityChangedHandler, self)
@@ -25,11 +26,19 @@ function createFriendster:onInit()
     self.mUnexpand:hide()
     self.mCityList:hide()
 
+    self.mCity:setText(string.empty)
     self.mName:setCharacterLimit(gameConfig.friendsterNameMaxLength)
+    self.mName:setText(string.empty)
     
+    self.mCityList_ChengDu:setSelected(false)
+    self.mCityList_WenJiang:setSelected(false)
+    self.mCityList_PiDu:setSelected(false)
+
     self.mCityList_ChengDu.id   = cityType.chengdu
     self.mCityList_WenJiang.id  = cityType.wenjiang
     self.mCityList_PiDu.id      = cityType.pidu
+
+    self:refreshCreateState()
 end
 
 function createFriendster:onCloseClickedHandler()
@@ -51,6 +60,10 @@ function createFriendster:onUnexpandClickedHandler()
     self.mExpand:show()
     self.mUnexpand:hide()
     self.mCityList:hide()
+end
+
+function createFriendster:onNameChangedHandler()
+    self:refreshCreateState()
 end
 
 function createFriendster:onCreateClickedHandler()
@@ -86,6 +99,19 @@ function createFriendster:onCityChangedHandler(selected, sender)
     if selected then
         self.cityId = sender.id
         self.mCity:setText(cityName[sender.id])
+    end
+
+    self:refreshCreateState()
+end
+
+function createFriendster:refreshCreateState()
+    local name = self.mName:getText()
+    if self.cityId == nil or string.isNilOrEmpty(name) then
+        self.mCreate:setInteractabled(false)
+        self.mCreateZ:setSprite("gray")
+    else
+        self.mCreate:setInteractabled(true)
+        self.mCreateZ:setSprite("light")
     end
 end
 

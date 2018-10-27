@@ -61,9 +61,9 @@ function friendsterMemberInfo:set(friendsterId, managerId, data)
 
     self.mId:setText(string.format("账号:%d", data.acId))
 
-    if data.ip ~= nil then
+    if not string.isNilOrEmpty(data.ip) then
         self.mIp:show()
-        self.mIp:setText(string.format("IP:", data.ip))
+        self.mIp:setText(string.format("IP:%s", data.ip))
     end
 
     self.mTotalCount:setText(string.format("总局数:%d", data.totalPlayTimes))

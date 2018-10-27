@@ -45,6 +45,10 @@ end
 
 function lobby:onHeadClickedHandler()
     playButtonClickSound()
+
+    local ui = require("ui.playerInfo").new()
+    ui:set(gamepref.player)
+    ui:show()
 end
 
 function lobby:onSwitchCityClickedHandler()
@@ -162,7 +166,10 @@ end
 
 function lobby:onMailClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能暂未开放，敬请期待")
+    
+    local ui = require("ui.mail.mail").new()
+    ui:set(gamepref.player.mails)
+    ui:show()
 end
 
 function lobby:enterDesk(loading, cityType, deskId)
