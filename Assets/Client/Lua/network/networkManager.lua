@@ -39,21 +39,41 @@ end
 
 
 
+local networkHandler = class("networkHandler")
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function networkHandler.setup()
+    networkManager.registerCommandHandler(protoType.sc.mail, function(msg)
+        networkHandler:onMail(msg)
+    end, true)
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function networkHandler:onMail(msg)
+    log("recv a mail, msg = " .. table.tostring(msg))
+    gamepref.player:addMail(msg)
+    signalManager.signal(signalType.mail)
+end
 
 
 
 
 
-protoType           = require("network.protoType")
-retc                = require("network.retc")
 
-local http          = require("network.http")
-local tcp           = require("network.tcp")
-local proto         = require("network.proto")
-local networkConfig = require("config.networkConfig")
-local cvt           = ByteUtils
+protoType               = require("network.protoType")
+retc                    = require("network.retc")
 
-local networkManager = class("networkManager")
+local http              = require("network.http")
+local tcp               = require("network.tcp")
+local proto             = require("network.proto")
+local networkConfig     = require("config.networkConfig")
+local cvt               = ByteUtils
+
+local networkManager    = class("networkManager")
 
 -------------------------------------------------------------------
 --
@@ -115,6 +135,8 @@ function networkManager.setup(disconnectedCallback)
     networkManager.messageQueue = {}
     networkManager.messageDeadline = time.realtimeSinceStartup()
     networkManager.disconnectedCallback = disconnectedCallback
+
+    networkHandler.setup()
 end
 
 -------------------------------------------------------------------
@@ -712,6 +734,48 @@ end
 function networkManager.replyFriendsterRequest(friendsterId, acId, agree, callback)
     local data = { ClubId = friendsterId, AcId = acId, Agree = agree }
     send(protoType.cs.replyFriendsterRequest, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.deleteMail(mailId, callback)
+    local data = { mailId = mailId, Op = 1 }
+    send(protoType.cs.mailOp, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.openMail(mailId, callback)
+    local data = { mailId = mailId, Op = 2 }
+    send(protoType.cs.mailOp, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.getRewardsFromMail(mailId, callback)
+    local data = { mailId = mailId, Op = 3 }
+    send(protoType.cs.mailOp, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else

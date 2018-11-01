@@ -11,7 +11,7 @@ local keycode       = UnityEngine.KeyCode
 -------------------------------------------------------------------
 -- 禁止定义全局变量
 -------------------------------------------------------------------
-local function disableGlobalVariableDeclaration()
+local function DISABLE_GLOBAL_VARIABLE_DECLARATION()
     setmetatable(_G, {
         __newindex = function(_, name, value)
             local msg = "Can't declare global variable: %s"
@@ -25,13 +25,9 @@ end
 ----------------------------------------------------------------
 local function checkEscapeState()
     if input.GetKeyDown(keycode.Escape) then
-        showMessageUI("确定要退出游戏吗？", 
-                      function() --confirm
-                          Application.Quit()
-                      end,
-                      function() --cancel
-                          --
-                      end)
+        showMessageUI("确定要退出游戏吗？", function()
+            Application.Quit()
+        end)
     end
 end
 
@@ -159,7 +155,14 @@ function clientApp:start()
     registerUpdateListener(checkEscapeState, nil)
     registerTracebackCallback(tracebackHandler)
 
-    disableGlobalVariableDeclaration()
+    DISABLE_GLOBAL_VARIABLE_DECLARATION()
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function clientApp:onDestroy()
+
 end
 
 return clientApp

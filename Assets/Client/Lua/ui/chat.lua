@@ -109,7 +109,7 @@ function chat:onEmojiClickedHandler(sender)
     playButtonClickSound()
 
     networkManager.sendChatMessage(chatType.emoji, sender.key)
-    signalManager.signal(signalType.chatEmojiSignal, sender.key)
+    signalManager.signal(signalType.chatEmoji, sender.key)
 
     self:close()
 end
@@ -118,7 +118,7 @@ function chat:onTextClickedHandler(sender)
     playButtonClickSound()
 
     networkManager.sendChatMessage(chatType.text, sender.key)
-    signalManager.signal(signalType.chatTextSignal, sender.key)
+    signalManager.signal(signalType.chatText, sender.key)
 
     self:close()
 end

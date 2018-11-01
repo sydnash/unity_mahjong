@@ -67,11 +67,12 @@ chatType = {
 --
 --------------------------------------------------------------
 signalType = {
-    chatTextSignal              = "chatText",
-    chatEmojiSignal             = "chatEmoji",
-    cardsChangedSignal          = "cardsChanged",
-    enterDeskSignal             = "enterDesk",
-    friendsterMessageOptSignal  = "friendsterMessageOpt",
+    chatText            = 1,
+    chatEmoji           = 2,
+    cardsChanged        = 3,
+    enterDesk           = 4,
+    friendsterMessageOp = 5,
+    mail                = 6,
 }
 
 --------------------------------------------------------------
@@ -83,6 +84,9 @@ cityType = {
     pidu        = 1002,
 }
 
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
 friendsterNotifyType = {
     createDesk          = 0,
     deskPlayerChanged   = 1,
@@ -101,17 +105,33 @@ friendsterNotifyType = {
     playerPlayEndClub   = 14,
 }
 
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
 deskState = {
     waiting = 0,
     playing = 1,
 }
 
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
 userType = {
     normal      = 0,--普通玩家
     proxy       = 1,--代理
     club        = 2,--仅可开亲友圈
     transfer    = 3,--仅可转账
-    operation   = 4,--1、2、3
+    operation   = 4,--1 and 2 and 3
+}
+
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
+mailStatus = {
+    notRead = 0,
+    read    = 1,
+    claimed = 2,
+    deleted = 3,
 }
 
 --endregion

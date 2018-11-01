@@ -39,8 +39,11 @@ function lobby:onInit()
         self.mCreateDesk:show()
     end
 
-    signalManager.registerSignalHandler(signalType.cardsChangedSignal, self.onCardsChangedHandler, self)
-    signalManager.registerSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
+    self:refreshMailRP()
+
+    signalManager.registerSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
+    signalManager.registerSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
+    signalManager.registerSignalHandler(signalType.mail, self.onMailHandler, self)
 end
 
 function lobby:onHeadClickedHandler()
@@ -217,9 +220,31 @@ function lobby:onEnterDeskHandler(args)
     self:enterDesk(loading, cityType, deskId)
 end
 
+function lobby:onMailHandler()
+    self:refreshMailRP()
+end
+
+function lobby:refreshMailRP()
+    local newmail = false
+
+    for _, v in pairs(gamepref.player.mails) do
+        if v.status == mailStatus.notRead then
+            newmail = true
+            break
+        end
+    end
+
+    if newmail then
+        self.mMailRP:show()
+    else
+        self.mMailRP:hide()
+    end
+end
+
 function lobby:onDestroy()
-    signalManager.unregisterSignalHandler(signalType.cardsChangedSignal, self.onCardsChangedHandler, self)
-    signalManager.unregisterSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
+    signalManager.unregisterSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
+    signalManager.unregisterSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
+    signalManager.unregisterSignalHandler(signalType.mail, self.onMailHandler, self)
 
     self.mHeadIcon:setTexture(nil)
     self.super.onDestroy(self)

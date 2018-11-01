@@ -76,9 +76,9 @@ function friendsterDetail:onInit()
     self.mBank:hide()
     self.mStatistics:hide()
 
-    signalManager.registerSignalHandler(signalType.cardsChangedSignal, self.onCardsChangedHandler, self)
-    signalManager.registerSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
-    signalManager.registerSignalHandler(signalType.friendsterMessageOptSignal, self.onMessageOptHandler, self)
+    signalManager.registerSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
+    signalManager.registerSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
+    signalManager.registerSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
 end
 
 function friendsterDetail:onReturnClickedHandler()
@@ -287,9 +287,9 @@ function friendsterDetail:onExitedHandler(friendsterId)
 end
 
 function friendsterDetail:onDestroy()
-    signalManager.unregisterSignalHandler(signalType.cardsChangedSignal, self.onCardsChangedHandler, self)
-    signalManager.unregisterSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
-    signalManager.unregisterSignalHandler(signalType.friendsterMessageOptSignal, self.onMessageOptHandler, self)
+    signalManager.unregisterSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
+    signalManager.unregisterSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
+    signalManager.unregisterSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
     
     self.mMemberList:reset()
     self.mDeskList:reset()

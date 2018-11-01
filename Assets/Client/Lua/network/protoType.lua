@@ -33,6 +33,7 @@ return {
         takeoutFromFriendsterBank   = "CmdType.fly.CS.WithdrawFromClub",
         queryFriendsterStatistics   = "CmdType.fly.CS_GetClubDeskHistory",
         replyFriendsterRequest      = "CmdType.fly.CS.ManageApplyRequest",
+        mailOp                      = "CmdType.fly.CS.MailOp",
     },
     -- server to client
     sc = {
@@ -58,6 +59,7 @@ return {
         dqDo                        = "CmdType.fly.SC.MJDQDo",
         chatMessage                 = "CmdType.fly.SC.ChatMsg",
         notifyFriendster            = "CmdType.fly.SC_NotifyClubInfo",
+        mail                        = "CmdType.fly.SC.Mail",
     },
 }
 

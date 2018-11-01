@@ -41,4 +41,8 @@ cityName = {
     [cityType.pidu]     = "郫都",
 }
 
+mailGiftName = {
+    ["jiangquan"] = "奖券",
+}
+
 --endregion

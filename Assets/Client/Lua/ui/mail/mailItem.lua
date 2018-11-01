@@ -36,6 +36,16 @@ function mailItem:set(mail, index)
 
     self.mTime:setText(t)
     self.mTimeU:setText(t)
+
+    self:refreshRP()
+end
+
+function mailItem:refreshRP()
+    if self.mail.status == mailStatus.notRead then
+        self.mRP:show()
+    else
+        self.mRP:hide()
+    end
 end
 
 function mailItem:setSelection(selected)

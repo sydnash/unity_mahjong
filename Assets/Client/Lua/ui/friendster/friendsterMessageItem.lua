@@ -17,7 +17,7 @@ function friendsterMessageItem:onRejectClickedHandler()
 
     networkManager.replyFriendsterRequest(self.friendsterId, self.acId, false, function(msg)
         log("reject friendster apply, msg = " .. table.tostring(msg))
-        signalManager.signal(signalType.friendsterMessageOptSignal, { friendsterId = self.friendsterId, acId = self.acId })
+        signalManager.signal(signalType.friendsterMessageOp, { friendsterId = self.friendsterId, acId = self.acId })
     end)
 end
 
@@ -26,7 +26,7 @@ function friendsterMessageItem:onAgreeClickedHandler()
 
     networkManager.replyFriendsterRequest(self.friendsterId, self.acId, true, function(msg)
         log("agree friendster apply, msg = " .. table.tostring(msg))
-        signalManager.signal(signalType.friendsterMessageOptSignal, { friendsterId = self.friendsterId, acId = self.acId })
+        signalManager.signal(signalType.friendsterMessageOp, { friendsterId = self.friendsterId, acId = self.acId })
     end)
 end
 

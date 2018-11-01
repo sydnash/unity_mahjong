@@ -42,8 +42,8 @@ function mahjongDesk:onInit()
         self:onChatMessageHandler(msg)
     end, true)
 
-    signalManager.registerSignalHandler(signalType.chatTextSignal,  self.onChatTextSignalHandler,  self)
-    signalManager.registerSignalHandler(signalType.chatEmojiSignal, self.onChatEmojiSignalHandler, self)
+    signalManager.registerSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
+    signalManager.registerSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
 end
 
 function mahjongDesk:update()
@@ -55,8 +55,8 @@ end
 function mahjongDesk:onDestroy()
     networkManager.unregisterCommandHandler(protoType.sc.chatMessage)
 
-    signalManager.unregisterSignalHandler(signalType.chatTextSignal,  self.onChatTextSignalHandler,  self)
-    signalManager.unregisterSignalHandler(signalType.chatEmojiSignal, self.onChatEmojiSignalHandler, self)
+    signalManager.unregisterSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
+    signalManager.unregisterSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
 
     if self.settingUI ~= nil then
         self.settingUI:close()

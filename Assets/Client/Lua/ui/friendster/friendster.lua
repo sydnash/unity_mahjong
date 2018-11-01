@@ -72,7 +72,7 @@ function friendster:onInit()
         self:onNotifyFriendster(msg)
     end, true)
 
-    signalManager.registerSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
+    signalManager.registerSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
 end
 
 function friendster:onCloseClickedHandler()
@@ -367,7 +367,7 @@ end
 
 function friendster:onDestroy()
     networkManager.unregisterCommandHandler(protoType.sc.notifyFriendster)
-    signalManager.unregisterSignalHandler(signalType.enterDeskSignal, self.onEnterDeskHandler, self)
+    signalManager.unregisterSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
 
     self.mList:reset()
 

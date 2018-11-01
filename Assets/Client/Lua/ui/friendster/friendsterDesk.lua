@@ -55,7 +55,7 @@ function friendsterDesk:onAddClickedHandler()
     local loading = require("ui.loading").new()
     loading:show()
 
-    signalManager.signal(signalType.enterDeskSignal, { cityType = self.data.cityType, deskId = self.data.deskId, loading = loading })
+    signalManager.signal(signalType.enterDesk, { cityType = self.data.cityType, deskId = self.data.deskId, loading = loading })
 end
 
 function friendsterDesk:onDestroy()

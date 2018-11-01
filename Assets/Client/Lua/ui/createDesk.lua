@@ -46,7 +46,7 @@ function createDesk:onCreateClickedHandler()
             return
         end
 
-        signalManager.signal(signalType.enterDeskSignal, { cityType = msg.GameType, deskId = msg.DeskId, loading = loading })
+        signalManager.signal(signalType.enterDesk, { cityType = msg.GameType, deskId = msg.DeskId, loading = loading })
         self:close()
     end)
 end

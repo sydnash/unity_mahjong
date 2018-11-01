@@ -85,7 +85,7 @@ function friendsterBank:onDepositClickedHandler()
         self.data.cards = self.data.cards + value
         gamepref.player.cards = gamepref.player.cards - value
 
-        signalManager.signal(signalType.cardsChangedSignal)
+        signalManager.signal(signalType.cardsChanged)
         self:close()
     end)
 end
@@ -108,7 +108,7 @@ function friendsterBank:onTakeoutClickedHandler()
         self.data.cards = self.data.cards - value
         gamepref.player.cards = gamepref.player.cards + value
 
-        signalManager.signal(signalType.cardsChangedSignal)
+        signalManager.signal(signalType.cardsChanged)
         self:close()
     end)
 end

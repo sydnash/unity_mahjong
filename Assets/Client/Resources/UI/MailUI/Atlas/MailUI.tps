@@ -251,6 +251,32 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/yj_di.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>23,23,45,45</rect>
+                <key>scale9Paddings</key>
+                <rect>23,23,45,45</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/yj_icon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,12,29,24</rect>
+                <key>scale9Paddings</key>
+                <rect>15,12,29,24</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/yj_zi01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -286,6 +312,8 @@
             <filename>Images/CJ_dian.png</filename>
             <filename>Images/yj_zi01.png</filename>
             <filename>Images/yj_zi02.png</filename>
+            <filename>Images/yj_di.png</filename>
+            <filename>Images/yj_icon.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

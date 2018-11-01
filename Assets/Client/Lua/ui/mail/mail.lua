@@ -8,20 +8,93 @@ local mail = class("mail", base)
 _RES_(mail, "MailUI", "MailUI")
 
 function mail:onInit()
+    self.items = {
+        { root = self.mItemA, icon = self.mItemA_Icon, count = self.mItemA_Count },
+        { root = self.mItemB, icon = self.mItemB_Icon, count = self.mItemB_Count },
+        { root = self.mItemC, icon = self.mItemC_Icon, count = self.mItemC_Count },
+    }
+
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mDelete:addClickListener(self.onDeleteClickedHandler, self)
+    self.mGet:addClickListener(self.onGetClickedHandler, self)
+
+    signalManager.registerSignalHandler(signalType.mail, self.onMailHandler, self)
 end
 
 function mail:onCloseClickedHandler()
     playButtonClickSound()
+
     self:close()
+    signalManager.signal(signalType.mail)
 end
 
 function mail:onDeleteClickedHandler()
     playButtonClickSound()
+
+    if self.curMail ~= nil then
+        networkManager.deleteMail(self.curMail.id, function(ok, msg)
+            if not ok then
+                showMessageUI("网络繁忙，请稍后再试")
+                return
+            end
+
+            log("delete a mail, msg = " .. table.tostring(msg))
+
+            if not msg.Ok then
+                showMessageUI("邮件删除失败，请稍后重试")
+                return 
+            end
+
+            gamepref.player:removeMail(msg.MailId)
+
+            self.mList:reset()
+            self:set(gamepref.player.mails)
+        end)
+    end
+end
+
+function mail:onGetClickedHandler()
+    playButtonClickSound()
+
+    if self.curMail ~= nil then
+        networkManager.getRewardsFromMail(self.curMail.id, function(ok, msg)
+            if not ok then
+                showMessageUI("网络繁忙，请稍后再试")
+                return
+            end
+
+            log("get rewards from mail, msg = " .. table.tostring(msg))
+
+            if not msg.Ok then
+                showMessageUI("领取失败，请稍后重试\n如有疑问请咨询代理")
+                return 
+            end
+
+            local text = "恭喜您成功领取"
+            for k, v in pairs(msg.MailGifts) do 
+                if k > 1 then
+                    text = text .. "、"
+                end
+
+                text = text .. string.format("【%s x%d】", mailGiftName[v.Type], v.AddValue)
+            end
+            showMessageUI(text)
+
+            local mail = gamepref.player:getMail(msg.MailId)
+            mail.status = mailStatus.claimed
+
+            self:refreshContent(mail)
+        end)
+    end
+end
+
+function mail:onMailHandler()
+    self.mList:reset()
+    self:set(gamepref.player.mails)
 end
 
 function mail:set(mails)
+    self:sortMails(mails)
     local count = #mails
 
     if mails == nil or count <= 0 then
@@ -47,26 +120,88 @@ function mail:set(mails)
     end
 end
 
+function mail:sortMails(mails)
+    table.sort(mails, function(a, b)
+        if a.status == mailStatus.notRead and b.status ~= mailStatus.notRead then
+            return true
+        elseif a.status ~= mailStatus.notRead and b.status == mailStatus.notRead then
+            return false
+        end
+
+        if a.status ~= mailStatus.claimed and b.status == mailStatus.claimed then
+            return true
+        elseif a.status == mailStatus.claimed and b.status ~= mailStatus.claimed then
+            return false
+        end
+
+        return a.time > b.time
+    end)
+end
+
 function mail:openMail(mail, index)
+    self.curMail = mail
+
     local items = self.mList:getItems()
     for i=0, items.Count - 1 do
         items[i]:setSelection(false)
     end
-    items[index]:setSelection(true)
 
+    local item = items[index]
+    item:setSelection(true)
+
+    self:refreshContent(mail)
+
+    if mail.status == mailStatus.notRead then
+        networkManager.openMail(mail.id, function(ok, msg)
+            log("open a mail, msg = " .. table.tostring(msg))
+            if msg ~= nil then
+                local mail = gamepref.player:getMail(msg.MailId)
+                mail.status = mailStatus.read
+            end
+
+            item:refreshRP()
+        end)
+    end
+end
+
+function mail:refreshContent(mail)
     self.mTitle:setText(mail.title)
     self.mContent:setText(mail.content)
 
     if mail.extra ~= nil and mail.extra.gift ~= nil and #mail.extra.gift > 0 then
-        self.mDelete:hide()
         self.mAttaches:show()
+
+        for _, v in pairs(self.items) do
+            v.root:hide()
+        end
+
+        for k, v in pairs(mail.extra.gift) do
+            local item = self.items[k]
+            item.icon:setSprite(v.type)
+            item.count:setText(string.format("x%d", v.value))
+            item.root:show()
+        end
+
+        if mail.status == mailStatus.claimed then
+            self.mGot:show()
+            self.mGet:hide()
+            self.mDelete:show()
+            self.mDelete:setLocalPosition(Vector3.New(240, -196, 0))
+        else
+            self.mGot:hide()
+            self.mGet:show()
+            self.mDelete:hide()
+        end
     else
         self.mDelete:show()
+        self.mDelete:setLocalPosition(Vector3.New(0, -196, 0))
         self.mAttaches:hide()
     end
 end
 
 function mail:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.mail, self.onMailHandler, self)
+
     self.mList:reset()
     self.super.onDestroy(self)
 end
