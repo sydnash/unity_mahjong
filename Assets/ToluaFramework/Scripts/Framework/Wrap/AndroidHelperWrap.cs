@@ -8,10 +8,12 @@ public class AndroidHelperWrap
 	{
 		L.BeginClass(typeof(AndroidHelper), typeof(System.Object));
 		L.RegFunction("ShowErrorMessage", ShowErrorMessage);
-		L.RegFunction("LoginWx", LoginWx);
-		L.RegFunction("ShareTextWx", ShareTextWx);
-		L.RegFunction("ShareUrlWx", ShareUrlWx);
-		L.RegFunction("ShareImageWx", ShareImageWx);
+		L.RegFunction("LoginWX", LoginWX);
+		L.RegFunction("ShareTextWX", ShareTextWX);
+		L.RegFunction("ShareUrlWX", ShareUrlWX);
+		L.RegFunction("ShareImageWX", ShareImageWX);
+		L.RegFunction("ShareTextSG", ShareTextSG);
+		L.RegFunction("ShareImageSG", ShareImageSG);
 		L.RegFunction("OnLoginWxHandler", OnLoginWxHandler);
 		L.RegFunction("New", _CreateAndroidHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -61,14 +63,14 @@ public class AndroidHelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int LoginWx(IntPtr L)
+	static int LoginWX(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
 			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
-			obj.LoginWx(arg0);
+			obj.LoginWX(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -78,7 +80,7 @@ public class AndroidHelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int ShareTextWx(IntPtr L)
+	static int ShareTextWX(IntPtr L)
 	{
 		try
 		{
@@ -86,7 +88,7 @@ public class AndroidHelperWrap
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
-			obj.ShareTextWx(arg0, arg1);
+			obj.ShareTextWX(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)
@@ -96,7 +98,7 @@ public class AndroidHelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int ShareUrlWx(IntPtr L)
+	static int ShareUrlWX(IntPtr L)
 	{
 		try
 		{
@@ -106,7 +108,7 @@ public class AndroidHelperWrap
 			string arg1 = ToLua.CheckString(L, 3);
 			string arg2 = ToLua.CheckString(L, 4);
 			bool arg3 = LuaDLL.luaL_checkboolean(L, 5);
-			obj.ShareUrlWx(arg0, arg1, arg2, arg3);
+			obj.ShareUrlWX(arg0, arg1, arg2, arg3);
 			return 0;
 		}
 		catch (Exception e)
@@ -116,7 +118,7 @@ public class AndroidHelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int ShareImageWx(IntPtr L)
+	static int ShareImageWX(IntPtr L)
 	{
 		try
 		{
@@ -124,7 +126,41 @@ public class AndroidHelperWrap
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
-			obj.ShareImageWx(arg0, arg1);
+			obj.ShareImageWX(arg0, arg1);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareTextSG(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.ShareTextSG(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareImageSG(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.ShareImageSG(arg0);
 			return 0;
 		}
 		catch (Exception e)

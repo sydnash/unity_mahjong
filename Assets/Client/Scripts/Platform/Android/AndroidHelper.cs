@@ -48,7 +48,7 @@ public class AndroidHelper
     /// <summary>
     /// 
     /// </summary>
-    public void LoginWx(Action<string> callback)
+    public void LoginWX(Action<string> callback)
     {
         WechatHelper.Login(javaObject, callback);
     }
@@ -58,7 +58,7 @@ public class AndroidHelper
     /// </summary>
     /// <param name="text"></param>
     /// <param name="timeline">true:发送到朋友圈；false：</param>
-    public void ShareTextWx(string text, bool timeline)
+    public void ShareTextWX(string text, bool timeline)
     {
         WechatHelper.ShareText(javaObject, text, timeline);
     }
@@ -70,7 +70,7 @@ public class AndroidHelper
     /// <param name="desc"></param>
     /// <param name="url"></param>
     /// <param name="timeline"></param>
-    public void ShareUrlWx(string title, string desc, string url, bool timeline)
+    public void ShareUrlWX(string title, string desc, string url, bool timeline)
     {
         WechatHelper.ShareUrl(javaObject, title, desc, url, timeline);
     }
@@ -78,9 +78,27 @@ public class AndroidHelper
     /// <summary>
     /// 
     /// </summary>
-    public void ShareImageWx(string imagePath, bool timeline)
+    public void ShareImageWX(string imagePath, bool timeline)
     {
         WechatHelper.ShareImage(javaObject, imagePath, timeline);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="text"></param>
+    public void ShareTextSG(string text)
+    {
+        UpdripsHelper.ShareText(javaObject, text);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="imagePath"></param>
+    public void ShareImageSG(string imagePath)
+    {
+        UpdripsHelper.ShareImage(javaObject, imagePath);
     }
 
     /// <summary>

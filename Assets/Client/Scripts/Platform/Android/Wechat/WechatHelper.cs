@@ -30,7 +30,7 @@ public class WechatHelper
     /// <param name="timeline">true:发送到朋友圈；false：</param>
     public static void ShareText(AndroidJavaObject javaObject, string text, bool timeline)
     {
-        javaObject.Call("ShareTextWx", text, timeline);
+        javaObject.Call("ShareTextWX", text, timeline);
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public class WechatHelper
     /// <param name="timeline"></param>
     public static void ShareUrl(AndroidJavaObject javaObject, string title, string desc, string url, bool timeline)
     {
-        javaObject.Call("ShareUrlWx", title, desc, url, timeline);
+        javaObject.Call("ShareUrlWX", title, desc, url, timeline);
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class WechatHelper
     /// </summary>
     public static void ShareImage(AndroidJavaObject javaObject, string imagePath, bool timeline)
     {
-        javaObject.Call("ShareImageWx", imagePath, timeline);
+        javaObject.Call("ShareImageWX", imagePath, timeline);
     }
 
     /// <summary>
