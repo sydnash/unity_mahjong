@@ -105,6 +105,7 @@ TextureImporter:
     21300196: ZM_zi10
     21300198: ZM_zi13
     21300200: ZM_zi14
+    21300202: fx_di01
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -170,11 +171,25 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+      name: fx_di01
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 862
+        width: 420
+        height: 161
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: JS_an_ls
       rect:
         serializedVersion: 2
         x: 573
-        y: 976
+        y: 813
         width: 114
         height: 47
       alignment: 0
@@ -243,7 +258,7 @@ TextureImporter:
       name: JS_dian
       rect:
         serializedVersion: 2
-        x: 795
+        x: 995
         y: 1017
         width: 6
         height: 6
@@ -258,7 +273,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 689
-        y: 985
+        y: 822
         width: 104
         height: 38
       alignment: 9

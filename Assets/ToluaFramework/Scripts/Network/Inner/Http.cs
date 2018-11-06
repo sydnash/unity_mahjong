@@ -97,7 +97,14 @@ public class Http : MonoBehaviour
     /// <param name="callback"></param>
     public void RequestText(string url, string method, int timeout, Action<bool, string> callback)
     {
-        mTextCallbackDict.Add(url, callback);
+        if (mTextCallbackDict.ContainsKey(url))
+        {
+            mTextCallbackDict[url] = callback;
+        }
+        else
+        {
+            mTextCallbackDict.Add(url, callback);
+        }
 
         Thread thread = new Thread(OnRequest);
         thread.Start(new RequestArgs(url, method, timeout));
@@ -110,7 +117,14 @@ public class Http : MonoBehaviour
     /// <param name="callback"></param>
     public void RequestBytes(string url, string method, int timeout, Action<bool, byte[]> callback)
     {
-        mByteCallbackDict.Add(url, callback);
+        if (mByteCallbackDict.ContainsKey(url))
+        {
+            mByteCallbackDict[url] = callback;
+        }
+        else
+        {
+            mByteCallbackDict.Add(url, callback);
+        }
 
         Thread thread = new Thread(OnRequest);
         thread.Start(new RequestArgs(url, method, timeout));
@@ -123,7 +137,15 @@ public class Http : MonoBehaviour
     /// <param name="callback"></param>
     public void RequestTexture(string url, Action<bool, Texture2D, byte[]> callback)
     {
-        mTextureCallbackDict.Add(url, callback);
+        if (mTextureCallbackDict.ContainsKey(url))
+        {
+            mTextureCallbackDict[url] = callback;
+        }
+        else
+        {
+            mTextureCallbackDict.Add(url, callback);
+        }
+        
         StartCoroutine(LoadTextureCoroutine(url));
     }
 
@@ -134,6 +156,7 @@ public class Http : MonoBehaviour
     {
         mTextCallbackDict.Clear();
         mByteCallbackDict.Clear();
+        mTextureCallbackDict.Clear();
 
         lock (mResponseDict)
         {
@@ -322,6 +345,8 @@ public class Http : MonoBehaviour
             {
                 callback(false, null, null);
             }
+
+            mTextureCallbackDict.Remove(url);
         }
 
         yield return new WaitForEndOfFrame();

@@ -145,7 +145,7 @@ function downloadIcon(url, callback)
 end
 
 -------------------------------------------------------------
--- 登录服务器
+-- 进入桌子
 -------------------------------------------------------------
 function enterDesk(gameType, deskId, callback)
     --开始预加载资源
@@ -194,6 +194,10 @@ function loginServer(callback)
     loginImp(function(ok, msg)
         closeWaitingUI()
 
+        if deviceConfig.isAndroid then
+            androidHelper.setLogined(false)
+        end
+
         if not ok then
             showMessageUI("网络繁忙，请稍后再试", function()
                 callback(false)
@@ -208,12 +212,38 @@ function loginServer(callback)
             return
         end
 
+        if deviceConfig.isAndroid then
+            androidHelper.setLogined(true)
+        end
+
         callback(true)
         log("login, msg = " .. table.tostring(msg))
 
+        local cityType = 0
+        local deskId   = 0
+
         local deskInfo = msg.DeskInfo
 
-        if deskInfo == nil or deskInfo.DeskId == 0 then
+        if deskInfo ~= nil and deskInfo.DeskId > 0 then
+            cityType = deskInfo.GameType
+            deskId = deskInfo.DeskId
+            log(string.format("get desk from DeskInfo, cityType = %d, deskId = %d", cityType, deskId))
+        else
+            if deviceConfig.isAndroid then
+                --检查闲聊的邀请数据
+                local params = androidHelper.getParamsSg()
+                if not string.isNilOrEmpty(params) then
+                    local t = table.fromjson(params)
+
+                    cityType = t.cityType
+                    deskId = t.deskId
+                    log(string.format("get desk from XianLiao, cityType = %d", cityType))
+                    log(string.format("get desk from XianLiao, deskId = %d", deskId))
+                end
+            end
+        end
+
+        if cityType == 0 and deskId == 0 then
             local sceneName = sceneManager.getActivedSceneName()
 
             if sceneName ~= "lobbyscene" then
@@ -232,9 +262,6 @@ function loginServer(callback)
                 end)
             end
         else -- 如有在房间内则跳过大厅直接进入房间
-            local cityType = deskInfo.GameType
-            local deskId = deskInfo.DeskId
-
             local loading = require("ui.loading").new()
             loading:show()
 

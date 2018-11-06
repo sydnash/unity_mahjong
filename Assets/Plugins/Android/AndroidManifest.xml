@@ -72,6 +72,29 @@
             android:name="com.bshy.mahjong.wxapi.WXEntryActivity"
             android:exported="true" >
         </activity>
+        <activity
+            android:name="com.bshy.mahjong.sgapi.SGEntryActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" >
+
+            <!-- 用于接收从闲聊邀请跳转进应用的roomId roomToken -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- scheme = "paraches" 固定不能改变，host = "xianliao"+ 你申请的appId -->
+                <data
+                    android:host="xianliaoMVGhscFdSy3OO7KG"
+                    android:scheme="paraches" />
+            </intent-filter>
+            <!-- （可选配置）如果应用有多渠道不同报名，晴天下面这个intent-filter -->
+            <intent-filter>
+                <action android:name="xianliaoMVGhscFdSy3OO7KG" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="unity.build-id"

@@ -8,6 +8,7 @@ TextureImporter:
     21300002: ZJS_dyj
     21300004: ZJS_zi01
     21300006: ZJS_di02
+    21300008: fx_di01 (1)
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -73,11 +74,25 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+      name: fx_di01 (1)
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 350
+        width: 420
+        height: 161
+      alignment: 9
+      pivot: {x: 0.53139883, y: 0.58436817}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: ZJS_di
       rect:
         serializedVersion: 2
-        x: 345
-        y: 366
+        x: 1
+        y: 48
         width: 110
         height: 145
       alignment: 0
@@ -90,12 +105,12 @@ TextureImporter:
       name: ZJS_di02
       rect:
         serializedVersion: 2
-        x: 345
-        y: 328
+        x: 423
+        y: 475
         width: 64
         height: 36
       alignment: 9
-      pivot: {x: 0.53125, y: 0.5833333}
+      pivot: {x: 0.53125, y: 0.583333}
       border: {x: 31, y: 17, z: 27, w: 9}
       outline: []
       physicsShape: []
@@ -105,7 +120,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 358
+        y: 195
         width: 342
         height: 153
       alignment: 9
@@ -118,8 +133,8 @@ TextureImporter:
       name: ZJS_zi01
       rect:
         serializedVersion: 2
-        x: 1
-        y: 304
+        x: 113
+        y: 141
         width: 181
         height: 52
       alignment: 9

@@ -7,14 +7,20 @@ public class AndroidHelperWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(AndroidHelper), typeof(System.Object));
+		L.RegFunction("RegisterLoginWXCallback", RegisterLoginWXCallback);
+		L.RegFunction("RegisterInviteSGCallback", RegisterInviteSGCallback);
+		L.RegFunction("SetLogined", SetLogined);
 		L.RegFunction("ShowErrorMessage", ShowErrorMessage);
 		L.RegFunction("LoginWX", LoginWX);
 		L.RegFunction("ShareTextWX", ShareTextWX);
 		L.RegFunction("ShareUrlWX", ShareUrlWX);
 		L.RegFunction("ShareImageWX", ShareImageWX);
 		L.RegFunction("ShareTextSG", ShareTextSG);
+		L.RegFunction("ShareInvitationSG", ShareInvitationSG);
 		L.RegFunction("ShareImageSG", ShareImageSG);
+		L.RegFunction("GetParamsSG", GetParamsSG);
 		L.RegFunction("OnLoginWxHandler", OnLoginWxHandler);
+		L.RegFunction("OnInviteSgHandler", OnInviteSgHandler);
 		L.RegFunction("New", _CreateAndroidHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -46,6 +52,57 @@ public class AndroidHelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RegisterLoginWXCallback(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
+			obj.RegisterLoginWXCallback(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RegisterInviteSGCallback(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
+			obj.RegisterInviteSGCallback(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetLogined(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.SetLogined(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int ShowErrorMessage(IntPtr L)
 	{
 		try
@@ -67,10 +124,9 @@ public class AndroidHelperWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
+			ToLua.CheckArgsCount(L, 1);
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
-			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
-			obj.LoginWX(arg0);
+			obj.LoginWX();
 			return 0;
 		}
 		catch (Exception e)
@@ -153,6 +209,28 @@ public class AndroidHelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareInvitationSG(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 7);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			string arg2 = ToLua.CheckString(L, 4);
+			string arg3 = ToLua.CheckString(L, 5);
+			string arg4 = ToLua.CheckString(L, 6);
+			string arg5 = ToLua.CheckString(L, 7);
+			obj.ShareInvitationSG(arg0, arg1, arg2, arg3, arg4, arg5);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int ShareImageSG(IntPtr L)
 	{
 		try
@@ -170,6 +248,23 @@ public class AndroidHelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetParamsSG(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string o = obj.GetParamsSG();
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int OnLoginWxHandler(IntPtr L)
 	{
 		try
@@ -178,6 +273,23 @@ public class AndroidHelperWrap
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			obj.OnLoginWxHandler(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnInviteSgHandler(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.OnInviteSgHandler(arg0);
 			return 0;
 		}
 		catch (Exception e)

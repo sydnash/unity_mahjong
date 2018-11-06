@@ -3,6 +3,26 @@ using UnityEngine;
 
 class UpdripsHelper
 {
+    #region Data
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static Action<string> mInviteCallback = null;
+
+    #endregion
+
+    #region Public 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="callback"></param>
+    public static void RegisterInviteCallback(Action<string> callback)
+    {
+        mInviteCallback = callback;
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -16,8 +36,59 @@ class UpdripsHelper
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="javaObject"></param>
+    /// <param name="title"></param>
+    /// <param name="description"></param>
+    /// <param name="launcherPath"></param>
+    /// <param name="param_a"></param>
+    /// <param name="param_b"></param>
+    /// <param name="androidDownloadUrl"></param>
+    /// <param name="iOSDownloadUrl"></param>
+    public static void ShareInvitation(AndroidJavaObject javaObject, string title, string description, string launcherPath, string param, string androidDownloadUrl, string iOSDownloadUrl)
+    {
+        javaObject.Call("ShareInvitationSG", title, description, launcherPath, param, androidDownloadUrl, iOSDownloadUrl);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="javaObject"></param>
+    /// <param name="imagePath"></param>
     public static void ShareImage(AndroidJavaObject javaObject, string imagePath)
     {
         javaObject.Call("ShareImageSG", imagePath);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="javaObject"></param>
+    public static string GetParams(AndroidJavaObject javaObject)
+    {
+        return javaObject.Call<string>("GetParams");
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="javaObject"></param>
+    public static void Clear(AndroidJavaObject javaObject)
+    {
+        javaObject.Call("Clear");
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="json"></param>
+    public static void OnInviteHandler(string json)
+    {
+        Logger.Log("SG.OnInviteHandler, json = " + json);
+        if (mInviteCallback != null)
+        {
+            mInviteCallback(json);
+        }
+    }
+
+    #endregion
 }

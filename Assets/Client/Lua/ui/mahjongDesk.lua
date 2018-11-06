@@ -19,11 +19,16 @@ function mahjongDesk:onInit()
     self.players = { self.mPlayerM, self.mPlayerR, self.mPlayerT, self.mPlayerL, }
     self:refreshUI()
 
+    self.mInvitePanel:hide()
+
     if deviceConfig.isMobile then
-        self.mInvite:show()
+        self.mInvite:setInteractabled(true)
         self.mInvite:addClickListener(self.onInviteClickedHandler, self)
+        self.mInvitePanel:addClickListener(self.onInvitePanelClickedHandler, self)
+        self.mInviteWX:addClickListener(self.onInviteWXClickedHandler, self)
+        self.mInviteXL:addClickListener(self.onInviteXLClickedHandler, self)
     else
-        self.mInvite:hide()
+        self.mInvite:setInteractabled(false)
     end
 
     self.mGameDesc:hide()
@@ -105,10 +110,43 @@ end
 
 function mahjongDesk:onInviteClickedHandler()
     playButtonClickSound()
+    self.mInvitePanel:show()
+end
+
+function mahjongDesk:onInvitePanelClickedHandler()
+    playButtonClickSound()
+    self.mInvitePanel:hide()
+end
+
+function mahjongDesk:onInviteWXClickedHandler()
+    playButtonClickSound()
 
     if deviceConfig.isAndroid then
-        androidHelper.shareUrlWx("好友邀请", self:getInvitationInfo(), "http://www.cdbshy.com/", false)
+        androidHelper.shareUrlWx("好友邀请", 
+                                 self:getInvitationInfo(), 
+                                 "http://www.cdbshy.com/", 
+                                 false)
     end
+
+    self.mInvitePanel:hide()
+end
+
+function mahjongDesk:onInviteXLClickedHandler()
+    playButtonClickSound()
+
+    if deviceConfig.isAndroid then
+        local params = { cityType = self.game.cityType, 
+                         deskId = self.game.deskId, }
+
+        androidHelper.shareInvitationSg("好友邀请", 
+                                        self:getInvitationInfo(), 
+                                        "",
+                                        table.tojson(params),
+                                        "http://www.cdbshy.com/",
+                                        "http://www.cdbshy.com/")
+    end
+
+    self.mInvitePanel:hide()
 end
 
 function mahjongDesk:getInvitationInfo()

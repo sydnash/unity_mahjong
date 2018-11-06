@@ -242,19 +242,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/ZM_an12.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>66,25,133,51</rect>
-                <key>scale9Paddings</key>
-                <rect>66,25,133,51</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/ZM_di.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -399,6 +386,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/fx_di02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>86,41,172,81</rect>
+                <key>scale9Paddings</key>
+                <rect>86,41,172,81</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -419,9 +419,9 @@
             <filename>Images/ZM_zi02.png</filename>
             <filename>Images/ZM_zi03.png</filename>
             <filename>Images/ZM_ok.png</filename>
-            <filename>Images/ZM_an12.png</filename>
             <filename>Images/ZM_di.png</filename>
             <filename>Images/HF_di02.png</filename>
+            <filename>Images/fx_di02.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

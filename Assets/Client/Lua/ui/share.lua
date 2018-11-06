@@ -31,8 +31,7 @@ function share:onPyqClickedHandler()
     playButtonClickSound()
 
     if deviceConfig.isAndroid then 
-        --androidHelper.shareImageWx(imgname, true)
-        androidHelper.shareTextSg("闲聊分享测试")
+        androidHelper.shareImageWx(imgname, true)
     end
 end
 

@@ -8,7 +8,7 @@ public class WechatHelper
     /// <summary>
     /// 
     /// </summary>
-    private static Action<string> mLoginWxCallback = null;
+    private static Action<string> mLoginCallback = null;
 
     #endregion
 
@@ -17,9 +17,17 @@ public class WechatHelper
     /// <summary>
     /// 
     /// </summary>
-    public static void Login(AndroidJavaObject javaObject, Action<string> callback)
+    /// <param name="callback"></param>
+    public static void RegisterLoginCallback(Action<string> callback)
     {
-        mLoginWxCallback = callback;
+        mLoginCallback = callback;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void Login(AndroidJavaObject javaObject)
+    {
         javaObject.Call("LoginWX");
     }
 
@@ -60,9 +68,9 @@ public class WechatHelper
     public static void OnLoginHandler(string json)
     {
         Logger.Log("WX.OnLoginHandler, json = " + json);
-        if (mLoginWxCallback != null)
+        if (mLoginCallback != null)
         {
-            mLoginWxCallback(json);
+            mLoginCallback(json);
         }
     }
 

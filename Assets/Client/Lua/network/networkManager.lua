@@ -340,7 +340,7 @@ end
 function networkManager.loginWx(callback)  
     log("networkManager.loginWx")
 
-    androidHelper.loginWx(function(json)
+    androidHelper.registerLoginWxCallback(function(json)
         if string.isNilOrEmpty(json) then
             callback(false, nil)
             return
@@ -364,6 +364,8 @@ function networkManager.loginWx(callback)
             end)
         end)
     end)
+
+    androidHelper.loginWx()
 end
 
 -------------------------------------------------------------------

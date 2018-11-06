@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/Common/Atlas/Common.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Resources/UI/Common/Atlas/Common.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -199,6 +199,33 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Images/FX_pyq.png</key>
+            <key type="filename">Images/FX_xl.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>23,23,46,47</rect>
+                <key>scale9Paddings</key>
+                <rect>23,23,46,47</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/FX_wx.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>23,23,46,46</rect>
+                <key>scale9Paddings</key>
+                <rect>23,23,46,46</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/GY_an_01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -244,6 +271,7 @@
                 <false/>
             </struct>
             <key type="filename">Images/GY_an_06.png</key>
+            <key type="filename">Images/ZM_an12.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -864,6 +892,10 @@
             <filename>Images/GY_fk.png</filename>
             <filename>Images/GY_fk01.png</filename>
             <filename>Images/GY_fk02.png</filename>
+            <filename>Images/FX_pyq.png</filename>
+            <filename>Images/FX_wx.png</filename>
+            <filename>Images/FX_xl.png</filename>
+            <filename>Images/ZM_an12.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

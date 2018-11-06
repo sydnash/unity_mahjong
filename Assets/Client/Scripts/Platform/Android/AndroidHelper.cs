@@ -39,6 +39,33 @@ public class AndroidHelper
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="callback"></param>
+    public void RegisterLoginWXCallback(Action<string> callback)
+    {
+        WechatHelper.RegisterLoginCallback(callback);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="callback"></param>
+    public void RegisterInviteSGCallback(Action<string> callback)
+    {
+        UpdripsHelper.RegisterInviteCallback(callback);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="logined"></param>
+    public void SetLogined(bool logined)
+    {
+        javaObject.Call("SetLogined", logined);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="errorMessage"></param>
     public void ShowErrorMessage(string errorMessage)
     {
@@ -48,9 +75,9 @@ public class AndroidHelper
     /// <summary>
     /// 
     /// </summary>
-    public void LoginWX(Action<string> callback)
+    public void LoginWX()
     {
-        WechatHelper.Login(javaObject, callback);
+        WechatHelper.Login(javaObject);
     }
 
     /// <summary>
@@ -95,6 +122,21 @@ public class AndroidHelper
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="title"></param>
+    /// <param name="description"></param>
+    /// <param name="launcherPath"></param>
+    /// <param name="param_a"></param>
+    /// <param name="param_b"></param>
+    /// <param name="androidDownloadUrl"></param>
+    /// <param name="iOSDownloadUrl"></param>
+    public void ShareInvitationSG(string title, string description, string launcherPath, string param, string androidDownloadUrl, string iOSDownloadUrl)
+    {
+        UpdripsHelper.ShareInvitation(javaObject, title, description, launcherPath, param, androidDownloadUrl, iOSDownloadUrl);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="imagePath"></param>
     public void ShareImageSG(string imagePath)
     {
@@ -104,10 +146,28 @@ public class AndroidHelper
     /// <summary>
     /// 
     /// </summary>
+    /// <returns></returns>
+    public string GetParamsSG()
+    {
+        return UpdripsHelper.GetParams(javaObject);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="args"></param>
     public void OnLoginWxHandler(string json)
     {
         WechatHelper.OnLoginHandler(json);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="json"></param>
+    public void OnInviteSgHandler(string json)
+    {
+        UpdripsHelper.OnInviteHandler(json);
     }
 
     #endregion

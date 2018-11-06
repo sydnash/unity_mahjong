@@ -131,6 +131,52 @@ local function tracebackHandler(errorMessage)
     networkManager.disconnect()
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+local function inviteSgCallback(params)
+    if clientApp.currentDesk == nil then
+        local t = table.fromjson(params)
+
+        local cityType = t.cityType
+        local deskId = t.deskId
+
+        local loading = require("ui.loading").new()
+        loading:show()
+
+        enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
+            if not ok then
+                loading:close()
+                showMessageUI(errText)
+            else
+                if msg == nil then
+                    loading:setProgress(progress * 0.4)
+                else
+                    loading:setProgress(0.4)
+
+                    sceneManager.load("scene", "mahjongscene", function(completed, progress)
+                        loading:setProgress(0.4 + 0.6 * progress)
+
+                        if completed then
+                            if preload ~= nil then
+                                preload:stop()
+                            end
+
+                            msg.Reenter = table.fromjson(msg.Reenter)
+                            msg.Config = table.fromjson(msg.Config)
+
+                            local desk = require("logic.mahjong.mahjongGame").new(msg)
+                            loading:close()
+                        end
+                    end)
+
+                    --finish
+                end
+            end
+        end)
+    end
+end
+
 clientApp = class("clientApp")
 
 ----------------------------------------------------------------
@@ -154,6 +200,10 @@ function clientApp:start()
 
     registerUpdateListener(checkEscapeState, nil)
     registerTracebackCallback(tracebackHandler)
+
+    if deviceConfig.isAndroid then
+        androidHelper.registerInviteSgCallback(inviteSgCallback)
+    end
 
     DISABLE_GLOBAL_VARIABLE_DECLARATION()
 end
