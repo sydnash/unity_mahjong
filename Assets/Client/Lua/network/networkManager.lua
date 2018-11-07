@@ -340,32 +340,36 @@ end
 function networkManager.loginWx(callback)  
     log("networkManager.loginWx")
 
-    androidHelper.registerLoginWxCallback(function(json)
-        if string.isNilOrEmpty(json) then
-            callback(false, nil)
-            return
-        end
-
-        local resp = table.fromjson(json)
-        --log("networkManager.loginWx, resp = " .. table.tostring(resp))
-        local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
-        local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
-
-        http.getText(accessUrl, timeout, function(ok, text)
-            if (not ok) or string.isNilOrEmpty(text) then
+    if deviceConfig.isAndroid then
+        androidHelper.registerLoginWxCallback(function(json)
+            if string.isNilOrEmpty(json) then
                 callback(false, nil)
                 return
             end
 
-            local p = table.fromjson(text)
-            local form = table.toUrlArgs({ wxtoken = p.refresh_token, appclass = "mj" })
-            http.getText(networkConfig.gameURL .. "?" .. form, timeout, function(ok, text)
-                loginC(text, callback)
+            local resp = table.fromjson(json)
+            --log("networkManager.loginWx, resp = " .. table.tostring(resp))
+            local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
+            local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
+
+            http.getText(accessUrl, timeout, function(ok, text)
+                if (not ok) or string.isNilOrEmpty(text) then
+                    callback(false, nil)
+                    return
+                end
+
+                local p = table.fromjson(text)
+                local form = table.toUrlArgs({ wxtoken = p.refresh_token, appclass = "mj" })
+                http.getText(networkConfig.gameURL .. "?" .. form, timeout, function(ok, text)
+                    loginC(text, callback)
+                end)
             end)
         end)
-    end)
 
-    androidHelper.loginWx()
+        androidHelper.loginWx()
+    elseif deviceConfig.isApple then
+        --iOS 微信登录
+    end
 end
 
 -------------------------------------------------------------------

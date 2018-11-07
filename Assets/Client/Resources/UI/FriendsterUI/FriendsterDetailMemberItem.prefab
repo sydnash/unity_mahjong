@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 222788607651222000}
   - component: {fileID: 114826469234047668}
   - component: {fileID: 114594165936528946}
+  - component: {fileID: 114006813920715254}
   m_Layer: 5
   m_Name: Head
   m_TagString: Untagged
@@ -133,6 +134,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114006813920715254
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1186031034192810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1417531237373522}
+    panelScript: 
 --- !u!114 &114038235510874156
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -259,10 +276,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mWidgets:
-  - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1417531237373522}
-    panelScript: 
   - variableName: mNickname
     widgetType: 2
     gameObject: {fileID: 1328211667173430}
@@ -283,6 +296,10 @@ MonoBehaviour:
     widgetType: 5
     gameObject: {fileID: 1186031034192810}
     panelScript: 
+  - variableName: mIcon
+    widgetType: 1
+    gameObject: {fileID: 1186031034192810}
+    panelScript: ui.header
 --- !u!114 &114499863619727566
 MonoBehaviour:
   m_ObjectHideFlags: 1

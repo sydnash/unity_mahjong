@@ -115,8 +115,6 @@ end
 -- 下载玩家头像
 -------------------------------------------------------------
 function downloadIcon(url, callback)
-    --log("downloadIcon, url = " .. url)
-
     if string.isNilOrEmpty(url) then
         return
     end
