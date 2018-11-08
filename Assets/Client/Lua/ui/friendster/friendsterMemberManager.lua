@@ -109,7 +109,7 @@ function friendsterMemberManager:onAddClickedHandler()
 
         log("add player to friendster, msg = " .. table.tostring(msg))
 
-        if msg.RetCode ~= retc.Ok then
+        if msg.RetCode ~= retc.ok then
             showMessageUI(retcText[msg.RetCode])
             return
         end
@@ -135,7 +135,7 @@ function friendsterMemberManager:onDeleteClickedHandler()
 
         log("delete player from friendster, msg = " .. table.tostring(msg))
 
-        if msg.RetCode ~= retc.Ok then
+        if msg.RetCode ~= retc.ok then
             showMessageUI(retcText[msg.RetCode])
             return
         end

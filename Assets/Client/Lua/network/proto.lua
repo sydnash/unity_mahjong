@@ -7,10 +7,9 @@ local networkConfig = require("config.networkConfig")
 local proto = class("proto")
 proto.length = 0
 
-local md5 = MD5
-local aes = AES
-local b64 = Base64
-local cvt = ByteUtils
+local aes  = AES
+local b64  = Base64
+local cvt  = Utils
 
 local INT_BYTES_COUNT = 4
 local CHECKSUM_LENGTH = 32
@@ -27,7 +26,7 @@ function proto.build(command, token, acid, session, payload)
     }
 
     local encrypt = table.tojson(p)
-    encrypt = encrypt .. md5.GetHash(encrypt)
+    encrypt = encrypt .. Hash.GetHash(encrypt)
 
     if networkConfig.encrypt then
         encrypt = aes.Encrypt(encrypt)
@@ -62,7 +61,7 @@ function proto.parse(bytes)
             local data = string.sub(decrypt, 1, size)
             local hash = string.sub(decrypt, size + 1, size + CHECKSUM_LENGTH)
 
-            if md5.GetHash(data) ~= hash then
+            if Hash.GetHash(data) ~= hash then
                 log("checksum of msg is wrong!")
                 return nil, length
             end

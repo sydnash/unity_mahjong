@@ -23,12 +23,14 @@ function mahjongDesk:onInit()
 
     if deviceConfig.isMobile then
         self.mInvite:setInteractabled(true)
+        self.mInviteText:setSprite("enable")
         self.mInvite:addClickListener(self.onInviteClickedHandler, self)
         self.mInvitePanel:addClickListener(self.onInvitePanelClickedHandler, self)
         self.mInviteWX:addClickListener(self.onInviteWXClickedHandler, self)
         self.mInviteXL:addClickListener(self.onInviteXLClickedHandler, self)
     else
         self.mInvite:setInteractabled(false)
+        self.mInviteText:setSprite("disable")
     end
 
     self.mGameDesc:hide()
@@ -102,8 +104,10 @@ function mahjongDesk:refreshUI()
     if deviceConfig.isMobile then
         if playerCount == playerTotalCount then
             self.mInvite:setInteractabled(false)
+            self.mInviteText:setSprite("disable")
         else
             self.mInvite:setInteractabled(true)
+            self.mInviteText:setSprite("enable")
         end
     end
 end
@@ -121,12 +125,10 @@ end
 function mahjongDesk:onInviteWXClickedHandler()
     playButtonClickSound()
 
-    if deviceConfig.isAndroid then
-        androidHelper.shareUrlWx("好友邀请", 
-                                 self:getInvitationInfo(), 
-                                 "http://www.cdbshy.com/", 
-                                 false)
-    end
+    platformHelper.shareUrlWx("好友邀请", 
+                                self:getInvitationInfo(), 
+                                "http://www.cdbshy.com/", 
+                                false)
 
     self.mInvitePanel:hide()
 end
@@ -134,17 +136,17 @@ end
 function mahjongDesk:onInviteXLClickedHandler()
     playButtonClickSound()
 
-    if deviceConfig.isAndroid then
-        local params = { cityType = self.game.cityType, 
-                         deskId = self.game.deskId, }
+    local image = textureManager.load(string.empty, "appIcon")
+    local params = { cityType = self.game.cityType, deskId = self.game.deskId, }
 
-        androidHelper.shareInvitationSg("好友邀请", 
-                                        self:getInvitationInfo(), 
-                                        "",
-                                        table.tojson(params),
-                                        "http://www.cdbshy.com/",
-                                        "http://www.cdbshy.com/")
-    end
+    platformHelper.shareInvitationSg("好友邀请", 
+                                    self:getInvitationInfo(), 
+                                    image,
+                                    table.tojson(params),
+                                    "http://www.cdbshy.com/",
+                                    "http://www.cdbshy.com/")
+
+    textureManager.unload(image)
 
     self.mInvitePanel:hide()
 end
@@ -251,6 +253,7 @@ function mahjongDesk:onPlayerEnter(player)
 
     if deviceConfig.isMobile and playerCount == playerTotalCount then
         self.mInvite:setInteractabled(false)
+        self.mInviteText:setSprite("disable")
     end
 
     local s = self.game:getSeatType(player.turn)
@@ -262,6 +265,7 @@ end
 function mahjongDesk:onPlayerExit(turn)
     if deviceConfig.isMobile then
         self.mInvite:setInteractabled(true)
+        self.mInviteText:setSprite("enable")
     end
 
     local s = self.game:getSeatType(turn)

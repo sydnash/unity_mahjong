@@ -1403,6 +1403,7 @@ GameObject:
   - component: {fileID: 224542451739698350}
   - component: {fileID: 222530434760365618}
   - component: {fileID: 114746575646163292}
+  - component: {fileID: 114828302573401988}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -3660,6 +3661,10 @@ MonoBehaviour:
     widgetType: 5
     gameObject: {fileID: 1732927097907058}
     panelScript: 
+  - variableName: mInviteText
+    widgetType: 3
+    gameObject: {fileID: 1776652706646228}
+    panelScript: 
 --- !u!114 &114558863019693692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4921,6 +4926,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114828302573401988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1776652706646228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mItems:
+  - key: enable
+    sprite: {fileID: 21300058, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
+  - key: disable
+    sprite: {fileID: 21300072, guid: 8b67b6a3be3a02c4faecd31caeb2fabe, type: 3}
 --- !u!114 &114846258570764698
 MonoBehaviour:
   m_ObjectHideFlags: 1

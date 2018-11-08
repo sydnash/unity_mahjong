@@ -94,10 +94,8 @@ end
 function friendsterDetail:onShareClickedHandler()
     playButtonClickSound()
 
-    if deviceConfig.isAndroid then 
-        local desc = string.format("编号：%d, 邀请码：%d", self.data.id, self.data.applyCode)
-        androidHelper.shareUrlWx("亲友圈信息", desc, "www.cdbshy.com", false)
-    end
+    local desc = string.format("编号：%d, 邀请码：%d", self.data.id, self.data.applyCode)
+    platformHelper.shareUrlWx("亲友圈信息", desc, "www.cdbshy.com", false)
 end
 
 function friendsterDetail:onManageClickedHandler()

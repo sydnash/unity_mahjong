@@ -40,7 +40,7 @@ function createDesk:onCreateClickedHandler()
 
         log("create desk, msg = " .. table.tostring(msg))
 
-        if msg.RetCode ~= retc.Ok then
+        if msg.RetCode ~= retc.ok then
             loading:close()
             showMessageUI(retcText[msg.RetCode])
             return

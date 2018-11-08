@@ -7,7 +7,7 @@ local share = class("share", base)
 
 _RES_(share, "ShareUI", "ShareUI")
 
-local imageName = ""
+local imageName = "DL_bg"
 local thumbSize = 150
 
 function share:onInit()
@@ -28,33 +28,26 @@ function share:onHyClickedHandler()
         return
     end
 
-    http.getTexture2D(imagePath, function(ok, tex, bytes)
-        if (not ok) or (tex == nil) then
-            return
-        end
+    if deviceConfig.isMobile then
+        local tex = textureManager.load(string.empty, imageName)
 
-        if deviceConfig.isAndroid then 
+        if tex ~= nil then
             local thumb = getSizedTexture(tex, thumbSize, thumbSize)
-            androidHelper.shareImageWx(tex, false)
+            platformHelper.shareImageWx(tex, thumb, false)
+            textureManager.unload(tex)
         end
-    end)
+    end
 end
 
 function share:onPyqClickedHandler()
     playButtonClickSound()
 
     if deviceConfig.isMobile then
-        local tex = textureManager.load(imageName)
+        local tex = textureManager.load(string.empty, imageName)
 
         if tex ~= nil then
             local thumb = getSizedTexture(tex, thumbSize, thumbSize)
-
-            if deviceConfig.isAndroid then
-                androidHelper.shareImageWx(tex, thumb, true)
-            elseif deviceConfig.isApple then
-
-            end
-
+            platformHelper.shareImageWx(tex, thumb, true)
             textureManager.unload(tex)
         end
     end

@@ -21,10 +21,9 @@ public static class LuaBinder
 		HttpWrap.Register(L);
 		TcpWrap.Register(L);
 		LFSWrap.Register(L);
-		MD5Wrap.Register(L);
+		HashWrap.Register(L);
 		AESWrap.Register(L);
 		Base64Wrap.Register(L);
-		ByteUtilsWrap.Register(L);
 		AnimationEventManagerWrap.Register(L);
 		GameObjectPickerWrap.Register(L);
 		LoggerWrap.Register(L);

@@ -65,13 +65,12 @@ end
 
 
 protoType               = require("network.protoType")
-retc                    = require("network.retc")
 
 local http              = require("network.http")
 local tcp               = require("network.tcp")
 local proto             = require("network.proto")
 local networkConfig     = require("config.networkConfig")
-local cvt               = ByteUtils
+local cvt               = Utils
 
 local networkManager    = class("networkManager")
 
@@ -266,9 +265,8 @@ end
 -------------------------------------------------------------------
 local function loginC(text, callback)
     local o = table.fromjson(text)
-    --log("loginC, o = " .. table.tostring(o))
 
-    if o.retcode ~= retc.Ok then
+    if o.retcode ~= retc.ok then
         callback(false, nil)
         return
     end
@@ -340,15 +338,17 @@ end
 function networkManager.loginWx(callback)  
     log("networkManager.loginWx")
 
-    if deviceConfig.isAndroid then
-        androidHelper.registerLoginWxCallback(function(json)
-            if string.isNilOrEmpty(json) then
-                callback(false, nil)
-                return
-            end
+    platformHelper.registerLoginWxCallback(function(json)
+        if string.isNilOrEmpty(json) then
+            callback(false, nil)
+            return
+        end
 
-            local resp = table.fromjson(json)
-            --log("networkManager.loginWx, resp = " .. table.tostring(resp))
+        local resp = table.fromjson(json)
+            
+        if resp.errCode ~= errCodeWx.ok then
+            showMessageUI("微信登录失败：" .. errTextWx[resp.errCode])
+        else
             local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
             local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
@@ -364,12 +364,10 @@ function networkManager.loginWx(callback)
                     loginC(text, callback)
                 end)
             end)
-        end)
+        end
+    end)
 
-        androidHelper.loginWx()
-    elseif deviceConfig.isApple then
-        --iOS 微信登录
-    end
+    platformHelper.loginWx()
 end
 
 -------------------------------------------------------------------

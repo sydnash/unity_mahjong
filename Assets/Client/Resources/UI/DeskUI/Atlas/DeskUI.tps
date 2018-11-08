@@ -321,6 +321,7 @@
                 <false/>
             </struct>
             <key type="filename">Images/ZM_zi01.png</key>
+            <key type="filename">Images/ZM_zi01_h.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -422,6 +423,7 @@
             <filename>Images/ZM_di.png</filename>
             <filename>Images/HF_di02.png</filename>
             <filename>Images/fx_di02.png</filename>
+            <filename>Images/ZM_zi01_h.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

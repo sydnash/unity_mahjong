@@ -200,10 +200,7 @@ function clientApp:start()
 
     registerUpdateListener(checkEscapeState, nil)
     registerTracebackCallback(tracebackHandler)
-
-    if deviceConfig.isAndroid then
-        androidHelper.registerInviteSgCallback(inviteSgCallback)
-    end
+    platformHelper.registerInviteSgCallback(inviteSgCallback)
 
     DISABLE_GLOBAL_VARIABLE_DECLARATION()
 end

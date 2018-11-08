@@ -129,18 +129,18 @@ public class AndroidHelper
     /// <param name="param_b"></param>
     /// <param name="androidDownloadUrl"></param>
     /// <param name="iOSDownloadUrl"></param>
-    public void ShareInvitationSG(string title, string description, string launcherPath, string param, string androidDownloadUrl, string iOSDownloadUrl)
+    public void ShareInvitationSG(string title, string description, Texture2D tex, string param, string androidDownloadUrl, string iOSDownloadUrl)
     {
-        UpdripsHelper.ShareInvitation(javaObject, title, description, launcherPath, param, androidDownloadUrl, iOSDownloadUrl);
+        UpdripsHelper.ShareInvitation(javaObject, title, description, tex, param, androidDownloadUrl, iOSDownloadUrl);
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="imagePath"></param>
-    public void ShareImageSG(string imagePath)
+    public void ShareImageSG(Texture2D tex)
     {
-        UpdripsHelper.ShareImage(javaObject, imagePath);
+        UpdripsHelper.ShareImage(javaObject, tex);
     }
 
     /// <summary>

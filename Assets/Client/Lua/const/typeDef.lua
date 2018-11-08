@@ -26,6 +26,37 @@ sexType = {
     girl = 2,
 }
 
+retc = {
+    ok                              = 0,
+    authorFailed                    = 1001,
+    kickByOtherLogin                = 1002,
+    kickByAlreadyLogout             = 1003,
+    kickLongInactive                = 1004,
+    enterGSDeskFailed               = 1005,
+    enterGSDeskDeskNotFound         = 1006,
+    enterGSDeskDeskFull             = 1007,
+    enterGSDeskPlaying              = 1008,
+    enterGSDeskAlreadyInOtherDesk   = 1009,
+    serverIsClosing                 = 1010,
+    serverError                     = 1011,
+    checkDeskDeskNotFind            = 1012,
+    coinNotEnough                   = 1013,
+    transferToSelf                  = 1014,
+    willClose                       = 1015,
+    notSupportGameType              = 1016,
+    notInClub                       = 1017,
+    playerHasTooMuchClub            = 1018,
+    clubIsFull                      = 1019,
+    clubNotFound                    = 1020,
+    clubPermision                   = 1021,
+    clubCoinNotEnough               = 1022,
+    playerNotFound                  = 1023,
+    clubCardNegative                = 1024,
+    clubPlayerInDesk                = 1025,
+    applyInfoNotFound               = 1026,
+    playerIsAlreadyInClub           = 1027,
+}
+
 --------------------------------------------------------------
 --
 --------------------------------------------------------------
@@ -133,6 +164,19 @@ mailStatus = {
     read    = 1,
     claimed = 2,
     deleted = 3,
+}
+
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
+errCodeWx = {
+    ok         =  0,
+    comm       = -1,
+    userCancel = -2,
+    sentFailed = -3,
+    authDenied = -4,
+    unsupport  = -5,
+    ban        = -6,
 }
 
 --endregion

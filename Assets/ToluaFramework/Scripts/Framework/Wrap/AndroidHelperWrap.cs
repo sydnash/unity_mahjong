@@ -219,7 +219,7 @@ public class AndroidHelperWrap
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
-			string arg2 = ToLua.CheckString(L, 4);
+			UnityEngine.Texture2D arg2 = (UnityEngine.Texture2D)ToLua.CheckObject(L, 4, typeof(UnityEngine.Texture2D));
 			string arg3 = ToLua.CheckString(L, 5);
 			string arg4 = ToLua.CheckString(L, 6);
 			string arg5 = ToLua.CheckString(L, 7);
@@ -239,7 +239,7 @@ public class AndroidHelperWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
+			UnityEngine.Texture2D arg0 = (UnityEngine.Texture2D)ToLua.CheckObject(L, 2, typeof(UnityEngine.Texture2D));
 			obj.ShareImageSG(arg0);
 			return 0;
 		}

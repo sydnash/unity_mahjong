@@ -9,7 +9,7 @@ require("const.statusDef")
 deviceConfig    = require("config.deviceConfig")
 gameConfig      = require("config.gameConfig")
 gamepref        = require("logic.gamepref")
-androidHelper   = require("platform.androidHelper")
+platformHelper  = require("platform.platformHelper")
 networkManager  = require("network.networkManager")
 
 local waiting       = require("ui.waiting")
@@ -119,7 +119,7 @@ function downloadIcon(url, callback)
         return
     end
 
-    local hash = MD5.GetHash(url)
+    local hash = Hash.GetHash(url)
     local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "wxicons", hash .. ".jpg")
 
     --先本地查找，没找到再从网上下载
@@ -169,7 +169,7 @@ function enterDesk(gameType, deskId, callback)
                 return
             end
 
-            if msg.RetCode ~= retc.Ok then
+            if msg.RetCode ~= retc.ok then
                 callback(false, retcText[msg.RetCode], preload, 0.5, nil)
                 return
             end
@@ -191,10 +191,7 @@ function loginServer(callback)
 
     loginImp(function(ok, msg)
         closeWaitingUI()
-
-        if deviceConfig.isAndroid then
-            androidHelper.setLogined(false)
-        end
+        platformHelper.setLogined(false)
 
         if not ok then
             showMessageUI("网络繁忙，请稍后再试", function()
@@ -203,17 +200,14 @@ function loginServer(callback)
             return
         end
 
-        if msg.RetCode ~= retc.Ok then
+        if msg.RetCode ~= retc.ok then
             showMessageUI(retText[msg.RetCode], function()
                 callback(false)
             end)
             return
         end
 
-        if deviceConfig.isAndroid then
-            androidHelper.setLogined(true)
-        end
-
+        platformHelper.setLogined(true)
         callback(true)
         log("login, msg = " .. table.tostring(msg))
 
@@ -227,17 +221,14 @@ function loginServer(callback)
             deskId = deskInfo.DeskId
             log(string.format("get desk from DeskInfo, cityType = %d, deskId = %d", cityType, deskId))
         else
-            if deviceConfig.isAndroid then
-                --检查闲聊的邀请数据
-                local params = androidHelper.getParamsSg()
-                if not string.isNilOrEmpty(params) then
-                    local t = table.fromjson(params)
+            local params = platformHelper.getParamsSg()--检查闲聊的邀请数据
+            if not string.isNilOrEmpty(params) then
+                local t = table.fromjson(params)
 
-                    cityType = t.cityType
-                    deskId = t.deskId
-                    log(string.format("get desk from XianLiao, cityType = %d", cityType))
-                    log(string.format("get desk from XianLiao, deskId = %d", deskId))
-                end
+                cityType = t.cityType
+                deskId = t.deskId
+                log(string.format("get desk from XianLiao, cityType = %d", cityType))
+                log(string.format("get desk from XianLiao, deskId = %d", deskId))
             end
         end
 
