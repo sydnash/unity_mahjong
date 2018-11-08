@@ -78,7 +78,7 @@ function createFriendster:onCreateClickedHandler()
             return
         end
 
-        if msg.RetCode ~= retc.Ok then
+        if msg.RetCode ~= retc.ok then
             showMessageUI(retcText[msg.RetCode])
             return
         end

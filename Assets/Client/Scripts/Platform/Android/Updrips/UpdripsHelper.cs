@@ -44,9 +44,10 @@ class UpdripsHelper
     /// <param name="param_b"></param>
     /// <param name="androidDownloadUrl"></param>
     /// <param name="iOSDownloadUrl"></param>
-    public static void ShareInvitation(AndroidJavaObject javaObject, string title, string description, string launcherPath, string param, string androidDownloadUrl, string iOSDownloadUrl)
+    public static void ShareInvitation(AndroidJavaObject javaObject, string title, string description, Texture2D image, string param, string androidDownloadUrl, string iOSDownloadUrl)
     {
-        javaObject.Call("ShareInvitationSG", title, description, launcherPath, param, androidDownloadUrl, iOSDownloadUrl);
+        byte[] imageData = image.EncodeToJPG();
+        javaObject.Call("ShareInvitationSG", title, description, imageData, param, androidDownloadUrl, iOSDownloadUrl);
     }
 
     /// <summary>
@@ -54,9 +55,10 @@ class UpdripsHelper
     /// </summary>
     /// <param name="javaObject"></param>
     /// <param name="imagePath"></param>
-    public static void ShareImage(AndroidJavaObject javaObject, string imagePath)
+    public static void ShareImage(AndroidJavaObject javaObject, Texture2D image)
     {
-        javaObject.Call("ShareImageSG", imagePath);
+        byte[] imageData = image.EncodeToJPG();
+        javaObject.Call("ShareImageSG", imageData);
     }
 
     /// <summary>

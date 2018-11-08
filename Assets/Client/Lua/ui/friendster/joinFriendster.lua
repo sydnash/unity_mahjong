@@ -46,7 +46,7 @@ function joinFriendster:onQueryClickedHandler()
 
         log("query friendster info, msg = " .. table.tostring(msg))
 
-        if msg.RetCode ~= retc.Ok then
+        if msg.RetCode ~= retc.ok then
             showMessageUI(retcText[msg.RetCode])
             return
         end

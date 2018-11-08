@@ -191,7 +191,7 @@ extern "C"
         // }
         SendAuthResp* authResp = (SendAuthResp*)resp;
         NSString* param = [NSString stringWithFormat:\
-                           @"{\"errcode\": %d, \"appid\": \"%@\", \"secret\":\"%@\", \"code\": \"%@\"}",\
+                           @"{\"errCode\": %d, \"appid\": \"%@\", \"secret\":\"%@\", \"code\": \"%@\"}",\
                             resp.errCode, self.appid, self.appsecret, authResp.code];
 
         UnitySendMessage("IOSMessageHandler", "OnWXLoginCallback", [param UTF8String]);

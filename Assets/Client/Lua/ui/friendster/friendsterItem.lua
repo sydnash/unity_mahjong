@@ -28,7 +28,7 @@ function friendsterItem:onClickedHandler()
             return
         end
 
-        if msg.RetCode ~= retc.Ok then
+        if msg.RetCode ~= retc.ok then
             closeWaitingUI()
             showWaitingUI(retcText[msg.RetCode])
             return
@@ -45,7 +45,7 @@ function friendsterItem:onClickedHandler()
                 return
             end
 
-            if msg.RetCode ~= retc.Ok then
+            if msg.RetCode ~= retc.ok then
                 showWaitingUI(retcText[msg.RetCode])
                 return
             end
