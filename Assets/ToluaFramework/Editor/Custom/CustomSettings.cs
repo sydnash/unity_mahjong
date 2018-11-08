@@ -201,6 +201,7 @@ public static class CustomSettings
         _GT(typeof(UnityEngine.UI.Sprite)),
         _GT(typeof(SpriteRD)),
         _GT(typeof(AndroidHelper)),
+        _GT(typeof(Utils)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

@@ -158,13 +158,14 @@ public class AndroidHelperWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 5);
+			ToLua.CheckArgsCount(L, 6);
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			string arg2 = ToLua.CheckString(L, 4);
-			bool arg3 = LuaDLL.luaL_checkboolean(L, 5);
-			obj.ShareUrlWX(arg0, arg1, arg2, arg3);
+			UnityEngine.Texture2D arg3 = (UnityEngine.Texture2D)ToLua.CheckObject(L, 5, typeof(UnityEngine.Texture2D));
+			bool arg4 = LuaDLL.luaL_checkboolean(L, 6);
+			obj.ShareUrlWX(arg0, arg1, arg2, arg3, arg4);
 			return 0;
 		}
 		catch (Exception e)
@@ -178,11 +179,12 @@ public class AndroidHelperWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
+			ToLua.CheckArgsCount(L, 4);
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
-			obj.ShareImageWX(arg0, arg1);
+			UnityEngine.Texture2D arg0 = (UnityEngine.Texture2D)ToLua.CheckObject(L, 2, typeof(UnityEngine.Texture2D));
+			UnityEngine.Texture2D arg1 = (UnityEngine.Texture2D)ToLua.CheckObject(L, 3, typeof(UnityEngine.Texture2D));
+			bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
+			obj.ShareImageWX(arg0, arg1, arg2);
 			return 0;
 		}
 		catch (Exception e)

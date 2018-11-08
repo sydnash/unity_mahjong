@@ -40,13 +40,13 @@ public class BuildManager : EditorWindow
         switch (mTargetPlatform)
         {
             case BuildTarget.Android:
-                suffix = "apk";
+                suffix = ".apk";
                 break;
             case BuildTarget.iOS:
                 suffix = string.Empty;
                 break;
             default:
-                suffix = "exe";
+                suffix = ".exe";
                 break;
         }
 
@@ -73,7 +73,7 @@ public class BuildManager : EditorWindow
 
         if (GUILayout.Button("Build Package"))
         {
-            string targetName = mDevelopment ? "debug." + suffix : "release." + suffix;
+            string targetName = mDevelopment ? "debug" + suffix : "release" + suffix;
             var targetPath = EditorUtility.SaveFilePanel( "Build", "", targetName, suffix);
 
             if (!string.IsNullOrEmpty(targetPath))

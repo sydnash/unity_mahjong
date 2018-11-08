@@ -378,4 +378,9 @@ function cutoutString(str, maxLen)
     return ret
 end
 
+function getSizedTexture(tex, width, height)
+    local size = Vector2.New(width, height)
+    return Utils.SizeTextureBilinear(tex, size)
+end
+
 --endregion

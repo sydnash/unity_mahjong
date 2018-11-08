@@ -49,16 +49,15 @@ end
 -------------------------------------------------------------------
 -- 分享URL到微信
 -------------------------------------------------------------------
-function androidHelper.shareUrlWx(title, desc, url, pyq)
-    AndroidHelper.instance:ShareUrlWX(title, desc, url, pyq)
+function androidHelper.shareUrlWx(title, desc, url, thumb, pyq)
+    AndroidHelper.instance:ShareUrlWX(title, desc, url, thumb, pyq)
 end
 
 -------------------------------------------------------------------
 -- 分享图片到微信
 -------------------------------------------------------------------
-function androidHelper.shareImageWx(imgname, pyq)
-    local imgpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "shimgs", imgname)
-    AndroidHelper.instance:ShareImageWX(imgpath, pyq)
+function androidHelper.shareImageWx(image, thumb, pyq)
+    AndroidHelper.instance:ShareImageWX(image, thumb, pyq)
 end
 
 -------------------------------------------------------------------

@@ -6,7 +6,9 @@ local base = require("ui.common.view")
 local share = class("share", base)
 
 _RES_(share, "ShareUI", "ShareUI")
-local imgname = ""
+
+local imageName = ""
+local thumbSize = 150
 
 function share:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
@@ -22,16 +24,39 @@ end
 function share:onHyClickedHandler()
     playButtonClickSound()
 
-    if deviceConfig.isAndroid then 
-        androidHelper.shareImageWx(imgname, false)
+    if not deviceConfig.isMobile then
+        return
     end
+
+    http.getTexture2D(imagePath, function(ok, tex, bytes)
+        if (not ok) or (tex == nil) then
+            return
+        end
+
+        if deviceConfig.isAndroid then 
+            local thumb = getSizedTexture(tex, thumbSize, thumbSize)
+            androidHelper.shareImageWx(tex, false)
+        end
+    end)
 end
 
 function share:onPyqClickedHandler()
     playButtonClickSound()
 
-    if deviceConfig.isAndroid then 
-        androidHelper.shareImageWx(imgname, true)
+    if deviceConfig.isMobile then
+        local tex = textureManager.load(imageName)
+
+        if tex ~= nil then
+            local thumb = getSizedTexture(tex, thumbSize, thumbSize)
+
+            if deviceConfig.isAndroid then
+                androidHelper.shareImageWx(tex, thumb, true)
+            elseif deviceConfig.isApple then
+
+            end
+
+            textureManager.unload(tex)
+        end
     end
 end
 

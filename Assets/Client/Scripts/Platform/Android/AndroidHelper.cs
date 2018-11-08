@@ -97,17 +97,17 @@ public class AndroidHelper
     /// <param name="desc"></param>
     /// <param name="url"></param>
     /// <param name="timeline"></param>
-    public void ShareUrlWX(string title, string desc, string url, bool timeline)
+    public void ShareUrlWX(string title, string desc, string url, Texture2D thumb, bool timeline)
     {
-        WechatHelper.ShareUrl(javaObject, title, desc, url, timeline);
+        WechatHelper.ShareUrl(javaObject, title, desc, url, thumb, timeline);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public void ShareImageWX(string imagePath, bool timeline)
+    public void ShareImageWX(Texture2D image, Texture2D thumb, bool timeline)
     {
-        WechatHelper.ShareImage(javaObject, imagePath, timeline);
+        WechatHelper.ShareImage(javaObject, image, thumb, timeline);
     }
 
     /// <summary>

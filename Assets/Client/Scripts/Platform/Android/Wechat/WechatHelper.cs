@@ -48,17 +48,25 @@ public class WechatHelper
     /// <param name="desc"></param>
     /// <param name="url"></param>
     /// <param name="timeline"></param>
-    public static void ShareUrl(AndroidJavaObject javaObject, string title, string desc, string url, bool timeline)
+    public static void ShareUrl(AndroidJavaObject javaObject, 
+                                string title, 
+                                string desc, 
+                                string url, 
+                                Texture2D thumb, 
+                                bool timeline)
     {
-        javaObject.Call("ShareUrlWX", title, desc, url, timeline);
+        byte[] thumbData = thumb.EncodeToJPG();
+        javaObject.Call("ShareUrlWX", title, desc, url, thumbData, timeline);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public static void ShareImage(AndroidJavaObject javaObject, string imagePath, bool timeline)
+    public static void ShareImage(AndroidJavaObject javaObject, Texture2D image, Texture2D thumb, bool timeline)
     {
-        javaObject.Call("ShareImageWX", imagePath, timeline);
+        byte[] imageData = image.EncodeToJPG();
+        byte[] thumbData = thumb.EncodeToJPG();
+        javaObject.Call("ShareImageWX", imageData, thumbData, timeline);
     }
 
     /// <summary>
