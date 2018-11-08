@@ -124,19 +124,18 @@ end
 
 function mahjongDesk:onInviteWXClickedHandler()
     playButtonClickSound()
-    self.mInvitePanel:hide()
 
     local image = textureManager.load(string.empty, "appIcon")
-    if image == nil then
-        return
+    if image ~= nil then
+        platformHelper.shareUrlWx("好友邀请", 
+                                  self:getInvitationInfo(), 
+                                  "http://www.cdbshy.com/", 
+                                  image,
+                                  false)
+        textureManager.unload(image)
     end
-    platformHelper.shareUrlWx("好友邀请", 
-                                self:getInvitationInfo(), 
-                                "http://www.cdbshy.com/", 
-                                image,
-                                false)
 
-    textureManager.unload(image)
+    self.mInvitePanel:hide()
 end
 
 function mahjongDesk:onInviteXLClickedHandler()
