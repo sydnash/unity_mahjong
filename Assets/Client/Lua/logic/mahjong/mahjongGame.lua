@@ -24,6 +24,7 @@ mahjongGame.cardType = {
 -- 构造函数
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data)
+    log("mahjongGame, data = " .. table.tostring(data))
     gamepref.deskId = data.DeskId
 
     self.totalMahjongCount  = 108
@@ -32,6 +33,7 @@ function mahjongGame:ctor(data)
     self.cityType           = data.GameType
     self.config             = data.Config
     self.status             = data.Status
+    self.creatorAcId        = data.Creator
 
     self.players = {}
     self.playerCount = 1
@@ -929,6 +931,14 @@ function mahjongGame:refreshUI()
     if self.exitDeskUI ~= nil then
 
     end
+end
+
+function mahjongGame:isCreator(acId)
+    return acId == self.creatorAcId
+end
+
+function mahjongGame:isPlaying()
+    return self.status == deskStatus.playing
 end
 
 return mahjongGame

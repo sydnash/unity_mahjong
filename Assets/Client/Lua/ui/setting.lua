@@ -51,6 +51,12 @@ function setting:onInit()
             self.m3DModel:setSelected(false)
         end
 
+        if self.game:isCreator(gamepref.player.acId) or self.game:isPlaying() then
+            self.mDissolveText:setSprite("js")
+        else
+            self.mDissolveText:setSprite("tc")
+        end
+
         self.mMandarin:addChangedListener(self.onMandarinChangedHandler, self)
         self.mSichuan:addChangedListener(self.onSichuanChangedHandler, self)
         self.m3DModel:addChangedListener(self.on3DModelChangedHandler, self)

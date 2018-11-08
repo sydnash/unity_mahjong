@@ -260,7 +260,7 @@ function friendster:onNotifyFriendster(msg)
         if lc ~= nil then
             local desk = lc.desks[d.DeskId]
             if desk ~= nil then
-                desk.state = deskState.playing
+                desk.state = friendsterDeskStatus.playing
             end
 
             if self.detailUI ~= nil then

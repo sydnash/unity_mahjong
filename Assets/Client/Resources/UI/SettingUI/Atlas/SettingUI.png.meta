@@ -15,6 +15,7 @@ TextureImporter:
     21300016: SZ_zi01
     21300018: SZ_zi02
     21300020: SZ_tcyx
+    21300022: SZ_zi02_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -83,7 +84,7 @@ TextureImporter:
       name: SZ_01
       rect:
         serializedVersion: 2
-        x: 208
+        x: 343
         y: 391
         width: 120
         height: 37
@@ -97,8 +98,8 @@ TextureImporter:
       name: SZ_02
       rect:
         serializedVersion: 2
-        x: 330
-        y: 393
+        x: 343
+        y: 354
         width: 117
         height: 35
       alignment: 0
@@ -153,7 +154,7 @@ TextureImporter:
       name: SZ_04
       rect:
         serializedVersion: 2
-        x: 449
+        x: 465
         y: 418
         width: 10
         height: 10
@@ -167,8 +168,8 @@ TextureImporter:
       name: SZ_05
       rect:
         serializedVersion: 2
-        x: 330
-        y: 358
+        x: 208
+        y: 354
         width: 117
         height: 33
       alignment: 0
@@ -181,8 +182,8 @@ TextureImporter:
       name: SZ_06
       rect:
         serializedVersion: 2
-        x: 208
-        y: 353
+        x: 73
+        y: 350
         width: 111
         height: 36
       alignment: 0
@@ -223,12 +224,26 @@ TextureImporter:
       name: SZ_zi02
       rect:
         serializedVersion: 2
-        x: 73
+        x: 208
         y: 389
         width: 133
         height: 39
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: SZ_zi02_1
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 388
+        width: 133
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4875}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
