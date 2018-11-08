@@ -61,11 +61,10 @@
     <Compile Include="Lua\logic\manager\patchManager.lua" />
     <Compile Include="Lua\logic\touch.lua" />
     <Compile Include="Lua\network\proto.lua" />
-    <Compile Include="Lua\network\retc.lua" />
     <Compile Include="Lua\logic\player\gamePlayer.lua" />
     <Compile Include="Lua\network\networkManager.lua" />
     <Compile Include="Lua\network\protoType.lua" />
-    <Compile Include="Lua\platform\androidHelper.lua" />
+    <Compile Include="Lua\platform\platformHelper.lua" />
     <Compile Include="Lua\ui\activity.lua" />
     <Compile Include="Lua\ui\authentication.lua" />
     <Compile Include="Lua\ui\chat.lua" />

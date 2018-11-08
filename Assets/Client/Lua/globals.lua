@@ -369,9 +369,27 @@ function cutoutString(str, maxLen)
     return ret
 end
 
+-------------------------------------------------------------
+-- 按给定长宽缩放texture
+-------------------------------------------------------------
 function getSizedTexture(tex, width, height)
     local size = Vector2.New(width, height)
     return Utils.SizeTextureBilinear(tex, size)
+end
+
+-------------------------------------------------------------
+-- 截取全屏UI
+-------------------------------------------------------------
+function captureScreenshotUI()
+    local go = find("UIRoot/UICamera")
+    if go ~= nil then
+        local camera = getComponentU(go.gameObject, typeof(UnityEngine.Camera))
+        if camera ~= nil then
+            return Utils.CaptureScreenshot(camera)
+        end
+    end
+
+    return nil
 end
 
 --endregion

@@ -36,7 +36,11 @@ function gameEnd:onInit()
     self.mOk:addClickListener(self.onOkClickedHandler, self)
     self.mNext:addClickListener(self.onNextClickedHandler, self)
     self.mShare:addClickListener(self.onShareClickedHandler, self)
+    self.mSharePanel:addClickListener(self.onSharePanelClickedHandler, self)
     self.mRecord:addClickListener(self.onRecordClickedHandler, self)
+    self.mShareWX:addClickListener(self.onShareWXClickedHandler, self)
+    self.mShareQYQ:addClickListener(self.onShareQYQClickedHandler, self)
+    self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)
 end
 
 function gameEnd:endAll()
@@ -64,10 +68,58 @@ end
 
 function gameEnd:onShareClickedHandler()
     playButtonClickSound()
+    self.mSharePanel:show()
+end
+
+function gameEnd:onSharePanelClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
 end
 
 function gameEnd:onRecordClickedHandler()
     playButtonClickSound()
+end
+
+function gameEnd:onShareWXClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
+
+    if deviceConfig.isMobile then
+        local tex = captureScreenshotUI()
+
+        if tex ~= nil then
+            local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
+            platformHelper.shareImageWx(tex, thumb, false)
+        end
+    end
+    
+end
+
+function gameEnd:onShareQYQClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
+
+    if deviceConfig.isMobile then
+        local tex = captureScreenshotUI()
+
+        if tex ~= nil then
+            local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
+            platformHelper.shareImageWx(tex, thumb, true)
+        end
+    end
+end
+
+function gameEnd:onShareXLClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
+
+    if deviceConfig.isMobile then
+        local tex = captureScreenshotUI()
+
+        if tex ~= nil then
+            platformHelper.shareImageSg(tex)
+        end
+    end
 end
 
 return gameEnd

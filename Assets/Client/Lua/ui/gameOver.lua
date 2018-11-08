@@ -28,7 +28,10 @@ function gameOver:onInit()
 
     self.mConfirm:addClickListener(self.onConfirmClickedHandler, self)
     self.mShare:addClickListener(self.onShareClickedHandler, self)
-end
+    self.mSharePanel:addClickListener(self.onSharePanelClickedHandler, self)
+    self.mShareWX:addClickListener(self.onShareWXClickedHandler, self)
+    self.mShareQYQ:addClickListener(self.onShareQYQClickedHandler, self)
+    self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)end
 
 function gameOver:onConfirmClickedHandler()
     playButtonClickSound()
@@ -39,6 +42,54 @@ end
 
 function gameOver:onShareClickedHandler()
     playButtonClickSound()
+    self.mSharePanel:show()
+end
+
+function gameOver:onSharePanelClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
+end
+
+function gameOver:onShareWXClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
+
+    if deviceConfig.isMobile then
+        local tex = captureScreenshotUI()
+
+        if tex ~= nil then
+            local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
+            platformHelper.shareImageWx(tex, thumb, false)
+        end
+    end
+    
+end
+
+function gameOver:onShareQYQClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
+
+    if deviceConfig.isMobile then
+        local tex = captureScreenshotUI()
+
+        if tex ~= nil then
+            local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
+            platformHelper.shareImageWx(tex, thumb, true)
+        end
+    end
+end
+
+function gameOver:onShareXLClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
+
+    if deviceConfig.isMobile then
+        local tex = captureScreenshotUI()
+
+        if tex ~= nil then
+            platformHelper.shareImageSg(tex)
+        end
+    end
 end
 
 function gameOver:onDestroy()
