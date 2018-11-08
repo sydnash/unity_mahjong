@@ -137,16 +137,17 @@ function mahjongDesk:onInviteXLClickedHandler()
     playButtonClickSound()
 
     local image = textureManager.load(string.empty, "appIcon")
-    local params = { cityType = self.game.cityType, deskId = self.game.deskId, }
+    if image ~= nil then
+        local params = { cityType = self.game.cityType, deskId = self.game.deskId, }
 
-    platformHelper.shareInvitationSg("好友邀请", 
-                                    self:getInvitationInfo(), 
-                                    image,
-                                    table.tojson(params),
-                                    "http://www.cdbshy.com/",
-                                    "http://www.cdbshy.com/")
-
-    textureManager.unload(image)
+        platformHelper.shareInvitationSg("好友邀请", 
+                                         self:getInvitationInfo(), 
+                                         image,
+                                         table.tojson(params),
+                                         "http://www.cdbshy.com/",
+                                         "http://www.cdbshy.com/")
+        textureManager.unload(image)
+    end
 
     self.mInvitePanel:hide()
 end
