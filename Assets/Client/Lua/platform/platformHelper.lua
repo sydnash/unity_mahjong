@@ -11,7 +11,7 @@ function platformHelper.registerLoginWxCallback(callback)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:RegisterLoginWXCallback(callback)
     elseif deviceConfig.isApple then
-
+        IOSHelper.instance:RegisterLoginWXCallback(callback)
     end
 end
 
@@ -55,7 +55,7 @@ function platformHelper.loginWx()
     if deviceConfig.isAndroid then
         AndroidHelper.instance:LoginWX()
     elseif deviceConfig.isApple then
-
+        IOSHelper.instance:LoginWX()
     end
 end
 
@@ -66,7 +66,7 @@ function platformHelper.shareTextWx(text, pyq)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareTextWX(text, pyq)
     elseif deviceConfig.isApple then
-
+        IOSHelper.instance:ShareTextWX(text, pyq)
     end
 end
 
@@ -77,7 +77,7 @@ function platformHelper.shareUrlWx(title, desc, url, thumb, pyq)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareUrlWX(title, desc, url, thumb, pyq)
     elseif deviceConfig.isApple then
-
+        IOSHelper.instance:ShareUrlWX(title, desc, url, thumb, pyq)
     end
 end
 
@@ -88,7 +88,7 @@ function platformHelper.shareImageWx(image, thumb, pyq)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareImageWX(image, thumb, pyq)
     elseif deviceConfig.isApple then
-
+        IOSHelper.instance:ShareImageWX(image, thumb, pyq)
     end
 end
 

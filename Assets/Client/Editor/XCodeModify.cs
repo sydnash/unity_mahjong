@@ -36,9 +36,9 @@ public class XCodeModify
 		proj.AddFrameworkToProject(target, "SystemConfiguration.framework", false);
 
 		//File.Delete(Path.Combine(path, "Classes/UnityAppController.h"));
-		//File.Delete(Path.Combine(path, "Classes/UnityAppController.mm"));
+		File.Delete(Path.Combine(path, "Classes/UnityAppController.mm"));
 		//File.Copy(Application.dataPath.Replace("Assets", "iOS/UnityAppController.h"), Path.Combine(path, "Classes/UnityAppController.h"));
-		//File.Copy(Application.dataPath.Replace("Assets", "iOS/UnityAppController.mm"), Path.Combine(path, "Classes/UnityAppController.mm"));
+		File.Copy(Path.Combine(Application.dataPath, "modifyForIOS/UnityAppController.mm"), Path.Combine(path, "Classes/UnityAppController.mm"));
 		//File.Move(Path.Combine(path, "Libraries/Plugins/OpenSDK1.8.1/libWeChatSDK.a"), Path.Combine(path, "Classes/libWeChatSDK.a"));
 
 		proj.UpdateBuildProperty(target, "OTHER_LDFLAGS", new List<string>() { "-Objc", "-all_load" }, new List<string>() { "-Objc" });
