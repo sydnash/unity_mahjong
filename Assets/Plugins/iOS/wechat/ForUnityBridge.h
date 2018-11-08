@@ -14,9 +14,13 @@
 
 @interface ForUnityBridge : UIResponder <UIApplicationDelegate,WXApiDelegate>
 
+@property(nonatomic, copy) NSString *appsecret;
+@property(nonatomic, copy) NSString *appid;
+
 +(instancetype)forUnityBridgeInstance;
 
 @property (nonatomic,weak) id<WXDelegate> wxDelegate;
 
+- (void) registerPlugin;
 @end
 

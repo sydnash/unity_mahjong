@@ -10,6 +10,7 @@ deviceConfig    = require("config.deviceConfig")
 gameConfig      = require("config.gameConfig")
 gamepref        = require("logic.gamepref")
 androidHelper   = require("platform.androidHelper")
+iosHelper       = require("platform.iosHelper")
 networkManager  = require("network.networkManager")
 
 local waiting       = require("ui.waiting")

@@ -152,6 +152,17 @@ extern "C"
     return instance;
 }
 
+- (id) init {
+    self = [super init];
+    self.appid = @"wx2ca58653c3f50625";
+    self.appsecret = @"5c6ccd50fa28b4bce79dc76c18a0998b";
+	
+    return self;
+}
+
+- (void) registerPlugin {
+    [WXApi registerApp:self.appid enableMTA:YES];
+}
 
 -(void) onReq:(BaseReq *)req{}
 
@@ -175,12 +186,17 @@ extern "C"
      };
      */
     if ([resp isKindOfClass:[SendAuthResp class]]) {   //授权登录的类。
-        if (resp.errCode == 0) {
-            UnitySendMessage("ThirdPartySdkManager", "LoginCallBack",[((SendAuthResp *)resp).code UTF8String]);
-        }
-        
+        // if (resp.errCode == 0) {
+        //     UnitySendMessage("ThirdPartySdkManager", "LoginCallBack",[((SendAuthResp *)resp).code UTF8String]);
+        // }
+        SendAuthResp* authResp = (SendAuthResp*)resp;
+        NSString* param = [NSString stringWithFormat:\
+                           @"{\"errcode\": %d, \"appid\": \"%@\", \"secret\":\"%@\", \"code\": \"%@\"}",\
+                            resp.errCode, self.appid, self.appsecret, authResp.code];
+
+        UnitySendMessage("IOSMessageHandler", "OnWXLoginCallback", [param UTF8String]);
     }else if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
-        UnitySendMessage("ShareManager", "WechatCallBack",[[NSString stringWithFormat:@"%d",((SendMessageToWXResp*)resp).errCode] UTF8String]);
+        //UnitySendMessage("ShareManager", "WechatCallBack",[[NSString stringWithFormat:@"%d",((SendMessageToWXResp*)resp).errCode] UTF8String]);
     }
     /*else if ([resp isKindOfClass:[PayResp class]]){
 		UnitySendMessage("ThirdPartySdkManager", "WechatPayCallback",[[NSString stringWithFormat:@"%d",((PayResp*)resp).errCode] UTF8String]);
