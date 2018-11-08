@@ -73,6 +73,7 @@ signalType = {
     enterDesk           = 4,
     friendsterMessageOp = 5,
     mail                = 6,
+    headerDownloaded    = "header|",
 }
 
 --------------------------------------------------------------

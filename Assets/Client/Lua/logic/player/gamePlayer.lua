@@ -4,6 +4,13 @@
 
 local gamePlayer = class("gamePlayer")
 
+local urls = {
+    [16903] = "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIcqbm2StHBdfNBDWr5H0WYNbQS1qicYp0cl5N3tkIsLFKDXAzURiak94QjOeI23iaxclzIM6GcudwvA/132",
+    [16917] = "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0",
+    [10002] = "http://wx.qlogo.cn/mmopen/JcDicrZBlREhnNXZRudod9PmibRkIs5K2f1tUQ7lFjC63pYHaXGxNDgMzjGDEuvzYZbFOqtUXaxSdoZG6iane5ko9H30krIbzGv/0",
+    [10003] = "http://wx.qlogo.cn/mmopen/UAqwJ95HSLycmQktIqAYuexoytJ3kJzknQ4icJkNpfUvxfqoNRDY2esKQj3YvxXuQacsu9fYKDQ1VUSVBxspic4MwNDTF4Z4zu/0",
+}
+
 function gamePlayer:ctor(acid)
     self.acId       = acid
     self.nickname   = string.empty
@@ -17,12 +24,18 @@ function gamePlayer:loadHeaderTex()
     --先显示默认头像
     self.headerTex = textureManager.load(string.empty, "JS_tx_a")
     --同时开始下载真实头像
+    self.headerUrl = urls[self.acId]
     if not string.isNilOrEmpty(self.headerUrl) then 
         downloadIcon(self.headerUrl, function(tex)
             if self.headerTex ~= nil then
                 textureManager.unload(self.headerTex, false)
+                self.headerTex = nil
             end
+
             self.headerTex = tex
+
+            local signalId = signalType.headerDownloaded .. tostring(self.acId)
+            signalManager.signal(signalId, self.headerTex)
         end)
     end
 end
@@ -74,7 +87,7 @@ end
 
 function gamePlayer:destroy()
     if self.headerTex ~= nil then
-        textureManager.unload(self.headerTex, true)
+        textureManager.unload(self.headerTex, false)
         self.headerTex = nil
     end
 end

@@ -53,7 +53,6 @@
     <Compile Include="Lua\manager\eventManager.lua" />
     <Compile Include="Lua\manager\signalManager.lua" />
     <Compile Include="Lua\manager\modelManager.lua" />
-    <Compile Include="Lua\manager\patchManager.lua" />
     <Compile Include="Lua\manager\preloadManager.lua" />
     <Compile Include="Lua\manager\sceneManager.lua" />
     <Compile Include="Lua\manager\soundManager.lua" />

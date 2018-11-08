@@ -27,7 +27,8 @@ function friendsterDetailMemberItem:set(friendsterId, managerId, data)
     self.managerId = managerId
     self.data = data
 
-    self.mIcon:setTexture(data.headerTex)
+    --self.mIcon:setTexture(data.headerTex)
+    self.mIcon:setPlayer(data)
     self.mNickname:setText(cutoutString(data.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText(string.format("账号:%d", data.acId))
 
@@ -44,6 +45,10 @@ function friendsterDetailMemberItem:setOnline(online)
     else
         self.mState:setSprite("offline")
     end
+end
+
+function friendsterDetailMemberItem:onDestroy()
+    self.mIcon:reset()
 end
 
 return friendsterDetailMemberItem

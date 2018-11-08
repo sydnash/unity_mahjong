@@ -51,7 +51,7 @@ public class Build
         }
         else if (buildTarget == BuildTarget.iOS)
         {
-            targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res/IOS");
+            targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res/iOS");
         }
 
         LFS.RemoveDir(targetDir);
@@ -64,102 +64,54 @@ public class Build
     /// </summary>
     public static void BuildPatchlist()
     {
-        string patchDir = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, "Patch");
-        LFS.MakeDir(patchDir);
+        string resourcesPath = LFS.CombinePath(Application.dataPath, "Resources");
 
         StringBuilder sb = new StringBuilder();
+        sb.Append("[\n");
 
-        string luaPath = LFS.CombinePath(patchDir, "Lua");
+        string luaPath = LFS.CombinePath(resourcesPath, "Lua");
         string[] luaFiles = Directory.GetFiles(luaPath, "*.bytes", SearchOption.AllDirectories);
         foreach (string file in luaFiles)
         {
-            string path = file.Substring(patchDir.Length + 1).Replace("\\", "/");
+            string path = file.Substring(resourcesPath.Length + 1).Replace("\\", "/");
             string code = MD5.GetHashFromFile(file);
             FileInfo info = new FileInfo(file);
 
-            sb.AppendFormat("{0}|{1}|{2}\n", path, code, info.Length);
+            sb.Append("{");
+            sb.AppendFormat("\"{0}\":", path);
+            sb.Append("{");
+            sb.AppendFormat("\"hash\":\"{0}\", \"size\":{1}", code, info.Length);
+            sb.Append("}");
+            sb.Append("},\n");
         }
 
 #if UNITY_ANDROID
-        string resPath = LFS.CombinePath(patchDir, "Res/Android");
+        string resPath = LFS.CombinePath(Application.streamingAssetsPath, "Res/Android");
 #elif UNITY_IOS
-        string resPath = LFS.CombinePath(patchDir, "Res/IOS");
+        string resPath = LFS.CombinePath(Application.streamingAssetsPath, "Res/iOS");
 #else
-        string resPath = LFS.CombinePath(patchDir, "Res/StandaloneWindows");
+        string resPath = LFS.CombinePath(Application.streamingAssetsPath, "Res/StandaloneWindows");
 #endif
         string[] resFiles = Directory.GetFiles(resPath, "*.*", SearchOption.AllDirectories);
         foreach (string file in resFiles)
         {
-            string path = file.Substring(patchDir.Length + 1).Replace("\\", "/");
+            string path = file.Substring(Application.streamingAssetsPath.Length + 1).Replace("\\", "/");
             string code = MD5.GetHashFromFile(file);
             FileInfo info = new FileInfo(file);
 
-            sb.AppendFormat("{0}|{1}|{2}\n", path, code, info.Length);
+            sb.Append("{");
+            sb.AppendFormat("\"{0}\":", path);
+            sb.Append("{");
+            sb.AppendFormat("\"hash\":\"{0}\", \"size\":{1}", code, info.Length);
+            sb.Append("}");
+            sb.Append("},\n");
         }
 
+        sb.Append("]");
+
         string text = sb.ToString();
-        LFS.WriteText(LFS.CombinePath(patchDir, "patchlist.txt"), text, LFS.UTF8_WITHOUT_BOM);
-
-        EditorUtility.DisplayDialog("Build", "Build patchlist over", "OK");
+        LFS.WriteText(LFS.CombinePath(Application.streamingAssetsPath, "patchlist.txt"), text, LFS.UTF8_WITHOUT_BOM);
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    //public static void CopyLuaToResources()
-    //{
-    //    string fromDir = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, "Patch/Lua");
-    //    string toDir = LFS.CombinePath(Application.dataPath, "Resources/Lua");
-
-    //    LFS.RemoveDir(toDir);
-
-    //    string[] files = Directory.GetFiles(fromDir, "*.bytes", SearchOption.AllDirectories);
-    //    foreach (string file in files)
-    //    {
-    //        string from = file;
-    //        string to = file.Replace(fromDir, toDir);
-
-    //        LFS.CopyFile(from, to);
-    //    }
-
-    //    AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-    //}
-
-    /// <summary>
-    /// 
-    /// </summary>
-//    public static void CopyBundlesToStreamingAssets()
-//    {
-//#if UNITY_ANDROID
-//        string targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res/Android");
-//#elif UNITY_IOS
-//        string targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res/IOS");
-//#else
-//        string targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res/StandaloneWindows");
-//#endif
-//        LFS.RemoveDir(targetDir);
-
-//        string patchDir = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, "Patch");
-
-//#if UNITY_ANDROID
-//        string resPath = LFS.CombinePath(patchDir, "Res/Android");
-//#elif UNITY_IOS
-//        string resPath = LFS.CombinePath(patchDir, "Res/IOS");
-//#else
-//        string resPath = LFS.CombinePath(patchDir, "Res/StandaloneWindows");
-//#endif
-
-//        string[] files = Directory.GetFiles(resPath, "*.*", SearchOption.AllDirectories);
-//        foreach (string file in files)
-//        {
-//            string from = file;
-//            string to = file.Replace(patchDir, LFS.LOCALIZED_DATA_PATH);
-
-//            LFS.CopyFile(from, to);
-//        }
-
-//        AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-//    }
 
     /// <summary>
     /// 
@@ -312,48 +264,4 @@ public class Build
                     LFS.CombinePath(Application.dataPath, "Client/Resources"));
         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    //static void CopyToResources()
-    //{
-    //    string[] folders = { "Model", 
-    //                         "UI",
-    //                         "Sound",
-    //                         "Texture"};
-
-    //    foreach (string folder in folders)
-    //    {
-    //        string from = LFS.CombinePath(LFS.CombinePath(Application.dataPath, "_Resources"), folder);
-    //        string to = LFS.CombinePath(LFS.CombinePath(Application.dataPath, "Resources"), folder);
-
-    //        LFS.RemoveDir(to);
-    //        LFS.CopyDir(from, to);
-    //    }
-
-    //    AssetDatabase.Refresh();
-    //}
-
-    /// <summary>
-    /// 
-    /// </summary>
-    //static void RemoveFromResources()
-    //{
-    //    string resources = LFS.CombinePath(Application.dataPath, "Resources");
-    //    string[] folders = { "Model", 
-    //                         "UI",
-    //                         "Sound",
-    //                         "Texture"};
-
-    //    foreach (string folder in folders)
-    //    {
-    //        string path = LFS.CombinePath(resources, folder);
-    //        LFS.RemoveDir(path);
-    //        string meta = LFS.CombinePath(resources, folder + ".meta");
-    //        LFS.RemoveFile(meta);
-    //    }
-
-    //    AssetDatabase.Refresh();
-    //}
 }

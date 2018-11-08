@@ -9,7 +9,6 @@ local slots = {}
 -------------------------------------------------------------------
 local function register(signalName, func, target)
 --    log(string.format("register, signalName = %s, target = %s", signalName, target.name))
-
     if slots[signalName] == nil then
         slots[signalName] = {}
     end
@@ -42,10 +41,9 @@ local function signal(signalName, args)
     local slot = slots[signalName]
 
     if slot == nil then
-        logError(string.format("handler of signal [%s] is not found in signalManager", name))
+        logWarning(string.format("handler of signal [%s] is not found in signalManager", signalName))
     else
         for _, v in pairs(slot) do
---            log(v.t.name)
             if v.t == nil then
                 v.f(args)
             else

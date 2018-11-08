@@ -51,6 +51,7 @@ function friendster:loadHeaderTex()
             if self.headerTex ~= nil then
                 textureManager.unload(self.headerTex, false)
             end
+
             self.headerTex = tex
         end)
     end
