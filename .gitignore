@@ -4,6 +4,7 @@
 [Bb]uilds/
 Assets/Resources*
 Assets/StreamingAssets*
+Assets/StreamingAssets.meta
 [Pp]rojectSettings
 [Pp]atch/
 [Uu]nityPackageManager/
@@ -36,3 +37,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+iosproject/
