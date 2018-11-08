@@ -36,20 +36,6 @@ public class BuildManager : EditorWindow
         mDevelopment = EditorGUILayout.Toggle("Development", mDevelopment);
         mProcessResources = EditorGUILayout.Toggle("Process resources", mProcessResources);
 
-        string suffix = string.Empty;
-        switch (mTargetPlatform)
-        {
-            case BuildTarget.Android:
-                suffix = ".apk";
-                break;
-            case BuildTarget.iOS:
-                suffix = string.Empty;
-                break;
-            default:
-                suffix = ".exe";
-                break;
-        }
-
         GUILayout.Space(10);
 
         if (GUILayout.Button("Build Lua"))
@@ -73,7 +59,21 @@ public class BuildManager : EditorWindow
 
         if (GUILayout.Button("Build Package"))
         {
-            string targetName = mDevelopment ? "debug" + suffix : "release" + suffix;
+            string suffix = string.Empty;
+            switch (mTargetPlatform)
+            {
+                case BuildTarget.Android:
+                    suffix = "apk";
+                    break;
+                case BuildTarget.iOS:
+                    suffix = string.Empty;
+                    break;
+                default:
+                    suffix = "exe";
+                    break;
+            }
+
+            string targetName = mDevelopment ? "debug" : "release";
             var targetPath = EditorUtility.SaveFilePanel( "Build", "", targetName, suffix);
 
             if (!string.IsNullOrEmpty(targetPath))
