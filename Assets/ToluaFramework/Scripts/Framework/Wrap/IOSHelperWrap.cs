@@ -19,6 +19,7 @@ public class IOSHelperWrap
 		L.RegFunction("ShareInvitationSG", ShareInvitationSG);
 		L.RegFunction("ShareImageSG", ShareImageSG);
 		L.RegFunction("GetParamsSG", GetParamsSG);
+		L.RegFunction("ClearSGInviteParam", ClearSGInviteParam);
 		L.RegFunction("OnInviteSgHandler", OnInviteSgHandler);
 		L.RegFunction("New", _CreateIOSHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -258,6 +259,22 @@ public class IOSHelperWrap
 			string o = obj.GetParamsSG();
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ClearSGInviteParam(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			obj.ClearSGInviteParam();
+			return 0;
 		}
 		catch (Exception e)
 		{

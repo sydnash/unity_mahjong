@@ -180,6 +180,7 @@ local function inviteSgCallback(params)
             end
         end)
     end
+    platformHelper.clearSGInviteParam()
 end
 
 local function downloadPatches(patchlist, size, downloadui)

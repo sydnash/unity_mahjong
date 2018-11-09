@@ -151,6 +151,14 @@ public class AndroidHelper
     {
         return UpdripsHelper.GetParams(javaObject);
     }
+	/// <summary>
+	/// Clears the SG invite parameter.
+	/// </summary>
+	/// <returns>The SG invite parameter.</returns>
+	public void ClearSGInviteParam()
+	{
+		UpdripsHelper.Clear(javaObject);
+	}
 
     /// <summary>
     /// 

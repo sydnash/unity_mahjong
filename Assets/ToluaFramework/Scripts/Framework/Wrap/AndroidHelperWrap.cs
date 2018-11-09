@@ -19,6 +19,7 @@ public class AndroidHelperWrap
 		L.RegFunction("ShareInvitationSG", ShareInvitationSG);
 		L.RegFunction("ShareImageSG", ShareImageSG);
 		L.RegFunction("GetParamsSG", GetParamsSG);
+		L.RegFunction("ClearSGInviteParam", ClearSGInviteParam);
 		L.RegFunction("OnLoginWxHandler", OnLoginWxHandler);
 		L.RegFunction("OnInviteSgHandler", OnInviteSgHandler);
 		L.RegFunction("New", _CreateAndroidHelper);
@@ -259,6 +260,22 @@ public class AndroidHelperWrap
 			string o = obj.GetParamsSG();
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ClearSGInviteParam(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			obj.ClearSGInviteParam();
+			return 0;
 		}
 		catch (Exception e)
 		{
