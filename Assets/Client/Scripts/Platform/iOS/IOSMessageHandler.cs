@@ -36,7 +36,7 @@ public class IOSMessageHandler : MonoBehaviour
 	/// 
 	/// </summary>
 	/// <param name="json"></param>
-	public void OnInviteSgHandler(string json)
+	public void OnXLInviteMsg(string json)
 	{
 		AndroidHelper.instance.OnInviteSgHandler(json);
 	}

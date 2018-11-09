@@ -22,7 +22,7 @@ function platformHelper.registerInviteSgCallback(callback)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:RegisterInviteSGCallback(callback)
     elseif deviceConfig.isApple then
-
+        IOSHelper.instance:RegisterInviteSGCallback(callback)
     end
 end
 
@@ -44,7 +44,7 @@ function platformHelper.setLogined(logined)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:SetLogined(logined)
     elseif deviceConfig.isApple then
-
+        IOSHelper.instance:SetLogined(logined)
     end
 end
 
@@ -99,7 +99,7 @@ function platformHelper.shareTextSg(text)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareTextSG(text)
     elseif deviceConfig.isApple then
-
+        IOSHelper.instance:ShareTextSG(text)
     end
 end
 
@@ -118,7 +118,7 @@ function platformHelper.shareInvitationSg(title, description, image, params, and
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareInvitationSG(title, description, image, params, androidDownloadUrl, iOSDownloadUrl)
     elseif deviceConfig.isApple then
-
+        IOSHelper.instance:ShareInvitationSG(title, description, image, params, androidDownloadUrl, iOSDownloadUrl)
     end
 end
 
@@ -129,7 +129,7 @@ function platformHelper.shareImageSg(image)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareImageSG(image)
     elseif deviceConfig.isApple then
-
+        IOSHelper.instance:ShareImageSG(image)
     end
 end
 
@@ -140,7 +140,7 @@ function platformHelper.getParamsSg()
     if deviceConfig.isAndroid then
         return AndroidHelper.instance:GetParamsSG()
     elseif deviceConfig.isApple then
-
+        return IOSHelper.instance:GetParamsSG()
     end
 end
 
