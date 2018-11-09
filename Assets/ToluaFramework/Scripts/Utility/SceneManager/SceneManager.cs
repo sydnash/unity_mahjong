@@ -58,13 +58,7 @@ public class SceneManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-#if UNITY_ANDROID
-    private const string SUB_PATH = "Res/Android";
-#elif UNITY_IOS
-    private const string SUB_PATH = "Res/iOS";
-#else
-    private const string SUB_PATH = "Res/StandaloneWindows";
-#endif
+    private static string SUB_PATH = string.Empty;
 
     #endregion
 
@@ -138,6 +132,7 @@ public class SceneManager : MonoBehaviour
     {
         mInstance = this;
 
+        SUB_PATH = LFS.CombinePath("Res", LFS.OS_PATH);
         mLocalizedPath = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, SUB_PATH);
         mDownloadPath  = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH,  SUB_PATH);
     }

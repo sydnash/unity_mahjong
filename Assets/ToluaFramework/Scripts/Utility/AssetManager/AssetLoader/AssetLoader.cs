@@ -165,13 +165,7 @@ public class AssetLoader
         if (mDependentManifest != null) 
             return;
 
-#if UNITY_ANDROID
-        string dependencies = LFS.CombinePath(SUB_PATH, "Android");
-#elif UNITY_IOS
-        string dependencies = LFS.CombinePath(SUB_PATH, "iOS");
-#else
-        string dependencies = LFS.CombinePath(SUB_PATH, "StandaloneWindows");
-#endif
+        string dependencies = LFS.CombinePath(SUB_PATH, LFS.OS_PATH);
 
         Object asset = Load(LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, dependencies), ASSETBUNDLE_MANIFEST, true);
         if (asset == null)
