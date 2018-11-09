@@ -19,24 +19,18 @@ function mahjongDesk:onInit()
     self.players = { self.mPlayerM, self.mPlayerR, self.mPlayerT, self.mPlayerL, }
     self:refreshUI()
 
+    self.mInvite:setInteractabled(true)
+    self.mInviteText:setSprite("enable")
     self.mInvitePanel:hide()
-
-    if deviceConfig.isMobile then
-        self.mInvite:setInteractabled(true)
-        self.mInviteText:setSprite("enable")
-        self.mInvite:addClickListener(self.onInviteClickedHandler, self)
-        self.mInvitePanel:addClickListener(self.onInvitePanelClickedHandler, self)
-        self.mInviteWX:addClickListener(self.onInviteWXClickedHandler, self)
-        self.mInviteXL:addClickListener(self.onInviteXLClickedHandler, self)
-    else
-        self.mInvite:setInteractabled(false)
-        self.mInviteText:setSprite("disable")
-    end
 
     self.mGameDesc:hide()
     self.mGameInfoS:show()
     self.mGameInfoH:hide()
 
+    self.mInvite:addClickListener(self.onInviteClickedHandler, self)
+    self.mInvitePanel:addClickListener(self.onInvitePanelClickedHandler, self)
+    self.mInviteWX:addClickListener(self.onInviteWXClickedHandler, self)
+    self.mInviteXL:addClickListener(self.onInviteXLClickedHandler, self)
     self.mReady:addClickListener(self.onReadyClickedHandler, self)
     self.mCancel:addClickListener(self.onCancelClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
@@ -101,14 +95,12 @@ function mahjongDesk:refreshUI()
     local playerTotalCount = self.game:getTotalPlayerCount()
     local playerCount = self.game:getPlayerCount()
 
-    if deviceConfig.isMobile then
-        if playerCount == playerTotalCount then
-            self.mInvite:setInteractabled(false)
-            self.mInviteText:setSprite("disable")
-        else
-            self.mInvite:setInteractabled(true)
-            self.mInviteText:setSprite("enable")
-        end
+    if playerCount == playerTotalCount then
+        self.mInvite:setInteractabled(false)
+        self.mInviteText:setSprite("disable")
+    else
+        self.mInvite:setInteractabled(true)
+        self.mInviteText:setSprite("enable")
     end
 end
 
@@ -257,7 +249,7 @@ function mahjongDesk:onPlayerEnter(player)
     local playerTotalCount = self.game:getTotalPlayerCount()
     local playerCount = self.game:getPlayerCount()
 
-    if deviceConfig.isMobile and playerCount == playerTotalCount then
+    if playerCount == playerTotalCount then
         self.mInvite:setInteractabled(false)
         self.mInviteText:setSprite("disable")
     end
@@ -269,10 +261,8 @@ function mahjongDesk:onPlayerEnter(player)
 end
 
 function mahjongDesk:onPlayerExit(turn)
-    if deviceConfig.isMobile then
-        self.mInvite:setInteractabled(true)
-        self.mInviteText:setSprite("enable")
-    end
+    self.mInvite:setInteractabled(true)
+    self.mInviteText:setSprite("enable")
 
     local s = self.game:getSeatType(turn)
     local p = self.players[s + 1]

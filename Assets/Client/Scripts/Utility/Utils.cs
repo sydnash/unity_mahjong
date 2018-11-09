@@ -171,4 +171,38 @@ public class Utils
 
         return newTexture;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="camera"></param>
+    /// <param name="size"></param>
+    /// <returns></returns>
+    public static Texture2D CaptureScreenshot(Camera camera)
+    {
+        int w = (int)camera.pixelRect.width;
+        int h = (int)camera.pixelRect.height;
+
+        RenderTexture rt = new RenderTexture(w, h, 0);
+
+        RenderTexture ct = camera.targetTexture;
+        camera.targetTexture = rt;
+        camera.Render();
+
+        RenderTexture.active = rt;
+        Texture2D screenshot = new Texture2D(w, h, TextureFormat.RGBA32, false);
+
+        screenshot.ReadPixels(camera.pixelRect, 0, 0);
+        screenshot.Apply();
+
+        camera.targetTexture = ct;
+        RenderTexture.active = null;
+        GameObject.Destroy(rt);
+
+        //byte[] bytes = screenshot.EncodeToJPG();
+        //string filename = Application.persistentDataPath + "/screenshot.jpg";
+        //System.IO.File.WriteAllBytes(filename, bytes);
+
+        return screenshot;
+    }
 }

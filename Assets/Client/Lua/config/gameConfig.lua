@@ -5,6 +5,7 @@
 return {
     nicknameMaxLength = 5,
     friendsterNameMaxLength = 10,
+    thumbSize = 150,
 }
 
 --endregion

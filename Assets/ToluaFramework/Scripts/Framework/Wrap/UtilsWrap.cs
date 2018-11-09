@@ -16,6 +16,7 @@ public class UtilsWrap
 		L.RegFunction("SubBytes", SubBytes);
 		L.RegFunction("TrimBytes", TrimBytes);
 		L.RegFunction("SizeTextureBilinear", SizeTextureBilinear);
+		L.RegFunction("CaptureScreenshot", CaptureScreenshot);
 		L.RegFunction("New", _CreateUtils);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -216,6 +217,23 @@ public class UtilsWrap
 			UnityEngine.Texture2D arg0 = (UnityEngine.Texture2D)ToLua.CheckObject(L, 1, typeof(UnityEngine.Texture2D));
 			UnityEngine.Vector2 arg1 = ToLua.ToVector2(L, 2);
 			UnityEngine.Texture2D o = Utils.SizeTextureBilinear(arg0, arg1);
+			ToLua.PushSealed(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CaptureScreenshot(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Camera arg0 = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
+			UnityEngine.Texture2D o = Utils.CaptureScreenshot(arg0);
 			ToLua.PushSealed(L, o);
 			return 1;
 		}

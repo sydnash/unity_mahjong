@@ -25,9 +25,13 @@ end
 ----------------------------------------------------------------
 local function checkEscapeState()
     if input.GetKeyDown(keycode.Escape) then
-        showMessageUI("确定要退出游戏吗？", function()
-            Application.Quit()
-        end)
+        showMessageUI("确定要退出游戏吗？", 
+                      function()
+                          Application.Quit()
+                      end,
+                      function()
+                          --
+                      end)
     end
 end
 
@@ -203,6 +207,30 @@ function clientApp:start()
     platformHelper.registerInviteSgCallback(inviteSgCallback)
 
     DISABLE_GLOBAL_VARIABLE_DECLARATION()
+
+    showWaitingUI()
+    patchManager.checkPatches(function(ok, patches)
+        closeWaitingUI()
+
+        if not ok then
+
+        end
+
+        if patches ~= nil and #patches > 0 then
+            local size = 0
+            for _, v in pairs(patches) do
+                size = size + v.size
+            end
+
+            showMessageUI("检测到" .. BKMGT(size) .."新资源，是否立即更新？",
+                          function()
+                              --
+                          end,
+                          function()
+                              Application.Quit()
+                          end)
+        end
+    end)
 end
 
 ----------------------------------------------------------------

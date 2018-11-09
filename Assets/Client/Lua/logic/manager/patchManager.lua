@@ -7,6 +7,9 @@ local localizedVerPath  = LFS.LOCALIZED_DATA_PATH
 local downloadedDataPath = LFS.DOWNLOAD_DATA_PATH
 local patchUrl = networkConfig.patchURL .. "patchlist.txt"
 
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
 local function downloadAnyText(urls, callback)
     local index = 1
 
@@ -26,6 +29,9 @@ local function downloadAnyText(urls, callback)
     http.getText(urls[index], 20 * 1000, onDownloaded)
 end
 
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
 local function downloadOfflineVersionFile(callback)
     local urls = {
         LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH,  "patchlist.txt"),
@@ -35,6 +41,9 @@ local function downloadOfflineVersionFile(callback)
     downloadAnyText(urls, callback)
 end
 
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
 local function downloadOnlineVersionFile(callback)
     http.getText(patchUrl, 20 * 1000, function(ok, text)
         if not ok then
@@ -45,6 +54,9 @@ local function downloadOnlineVersionFile(callback)
     end)
 end
 
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
 local function filterPatchList(offlineVersionText, onlineVersionText)
     local retb = nil
 
@@ -65,12 +77,15 @@ end
 
 local patchManager = {}
 
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
 function patchManager.checkPatches(callback)
     downloadOfflineVersionFile(function(ofvt)
         local offlineVersionText = ofvt
 
         if string.isNilOrEmpty(offlineVersionText) then
-            callback(nil)
+            callback(false, nil)
             return
         end
 
@@ -78,14 +93,24 @@ function patchManager.checkPatches(callback)
             local onlineVersionText = onvt
 
             if string.isNilOrEmpty(offlineVersionText) then
-                callback(nil)
+                callback(false, nil)
                 return
             end
 
             local plist = filterPatchList(offlineVersionText, onlineVersionText)
-            callback(plist)
+            callback(true, plist)
         end)
     end)
+end
+
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function patchManager.downloadPatches(files, callback)
+    for _, v in pairs(files) do
+        local url = networkManager.patchUrl .. v
+        http.getBytes(url, networkConfig.patchTimeout * 1000, callback)
+    end
 end
 
 return patchManager
