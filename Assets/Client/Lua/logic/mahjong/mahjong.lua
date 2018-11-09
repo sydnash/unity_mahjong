@@ -32,6 +32,8 @@ function mahjong:ctor(id)
 
     self.name  = mtype.name
     self.class = mtype.class
+
+    self:reset()
 end
 
 function mahjong:dark()
@@ -51,8 +53,15 @@ function mahjong:setPickabled(pickabled)
     self:setLayer(layer, true)
 end
 
+function mahjong:reset()
+    self:light()
+    self:setPickabled(false)
+end
+
 function mahjong:onDestroy()
+    self:reset()
     self:hide()
+
     modelManager.unload(self)
 end
 

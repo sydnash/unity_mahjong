@@ -18,13 +18,14 @@ function gameOver:onInit()
     self.mFinishCount:setText(string.format("已打%d/%d局", self.datas.finishGameCount, self.datas.totalGameCount))
     self.mDateTime:setText(time.formatDateTime())
 
-    local items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD, }
-    self.items = items
+    self.items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD, }
 
     for k, v in pairs(self.datas.players) do
-        local item = items[k+1]
+        local item = self.items[k]
         item:setPlayerInfo(v)
     end
+
+    self.mSharePanel:hide()
 
     self.mConfirm:addClickListener(self.onConfirmClickedHandler, self)
     self.mShare:addClickListener(self.onShareClickedHandler, self)
