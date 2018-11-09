@@ -66,13 +66,7 @@ public class AssetLoader
     /// <summary>
     /// 
     /// </summary>
-#if UNITY_ANDROID
-    private const string SUB_PATH = "Res/Android";
-#elif UNITY_IOS
-    private const string SUB_PATH = "Res/iOS";
-#else
-    private const string SUB_PATH = "Res/StandaloneWindows";
-#endif
+    private static readonly string SUB_PATH = LFS.CombinePath("Res", LFS.OS_PATH);
 
     /// <summary>
     /// 

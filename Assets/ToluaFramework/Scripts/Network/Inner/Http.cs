@@ -106,8 +106,15 @@ public class Http : MonoBehaviour
             mTextCallbackDict.Add(url, callback);
         }
 
-        Thread thread = new Thread(OnRequest);
-        thread.Start(new RequestArgs(url, method, timeout));
+        if (url.StartsWith("file:///"))
+        {
+            StartCoroutine(LoadFileCoroutine(url));
+        }
+        else
+        {
+            Thread thread = new Thread(OnRequest);
+            thread.Start(new RequestArgs(url, method, timeout));
+        }
     }
 
     /// <summary>
@@ -347,6 +354,39 @@ public class Http : MonoBehaviour
             }
 
             mTextureCallbackDict.Remove(url);
+        }
+
+        yield return new WaitForEndOfFrame();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="url"></param>
+    /// <returns></returns>
+    private IEnumerator LoadFileCoroutine(string url)
+    {
+        WWW www = new WWW(url);
+
+        while (!www.isDone)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (mTextCallbackDict.ContainsKey(url))
+        {
+            Action<bool, string> callback = mTextCallbackDict[url];
+
+            if (string.IsNullOrEmpty(www.error))
+            {
+                callback(true, www.text);
+            }
+            else
+            {
+                callback(false, string.Empty);
+            }
+
+            mTextCallbackDict.Remove(url);
         }
 
         yield return new WaitForEndOfFrame();

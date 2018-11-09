@@ -43,17 +43,7 @@ public class Build
     /// </summary>
     public static void BuildAssetBundles(BuildTarget buildTarget)
     {
-        string targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res/StandaloneWindows");
-
-        if (buildTarget == BuildTarget.Android)
-        {
-            targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res/Android");
-        }
-        else if (buildTarget == BuildTarget.iOS)
-        {
-            targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res/iOS");
-        }
-
+        string targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res", LFS.OS_PATH);
         LFS.RemoveDir(targetDir);
 
         AssetBundleBrowser.AssetBundleBrowserMain.ExecuteBuild(buildTarget, targetDir);
@@ -67,47 +57,43 @@ public class Build
         string resourcesPath = LFS.CombinePath(Application.dataPath, "Resources");
 
         StringBuilder sb = new StringBuilder();
-        sb.Append("[\n");
+        sb.Append("return {\n");
 
         string luaPath = LFS.CombinePath(resourcesPath, "Lua");
         string[] luaFiles = Directory.GetFiles(luaPath, "*.bytes", SearchOption.AllDirectories);
-        foreach (string file in luaFiles)
+        for (int i = 0; i < luaFiles.Length; i++)
         {
+            string file = luaFiles[i];
+
             string path = file.Substring(resourcesPath.Length + 1).Replace("\\", "/");
             string code = MD5.GetHashFromFile(file);
             FileInfo info = new FileInfo(file);
 
+            sb.AppendFormat("[\"{0}\"]=", path);
             sb.Append("{");
-            sb.AppendFormat("\"{0}\":", path);
-            sb.Append("{");
-            sb.AppendFormat("\"hash\":\"{0}\", \"size\":{1}", code, info.Length);
-            sb.Append("}");
+            sb.AppendFormat("[\"hash\"]=\"{0}\", [\"size\"]={1}", code, info.Length);
             sb.Append("},\n");
         }
 
-#if UNITY_ANDROID
-        string resPath = LFS.CombinePath(Application.streamingAssetsPath, "Res/Android");
-#elif UNITY_IOS
-        string resPath = LFS.CombinePath(Application.streamingAssetsPath, "Res/iOS");
-#else
-        string resPath = LFS.CombinePath(Application.streamingAssetsPath, "Res/StandaloneWindows");
-#endif
+        string resPath = LFS.CombinePath(Application.streamingAssetsPath, "Res", LFS.OS_PATH);
         string[] resFiles = Directory.GetFiles(resPath, "*.*", SearchOption.AllDirectories);
-        foreach (string file in resFiles)
+
+        for (int i=0; i<resFiles.Length; i++)
         {
+            string file = resFiles[i];
+            if (file.EndsWith(".meta")) continue;
+
             string path = file.Substring(Application.streamingAssetsPath.Length + 1).Replace("\\", "/");
             string code = MD5.GetHashFromFile(file);
             FileInfo info = new FileInfo(file);
 
+            sb.AppendFormat("[\"{0}\"]=", path);
             sb.Append("{");
-            sb.AppendFormat("\"{0}\":", path);
-            sb.Append("{");
-            sb.AppendFormat("\"hash\":\"{0}\", \"size\":{1}", code, info.Length);
-            sb.Append("}");
+            sb.AppendFormat("[\"hash\"]=\"{0}\", [\"size\"]={1}", code, info.Length);
             sb.Append("},\n");
         }
 
-        sb.Append("]");
+        sb.Append("}");
 
         string text = sb.ToString();
         LFS.WriteText(LFS.CombinePath(Application.streamingAssetsPath, "patchlist.txt"), text, LFS.UTF8_WITHOUT_BOM);

@@ -182,24 +182,59 @@ local function inviteSgCallback(params)
     end
 end
 
-local function downloadPatches(patchlist, size, downloadui)
-    local count = #patchlist
-    local index = 0
-    local failedlist = {}
+local function downloadPatches(patchlist, size, plistText, downloadui)
+    local totalCount        = #patchlist
+    local successfulCount   = 0
 
-    patchManager.downloadPatches(patchlist, function(url, ok, bytes)
-        if not ok then
-            table.failedlist(url)
-        else
-            index = index + 1
-            downloadui:setProgress(math.min(1, index / count))
-        end
-    end)
+    local function downloadC(files, callback)
+        local failedList = {}
+        patchManager.downloadPatches(files, function(url, name, ok, bytes)
+            if not ok then
+                table.insert(failedList, { name = name })
+            else
+                successfulCount = successfulCount + 1
+
+                local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, name)
+                LFS.WriteBytes(path, bytes)
+            end
+
+            downloadui:setProgress(math.min(1, successfulCount / totalCount))
+
+            if successfulCount + #failedList == totalCount then
+                callback(failedList)
+            end
+        end)
+    end
+
+    local function download(files)
+        downloadC(files, function(failedList)
+            if #failedList > 0 then
+                showMessageUI("有部分更新资源下载失败，是否重新下载？", 
+                              function()
+                                  download(failedList)
+                              end,
+                              function()
+                                  Application.Quit()
+                              end)
+            else
+                local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME)
+                LFS.WriteText(path, plistText, LFS.UTF8_WITHOUT_BOM)
+
+                local login = require("ui.login").new()
+                login:show()
+
+                downloadui:close()
+            end
+        end)
+    end
+
+    download(patchlist)
 end
 
 local function checkPatches(downloadui)
     showWaitingUI()
-    patchManager.checkPatches(function(ok, plist)
+
+    patchManager.checkPatches(function(ok, plist, plistText)
         closeWaitingUI()
 
         if not ok then
@@ -207,7 +242,12 @@ local function checkPatches(downloadui)
             return
         end
 
-        if patches ~= nil and #plist > 0 then
+        if plist == nil or #plist == 0 then
+            local login = require("ui.login").new()
+            login:show()
+
+            downloadui:close()
+        else
             local size = 0
             for _, v in pairs(plist) do
                 size = size + v.size
@@ -215,7 +255,7 @@ local function checkPatches(downloadui)
 
             showMessageUI("检测到" .. BKMGT(size) .."新资源，是否立即更新？",
                           function()
-                              downloadPatches(plist, size, downloadui)
+                              downloadPatches(plist, size, plistText, downloadui)
                           end,
                           function()
                               Application.Quit()
@@ -225,15 +265,15 @@ local function checkPatches(downloadui)
 end
 
 local function patch()
---    if deviceConfig.isMobile then
---        local loading = require("ui.loading").new()
---        loading:show()
+    if deviceConfig.isMobile then
+        local loading = require("ui.loading").new()
+        loading:show()
 
---        checkPatches(loading)
---    else
+        checkPatches(loading)
+    else
         local login = require("ui.login").new()
         login:show()
---    end
+    end
 end
 
 clientApp = class("clientApp")

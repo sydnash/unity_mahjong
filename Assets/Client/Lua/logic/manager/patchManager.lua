@@ -9,6 +9,9 @@ local localizedVerPath  = LFS.LOCALIZED_DATA_PATH
 local downloadedDataPath = LFS.DOWNLOAD_DATA_PATH
 local patchUrl = networkConfig.patchURL .. "patchlist.txt"
 
+local patchManager = {}
+patchManager.PATCHLIST_FILE_NAME = "patchlist.txt"
+
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
@@ -36,8 +39,8 @@ end
 -------------------------------------------------------------------
 local function downloadOfflineVersionFile(callback)
     local urls = {
-        LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH,  "patchlist.txt"),
-        LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "patchlist.txt"),
+        LFS.CombinePath("file:///" .. LFS.DOWNLOAD_DATA_PATH,  LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME),
+        LFS.CombinePath("file:///" .. LFS.LOCALIZED_DATA_PATH, patchManager.PATCHLIST_FILE_NAME),
     }
 
     downloadAnyText(urls, callback)
@@ -61,9 +64,9 @@ end
 -------------------------------------------------------------------
 local function filterPatchList(offlineVersionText, onlineVersionText)
     local retb = nil
-
-    local oftb = table.fromjson(offlineVersionText)
-    local ontb = table.fromjson(onlineVersionText)
+    
+    local oftb = loadstring(offlineVersionText)()
+    local ontb = loadstring(onlineVersionText)()
 
     for k, v in pairs(ontb) do
         local u = oftb[k]
@@ -76,8 +79,6 @@ local function filterPatchList(offlineVersionText, onlineVersionText)
 
     return retb
 end
-
-local patchManager = {}
 
 -------------------------------------------------------------------
 -- 
@@ -100,7 +101,7 @@ function patchManager.checkPatches(callback)
             end
 
             local plist = filterPatchList(offlineVersionText, onlineVersionText)
-            callback(true, plist)
+            callback(true, plist, onlineVersionText)
         end)
     end)
 end
@@ -109,11 +110,12 @@ end
 -- 
 -------------------------------------------------------------------
 function patchManager.downloadPatches(files, callback)
+    log(files)
     for _, v in pairs(files) do
-        local url = networkManager.patchUrl .. v
+        local url = networkConfig.patchURL .. v.name
         http.getBytes(url, networkConfig.patchTimeout * 1000, function(ok, bytes)
             if callback ~= nil then
-                callback(url, ok, bytes)
+                callback(url, v.name, ok, bytes)
             end
         end)
     end
