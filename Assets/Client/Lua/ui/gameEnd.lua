@@ -15,10 +15,15 @@ function gameEnd:ctor(game, datas)
 end
 
 function gameEnd:onInit()
-    local items = { self.mItemM, self.mItemR, self.mItemT, self.mItemL, }
+    local items = { 
+        [mahjongGame.seatType.mine]  = self.mItemM, 
+        [mahjongGame.seatType.right] = self.mItemR, 
+        [mahjongGame.seatType.top]   = self.mItemT, 
+        [mahjongGame.seatType.left]  = self.mItemL, 
+    }
 
     for _, v in pairs(self.datas.players) do
-        local item = items[v.seat + 1]
+        local item = items[v.seat]
         item:setPlayerInfo(v)
     end
 
@@ -32,6 +37,8 @@ function gameEnd:onInit()
         self.mOk:show()
         self.mNext:hide()
     end
+
+    self.mSharePanel:hide()
 
     self.mOk:addClickListener(self.onOkClickedHandler, self)
     self.mNext:addClickListener(self.onNextClickedHandler, self)
@@ -92,7 +99,6 @@ function gameEnd:onShareWXClickedHandler()
             platformHelper.shareImageWx(tex, thumb, false)
         end
     end
-    
 end
 
 function gameEnd:onShareQYQClickedHandler()

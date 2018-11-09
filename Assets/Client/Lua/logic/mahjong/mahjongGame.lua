@@ -305,7 +305,6 @@ function mahjongGame:onGameStartHandler(msg)
     self.leftMahjongCount = self.totalMahjongCount
     self.dices = { msg.Dice1, msg.Dice2 }
     self.markerTurn = msg.Marker
-    self.isPlaying = true
 
     self.deskUI:onGameStart()
     local duration = self.operationUI:onGameStart()

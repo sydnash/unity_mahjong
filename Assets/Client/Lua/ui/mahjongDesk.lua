@@ -16,9 +16,16 @@ function mahjongDesk:ctor(game)
 end
 
 function mahjongDesk:onInit()
-    self.players = { self.mPlayerM, self.mPlayerR, self.mPlayerT, self.mPlayerL, }
+    self.players = { 
+        [mahjongGame.seatType.mine]  = self.mPlayerM, 
+        [mahjongGame.seatType.right] = self.mPlayerR, 
+        [mahjongGame.seatType.top]   = self.mPlayerT, 
+        [mahjongGame.seatType.left]  = self.mPlayerL, 
+    }
+
     self:refreshUI()
 
+    self.mInvite:show()
     self.mInvite:setInteractabled(true)
     self.mInviteText:setSprite("enable")
     self.mInvitePanel:hide()
@@ -84,7 +91,7 @@ function mahjongDesk:refreshUI()
 
     for _, v in pairs(self.game.players) do
         local s = self.game:getSeatType(v.turn)
-        local p = self.players[s + 1]
+        local p = self.players[s]
         p:setPlayerInfo(v)
 
         if self.game.status == gameStatus.playing then
@@ -194,7 +201,7 @@ function mahjongDesk:setReady(acId, ready)
             self.mCancel:hide()
         end
     else
-        local seat = self.game:getSeatTypeByAcId(acId) + 1
+        local seat = self.game:getSeatTypeByAcId(acId)
         self.players[seat]:setReady(ready)
     end
 end
@@ -220,7 +227,7 @@ function mahjongDesk:onGameSync()
 end
 
 function mahjongDesk:reset()
-    self.mInvite:hide()
+    self.mInvite:show()
     self.mReady:show()
     self.mCancel:hide()
 
@@ -255,7 +262,7 @@ function mahjongDesk:onPlayerEnter(player)
     end
 
     local s = self.game:getSeatType(player.turn)
-    local p = self.players[s + 1]
+    local p = self.players[s]
 
     p:setPlayerInfo(player)
 end
@@ -265,26 +272,26 @@ function mahjongDesk:onPlayerExit(turn)
     self.mInviteText:setSprite("enable")
 
     local s = self.game:getSeatType(turn)
-    local p = self.players[s + 1]
+    local p = self.players[s]
 
     p:setPlayerInfo(nil)
 end
 
 function mahjongDesk:onPlayerPeng(acId)
     local s = self.game:getSeatTypeByAcId(acId)
-    local p = self.players[s + 1]
+    local p = self.players[s]
     p:playGfx("peng")
 end
 
 function mahjongDesk:onPlayerGang(acId)
     local s = self.game:getSeatTypeByAcId(acId)
-    local p = self.players[s + 1]
+    local p = self.players[s]
     p:playGfx("gang")
 end
 
 function mahjongDesk:onPlayerHu(acId, t)
     local s = self.game:getSeatTypeByAcId(acId)
-    local p = self.players[s + 1]
+    local p = self.players[s]
 
     local detail = opType.hu.detail
 
@@ -309,7 +316,7 @@ function mahjongDesk:onDingQueDo(msg)
     for _, v in pairs(msg.Dos) do
         local player = self.game:getPlayerByAcId(v.AcId)
         local seat = self.game:getSeatType(player.turn)
-        self.players[seat + 1]:showDingQue(v.Q)
+        self.players[seat]:showDingQue(v.Q)
     end
 end
 

@@ -11,6 +11,8 @@ function mahjongDeskHeader:onInit()
     self.mU:show()
     self.mP:hide()
     self:reset()
+
+    self:show()
 end
 
 function mahjongDeskHeader:setPlayerInfo(player)
