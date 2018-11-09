@@ -16,6 +16,7 @@
 #include <mach/mach_time.h>
 
 #import "ForUnityBridge.h"
+#import "XLUnityBridge.h"
 
 // MSAA_DEFAULT_SAMPLE_COUNT was moved to iPhone_GlesSupport.h
 // ENABLE_INTERNAL_PROFILER and related defines were moved to iPhone_Profiler.h
@@ -218,6 +219,9 @@ extern "C" void UnityRequestQuit()
     AppController_SendNotificationWithArg(kUnityOnOpenURL, notifData);
     
     BOOL ret = [WXApi handleOpenURL:url delegate:[ForUnityBridge forUnityBridgeInstance]];
+    if (not ret) {
+        ret = [XLUnityBridge handlerOpenURL:url];
+    }
     return ret;
 }
 
@@ -265,6 +269,7 @@ extern "C" void UnityRequestQuit()
 #endif
 
     [[ForUnityBridge forUnityBridgeInstance] registerPlugin];
+    [[XLUnityBridge shareHelper] registerXL];
     return YES;
 }
 

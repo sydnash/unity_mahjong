@@ -13,6 +13,13 @@ public class IOSHelperWrap
 		L.RegFunction("ShareUrlWX", ShareUrlWX);
 		L.RegFunction("ShareImageWX", ShareImageWX);
 		L.RegFunction("OnLoginWxHandler", OnLoginWxHandler);
+		L.RegFunction("RegisterInviteSGCallback", RegisterInviteSGCallback);
+		L.RegFunction("SetLogined", SetLogined);
+		L.RegFunction("ShareTextSG", ShareTextSG);
+		L.RegFunction("ShareInvitationSG", ShareInvitationSG);
+		L.RegFunction("ShareImageSG", ShareImageSG);
+		L.RegFunction("GetParamsSG", GetParamsSG);
+		L.RegFunction("OnInviteSgHandler", OnInviteSgHandler);
 		L.RegFunction("New", _CreateIOSHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -143,6 +150,130 @@ public class IOSHelperWrap
 			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			obj.OnLoginWxHandler(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RegisterInviteSGCallback(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
+			obj.RegisterInviteSGCallback(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetLogined(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.SetLogined(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareTextSG(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.ShareTextSG(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareInvitationSG(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 7);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			UnityEngine.Texture2D arg2 = (UnityEngine.Texture2D)ToLua.CheckObject(L, 4, typeof(UnityEngine.Texture2D));
+			string arg3 = ToLua.CheckString(L, 5);
+			string arg4 = ToLua.CheckString(L, 6);
+			string arg5 = ToLua.CheckString(L, 7);
+			obj.ShareInvitationSG(arg0, arg1, arg2, arg3, arg4, arg5);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareImageSG(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			UnityEngine.Texture2D arg0 = (UnityEngine.Texture2D)ToLua.CheckObject(L, 2, typeof(UnityEngine.Texture2D));
+			obj.ShareImageSG(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetParamsSG(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			string o = obj.GetParamsSG();
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnInviteSgHandler(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.OnInviteSgHandler(arg0);
 			return 0;
 		}
 		catch (Exception e)

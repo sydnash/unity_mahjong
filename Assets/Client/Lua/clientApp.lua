@@ -249,7 +249,6 @@ end
 --
 ----------------------------------------------------------------
 function clientApp:start()
-    log("111")
     networkManager.setup(networkDisconnectedCallback)
 
     soundManager.setBGMVolume(soundConfig.defaultBgmVolume)
@@ -260,9 +259,8 @@ function clientApp:start()
     platformHelper.registerInviteSgCallback(inviteSgCallback)
 
     DISABLE_GLOBAL_VARIABLE_DECLARATION()
-    log("222")
+
     patch()
-    log("333")
 end
 
 ----------------------------------------------------------------

@@ -87,5 +87,79 @@ public class IOSHelper
 	#endregion
 
 
+	#region publicXL
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="callback"></param>
+	public void RegisterInviteSGCallback(Action<string> callback)
+	{
+		IOSXLHelper.RegisterInviteCallback(callback);
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="logined"></param>
+	public void SetLogined(bool logined)
+	{
+		IOSXLHelper.SetLoginState (logined);
+	}
+
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="text"></param>
+	public void ShareTextSG(string text)
+	{
+		IOSXLHelper.ShareText (text);
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="title"></param>
+	/// <param name="description"></param>
+	/// <param name="launcherPath"></param>
+	/// <param name="param_a"></param>
+	/// <param name="param_b"></param>
+	/// <param name="androidDownloadUrl"></param>
+	/// <param name="iOSDownloadUrl"></param>
+	public void ShareInvitationSG(string title, string description, Texture2D tex, string param, string androidDownloadUrl, string iOSDownloadUrl)
+	{
+		IOSXLHelper.ShareInvitation (title, description, tex, param, androidDownloadUrl, iOSDownloadUrl);
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="imagePath"></param>
+	public void ShareImageSG(Texture2D tex)
+	{
+		IOSXLHelper.ShareImage(tex);
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	public string GetParamsSG()
+	{
+		return IOSXLHelper.GetParams();
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="json"></param>
+	public void OnInviteSgHandler(string json)
+	{
+		IOSXLHelper.OnInviteHandler(json);
+	}
+
+	#endregion
+
 }
 	
