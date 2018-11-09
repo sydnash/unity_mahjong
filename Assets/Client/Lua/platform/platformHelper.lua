@@ -144,6 +144,14 @@ function platformHelper.getParamsSg()
     end
 end
 
+function platformHelper.clearSGInviteParam()
+    if deviceConfig.isAndroid then
+        AndroidHelper.instance.ClearSGInviteParam()
+    elseif deviceConfig.isApple then
+        IOSHelper.instance:ClearSGInviteParam()
+    end
+end
+
 return platformHelper
 
 --endregion

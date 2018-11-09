@@ -230,6 +230,7 @@ function loginServer(callback)
                 log(string.format("get desk from XianLiao, cityType = %d", cityType))
                 log(string.format("get desk from XianLiao, deskId = %d", deskId))
             end
+            platformHelper.clearSGInviteParam()
         end
 
         if cityType == 0 and deskId == 0 then

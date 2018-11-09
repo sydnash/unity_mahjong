@@ -149,6 +149,14 @@ public class IOSHelper
 	{
 		return IOSXLHelper.GetParams();
 	}
+	/// <summary>
+	/// Clears the SG invite parameter.
+	/// </summary>
+	/// <returns>The SG invite parameter.</returns>
+	public void ClearSGInviteParam()
+	{
+		IOSXLHelper.Clear();
+	}
 
 	/// <summary>
 	/// 
