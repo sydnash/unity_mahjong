@@ -2,7 +2,9 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local http = require("network.http")
+local networkConfig = require("config.networkConfig")
+local http          = require("network.http")
+
 local localizedVerPath  = LFS.LOCALIZED_DATA_PATH
 local downloadedDataPath = LFS.DOWNLOAD_DATA_PATH
 local patchUrl = networkConfig.patchURL .. "patchlist.txt"
@@ -109,7 +111,11 @@ end
 function patchManager.downloadPatches(files, callback)
     for _, v in pairs(files) do
         local url = networkManager.patchUrl .. v
-        http.getBytes(url, networkConfig.patchTimeout * 1000, callback)
+        http.getBytes(url, networkConfig.patchTimeout * 1000, function(ok, bytes)
+            if callback ~= nil then
+                callback(url, ok, bytes)
+            end
+        end)
     end
 end
 

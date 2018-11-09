@@ -5,6 +5,7 @@
 require("globals")
 
 local soundConfig   = require("config.soundConfig")
+local patchManager  = require("logic.manager.patchManager")
 local input         = UnityEngine.Input
 local keycode       = UnityEngine.KeyCode
 
@@ -181,6 +182,60 @@ local function inviteSgCallback(params)
     end
 end
 
+local function downloadPatches(patchlist, size, downloadui)
+    local count = #patchlist
+    local index = 0
+    local failedlist = {}
+
+    patchManager.downloadPatches(patchlist, function(url, ok, bytes)
+        if not ok then
+            table.failedlist(url)
+        else
+            index = index + 1
+            downloadui:setProgress(math.min(1, index / count))
+        end
+    end)
+end
+
+local function checkPatches(downloadui)
+    showWaitingUI()
+    patchManager.checkPatches(function(ok, plist)
+        closeWaitingUI()
+
+        if not ok then
+            showMessageUI("更新检测失败")
+            return
+        end
+
+        if patches ~= nil and #plist > 0 then
+            local size = 0
+            for _, v in pairs(plist) do
+                size = size + v.size
+            end
+
+            showMessageUI("检测到" .. BKMGT(size) .."新资源，是否立即更新？",
+                          function()
+                              downloadPatches(plist, size, downloadui)
+                          end,
+                          function()
+                              Application.Quit()
+                          end)
+        end
+    end)
+end
+
+local function patch()
+--    if deviceConfig.isMobile then
+--        local loading = require("ui.loading").new()
+--        loading:show()
+
+--        checkPatches(loading)
+--    else
+        local login = require("ui.login").new()
+        login:show()
+--    end
+end
+
 clientApp = class("clientApp")
 
 ----------------------------------------------------------------
@@ -194,10 +249,8 @@ end
 --
 ----------------------------------------------------------------
 function clientApp:start()
+    log("111")
     networkManager.setup(networkDisconnectedCallback)
-
-    local ui = require("ui.login").new()
-    ui:show()
 
     soundManager.setBGMVolume(soundConfig.defaultBgmVolume)
     soundManager.playBGM(string.empty, "bgm")
@@ -207,30 +260,9 @@ function clientApp:start()
     platformHelper.registerInviteSgCallback(inviteSgCallback)
 
     DISABLE_GLOBAL_VARIABLE_DECLARATION()
-
-    showWaitingUI()
-    patchManager.checkPatches(function(ok, patches)
-        closeWaitingUI()
-
-        if not ok then
-
-        end
-
-        if patches ~= nil and #patches > 0 then
-            local size = 0
-            for _, v in pairs(patches) do
-                size = size + v.size
-            end
-
-            showMessageUI("检测到" .. BKMGT(size) .."新资源，是否立即更新？",
-                          function()
-                              --
-                          end,
-                          function()
-                              Application.Quit()
-                          end)
-        end
-    end)
+    log("222")
+    patch()
+    log("333")
 end
 
 ----------------------------------------------------------------
