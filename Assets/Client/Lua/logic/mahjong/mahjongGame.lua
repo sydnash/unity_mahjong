@@ -24,7 +24,7 @@ mahjongGame.cardType = {
 -- 构造函数
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data)
-    log("mahjongGame, data = " .. table.tostring(data))
+--    log("mahjongGame, data = " .. table.tostring(data))
     gamepref.deskId = data.DeskId
 
     self.totalMahjongCount  = 108
@@ -262,7 +262,7 @@ end
 -- 其他玩家加入
 -------------------------------------------------------------------------------
 function mahjongGame:onOtherEnterHandler(msg)
-    log("otherEnter, msg = " .. table.tostring(msg))
+--    log("otherEnter, msg = " .. table.tostring(msg))
 
     local player = gamePlayer.new(msg.AcId)
 
@@ -287,7 +287,7 @@ end
 -- 准备
 -------------------------------------------------------------------------------
 function mahjongGame:onReadyHandler(msg)
-    log("ready, msg = " .. table.tostring(msg))
+--    log("ready, msg = " .. table.tostring(msg))
 
     local player = self:getPlayerByTurn(msg.Turn)
     player.ready = msg.Ready
@@ -299,7 +299,11 @@ end
 -- 开始游戏
 -------------------------------------------------------------------------------
 function mahjongGame:onGameStartHandler(msg)
-    log("start game, msg = " .. table.tostring(msg))
+--    log("start game, msg = " .. table.tostring(msg))
+
+    for _, v in pairs(self.players) do
+        v.que = -1
+    end
 
     self.totalMahjongCount = msg.TotalMJCnt
     self.leftMahjongCount = self.totalMahjongCount
@@ -316,7 +320,7 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongGame:onFaPaiHandler(msg)
-    log("fapai, msg = " .. table.tostring(msg))
+--    log("fapai, msg = " .. table.tostring(msg))
 
     for _, v in pairs(msg.Seats) do
         local player = self:getPlayerByAcId(v.AcId)
@@ -335,7 +339,7 @@ end
 -- 摸牌
 -------------------------------------------------------------------------------
 function mahjongGame:onMoPaiHandler(msg)
-    log("mopai, msg = " .. table.tostring(msg))
+--    log("mopai, msg = " .. table.tostring(msg))
 
     local player = self:getPlayerByAcId(msg.AcId)
     local inhandMahjongs = player[mahjongGame.cardType.shou]
@@ -353,7 +357,7 @@ end
 -- 操作
 -------------------------------------------------------------------------------
 function mahjongGame:onOpListHandler(msg)
-    log("oplist, msg = " .. table.tostring(msg))
+--    log("oplist, msg = " .. table.tostring(msg))
     self.operationUI:onOpList(msg)
 end
 
@@ -361,7 +365,7 @@ end
 -- 服务器验证的操作结果
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoHandler(msg)
-    log("opdo, msg = " .. table.tostring(msg))
+--    log("opdo, msg = " .. table.tostring(msg))
 
     for _, v in pairs(msg.Do) do
         local optype = v.Op
@@ -402,7 +406,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:endGame()
     networkManager.destroyDesk(function(ok, msg)
-        log("end game, msg = " .. table.tostring(msg))
+--        log("end game, msg = " .. table.tostring(msg))
         if not ok then
             showMessageUI("网络繁忙，请稍后再试")
             return
@@ -463,7 +467,7 @@ end
 -- CS 杠
 -------------------------------------------------------------------------------
 function mahjongGame:gang(cards)
-    log("mahjongGame.gang, cards = " .. table.tostring(cards))
+--    log("mahjongGame.gang, cards = " .. table.tostring(cards))
     networkManager.gangPai(cards, function(ok, msg)
     end)
 end
@@ -667,7 +671,7 @@ local exitReason = {
 -- 服务器通知直接退出
 -------------------------------------------------------------------------------
 function mahjongGame:onExitDeskHandler(msg)
-    log("exit desk, msg = " .. table.tostring(msg))
+--    log("exit desk, msg = " .. table.tostring(msg))
 
     if msg.Reason == exitReason.voteExit then
         --投票解散房间，关闭投票界面并显示大结算界面
@@ -689,8 +693,6 @@ function mahjongGame:onExitDeskHandler(msg)
             end
         else
             local special = table.fromjson(msg.Special)
---            local preData = table.fromjson(special.PreData)
-
             for _, v in pairs(special.TotalResuts) do
                 totalScores[v.AcId] = v.Score
             end
@@ -726,7 +728,7 @@ end
 -- 服务器通知其他玩家退出
 -------------------------------------------------------------------------------
 function mahjongGame:onOtherExitHandler(msg)
-    log("other exit, msg = " .. table.tostring(msg))
+--    log("other exit, msg = " .. table.tostring(msg))
 
     if self.leftGames > 0 then
         self.playerCount = self.playerCount - 1
@@ -738,7 +740,7 @@ end
 -- 服务器通知发起退出投票
 -------------------------------------------------------------------------------
 function mahjongGame:onNotifyExitVoteHandler(msg)
-    log("notify exit vote, msg = " .. table.tostring(msg))
+--    log("notify exit vote, msg = " .. table.tostring(msg))
 
     self.leftVoteSeconds    = msg.LeftTime
     self.exitVoteProposer   = msg.Proposer
@@ -751,7 +753,7 @@ end
 -- 服务器通知投票失败（有人拒绝）
 -------------------------------------------------------------------------------
 function mahjongGame:onNotifyExitVoteFailedHandler(msg)
-    log("notify exit vote failed, msg = " .. table.tostring(msg))
+--    log("notify exit vote failed, msg = " .. table.tostring(msg))
     self.exitDeskUI:close()
     self.exitDeskUI = nil
 end
@@ -760,7 +762,7 @@ end
 -- 服务器通知有人投票
 -------------------------------------------------------------------------------
 function mahjongGame:onExitVoteHandler(msg)
-    log("exit vote, msg = " .. table.tostring(msg))
+--    log("exit vote, msg = " .. table.tostring(msg))
     if self.exitDeskUI~= nil then
         local player = self:getPlayerByAcId(msg.AcId)
         player.exitVoteState = 1
@@ -772,7 +774,11 @@ end
 -- 服务器通知牌局结束
 -------------------------------------------------------------------------------
 function mahjongGame:onGameEndHandler(msg)
-    log("game end, msg = " .. table.tostring(msg))
+--    log("game end, msg = " .. table.tostring(msg))
+    for _, v in pairs(self.players) do
+        v.que = -1
+    end
+
     self.leftGames = msg.LeftTime
 
     local datas = { deskId          = self.deskId,
@@ -833,7 +839,7 @@ end
 -- 服务器通知定缺信息
 -------------------------------------------------------------------------------
 function mahjongGame:onDingQueHintHandler(msg)
-    log("ding que hint, msg = " .. table.tostring(msg))
+--    log("ding que hint, msg = " .. table.tostring(msg))
     self.operationUI:onDingQueHint(msg)
 end
 
@@ -841,7 +847,7 @@ end
 -- 服务器通知定缺具体信息
 -------------------------------------------------------------------------------
 function mahjongGame:onDingQueDoHandler(msg)
-    log("ding que do, msg = " .. table.tostring(msg))
+--    log("ding que do, msg = " .. table.tostring(msg))
 
     for _, v in pairs(msg.Dos) do
         local player = self:getPlayerByAcId(v.AcId)
@@ -860,7 +866,7 @@ function mahjongGame:agreeExit()
         if not ok then
 
         else
-            log("agree exit, msg = " .. tostring(msg.Agree))
+--            log("agree exit, msg = " .. tostring(msg.Agree))
         end
     end)
 end
@@ -873,7 +879,7 @@ function mahjongGame:rejectExit()
         if not ok then
 
         else
-            log("reject exit, msg = " .. tostring(msg.Agree))
+--            log("reject exit, msg = " .. tostring(msg.Agree))
         end
     end)
 end
@@ -889,7 +895,7 @@ end
 -- 销毁游戏对象
 -------------------------------------------------------------------------------
 function mahjongGame:destroy()
-    log("mahjongGame:destroy")
+--    log("mahjongGame:destroy")
 
     self.playerCount = 0
     self:unregisterCommandHandlers()

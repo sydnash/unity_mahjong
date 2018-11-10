@@ -160,7 +160,7 @@ function enterDesk(gameType, deskId, callback)
             return
         end
 
-        log("check desk, msg = " .. table.tostring(msg))
+--        log("check desk, msg = " .. table.tostring(msg))
         callback(true, string.empty, preload, 0.5, nil)
 
         networkManager.enterDesk(gameType, deskId, function(ok, msg)
@@ -174,7 +174,7 @@ function enterDesk(gameType, deskId, callback)
                 return
             end
 
-            log("enter desk, msg = " .. table.tostring(msg))
+--            log("enter desk, msg = " .. table.tostring(msg))
             callback(true, string.empty, preload, 1, msg)
         end)
     end)
@@ -209,7 +209,7 @@ function loginServer(callback)
 
         platformHelper.setLogined(true)
         callback(true)
-        log("login, msg = " .. table.tostring(msg))
+--        log("login, msg = " .. table.tostring(msg))
 
         local cityType = 0
         local deskId   = 0
@@ -219,7 +219,7 @@ function loginServer(callback)
         if deskInfo ~= nil and deskInfo.DeskId > 0 then
             cityType = deskInfo.GameType
             deskId = deskInfo.DeskId
-            log(string.format("get desk from DeskInfo, cityType = %d, deskId = %d", cityType, deskId))
+--            log(string.format("get desk from DeskInfo, cityType = %d, deskId = %d", cityType, deskId))
         else
             local params = platformHelper.getParamsSg()--检查闲聊的邀请数据
             if not string.isNilOrEmpty(params) then
@@ -227,8 +227,8 @@ function loginServer(callback)
 
                 cityType = t.cityType
                 deskId = t.deskId
-                log(string.format("get desk from XianLiao, cityType = %d", cityType))
-                log(string.format("get desk from XianLiao, deskId = %d", deskId))
+--                log(string.format("get desk from XianLiao, cityType = %d", cityType))
+--                log(string.format("get desk from XianLiao, deskId = %d", deskId))
             end
             platformHelper.clearSGInviteParam()
         end

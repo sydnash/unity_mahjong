@@ -21,7 +21,7 @@ function gameOver:onInit()
     self.items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD, }
 
     for k, v in pairs(self.datas.players) do
-        local item = self.items[k]
+        local item = self.items[k + 1]
         item:setPlayerInfo(v)
     end
 
