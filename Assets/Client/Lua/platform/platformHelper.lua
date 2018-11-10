@@ -152,6 +152,10 @@ function platformHelper.clearSGInviteParam()
     end
 end
 
+function platformHelper.changeWindowTitle(new)
+    WINHelper.instance:ChangeWindowTitle(new)
+end
+
 return platformHelper
 
 --endregion
