@@ -191,6 +191,7 @@ function mahjongOperation:onInit()
     self.pengMahjongs   = {}
     self.huMahjongs     = {}
 
+--    self.canChuPai = false
     self:loadMahjongs()
 end
 
@@ -672,8 +673,6 @@ function mahjongOperation:showOperations(ops, leftTime)
     for _, v in pairs(ops) do 
         if v.Op == opType.guo.id then
             self.mGuo:show()
---        elseif v.Op == opType.bao.id then
---            self.mBao:show()
         elseif v.Op == opType.chi.id then
             self.mChi:show()
         elseif v.Op == opType.peng.id then
@@ -1388,6 +1387,7 @@ function mahjongOperation:clear(forceDestroy)
             end
 
             if set[m.id] == nil then
+                m:reset()
                 m:hide()
                 set[m.id] = m
             else
@@ -1444,6 +1444,7 @@ function mahjongOperation:clear(forceDestroy)
 
     self.mo = nil
     self.chupaiPtr:hide()
+    self.canChuPai = false
     log("clear over, idle count = " .. tostring(#self.idleMahjongs))
 end
 
