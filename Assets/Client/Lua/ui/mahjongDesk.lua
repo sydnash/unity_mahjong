@@ -337,7 +337,7 @@ function mahjongDesk:onGameInfoHClickedHandler()
 end
 
 function mahjongDesk:onChatMessageHandler(msg)
-    log("chat message, msg = " .. table.tostring(msg))
+--    log("chat message, msg = " .. table.tostring(msg))
     
     local seat = self.game:getSeatTypeByAcId(msg.AcId)
     local player = self.players[seat]

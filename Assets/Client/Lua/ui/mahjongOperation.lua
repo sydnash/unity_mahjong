@@ -1001,7 +1001,7 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
     end
 
     if hu == nil then
-        log("hu, new a mahjong, id = " .. tostring(beCard))
+--        log("hu, new a mahjong, id = " .. tostring(beCard))
         hu = mahjong.new(beCard)
     end
     
@@ -1334,7 +1334,7 @@ end
 -- 重置
 -------------------------------------------------------------------------------
 function mahjongOperation:clear(forceDestroy)
-    log("clear, forceDestroy = " .. tostring(forceDestroy))
+--    log("clear, forceDestroy = " .. tostring(forceDestroy))
 
     if forceDestroy then
         -- 直接删除
@@ -1445,7 +1445,7 @@ function mahjongOperation:clear(forceDestroy)
     self.mo = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
-    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
+--    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
 end
 
 -------------------------------------------------------------------------------
