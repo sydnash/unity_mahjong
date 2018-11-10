@@ -1007,6 +1007,7 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
         hu = mahjong.new(beCard)
     end
     
+    hu:setPickabled(false)
     self.huMahjongs[acId] = hu
 
     local s = self.game:getSeatTypeByAcId(acId)
