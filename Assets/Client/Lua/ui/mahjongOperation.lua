@@ -979,7 +979,10 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
         local inhand = self.inhandMahjongs[acId]
 
         if acId ~= gamepref.player.acId then
-            hu = inhand[1]
+            local hu, queue, idx = self:getMahjongFromIdle(beCard)
+            swap(inhand, 1, queue, idx)
+            --如果需要再把牌扣起来
+            --
             table.remove(inhand, 1)
         else
             hu = self.mo
@@ -1069,6 +1072,7 @@ function mahjongOperation:getMahjongFromIdle(mid)
         end
     end
         
+    log("connot find pai from idle.")
     return nil, nil, nil
 end
 

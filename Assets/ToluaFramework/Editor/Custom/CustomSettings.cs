@@ -201,6 +201,7 @@ public static class CustomSettings
         _GT(typeof(SpriteRD)),
         _GT(typeof(AndroidHelper)),
 		_GT(typeof(IOSHelper)),
+		_GT(typeof(WINHelper)),
         _GT(typeof(Utils)),
     };
 

@@ -30,6 +30,7 @@ public static class LuaBinder
 		SpriteRDWrap.Register(L);
 		AndroidHelperWrap.Register(L);
 		IOSHelperWrap.Register(L);
+		WINHelperWrap.Register(L);
 		UtilsWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);

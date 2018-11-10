@@ -294,6 +294,7 @@ function clientApp:start()
 
     soundManager.setBGMVolume(soundConfig.defaultBgmVolume)
     soundManager.playBGM(string.empty, "bgm")
+    platformHelper.changeWindowTitle(deviceConfig.deviceId)
 
     registerUpdateListener(checkEscapeState, nil)
     registerTracebackCallback(tracebackHandler)
