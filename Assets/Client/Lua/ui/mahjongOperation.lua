@@ -1334,7 +1334,7 @@ end
 -- 重置
 -------------------------------------------------------------------------------
 function mahjongOperation:clear(forceDestroy)
---    log("clear, forceDestroy = " .. tostring(forceDestroy))
+    log("clear, forceDestroy = " .. tostring(forceDestroy))
 
     if forceDestroy then
         -- 直接删除

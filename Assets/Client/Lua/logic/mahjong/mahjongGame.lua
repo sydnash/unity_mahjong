@@ -301,6 +301,10 @@ end
 function mahjongGame:onGameStartHandler(msg)
 --    log("start game, msg = " .. table.tostring(msg))
 
+    for _, v in pairs(self.players) do
+        v.que = -1
+    end
+
     self.totalMahjongCount = msg.TotalMJCnt
     self.leftMahjongCount = self.totalMahjongCount
     self.dices = { msg.Dice1, msg.Dice2 }
@@ -771,6 +775,10 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onGameEndHandler(msg)
 --    log("game end, msg = " .. table.tostring(msg))
+    for _, v in pairs(self.players) do
+        v.que = -1
+    end
+
     self.leftGames = msg.LeftTime
 
     local datas = { deskId          = self.deskId,
