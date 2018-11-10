@@ -191,7 +191,7 @@ function mahjongOperation:onInit()
     self.pengMahjongs   = {}
     self.huMahjongs     = {}
 
-    self.canChuPai = false
+--    self.canChuPai = false
     self:loadMahjongs()
 end
 
