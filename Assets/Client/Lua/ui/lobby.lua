@@ -31,7 +31,7 @@ function lobby:onInit()
     self.mAuthenticate:addClickListener(self.onAuthenticateClickedHandler, self)
     self.mMail:addClickListener(self.onMailClickedHandler, self)
 
-    if gamepref.deskId ~= nil and gamepref.deskId > 0 then
+    if clientApp.currentDesk ~= nil and clientApp.currentDesk.deskId ~= nil then
         self.mReturnDesk:show()
         self.mCreateDesk:hide()
     else
@@ -100,7 +100,7 @@ function lobby:onReturnDeskClickedHandler()
     loading:show()
 
     local cityType = cityType.chengdu
-    self:enterDesk(loading, cityType, gamepref.deskId)
+    self:enterDesk(loading, cityType, clientApp.currentDesk.deskId)
 end
 
 function lobby:onCreateDeskClickedHandler()
