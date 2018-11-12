@@ -194,7 +194,6 @@ function mahjongOperation:onInit()
     self.pengMahjongs   = {}
     self.huMahjongs     = {}
 
---    self.canChuPai = false
     self:loadMahjongs()
 end
 
@@ -447,8 +446,6 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongOperation:OnFaPai()
-    soundManager.playGfx("mahjong", "shaizi")
-
     for _, player in pairs(self.game.players) do
         self:createInHandMahjongs(player)
     end
@@ -460,6 +457,7 @@ end
 -- 播放骰子动画
 -------------------------------------------------------------------------------
 function mahjongOperation:playDiceAnim()
+    soundManager.playGfx("mahjong", "shaizi")
     self:playAnimation(self.diceRootAnim)
 
     local diceMat1 = self.diceMats[1]
@@ -979,7 +977,6 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
             self.chupaiPtr:hide()
         end
     elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
-		log("11111111111111111111111111111111111111111")
         if self.mo ~= nil then
             self:insertMahjongToInhand(self.mo)
             self.mo = nil
@@ -1130,7 +1127,6 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
     local mahjongs = self.inhandMahjongs[acId]
 
     for _, id in pairs(datas) do
-    log(id)
         local m = self:getMahjongFromIdle(id)
         m:show()
         table.insert(mahjongs, m)
@@ -1181,7 +1177,6 @@ function mahjongOperation:decreaseInhandMahjongs(acId, datas)
     else
         for _, id in pairs(datas) do
             local m, mahjongQueue, idx = self:getMahjongFromIdle(id)
-            --local index = self:getIdleStart()
             swap(mahjongs, 1, mahjongQueue, idx)
             table.insert(decreaseMahjongs, m)
             table.remove(mahjongs, 1)
@@ -1436,7 +1431,7 @@ end
 -- 重置
 -------------------------------------------------------------------------------
 function mahjongOperation:clear(forceDestroy)
-    log("clear, forceDestroy = " .. tostring(forceDestroy))
+--    log("clear, forceDestroy = " .. tostring(forceDestroy))
 
     self.lastPengPos = nil
     if forceDestroy then
@@ -1548,7 +1543,7 @@ function mahjongOperation:clear(forceDestroy)
     self.mo = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
-    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
+--    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
 end
 
 -------------------------------------------------------------------------------

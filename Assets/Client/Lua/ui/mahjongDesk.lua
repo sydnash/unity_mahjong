@@ -23,12 +23,10 @@ function mahjongDesk:onInit()
         [mahjongGame.seatType.left]  = self.mPlayerL, 
     }
 
-    self:refreshUI()
-
+    
     self.mInvite:show()
-    self.mInvite:setInteractabled(true)
-    self.mInviteText:setSprite("enable")
     self.mInvitePanel:hide()
+    self:refreshUI()
 
     self.mGameDesc:hide()
     self.mGameInfoS:show()
@@ -99,12 +97,18 @@ function mahjongDesk:refreshUI()
         end
     end
 
+    self:refreshInvitationButtonState()
+end
+
+function mahjongDesk:refreshInvitationButtonState()
     local playerTotalCount = self.game:getTotalPlayerCount()
     local playerCount = self.game:getPlayerCount()
 
     if playerCount == playerTotalCount then
         self.mInvite:setInteractabled(false)
         self.mInviteText:setSprite("disable")
+
+        self.mInvitePanel:hide()
     else
         self.mInvite:setInteractabled(true)
         self.mInviteText:setSprite("enable")
@@ -253,13 +257,7 @@ function mahjongDesk:updateCurrentGameIndex()
 end
 
 function mahjongDesk:onPlayerEnter(player)
-    local playerTotalCount = self.game:getTotalPlayerCount()
-    local playerCount = self.game:getPlayerCount()
-
-    if playerCount == playerTotalCount then
-        self.mInvite:setInteractabled(false)
-        self.mInviteText:setSprite("disable")
-    end
+    self:refreshInvitationButtonState()
 
     local s = self.game:getSeatType(player.turn)
     local p = self.players[s]
@@ -268,8 +266,7 @@ function mahjongDesk:onPlayerEnter(player)
 end
 
 function mahjongDesk:onPlayerExit(turn)
-    self.mInvite:setInteractabled(true)
-    self.mInviteText:setSprite("enable")
+    self:refreshInvitationButtonState()
 
     local s = self.game:getSeatType(turn)
     local p = self.players[s]

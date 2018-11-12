@@ -14,7 +14,7 @@ mahjong.z = 0.024 --厚度
 local DEFAULT_LAYER         = 0
 local INHAND_MAHJONG_LAYER  = 8
 
-local d = 150 / 255
+local d = 160 / 255
 local DARK_COLOR  = Color.New(d, d, d, 1)
 local LIGHT_COLOR = Color.New(1, 1, 1, 1)
 

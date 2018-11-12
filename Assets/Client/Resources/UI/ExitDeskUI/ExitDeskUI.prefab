@@ -1479,7 +1479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
+  mItems:
   - key: JS_zi01
     sprite: {fileID: 21300006, guid: 47d4dc95f6cdf9842a9a1979b7d463dc, type: 3}
   - key: JS_zi01_h
@@ -1642,7 +1642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
+  mItems:
   - key: JS_zi02
     sprite: {fileID: 21300010, guid: 47d4dc95f6cdf9842a9a1979b7d463dc, type: 3}
   - key: JS_zi02_h

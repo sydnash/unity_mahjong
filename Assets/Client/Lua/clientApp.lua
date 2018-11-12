@@ -290,6 +290,7 @@ end
 --
 ----------------------------------------------------------------
 function clientApp:start()
+    Application.targetFrameRate = gameConfig.fps
     networkManager.setup(networkDisconnectedCallback)
 
     soundManager.setBGMVolume(soundConfig.defaultBgmVolume)
