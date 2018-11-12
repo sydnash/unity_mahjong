@@ -1206,11 +1206,14 @@ function mahjongOperation:getMyInhandMahjongPos(player, index)
         if self.lastPengPos then
             local sceneCamera = UnityEngine.Camera.main
             local screenPos = sceneCamera:WorldToScreenPoint(self.lastPengPos)
+            --log("sc1 " .. screenPos.x .. "  " .. screenPos.y)
             local inhandCamera = GameObjectPicker.instance.camera
             local direct = o - inhandCamera.transform.position
             local project = Vector3.Project(direct, inhandCamera.transform.forward)
             screenPos.x = screenPos.x + 40
+            --log("sc2 " .. screenPos.x .. "  " .. screenPos.y)
             local wp = inhandCamera:ScreenToWorldPoint(Vector3.New(screenPos.x, screenPos.y, project.magnitude))
+            wp.x = wp.x + mahjong.w * 0.5
             o.x = wp.x
         end
         o.x = o.x + mahjong.w * index
@@ -1346,7 +1349,7 @@ function mahjongOperation:relocatePengMahjongs(player)
             m:setLocalRotation(r)
             m:setLocalScale(s)
             if not isUpon then
-                lastPengPos = Vector3.New(o.x + (mahjong.w * c) * s.x + d + mahjong.w * 0.5, y, o.z)
+                lastPengPos = Vector3.New(o.x + (mahjong.w * c) * s.x + d + mahjong.w * 0.5, y, o.z - mahjong.z * 0.5)
             end
         end
     end
