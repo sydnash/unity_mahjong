@@ -1194,10 +1194,9 @@ function mahjongOperation:getMyInhandMahjongPos(player, index)
         local direct = o - inhandCamera.transform.position
         local project = Vector3.Project(direct, inhandCamera.transform.forward)
         screenPos.x = screenPos.x + 40
-        local wp = inhandCamera:ScreenToWorldPoint(Vector3.New(screenPos.x, screenPos.y, project.magnitude))
-        o.x = wp.x + mahjong.w * index
-        return o
+        o = inhandCamera:ScreenToWorldPoint(Vector3.New(screenPos.x, screenPos.y, project.magnitude))
     end
+    o.x = o.x + mahjong.w * index
     return o
 end
 
