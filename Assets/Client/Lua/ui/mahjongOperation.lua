@@ -296,18 +296,29 @@ function mahjongOperation:onGameSync(reenter)
     self:relocateIdleMahjongs(true)    
 
     for _, v in pairs(self.game.players) do 
-        if v.hu ~= nil and v.hu[1].HuCard >= 0 then
-            local m = self:getMahjongFromIdle(v.hu[1].HuCard)
-            self:removeFromIdle()
+        if v.hu ~= nil then
+            local mid = v.hu[1].HuCard
 
-            local s = self.game:getSeatType(v.turn)
-            local c = self.seats[s][mahjongGame.cardType.hu]
+            if mid >= 0 then
+                local m = self:getMahjongFromIdle(mid)
 
-            m:setLocalPosition(c.pos)
-            m:setLocalRotation(c.rot)
-            m:setLocalScale(c.scl)
+                if m ~= nil then
+                    self:removeFromIdle()
+                else
+                    --如一炮双响的时候，会出现无法从idle列表中搜索到牌的情况
+                    --此时，就直接创建一个新的麻将对象
+                    m = mahjong.new(mid)
+                end
 
-            self.huMahjongs[v.acId] = m
+                local s = self.game:getSeatType(v.turn)
+                local c = self.seats[s][mahjongGame.cardType.hu]
+
+                m:setLocalPosition(c.pos)
+                m:setLocalRotation(c.rot)
+                m:setLocalScale(c.scl)
+
+                self.huMahjongs[v.acId] = m
+            end
         end
 
         self:createPengMahjongs(v)
@@ -1011,11 +1022,13 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
         local inhand = self.inhandMahjongs[acId]
 
         if acId ~= gamepref.player.acId then
-            local hu, queue, idx = self:getMahjongFromIdle(beCard)
+            local m, queue, idx = self:getMahjongFromIdle(beCard)
             swap(inhand, 1, queue, idx)
+            table.remove(inhand, 1)
+
+            hu = m
             --如果需要再把牌扣起来
             --
-            table.remove(inhand, 1)
         else
             hu = self.mo
             self.mo = nil
@@ -1032,14 +1045,15 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
             end
         end
 
+        if hu == nil then
+            --如一炮双响的时候，会出现无法从idle列表中搜索到牌的情况
+            --此时，就直接创建一个新的麻将对象
+            hu = mahjong.new(beCard)
+        end
+
         if self.chupaiPtr.mahjongId == beCard then
             self.chupaiPtr:hide()
         end
-    end
-
-    if hu == nil then
---        log("hu, new a mahjong, id = " .. tostring(beCard))
-        hu = mahjong.new(beCard)
     end
     
     hu:setPickabled(false)
@@ -1078,7 +1092,7 @@ function mahjongOperation:getMahjongFromIdle(mid)
     local index = self:getIdleStart()
 
     if mid < 0 then
-        return self.idleMahjongs[index]
+        return self.idleMahjongs[index], self.idleMahjongs, index
     end
 
     --先在“城墙”里面查找
@@ -1104,7 +1118,7 @@ function mahjongOperation:getMahjongFromIdle(mid)
         end
     end
         
-    log("connot find pai from idle.")
+    log("connot find pai [id = " .. tostring(mid) .. "] from idle.")
     return nil, nil, nil
 end
 
@@ -1115,6 +1129,7 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
     local mahjongs = self.inhandMahjongs[acId]
 
     for _, id in pairs(datas) do
+    log(id)
         local m = self:getMahjongFromIdle(id)
         m:show()
         table.insert(mahjongs, m)

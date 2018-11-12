@@ -224,6 +224,17 @@ function mahjongGame:syncSeats(seats)
         player[mahjongGame.cardType.shou] = v.CardsInHand
         player[mahjongGame.cardType.chu]  = v.CardsInChuPai
         player[mahjongGame.cardType.peng] = v.ChiCheInfos
+
+        if player.hu ~= nil then
+            local shou = player[mahjongGame.cardType.shou]
+
+            for k, u in pairs(shou) do
+                if u == player.hu[1].HuCard then
+                    table.remove(shou, k)
+                    break
+                end 
+            end
+        end
     end
 end
 
@@ -813,6 +824,12 @@ function mahjongGame:onGameEndHandler(msg)
                     isWinner        = false,
 --                    que             = 1,
         }
+
+        for k, u in pairs(d.inhand) do 
+            if u == d.hu then
+                table.remove(d.inhand, k)
+            end
+        end
 
         local peng = v.ChiChe
         if peng ~= nil then
