@@ -25,8 +25,6 @@ mahjongGame.cardType = {
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data)
 --    log("mahjongGame, data = " .. table.tostring(data))
-    gamepref.deskId = data.DeskId
-
     self.totalMahjongCount  = 108
     self.leftMahjongCount   = 0
     self.deskId             = data.DeskId
@@ -428,7 +426,7 @@ function mahjongGame:endGame()
             return
         end
 
-        gamepref.deskId = 0
+        self.deskId = nil
 
         self.leftVoteSeconds    = msg.LeftTime
         self.exitVoteProposer   = msg.Proposer
@@ -938,6 +936,7 @@ function mahjongGame:destroy()
         end
     end
 
+    self.deskId = nil
     clientApp.currentDesk = nil
 end
 

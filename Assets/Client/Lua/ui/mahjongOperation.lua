@@ -985,7 +985,7 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
         end
 
         local m = self:decreaseInhandMahjongs(acId, cards)
-        local p = self.pengMahjongs[gamepref.player.acId]
+        local p = self.pengMahjongs[acId]
 
         for _, v in pairs(p) do
             if v[1].name == m.name then
