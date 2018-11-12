@@ -266,7 +266,7 @@ local function checkPatches(downloadui)
 end
 
 local function patch()
-    if deviceConfig.isMobile then
+    if deviceConfig.isMobile and gameConfig.patchEnabled then
         local loading = require("ui.loading").new()
         loading:show()
 

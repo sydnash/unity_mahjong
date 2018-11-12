@@ -393,7 +393,6 @@ function mahjongOperation:relocateIdleMahjongs(visible)
         local d = (l - (mahjong.w * (i * 0.5))) * 0.5
 
         for k=1, i do
-            log("mahjongOperation:relocateIdleMahjongs, acc = " .. tostring(acc) .. ", i = " .. tostring(i))
             local m = self.idleMahjongs[acc]
             acc = acc + 1
 
