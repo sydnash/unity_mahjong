@@ -146,7 +146,7 @@ end
 
 function platformHelper.clearSGInviteParam()
     if deviceConfig.isAndroid then
-        AndroidHelper.instance.ClearSGInviteParam()
+        AndroidHelper.instance:ClearSGInviteParam()
     elseif deviceConfig.isApple then
         IOSHelper.instance:ClearSGInviteParam()
     end
