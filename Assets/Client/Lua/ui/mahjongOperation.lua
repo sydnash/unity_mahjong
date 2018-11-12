@@ -1214,7 +1214,6 @@ function mahjongOperation:getMyInhandMahjongPos(player, index)
             o.x = wp.x
         end
         o.x = o.x + mahjong.w * index
-        log("get my inhand mahjong : " .. o.x  ..  o.y  .. o.z)
         return o
     end
     return o
