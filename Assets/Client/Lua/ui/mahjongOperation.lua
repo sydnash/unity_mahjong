@@ -979,6 +979,7 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
             self.chupaiPtr:hide()
         end
     elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
+		log("11111111111111111111111111111111111111111")
         if self.mo ~= nil then
             self:insertMahjongToInhand(self.mo)
             self.mo = nil
@@ -988,8 +989,8 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
         local p = self.pengMahjongs[acId]
 
         for _, v in pairs(p) do
-            if v[1].name == m.name then
-                table.insert(v, m)
+            if v[1].name == m[1].name then
+                table.insert(v, m[1])
                 break
             end
         end 
