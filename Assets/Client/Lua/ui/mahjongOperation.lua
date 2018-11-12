@@ -64,14 +64,17 @@ local function swap(ta, ia, tb, ib)
         local p = a:getLocalPosition()
         local r = a:getLocalRotation()
         local s = a:getLocalScale()
+        local visible = a:getVisibled()
 
         a:setLocalPosition(b:getLocalPosition())
         a:setLocalRotation(b:getLocalRotation())
         a:setLocalScale(b:getLocalScale())
+        a:setVisibled(b:getVisibled())
 
         b:setLocalPosition(p)
         b:setLocalRotation(r)
         b:setLocalScale(s)
+        b:setVisibled(visible)
         --交换索引
         ta[ia] = b
         tb[ib] = a
