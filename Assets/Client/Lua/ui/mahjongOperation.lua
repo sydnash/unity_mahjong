@@ -1325,9 +1325,11 @@ function mahjongOperation:relocatePengMahjongs(player)
             local p = m:getLocalPosition()
             local y = o.y
         
+            local isUpon = false
             if k == 4 then -- 杠的第4张牌放在第2张上面
                 c = 3 * i + 1
                 y = o.y + mahjong.z
+                isUpon = true
             end 
 
             if turn == mahjongGame.seatType.mine then
@@ -1344,7 +1346,9 @@ function mahjongOperation:relocatePengMahjongs(player)
             m:setLocalPosition(p)
             m:setLocalRotation(r)
             m:setLocalScale(s)
-            lastPengPos = Vector3.New(o.x + (mahjong.w * c) * s.x + d + mahjong.w * 0.5, y, o.z)
+            if not isUpon then
+                lastPengPos = Vector3.New(o.x + (mahjong.w * c) * s.x + d + mahjong.w * 0.5, y, o.z)
+            end
         end
     end
     if turn == mahjongGame.seatType.mine then
