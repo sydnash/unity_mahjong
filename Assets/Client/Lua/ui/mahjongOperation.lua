@@ -24,16 +24,16 @@ mahjongOperation.seats = {
     [mahjongGame.seatType.right] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.309, 0.156,  0.275), rot = Quaternion.Euler(180, 90, 0),  scl = Vector3.New(1.0, 1.0, 1.0), len = 0.50 },
         [mahjongGame.cardType.shou] = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.420, 0.156, -0.320), rot = Quaternion.Euler(0, 90, 0),    scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.160, 0.156, -0.080), rot = Quaternion.Euler(0, 90, 0),    scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156,  0.320), rot = Quaternion.Euler(0, 90, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.420, 0.156, -0.320), rot = Quaternion.Euler(0, -90, 0),    scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.160, 0.156, -0.080), rot = Quaternion.Euler(0, -90, 0),    scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156,  0.320), rot = Quaternion.Euler(0, -90, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
     },
     [mahjongGame.seatType.top] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.235, 0.156,  0.330), rot = Quaternion.Euler(180, 0, 0),   scl = Vector3.New(1.0, 1.0, 1.0), len = 0.50 },
         [mahjongGame.cardType.shou] = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.360, 0.156,  0.420), rot = Quaternion.Euler(0, 0, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.100, 0.156,  0.195), rot = Quaternion.Euler(0, 0, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.hu  ] = { pos = Vector3.New(-0.290, 0.156,  0.320), rot = Quaternion.Euler(0, 0, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.360, 0.156,  0.420), rot = Quaternion.Euler(0, 180, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.100, 0.156,  0.195), rot = Quaternion.Euler(0, 180, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.hu  ] = { pos = Vector3.New(-0.290, 0.156,  0.320), rot = Quaternion.Euler(0, 180, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
     },
     [mahjongGame.seatType.left] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.310, 0.156, -0.195), rot = Quaternion.Euler(180, 90, 0),  scl = Vector3.New(1.0, 1.0, 1.0), len = 0.50 },
@@ -1202,15 +1202,19 @@ function mahjongOperation:getMyInhandMahjongPos(player, index)
     local seat = self.seats[turn]
     local o = seat[mahjongGame.cardType.shou].pos
     o = Vector3.New(o.x, o.y, o.z)
-    if self.lastPengPos and turn == mahjongGame.seatType.mine then
-        local sceneCamera = UnityEngine.Camera.main
-        local screenPos = sceneCamera:WorldToScreenPoint(self.lastPengPos)
-        local inhandCamera = GameObjectPicker.instance.camera
-        local direct = o - inhandCamera.transform.position
-        local project = Vector3.Project(direct, inhandCamera.transform.forward)
-        screenPos.x = screenPos.x + 40
-        local wp = inhandCamera:ScreenToWorldPoint(Vector3.New(screenPos.x, screenPos.y, project.magnitude))
-        o.x = wp.x + mahjong.w * index
+    if turn == mahjongGame.seatType.mine then
+        if self.lastPengPos then
+            local sceneCamera = UnityEngine.Camera.main
+            local screenPos = sceneCamera:WorldToScreenPoint(self.lastPengPos)
+            local inhandCamera = GameObjectPicker.instance.camera
+            local direct = o - inhandCamera.transform.position
+            local project = Vector3.Project(direct, inhandCamera.transform.forward)
+            screenPos.x = screenPos.x + 40
+            local wp = inhandCamera:ScreenToWorldPoint(Vector3.New(screenPos.x, screenPos.y, project.magnitude))
+            o.x = wp.x
+        end
+        o.x = o.x + mahjong.w * index
+        log("get my inhand mahjong : " .. o.x  ..  o.y  .. o.z)
         return o
     end
     return o
@@ -1346,6 +1350,11 @@ function mahjongOperation:relocatePengMahjongs(player)
     if turn == mahjongGame.seatType.mine then
         self.lastPengPos = lastPengPos
     end
+
+    if turn == mahjongGame.seatType.mine then
+        local mahjongs = self.inhandMahjongs[gamepref.player.acId]
+        self:relocateInhandMahjongs(gamepref.player, mahjongs)
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -1387,9 +1396,6 @@ function mahjongOperation:putMahjongsToPeng(acId, mahjongs)
 
     local player = self.game:getPlayerByAcId(acId)
     self:relocatePengMahjongs(player)
-
-    local mahjongs = self.inhandMahjongs[gamepref.player.acId]
-    self:relocateInhandMahjongs(player, mahjongs)
 end
 
 -------------------------------------------------------------------------------
