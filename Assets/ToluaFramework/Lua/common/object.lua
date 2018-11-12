@@ -87,6 +87,14 @@ function object:getVisibled()
     return self.gameObject.activeSelf
 end
 
+function object:setVisibled(v)
+    if v then
+        self:show()
+    else
+        self:hide()
+    end
+end
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
