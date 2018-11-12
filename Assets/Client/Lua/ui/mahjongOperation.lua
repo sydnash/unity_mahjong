@@ -955,6 +955,24 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
         if self.chupaiPtr.mahjongId == beCard then
             self.chupaiPtr:hide()
         end
+    elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
+        if self.mo ~= nil then
+            self:insertMahjongToInhand(self.mo)
+            self.mo = nil
+        end
+
+        local m = self:decreaseInhandMahjongs(acId, cards)
+        local p = self.pengMahjongs[gamepref.player.acId]
+
+        for _, v in pairs(p) do
+            if v[1].name == m.name then
+                table.insert(v, m)
+                break
+            end
+        end 
+
+        local player = self.game:getPlayerByAcId(acId)
+        self:relocatePengMahjongs(player)
     else
         if self.mo ~= nil then
             self:insertMahjongToInhand(self.mo)
