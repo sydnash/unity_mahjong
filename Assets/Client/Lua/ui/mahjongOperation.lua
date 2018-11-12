@@ -16,8 +16,8 @@ _RES_(mahjongOperation, "DeskOperationUI", "DeskOperationUI")
 mahjongOperation.seats = {
     [mahjongGame.seatType.mine] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.235, 0.156, -0.268), rot = Quaternion.Euler(180, 0, 0),   scl = Vector3.New(1.0, 1.0, 1.0), len = 0.50 },
-        [mahjongGame.cardType.shou] = { pos = Vector3.New( 0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0),  scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400, 0.156, -0.360), rot = Quaternion.Euler(0, 0, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.shou] = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0),  scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 2, 0.156, -0.360), rot = Quaternion.Euler(0, 0, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.110, 0.156, -0.140), rot = Quaternion.Euler(0, 0, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
         [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 0, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
     },
@@ -554,7 +554,11 @@ function mahjongOperation:onMoPai(acId, cards)
         self.mo = self:getMahjongFromIdle(cards[1])
         self:removeFromIdle()
 
-        self.mo:setLocalPosition(mopaiConfig.position)
+        local mahjongs = self.inhandMahjongs[player.acId]
+        local moPaiPos = self:getMyInhandMahjongPos(player, #mahjongs + 1)
+        moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
+
+        self.mo:setLocalPosition(moPaiPos)
         self.mo:setLocalRotation(mopaiConfig.rotation)
         self.mo:setLocalScale(mopaiConfig.scale)
 
@@ -597,6 +601,13 @@ function mahjongOperation:beginChuPai()
     self.turnCountdown = COUNTDOWN_SECONDS_C
     self.countdownTick = time.realtimeSinceStartup()
     self:setCountdownVisible(true)
+
+    if self.mo == nil then
+        local mahjongs = self.inhandMahjongs[gamepref.player.acId]
+        local moPaiPos = self:getMyInhandMahjongPos(gamepref.player, #mahjongs)
+        moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
+        mahjongs[#mahjongs]:setLocalPosition(moPaiPos)
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -918,6 +929,7 @@ function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
 
     self:putMahjongsToPeng(acId, pengMahjongs)
 
+
     if self.chupaiPtr.mahjongId == beCard then
         self.chupaiPtr:hide()
     end
@@ -1169,6 +1181,26 @@ end
 -------------------------------------------------------------------------------
 -- 调整手牌位置
 -------------------------------------------------------------------------------
+function mahjongOperation:getMyInhandMahjongPos(player, index) 
+    index = index - 1
+    local turn = self.game:getSeatType(player.turn)
+    local seat = self.seats[turn]
+    local o = seat[mahjongGame.cardType.shou].pos
+    o = Vector3.New(o.x, o.y, o.z)
+    if self.lastPengPos and turn == mahjongGame.seatType.mine then
+        local sceneCamera = UnityEngine.Camera.main
+        local screenPos = sceneCamera:WorldToScreenPoint(self.lastPengPos)
+        local inhandCamera = GameObjectPicker.instance.camera
+        local direct = o - inhandCamera.transform.position
+        local project = Vector3.Project(direct, inhandCamera.transform.forward)
+        screenPos.x = screenPos.x + 40
+        local wp = inhandCamera:ScreenToWorldPoint(Vector3.New(screenPos.x, screenPos.y, project.magnitude))
+        o.x = wp.x + mahjong.w * index
+        return o
+    end
+    return o
+end
+
 function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
     if mahjongs == nil then
         return
@@ -1180,6 +1212,9 @@ function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
     local seat = self.seats[turn]
 
     local o = seat[mahjongGame.cardType.shou].pos
+    o = self:getMyInhandMahjongPos(player, 1)
+
+
     local r = seat[mahjongGame.cardType.shou].rot
     local s = seat[mahjongGame.cardType.shou].scl
 
@@ -1188,7 +1223,7 @@ function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
         local p = m:getLocalPosition()
 
         if turn == mahjongGame.seatType.mine then
-            p:Set(o.x - (mahjong.w * k) * s.x, o.y, o.z)
+            p:Set(o.x + (mahjong.w * k) * s.x, o.y, o.z)
             m:setPickabled(true)
         elseif turn == mahjongGame.seatType.left then
             p:Set(o.x, o.y, o.z + (mahjong.w * k) * s.z)
@@ -1261,6 +1296,7 @@ function mahjongOperation:relocatePengMahjongs(player)
 
     local pengMahjongs = self.pengMahjongs[acId]
 
+    local lastPengPos = nil
     for i, mahjongs in pairs(pengMahjongs) do
         i = i - 1
         local d = 0.015 * i -- 碰/杠牌每组之间的间隔
@@ -1289,7 +1325,11 @@ function mahjongOperation:relocatePengMahjongs(player)
             m:setLocalPosition(p)
             m:setLocalRotation(r)
             m:setLocalScale(s)
+            lastPengPos = Vector3.New(o.x + (mahjong.w * c) * s.x + d + mahjong.w * 0.5, y, o.z)
         end
+    end
+    if turn == mahjongGame.seatType.mine then
+        self.lastPengPos = lastPengPos
     end
 end
 
@@ -1332,6 +1372,9 @@ function mahjongOperation:putMahjongsToPeng(acId, mahjongs)
 
     local player = self.game:getPlayerByAcId(acId)
     self:relocatePengMahjongs(player)
+
+    local mahjongs = self.inhandMahjongs[gamepref.player.acId]
+    self:relocateInhandMahjongs(player, mahjongs)
 end
 
 -------------------------------------------------------------------------------
@@ -1367,6 +1410,7 @@ end
 function mahjongOperation:clear(forceDestroy)
     log("clear, forceDestroy = " .. tostring(forceDestroy))
 
+    self.lastPengPos = nil
     if forceDestroy then
         -- 直接删除
         for _, m in pairs(self.idleMahjongs) do
@@ -1520,12 +1564,12 @@ function mahjongOperation:sortInhand(player, mahjongs)
     if player.acId == gamepref.player.acId then
         table.sort(mahjongs, function(a, b)
             if a.class == player.que and b.class ~= player.que then
-                return true
-            elseif b.class == player.que and a.class ~= player.que then
                 return false
+            elseif b.class == player.que and a.class ~= player.que then
+                return true
             end
 
-            return a.id > b.id
+            return a.id < b.id
         end)
     end
 end
