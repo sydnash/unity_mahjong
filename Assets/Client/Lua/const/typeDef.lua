@@ -71,7 +71,7 @@ opType = {
     gang = { id = 4, 
              detail = { angang              = 0, 
                         bagangwithmoney     = 1, 
-                        bagangwithoutmoney  = 1, 
+                        bagangwithoutmoney  = 2, 
                         minggang            = 3, 
              } 
     },
