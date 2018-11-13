@@ -48,66 +48,120 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function table.tostring(t, _n)
-	if not appConfig.debug then return '' end 
+--function table.tostring(t, _n)
+--	if not appConfig.debug then return '' end 
 
-	if t == nil then return 'nil' end
-	if type(t) ~= 'table' then return '' end
+--	if t == nil then return 'nil' end
+--	if type(t) ~= 'table' then return '' end
 
-	local _t = {}
-	--_n = _n or 0
-	function _t:_tostring(t, n)
-		if _n and n > _n then return '' end
+--	local _t = {}
+--	--_n = _n or 0
+--	function _t:_tostring(t, n)
+--		if _n and n > _n then return '' end
 
-		self[t] = n
-		local str = {}
-		local fmt = {}
+--		self[t] = n
+--		local str = {}
+--		local fmt = {}
 
-		n = n or 0
-		for i=1,n do
-			fmt[#fmt+1] = '  '
-		end
-		local fmt_str = table.concat(fmt)
+--		n = n or 0
+--		for i=1,n do
+--			fmt[#fmt+1] = '  '
+--		end
+--		local fmt_str = table.concat(fmt)
 
-		str[#str+1] = '{\n'
-		if type(t) ~= 'table' then
-			error('not table' .. debug.traceback())
-		end
+--		str[#str+1] = '{\n'
+--		if type(t) ~= 'table' then
+--			error('not table' .. debug.traceback())
+--		end
 
-		for k,v in pairs(t) do
-			if type(v) == 'table' and not self[v] then
-                local key
-				if type(k) == 'number' then
-					key = "[" .. tostring(k) .. "]"
-				else
-					key = tostring(k)
-				end
-				str[#str+1] = string.format('  %s%s=', fmt_str, key)
-				str[#str+1] = self:_tostring(v, n+1)
-			elseif type(v) == 'string' then
-				local key
-				if type(k) == "number" then
-					key = '[' .. tostring(k) .. ']'
-				else
-					key = tostring(k)
-				end
-				str[#str+1] = string.format("  %s%s='%s',\n", fmt_str, key, tostring(v))
-			else
-				local key
-				if type(k) == "number" then
-					key = "[" .. tostring(k) .. "]"
-				else
-					key = tostring(k)
-				end
-				str[#str+1] = string.format("  %s%s='%s',\n", fmt_str, key, tostring(v))
-			end
-		end
-		str[#str+1] = fmt_str..'},\n'
+--		for k,v in pairs(t) do
+--			if type(v) == 'table' and not self[v] then
+--                local key
+--				if type(k) == 'number' then
+--					key = "[" .. tostring(k) .. "]"
+--				else
+--					key = tostring(k)
+--				end
+--				str[#str+1] = string.format('  %s%s=', fmt_str, key)
+--				str[#str+1] = self:_tostring(v, n+1)
+--			elseif type(v) == 'string' then
+--				local key
+--				if type(k) == "number" then
+--					key = '[' .. tostring(k) .. ']'
+--				else
+--					key = tostring(k)
+--				end
+--				str[#str+1] = string.format("  %s%s='%s',\n", fmt_str, key, tostring(v))
+--			else
+--				local key
+--				if type(k) == "number" then
+--					key = "[" .. tostring(k) .. "]"
+--				else
+--					key = tostring(k)
+--				end
+--				str[#str+1] = string.format("  %s%s='%s',\n", fmt_str, key, tostring(v))
+--			end
+--		end
+--		str[#str+1] = fmt_str..'},\n'
 
-		return table.concat(str)
-	end
+--		return table.concat(str)
+--	end
 
-	return _t:_tostring(t, 0)
+--	return _t:_tostring(t, 0)
+--end
+
+function table.tostring(object)
+    local lookupTable = {}
+    local result = {}
+
+    local function _v(v)
+        if type(v) == "string" then
+            v = "\"" .. v .. "\""
+        end
+        return tostring(v)
+    end
+
+    local function _vardump(object, label, indent, nest)
+        --label = label or "<var>"
+        local postfix = ""
+        if nest > 1 then postfix = "," end
+        if type(object) ~= "table" then
+            if type(label) == "string" and #label > 0 then
+                result[#result +1] = string.format("%s%s = %s%s", indent, label, _v(object), postfix)
+            else
+                result[#result +1] = string.format("%s%s%s", indent, _v(object), postfix)
+            end
+        elseif not lookupTable[object] then
+            lookupTable[object] = true
+
+            if type(label) == "string" and #label > 0  then
+                result[#result +1 ] = string.format("%s%s = {", indent, label)
+            else
+                result[#result +1 ] = string.format("%s{", indent)
+            end
+            local indent2 = indent .. "    "
+            local keys = {}
+            local values = {}
+            for k, v in pairs(object) do
+                keys[#keys + 1] = k
+                values[k] = v
+            end
+            table.sort(keys, function(a, b)
+                if type(a) == "number" and type(b) == "number" then
+                    return a < b
+                else
+                    return tostring(a) < tostring(b)
+                end
+            end)
+            for i, k in ipairs(keys) do
+                _vardump(values[k], k, indent2, nest + 1)
+            end
+            result[#result +1] = string.format("%s}%s", indent, postfix)
+        end
+    end
+    _vardump(object, "", "", 1)
+
+    return table.concat(result, "\n")
 end
 
 local function escape(k)

@@ -60,6 +60,35 @@ public static class LFS
     /// 
     /// </summary>
     /// <param name="filename"></param>
+    /// <param name="encode"></param>
+    /// <returns></returns>
+    public static string ReadText(string filename, Encoding encode)
+    {
+        string text = string.Empty;
+
+        try
+        {
+            if (File.Exists(filename))
+            {
+                StreamReader sr = new StreamReader(filename, encode);
+                text = sr.ReadToEnd();
+                sr.Close();
+            }
+        }
+        catch(Exception ex)
+        {
+#if UNITY_EDITOR
+            Debug.LogError(ex.Message);
+#endif
+        }
+
+        return text;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filename"></param>
     /// <param name="content"></param>
     public static void WriteBytes(string filename, byte[] content)
     {
@@ -74,6 +103,32 @@ public static class LFS
             Debug.LogError(ex.Message);
 #endif
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <returns></returns>
+    public static byte[] ReadBytes(string filename)
+    {
+        byte[] bytes = null;
+
+        try
+        {
+            if (File.Exists(filename))
+            {
+                bytes = File.ReadAllBytes(filename);
+            }
+        }
+        catch (Exception ex)
+        {
+#if UNITY_EDITOR
+            Debug.LogError(ex.Message);
+#endif
+        }
+
+        return bytes;
     }
 
     /// <summary>

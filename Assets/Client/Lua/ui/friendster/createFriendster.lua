@@ -20,8 +20,7 @@ function createFriendster:onInit()
     self.mName:addChangedListener(self.onNameChangedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
     self.mCityList_ChengDu:addChangedListener(self.onCityChangedHandler, self)
-    self.mCityList_WenJiang:addChangedListener(self.onCityChangedHandler, self)
-    self.mCityList_PiDu:addChangedListener(self.onCityChangedHandler, self)
+    self.mCityList_JinTang:addChangedListener(self.onCityChangedHandler, self)
 
     self.mUnexpand:hide()
     self.mCityList:hide()
@@ -34,9 +33,8 @@ function createFriendster:onInit()
     self.mCityList_WenJiang:setSelected(false)
     self.mCityList_PiDu:setSelected(false)
 
-    self.mCityList_ChengDu.id   = cityType.chengdu
-    self.mCityList_WenJiang.id  = cityType.wenjiang
-    self.mCityList_PiDu.id      = cityType.pidu
+    self.mCityList_ChengDu.id  = cityType.chengdu
+    self.mCityList_JinTang.id  = cityType.jintang
 
     self:refreshCreateState()
 end

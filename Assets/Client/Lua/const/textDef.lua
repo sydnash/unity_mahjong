@@ -34,9 +34,8 @@ retcText = {
 }
 
 cityName = {
-    [cityType.chengdu]  = "成都",
-    [cityType.wenjiang] = "温江", 
-    [cityType.pidu]     = "郫都",
+    [cityType.chengdu] = "成都",
+    [cityType.jintang] = "金堂",
 }
 
 mailGiftName = {

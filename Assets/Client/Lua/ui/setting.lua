@@ -91,27 +91,29 @@ function setting:onExitClickedHandler()
 end
 
 function setting:onMandarinChangedHandler(selected)
-    playButtonClickSound()
-
     if selected then
+        playButtonClickSound()
         gamepref.setLanguage(language.mandarin)
     end
 end
 
 function setting:onSichuanChangedHandler(selected)
-    playButtonClickSound()
-
     if selected then
+        playButtonClickSound()
         gamepref.setLanguage(language.sichuan)
     end
 end
 
 function setting:on3DModelChangedHandler(selected)
-    playButtonClickSound()
+    if selected then
+        playButtonClickSound()
+    end
 end
 
 function setting:onWechatHeaderChangedHandler(selected)
-    playButtonClickSound()
+    if selected then
+        playButtonClickSound()
+    end
 end
 
 

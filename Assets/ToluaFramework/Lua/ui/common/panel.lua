@@ -13,6 +13,7 @@ local toggle        = require("ui.common.toggle")
 local slider        = require("ui.common.slider")
 local input         = require("ui.common.input")
 local scrollview    = require("ui.common.scrollview")
+local scrollrect    = require("ui.common.scrollrect")
 local pageview      = require("ui.common.pageview")
 local animation     = require("ui.common.animation")
 
@@ -56,7 +57,7 @@ local function bind(target, variableName, gameObject, widgetType, panelScript)
     elseif widgetType == LuaPanel.WidgetType.ScrollView then 
         widget = scrollview.new(gameObject)
     elseif widgetType == LuaPanel.WidgetType.ScrollRect then 
-        --
+        widget = scrollrect.new(gameObject)
     elseif widgetType == LuaPanel.WidgetType.PageView then 
         widget = pageview.new(gameObject)
     elseif widgetType == LuaPanel.WidgetType.Animation then 

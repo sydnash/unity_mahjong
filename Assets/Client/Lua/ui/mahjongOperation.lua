@@ -1552,6 +1552,10 @@ end
 function mahjongOperation:reset()
     touch.removeListener()
 
+    self.diceRoot:show()
+    self.centerGlass:show()
+    self.countdown:show()
+
     self:clear(false)
     self:hideOperations()
 end
@@ -1561,6 +1565,11 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:onDestroy()
     touch.removeListener()
+
+    self.diceRoot:show()
+    self.centerGlass:show()
+    self.countdown:show()
+
     self:clear(true)
 
     for _, v in pairs(self.diceMats) do

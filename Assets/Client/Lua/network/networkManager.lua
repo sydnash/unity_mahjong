@@ -373,8 +373,8 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.createDesk(cityType, choose, clubId, callback)
-    local data = { GameType = cityType, ConfigChoose = table.tojson(choose), ClubId = clubId }
+function networkManager.createDesk(cityType, gameType, choose, clubId, callback)
+    local data = { GameType = cityType, Game = gameType, ConfigChoose = table.tojson(choose), ClubId = clubId }
     send(protoType.cs.createDesk, data, function(msg)
         if msg == nil then
             callback(false, nil)

@@ -655,6 +655,8 @@ function mahjongGame:exitGame()
     local loading = require("ui.loading").new()
     loading:show()
 
+    self:destroy()
+
     sceneManager.load("scene", "lobbyscene", function(completed, progress)
         loading:setProgress(progress)
 

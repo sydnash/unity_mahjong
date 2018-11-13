@@ -28,10 +28,11 @@ function createDesk:onCreateClickedHandler()
     local loading = require("ui.loading").new()
     loading:show()
 
-    local choose = { }
+    local choose = self.config[gameTypeSID[self.gameType]]
+    --log("create desk, choose = " .. table.tostring(choose))
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 
-    networkManager.createDesk(self.cityType, choose, friendsterId, function(ok, msg)
+    networkManager.createDesk(self.cityType, self.gameType, choose, friendsterId, function(ok, msg)
         if not ok then
             loading:close()
             showMessageUI("网络繁忙，请稍后再试")
@@ -49,11 +50,84 @@ function createDesk:onCreateClickedHandler()
         signalManager.signal(signalType.enterDesk, { cityType = msg.GameType, deskId = msg.DeskId, loading = loading })
         self:close()
     end)
+
+    self:writeConfig()
+
+    if self.detail ~= nil then
+        self.detail:close()
+        self.detail = nil
+    end
 end
 
 function createDesk:set(cityType, friendsterId)
     self.cityType = cityType
+    self.gameType = gameType.mahjong
     self.friendsterId = friendsterId
+
+    self.config = self:readConfig()
+    self:createDetail()
+end
+
+function createDesk:createDetail()
+    if self.detail ~= nil then
+        self.detail:close()
+        self.detail = nil
+    end
+    
+    local path = string.format("ui.createDesk.%s.createDeskDetail_%s", gameTypeSID[self.gameType], cityTypeSID[self.cityType])
+    
+    self.detail = require(path).new()
+    self.detail:setParent(self.mDetailRoot)
+    self.detail:set(self.config[gameTypeSID[self.gameType]])
+    self.detail:show()
+end
+
+function createDesk:readConfig()
+    local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "create_desk_detail_configs", cityTypeSID[self.cityType] .. ".txt")
+    local text = LFS.ReadText(path, LFS.UTF8_WITHOUT_BOM)
+
+    if string.isNilOrEmpty(text) then
+        return {
+            [gameTypeSID[gameType.mahjong]] = {
+                ["RenShu"]          = 1,
+                ["JuShu"]           = 1,
+                ["FangShu"]         = 1,
+                ["FengDing"]        = 1,
+                ["ZiMoJiaX"]        = 1,
+                ["DianGangHuaX"]    = 1,
+                ["HuanNZhang"]      = 1,
+                ["YaoJiu"]          = 1,
+                ["ZhongZhang"]      = 1,
+                ["JiangDui"]        = 1,
+                ["MenQIng"]         = 1,
+                ["TianDiHu"]        = 1,
+            },
+        }
+    end
+
+    return loadstring(text)()
+end
+
+function createDesk:writeConfig()
+    local text = table.tostring(self.config)
+    if not string.isNilOrEmpty(text) then
+        if string.endsWith(text, ",\n") then
+            local len = #text
+            text = string.sub(text, 1, len - 2)
+        end
+
+        text = "return " .. text
+
+        local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "create_desk_detail_configs", cityTypeSID[self.cityType] .. ".txt")
+        LFS.WriteText(path, text, LFS.UTF8_WITHOUT_BOM)
+    end
+end
+
+function createDesk:onDestroy()
+    if self.detail ~= nil then
+        self.detail:close()
+        self.detail = nil
+    end
 end
 
 return createDesk

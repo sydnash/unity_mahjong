@@ -9,7 +9,9 @@ public class LFSWrap
 		L.BeginStaticLibs("LFS");
 		L.RegFunction("CombinePath", CombinePath);
 		L.RegFunction("WriteText", WriteText);
+		L.RegFunction("ReadText", ReadText);
 		L.RegFunction("WriteBytes", WriteBytes);
+		L.RegFunction("ReadBytes", ReadBytes);
 		L.RegFunction("MoveFile", MoveFile);
 		L.RegFunction("CopyFile", CopyFile);
 		L.RegFunction("RemoveFile", RemoveFile);
@@ -78,6 +80,24 @@ public class LFSWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ReadText(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			System.Text.Encoding arg1 = (System.Text.Encoding)ToLua.CheckObject<System.Text.Encoding>(L, 2);
+			string o = LFS.ReadText(arg0, arg1);
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int WriteBytes(IntPtr L)
 	{
 		try
@@ -87,6 +107,23 @@ public class LFSWrap
 			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
 			LFS.WriteBytes(arg0, arg1);
 			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ReadBytes(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			byte[] o = LFS.ReadBytes(arg0);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
