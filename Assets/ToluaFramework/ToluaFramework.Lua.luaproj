@@ -75,6 +75,7 @@
     <Compile Include="Lua\ui\common\input.lua" />
     <Compile Include="Lua\ui\common\pageview.lua" />
     <Compile Include="Lua\ui\common\panel.lua" />
+    <Compile Include="Lua\ui\common\scrollrect.lua" />
     <Compile Include="Lua\ui\common\scrollview.lua" />
     <Compile Include="Lua\ui\common\slider.lua" />
     <Compile Include="Lua\ui\common\sprite.lua" />
