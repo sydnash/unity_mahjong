@@ -24,11 +24,12 @@ mahjongGame.cardType = {
 -- 构造函数
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data)
---    log("mahjongGame, data = " .. table.tostring(data))
+    log("mahjongGame, data = " .. table.tostring(data))
     self.totalMahjongCount  = 108
     self.leftMahjongCount   = 0
     self.deskId             = data.DeskId
     self.cityType           = data.GameType
+    self.gameType           = gameType.mahjong
     self.config             = data.Config
     self.status             = data.Status
     self.creatorAcId        = data.Creator

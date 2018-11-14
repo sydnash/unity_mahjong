@@ -28,10 +28,6 @@ function mahjongDesk:onInit()
     self.mInvitePanel:hide()
     self:refreshUI()
 
-    self.mGameDesc:hide()
-    self.mGameInfoS:show()
-    self.mGameInfoH:hide()
-
     self.mInvite:addClickListener(self.onInviteClickedHandler, self)
     self.mInvitePanel:addClickListener(self.onInvitePanelClickedHandler, self)
     self.mInviteWX:addClickListener(self.onInviteWXClickedHandler, self)
@@ -41,8 +37,7 @@ function mahjongDesk:onInit()
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
     self.mChat:addClickListener(self.onChatClickedHandler, self)
     self.mVoice:addClickListener(self.onVoiceClickedHandler, self)
-    self.mGameInfoS:addClickListener(self.onGameInfoSClickedHandler, self)
-    self.mGameInfoH:addClickListener(self.onGameInfoHClickedHandler, self)
+    self.mGameInfo:addClickListener(self.onGameInfoClickedHandler, self)
 
     networkManager.registerCommandHandler(protoType.sc.chatMessage, function(msg)
         self:onChatMessageHandler(msg)
@@ -238,10 +233,6 @@ function mahjongDesk:reset()
     for _, v in pairs(self.players) do
         v:reset()
     end
-
-    self.mGameDesc:hide()
-    self.mGameInfoS:show()
-    self.mGameInfoH:hide()
 end
 
 function mahjongDesk:update()
@@ -317,20 +308,11 @@ function mahjongDesk:onDingQueDo(msg)
     end
 end
 
-function mahjongDesk:onGameInfoSClickedHandler()
+function mahjongDesk:onGameInfoClickedHandler()
     playButtonClickSound()
 
-    self.mGameDesc:show()
-    self.mGameInfoS:hide()
-    self.mGameInfoH:show()
-end
-
-function mahjongDesk:onGameInfoHClickedHandler()
-    playButtonClickSound()
-
-    self.mGameDesc:hide()
-    self.mGameInfoS:show()
-    self.mGameInfoH:hide()
+    local ui = require("ui.deskDetail").new(self.game.cityType, self.game.gameType, self.game.config)
+    ui:show()
 end
 
 function mahjongDesk:onChatMessageHandler(msg)

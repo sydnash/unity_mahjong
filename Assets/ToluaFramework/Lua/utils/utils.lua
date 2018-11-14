@@ -148,6 +148,21 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function findText(transform, name)
+    assert(transform ~= nil, "can't find a child for nil")
+
+    local child = transform:Find(name)
+    if child ~= nil then
+        local text = require("ui.common.text")
+        return text.new(child.gameObject)
+    end
+
+    return nil
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function findChildByIndex(transform, index)
     assert(transform ~= nil)
 

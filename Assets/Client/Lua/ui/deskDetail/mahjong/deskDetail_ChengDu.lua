@@ -3,12 +3,29 @@
 --此文件由[BabeLua]插件自动生成
 
 local base = require("ui.common.view")
-local createDeskDetail = class("createDeskDetail", base)
+local deskDetail = class("deskDetail", base)
 
-_RES_(createDeskDetail, "CreateDeskUI/Mahjong", "CreateDeskDetialUI_ChengDu")
-local filepath = ""
+_RES_(deskDetail, "DeskDetailUI/Mahjong", "DeskDetailUI_ChengDu")
 
-function createDeskDetail:onInit()
+local LABEL_S_COLOR = Color.New(12  / 255, 138 / 255, 33 / 255, 1)
+local LABEL_U_COLOR = Color.New(146 / 255, 84  / 255, 46 / 255, 1)
+
+local function setTextColorBySelection(c)
+    local text = findText(c.transform, "Label")
+
+    if text ~= nil then
+        text:setColor(c:getSelected() and LABEL_S_COLOR or LABEL_U_COLOR)
+    end
+end
+
+function deskDetail:ctor(config, interactable)
+    self.config = config
+    self.interactable = interactable
+
+    self.super.ctor(self)
+end
+
+function deskDetail:onInit()
     self.mRenShu4.n = "RenShu"
     self.mRenShu4.v = 1
     self.mRenShu3.n = "RenShu"
@@ -72,7 +89,7 @@ function createDeskDetail:onInit()
     self.mYaoJiu.n = "YaoJiu"
     self.mZhongZhang.n = "ZhongZhang"
     self.mJiangDui.n = "JiangDui"
-    self.mMenQing.n = "MenQIng"
+    self.mMenQing.n = "MenQing"
     self.mTianDiHu.n = "TianDiHu"
 
     self.mYaoJiu:addChangedListener(self.onCheckboxChangedHandler, self)
@@ -80,14 +97,11 @@ function createDeskDetail:onInit()
     self.mJiangDui:addChangedListener(self.onCheckboxChangedHandler, self)
     self.mMenQing:addChangedListener(self.onCheckboxChangedHandler, self)
     self.mTianDiHu:addChangedListener(self.onCheckboxChangedHandler, self)
-end
 
-function createDeskDetail:set(config)
-    self.config = config
     self:refreshUI()
 end
 
-function createDeskDetail:refreshUI()
+function deskDetail:refreshUI()
     self.mRenShu4:setSelected(self.config.RenShu == self.mRenShu4.v)
     self.mRenShu3:setSelected(self.config.RenShu == self.mRenShu3.v)
     self.mRenShu2:setSelected(self.config.RenShu == self.mRenShu2.v)
@@ -111,41 +125,76 @@ function createDeskDetail:refreshUI()
 
     self.mHuanSanZhang:setSelected(self.config.HuanNZhang == self.mHuanSanZhang.v)
     self.mHuanSiZhang:setSelected(self.config.HuanNZhang == self.mHuanSiZhang.v)
-    
 
     self.mYaoJiu:setSelected(self.config.YaoJiu == 1)
     self.mZhongZhang:setSelected(self.config.ZhongZhang == 1)
     self.mJiangDui:setSelected(self.config.JiangDui == 1)
     self.mMenQing:setSelected(self.config.MenQing == 1)
     self.mTianDiHu:setSelected(self.config.TianDiHu == 1)
+
+    local cs = {
+        self.mRenShu4,
+        self.mRenShu3,
+        self.mRenShu2,
+        self.mJuShu08,
+        self.mJuShu12,
+        self.mJuShu16,
+        self.mFangShu3,
+        self.mFangShu2,
+        self.mFengDing3,
+        self.mFengDing4,
+        self.mFengDing5,
+        self.mZiMoJiaDi,
+        self.mZiMoJiaFan,
+        self.mDianGangHuaPao,
+        self.mDianGangHuaMo,
+        self.mHuanSanZhang,
+        self.mHuanSiZhang,
+        self.mYaoJiu,
+        self.mZhongZhang,
+        self.mJiangDui,
+        self.mMenQing,
+        self.mTianDiHu,
+    }
+
+    for _, v in pairs(cs) do
+        v:setInteractable(self.interactable)
+        setTextColorBySelection(v)
+    end
 end
 
-function createDeskDetail:onRadioboxChangedHandler(sender, selected, clicked)
+function deskDetail:onRadioboxChangedHandler(sender, selected, clicked)
     if clicked and selected then
         playButtonClickSound()
         self.config[sender.n] = sender.v
     end
+
+    setTextColorBySelection(sender)
 end
 
-function createDeskDetail:onCheckboxChangedHandler(sender, selected, clicked)
+function deskDetail:onCheckboxChangedHandler(sender, selected, clicked)
     if clicked then
         playButtonClickSound()
         self.config[sender.n] = selected and 1 or 2
     end
+
+    setTextColorBySelection(sender)
 end
 
-function createDeskDetail:OnHuanNZhangChangedHandler(sender, selected, clicked)
+function deskDetail:OnHuanNZhangChangedHandler(sender, selected, clicked)
     if clicked then
         playButtonClickSound()
         self.config[sender.n] = selected and sender.v or 1
     end
+
+    setTextColorBySelection(sender)
 end
 
-function createDeskDetail:onDestroy()
+function deskDetail:onDestroy()
     self.mScrollRect:reset()
     self.super.onDestroy(self)
 end
 
-return createDeskDetail
+return deskDetail
 
 --endregion

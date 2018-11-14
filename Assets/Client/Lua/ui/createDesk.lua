@@ -29,7 +29,7 @@ function createDesk:onCreateClickedHandler()
     loading:show()
 
     local choose = self.config[gameTypeSID[self.gameType]]
---    log("create desk, choose = " .. table.tostring(choose))
+    log("create desk, choose = " .. table.tostring(choose))
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 
     networkManager.createDesk(self.cityType, self.gameType, choose, friendsterId, function(ok, msg)
@@ -39,7 +39,7 @@ function createDesk:onCreateClickedHandler()
             return
         end
 
---        log("create desk, msg = " .. table.tostring(msg))
+        log("create desk, msg = " .. table.tostring(msg))
 
         if msg.RetCode ~= retc.ok then
             loading:close()
@@ -52,11 +52,6 @@ function createDesk:onCreateClickedHandler()
     end)
 
     self:writeConfig()
-
-    if self.detail ~= nil then
-        self.detail:close()
-        self.detail = nil
-    end
 end
 
 function createDesk:set(cityType, friendsterId)
@@ -74,11 +69,10 @@ function createDesk:createDetail()
         self.detail = nil
     end
     
-    local path = string.format("ui.createDesk.%s.createDeskDetail_%s", gameTypeSID[self.gameType], cityTypeSID[self.cityType])
+    local path = string.format("ui.deskDetail.%s.deskDetail_%s", gameTypeSID[self.gameType], cityTypeSID[self.cityType])
     
-    self.detail = require(path).new()
+    self.detail = require(path).new(self.config[gameTypeSID[self.gameType]], true)
     self.detail:setParent(self.mDetailRoot)
-    self.detail:set(self.config[gameTypeSID[self.gameType]])
     self.detail:show()
 end
 
@@ -87,7 +81,7 @@ function createDesk:readConfig()
     local text = LFS.ReadText(path, LFS.UTF8_WITHOUT_BOM)
 
     if string.isNilOrEmpty(text) then
-        return require("config.createDeskConfig")
+        return deskDetailConfig[cityTypeSID[self.cityType]]
     end
 
     return loadstring(text)()

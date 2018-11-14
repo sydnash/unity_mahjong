@@ -6,6 +6,8 @@ require("const.typeDef")
 require("const.textDef")
 require("const.statusDef")
 
+require("config.deskDetailConfig")
+
 deviceConfig    = require("config.deviceConfig")
 gameConfig      = require("config.gameConfig")
 gamepref        = require("logic.gamepref")
