@@ -25,7 +25,7 @@ function createFriendster:onInit()
     self.mUnexpand:hide()
     self.mCityList:hide()
 
-    self.mCity:setText(string.empty)
+    self.mCity:setText(cityName[gamepref.city.City])
     self.mName:setCharacterLimit(gameConfig.friendsterNameMaxLength)
     self.mName:setText(string.empty)
     
@@ -34,6 +34,15 @@ function createFriendster:onInit()
 
     self.mCityList_ChengDu.id  = cityType.chengdu
     self.mCityList_JinTang.id  = cityType.jintang
+
+    local citys = {
+        self.mCityList_ChengDu,
+        self.mCityList_JinTang,
+    }
+
+    for _, v in pairs(citys) do
+        v:setSelected(v.id == gamepref.city.City)
+    end
 
     self:refreshCreateState()
 end

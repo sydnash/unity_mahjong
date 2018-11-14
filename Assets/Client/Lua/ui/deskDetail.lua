@@ -37,6 +37,15 @@ function deskDetail:onCloseClickedHandler()
     self:close()
 end
 
+function deskDetail:onDestroy()
+    if self.detail ~= nil then
+        self.detail:close()
+        self.detail = nil
+    end
+
+    self.super.onDestroy(self)
+end
+
 return deskDetail
 
 --endregion
