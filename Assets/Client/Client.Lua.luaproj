@@ -33,19 +33,19 @@
     <Folder Include="Lua\config\" />
     <Folder Include="Lua\platform\" />
     <Folder Include="Lua\ui\" />
-    <Folder Include="Lua\ui\createDesk\mahjong\" />
+    <Folder Include="Lua\ui\deskDetail\mahjong\" />
     <Folder Include="Lua\ui\gameEnd\" />
     <Folder Include="Lua\ui\mahjongDesk\" />
     <Folder Include="Lua\ui\gameOver\" />
     <Folder Include="Lua\ui\exitDesk\" />
     <Folder Include="Lua\ui\friendster\" />
     <Folder Include="Lua\ui\mail\" />
-    <Folder Include="Lua\ui\createDesk\" />
+    <Folder Include="Lua\ui\deskDetail\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
     <Compile Include="Lua\config\chatConfig.lua" />
-    <Compile Include="Lua\config\createDeskConfig.lua" />
+    <Compile Include="Lua\config\deskDetailConfig.lua" />
     <Compile Include="Lua\config\deviceConfig.lua" />
     <Compile Include="Lua\config\gameConfig.lua" />
     <Compile Include="Lua\config\networkConfig.lua" />
@@ -72,7 +72,8 @@
     <Compile Include="Lua\ui\authentication.lua" />
     <Compile Include="Lua\ui\chat.lua" />
     <Compile Include="Lua\ui\city.lua" />
-    <Compile Include="Lua\ui\createDesk\mahjong\createDeskDetail_ChengDu.lua" />
+    <Compile Include="Lua\ui\deskDetail.lua" />
+    <Compile Include="Lua\ui\deskDetail\mahjong\deskDetail_ChengDu.lua" />
     <Compile Include="Lua\ui\errorMessage.lua" />
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDesk.lua" />
