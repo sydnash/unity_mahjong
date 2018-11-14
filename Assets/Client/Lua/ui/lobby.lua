@@ -12,6 +12,7 @@ function lobby:onInit()
     self.mNickname:setText(cutoutString(gamepref.player.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText("帐号:" .. gamepref.player.acId)
     self.mCards:setText(tostring(gamepref.player.cards))
+    self.mCityText:setSprite(cityTypeSID[gamepref.city.City])
 
     self.mHead:addClickListener(self.onHeadClickedHandler, self)
     self.mSwitchCity:addClickListener(self.onSwitchCityClickedHandler, self)
@@ -44,6 +45,7 @@ function lobby:onInit()
     signalManager.registerSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
     signalManager.registerSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.registerSignalHandler(signalType.mail, self.onMailHandler, self)
+    signalManager.registerSignalHandler(signalType.city, self.onCityChangedHandler, self)
 end
 
 function lobby:onHeadClickedHandler()
@@ -56,6 +58,9 @@ end
 
 function lobby:onSwitchCityClickedHandler()
     playButtonClickSound()
+
+    local ui = require("ui.city").new()
+    ui:show()
 end
 
 function lobby:onAddRoomCardClickedHandler()
@@ -83,7 +88,7 @@ function lobby:onEnterDeskClickedHandler()
     playButtonClickSound()
 
     local ui = require("ui.enterDesk").new(function(deskId)
-        local cityType = cityType.chengdu
+        local cityType = gamepref.city.City
 
         local loading = require("ui.loading").new()
         loading:show()
@@ -99,15 +104,16 @@ function lobby:onReturnDeskClickedHandler()
     local loading = require("ui.loading").new()
     loading:show()
 
-    local cityType = cityType.chengdu
-    self:enterDesk(loading, cityType, clientApp.currentDesk.deskId)
+    local cityType = clientApp.currentDesk.cityType
+    local deskId = clientApp.currentDesk.deskId
+    self:enterDesk(loading, cityType, deskId)
 end
 
 function lobby:onCreateDeskClickedHandler()
     playButtonClickSound()
     
     local ui = require("ui.createDesk").new()
-    ui:set(cityType.chengdu, 0)
+    ui:set(gamepref.city.City, 0)
     ui:show()
 end
 
@@ -224,6 +230,10 @@ function lobby:onMailHandler()
     self:refreshMailRP()
 end
 
+function lobby:onCityChangedHandler(city)
+    self.mCityText:setSprite(cityTypeSID[city])
+end
+
 function lobby:refreshMailRP()
     local newmail = false
 
@@ -245,6 +255,7 @@ function lobby:onDestroy()
     signalManager.unregisterSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
     signalManager.unregisterSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.unregisterSignalHandler(signalType.mail, self.onMailHandler, self)
+    signalManager.unregisterSignalHandler(signalType.city, self.onCityChangedHandler, self)
 
     self.mIcon:reset()
     self.super.onDestroy(self)

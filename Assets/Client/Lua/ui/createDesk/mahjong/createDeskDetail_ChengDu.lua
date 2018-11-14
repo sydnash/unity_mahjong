@@ -84,7 +84,6 @@ end
 
 function createDeskDetail:set(config)
     self.config = config
-    log(self.config)
     self:refreshUI()
 end
 
@@ -112,6 +111,7 @@ function createDeskDetail:refreshUI()
 
     self.mHuanSanZhang:setSelected(self.config.HuanNZhang == self.mHuanSanZhang.v)
     self.mHuanSiZhang:setSelected(self.config.HuanNZhang == self.mHuanSiZhang.v)
+    
 
     self.mYaoJiu:setSelected(self.config.YaoJiu == 2)
     self.mZhongZhang:setSelected(self.config.ZhongZhang == 2)
@@ -120,26 +120,25 @@ function createDeskDetail:refreshUI()
     self.mTianDiHu:setSelected(self.config.TianDiHu == 2)
 end
 
-function createDeskDetail:onRadioboxChangedHandler(selected, sender)
-    if selected then
+function createDeskDetail:onRadioboxChangedHandler(sender, selected, clicked)
+    if clicked and selected then
         playButtonClickSound()
         self.config[sender.n] = sender.v
     end
 end
 
-function createDeskDetail:onCheckboxChangedHandler(selected, sender)
-    if selected then
+function createDeskDetail:onCheckboxChangedHandler(sender, selected, clicked)
+    if clicked and selected then
         playButtonClickSound()
         self.config[sender.n] = selected and 2 or 1
     end
 end
 
-function createDeskDetail:OnHuanNZhangChangedHandler(selected, sender)
-    if selected or self.config[sender.n] == sender.v then
+function createDeskDetail:OnHuanNZhangChangedHandler(sender, selected, clicked)
+    if clicked then
         playButtonClickSound()
+        self.config[sender.n] = selected and sender.v or 1
     end
-
-    self.config[sender.n] = selected and sender.v or 1
 end
 
 function createDeskDetail:onDestroy()

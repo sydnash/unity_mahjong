@@ -171,6 +171,7 @@ public static class CustomSettings
         _GT(typeof(RawImage)),
         _GT(typeof(Toggle)),
         _GT(typeof(Toggle.ToggleEvent)),
+        _GT(typeof(CxToggle)),
         _GT(typeof(Slider)),
         _GT(typeof(Slider.SliderEvent)),
         _GT(typeof(InputField)),

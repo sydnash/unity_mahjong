@@ -183,6 +183,9 @@ local function inviteSgCallback(params)
     platformHelper.clearSGInviteParam()
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
 local function downloadPatches(patchlist, size, plistText, downloadui)
     local totalCount        = #patchlist
     local successfulCount   = 0
@@ -232,6 +235,9 @@ local function downloadPatches(patchlist, size, plistText, downloadui)
     download(patchlist)
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
 local function checkPatches(downloadui)
     showWaitingUI()
 
@@ -265,6 +271,9 @@ local function checkPatches(downloadui)
     end)
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
 local function patch()
     if deviceConfig.isMobile and gameConfig.patchEnabled then
         local loading = require("ui.loading").new()
@@ -277,6 +286,20 @@ local function patch()
     end
 end
 
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
 clientApp = class("clientApp")
 
 ----------------------------------------------------------------
@@ -303,6 +326,7 @@ function clientApp:start()
 
     DISABLE_GLOBAL_VARIABLE_DECLARATION()
 
+    gamepref.city = readCityConfig()
     patch()
 end
 

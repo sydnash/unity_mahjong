@@ -91,6 +91,7 @@ public static class LuaBinder
 		UnityEngine_UI_ImageWrap.Register(L);
 		UnityEngine_UI_RawImageWrap.Register(L);
 		UnityEngine_UI_ToggleWrap.Register(L);
+		UnityEngine_UI_CxToggleWrap.Register(L);
 		UnityEngine_UI_SliderWrap.Register(L);
 		UnityEngine_UI_InputFieldWrap.Register(L);
 		UnityEngine_UI_ScrollRectWrap.Register(L);

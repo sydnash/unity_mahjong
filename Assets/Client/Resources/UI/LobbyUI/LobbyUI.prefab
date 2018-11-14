@@ -605,6 +605,7 @@ GameObject:
   - component: {fileID: 224569243952254290}
   - component: {fileID: 222311732517651166}
   - component: {fileID: 114350680955691202}
+  - component: {fileID: 114868535254844810}
   m_Layer: 5
   m_Name: City
   m_TagString: Untagged
@@ -1515,7 +1516,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300048, guid: ec61019e22c2664498b7d62578014507, type: 3}
+  m_Sprite: {fileID: 21300006, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2047,7 +2048,7 @@ MonoBehaviour:
     widgetType: 5
     gameObject: {fileID: 1902705642424050}
     panelScript: 
-  - variableName: mCityName
+  - variableName: mCityText
     widgetType: 3
     gameObject: {fileID: 1857580731500138}
     panelScript: 
@@ -2426,6 +2427,22 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114868535254844810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1857580731500138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mItems:
+  - key: ChengDu
+    sprite: {fileID: 21300006, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}
+  - key: JinTang
+    sprite: {fileID: 21300008, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}
 --- !u!114 &114871749457012598
 MonoBehaviour:
   m_ObjectHideFlags: 1

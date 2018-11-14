@@ -31,6 +31,8 @@ function friendster:ctor(id)
     self.name               = string.empty
     self.headerUrl          = string.empty
     self.headerTex          = nil
+    self.cityType           = cityType.chengdu
+    self.gameType           = gameType.mahjong
     self.cards              = 0
     self.curDeskCount       = 0
     self.maxMemberCount     = 0

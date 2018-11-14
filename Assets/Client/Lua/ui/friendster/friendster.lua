@@ -21,6 +21,7 @@ local function createFriendsterLC(friendster)
     lc.name             = friendster.ClubName
     lc.headerUrl        = friendster.HeadUrl
     lc:loadHeaderTex()
+    lc.cityType         = friendster.GameType
     lc.cards            = friendster.CurCardNum
     lc.maxMemberCount   = friendster.MaxMemberCnt
     lc.curMemberCount   = friendster.CurMemberCnt

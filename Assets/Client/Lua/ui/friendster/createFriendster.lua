@@ -30,8 +30,7 @@ function createFriendster:onInit()
     self.mName:setText(string.empty)
     
     self.mCityList_ChengDu:setSelected(false)
-    self.mCityList_WenJiang:setSelected(false)
-    self.mCityList_PiDu:setSelected(false)
+    self.mCityList_JinTang:setSelected(false)
 
     self.mCityList_ChengDu.id  = cityType.chengdu
     self.mCityList_JinTang.id  = cityType.jintang
@@ -81,7 +80,7 @@ function createFriendster:onCreateClickedHandler()
             return
         end
 
-        log("friendster created, msg = " .. table.tostring(msg))
+--        log("friendster created, msg = " .. table.tostring(msg))
         if self.callback ~= nil then
             msg.RetCode = nil
             self.callback(msg)
@@ -91,15 +90,15 @@ function createFriendster:onCreateClickedHandler()
     end)
 end
 
-function createFriendster:onCityChangedHandler(selected, sender)
-    playButtonClickSound()
+function createFriendster:onCityChangedHandler(sender, selected, clicked)
+    if clicked and selected then
+        playButtonClickSound()
 
-    if selected then
         self.cityId = sender.id
         self.mCity:setText(cityName[sender.id])
-    end
 
-    self:refreshCreateState()
+        self:refreshCreateState()
+    end
 end
 
 function createFriendster:refreshCreateState()

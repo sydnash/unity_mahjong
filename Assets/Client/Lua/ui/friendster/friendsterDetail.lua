@@ -110,7 +110,7 @@ function friendsterDetail:onCreateClickedHandler()
     playButtonClickSound()
 
     local ui = require("ui.createDesk").new()
-    ui:set(cityType.chengdu, self.data.id)
+    ui:set(self.data.cityType, self.data.id)
     ui:show()
 end
 

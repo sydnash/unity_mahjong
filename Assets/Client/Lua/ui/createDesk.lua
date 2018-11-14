@@ -29,7 +29,7 @@ function createDesk:onCreateClickedHandler()
     loading:show()
 
     local choose = self.config[gameTypeSID[self.gameType]]
-    --log("create desk, choose = " .. table.tostring(choose))
+    log("create desk, choose = " .. table.tostring(choose))
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 
     networkManager.createDesk(self.cityType, self.gameType, choose, friendsterId, function(ok, msg)
@@ -128,6 +128,8 @@ function createDesk:onDestroy()
         self.detail:close()
         self.detail = nil
     end
+
+    self.super.onDestroy(self)
 end
 
 return createDesk

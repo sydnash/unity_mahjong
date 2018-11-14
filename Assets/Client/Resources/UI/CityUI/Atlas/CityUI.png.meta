@@ -1,0 +1,211 @@
+fileFormatVersion: 2
+guid: df64d02e1b0b5014aa19c87854b7bf1b
+timeCreated: 1542165580
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: qy_01
+    21300002: qy_dq_cd_01
+    21300004: qy_dq_cd_02
+    21300006: qy_dq_cd_03
+    21300008: qy_dq_cd_04
+    21300010: qy_dq_nc_01
+    21300012: qy_dq_nc_02
+    21300014: qy_dq_ya_01
+    21300016: qy_dq_ya_02
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: qy_01
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 367
+        width: 385
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_dq_cd_01
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 305
+        width: 201
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_dq_cd_02
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 245
+        width: 200
+        height: 58
+      alignment: 9
+      pivot: {x: 0.5025, y: 0.4827586}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_dq_cd_03
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 122
+        width: 197
+        height: 58
+      alignment: 9
+      pivot: {x: 0.49492386, y: 0.4827586}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_dq_cd_04
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 243
+        width: 199
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_dq_nc_01
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 185
+        width: 200
+        height: 58
+      alignment: 9
+      pivot: {x: 0.5025, y: 0.4827586}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_dq_nc_02
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 305
+        width: 201
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_dq_ya_01
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 182
+        width: 198
+        height: 59
+      alignment: 9
+      pivot: {x: 0.49242425, y: 0.5084746}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_dq_ya_02
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 124
+        width: 198
+        height: 59
+      alignment: 9
+      pivot: {x: 0.49747476, y: 0.4915254}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

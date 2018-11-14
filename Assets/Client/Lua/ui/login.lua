@@ -8,6 +8,8 @@ local login = class("login", base)
 _RES_(login, "LoginUI", "LoginUI")
 
 function login:onInit()
+    self.mCityText:setSprite(cityTypeSID[gamepref.city.City])
+
     if deviceConfig.isMobile then
         self.mWechatLogin:show()
         self.mGuestLogin:hide()
@@ -16,9 +18,19 @@ function login:onInit()
         self.mGuestLogin:show()
     end
 
+    self.mSwitchCity:addClickListener(self.onSwitchCityClickedHandler, self)
     self.mWechatLogin:addClickListener(self.onWechatLoginClickedHandler, self)
     self.mGuestLogin:addClickListener(self.onGuestLoginClickedHandler, self)
     self.mAgreement:addChangedListener(self.onAgreementChangedHandler, self)
+
+    signalManager.registerSignalHandler(signalType.city, self.onCityChangedHandler, self)
+end
+
+function login:onSwitchCityClickedHandler()
+    playButtonClickSound()
+
+    local ui = require("ui.city").new()
+    ui:show()
 end
 
 function login:onWechatLoginClickedHandler()
@@ -54,9 +66,18 @@ function login:onGuestLoginClickedHandler()
     end)
 end
 
-function login:onAgreementChangedHandler(selected)
+function login:onAgreementChangedHandler(sender, selected, clicked)
     self.mWechatLogin:setInteractabled(selected)
     self.mGuestLogin:setInteractabled(selected)
+end
+
+function login:onCityChangedHandler(city)
+    self.mCityText:setSprite(cityTypeSID[city])
+end
+
+function login:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.city, self.onCityChangedHandler, self)
+    self.super.onDestroy(self)
 end
 
 return login

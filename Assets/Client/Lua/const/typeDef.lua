@@ -108,6 +108,7 @@ signalType = {
     friendsterMessageOp = 5,
     mail                = 6,
     headerDownloaded    = "header|",
+    city                = 8,
 }
 
 --------------------------------------------------------------

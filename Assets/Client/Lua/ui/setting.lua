@@ -90,28 +90,28 @@ function setting:onExitClickedHandler()
     networkManager.disconnect()
 end
 
-function setting:onMandarinChangedHandler(selected)
-    if selected then
+function setting:onMandarinChangedHandler(sender, selected, clicked)
+    if clicked and selected then
         playButtonClickSound()
         gamepref.setLanguage(language.mandarin)
     end
 end
 
-function setting:onSichuanChangedHandler(selected)
-    if selected then
+function setting:onSichuanChangedHandler(sender, selected, clicked)
+    if clicked and selected then
         playButtonClickSound()
         gamepref.setLanguage(language.sichuan)
     end
 end
 
-function setting:on3DModelChangedHandler(selected)
-    if selected then
+function setting:on3DModelChangedHandler(sender, selected, clicked)
+    if clicked and selected then
         playButtonClickSound()
     end
 end
 
-function setting:onWechatHeaderChangedHandler(selected)
-    if selected then
+function setting:onWechatHeaderChangedHandler(sender, selected, clicked)
+    if clicked and selected then
         playButtonClickSound()
     end
 end

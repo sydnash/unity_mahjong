@@ -160,7 +160,7 @@ function enterDesk(gameType, deskId, callback)
             return
         end
 
---        log("check desk, msg = " .. table.tostring(msg))
+        log("check desk, msg = " .. table.tostring(msg))
         callback(true, string.empty, preload, 0.5, nil)
 
         networkManager.enterDesk(gameType, deskId, function(ok, msg)
@@ -391,6 +391,32 @@ function captureScreenshotUI()
     end
 
     return nil
+end
+
+local cityFilename = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "city.txt")
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function readCityConfig()
+    local text = LFS.ReadText(cityFilename, LFS.UTF8_WITHOUT_BOM)
+
+    if string.isNilOrEmpty(text) then
+        return {
+            ["Region"] = "ChengDu",
+            ["City"] = 1000,
+        }
+    end
+
+    return loadstring(text)()
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function writeCityConfig(config)
+    local text = "return " .. table.tostring(config)
+    LFS.WriteText(cityFilename, text, LFS.UTF8_WITHOUT_BOM)
 end
 
 --endregion
