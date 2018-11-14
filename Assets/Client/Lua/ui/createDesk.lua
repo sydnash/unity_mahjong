@@ -29,7 +29,7 @@ function createDesk:onCreateClickedHandler()
     loading:show()
 
     local choose = self.config[gameTypeSID[self.gameType]]
-    log("create desk, choose = " .. table.tostring(choose))
+--    log("create desk, choose = " .. table.tostring(choose))
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 
     networkManager.createDesk(self.cityType, self.gameType, choose, friendsterId, function(ok, msg)
@@ -39,7 +39,7 @@ function createDesk:onCreateClickedHandler()
             return
         end
 
-        log("create desk, msg = " .. table.tostring(msg))
+--        log("create desk, msg = " .. table.tostring(msg))
 
         if msg.RetCode ~= retc.ok then
             loading:close()
@@ -83,26 +83,11 @@ function createDesk:createDetail()
 end
 
 function createDesk:readConfig()
-    local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "create_desk_detail_configs", cityTypeSID[self.cityType] .. ".txt")
+    local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "CreateDeskConfigs", cityTypeSID[self.cityType] .. ".txt")
     local text = LFS.ReadText(path, LFS.UTF8_WITHOUT_BOM)
 
     if string.isNilOrEmpty(text) then
-        return {
-            [gameTypeSID[gameType.mahjong]] = {
-                ["RenShu"]          = 1,
-                ["JuShu"]           = 1,
-                ["FangShu"]         = 1,
-                ["FengDing"]        = 1,
-                ["ZiMoJiaX"]        = 1,
-                ["DianGangHuaX"]    = 1,
-                ["HuanNZhang"]      = 1,
-                ["YaoJiu"]          = 1,
-                ["ZhongZhang"]      = 1,
-                ["JiangDui"]        = 1,
-                ["MenQIng"]         = 1,
-                ["TianDiHu"]        = 1,
-            },
-        }
+        return require("config.createDeskConfig")
     end
 
     return loadstring(text)()
@@ -111,14 +96,9 @@ end
 function createDesk:writeConfig()
     local text = table.tostring(self.config)
     if not string.isNilOrEmpty(text) then
-        if string.endsWith(text, ",\n") then
-            local len = #text
-            text = string.sub(text, 1, len - 2)
-        end
-
         text = "return " .. text
 
-        local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "create_desk_detail_configs", cityTypeSID[self.cityType] .. ".txt")
+        local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "CreateDeskConfigs", cityTypeSID[self.cityType] .. ".txt")
         LFS.WriteText(path, text, LFS.UTF8_WITHOUT_BOM)
     end
 end

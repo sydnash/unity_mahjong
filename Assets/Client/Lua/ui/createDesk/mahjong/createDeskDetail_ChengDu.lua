@@ -113,11 +113,11 @@ function createDeskDetail:refreshUI()
     self.mHuanSiZhang:setSelected(self.config.HuanNZhang == self.mHuanSiZhang.v)
     
 
-    self.mYaoJiu:setSelected(self.config.YaoJiu == 2)
-    self.mZhongZhang:setSelected(self.config.ZhongZhang == 2)
-    self.mJiangDui:setSelected(self.config.JiangDui == 2)
-    self.mMenQing:setSelected(self.config.MenQing == 2)
-    self.mTianDiHu:setSelected(self.config.TianDiHu == 2)
+    self.mYaoJiu:setSelected(self.config.YaoJiu == 1)
+    self.mZhongZhang:setSelected(self.config.ZhongZhang == 1)
+    self.mJiangDui:setSelected(self.config.JiangDui == 1)
+    self.mMenQing:setSelected(self.config.MenQing == 1)
+    self.mTianDiHu:setSelected(self.config.TianDiHu == 1)
 end
 
 function createDeskDetail:onRadioboxChangedHandler(sender, selected, clicked)
@@ -128,9 +128,9 @@ function createDeskDetail:onRadioboxChangedHandler(sender, selected, clicked)
 end
 
 function createDeskDetail:onCheckboxChangedHandler(sender, selected, clicked)
-    if clicked and selected then
+    if clicked then
         playButtonClickSound()
-        self.config[sender.n] = selected and 2 or 1
+        self.config[sender.n] = selected and 1 or 2
     end
 end
 

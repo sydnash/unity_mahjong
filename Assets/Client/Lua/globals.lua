@@ -160,7 +160,7 @@ function enterDesk(gameType, deskId, callback)
             return
         end
 
-        log("check desk, msg = " .. table.tostring(msg))
+--        log("check desk, msg = " .. table.tostring(msg))
         callback(true, string.empty, preload, 0.5, nil)
 
         networkManager.enterDesk(gameType, deskId, function(ok, msg)
