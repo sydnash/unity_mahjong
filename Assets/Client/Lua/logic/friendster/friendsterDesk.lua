@@ -10,8 +10,9 @@ function friendsterDesk:ctor(data)
     self.seatCount = data.SeatCnt
     self.state = 0
 
-    local config = table.fromjson(data.Config)
-    self.totalCount = config.JuShu
+    self.config = table.fromjson(data.Config)
+    self.gameType = self.config.Game
+    self.totalCount = self.config.JuShu
     self.playedCount = data.CurJu
 
     self.players = {}

@@ -28,11 +28,12 @@ function createDesk:onCreateClickedHandler()
     local loading = require("ui.loading").new()
     loading:show()
 
-    local choose = self.config[self.gameType]
+    local choose = table.clone(self.config[self.gameType])
+    choose.Game = self.gameType
     log("create desk, choose = " .. table.tostring(choose))
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 
-    networkManager.createDesk(self.cityType, self.gameType, choose, friendsterId, function(ok, msg)
+    networkManager.createDesk(self.cityType, choose, friendsterId, function(ok, msg)
         if not ok then
             loading:close()
             showMessageUI("网络繁忙，请稍后再试")

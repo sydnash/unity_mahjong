@@ -7,9 +7,11 @@ local deskDetail = class("deskDetail", base)
 
 _RES_(deskDetail, "DeskDetailUI", "DeskDetailUI")
 
-function deskDetail:ctor(cityType, gameType, config)
+function deskDetail:ctor(cityType, gameType, config, join, deskId)
     self.cityType = cityType
     self.gameType = gameType
+    self.join = join
+    self.deskId = deskId
 
     self.config = {}
     for k, v in pairs(config) do
@@ -27,14 +29,33 @@ function deskDetail:onInit()
     local config = self.config
 
     self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, false)
-    self.detail:setParent(self.mDetailRoot)
+    if self.join then
+        self.mDetailRoot:hide()
+        self.mDetailRoot2:show()
+        self.detail:setParent(self.mDetailRoot2)
+    else
+        self.mDetailRoot:show()
+        self.mDetailRoot2:hide()
+        self.detail:setParent(self.mDetailRoot)
+    end
     self.detail:show()
 
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+    self.mJoin:addClickListener(self.onJoinClickedHandler, self)
 end
 
 function deskDetail:onCloseClickedHandler()
     playButtonClickSound()
+    self:close()
+end
+
+function deskDetail:onJoinClickedHandler()
+    playButtonClickSound()
+
+    local loading = require("ui.loading").new()
+    loading:show()
+
+    signalManager.signal(signalType.enterDesk, { cityType = self.cityType, deskId = self.deskId, loading = loading })
     self:close()
 end
 

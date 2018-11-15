@@ -6,15 +6,28 @@ local base = require("ui.common.panel")
 local friendsterDesk = class("friendsterDesk", base)
 
 function friendsterDesk:onInit()
-    self.slots = { { root = self.mPlayerA, head = self.mPlayerA_Head, icon = self.mPlayerA_Icon, add = self.mPlayerA_Add, },
-                   { root = self.mPlayerB, head = self.mPlayerB_Head, icon = self.mPlayerB_Icon, add = self.mPlayerB_Add, },
-                   { root = self.mPlayerC, head = self.mPlayerC_Head, icon = self.mPlayerC_Icon, add = self.mPlayerC_Add, },
-                   { root = self.mPlayerD, head = self.mPlayerD_Head, icon = self.mPlayerD_Icon, add = self.mPlayerD_Add, },
+    self.slots = { 
+        { root = self.mPlayerA, head = self.mPlayerA_Head, icon = self.mPlayerA_Icon, add = self.mPlayerA_Add, },
+        { root = self.mPlayerB, head = self.mPlayerB_Head, icon = self.mPlayerB_Icon, add = self.mPlayerB_Add, },
+        { root = self.mPlayerC, head = self.mPlayerC_Head, icon = self.mPlayerC_Icon, add = self.mPlayerC_Add, },
+        { root = self.mPlayerD, head = self.mPlayerD_Head, icon = self.mPlayerD_Icon, add = self.mPlayerD_Add, },
     }
+
+    self.mClick:addClickListener(self.onClickedHandler, self)
+end
+
+function friendsterDesk:onClickedHandler()
+    if self.data ~= nil then
+        playButtonClickSound()
+
+        local ui = require("ui.deskDetail").new(self.data.cityType, self.data.gameType, self.data.config, true, self.data.deskId)
+        ui:show()
+    end
 end
 
 function friendsterDesk:set(data)
     self.data = data
+    log(data)
 
     if self.data ~= nil then
         self.mNum:setText(string.format("（第%d/%d局）", self.data.playedCount, self.data.totalCount))
