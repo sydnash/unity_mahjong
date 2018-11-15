@@ -16,6 +16,8 @@ local scrollview    = require("ui.common.scrollview")
 local scrollrect    = require("ui.common.scrollrect")
 local pageview      = require("ui.common.pageview")
 local animation     = require("ui.common.animation")
+local horizontal    = require("ui.common.horizontalLayout")
+local vertical      = require("ui.common.verticalLayout")
 
 -------------------------------------------------------------------
 --
@@ -62,6 +64,10 @@ local function bind(target, variableName, gameObject, widgetType, panelScript)
         widget = pageview.new(gameObject)
     elseif widgetType == LuaPanel.WidgetType.Animation then 
         widget = animation.new(gameObject)
+    elseif widgetType == LuaPanel.WidgetType.HorizontalLayout then 
+        widget = horizontal.new(gameObject)
+    elseif widgetType == LuaPanel.WidgetType.VerticalLayout then 
+        widget = vertical.new(gameObject)
     else
         error("unknown widget type: " .. tostring(widgetType))
         return

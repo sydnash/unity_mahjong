@@ -163,6 +163,66 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function findSprite(transform, name)
+    assert(transform ~= nil, "can't find a child for nil")
+
+    local child = transform:Find(name)
+    if child ~= nil then
+        local sprite = require("ui.common.sprite")
+        return sprite.new(child.gameObject)
+    end
+
+    return nil
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function findImage(transform, name)
+    assert(transform ~= nil, "can't find a child for nil")
+
+    local child = transform:Find(name)
+    if child ~= nil then
+        local image = require("ui.common.image")
+        return image.new(child.gameObject)
+    end
+
+    return nil
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function findToggle(transform, name)
+    assert(transform ~= nil, "can't find a child for nil")
+
+    local child = transform:Find(name)
+    if child ~= nil then
+        local toggle = require("ui.common.toggle")
+        return toggle.new(child.gameObject)
+    end
+
+    return nil
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function findToggleGroup(transform, name)
+    assert(transform ~= nil, "can't find a child for nil")
+
+    local child = transform:Find(name)
+    if child ~= nil then
+        local toggleGroup = require("ui.common.toggleGroup")
+        return toggleGroup.new(child.gameObject)
+    end
+
+    return nil
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function findChildByIndex(transform, index)
     assert(transform ~= nil)
 

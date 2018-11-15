@@ -7,8 +7,7 @@ public class UnityEngine_UI_CxToggleWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UnityEngine.UI.CxToggle), typeof(UnityEngine.UI.Toggle));
-		L.RegFunction("OnPointerDown", OnPointerDown);
-		L.RegFunction("OnPointerUp", OnPointerUp);
+		L.RegFunction("OnPointerClick", OnPointerClick);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("clicked", get_clicked, null);
@@ -16,31 +15,14 @@ public class UnityEngine_UI_CxToggleWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnPointerDown(IntPtr L)
+	static int OnPointerClick(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
 			UnityEngine.UI.CxToggle obj = (UnityEngine.UI.CxToggle)ToLua.CheckObject<UnityEngine.UI.CxToggle>(L, 1);
 			UnityEngine.EventSystems.PointerEventData arg0 = (UnityEngine.EventSystems.PointerEventData)ToLua.CheckObject<UnityEngine.EventSystems.PointerEventData>(L, 2);
-			obj.OnPointerDown(arg0);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int OnPointerUp(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.UI.CxToggle obj = (UnityEngine.UI.CxToggle)ToLua.CheckObject<UnityEngine.UI.CxToggle>(L, 1);
-			UnityEngine.EventSystems.PointerEventData arg0 = (UnityEngine.EventSystems.PointerEventData)ToLua.CheckObject<UnityEngine.EventSystems.PointerEventData>(L, 2);
-			obj.OnPointerUp(arg0);
+			obj.OnPointerClick(arg0);
 			return 0;
 		}
 		catch (Exception e)

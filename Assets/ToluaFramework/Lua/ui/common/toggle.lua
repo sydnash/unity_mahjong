@@ -55,6 +55,13 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function toggle:setGroup(group)
+    self.component.group = (group ~= nil) and group.component or nil
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function toggle:onDestroy()
     self.component.onValueChanged:RemoveAllListeners()
 end

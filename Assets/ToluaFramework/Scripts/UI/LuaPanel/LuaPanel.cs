@@ -9,19 +9,21 @@ public class LuaPanel : MonoBehaviour
     /// </summary>
     public enum WidgetType
     {
-        GameObject, //
-        Panel,      //
-        Text,       //
-        Sprite,     //
-        Image,      //
-        Button,     //
-        Toggle,     //
-        Slider,     //
-        Input,      //
-        ScrollView, //
-        ScrollRect, //
-        PageView,   //
-        Animation,  //
+        GameObject,         //
+        Panel,              //
+        Text,               //
+        Sprite,             //
+        Image,              //
+        Button,             //
+        Toggle,             //
+        Slider,             //
+        Input,              //
+        ScrollView,         //
+        ScrollRect,         //
+        PageView,           //
+        Animation,          //
+        HorizontalLayout,   //
+        VerticalLayout,     //
     }
 
     /// <summary>

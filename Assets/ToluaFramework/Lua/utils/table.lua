@@ -65,7 +65,9 @@ function table.tostring(object)
         if nest > 1 then postfix = "," end
         if type(object) ~= "table" then
             if type(label) == "string" and #label > 0 then
-                result[#result +1] = string.format("%s%s = %s%s", indent, label, _v(object), postfix)
+                result[#result +1] = string.format("%s[\"%s\"] = %s%s", indent, label, _v(object), postfix)
+            elseif type(label) == "number" then
+                result[#result +1] = string.format("%s[%d] = %s%s", indent, label, _v(object), postfix)
             else
                 result[#result +1] = string.format("%s%s%s", indent, _v(object), postfix)
             end
@@ -73,10 +75,13 @@ function table.tostring(object)
             lookupTable[object] = true
 
             if type(label) == "string" and #label > 0  then
-                result[#result +1 ] = string.format("%s%s = {", indent, label)
+                result[#result +1 ] = string.format("%s[\"%s\"] = {", indent, label)
+            elseif type(label) == "number" then
+                result[#result +1 ] = string.format("%s[%d] = {", indent, label)
             else
                 result[#result +1 ] = string.format("%s{", indent)
             end
+
             local indent2 = indent .. "    "
             local keys = {}
             local values = {}
@@ -84,6 +89,7 @@ function table.tostring(object)
                 keys[#keys + 1] = k
                 values[k] = v
             end
+
             table.sort(keys, function(a, b)
                 if type(a) == "number" and type(b) == "number" then
                     return a < b
@@ -91,14 +97,16 @@ function table.tostring(object)
                     return tostring(a) < tostring(b)
                 end
             end)
+
             for i, k in ipairs(keys) do
                 _vardump(values[k], k, indent2, nest + 1)
             end
+
             result[#result +1] = string.format("%s}%s", indent, postfix)
         end
     end
-    _vardump(object, "", "", 1)
 
+    _vardump(object, "", "", 1)
     return table.concat(result, "\n")
 end
 
@@ -132,13 +140,26 @@ end
 --
 -------------------------------------------------------------------
 function table.clone(t)
-    local c = {}
-    
-    for k, v in pairs(t) do
-        c[k] = v
+    local lookup_table = {}
+
+    local function _copy(o)
+        if type(o) ~= "table" then 
+            return o
+        elseif lookup_table[o] then
+            return lookup_table[o]
+        end
+
+        local new_table = {}
+        lookup_table[o] = new_table
+
+        for key, value in pairs(o) do
+            new_table[_copy(key)] = _copy(value)
+        end
+
+        return setmetatable(new_table, getmetatable(o))
     end
 
-    return c
+    return _copy(t)
 end
 
 --endregion

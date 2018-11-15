@@ -28,7 +28,7 @@ function createDesk:onCreateClickedHandler()
     local loading = require("ui.loading").new()
     loading:show()
 
-    local choose = self.config[gameTypeSID[self.gameType]]
+    local choose = self.config[self.gameType]
     log("create desk, choose = " .. table.tostring(choose))
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 
@@ -69,9 +69,10 @@ function createDesk:createDetail()
         self.detail = nil
     end
     
-    local path = string.format("ui.deskDetail.%s.deskDetail_%s", gameTypeSID[self.gameType], cityTypeSID[self.cityType])
-    
-    self.detail = require(path).new(self.config[gameTypeSID[self.gameType]], true)
+    local layout = deskDetailLayout[self.cityType][self.gameType]
+    local config = self.config[self.gameType]
+
+    self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, true)
     self.detail:setParent(self.mDetailRoot)
     self.detail:show()
 end
@@ -81,7 +82,7 @@ function createDesk:readConfig()
     local text = LFS.ReadText(path, LFS.UTF8_WITHOUT_BOM)
 
     if string.isNilOrEmpty(text) then
-        return deskDetailConfig[cityTypeSID[self.cityType]]
+        return deskDetailConfig[self.cityType]
     end
 
     return loadstring(text)()
