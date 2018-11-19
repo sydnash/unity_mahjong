@@ -178,9 +178,7 @@ function networkManager.update()
         end
     end
     --处理消息队列
-    if now >= networkManager.messageDeadline and #networkManager.messageQueue > 0 then
-        networkManager.messageDeadline = now 
-
+    if #networkManager.messageQueue > 0 then
         local msg = networkManager.messageQueue[1]
         table.remove(networkManager.messageQueue, 1)
 
@@ -190,10 +188,7 @@ function networkManager.update()
         end
 
         if callback ~= nil then
-            local duration = callback(table.fromjson(msg.Payload))
-            if duration ~= nil and duration > 0 then
-                networkManager.messageDeadline = now + duration
-            end
+            callback(table.fromjson(msg.Payload))
         end
     end
 end

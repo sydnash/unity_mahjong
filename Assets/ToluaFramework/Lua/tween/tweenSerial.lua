@@ -7,11 +7,12 @@ local tweenSerial = class("tweenSerial")
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function tweenSerial:ctor()
+function tweenSerial:ctor(autoDestroy)
     self.queue = {}
     self.currentIndex = 1
     self.playing = false
     self.finished = false
+    self.autoDestroy = autoDestroy
 end
 
 -------------------------------------------------------------------
