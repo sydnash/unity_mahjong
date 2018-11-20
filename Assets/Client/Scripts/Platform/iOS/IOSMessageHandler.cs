@@ -41,6 +41,11 @@ public class IOSMessageHandler : MonoBehaviour
 		IOSHelper.instance.OnInviteSgHandler(json);
 	}
 
+	public void OnLocationUpdateHandler(string param)
+	{
+		UtilsHelper.OnLocationUpdate (param);
+	}
+
 	#endregion
 
 	#region Private
