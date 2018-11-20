@@ -167,6 +167,35 @@ public class IOSHelper
 		IOSXLHelper.OnInviteHandler(json);
 	}
 
+	public string GetDeviceId() {
+		return UtilsHelper.GetDeviceId ();
+	}
+	public void OpenExplore(string url) {
+		UtilsHelper.OpenExplore (url);
+	}
+	public void SetToClipboard(string text) {
+		UtilsHelper.SetToClipboard (text);
+	}
+	public string GetFromClipboard() {
+		return UtilsHelper.GetFromClipboard ();
+	}
+	public float GetDistance(float la1, float lo1, float la2, float lo2) {
+		return UtilsHelper.GetDistance(la1, lo1, la2, lo2);
+	}
+	public void StartLocationOnce() {
+		UtilsHelper.StartLocationOnce ();
+	}
+	public void StartLocationUpdate() {
+		UtilsHelper.StartLocationUpdate ();
+	}
+	public void StopLocationUpdate() {
+		UtilsHelper.StopLocationUpdate ();
+	}
+
+	public void SetLocationUpdateHandler(Action<string> callback) {
+		UtilsHelper.SetLocationUpdateHandler (callback);
+	}
+
 	#endregion
 
 }
