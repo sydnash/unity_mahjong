@@ -199,7 +199,10 @@ end
 function mahjongDesk:onVoiceDownClickedHandler(sender, pos)
     playButtonClickSound()
 --    log(string.format("voice down, pos = (%f, %f)", pos.x, pos.y))
-    gvoiceManager.startRecord(LFS.CombinePath(gvoiceManager.path, "xxxx.gcv"))
+    self.voiceDownPos = pos
+
+    gvoiceManager.stopPlay()
+    gvoiceManager.startRecord(LFS.CombinePath(gvoiceManager.path, tostring(gamepref.player.acId) .. ".gcv"))
 end
 
 function mahjongDesk:onVoiceMoveClickedHandler(sender, pos)
@@ -208,7 +211,13 @@ end
 
 function mahjongDesk:onVoiceUpClickedHandler(sender, pos)
 --    log(string.format("voice up, pos = (%f, %f)", pos.x, pos.y))
-    gvoiceManager.stopRecord()
+    if pos.y - self.voiceDownPos.y > 100 then
+        gvoiceManager.stopRecord(true)
+    else 
+        gvoiceManager.stopRecord(false)
+    end
+
+    self.voiceDownPos = Vector2.zero
 end
 
 function mahjongDesk:setReady(acId, ready)
@@ -357,8 +366,8 @@ function mahjongDesk:onChatMessageHandler(msg)
 
         end
     elseif msg.Type == chatType.voice then
-        local filename = msg.Data.filename
-        local fileid = msg.Data.fileid
+        local fileid = msg.Data
+        local filename = LFS.CombinePath(gvoiceManager.path, Hash.GetHash(fileid) .. ".gcv")
 
         player.filename = filename
         gvoiceManager.startPlay(filename, fileid)

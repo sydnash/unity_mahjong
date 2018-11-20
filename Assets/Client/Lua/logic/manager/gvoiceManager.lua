@@ -12,6 +12,8 @@ local playDownloaded = false
 local recordFinishedCallback = nil
 local playStartedCallback = nil
 local playFinishedCallback = nil
+local isPlaying = false
+local isRecording = false
 
 local networkConfig = require("config.networkConfig")
 local timeout = networkConfig.gvoiceTimeout * 1000
@@ -37,11 +39,10 @@ function gvoiceManager.update()
     GVoiceEngine.instance:Update()
     
     if gvoiceManager.status then
-        if #playQueue > 0 then
+        if #playQueue > 0 and (not isPlaying) and (not isRecording) then
             local o = playQueue[1]
             table.remove(playQueue, 1)
-
-            GVoiceEngine.instance:Download(o.filename, o.fileid, timeout)
+            GVoiceEngine.instance:Download(o.fileid, o.filename, timeout)
         end
     end
 end
@@ -52,17 +53,19 @@ end
 
 function gvoiceManager.startRecord(filename)
     if gvoiceManager.status then
+        isRecording = true
         recordFilename = filename
-        log("gvoiceManager.startRecord, filename = " .. filename)
         GVoiceEngine.instance:StartRecord(filename)
     end
 end
 
-function gvoiceManager.stopRecord()
+function gvoiceManager.stopRecord(cancel)
     if gvoiceManager.status then
-        log("gvoiceManager.stopRecord, filename = " .. recordFilename)
         GVoiceEngine.instance:StopRecord()
-        GVoiceEngine.instance:Upload(recordFilename, timeout)
+        if not cancel then
+            GVoiceEngine.instance:Upload(recordFilename, timeout)
+        end
+        isRecording = false
     end
 end
 
@@ -76,6 +79,8 @@ end
 
 function gvoiceManager.play(filename)
     if gvoiceManager.status then
+        isPlaying = true
+
         if playStartedCallback ~= nil then
             playStartedCallback(filename)
         end
@@ -93,7 +98,7 @@ end
 
 function gvoiceManager.stopPlay()
     if gvoiceManager.status then
-        playQueue = {}
+        isPlaying = false
         playDownloaded = false
 
         GVoiceEngine.instance:StopPlay()
@@ -107,12 +112,12 @@ function gvoiceManager.reset()
     recordFinishedCallback = nil
     playStartedCallback = nil
     playFinishedCallback = nil
+    isPlaying = false
+    isRecording = false
 end
 
 function gvoiceManager.onUploadedHandler(ok, filename, fileid)
     if gvoiceManager.status then
-        log("gvoiceManager.onUploadedHandler, filename = " .. filename)
-        local data = { filename = filename, fileid = fileid }
         networkManager.sendChatMessage(chatType.voice, fileid, function(ok, msg)
         
         end)
@@ -125,10 +130,11 @@ end
 
 function gvoiceManager.onDownloadedHandler(ok, filename, fileid)
     if gvoiceManager.status then
-        if playDownloaded then
+        if playDownloaded and (not isRecording) then
             gvoiceManager.play(filename)
         else
             LFS.RemoveFile(filename)--语音下载完后如果不播放就立即删除对应的文件
+            isPlaying = false
         end
     end
 end
@@ -138,6 +144,7 @@ function gvoiceManager.onPlayFinishedHandler(ok, filename)
         playFinishedCallback(filename)
         --语音播放完后立即删除对应的文件
         LFS.RemoveFile(filename)
+        isPlaying = false
     end
 end
 
