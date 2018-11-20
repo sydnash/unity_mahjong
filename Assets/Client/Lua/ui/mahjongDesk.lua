@@ -22,7 +22,6 @@ function mahjongDesk:onInit()
         [mahjongGame.seatType.top]   = self.mPlayerT, 
         [mahjongGame.seatType.left]  = self.mPlayerL, 
     }
-
     
     self.mInvite:show()
     self.mInvitePanel:hide()
@@ -36,21 +35,32 @@ function mahjongDesk:onInit()
     self.mCancel:addClickListener(self.onCancelClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
     self.mChat:addClickListener(self.onChatClickedHandler, self)
-    self.mVoice:addClickListener(self.onVoiceClickedHandler, self)
+    self.mVoice:addDownListener(self.onVoiceDownClickedHandler, self)
+    self.mVoice:addMoveListener(self.onVoiceMoveClickedHandler, self)
+    self.mVoice:addUpListener(self.onVoiceUpClickedHandler, self)
     self.mGameInfo:addClickListener(self.onGameInfoClickedHandler, self)
 
     networkManager.registerCommandHandler(protoType.sc.chatMessage, function(msg)
         self:onChatMessageHandler(msg)
     end, true)
 
+    gvoiceManager.registerRecordFinishedHandler(function(filename)
+        self:onGVoiceRecordFinishedHandler(filename)
+    end)
+    gvoiceManager.registerPlayStartedHandler(function(filename)
+        self:onGVoicePlayStartedHandler(filename)
+    end)
+    gvoiceManager.registerPlayFinishedHandler(function(filename)
+        self:onGVoicePlayFinishedHandler(filename)
+    end)
+
     signalManager.registerSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
     signalManager.registerSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
 end
 
 function mahjongDesk:update()
-    for _, v in pairs(self.players) do
-        v:update()
-    end
+    self.mTime:setText(time.formatTime())
+    gvoiceManager.update()
 end
 
 function mahjongDesk:onDestroy()
@@ -186,8 +196,19 @@ function mahjongDesk:onChatClickedHandler()
     self.chatUI:show()
 end
 
-function mahjongDesk:onVoiceClickedHandler()
+function mahjongDesk:onVoiceDownClickedHandler(sender, pos)
     playButtonClickSound()
+--    log(string.format("voice down, pos = (%f, %f)", pos.x, pos.y))
+    gvoiceManager.startRecord(LFS.CombinePath(gvoiceManager.path, "xxxx.gcv"))
+end
+
+function mahjongDesk:onVoiceMoveClickedHandler(sender, pos)
+--    log(string.format("voice move, pos = (%f, %f)", pos.x, pos.y))
+end
+
+function mahjongDesk:onVoiceUpClickedHandler(sender, pos)
+--    log(string.format("voice up, pos = (%f, %f)", pos.x, pos.y))
+    gvoiceManager.stopRecord()
 end
 
 function mahjongDesk:setReady(acId, ready)
@@ -233,10 +254,6 @@ function mahjongDesk:reset()
     for _, v in pairs(self.players) do
         v:reset()
     end
-end
-
-function mahjongDesk:update()
-    self.mTime:setText(time.formatTime())
 end
 
 function mahjongDesk:updateCurrentGameIndex()
@@ -334,11 +351,17 @@ function mahjongDesk:onChatMessageHandler(msg)
         local content = chatConfig.emoji[msg.Data].content
         local audio = chatConfig.emoji[msg.Data].audio
 
-        player:showChatEmoji(msg.Data)
+        player:showChatEmoji(content)
 
         if not string.isNilOrEmpty(audio) then
 
         end
+    elseif msg.Type == chatType.voice then
+        local filename = msg.Data.filename
+        local fileid = msg.Data.fileid
+
+        player.filename = filename
+        gvoiceManager.startPlay(filename, fileid)
     end
 end
 
@@ -363,6 +386,32 @@ function mahjongDesk:onChatEmojiSignalHandler(key)
 
     if not string.isNilOrEmpty(audio) then
 
+    end
+end
+
+function mahjongDesk:onGVoiceRecordFinishedHandler(filename)
+    log("mahjongDesk:onGVoiceRecordFinishedHandler, filename = " .. filename)
+    local player = self.players[mahjongGame.seatType.mine]
+    player.filename = filename
+
+    gvoiceManager.play(filename)
+end
+
+function mahjongDesk:onGVoicePlayStartedHandler(filename)
+    for _, v in pairs(self.players) do
+        if v.filename == filename then
+            v:showChatVoice()
+            break
+        end
+    end
+end
+
+function mahjongDesk:onGVoicePlayFinishedHandler(filename)
+    for _, v in pairs(self.players) do
+        if v.filename == filename then
+            v:hideChatVoice()
+            break
+        end
     end
 end
 

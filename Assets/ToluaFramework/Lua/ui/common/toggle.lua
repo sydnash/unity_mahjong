@@ -5,7 +5,7 @@
 local base = require("common.object")
 local toggle = class("toggle", base)
 
-local UIToggle = UnityEngine.UI.CxToggle
+local UIToggle = UnityEngine.UI.Toggle
 
 -------------------------------------------------------------------
 --
@@ -34,7 +34,7 @@ end
 ----------------------------------------------------------------
 function toggle:addChangedListener(handler, target)
     self.component.onValueChanged:AddListener(function()
-        handler(target, self, self.component.isOn, self.component.clicked) 
+        handler(target, self, self.component.isOn) 
     end)
 end
 

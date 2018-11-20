@@ -42,7 +42,7 @@ public static class LFS
     {
         try
         {
-            MakeDir(filename);
+            MakeDirByFilename(filename);
 
             StreamWriter sw = new StreamWriter(filename, false, encode);
             sw.Write(content);
@@ -94,7 +94,7 @@ public static class LFS
     {
         try
         {
-            MakeDir(filename);
+            MakeDirByFilename(filename);
             File.WriteAllBytes(filename, content);
         }
         catch (Exception ex)
@@ -140,7 +140,7 @@ public static class LFS
     {
         try
         {
-            MakeDir(dst);
+            MakeDirByFilename(dst);
             if (File.Exists(src))
             {
                 File.Copy(src, dst, true);
@@ -164,7 +164,7 @@ public static class LFS
     {
         try
         {
-            MakeDir(dst);
+            MakeDirByFilename(dst);
             if (File.Exists(src)) File.Copy(src, dst, true);
         }
         catch (Exception ex)
@@ -200,7 +200,28 @@ public static class LFS
     /// 
     /// </summary>
     /// <param name="filename"></param>
-    public static void MakeDir(string filename)
+    public static void MakeDir(string path)
+    {
+        try
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+        catch (Exception ex)
+        {
+#if UNITY_EDITOR
+            Debug.LogError(ex.Message);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filename"></param>
+    public static void MakeDirByFilename(string filename)
     {
         try
         {
@@ -251,7 +272,7 @@ public static class LFS
     {
         try
         {
-            MakeDir(to);
+            MakeDirByFilename(to);
 
             if (Directory.Exists(from))
             {

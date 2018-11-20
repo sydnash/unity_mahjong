@@ -8,12 +8,12 @@ local detailPanel = class("detailPanel", base)
 _RES_(detailPanel, "DeskDetailUI", "DeskDetailPanel")
 
 local function createItem(parent, name)
-    local toggle = findToggle(parent, name)
-    toggle.background = findSprite(parent, name .. "/Background")
-    toggle.checkmark  = findSprite(parent, name .. "/Background/Checkmark")
-    toggle.label      = findText(parent, name .. "/Label")
+    local pointerToggle = findPointerToggle(parent, name)
+    pointerToggle.background = findSprite(parent, name .. "/Background")
+    pointerToggle.checkmark  = findSprite(parent, name .. "/Background/Checkmark")
+    pointerToggle.label      = findText(parent, name .. "/Label")
 
-    return toggle
+    return pointerToggle
 end
 
 local function createGroup(parent, name)

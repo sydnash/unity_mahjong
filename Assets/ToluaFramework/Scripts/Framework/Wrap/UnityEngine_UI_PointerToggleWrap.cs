@@ -2,11 +2,11 @@
 using System;
 using LuaInterface;
 
-public class UnityEngine_UI_CxToggleWrap
+public class UnityEngine_UI_PointerToggleWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(UnityEngine.UI.CxToggle), typeof(UnityEngine.UI.Toggle));
+		L.BeginClass(typeof(UnityEngine.UI.PointerToggle), typeof(UnityEngine.UI.Toggle));
 		L.RegFunction("OnPointerClick", OnPointerClick);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -20,7 +20,7 @@ public class UnityEngine_UI_CxToggleWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.UI.CxToggle obj = (UnityEngine.UI.CxToggle)ToLua.CheckObject<UnityEngine.UI.CxToggle>(L, 1);
+			UnityEngine.UI.PointerToggle obj = (UnityEngine.UI.PointerToggle)ToLua.CheckObject<UnityEngine.UI.PointerToggle>(L, 1);
 			UnityEngine.EventSystems.PointerEventData arg0 = (UnityEngine.EventSystems.PointerEventData)ToLua.CheckObject<UnityEngine.EventSystems.PointerEventData>(L, 2);
 			obj.OnPointerClick(arg0);
 			return 0;
@@ -57,7 +57,7 @@ public class UnityEngine_UI_CxToggleWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			UnityEngine.UI.CxToggle obj = (UnityEngine.UI.CxToggle)o;
+			UnityEngine.UI.PointerToggle obj = (UnityEngine.UI.PointerToggle)o;
 			bool ret = obj.clicked;
 			LuaDLL.lua_pushboolean(L, ret);
 			return 1;

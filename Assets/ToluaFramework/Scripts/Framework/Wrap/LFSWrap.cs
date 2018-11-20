@@ -16,6 +16,7 @@ public class LFSWrap
 		L.RegFunction("CopyFile", CopyFile);
 		L.RegFunction("RemoveFile", RemoveFile);
 		L.RegFunction("MakeDir", MakeDir);
+		L.RegFunction("MakeDirByFilename", MakeDirByFilename);
 		L.RegFunction("MoveDir", MoveDir);
 		L.RegFunction("CopyDir", CopyDir);
 		L.RegFunction("RemoveDir", RemoveDir);
@@ -189,6 +190,22 @@ public class LFSWrap
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
 			LFS.MakeDir(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int MakeDirByFilename(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			LFS.MakeDirByFilename(arg0);
 			return 0;
 		}
 		catch (Exception e)

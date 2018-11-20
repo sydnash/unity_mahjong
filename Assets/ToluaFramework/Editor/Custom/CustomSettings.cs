@@ -166,13 +166,15 @@ public static class CustomSettings
         _GT(typeof(Text)),
         _GT(typeof(Button)),
         _GT(typeof(Button.ButtonClickedEvent)),
+        _GT(typeof(PointerButton)),
+        _GT(typeof(PointerButton.PointerButtonEvent)),
         _GT(typeof(Image)),
         _GT(typeof(Image.Type)),
         _GT(typeof(RawImage)),
         _GT(typeof(Toggle)),
         _GT(typeof(Toggle.ToggleEvent)),
         _GT(typeof(ToggleGroup)),
-        _GT(typeof(CxToggle)),
+        _GT(typeof(PointerToggle)),
         _GT(typeof(Slider)),
         _GT(typeof(Slider.SliderEvent)),
         _GT(typeof(InputField)),
@@ -206,6 +208,7 @@ public static class CustomSettings
 		_GT(typeof(IOSHelper)),
 		_GT(typeof(WINHelper)),
         _GT(typeof(Utils)),
+        _GT(typeof(GVoiceEngine)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

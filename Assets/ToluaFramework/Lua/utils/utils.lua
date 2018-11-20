@@ -208,6 +208,21 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function findPointerToggle(transform, name)
+    assert(transform ~= nil, "can't find a child for nil")
+
+    local child = transform:Find(name)
+    if child ~= nil then
+        local pointerToggle = require("ui.common.pointerToggle")
+        return pointerToggle.new(child.gameObject)
+    end
+
+    return nil
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function findToggleGroup(transform, name)
     assert(transform ~= nil, "can't find a child for nil")
 
