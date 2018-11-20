@@ -1548,11 +1548,11 @@ MonoBehaviour:
     gameObject: {fileID: 1716930720331932}
     panelScript: 
   - variableName: mEmojiTab
-    widgetType: 6
+    widgetType: 16
     gameObject: {fileID: 1287256689049140}
     panelScript: 
   - variableName: mTextTab
-    widgetType: 6
+    widgetType: 16
     gameObject: {fileID: 1394438894277524}
     panelScript: 
   - variableName: mEmojiPage

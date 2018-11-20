@@ -22,6 +22,8 @@ public class LuaPanel_WidgetTypeWrap
 		L.RegVar("Animation", get_Animation, null);
 		L.RegVar("HorizontalLayout", get_HorizontalLayout, null);
 		L.RegVar("VerticalLayout", get_VerticalLayout, null);
+		L.RegVar("PointerButton", get_PointerButton, null);
+		L.RegVar("PointerToggle", get_PointerToggle, null);
 		L.RegFunction("IntToEnum", IntToEnum);
 		L.EndEnum();
 		TypeTraits<LuaPanel.WidgetType>.Check = CheckType;
@@ -140,6 +142,20 @@ public class LuaPanel_WidgetTypeWrap
 	static int get_VerticalLayout(IntPtr L)
 	{
 		ToLua.Push(L, LuaPanel.WidgetType.VerticalLayout);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PointerButton(IntPtr L)
+	{
+		ToLua.Push(L, LuaPanel.WidgetType.PointerButton);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PointerToggle(IntPtr L)
+	{
+		ToLua.Push(L, LuaPanel.WidgetType.PointerToggle);
 		return 1;
 	}
 

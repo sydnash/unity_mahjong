@@ -39,7 +39,7 @@ public class LuaResLoader : LuaFileUtils
 #if UNITY_EDITOR
     #if !SIMULATE_RUNTIME_ENVIRONMENT
         byte[] buffer = base.ReadFile(fileName);
-        Debug.Assert(buffer != null);
+        Debug.Assert(buffer != null, "load file [" + fileName + "] failed");
     #else 
         byte[] buffer = ReadResourceFile(fileName);
 

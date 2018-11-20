@@ -365,7 +365,7 @@ MonoBehaviour:
     gameObject: {fileID: 1014991149373812}
     panelScript: 
   - variableName: mAgreement
-    widgetType: 6
+    widgetType: 16
     gameObject: {fileID: 1365876340704368}
     panelScript: 
   - variableName: mCityText

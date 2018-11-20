@@ -13,6 +13,7 @@ gameConfig      = require("config.gameConfig")
 gamepref        = require("logic.gamepref")
 platformHelper  = require("platform.platformHelper")
 networkManager  = require("network.networkManager")
+gvoiceManager   = require("logic.manager.gvoiceManager")
 
 local waiting       = require("ui.waiting")
 local messagebox    = require("ui.messagebox")
@@ -210,12 +211,13 @@ function loginServer(callback)
         end
 
         platformHelper.setLogined(true)
+        gvoiceManager.setup(tostring(gamepref.player.acId))
+
         callback(true)
 --        log("login, msg = " .. table.tostring(msg))
 
         local cityType = 0
         local deskId   = 0
-
         local deskInfo = msg.DeskInfo
 
         if deskInfo ~= nil and deskInfo.DeskId > 0 then
@@ -229,8 +231,7 @@ function loginServer(callback)
 
                 cityType = t.cityType
                 deskId = t.deskId
---                log(string.format("get desk from XianLiao, cityType = %d", cityType))
---                log(string.format("get desk from XianLiao, deskId = %d", deskId))
+--                log(string.format("get desk from XianLiao, cityType = %d, deskId = %d", cityType, deskId))
             end
             platformHelper.clearSGInviteParam()
         end

@@ -35,7 +35,7 @@ public static class Logger
     #else
             string filename = LFS.CombinePath(Directory.GetCurrentDirectory(), "Log", DateTime.Now.ToString("yyyyMMddHHmmssfff")+".txt");
     #endif
-            LFS.MakeDir(filename);
+            LFS.MakeDirByFilename(filename);
             writer = new StreamWriter(filename);
 
             Application.logMessageReceived += LogReceivedHandler;

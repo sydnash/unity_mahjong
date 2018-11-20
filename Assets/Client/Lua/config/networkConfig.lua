@@ -16,6 +16,7 @@ return {
     ping            = 10,  --秒
     pong            = 15,  --秒
     encrypt         = true,--对网络数据进行加解密
+    gvoiceTimeout   = 10,  --秒
 }
 
 --endregion

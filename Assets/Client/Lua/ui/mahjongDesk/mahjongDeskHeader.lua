@@ -55,6 +55,7 @@ function mahjongDeskHeader:setPlayerInfo(player)
 
         self.mEmoji:hide()
         self.mChat:hide()
+        self.mVoice:hide()
     end
 end
 
@@ -88,7 +89,7 @@ function mahjongDeskHeader:showDingQue(mjtype)
 end
 
 function mahjongDeskHeader:showChatEmoji(emoji)
-    self.mEmoji:setSprite(tostring(emoji))
+    self.mEmoji:setSprite(emoji)
     self.mEmoji:show()
 
     self.showEmojiTimestamp = time.realtimeSinceStartup()
@@ -99,6 +100,16 @@ function mahjongDeskHeader:showChatText(text)
     self.mChat:show()
 
     self.showChatTimestamp = time.realtimeSinceStartup()
+end
+
+function mahjongDeskHeader:showChatVoice()
+    self.mVoice:show()
+    self.showVoiceTimestamp = time.realtimeSinceStartup()
+end
+
+function mahjongDeskHeader:hideChatVoice()
+    self.mVoice:hide()
+    self.showChatTimestamp = nil
 end
 
 function mahjongDeskHeader:update()
@@ -115,6 +126,13 @@ function mahjongDeskHeader:update()
             self.showChatTimestamp = nil
         end
     end
+
+    if self.showVoiceTimestamp ~= nil then
+        if time.realtimeSinceStartup() - self.showVoiceTimestamp > 30 then
+            self.mVoice:hide()
+            self.showChatTimestamp = nil
+        end
+    end
 end
 
 function mahjongDeskHeader:reset()
@@ -126,6 +144,7 @@ function mahjongDeskHeader:reset()
     self.mZhuang:hide()
     self.mEmoji:hide()
     self.mChat:hide()
+    self.mVoice:hide()
 end
 
 function mahjongDeskHeader:onDestroy()

@@ -54,6 +54,7 @@
     <Compile Include="Lua\const\textDef.lua" />
     <Compile Include="Lua\const\typeDef.lua" />
     <Compile Include="Lua\globals.lua" />
+    <Compile Include="Lua\logic\manager\gvoiceManager.lua" />
     <Compile Include="Lua\logic\friendster\friendster.lua" />
     <Compile Include="Lua\logic\friendster\friendsterDesk.lua" />
     <Compile Include="Lua\logic\gamepref.lua" />

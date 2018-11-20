@@ -3,11 +3,12 @@
 --此文件由[BabeLua]插件自动生成
 
 return {
-    fps = 30,
-    patchEnabled = false,
-    nicknameMaxLength = 5,
-    friendsterNameMaxLength = 10,
-    thumbSize = 150,
+    fps                     = 30,       --帧率
+    patchEnabled            = false,    --是否启用热更
+    nicknameMaxLength       = 5,        --玩家昵称可显示的最大长度
+    friendsterNameMaxLength = 10,       --亲友圈名称可显示的最大长度
+    thumbSize               = 150,      --缩略图尺寸
+    gvoiceMaxLength         = 10000,    --语音录制最大时长，单位ms
 }
 
 --endregion

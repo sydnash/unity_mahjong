@@ -928,11 +928,11 @@ MonoBehaviour:
     gameObject: {fileID: 1417800344674606}
     panelScript: 
   - variableName: mCityList_ChengDu
-    widgetType: 6
+    widgetType: 16
     gameObject: {fileID: 1794548086832554}
     panelScript: 
   - variableName: mCityList_JinTang
-    widgetType: 6
+    widgetType: 16
     gameObject: {fileID: 1866038939759260}
     panelScript: 
   - variableName: mName

@@ -24,6 +24,8 @@ public class LuaPanel : MonoBehaviour
         Animation,          //
         HorizontalLayout,   //
         VerticalLayout,     //
+        PointerButton,      //
+        PointerToggle,      //
     }
 
     /// <summary>

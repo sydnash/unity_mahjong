@@ -2,7 +2,7 @@
 
 namespace UnityEngine.UI
 {
-    public class CxToggle : Toggle
+    public class PointerToggle : Toggle
     {
         private bool mClicked = false;
 
