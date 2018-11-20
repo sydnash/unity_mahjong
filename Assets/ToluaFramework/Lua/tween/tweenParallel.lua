@@ -10,7 +10,6 @@ local tweenParallel = class("tweenParallel")
 function tweenParallel:ctor(autoDestroy)
     self.queue = {}
     self.playing = false
-    self.finished = false
     self.autoDestroy = autoDestroy
 end
 
@@ -29,29 +28,37 @@ function tweenParallel:play()
         for _, v in pairs(self.queue) do
             v:play()
         end
-
-        self.playing = true
-        self.finished = false
     end
+
+    self.playing = true
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function tweenParallel:update()
-    if self.playing and not self.finished then
-        self.playing = false
-        self.finished = true
+    if self.playing then
+        local temp = {}
 
-        for _, v in pairs(self.queue) do
-            if not v:update() then
-                self.playing = true
-                self.finished = false
+        for k, v in pairs(self.queue) do
+            if v.playing then
+                v:play()
             end
+
+            local finished = v:update()
+
+            if finished then
+                table.insert(temp, k)
+            end
+        end
+
+        for i=#temp, 1, -1 do
+            local k = temp[i]
+            table.remove(self.queue, k)
         end
     end
 
-    return self.finished
+    return (self.queue == 0)
 end
 
 -------------------------------------------------------------------
@@ -61,6 +68,8 @@ function tweenParallel:stop()
     for _, v in pairs(self.queue) do
         v:stop()
     end
+
+    self.playing = false
 end
 
 return tweenParallel

@@ -9,9 +9,7 @@ local tweenSerial = class("tweenSerial")
 -------------------------------------------------------------------
 function tweenSerial:ctor(autoDestroy)
     self.queue = {}
-    self.currentIndex = 1
     self.playing = false
-    self.finished = false
     self.autoDestroy = autoDestroy
 end
 
@@ -27,37 +25,40 @@ end
 -------------------------------------------------------------------
 function tweenSerial:play()
     if #self.queue > 0 then
-        local tween = self.queue[self.currentIndex]
+        local tween = self.queue[1]
         tween:play()
-
-        self.playing = true
-        self.finished = false
     end
+
+    self.playing = true
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function tweenSerial:update()
-    if self.playing and not self.finished then
-        local tween = self.queue[self.currentIndex]
-        self.finished = tween:update()
+    local count = #self.queue
 
-        if self.finished then
-            self.currentIndex = self.currentIndex + 1
-            self.playing = false
+    if self.playing and count > 0 then
+        local tween = self.queue[1]
 
-            if self.currentIndex <= #self.queue then
-                tween = self.queue[self.currentIndex]
+        if not tween.playing then
+            tween:play()
+        end
+
+        local finished = tween:update()
+
+        if finished then
+            table.remove(self.queue, 1)
+            count = #self.queue
+
+            if count > 0 then
+                tween = self.queue[1]
                 tween:play()
-
-                self.playing = true
-                self.finished = false
             end
         end
     end
 
-    return self.finished
+    return (count == 0)
 end
 
 -------------------------------------------------------------------
@@ -67,6 +68,8 @@ function tweenSerial:stop()
     for _, v in pairs(self.queue) do
         v:stop()
     end
+
+    self.playing = false
 end
 
 return tweenSerial

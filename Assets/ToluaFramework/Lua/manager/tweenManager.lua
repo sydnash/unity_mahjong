@@ -32,16 +32,17 @@ local function update()
 
     local finishedTweens = {}
 
-    for _, v in pairs(queue) do
-        v:update()
+    for k, v in pairs(queue) do
+        local finished = v:update()
         
-        if v.autoDestroy and v.finished then
-            table.insert(finishedTweens, v)
+        if v.autoDestroy and finished then
+            table.insert(finishedTweens, k)
         end
     end
 
-    for _, v in pairs(finishedTweens) do
-        table.removeItem(queue, v)
+    for i=#finishedTweens, 1, -1 do
+        local k = finishedTweens[i]
+        table.remove(queue, k)
     end
 
     if #queue == 0 then
