@@ -1206,7 +1206,7 @@ function mahjongOperation:getMyInhandMahjongPos(player, index)
             local inhandCamera = GameObjectPicker.instance.camera
             local direct = o - inhandCamera.transform.position
             local project = Vector3.Project(direct, inhandCamera.transform.forward)
-            screenPos.x = screenPos.x + 40
+            screenPos.x = screenPos.x + 30
             --log("sc2 " .. screenPos.x .. "  " .. screenPos.y)
             local wp = inhandCamera:ScreenToWorldPoint(Vector3.New(screenPos.x, screenPos.y, project.magnitude))
             wp.x = wp.x + mahjong.w * 0.5
