@@ -2,11 +2,13 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-tweenPosition = require("tween.tweenPosition")
-tweenRotation = require("tween.tweenRotation")
-tweenScale    = require("tween.tweenScale")
-tweenSerial   = require("tween.tweenSerial")
-tweenParallel = require("tween.tweenParallel")
+tweenPosition   = require("tween.tweenPosition")
+tweenRotation   = require("tween.tweenRotation")
+tweenScale      = require("tween.tweenScale")
+tweenDelay      = require("tween.tweenDelay")
+tweenFunction   = require("tween.tweenFunction")
+tweenSerial     = require("tween.tweenSerial")
+tweenParallel   = require("tween.tweenParallel")
 
 local tweenManager = {}
 local queue = nil
@@ -31,7 +33,9 @@ local function update()
     local finishedTweens = {}
 
     for _, v in pairs(queue) do
-        if v:update() then
+        v:update()
+        
+        if v.autoDestroy and v.finished then
             table.insert(finishedTweens, v)
         end
     end
@@ -61,6 +65,10 @@ end
 --
 -------------------------------------------------------------------
 function tweenManager.remove(tween)
+    if tween ~= nil then
+        tween:stop()
+    end
+
     if queue == nil then return end
 
     for k, v in pairs(queue) do

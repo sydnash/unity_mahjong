@@ -7,10 +7,11 @@ local tweenParallel = class("tweenParallel")
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function tweenParallel:ctor()
+function tweenParallel:ctor(autoDestroy)
     self.queue = {}
     self.playing = false
     self.finished = false
+    self.autoDestroy = autoDestroy
 end
 
 -------------------------------------------------------------------

@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
+using UnityEditor.Build;
 #if UNITY_IPHONE
 using UnityEditor.iOS.Xcode;
 #endif
@@ -15,7 +16,7 @@ public class XCodeModify
 	public XCodeModify ()
 	{
 	}
-
+		
 	[PostProcessBuild(1)]
 	public static void OnPostprocessBuild(BuildTarget bildTarget, string path) {
 #if UNITY_IPHONE
@@ -24,6 +25,23 @@ public class XCodeModify
 		PBXProject proj = new PBXProject();
 		proj.ReadFromString(File.ReadAllText(projPath));
 		string target = proj.TargetGuidByName("Unity-iPhone");
+
+		string manualAddIOSFileDir = Application.dataPath.Replace("Assets", "ManualAddIOSFile");
+
+		try {
+			string filepath = Path.Combine(manualAddIOSFileDir, "OpenUDID.m");
+			string projpath = Path.Combine(path, "Libraries/Plugins/iOS/utils/OpenUDID.m");
+			File.Copy(filepath, projpath);
+			string fileguid = proj.AddFile("Libraries/Plugins/iOS/utils/OpenUDID.m", "Libraries/Plugins/iOS/utils/OpenUDID.m", PBXSourceTree.Source);
+			proj.AddFileToBuildWithFlags(target, fileguid, "-fno-objc-arc");
+
+			filepath = Path.Combine(manualAddIOSFileDir, "GTMBase64.m");
+			projpath = Path.Combine(path, "Libraries/Plugins/iOS/utils/GTMBase64.m");
+			File.Copy(filepath, projpath);
+			fileguid = proj.AddFile("Libraries/Plugins/iOS/utils/GTMBase64.m", "Libraries/Plugins/iOS/utils/GTMBase64.m", PBXSourceTree.Source);
+			proj.AddFileToBuildWithFlags(target, fileguid, "-fno-objc-arc");
+		} catch(Exception e) {
+		}
 
 		//添加xcode默认framework引用
 		proj.AddFrameworkToProject(target, "libz.tbd", false);
@@ -34,6 +52,9 @@ public class XCodeModify
 		proj.AddFrameworkToProject(target, "CoreTelephony.framework", false);
 		proj.AddFrameworkToProject(target, "CoreAudio.framework", false);
 		proj.AddFrameworkToProject(target, "SystemConfiguration.framework", false);
+		proj.AddFrameworkToProject(target, "CoreLocation.framework", false);
+		proj.AddFrameworkToProject(target, "AudioToolbox.framework", false);
+		proj.AddFrameworkToProject(target, "AVFoundation.framework", false);
 
 		//File.Delete(Path.Combine(path, "Classes/UnityAppController.h"));
 		File.Delete(Path.Combine(path, "Classes/UnityAppController.mm"));
@@ -67,6 +88,20 @@ public class XCodeModify
 
 		AddUrlType(rootDict, "Editor", "weixin", "wx2ca58653c3f50625");
 		AddUrlType(rootDict, "Editor", "xianliao", "xianliaoMVGhscFdSy3OO7KG");
+
+		/*<key>NSLocationAlwaysUsageDescription</key>
+		<string>开启定位，防止作弊打牌</string>
+		<key>NSLocationUsageDescription</key>
+		<string>开启定位，防止作弊打牌</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>开启定位，防止作弊打牌</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>开启麦克风进行语音聊天</string>*/
+		rootDict.SetString("NSLocationAlwaysUsageDescription", "开启定位，防止作弊打牌");
+		rootDict.SetString("NSLocationUsageDescription", "开启定位，防止作弊打牌");
+		rootDict.SetString("NSLocationWhenInUseUsageDescription", "开启定位，防止作弊打牌");
+		rootDict.SetString("NSMicrophoneUsageDescription", "开启麦克风进行语音聊天");
+
 
 		//这个在addurltype里面已经被添加了
 		//AddKeyArray(rootDict, "LSApplicationQueriesSchemes", "weixin");
