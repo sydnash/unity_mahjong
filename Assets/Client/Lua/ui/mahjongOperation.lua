@@ -393,23 +393,32 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:relocateIdleMahjongs(visible)
     local mahjongCount = self.game:getTotalMahjongCount()
-    local playerCount  = self.game:getTotalPlayerCount()
+    local playerCount  = 4 --self.game:getTotalPlayerCount()
     local markerTurn   = self.game:getMarkerTurn()
     local playerStart  = (self.game.dices[1] + self.game.dices[2] + markerTurn) % playerCount - 1
 
-    local c = mahjongCount / playerCount
-    local i, f = math.modf(c / 2)
+    local dirMahjongCnt = {}
+    for i = 0, playerCount-1 do
+        dirMahjongCnt[i] = 0
+    end
+    local i = 0
+    while mahjongCount > 0 do
+        mahjongCount = mahjongCount - 2
+        dirMahjongCnt[i%playerCount] = dirMahjongCnt[i%playerCount] + 1
+        i = i + 1
+    end
 
     local acc = 1
+    for dir = playerStart, playerStart-playerCount+1, -1 do
+        -- local player = self.game:getPlayerByTurn((playerCount+t) % playerCount)
 
-    for t=playerStart, playerStart-playerCount+1, -1 do
-        local player = self.game:getPlayerByTurn((playerCount+t) % playerCount)
-
-        if f > 0.1 then
-            i = (player.turn % 2 == 0) and c + 1 or c - 1 
+        if dir < 0 then
+            dir = dir + 4
         end
+        local i = dirMahjongCnt[dir]
+        i = i * 2
 
-        local turn = self.game:getSeatType(player.turn)
+        local turn = dir --self.game:getSeatType(player.turn)
         local seat = self.seats[turn]
 
         local o = seat[mahjongGame.cardType.idle].pos
@@ -1265,7 +1274,7 @@ function mahjongOperation:getMyInhandMahjongPos(player, index)
             local inhandCamera = GameObjectPicker.instance.camera
             local direct = o - inhandCamera.transform.position
             local project = Vector3.Project(direct, inhandCamera.transform.forward)
-            screenPos.x = screenPos.x + 40
+            screenPos.x = screenPos.x + 30
             --log("sc2 " .. screenPos.x .. "  " .. screenPos.y)
             local wp = inhandCamera:ScreenToWorldPoint(Vector3.New(screenPos.x, screenPos.y, project.magnitude))
             wp.x = wp.x + mahjong.w * 0.5
