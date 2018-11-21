@@ -831,7 +831,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onGameEndHandler(msg)
 --    log("game end, msg = " .. table.tostring(msg))
-    local func = tweenFunction(function()
+    local func = tweenFunction.new(function()
         for _, v in pairs(self.players) do
             v.que = -1
         end

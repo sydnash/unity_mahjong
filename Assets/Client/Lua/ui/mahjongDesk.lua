@@ -87,6 +87,14 @@ function mahjongDesk:refreshUI()
         
     end
 
+    local totalCount = self.game:getTotalPlayerCount()
+    if totalCount == 3 then
+        self.players[mahjongGame.seatType.top]:hide()
+    elseif totalCount == 2 then
+        self.players[mahjongGame.seatType.left]:hide()
+        self.players[mahjongGame.seatType.right]:hide()
+    end
+
     self.mDeskID:setText(string.format("房号:%d", self.game.deskId))
     self:updateCurrentGameIndex()
     self.mTime:setText(time.formatTime())
