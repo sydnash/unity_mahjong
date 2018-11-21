@@ -151,6 +151,18 @@ public class GVoiceEngine
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="ms"></param>
+    public void SetMaxMessageLength(int ms)
+    {
+        if (mCloudVoice != null)
+        {
+            mCloudVoice.SetMaxMessageLength(ms);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="filename"></param>
     /// <returns></returns>
     public bool StartRecord(string filename)

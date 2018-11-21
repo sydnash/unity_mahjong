@@ -427,7 +427,7 @@ function mahjongGame:endGame()
             return
         end
 
-        self.deskId = nil
+--        self.deskId = nil
 
         self.leftVoteSeconds    = msg.LeftTime
         self.exitVoteProposer   = msg.Proposer

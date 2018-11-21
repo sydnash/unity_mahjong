@@ -29,6 +29,8 @@ function gvoiceManager.setup(userId)
 
             gvoiceManager.status = ok
         end)
+
+        GVoiceEngine.instance:SetMaxMessageLength(gameConfig.gvoiceMaxLength * 1000)
         GVoiceEngine.instance:ApplyMessageKey(timeout)
     end
 
@@ -67,10 +69,15 @@ end
 function gvoiceManager.stopRecord(cancel)
     if gvoiceManager.status then
         GVoiceEngine.instance:StopRecord()
+        isRecording = false
+
         if not cancel then
+            if recordFinishedCallback ~= nil then
+                recordFinishedCallback(filename)
+            end
+
             GVoiceEngine.instance:Upload(recordFilename, timeout)
         end
-        isRecording = false
 
         soundManager.setBGMVolume(gamepref.getBGMVolume())
         soundManager.setSFXVolume(gamepref.getSFXVolume())
@@ -132,10 +139,6 @@ function gvoiceManager.onUploadedHandler(ok, filename, fileid)
         networkManager.sendChatMessage(chatType.voice, fileid, function(ok, msg)
         
         end)
-
-        if recordFinishedCallback ~= nil then
-            recordFinishedCallback(filename)
-        end
     end
 end
 

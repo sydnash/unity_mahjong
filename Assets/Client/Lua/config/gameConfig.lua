@@ -8,7 +8,7 @@ return {
     nicknameMaxLength       = 5,        --玩家昵称可显示的最大长度
     friendsterNameMaxLength = 10,       --亲友圈名称可显示的最大长度
     thumbSize               = 150,      --缩略图尺寸
-    gvoiceMaxLength         = 10000,    --语音录制最大时长，单位ms
+    gvoiceMaxLength         = 120,      --语音录制最大时长，单位秒
 }
 
 --endregion
