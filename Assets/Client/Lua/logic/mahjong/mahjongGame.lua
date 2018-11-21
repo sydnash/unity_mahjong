@@ -2,7 +2,9 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local gamePlayer  = require("logic.player.gamePlayer")
+local gamePlayer    = require("logic.player.gamePlayer")
+local tweenManager  = require("manager.tweenManager")
+
 local mahjongGame = class("mahjongGame")
 
 mahjongGame.seatType = {
@@ -25,6 +27,10 @@ mahjongGame.cardType = {
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data)
     log("mahjongGame, data = " .. table.tostring(data))
+    self.messageHandlers = tweenSerial.new(false)
+    self.messageHandlers:play()
+    tweenManager.add(self.messageHandlers)
+
     self.totalMahjongCount  = 108
     self.leftMahjongCount   = 0
     self.deskId             = data.DeskId
@@ -310,20 +316,21 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onGameStartHandler(msg)
 --    log("start game, msg = " .. table.tostring(msg))
+    local func = tweenFunction.new(function()
+        for _, v in pairs(self.players) do
+            v.que = -1
+        end
 
-    for _, v in pairs(self.players) do
-        v.que = -1
-    end
+        self.totalMahjongCount = msg.TotalMJCnt
+        self.leftMahjongCount = self.totalMahjongCount
+        self.dices = { msg.Dice1, msg.Dice2 }
+        self.markerTurn = msg.Marker
 
-    self.totalMahjongCount = msg.TotalMJCnt
-    self.leftMahjongCount = self.totalMahjongCount
-    self.dices = { msg.Dice1, msg.Dice2 }
-    self.markerTurn = msg.Marker
-
-    self.deskUI:onGameStart()
-    local duration = self.operationUI:onGameStart()
-
-    return duration
+        self.deskUI:onGameStart()
+        self.operationUI:onGameStart()
+    end)
+    self.messageHandlers:add(func)
+    self.messageHandlers:add(tweenDelay.new(3))
 end
 
 -------------------------------------------------------------------------------
@@ -331,18 +338,20 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onFaPaiHandler(msg)
 --    log("fapai, msg = " .. table.tostring(msg))
+    local func = tweenFunction.new(function()
+        for _, v in pairs(msg.Seats) do
+            local player = self:getPlayerByAcId(v.AcId)
+            player[mahjongGame.cardType.shou] = v.Cards
 
-    for _, v in pairs(msg.Seats) do
-        local player = self:getPlayerByAcId(v.AcId)
-        player[mahjongGame.cardType.shou] = v.Cards
-
-        for _, _ in pairs(v.Cards) do
-            self.leftMahjongCount = self.leftMahjongCount - 1
+            for _, _ in pairs(v.Cards) do
+                self.leftMahjongCount = self.leftMahjongCount - 1
+            end
         end
-    end
 
-    self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
-    self.operationUI:OnFaPai()
+        self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
+        self.operationUI:OnFaPai()
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -350,17 +359,19 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onMoPaiHandler(msg)
 --    log("mopai, msg = " .. table.tostring(msg))
+    local func = tweenFunction.new(function()
+        local player = self:getPlayerByAcId(msg.AcId)
+        local inhandMahjongs = player[mahjongGame.cardType.shou]
 
-    local player = self:getPlayerByAcId(msg.AcId)
-    local inhandMahjongs = player[mahjongGame.cardType.shou]
+        for _, v in pairs(msg.Ids) do
+            table.insert(inhandMahjongs, v)
+            self.leftMahjongCount = self.leftMahjongCount - 1
+        end
 
-    for _, v in pairs(msg.Ids) do
-        table.insert(inhandMahjongs, v)
-        self.leftMahjongCount = self.leftMahjongCount - 1
-    end
-
-    self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
-    self.operationUI:onMoPai(msg.AcId, msg.Ids)
+        self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
+        self.operationUI:onMoPai(msg.AcId, msg.Ids)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -368,7 +379,10 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onOpListHandler(msg)
 --    log("oplist, msg = " .. table.tostring(msg))
-    self.operationUI:onOpList(msg)
+    local func = tweenFunction.new(function()
+        self.operationUI:onOpList(msg)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -376,39 +390,44 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoHandler(msg)
 --    log("opdo, msg = " .. table.tostring(msg))
+    local func = tweenFunction.new(function()
+        for _, v in pairs(msg.Do) do
+            local optype = v.Op
+            local acId   = v.AcId
+            local cards  = v.Do.Cs
+            local beAcId = v.BeAcId
+            local beCard = v.Card
 
-    for _, v in pairs(msg.Do) do
-        local optype = v.Op
-        local acId   = v.AcId
-        local cards  = v.Do.Cs
-        local beAcId = v.BeAcId
-        local beCard = v.Card
-
-        if optype == opType.chu.id then
-            self:onOpDoChu(acId, cards)
-        elseif optype == opType.chi.id then
-            self:onOpDoChi(acId, cards, beAcId, beCard)
-        elseif optype == opType.peng.id then
-            self:onOpDoPeng(acId, cards, beAcId, beCard)
-        elseif optype == opType.gang.id then
-            local t = v.Do.T
-            self:onOpDoGang(acId, cards, beAcId, beCard, t)
-        elseif optype == opType.hu.id then
-            local t = v.Do.T
-            self:onOpDoHu(acId, cards, beAcId, beCard, t)
-        elseif optype == opType.guo.id then
-            self:onOpDoGuo(acId)
-        else
-            log("unknown optype: " .. tostring(optype))
+            if optype == opType.chu.id then
+                self:onOpDoChu(acId, cards)
+            elseif optype == opType.chi.id then
+                self:onOpDoChi(acId, cards, beAcId, beCard)
+            elseif optype == opType.peng.id then
+                self:onOpDoPeng(acId, cards, beAcId, beCard)
+            elseif optype == opType.gang.id then
+                local t = v.Do.T
+                self:onOpDoGang(acId, cards, beAcId, beCard, t)
+            elseif optype == opType.hu.id then
+                local t = v.Do.T
+                self:onOpDoHu(acId, cards, beAcId, beCard, t)
+            elseif optype == opType.guo.id then
+                self:onOpDoGuo(acId)
+            else
+                log("unknown optype: " .. tostring(optype))
+            end
         end
-    end
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
 -- 取消所有操作
 -------------------------------------------------------------------------------
 function mahjongGame:onClearHandler(msg)
-    self.operationUI:onClear()
+    local func = tweenFunction.new(function()
+        self.operationUI:onClear()
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -494,7 +513,10 @@ end
 -- SC 出牌
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoChu(acId, cards)
-    self.operationUI:onOpDoChu(acId, cards)
+    local func = tweenFunction.new(function()
+        self.operationUI:onOpDoChu(acId, cards)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -508,31 +530,43 @@ end
 -- SC 碰
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoPeng(acId, cards, beAcId, beCard)
-    self.deskUI:onPlayerPeng(acId)
-    self.operationUI:onOpDoPeng(acId, cards, beAcId, beCard)
+    local func = tweenFunction.new(function()
+        self.deskUI:onPlayerPeng(acId)
+        self.operationUI:onOpDoPeng(acId, cards, beAcId, beCard)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
 -- SC 杠
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
-    self.deskUI:onPlayerGang(acId)
-    self.operationUI:onOpDoGang(acId, cards, beAcId, beCard, t)
+    local func = tweenFunction.new(function()
+        self.deskUI:onPlayerGang(acId)
+        self.operationUI:onOpDoGang(acId, cards, beAcId, beCard, t)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
 -- SC 胡
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard, t)
-    self.deskUI:onPlayerHu(acId, t)
-    self.operationUI:onOpDoHu(acId, cards, beAcId, beCard, t)
+    local func = tweenFunction.new(function()
+        self.deskUI:onPlayerHu(acId, t)
+        self.operationUI:onOpDoHu(acId, cards, beAcId, beCard, t)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
 -- SC 过
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoGuo(acId)
-    self.operationUI:onOpDoGuo(acId)
+    local func = tweenFunction.new(function()
+        self.operationUI:onOpDoGuo(acId)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -668,8 +702,6 @@ function mahjongGame:exitGame()
     local loading = require("ui.loading").new()
     loading:show()
 
-    self:destroy()
-
     sceneManager.load("scene", "lobbyscene", function(completed, progress)
         loading:setProgress(progress)
 
@@ -799,70 +831,73 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onGameEndHandler(msg)
 --    log("game end, msg = " .. table.tostring(msg))
-    for _, v in pairs(self.players) do
-        v.que = -1
-    end
+    local func = tweenFunction(function()
+        for _, v in pairs(self.players) do
+            v.que = -1
+        end
 
-    self.leftGames = msg.LeftTime
+        self.leftGames = msg.LeftTime
 
-    local datas = { deskId          = self.deskId,
-                    totalGameCount  = self:getTotalGameCount(),
-                    finishGameCount = self:getTotalGameCount() - self:getLeftGameCount(),
-                    players         = {},
-    }
-
-    local special = table.fromjson(msg.Special)
-
-    local totalScores = {}
-    local preData = table.fromjson(special.PreData)
-    
-    for _, v in pairs(preData.TotalResuts) do
-        totalScores[v.AcId] = v.Score
-    end
-
-    local specialData = table.fromjson(special.SpecialData)
-
-    for _, v in pairs(specialData.PlayerInfos) do
-        local p = self:getPlayerByAcId(v.AcId)
-        local d = { acId            = v.AcId, 
-                    headerTex       = self.players[p.turn].headerTex,
-                    nickname        = p.nickname, 
-                    score           = v.Score,
-                    totalScore      = totalScores[v.AcId], 
-                    turn            = p.turn, 
-                    seat            = self:getSeatType(p.turn),
-                    inhand          = v.ShouPai,
-                    hu              = v.Hu,
-                    isCreator       = self:isCreator(v.AcId),
-                    isWinner        = false,
---                    que             = 1,
+        local datas = { deskId          = self.deskId,
+                        totalGameCount  = self:getTotalGameCount(),
+                        finishGameCount = self:getTotalGameCount() - self:getLeftGameCount(),
+                        players         = {},
         }
 
-        for k, u in pairs(d.inhand) do 
-            if u == d.hu then
-                table.remove(d.inhand, k)
-            end
+        local special = table.fromjson(msg.Special)
+
+        local totalScores = {}
+        local preData = table.fromjson(special.PreData)
+    
+        for _, v in pairs(preData.TotalResuts) do
+            totalScores[v.AcId] = v.Score
         end
 
-        local peng = v.ChiChe
-        if peng ~= nil then
-            for _, u in pairs(peng) do
-                if d[u.Op] == nil then
-                    d[u.Op] = {}
+        local specialData = table.fromjson(special.SpecialData)
+
+        for _, v in pairs(specialData.PlayerInfos) do
+            local p = self:getPlayerByAcId(v.AcId)
+            local d = { acId            = v.AcId, 
+                        headerTex       = self.players[p.turn].headerTex,
+                        nickname        = p.nickname, 
+                        score           = v.Score,
+                        totalScore      = totalScores[v.AcId], 
+                        turn            = p.turn, 
+                        seat            = self:getSeatType(p.turn),
+                        inhand          = v.ShouPai,
+                        hu              = v.Hu,
+                        isCreator       = self:isCreator(v.AcId),
+                        isWinner        = false,
+    --                    que             = 1,
+            }
+
+            for k, u in pairs(d.inhand) do 
+                if u == d.hu then
+                    table.remove(d.inhand, k)
                 end
-
-                table.insert(d[u.Op], u.Cs)
             end
+
+            local peng = v.ChiChe
+            if peng ~= nil then
+                for _, u in pairs(peng) do
+                    if d[u.Op] == nil then
+                        d[u.Op] = {}
+                    end
+
+                    table.insert(d[u.Op], u.Cs)
+                end
+            end
+
+            datas.players[p.turn] = d
         end
 
-        datas.players[p.turn] = d
-    end
+        self.gameEndUI = require("ui.gameEnd").new(self, datas)
+        self.gameEndUI:show()
 
-    self.gameEndUI = require("ui.gameEnd").new(self, datas)
-    self.gameEndUI:show()
-
-    self.deskUI:reset()
-    self.operationUI:reset()
+        self.deskUI:reset()
+        self.operationUI:reset()
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -870,7 +905,10 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onDingQueHintHandler(msg)
 --    log("ding que hint, msg = " .. table.tostring(msg))
-    self.operationUI:onDingQueHint(msg)
+    local func = tweenFunction.new(function()
+        self.operationUI:onDingQueHint(msg)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -878,14 +916,16 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onDingQueDoHandler(msg)
 --    log("ding que do, msg = " .. table.tostring(msg))
+    local func = tweenFunction.new(function()
+        for _, v in pairs(msg.Dos) do
+            local player = self:getPlayerByAcId(v.AcId)
+            player.que = v.Q
+        end
 
-    for _, v in pairs(msg.Dos) do
-        local player = self:getPlayerByAcId(v.AcId)
-        player.que = v.Q
-    end
-
-    self.deskUI:onDingQueDo(msg)
-    self.operationUI:onDingQueDo(msg)
+        self.deskUI:onDingQueDo(msg)
+        self.operationUI:onDingQueDo(msg)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -926,6 +966,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:destroy()
 --    log("mahjongGame:destroy")
+    tweenManager.remove(self.messageHandlers)
 
     self.playerCount = 0
     self:unregisterCommandHandlers()
@@ -955,6 +996,9 @@ function mahjongGame:destroy()
     clientApp.currentDesk = nil
 end
 
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
 function mahjongGame:refreshUI()
     if self.deskUI ~= nil then
         self.deskUI:refreshUI()
@@ -969,10 +1013,16 @@ function mahjongGame:refreshUI()
     end
 end
 
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
 function mahjongGame:isCreator(acId)
     return acId == self.creatorAcId
 end
 
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
 function mahjongGame:isPlaying()
     return self.status == deskStatus.playing
 end

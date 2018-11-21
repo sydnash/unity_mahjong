@@ -7,7 +7,6 @@ local mahjongType   = require("logic.mahjong.mahjongType")
 local mahjongGame   = require("logic.mahjong.mahjongGame")
 local mahjong       = require("logic.mahjong.mahjong")
 local touch         = require("logic.touch")
-local tweenManager  = require("manager.tweenManager")
 
 local base = require("ui.common.view")
 local mahjongOperation = class("mahjongOperation", base)
@@ -94,10 +93,6 @@ end
 -- 初始化
 -------------------------------------------------------------------------------
 function mahjongOperation:onInit()
-    self.messageHandlers = tweenSerial.new(false)
-    self.messageHandlers:play()
-    tweenManager.add(self.messageHandlers)
-
     self.turnCountdown = COUNTDOWN_SECONDS_C
     self.countdownTick = -1
 
@@ -262,28 +257,23 @@ end
 -- 游戏开始
 -------------------------------------------------------------------------------
 function mahjongOperation:onGameStart()
-    local func = tweenFunction.new(function()
-        self.countdownTick = -1
-        self:highlightPlaneByTurn(-1)
-        self:setCountdownVisible(false)
-        self.chupaiPtr:hide()
+    self.countdownTick = -1
+    self:highlightPlaneByTurn(-1)
+    self:setCountdownVisible(false)
+    self.chupaiPtr:hide()
 
-        self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
-        self:relocateIdleMahjongs(false)
+    self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
+    self:relocateIdleMahjongs(false)
 
-        eventManager.registerAnimationTrigger("table_plane_down", function()
-            for _, m in pairs(self.idleMahjongs) do
-                m:show()
-            end
-        end)
-
-        self:playAnimation(self.planeAnim)
-        self:playAnimation(self.mahjongsRootAnim)
-        self:playDiceAnim()
+    eventManager.registerAnimationTrigger("table_plane_down", function()
+        for _, m in pairs(self.idleMahjongs) do
+            m:show()
+        end
     end)
 
-    self.messageHandlers:add(func)
-    self.messageHandlers:add(tweenDelay.new(3))
+    self:playAnimation(self.planeAnim)
+    self:playAnimation(self.mahjongsRootAnim)
+    self:playDiceAnim()
 end
 
 -------------------------------------------------------------------------------
@@ -299,81 +289,77 @@ end
 -- 游戏同步
 -------------------------------------------------------------------------------
 function mahjongOperation:onGameSync(reenter)
-    local func = tweenFunction.new(function()
-        self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
-        self:relocateIdleMahjongs(true)    
+    self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
+    self:relocateIdleMahjongs(true)    
 
-        for _, v in pairs(self.game.players) do 
-            if v.hu ~= nil then
-                local mid = v.hu[1].HuCard
+    for _, v in pairs(self.game.players) do 
+        if v.hu ~= nil then
+            local mid = v.hu[1].HuCard
 
-                if mid >= 0 then
-                    local m = self:getMahjongFromIdle(mid)
+            if mid >= 0 then
+                local m = self:getMahjongFromIdle(mid)
 
-                    if m ~= nil then
-                        self:removeFromIdle()
-                    else
-                        --如一炮双响的时候，会出现无法从idle列表中搜索到牌的情况
-                        --此时，就直接创建一个新的麻将对象
-                        m = mahjong.new(mid)
-                    end
-
-                    local s = self.game:getSeatType(v.turn)
-                    local c = self.seats[s][mahjongGame.cardType.hu]
-
-                    m:setLocalPosition(c.pos)
-                    m:setLocalRotation(c.rot)
-                    m:setLocalScale(c.scl)
-
-                    self.huMahjongs[v.acId] = m
+                if m ~= nil then
+                    self:removeFromIdle()
+                else
+                    --如一炮双响的时候，会出现无法从idle列表中搜索到牌的情况
+                    --此时，就直接创建一个新的麻将对象
+                    m = mahjong.new(mid)
                 end
-            end
 
-            self:createPengMahjongs(v)
-            self:createChuMahjongs(v)
-            self:createInHandMahjongs(v)
+                local s = self.game:getSeatType(v.turn)
+                local c = self.seats[s][mahjongGame.cardType.hu]
+
+                m:setLocalPosition(c.pos)
+                m:setLocalRotation(c.rot)
+                m:setLocalScale(c.scl)
+
+                self.huMahjongs[v.acId] = m
+            end
         end
 
-        local chu = nil
+        self:createPengMahjongs(v)
+        self:createChuMahjongs(v)
+        self:createInHandMahjongs(v)
+    end
 
-        for _, u in pairs(self.chuMahjongs) do
-            for _, v in pairs(u) do
-                if v.id == reenter.CurDiPai then
-                    chu = v
-                    break
-                end
-            end
+    local chu = nil
 
-            if chu ~= nil then
-                local c = chu:getLocalPosition()
-                local p = self.chupaiPtr:getLocalPosition()
-                p:Set(c.x, c.y + mahjong.z * 0.55 + 0.025, c.z)
-                self.chupaiPtr:setLocalPosition(p)
-                self.chupaiPtr:show()
-
+    for _, u in pairs(self.chuMahjongs) do
+        for _, v in pairs(u) do
+            if v.id == reenter.CurDiPai then
+                chu = v
                 break
             end
         end
 
-        if self.game.deskStatus == deskStatus.dingque then
-            self.mStatus:show()
+        if chu ~= nil then
+            local c = chu:getLocalPosition()
+            local p = self.chupaiPtr:getLocalPosition()
+            p:Set(c.x, c.y + mahjong.z * 0.55 + 0.025, c.z)
+            self.chupaiPtr:setLocalPosition(p)
+            self.chupaiPtr:show()
 
-            local player = self.game:getPlayerByAcId(gamepref.player.acId)
-            if player.que < 0 then
-                self.mQue:show()
-            end
-        elseif self.game.deskStatus == deskStatus.playing then
-            self:onOpList(reenter.CurOpList)
-            self:highlightPlaneByTurn(reenter.CurOpTurn)
-            self.turnCountdown = COUNTDOWN_SECONDS_C
-            self.countdownTick = time.realtimeSinceStartup()
-            self:setCountdownVisible(true)
+            break
         end
+    end
 
-        touch.addListener(self.touchHandler, self)
-    end)
+    if self.game.deskStatus == deskStatus.dingque then
+        self.mStatus:show()
 
-    self.messageHandlers:add(func)
+        local player = self.game:getPlayerByAcId(gamepref.player.acId)
+        if player.que < 0 then
+            self.mQue:show()
+        end
+    elseif self.game.deskStatus == deskStatus.playing then
+        self:onOpList(reenter.CurOpList)
+        self:highlightPlaneByTurn(reenter.CurOpTurn)
+        self.turnCountdown = COUNTDOWN_SECONDS_C
+        self.countdownTick = time.realtimeSinceStartup()
+        self:setCountdownVisible(true)
+    end
+
+    touch.addListener(self.touchHandler, self)
 end
 
 -------------------------------------------------------------------------------
@@ -467,17 +453,11 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongOperation:OnFaPai()
-    log("mahjongOperation:OnFaPai")
-    local func = tweenFunction.new(function()
-        log("mahjongOperation:OnFaPai, tweenFunc")
-        for _, player in pairs(self.game.players) do
-            self:createInHandMahjongs(player)
-        end
+    for _, player in pairs(self.game.players) do
+        self:createInHandMahjongs(player)
+    end
 
-        touch.addListener(self.touchHandler, self)
-    end)
-
-    self.messageHandlers:add(func)
+    touch.addListener(self.touchHandler, self)
 end
 
 -------------------------------------------------------------------------------
@@ -504,36 +484,29 @@ end
 -- 定缺提示
 -------------------------------------------------------------------------------
 function mahjongOperation:onDingQueHint(msg)
-    local func = tweenFunction.new(function()
-        self.mStatus:show()
-        self.mQue:show()
-    end)
-
-    self.messageHandlers:add(func)
+    self.mStatus:show()
+    self.mQue:show()
 end
 
 -------------------------------------------------------------------------------
 -- 定缺结束
 -------------------------------------------------------------------------------
 function mahjongOperation:onDingQueDo(msg)
-    local func = tweenFunction.new(function()
-        local player = self.game:getPlayerByAcId(gamepref.player.acId)
-        local mahjongs = self.inhandMahjongs[gamepref.player.acId]
+    local player = self.game:getPlayerByAcId(gamepref.player.acId)
+    local mahjongs = self.inhandMahjongs[gamepref.player.acId]
 
-        for _, v in pairs(mahjongs) do
-            if v.class == player.que then
-                v:dark()
-            else
-                v:light()
-            end  
-        end
+    for _, v in pairs(mahjongs) do
+        if v.class == player.que then
+            v:dark()
+        else
+            v:light()
+        end  
+    end
 
-        self:relocateInhandMahjongs(player, mahjongs)
+    self:relocateInhandMahjongs(player, mahjongs)
 
-        self.mStatus:hide()
-        self.mQue:hide()
-    end)
-    self.messageHandlers:add(func)
+    self.mStatus:hide()
+    self.mQue:hide()
 end
 
 -------------------------------------------------------------------------------
@@ -585,59 +558,53 @@ end
 -- 摸牌
 -------------------------------------------------------------------------------
 function mahjongOperation:onMoPai(acId, cards)
-    local func = tweenFunction.new(function()
-        self.turnCountdown = COUNTDOWN_SECONDS_C
-        self.countdownTick = time.realtimeSinceStartup()
-        self:highlightPlaneByAcId(acId)
+    self.turnCountdown = COUNTDOWN_SECONDS_C
+    self.countdownTick = time.realtimeSinceStartup()
+    self:highlightPlaneByAcId(acId)
     
-        if acId ~= gamepref.player.acId then
-            self:increaseInhandMahjongs(acId, cards)
+    if acId ~= gamepref.player.acId then
+        self:increaseInhandMahjongs(acId, cards)
+    else
+        local player = self.game:getPlayerByAcId(acId)
+
+        self.mo = self:getMahjongFromIdle(cards[1])
+        self:removeFromIdle()
+
+        local mahjongs = self.inhandMahjongs[player.acId]
+        local moPaiPos = self:getMyInhandMahjongPos(player, #mahjongs + 1)
+        moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
+
+        self.mo:setLocalPosition(moPaiPos)
+        self.mo:setLocalRotation(mopaiConfig.rotation)
+        self.mo:setLocalScale(mopaiConfig.scale)
+
+        if self.mo.class == player.que then
+            self.mo:dark()
         else
-            local player = self.game:getPlayerByAcId(acId)
-
-            self.mo = self:getMahjongFromIdle(cards[1])
-            self:removeFromIdle()
-
-            local mahjongs = self.inhandMahjongs[player.acId]
-            local moPaiPos = self:getMyInhandMahjongPos(player, #mahjongs + 1)
-            moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
-
-            self.mo:setLocalPosition(moPaiPos)
-            self.mo:setLocalRotation(mopaiConfig.rotation)
-            self.mo:setLocalScale(mopaiConfig.scale)
-
-            if self.mo.class == player.que then
-                self.mo:dark()
-            else
-                self.mo:light()
-            end
-
-            self.mo:setPickabled(true)
-            self.mo:show()
+            self.mo:light()
         end
-    end)
-    self.messageHandlers:add(func)
+
+        self.mo:setPickabled(true)
+        self.mo:show()
+    end
 end
 
 -------------------------------------------------------------------------------
 -- OpList
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpList(oplist)
-    local func = tweenFunction.new(function()
-        if oplist ~= nil then
-            local infos = oplist.OpInfos
-            local leftTime = oplist.L
+    if oplist ~= nil then
+        local infos = oplist.OpInfos
+        local leftTime = oplist.L
 
-            for _, v in pairs(infos) do
-                if v.Op == opType.chu.id then
-                    self:beginChuPai()
-                end
+        for _, v in pairs(infos) do
+            if v.Op == opType.chu.id then
+                self:beginChuPai()
             end
-
-            self:showOperations(infos, leftTime)
         end
-    end)
-    self.messageHandlers:add(func)
+
+        self:showOperations(infos, leftTime)
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -918,83 +885,77 @@ end
 -- 出牌
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpDoChu(acId, cards)
-    local func = tweenFunction.new(function()
-        self:endChuPai()
-        local chu = nil
+    self:endChuPai()
+    local chu = nil
 
-        if acId == gamepref.player.acId and self.mo ~= nil and cards[1] == self.mo.id then
-            self:putMahjongToChu(acId, self.mo)
-            chu = self.mo
-        else
-            if acId == gamepref.player.acId and self.mo ~= nil then
-                self:insertMahjongToInhand(self.mo)
-            end
-
-            local mahjongs = self:decreaseInhandMahjongs(acId, cards)
-            for _, m in pairs(mahjongs) do
-                self:putMahjongToChu(acId, m)
-                chu = m
-            end
+    if acId == gamepref.player.acId and self.mo ~= nil and cards[1] == self.mo.id then
+        self:putMahjongToChu(acId, self.mo)
+        chu = self.mo
+    else
+        if acId == gamepref.player.acId and self.mo ~= nil then
+            self:insertMahjongToInhand(self.mo)
         end
 
-        if chu ~= nil then
-            self.chupaiPtr.mahjongId = chu.id
-
-            local c = chu:getLocalPosition()
-            local p = self.chupaiPtr:getLocalPosition()
-            p:Set(c.x, c.y + mahjong.z * 0.55 + 0.035, c.z)
-            self.chupaiPtr:setLocalPosition(p)
-            self.chupaiPtr:show()
-
-            if acId == gamepref.player.acId then
-                chu:light()
-            end 
+        local mahjongs = self:decreaseInhandMahjongs(acId, cards)
+        for _, m in pairs(mahjongs) do
+            self:putMahjongToChu(acId, m)
+            chu = m
         end
+    end
 
-        self.mo = nil
-        soundManager.playGfx("mahjong", "chupai")
+    if chu ~= nil then
+        self.chupaiPtr.mahjongId = chu.id
 
-        if acId ~= gamepref.player.acId then 
-            local player = self.game:getPlayerByAcId(acId)
-            playMahjongSound(cards[1], player.sex)
-        end
-    end)
-    self.messageHandlers:add(func)
+        local c = chu:getLocalPosition()
+        local p = self.chupaiPtr:getLocalPosition()
+        p:Set(c.x, c.y + mahjong.z * 0.55 + 0.035, c.z)
+        self.chupaiPtr:setLocalPosition(p)
+        self.chupaiPtr:show()
+
+        if acId == gamepref.player.acId then
+            chu:light()
+        end 
+    end
+
+    self.mo = nil
+    soundManager.playGfx("mahjong", "chupai")
+
+    if acId ~= gamepref.player.acId then 
+        local player = self.game:getPlayerByAcId(acId)
+        playMahjongSound(cards[1], player.sex)
+    end
 end
 
 -------------------------------------------------------------------------------
 -- 碰
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
-    local func = tweenFunction.new(function()
-        local beAcId = beAcId[1]
+    local beAcId = beAcId[1]
 
-        local pengMahjongs = self:decreaseInhandMahjongs(acId, cards)
-        local chuMahjongs = self.chuMahjongs[beAcId]
+    local pengMahjongs = self:decreaseInhandMahjongs(acId, cards)
+    local chuMahjongs = self.chuMahjongs[beAcId]
 
-        for k, v in pairs(chuMahjongs) do
-            if v.id == beCard then
-                table.insert(pengMahjongs, v)
-                table.remove(chuMahjongs, k)
-                break
-            end
+    for k, v in pairs(chuMahjongs) do
+        if v.id == beCard then
+            table.insert(pengMahjongs, v)
+            table.remove(chuMahjongs, k)
+            break
         end
+    end
 
-        self:putMahjongsToPeng(acId, pengMahjongs)
+    self:putMahjongsToPeng(acId, pengMahjongs)
 
 
-        if self.chupaiPtr.mahjongId == beCard then
-            self.chupaiPtr:hide()
-        end
+    if self.chupaiPtr.mahjongId == beCard then
+        self.chupaiPtr:hide()
+    end
 
-        self:highlightPlaneByAcId(acId)
+    self:highlightPlaneByAcId(acId)
 
-        if acId ~= gamepref.player.acId then 
-            local player = self.game:getPlayerByAcId(acId)
-            playMahjongOpSound(opType.peng.id, player.sex)
-        end
-    end)
-    self.messageHandlers:add(func)
+    if acId ~= gamepref.player.acId then 
+        local player = self.game:getPlayerByAcId(acId)
+        playMahjongOpSound(opType.peng.id, player.sex)
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -1004,67 +965,55 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
     local detail = opType.gang.detail
 
     if t == detail.minggang then
-        local func = tweenFunction.new(function()
-            local beAcId = beAcId[1]
+        local beAcId = beAcId[1]
 
-            local mahjongs = self:decreaseInhandMahjongs(acId, cards)
-            local chu = self.chuMahjongs[beAcId]
+        local mahjongs = self:decreaseInhandMahjongs(acId, cards)
+        local chu = self.chuMahjongs[beAcId]
 
-            for k, v in pairs(chu) do
-                if v.id == beCard then
-                    table.insert(mahjongs, v)
-                    table.remove(chu, k)
-                    break
-                end
+        for k, v in pairs(chu) do
+            if v.id == beCard then
+                table.insert(mahjongs, v)
+                table.remove(chu, k)
+                break
             end
+        end
 
-            self:putMahjongsToPeng(acId, mahjongs)
+        self:putMahjongsToPeng(acId, mahjongs)
 
-            if self.chupaiPtr.mahjongId == beCard then
-                self.chupaiPtr:hide()
-            end
-        end)
-        self.messageHandlers:add(func)
+        if self.chupaiPtr.mahjongId == beCard then
+            self.chupaiPtr:hide()
+        end
     elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
-        local func = tweenFunction.new(function()
-            if self.mo ~= nil then
-                self:insertMahjongToInhand(self.mo)
-                self.mo = nil
+        if self.mo ~= nil then
+            self:insertMahjongToInhand(self.mo)
+            self.mo = nil
+        end
+
+        local m = self:decreaseInhandMahjongs(acId, cards)
+        local p = self.pengMahjongs[acId]
+
+        for _, v in pairs(p) do
+            if v[1].name == m[1].name then
+                table.insert(v, m[1])
+                break
             end
+        end 
 
-            local m = self:decreaseInhandMahjongs(acId, cards)
-            local p = self.pengMahjongs[acId]
-
-            for _, v in pairs(p) do
-                if v[1].name == m[1].name then
-                    table.insert(v, m[1])
-                    break
-                end
-            end 
-
-            local player = self.game:getPlayerByAcId(acId)
-            self:relocatePengMahjongs(player)
-        end)
-        self.messageHandlers:add(func)
+        local player = self.game:getPlayerByAcId(acId)
+        self:relocatePengMahjongs(player)
     else
-        local func = tweenFunction.new(function()
-            if self.mo ~= nil then
-                self:insertMahjongToInhand(self.mo)
-            end
+        if self.mo ~= nil then
+            self:insertMahjongToInhand(self.mo)
+        end
 
-            local mahjongs = self:decreaseInhandMahjongs(acId, cards)
-            self:putMahjongsToPeng(acId, mahjongs)
-        end)
-        self.messageHandlers:add(func)
+        local mahjongs = self:decreaseInhandMahjongs(acId, cards)
+        self:putMahjongsToPeng(acId, mahjongs)
     end
 
-    local func = tweenFunction.new(function()
-        if acId ~= gamepref.player.acId then 
-            local player = self.game:getPlayerByAcId(acId)
-            playMahjongOpSound(opType.gang.id, player.sex)
-        end
-    end)
-    self.messageHandlers:add(func)
+    if acId ~= gamepref.player.acId then 
+        local player = self.game:getPlayerByAcId(acId)
+        playMahjongOpSound(opType.gang.id, player.sex)
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -1075,75 +1024,63 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
     local detail = opType.hu.detail
 
     if t == detail.zimo or t == detail.gangshanghua or t == detail.haidilao then
-        local func = tweenFunction(function()
-            local inhand = self.inhandMahjongs[acId]
+        local inhand = self.inhandMahjongs[acId]
 
-            if acId ~= gamepref.player.acId then
-                local m, queue, idx = self:getMahjongFromIdle(beCard)
-                swap(inhand, 1, queue, idx)
-                table.remove(inhand, 1)
+        if acId ~= gamepref.player.acId then
+            local m, queue, idx = self:getMahjongFromIdle(beCard)
+            swap(inhand, 1, queue, idx)
+            table.remove(inhand, 1)
 
-                hu = m
-                --如果需要再把牌扣起来
-                --
-            else
-                hu = self.mo
-                self.mo = nil
-            end
-        end)
-        self.messageHandlers:add(func)
+            hu = m
+            --如果需要再把牌扣起来
+            --
+        else
+            hu = self.mo
+            self.mo = nil
+        end
     else
-        local func = tweenFunction.new(function()
-            local beAcId = beAcId[1]
-            local chu = self.chuMahjongs[beAcId]
+        local beAcId = beAcId[1]
+        local chu = self.chuMahjongs[beAcId]
 
-            for k, v in pairs(chu) do
-                if v.id == beCard then
-                    hu = v
-                    table.remove(chu, k)
-                    break
-                end
+        for k, v in pairs(chu) do
+            if v.id == beCard then
+                hu = v
+                table.remove(chu, k)
+                break
             end
+        end
 
-            if hu == nil then
-                --如一炮双响的时候，会出现无法从idle列表中搜索到牌的情况
-                --此时，就直接创建一个新的麻将对象
-                hu = mahjong.new(beCard)
-            end
+        if hu == nil then
+            --如一炮双响的时候，会出现无法从idle列表中搜索到牌的情况
+            --此时，就直接创建一个新的麻将对象
+            hu = mahjong.new(beCard)
+        end
 
-            if self.chupaiPtr.mahjongId == beCard then
-                self.chupaiPtr:hide()
-            end
-        end)
-        self.messageHandlers:add(func)
+        if self.chupaiPtr.mahjongId == beCard then
+            self.chupaiPtr:hide()
+        end
     end
     
-    local func = tweenFunction.new(function()
-        hu:setPickabled(false)
-        self.huMahjongs[acId] = hu
+    hu:setPickabled(false)
+    self.huMahjongs[acId] = hu
 
-        local s = self.game:getSeatTypeByAcId(acId)
-        local t = self.seats[s][mahjongGame.cardType.hu]
-        hu:setLocalPosition(t.pos)
-        hu:setLocalRotation(t.rot)
-        hu:setLocalScale(t.scl)
+    local s = self.game:getSeatTypeByAcId(acId)
+    local t = self.seats[s][mahjongGame.cardType.hu]
+    hu:setLocalPosition(t.pos)
+    hu:setLocalRotation(t.rot)
+    hu:setLocalScale(t.scl)
 
-        if acId ~= gamepref.player.acId then 
-            local player = self.game:getPlayerByAcId(acId)
-            playMahjongOpSound(opType.hu.id, player.sex)
-        end
-    end)
-    self.messageHandlers:add(func)
+    if acId ~= gamepref.player.acId then 
+        local player = self.game:getPlayerByAcId(acId)
+        playMahjongOpSound(opType.hu.id, player.sex)
+    end
 end
 
 -------------------------------------------------------------------------------
 -- 取消所有操作
 -------------------------------------------------------------------------------
 function mahjongOperation:onClear()
-    local func = tweenFunction.new(function()
-        self:hideOperations()
-    end)
-    self.messageHandlers:add(func)
+    self:hideOperations()
 end
 
 -------------------------------------------------------------------------------
@@ -1634,7 +1571,6 @@ end
 -- 销毁
 -------------------------------------------------------------------------------
 function mahjongOperation:onDestroy()
-    tweenManager.remove(self.messageHandlers)
     touch.removeListener()
 
     self.diceRoot:show()
