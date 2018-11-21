@@ -2,10 +2,41 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local soundConfig = require("config.soundConfig")
 local PlayerPrefs = UnityEngine.PlayerPrefs
 
-local language_key = "_AUDIO_LANGUAGE_"
-local header_key = "_HEADER_TYPE_"
+local bgm_volume_key    = "AUDIO_BGM_VOLUME";
+local sfx_volume_key    = "AUDIO_SFX_VOLUME";
+local language_key      = "AUDIO_LANGUAGE"
+local header_key        = "HEADER_TYPE"
+
+-------------------------------------------------------------
+--
+-------------------------------------------------------------
+local function setBGMVolume(volume)
+    PlayerPrefs.SetFloat(bgm_volume_key, volume)
+end
+
+-------------------------------------------------------------
+--
+-------------------------------------------------------------
+local function getBGMVolume()
+    return PlayerPrefs.HasKey(bgm_volume_key) and PlayerPrefs.GetFloat(bgm_volume_key) or soundConfig.defaultBGMVolume;
+end
+
+-------------------------------------------------------------
+--
+-------------------------------------------------------------
+local function setSFXVolume(volume)
+    PlayerPrefs.SetFloat(sfx_volume_key, volume)
+end
+
+-------------------------------------------------------------
+--
+-------------------------------------------------------------
+local function getSFXVolume()
+    return PlayerPrefs.HasKey(sfx_volume_key) and PlayerPrefs.GetFloat(sfx_volume_key) or soundConfig.defaultSFXVolume;
+end
 
 -------------------------------------------------------------
 --
@@ -58,6 +89,10 @@ return {
     host = string.empty,
     prot = 0,
 
+    setBGMVolume = setBGMVolume,
+    getBGMVolume = getBGMVolume,
+    setSFXVolume = setSFXVolume,
+    getSFXVolume = getSFXVolume,
     setLanguage = setLanguage,
     getLanguage = getLanguage,
     setHeaderType = setHeaderType,

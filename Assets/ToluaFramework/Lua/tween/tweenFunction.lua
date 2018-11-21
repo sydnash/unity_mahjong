@@ -13,6 +13,8 @@ end
 --
 -------------------------------------------------------------------
 function tweenFunction:play()
+    self.playing = true
+
     if self.func ~= nil then
         self.func(self.args)
     end

@@ -4,7 +4,6 @@
 
 require("globals")
 
-local soundConfig   = require("config.soundConfig")
 local patchManager  = require("logic.manager.patchManager")
 local input         = UnityEngine.Input
 local keycode       = UnityEngine.KeyCode
@@ -316,8 +315,10 @@ function clientApp:start()
     Application.targetFrameRate = gameConfig.fps
     networkManager.setup(networkDisconnectedCallback)
 
-    soundManager.setBGMVolume(soundConfig.defaultBgmVolume)
+    soundManager.setBGMVolume(gamepref.getBGMVolume())
+    soundManager.setSFXVolume(gamepref.getSFXVolume())
     soundManager.playBGM(string.empty, "bgm")
+
     platformHelper.changeWindowTitle(deviceConfig.deviceId)
 
     registerUpdateListener(checkEscapeState, nil)

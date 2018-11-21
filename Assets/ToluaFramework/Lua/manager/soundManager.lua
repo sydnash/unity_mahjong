@@ -16,13 +16,6 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function soundManager.save()
-    AudioManager.instance:Save()
-end
-
--------------------------------------------------------------------
---
--------------------------------------------------------------------
 function soundManager.playBGM(audioPath, audioName)
     AudioManager.instance:PlayBGM(audioPath, audioName)
 end
@@ -51,15 +44,15 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function soundManager.setSfxVolume(volume)
-    AudioManager.instance:SetSEVolume(volume)
+function soundManager.setSFXVolume(volume)
+    AudioManager.instance:SetSFXVolume(volume)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function soundManager.getSfxVolume()
-    return AudioManager.instance:GetSEVolume()
+function soundManager.getSFXVolume()
+    return AudioManager.instance:GetSFXVolume()
 end
 
 -------------------------------------------------------------------

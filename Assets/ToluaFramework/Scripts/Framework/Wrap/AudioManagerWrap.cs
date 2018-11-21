@@ -14,14 +14,11 @@ public class AudioManagerWrap
 		L.RegFunction("StopUI", StopUI);
 		L.RegFunction("PlayGfx", PlayGfx);
 		L.RegFunction("StopGfx", StopGfx);
-		L.RegFunction("PlayVoice", PlayVoice);
-		L.RegFunction("StopVoice", StopVoice);
 		L.RegFunction("StopAll", StopAll);
 		L.RegFunction("SetBGMVolume", SetBGMVolume);
 		L.RegFunction("GetBGMVolume", GetBGMVolume);
-		L.RegFunction("SetSEVolume", SetSEVolume);
-		L.RegFunction("GetSEVolume", GetSEVolume);
-		L.RegFunction("Save", Save);
+		L.RegFunction("SetSFXVolume", SetSFXVolume);
+		L.RegFunction("GetSFXVolume", GetSFXVolume);
 		L.RegFunction("Update", Update);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -147,40 +144,6 @@ public class AudioManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int PlayVoice(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 3);
-			AudioManager obj = (AudioManager)ToLua.CheckObject<AudioManager>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			obj.PlayVoice(arg0, arg1);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int StopVoice(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			AudioManager obj = (AudioManager)ToLua.CheckObject<AudioManager>(L, 1);
-			obj.StopVoice();
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int StopAll(IntPtr L)
 	{
 		try
@@ -231,14 +194,14 @@ public class AudioManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SetSEVolume(IntPtr L)
+	static int SetSFXVolume(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
 			AudioManager obj = (AudioManager)ToLua.CheckObject<AudioManager>(L, 1);
 			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
-			obj.SetSEVolume(arg0);
+			obj.SetSFXVolume(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -248,31 +211,15 @@ public class AudioManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetSEVolume(IntPtr L)
+	static int GetSFXVolume(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			AudioManager obj = (AudioManager)ToLua.CheckObject<AudioManager>(L, 1);
-			float o = obj.GetSEVolume();
+			float o = obj.GetSFXVolume();
 			LuaDLL.lua_pushnumber(L, o);
 			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Save(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			AudioManager obj = (AudioManager)ToLua.CheckObject<AudioManager>(L, 1);
-			obj.Save();
-			return 0;
 		}
 		catch (Exception e)
 		{

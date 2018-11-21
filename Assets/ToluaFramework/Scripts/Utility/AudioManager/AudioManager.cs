@@ -22,11 +22,6 @@ public class AudioManager
     /// </summary>
     private AudioChannel mGfxChannel = null;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private AudioChannel mVoiceChannel = null;
-
     #endregion
 
     #region Instance
@@ -119,29 +114,11 @@ public class AudioManager
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="audioName"></param>
-    public void PlayVoice(string audioPath, string audioName)
-    {
-        mVoiceChannel.Play(audioPath, audioName, Audio.PlayMode.Once);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void StopVoice()
-    {
-        mVoiceChannel.Stop();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     public void StopAll()
     {
         StopBGM();
         StopUI();
         StopGfx();
-        StopVoice();
     }
 
     /// <summary>
@@ -151,10 +128,7 @@ public class AudioManager
     /// <param name="volume"></param>
     public void SetBGMVolume(float volume)
     {
-        volume = Mathf.Clamp01(volume);
         mBGMChannel.volume = volume;
-
-        PlayerPrefs.SetFloat("AUDIO_BGM_VOLUME", volume);
     }
 
     /// <summary>
@@ -163,22 +137,17 @@ public class AudioManager
     /// <param name="type"></param>
     public float GetBGMVolume()
     {
-        return PlayerPrefs.HasKey("AUDIO_BGM_VOLUME") ? PlayerPrefs.GetFloat("AUDIO_BGM_VOLUME") : 0.6f;
+        return mBGMChannel.volume;
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="volume"></param>
-    public void SetSEVolume(float volume)
+    public void SetSFXVolume(float volume)
     {
-        volume = Mathf.Clamp01(volume);
-
         mUIChannel.volume = volume;
         mGfxChannel.volume = volume;
-        mVoiceChannel.volume = volume;
-
-        PlayerPrefs.SetFloat("AUDIO_SE_VOLUME", volume);
     }
 
     /// <summary>
@@ -186,17 +155,9 @@ public class AudioManager
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public float GetSEVolume()
+    public float GetSFXVolume()
     {
-        return PlayerPrefs.HasKey("AUDIO_SE_VOLUME") ? PlayerPrefs.GetFloat("AUDIO_SE_VOLUME") : 0.8f;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void Save()
-    {
-        PlayerPrefs.Save();
+        return mUIChannel.volume;
     }
 
     /// <summary>
@@ -207,7 +168,6 @@ public class AudioManager
         mBGMChannel.Update();
         mUIChannel.Update();
         mGfxChannel.Update();
-        mVoiceChannel.Update();
     }
 
     #endregion
@@ -229,13 +189,11 @@ public class AudioManager
     {
         mBGMChannel   = new AudioChannel(root, 1);
         mUIChannel    = new AudioChannel(root, 2);
-        mGfxChannel   = new AudioChannel(root, 5);
-        mVoiceChannel = new AudioChannel(root, 3);
+        mGfxChannel   = new AudioChannel(root, 2);
 
-        SetBGMVolume(GetBGMVolume());
-        SetSEVolume(GetSEVolume());
-
-        Save();
+        mBGMChannel.volume = 0.1f;
+        mUIChannel.volume  = 0.1f;
+        mGfxChannel.volume = 0.1f;
     }
 
     #endregion

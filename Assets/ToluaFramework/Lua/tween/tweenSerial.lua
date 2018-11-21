@@ -49,12 +49,6 @@ function tweenSerial:update()
 
         if finished then
             table.remove(self.queue, 1)
-            count = #self.queue
-
-            if count > 0 then
-                tween = self.queue[1]
-                tween:play()
-            end
         end
     end
 

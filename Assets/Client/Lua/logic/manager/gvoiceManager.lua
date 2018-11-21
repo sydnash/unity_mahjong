@@ -55,6 +55,11 @@ function gvoiceManager.startRecord(filename)
     if gvoiceManager.status then
         isRecording = true
         recordFilename = filename
+
+        soundManager.setBGMVolume(0)
+        soundManager.setSFXVolume(0)
+        gvoiceManager.stopPlay()
+
         GVoiceEngine.instance:StartRecord(filename)
     end
 end
@@ -66,6 +71,9 @@ function gvoiceManager.stopRecord(cancel)
             GVoiceEngine.instance:Upload(recordFilename, timeout)
         end
         isRecording = false
+
+        soundManager.setBGMVolume(gamepref.getBGMVolume())
+        soundManager.setSFXVolume(gamepref.getSFXVolume())
     end
 end
 
@@ -80,6 +88,9 @@ end
 function gvoiceManager.play(filename)
     if gvoiceManager.status then
         isPlaying = true
+
+        soundManager.setBGMVolume(0)
+        soundManager.setSFXVolume(0)
 
         if playStartedCallback ~= nil then
             playStartedCallback(filename)
@@ -145,6 +156,9 @@ function gvoiceManager.onPlayFinishedHandler(ok, filename)
         --语音播放完后立即删除对应的文件
         LFS.RemoveFile(filename)
         isPlaying = false
+
+        soundManager.setBGMVolume(gamepref.getBGMVolume())
+        soundManager.setSFXVolume(gamepref.getSFXVolume())
     end
 end
 

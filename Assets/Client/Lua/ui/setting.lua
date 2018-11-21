@@ -13,8 +13,8 @@ function setting:ctor(game)
 end
 
 function setting:onInit()
-    self.mBgmVolume:setValue(soundManager.getBGMVolume())
-    self.mSfxVolume:setValue(soundManager.getSfxVolume())
+    self.mBgmVolume:setValue(gamepref.getBGMVolume())
+    self.mSfxVolume:setValue(gamepref.getSFXVolume())
 
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mBgmVolume:addChangedListener(self.onBGMVolumeChangedHandler, self)
@@ -75,10 +75,12 @@ end
 
 function setting:onBGMVolumeChangedHandler(value)
     soundManager.setBGMVolume(value)
+    gamepref.setBGMVolume(value)
 end
 
 function setting:onSFXVolumeChangedHandler(value)
-    soundManager.setSfxVolume(value)
+    soundManager.setSFXVolume(value)
+    gamepref.setSFXVolume(value)
 end
 
 function setting:onExitClickedHandler()
@@ -91,28 +93,42 @@ function setting:onExitClickedHandler()
 end
 
 function setting:onMandarinChangedHandler(sender, selected, clicked)
-    if clicked and selected then
+    if clicked then
         playButtonClickSound()
-        gamepref.setLanguage(language.mandarin)
+
+        if selected then
+            gamepref.setLanguage(language.mandarin)
+        end
     end
 end
 
 function setting:onSichuanChangedHandler(sender, selected, clicked)
-    if clicked and selected then
+    if clicked then
         playButtonClickSound()
-        gamepref.setLanguage(language.sichuan)
+
+        if selected then
+            gamepref.setLanguage(language.sichuan)
+        end
     end
 end
 
 function setting:on3DModelChangedHandler(sender, selected, clicked)
-    if clicked and selected then
+    if clicked then
         playButtonClickSound()
+
+        if selected then
+            --
+        end
     end
 end
 
 function setting:onWechatHeaderChangedHandler(sender, selected, clicked)
-    if clicked and selected then
+    if clicked then
         playButtonClickSound()
+
+        if selected then
+            --
+        end
     end
 end
 

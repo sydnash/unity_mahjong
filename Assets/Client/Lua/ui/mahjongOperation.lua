@@ -467,7 +467,9 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongOperation:OnFaPai()
+    log("mahjongOperation:OnFaPai")
     local func = tweenFunction.new(function()
+        log("mahjongOperation:OnFaPai, tweenFunc")
         for _, player in pairs(self.game.players) do
             self:createInHandMahjongs(player)
         end
