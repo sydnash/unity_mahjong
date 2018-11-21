@@ -187,7 +187,7 @@
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Polygon</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -699,6 +699,32 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/ZM_zi11.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>26,25,52,50</rect>
+                <key>scale9Paddings</key>
+                <rect>26,25,52,50</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZM_zi12.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,25,51,50</rect>
+                <key>scale9Paddings</key>
+                <rect>25,25,51,50</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/ZM_zi13.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -910,6 +936,8 @@
             <filename>Images/FX_xl.png</filename>
             <filename>Images/ZM_an12.png</filename>
             <filename>Images/QYQ_zi15.png</filename>
+            <filename>Images/ZM_zi11.png</filename>
+            <filename>Images/ZM_zi12.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -34,6 +34,13 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
+function animation:stop()
+    self.component:Stop()
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
 function animation:addTrigger(triggerKey, callback, args)
     eventManager.registerAnimationTrigger(triggerKey, function()
         if callback ~= nil then

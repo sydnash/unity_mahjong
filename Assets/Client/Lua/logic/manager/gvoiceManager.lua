@@ -73,7 +73,7 @@ function gvoiceManager.stopRecord(cancel)
 
         if not cancel then
             if recordFinishedCallback ~= nil then
-                recordFinishedCallback(filename)
+                recordFinishedCallback(recordFilename)
             end
 
             GVoiceEngine.instance:Upload(recordFilename, timeout)
