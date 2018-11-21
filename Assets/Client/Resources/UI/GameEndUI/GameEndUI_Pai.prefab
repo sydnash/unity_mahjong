@@ -121,7 +121,7 @@ MonoBehaviour:
   - key: 8tong
     sprite: {fileID: 21300128, guid: a2bb16f3b9297324fa0184d13a9e341f, type: 3}
   - key: 8wan
-    sprite: {fileID: 21300046, guid: a2bb16f3b9297324fa0184d13a9e341f, type: 3}
+    sprite: {fileID: 21300130, guid: a2bb16f3b9297324fa0184d13a9e341f, type: 3}
   - key: 9tiao
     sprite: {fileID: 21300132, guid: a2bb16f3b9297324fa0184d13a9e341f, type: 3}
   - key: 9tong

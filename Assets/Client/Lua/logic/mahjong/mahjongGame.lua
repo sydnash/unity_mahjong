@@ -232,12 +232,18 @@ function mahjongGame:syncSeats(seats)
 
         if player.hu ~= nil then
             local shou = player[mahjongGame.cardType.shou]
-
-            for k, u in pairs(shou) do
-                if u == player.hu[1].HuCard then
-                    table.remove(shou, k)
-                    break
-                end 
+            local huInfo = player.hu[1]
+            if huInfo.HuType == 10 then --自摸
+                if player.acId == gamepref.player.acId then
+                    for k, u in pairs(shou) do
+                        if u == player.hu[1].HuCard then
+                            table.remove(shou, k)
+                            break
+                        end 
+                    end
+                else
+                    table.remove(shou, 1)
+                end
             end
         end
     end
