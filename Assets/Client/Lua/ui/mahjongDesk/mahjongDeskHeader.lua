@@ -129,8 +129,7 @@ function mahjongDeskHeader:update()
 
     if self.showVoiceTimestamp ~= nil then
         if time.realtimeSinceStartup() - self.showVoiceTimestamp > 30 then
-            self.mVoice:hide()
-            self.showChatTimestamp = nil
+            self:hideChatVoice()
         end
     end
 end

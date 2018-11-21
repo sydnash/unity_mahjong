@@ -20,6 +20,7 @@ local pageview      = require("ui.common.pageview")
 local animation     = require("ui.common.animation")
 local horizontal    = require("ui.common.horizontalLayout")
 local vertical      = require("ui.common.verticalLayout")
+local animator      = require("ui.common.animator")
 
 -------------------------------------------------------------------
 --
@@ -70,6 +71,8 @@ local function bind(target, variableName, gameObject, widgetType, panelScript)
         widget = pageview.new(gameObject)
     elseif widgetType == LuaPanel.WidgetType.Animation then 
         widget = animation.new(gameObject)
+    elseif widgetType == LuaPanel.WidgetType.Animator then 
+        widget = animator.new(gameObject)
     elseif widgetType == LuaPanel.WidgetType.HorizontalLayout then 
         widget = horizontal.new(gameObject)
     elseif widgetType == LuaPanel.WidgetType.VerticalLayout then 

@@ -25,6 +25,7 @@ function mahjongDesk:onInit()
     
     self.mInvite:show()
     self.mInvitePanel:hide()
+    self.mVoiceTips:hide()
     self:refreshUI()
 
     self.mInvite:addClickListener(self.onInviteClickedHandler, self)
@@ -198,7 +199,11 @@ end
 
 function mahjongDesk:onVoiceDownClickedHandler(sender, pos)
     playButtonClickSound()
---    log(string.format("voice down, pos = (%f, %f)", pos.x, pos.y))
+
+    self.mVoiceTips:show()
+    self.mVoiceTipsOk:show()
+    self.mVoiceTipsCancel:hide()
+
     self.voiceDownPos = pos
 
     gvoiceManager.stopPlay()
@@ -206,17 +211,23 @@ function mahjongDesk:onVoiceDownClickedHandler(sender, pos)
 end
 
 function mahjongDesk:onVoiceMoveClickedHandler(sender, pos)
---    log(string.format("voice move, pos = (%f, %f)", pos.x, pos.y))
+    if pos.y - self.voiceDownPos.y > 150 then
+        self.mVoiceTipsOk:hide()
+        self.mVoiceTipsCancel:show()
+    else
+        self.mVoiceTipsOk:show()
+        self.mVoiceTipsCancel:hide()
+    end
 end
 
 function mahjongDesk:onVoiceUpClickedHandler(sender, pos)
---    log(string.format("voice up, pos = (%f, %f)", pos.x, pos.y))
-    if pos.y - self.voiceDownPos.y > 100 then
+    if pos.y - self.voiceDownPos.y > 150 then
         gvoiceManager.stopRecord(true)
     else 
         gvoiceManager.stopRecord(false)
     end
 
+    self.mVoiceTips:hide()
     self.voiceDownPos = Vector2.zero
 end
 
@@ -399,7 +410,6 @@ function mahjongDesk:onChatEmojiSignalHandler(key)
 end
 
 function mahjongDesk:onGVoiceRecordFinishedHandler(filename)
-    log("mahjongDesk:onGVoiceRecordFinishedHandler, filename = " .. filename)
     local player = self.players[mahjongGame.seatType.mine]
     player.filename = filename
 
