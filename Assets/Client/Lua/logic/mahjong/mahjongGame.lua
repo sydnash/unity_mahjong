@@ -624,13 +624,25 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:getSeatType(turn)
     local mineTurn = self:getTurn(gamepref.acId)
+    local playerCount = self:getTotalPlayerCount()
 
+    local dir
     if turn - mineTurn >= 0 then
-        return turn - mineTurn
+        dir = turn - mineTurn
+    else
+        dir = playerCount + turn - mineTurn
     end
 
-    local playerCount = self:getTotalPlayerCount()
-    return playerCount + turn - mineTurn
+    if playerCount == 3 then
+        if dir == mahjongGame.seatType.top then
+            dir = mahjongGame.seatType.left
+        end
+    elseif playerCount == 2 then
+        if dir == mahjongGame.seatType.right then
+            dir = mahjongGame.seatType.top
+        end
+    end
+    return dir
 end
 
 -------------------------------------------------------------------------------
