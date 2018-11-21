@@ -14,6 +14,7 @@ public class GVoiceEngineWrap
 		L.RegFunction("RegisterDownloadedCallback", RegisterDownloadedCallback);
 		L.RegFunction("RegisterPlayFinishedCallback", RegisterPlayFinishedCallback);
 		L.RegFunction("ApplyMessageKey", ApplyMessageKey);
+		L.RegFunction("SetMaxMessageLength", SetMaxMessageLength);
 		L.RegFunction("StartRecord", StartRecord);
 		L.RegFunction("StopRecord", StopRecord);
 		L.RegFunction("Upload", Upload);
@@ -163,6 +164,23 @@ public class GVoiceEngineWrap
 			GVoiceEngine obj = (GVoiceEngine)ToLua.CheckObject<GVoiceEngine>(L, 1);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			obj.ApplyMessageKey(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetMaxMessageLength(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			GVoiceEngine obj = (GVoiceEngine)ToLua.CheckObject<GVoiceEngine>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.SetMaxMessageLength(arg0);
 			return 0;
 		}
 		catch (Exception e)
