@@ -796,6 +796,10 @@ function mahjongGame:onExitDeskHandler(msg)
         local ui = require("ui.gameOver").new(self, datas)
         ui:show()
 
+        if self.gameEndUI ~= nil then
+            self.gameEndUI:close()
+            self.gameEndUI = nil
+        end
         self.deskUI:reset()
         self.operationUI:reset()
     else
