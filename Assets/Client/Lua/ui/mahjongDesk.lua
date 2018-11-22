@@ -34,6 +34,7 @@ function mahjongDesk:onInit()
     self.mInviteXL:addClickListener(self.onInviteXLClickedHandler, self)
     self.mReady:addClickListener(self.onReadyClickedHandler, self)
     self.mCancel:addClickListener(self.onCancelClickedHandler, self)
+    self.mPosition:addClickListener(self.onPositionClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
     self.mChat:addClickListener(self.onChatClickedHandler, self)
     self.mVoice:addDownListener(self.onVoiceDownClickedHandler, self)
@@ -189,6 +190,29 @@ end
 function mahjongDesk:onCancelClickedHandler()
     playButtonClickSound()
     self.game:ready(false)
+end
+
+function mahjongDesk:onPositionClickedHandler()
+    playButtonClickSound()
+
+    local location = locationManager.getData()
+    if location.status then
+        networkManager.syncLocation(location, function(ok, msg)
+            if ok then
+                log("location = " .. table.tostring(msg))
+
+                for _, v in pairs(msg.Locations) do
+                    local player = self.game:getPlayerByAcId(v.AcId)
+                    player.location.status    = v.Has
+                    player.location.latitude  = v.Latitude
+                    player.location.longitude = v.Longitude
+                end
+            end
+        end)
+    end
+
+    local ui = require("ui.location").new(self.game)
+    ui:show()
 end
 
 function mahjongDesk:onSettingClickedHandler()

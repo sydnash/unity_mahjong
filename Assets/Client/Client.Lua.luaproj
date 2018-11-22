@@ -61,6 +61,7 @@
     <Compile Include="Lua\logic\mahjong\mahjong.lua" />
     <Compile Include="Lua\logic\mahjong\mahjongGame.lua" />
     <Compile Include="Lua\logic\mahjong\mahjongType.lua" />
+    <Compile Include="Lua\logic\manager\locationManager.lua" />
     <Compile Include="Lua\logic\manager\patchManager.lua" />
     <Compile Include="Lua\logic\touch.lua" />
     <Compile Include="Lua\network\proto.lua" />
@@ -79,6 +80,7 @@
     <Compile Include="Lua\ui\friendster\friendsterDesk.lua" />
     <Compile Include="Lua\ui\friendster\friendsterBank.lua" />
     <Compile Include="Lua\ui\header.lua" />
+    <Compile Include="Lua\ui\location.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
     <Compile Include="Lua\ui\mail\mailItem.lua" />
     <Compile Include="Lua\ui\playerInfo.lua" />

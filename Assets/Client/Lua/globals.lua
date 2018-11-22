@@ -14,6 +14,7 @@ gamepref        = require("logic.gamepref")
 platformHelper  = require("platform.platformHelper")
 networkManager  = require("network.networkManager")
 gvoiceManager   = require("logic.manager.gvoiceManager")
+locationManager = require("logic.manager.locationManager")
 
 local waiting       = require("ui.waiting")
 local messagebox    = require("ui.messagebox")
@@ -166,7 +167,8 @@ function enterDesk(gameType, deskId, callback)
 --        log("check desk, msg = " .. table.tostring(msg))
         callback(true, string.empty, preload, 0.5, nil)
 
-        networkManager.enterDesk(gameType, deskId, function(ok, msg)
+        local location = locationManager.getData()
+        networkManager.enterDesk(gameType, deskId, location, function(ok, msg)
             if not ok then
                 callback(false, "网络繁忙，请稍后再试", preload, 0.5, nil)
                 return

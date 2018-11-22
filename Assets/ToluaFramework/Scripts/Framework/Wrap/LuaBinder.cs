@@ -82,6 +82,9 @@ public static class LuaBinder
 		UnityEngine_PlayerPrefsWrap.Register(L);
 		UnityEngine_RuntimePlatformWrap.Register(L);
 		UnityEngine_RectTransformWrap.Register(L);
+		UnityEngine_LocationServiceWrap.Register(L);
+		UnityEngine_LocationServiceStatusWrap.Register(L);
+		UnityEngine_LocationInfoWrap.Register(L);
 		L.BeginModule("EventSystems");
 		UnityEngine_EventSystems_EventSystemWrap.Register(L);
 		UnityEngine_EventSystems_UIBehaviourWrap.Register(L);

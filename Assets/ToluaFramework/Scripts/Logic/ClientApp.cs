@@ -18,7 +18,10 @@ public class ClientApp : LuaClient
     protected override void OnAwake()
     {
         DontDestroyOnLoad(gameObject);
+
         AssetPoolManager.instance.Setup();
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;//屏幕常亮
+
         base.OnAwake();
     }
 

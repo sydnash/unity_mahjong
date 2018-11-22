@@ -36,6 +36,7 @@ return {
         mailOp                      = "CmdType.fly.CS.MailOp",
         proposerQuicklyStart        = "CmdType.fly.CS.ProposerQuicklyStart",
         quicklyStartChose           = "CmdType.fly.CS.QuicklyStartChose",
+        syncLocation                = "CmdType.fly.CS.SyncLocation",
     },
     -- server to client
     sc = {

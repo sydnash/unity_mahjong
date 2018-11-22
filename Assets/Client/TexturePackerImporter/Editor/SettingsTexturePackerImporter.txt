@@ -18,6 +18,7 @@ tpsheetFileNames:
 - Assets/Client/Resources/UI/GameOverUI/Atlas/GameOverUI.tpsheet
 - Assets/Client/Resources/UI/LoadingUI/Atlas/LoadingUI.tpsheet
 - Assets/Client/Resources/UI/LobbyUI/Atlas/LobbyUI.tpsheet
+- Assets/Client/Resources/UI/LocationUI/Atlas/LocationUI.tpsheet
 - Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.tpsheet
 - Assets/Client/Resources/UI/Mahjong/Atlas/Mahjong.tpsheet
 - Assets/Client/Resources/UI/MailUI/Atlas/MailUI.tpsheet
@@ -44,6 +45,7 @@ textureFileNames:
 - Assets/Client/Resources/UI/GameOverUI/Atlas/GameOverUI.png
 - Assets/Client/Resources/UI/LoadingUI/Atlas/LoadingUI.png
 - Assets/Client/Resources/UI/LobbyUI/Atlas/LobbyUI.png
+- Assets/Client/Resources/UI/LocationUI/Atlas/LocationUI.png
 - Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.png
 - Assets/Client/Resources/UI/Mahjong/Atlas/Mahjong.png
 - Assets/Client/Resources/UI/MailUI/Atlas/MailUI.png
@@ -53,6 +55,7 @@ textureFileNames:
 - Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

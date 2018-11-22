@@ -374,19 +374,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/ZM_tx01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>24,24,47,47</rect>
-                <key>scale9Paddings</key>
-                <rect>24,24,47,47</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/ZM_zi01.png</key>
             <key type="filename">Images/ZM_zi01_h.png</key>
             <struct type="IndividualSpriteSettings">
@@ -440,7 +427,6 @@
             <filename>Images/ZM_di02.png</filename>
             <filename>Images/ZM_di03.png</filename>
             <filename>Images/ZM_di04.png</filename>
-            <filename>Images/ZM_tx01.png</filename>
             <filename>Images/ZM_zi01.png</filename>
             <filename>Images/ZM_zi02.png</filename>
             <filename>Images/ZM_zi03.png</filename>
