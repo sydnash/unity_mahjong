@@ -18,15 +18,20 @@ end
 
 function gameEnd:onInit()
     local items = { 
-        [mahjongGame.seatType.mine]  = self.mItemM, 
-        [mahjongGame.seatType.right] = self.mItemR, 
-        [mahjongGame.seatType.top]   = self.mItemT, 
-        [mahjongGame.seatType.left]  = self.mItemL, 
+        self.mItemM, 
+        self.mItemR, 
+        self.mItemT, 
+        self.mItemL, 
     }
 
+    local i = 1
     for _, v in pairs(self.datas.players) do
-        local item = items[v.seat]
+        local item = items[i]
         item:setPlayerInfo(v)
+        i = i + 1
+    end
+    for j = i,4 do
+        items[j]:hide()
     end
 
     local info = string.format("第%d/%d局  房号:%d", self.datas.finishGameCount, self.datas.totalGameCount, self.datas.deskId)

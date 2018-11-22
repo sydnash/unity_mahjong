@@ -19,6 +19,7 @@ function exitDesk:onInit()
     local items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD, }
     self.items = {}
 
+    local i = 0
     for k, v in pairs(self.game.players) do
         if self.game.exitVoteProposer == v.acId then
             self.mProposer:setText(v.nickname)
@@ -28,6 +29,10 @@ function exitDesk:onInit()
         local item = items[k+1]
         item:setPlayerInfo(v)
         self.items[v.turn] = item
+        i = k + 1
+    end
+    for j = i + 1, 4 do
+        items[j]:hide()
     end
 
     if self.game.exitVoteProposer == gamepref.acId then

@@ -20,9 +20,14 @@ function gameOver:onInit()
 
     self.items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD, }
 
+    local i = 0
     for k, v in pairs(self.datas.players) do
         local item = self.items[k + 1]
         item:setPlayerInfo(v)
+        i = k + 1
+    end
+    for j = i + 1, 4 do
+        self.items[j]:hide()
     end
 
     self.mSharePanel:hide()
