@@ -21,15 +21,15 @@ function exitDesk:onInit()
 
     local i = 0
     for k, v in pairs(self.game.players) do
+        i = i + 1
         if self.game.exitVoteProposer == v.acId then
             self.mProposer:setText(v.nickname)
             v.exitVoteState = -1
         end
 
-        local item = items[k+1]
+        local item = items[i]
         item:setPlayerInfo(v)
         self.items[v.turn] = item
-        i = k + 1
     end
     for j = i + 1, 4 do
         items[j]:hide()

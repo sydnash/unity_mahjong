@@ -34,6 +34,8 @@ return {
         queryFriendsterStatistics   = "CmdType.fly.CS_GetClubDeskHistory",
         replyFriendsterRequest      = "CmdType.fly.CS.ManageApplyRequest",
         mailOp                      = "CmdType.fly.CS.MailOp",
+        proposerQuicklyStart        = "CmdType.fly.CS.ProposerQuicklyStart",
+        quicklyStartChose           = "CmdType.fly.CS.QuicklyStartChose",
     },
     -- server to client
     sc = {
@@ -60,6 +62,9 @@ return {
         chatMessage                 = "CmdType.fly.SC.ChatMsg",
         notifyFriendster            = "CmdType.fly.SC_NotifyClubInfo",
         mail                        = "CmdType.fly.SC.Mail",
+        quicklyStartNotify          = "CmdType.fly.SC.QuicklyStartNotify",
+        quicklyStartEndNotify       = "CmdType.fly.SC.QuicklyStartEndNotify",
+	    quicklyStartChose           = "CmdType.fly.SC.QuicklyStartChose",
     },
 }
 

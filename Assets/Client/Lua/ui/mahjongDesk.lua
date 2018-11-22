@@ -196,6 +196,8 @@ function mahjongDesk:onSettingClickedHandler()
 
     self.settingUI = require("ui.setting").new(self.game)
     self.settingUI:show()
+
+    --self.game:proposerQuicklyStart()
 end
 
 function mahjongDesk:onChatClickedHandler()
@@ -203,6 +205,8 @@ function mahjongDesk:onChatClickedHandler()
 
     self.chatUI = require("ui.chat").new()
     self.chatUI:show()
+
+    --self.game:quicklyStartChose(true)
 end
 
 function mahjongDesk:onVoiceDownClickedHandler(sender, pos)
