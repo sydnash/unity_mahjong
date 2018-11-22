@@ -15,6 +15,10 @@ local COLOR_LINE_RED     = Color.New(224 / 255, 100 / 255, 100 / 255, 1)
 local COLOR_TEXT_GREEN   = Color.New(45  / 255, 140 / 255, 35  / 255, 1)
 local COLOR_TEXT_RED     = Color.New(214 / 255, 68  / 255, 68  / 255, 1)
 
+local function formatDistance(d)
+    return (d < 1000) and string.format("%d 米", math.floor(d)) or string.format("%d 公里", math.floor(d / 1000)) 
+end
+
 function location:ctor(game)
     self.game = game
     self.super.ctor(self)
@@ -62,7 +66,7 @@ function location:onInit()
         self.headers[mahjongGame.seatType.mine] = { icon = self.mPanel2_IconA, nickname = self.mPanel2_NicknameA, ip = self.mPanel2_IpA }
         self.headers[mahjongGame.seatType.top]  = { icon = self.mPanel2_IconC, nickname = self.mPanel2_NicknameC, ip = self.mPanel2_IpC }
                                                                                                                  
-        self.distances["12"] = { image = self.mPanel2_AC, text = self.mPanel2_AC_Text }                       
+        self.distances["02"] = { image = self.mPanel2_AC, text = self.mPanel2_AC_Text }                       
                                
     end                        
 
@@ -91,16 +95,16 @@ end
 function location:refreshUI()
     local players = {}
 
-    for k, v in pairs(self.game.players) do
-        local header = self.headers[k]
+    for _, v in pairs(self.game.players) do
+        local s = self.game:getSeatType(v.turn)
+        local header = self.headers[s]
 
         header.icon:show()
         header.icon:setTexture(v.headerTex)
         header.nickname:setText(v.nickname)
         header.ip:setText(v.ip)
 
-        local seat = self.game:getSeatType(v.turn)
-        players[seat] = v
+        players[s] = v
     end
 
     for i=mahjongGame.seatType.mine, mahjongGame.seatType.left do
@@ -110,10 +114,11 @@ function location:refreshUI()
                 local b = players[j]
                 if b ~= nil then
                     local d = locationManager.distance(a, b)
-                    log(string.format("distance, k = %s, d = %f", k, d))
-
                     local k = string.format("%d%d", i, j)
+--                    log(string.format("distance, k = %s, d = %f", k, d))
                     local v = self.distances[k]
+
+                    v.text:setText(formatDistance(d))
                     v.text:show()
 
 --                    if d <= SAVE_DISTANCE then
