@@ -144,6 +144,9 @@ function platformHelper.getParamsSg()
     end
 end
 
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
 function platformHelper.clearSGInviteParam()
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ClearSGInviteParam()
@@ -152,8 +155,24 @@ function platformHelper.clearSGInviteParam()
     end
 end
 
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
 function platformHelper.changeWindowTitle(new)
     WINHelper.instance:ChangeWindowTitle(new)
+end
+
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function platformHelper.getDistance(latitude1, longitude1, latitude2, longitude2)
+    if deviceConfig.isAndroid then
+        AndroidHelper.instance:GetDistance(latitude1, longitude1, latitude2, longitude2)
+    elseif deviceConfig.isApple then
+        IOSHelper.instance:GetDistance(latitude1, longitude1, latitude2, longitude2)
+    end
+
+    return 0
 end
 
 return platformHelper

@@ -396,12 +396,14 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.enterDesk(cityType, deskId, callback)
-    local latitude = 0
-    local longitude = 0
-    local hasPosition = false
+function networkManager.enterDesk(cityType, deskId, location, callback)
+    local data = { GameType     = cityType, 
+                   DeskId       = deskId, 
+                   Latitude     = location.latitude, 
+                   Longitude    = location.longitude, 
+                   HasPosition  = location.status 
+    }
 
-    local data = { GameType = cityType, DeskId = deskId, Latitude = latitude, Longitude = longitude, HasPosition = has}
     send(protoType.cs.enterGSDesk, data, function(msg)
         if msg == nil then
             callback(false, nil)
@@ -775,6 +777,20 @@ end
 function networkManager.getRewardsFromMail(mailId, callback)
     local data = { mailId = mailId, Op = 3 }
     send(protoType.cs.mailOp, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.syncLocation(location, callback)
+    local data = { Latitude = location.latitude, Longitude = location.longitude, Has = location.status }
+    send(protoType.cs.syncLocation, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else

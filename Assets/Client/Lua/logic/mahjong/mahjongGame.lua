@@ -2,8 +2,9 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local gamePlayer    = require("logic.player.gamePlayer")
-local tweenManager  = require("manager.tweenManager")
+local gamePlayer        = require("logic.player.gamePlayer")
+local tweenManager      = require("manager.tweenManager")
+local locationManager   = require("logic.manager.locationManager")
 
 local mahjongGame = class("mahjongGame")
 
@@ -169,6 +170,7 @@ function mahjongGame:onEnter(msg)
     player.score        = msg.Score
     player.isCreator    = self:isCreator(player.acId)
     player.isMarker     = self:isMarker(player.turn)
+    player.location     = locationManager.getData()
 
     self.players[player.turn] = player
     self.playerCount = 1
@@ -212,6 +214,7 @@ function mahjongGame:syncOthers(others)
         player.score     = v.Score
         player.isCreator = self:isCreator(player.acId)
         player.isMarker  = self:isMarker(player.turn)
+        player.location  = { status = v.HasPosition, latitude = v.Latitude, longitude = v.Longitude }
 
         self.playerCount = self.playerCount + 1
     end
@@ -278,7 +281,7 @@ end
 -- 其他玩家加入
 -------------------------------------------------------------------------------
 function mahjongGame:onOtherEnterHandler(msg)
---    log("otherEnter, msg = " .. table.tostring(msg))
+    log("otherEnter, msg = " .. table.tostring(msg))
 
     local player = gamePlayer.new(msg.AcId)
 
@@ -292,6 +295,7 @@ function mahjongGame:onOtherEnterHandler(msg)
     player.ready        = msg.Ready
     player.turn         = msg.Turn
     player.score        = msg.Score
+    player.location     = { status = msg.HasPosition, latitude = msg.Latitude, longitude = msg.Longitude }
 
     self.players[player.turn] = player
     self.playerCount = self.playerCount + 1
@@ -659,24 +663,25 @@ end
 function mahjongGame:getSeatType(turn)
     local mineTurn = self:getTurn(gamepref.acId)
     local playerCount = self:getTotalPlayerCount()
+    local seat = nil
 
-    local dir
     if turn - mineTurn >= 0 then
-        dir = turn - mineTurn
+        seat = turn - mineTurn
     else
-        dir = playerCount + turn - mineTurn
+        seat = playerCount + turn - mineTurn
     end
 
     if playerCount == 3 then
-        if dir == mahjongGame.seatType.top then
-            dir = mahjongGame.seatType.left
+        if seat == mahjongGame.seatType.top then
+            seat = mahjongGame.seatType.left
         end
     elseif playerCount == 2 then
-        if dir == mahjongGame.seatType.right then
-            dir = mahjongGame.seatType.top
+        if seat == mahjongGame.seatType.right then
+            seat = mahjongGame.seatType.top
         end
     end
-    return dir
+
+    return seat
 end
 
 -------------------------------------------------------------------------------
@@ -965,7 +970,6 @@ end
 -- 销毁游戏对象
 -------------------------------------------------------------------------------
 function mahjongGame:destroy()
---    log("mahjongGame:destroy")
     tweenManager.remove(self.messageHandlers)
 
     self.playerCount = 0

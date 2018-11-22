@@ -178,6 +178,88 @@ public class AndroidHelper
         UpdripsHelper.OnInviteHandler(json);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public string GetDeviceId()
+    {
+        return "";
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="url"></param>
+    public void OpenExplore(string url)
+    {
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="text"></param>
+    public void SetToClipboard(string text)
+    {
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public string GetFromClipboard()
+    {
+        return "";
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="la1"></param>
+    /// <param name="lo1"></param>
+    /// <param name="la2"></param>
+    /// <param name="lo2"></param>
+    /// <returns></returns>
+    public float GetDistance(float la1, float lo1, float la2, float lo2)
+    {
+        return javaObject.Call<float>("GetDistance", la1, lo1, la2, lo2);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void StartLocationOnce()
+    {
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void StartLocationUpdate()
+    {
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void StopLocationUpdate()
+    {
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="callback"></param>
+    public void SetLocationUpdateHandler(Action<string> callback)
+    {
+        UtilsHelper.SetLocationUpdateHandler(callback);
+    }
+
     #endregion
 
     #region Private

@@ -182,6 +182,9 @@ public static class CustomSettings
         _GT(typeof(ScrollRect)),
         _GT(typeof(HorizontalLayoutGroup)),
         _GT(typeof(VerticalLayoutGroup)),
+        _GT(typeof(LocationService)),
+        _GT(typeof(LocationServiceStatus)),
+        _GT(typeof(LocationInfo)),
 
         //Custom Classes
         _GT(typeof(AssetPoolManager)),

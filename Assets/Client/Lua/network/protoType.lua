@@ -34,6 +34,7 @@ return {
         queryFriendsterStatistics   = "CmdType.fly.CS_GetClubDeskHistory",
         replyFriendsterRequest      = "CmdType.fly.CS.ManageApplyRequest",
         mailOp                      = "CmdType.fly.CS.MailOp",
+        syncLocation                = "CmdType.fly.CS.SyncLocation",
     },
     -- server to client
     sc = {

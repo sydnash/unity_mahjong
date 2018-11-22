@@ -22,6 +22,15 @@ public class AndroidHelperWrap
 		L.RegFunction("ClearSGInviteParam", ClearSGInviteParam);
 		L.RegFunction("OnLoginWxHandler", OnLoginWxHandler);
 		L.RegFunction("OnInviteSgHandler", OnInviteSgHandler);
+		L.RegFunction("GetDeviceId", GetDeviceId);
+		L.RegFunction("OpenExplore", OpenExplore);
+		L.RegFunction("SetToClipboard", SetToClipboard);
+		L.RegFunction("GetFromClipboard", GetFromClipboard);
+		L.RegFunction("GetDistance", GetDistance);
+		L.RegFunction("StartLocationOnce", StartLocationOnce);
+		L.RegFunction("StartLocationUpdate", StartLocationUpdate);
+		L.RegFunction("StopLocationUpdate", StopLocationUpdate);
+		L.RegFunction("SetLocationUpdateHandler", SetLocationUpdateHandler);
 		L.RegFunction("New", _CreateAndroidHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -309,6 +318,160 @@ public class AndroidHelperWrap
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			obj.OnInviteSgHandler(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetDeviceId(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string o = obj.GetDeviceId();
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OpenExplore(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.OpenExplore(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetToClipboard(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.SetToClipboard(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetFromClipboard(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string o = obj.GetFromClipboard();
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetDistance(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 5);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
+			float arg2 = (float)LuaDLL.luaL_checknumber(L, 4);
+			float arg3 = (float)LuaDLL.luaL_checknumber(L, 5);
+			float o = obj.GetDistance(arg0, arg1, arg2, arg3);
+			LuaDLL.lua_pushnumber(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int StartLocationOnce(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			obj.StartLocationOnce();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int StartLocationUpdate(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			obj.StartLocationUpdate();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int StopLocationUpdate(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			obj.StopLocationUpdate();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetLocationUpdateHandler(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
+			obj.SetLocationUpdateHandler(arg0);
 			return 0;
 		}
 		catch (Exception e)

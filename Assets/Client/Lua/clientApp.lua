@@ -4,9 +4,9 @@
 
 require("globals")
 
-local patchManager  = require("logic.manager.patchManager")
-local input         = UnityEngine.Input
-local keycode       = UnityEngine.KeyCode
+local patchManager      = require("logic.manager.patchManager")
+local input             = UnityEngine.Input
+local keycode           = UnityEngine.KeyCode
 
 -------------------------------------------------------------------
 -- 禁止定义全局变量
@@ -18,21 +18,6 @@ local function DISABLE_GLOBAL_VARIABLE_DECLARATION()
             error(string.format(msg, name), 0)
         end
     })
-end
-
-----------------------------------------------------------------
--- 检测返回键状态
-----------------------------------------------------------------
-local function checkEscapeState()
-    if input.GetKeyDown(keycode.Escape) then
-        showMessageUI("确定要退出游戏吗？", 
-                      function()
-                          Application.Quit()
-                      end,
-                      function()
-                          --
-                      end)
-    end
 end
 
 ----------------------------------------------------------------
@@ -321,11 +306,13 @@ function clientApp:start()
 
     platformHelper.changeWindowTitle(deviceConfig.deviceId)
 
-    registerUpdateListener(checkEscapeState, nil)
     registerTracebackCallback(tracebackHandler)
     platformHelper.registerInviteSgCallback(inviteSgCallback)
 
     DISABLE_GLOBAL_VARIABLE_DECLARATION()
+
+    locationManager.checkEnabled()
+    locationManager.start()
 
     gamepref.city = readCityConfig()
     patch()
@@ -334,8 +321,24 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-function clientApp:onDestroy()
+function clientApp:update()
+    -- 检测返回键状态
+    if input.GetKeyDown(keycode.Escape) then
+        showMessageUI("确定要退出游戏吗？", 
+                      function()
+                          Application.Quit()
+                      end,
+                      function()
+                          --
+                      end)
+    end
+end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function clientApp:onDestroy()
+    locationManager.start()
 end
 
 return clientApp

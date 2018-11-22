@@ -70,6 +70,7 @@
     <Compile Include="Lua\tween\tweenScale.lua" />
     <Compile Include="Lua\tween\tweenSerial.lua" />
     <Compile Include="Lua\ui\common\animation.lua" />
+    <Compile Include="Lua\ui\common\animator.lua" />
     <Compile Include="Lua\ui\common\button.lua" />
     <Compile Include="Lua\ui\common\horizontalLayout.lua" />
     <Compile Include="Lua\ui\common\image.lua" />
