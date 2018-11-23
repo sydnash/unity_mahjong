@@ -238,28 +238,21 @@ function loginServer(callback)
             platformHelper.clearSGInviteParam()
         end
 
+        local loading = require("ui.loading").new()
+        loading:show()
+
         if cityType == 0 and deskId == 0 then
-            local sceneName = sceneManager.getActivedSceneName()
+            sceneManager.load("scene", "lobbyscene", function(completed, progress)
+                loading:setProgress(progress)
 
-            if sceneName ~= "lobbyscene" then
-                local loading = require("ui.loading").new()
-                loading:show()
+                if completed then
+                    local lobby = require("ui.lobby").new()
+                    lobby:show()
 
-                sceneManager.load("scene", "lobbyscene", function(completed, progress)
-                    loading:setProgress(progress)
-
-                    if completed then
-                        local lobby = require("ui.lobby").new()
-                        lobby:show()
-
-                        loading:close()
-                    end
-                end)
-            end
+                    loading:close()
+                end
+            end)
         else -- 如有在房间内则跳过大厅直接进入房间
-            local loading = require("ui.loading").new()
-            loading:show()
-
             enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
                 if not ok then
                     loading:close()

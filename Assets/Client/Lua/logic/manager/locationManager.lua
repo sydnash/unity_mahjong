@@ -28,8 +28,6 @@ function locationManager.getData()
         location.longitude  = data.longitude
     end
 
-    log("locationManager, status = " .. tostring(input.location.status) .. ", location = " .. table.tostring(location))
-
     return location
 end
 
