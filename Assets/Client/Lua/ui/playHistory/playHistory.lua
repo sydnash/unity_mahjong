@@ -17,7 +17,6 @@ function playHistory:onCloseClickedHandler()
     playButtonClickSound()
 
     self:close()
-    signalManager.signal(signalType.mail)
 end
 
 function playHistory:refreshUI()

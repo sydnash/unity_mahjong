@@ -16,10 +16,25 @@ function playHistoryItem:onInit()
                      { root = self.mPlayerD, icon = self.mPlayerD_Icon, nickname = self.mPlayerD_Nickname, score = { p = self.mPlayerD_ScoreP, n = self.mPlayerD_ScoreN }, winner = self.mPlayerD_Winner },
     }
 
+    self.mThis:addClickListener(self.onThisClickHandler, self)
     for _, v in pairs(self.players) do
         v.root:hide()
         v.winner:hide()
     end
+end
+
+function playHistoryItem:onThisClickHandler()
+    showWaitingUI("正在拉取对战详情")
+    gamepref.player.playHistory:getScoreDetail(self.mHistoryId, function(ok, data)
+        closeWaitingUI()
+        if not ok then
+            showMessageUI("同步战绩失败")
+            return
+        end
+        local ui = require("ui.playHistory.playHistoryDetail").new()
+        ui:setHistory(self.mHistoryId)
+        ui:show()
+    end)
 end
 
 function playHistoryItem:set(data)
