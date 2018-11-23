@@ -142,7 +142,17 @@ end
 
 function lobby:onHistoryClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能暂未开放，敬请期待")
+
+    showWaitingUI("正在同步战绩")
+    gamepref.player.playHistory:updateHistory(function(ok)
+        closeWaitingUI()
+        if not ok then
+            showMessageUI("同步战绩失败")
+            return
+        end
+        local ui = require("ui.playHistory.playHistory").new()
+        ui:show()
+    end)
 end
 
 function lobby:onRankClickedHandler()

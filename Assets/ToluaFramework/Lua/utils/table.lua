@@ -110,6 +110,35 @@ function table.tostring(object)
     return table.concat(result, "\n")
 end
 
+
+function table.bubbleSort(t, comp, len)
+    if not comp then
+        comp = function (a1, a2)
+            return a1 < a2
+        end
+    end
+    len = len or #t
+
+    if len <= 1 then
+        return
+    end
+
+    local s = len - 1
+    local e = len - 1
+    local tmp
+    for j = 1, e do 
+        s = len - j
+        for i = s, e do
+            if not comp(t[i], t[i + 1]) then
+                tmp = t[i + 1]
+                t[i + 1] = t[i]
+                t[i] = tmp
+            else 
+                break
+            end
+        end
+    end
+end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------

@@ -48,6 +48,15 @@ function networkHandler.setup()
     networkManager.registerCommandHandler(protoType.sc.mail, function(msg)
         networkHandler:onMail(msg)
     end, true)
+    networkManager.registerCommandHandler(protoType.sc.notifyPropertyChange, function(data)
+        if data["coin"] then
+            gamepref.player.cards = data["coin"]
+            signalManager.signal(signalType.cardsChanged)
+        elseif data["gold"] then
+            gamepref.player.cards = data["gold"]
+            signalManager.signal(signalType.cardsChanged)
+        end
+    end, true)
 end
 
 ----------------------------------------------------------------
@@ -678,6 +687,19 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function networkManager.transferCards(id, count, callback)
+    local data = {Target = id, Value = count}
+    send(protoType.cs.transferCards, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function networkManager.queryAcId(acId, callback)
     local data = { AcId = acId }
     send(protoType.cs.queryAcId, data, function(msg)
@@ -821,6 +843,36 @@ end
 function networkManager.syncLocation(location, callback)
     local data = { Latitude = location.latitude, Longitude = location.longitude, Has = location.status }
     send(protoType.cs.syncLocation, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.getPlayHistory(time, callback)
+    local data =  {StartTime = time}
+    send(protoType.cs.getPlayHistory, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+--typ 0 表示拉取所有详细积分数据  round没有意义
+--typ 2 表示拉取单场的对局详情  round从0开始
+function networkManager.getPlayHistoryDetail(typ, id, round, callback)
+    local data = {
+        Type  = typ,
+	    Id    = id,
+	    Round = round,
+    }
+    send(protoType.cs.getPlayHistoryDetail, data, function(msg)
         if msg == nil then
             callback(false, nil)
         else
