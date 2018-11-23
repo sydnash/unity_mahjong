@@ -47,8 +47,8 @@ end
 
 function playHistory:insertHistory(data)
     for _, v in pairs(data) do
-        local cacheMail = self:findHistoryById(v.Id)
-        if not cacheMail then
+        local cached = self:findHistoryById(v.Id)
+        if not cached then
             table.insert(self.mDatas, v)
         end
     end
@@ -80,29 +80,31 @@ end
 function playHistory:getScoreDetail(id, cb)
     local history = self:findHistoryById(id)
     if history.PlayTimes == 0 or (history.ScoreDetail and #history.ScoreDetail == history.PlayTimes) then
-		cb(true, 0)
+		cb(true, history.ScoreDetail)
 		return
 	end
-    networkManager.getPlayHistoryDetail(0, history.Id, 0, function(timeout, data)
-        if timeout then
+    networkManager.getPlayHistoryDetail(0, history.Id, 0, function(ok, data)
+        if not ok then
             cb(false)
             return 
         end
-        if data.RetCode ~= 0 then
-            cb(true, data.RetCode)
+        if data.RetCode ~= retc.ok then
+            cb(true, nil)
             return
         end
 		history.ScoreDetail = data.ScoreDetail
-		cb(true, 0)
+		cb(true, history.ScoreDetail)
 	end)
 end
 function playHistory:getPlayDetail(id, round, cb)
     local history = self:findHistoryById(id)
+
     if history.PlaybackMsg == nil then
 		history.PlaybackMsg = {}
 	end
+
     if history.PlaybackMsg[round] then
-        cb(true, 0)
+        cb(true, history.PlaybackMsg[round])
 		return
 	end
 	
@@ -111,13 +113,14 @@ function playHistory:getPlayDetail(id, round, cb)
             cb(false)
             return 
         end
-        local data = data.data
-        if data.RetCode ~= 0 or data.OnePlayback == "" then
-            cb(true, 1) --战绩回放不存在
+
+        if data.RetCode ~= retc.ok or data.OnePlayback == "" then
+            cb(true, nil) --战绩回放不存在
             return
         end
+
         history.PlaybackMsg[round] = data.OnePlayback
-        cb(true, 0)
+        cb(true, history.PlaybackMsg[round])
     end)
 end
 
