@@ -8,7 +8,7 @@ local base = require("ui.common.panel")
 local mahjongDeskHeader = class("mahjongDeskHeader", base)
 
 local OnlineColor = Color.New(1, 1, 1, 1)
-local OfflineColor = Color.New(0.6, 0.6, 0.6, 1)
+local OfflineColor = Color.New(0.3, 0.3, 0.3, 1)
 
 function mahjongDeskHeader:onInit()
     self.mU:show()

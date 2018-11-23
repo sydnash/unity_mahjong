@@ -14,11 +14,14 @@ function mail:onInit()
         { root = self.mItemC, icon = self.mItemC_Icon, count = self.mItemC_Count },
     }
 
+    self:refreshMails(gamepref.player.mails)
+
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mDelete:addClickListener(self.onDeleteClickedHandler, self)
     self.mGet:addClickListener(self.onGetClickedHandler, self)
 
     signalManager.registerSignalHandler(signalType.mail, self.onMailHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function mail:onCloseClickedHandler()
@@ -46,9 +49,7 @@ function mail:onDeleteClickedHandler()
             end
 
             gamepref.player:removeMail(msg.MailId)
-
-            self.mList:reset()
-            self:set(gamepref.player.mails)
+            self:refreshMails(gamepref.player.mails)
         end)
     end
 end
@@ -89,11 +90,10 @@ function mail:onGetClickedHandler()
 end
 
 function mail:onMailHandler()
-    self.mList:reset()
-    self:set(gamepref.player.mails)
+    self:refreshMails(gamepref.player.mails)
 end
 
-function mail:set(mails)
+function mail:refreshMails(mails)
     self:sortMails(mails)
     local count = #mails
 
@@ -115,7 +115,9 @@ function mail:set(mails)
             item:set(mails[index + 1], index)
         end
 
+        self.mList:reset()
         self.mList:set(count, createItem, refreshItem)
+
         self:openMail(mails[1], 0)
     end
 end
@@ -199,9 +201,14 @@ function mail:refreshContent(mail)
     end
 end
 
+function mail:onCloseAllUIHandler()
+    self:close()
+end
+
 function mail:onDestroy()
     signalManager.unregisterSignalHandler(signalType.mail, self.onMailHandler, self)
-
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    
     self.mList:reset()
     self.super.onDestroy(self)
 end

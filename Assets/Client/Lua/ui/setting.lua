@@ -64,6 +64,8 @@ function setting:onInit()
         self.mDissolve:addClickListener(self.onDissolveClickedHandler, self)
         self.mBack:addClickListener(self.onBackClickedHandler, self)
     end
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function setting:onCloseClickedHandler()
@@ -149,6 +151,15 @@ function setting:onBackClickedHandler()
         self.game:exitGame()
         self:close()
     end
+end
+
+function setting:onCloseAllUIHandler()
+    self:close()
+end
+
+function setting:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return setting

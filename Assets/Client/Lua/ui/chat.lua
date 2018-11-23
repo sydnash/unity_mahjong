@@ -80,6 +80,8 @@ function chat:onInit()
             c.text = chatConfig.text[v.key].content
         end
     end
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function chat:onCloseClickedHandler()
@@ -121,6 +123,15 @@ function chat:onTextClickedHandler(sender)
     signalManager.signal(signalType.chatText, sender.key)
 
     self:close()
+end
+
+function chat:onCloseAllUIHandler()
+    self:close()
+end
+
+function chat:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return chat

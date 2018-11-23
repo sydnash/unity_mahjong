@@ -33,6 +33,37 @@ local function createFriendsterLC(friendster)
     return lc
 end
 
+function friendster:ctor(data)
+--    self.data = data
+    self.friendsters = {}
+
+    for _, v in pairs(data) do
+        local lc = createFriendsterLC(v)
+        self.friendsters[lc.id] = lc
+    end
+
+    self.my = {}
+    self.joined = {}
+
+    for _, d in pairs(self.friendsters) do 
+        if d.managerAcId == gamepref.acId then
+            table.insert(self.my, d)
+        else
+            table.insert(self.joined, d)
+        end
+    end 
+
+    table.sort(self.my, function(a, b)
+        return a.id < b.id
+    end)
+
+    table.sort(self.joined, function(a, b)
+        return a.id < b.id
+    end)
+
+    self.super.ctor(self)
+end
+
 function friendster:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mTabMyU:addClickListener(self.onMyClickedHandler, self)
@@ -74,6 +105,9 @@ function friendster:onInit()
     end, true)
 
     signalManager.registerSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    
+    self:refreshList()
 end
 
 function friendster:onCloseClickedHandler()
@@ -163,36 +197,6 @@ function friendster:onJoinClickedHandler()
 
     local ui = require("ui.friendster.joinFriendster").new()
     ui:show()
-end
-
-function friendster:set(data)
-    self.friendsters = {}
-
-    for _, v in pairs(data) do
-        local lc = createFriendsterLC(v)
-        self.friendsters[lc.id] = lc
-    end
-
-    self.my = {}
-    self.joined = {}
-
-    for _, d in pairs(self.friendsters) do 
-        if d.managerAcId == gamepref.acId then
-            table.insert(self.my, d)
-        else
-            table.insert(self.joined, d)
-        end
-    end 
-
-    table.sort(self.my, function(a, b)
-        return a.id < b.id
-    end)
-
-    table.sort(self.joined, function(a, b)
-        return a.id < b.id
-    end)
-    
-    self:refreshList()
 end
 
 function friendster:refreshList()
@@ -366,9 +370,14 @@ function friendster:onNotifyFriendster(msg)
     end
 end
 
+function friendster:onCloseAllUIHandler()
+    self:close()
+end
+
 function friendster:onDestroy()
     networkManager.unregisterCommandHandler(protoType.sc.notifyFriendster)
     signalManager.unregisterSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
     self.mList:reset()
 

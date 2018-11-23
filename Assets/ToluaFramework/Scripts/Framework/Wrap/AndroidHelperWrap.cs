@@ -27,10 +27,6 @@ public class AndroidHelperWrap
 		L.RegFunction("SetToClipboard", SetToClipboard);
 		L.RegFunction("GetFromClipboard", GetFromClipboard);
 		L.RegFunction("GetDistance", GetDistance);
-		L.RegFunction("StartLocationOnce", StartLocationOnce);
-		L.RegFunction("StartLocationUpdate", StartLocationUpdate);
-		L.RegFunction("StopLocationUpdate", StopLocationUpdate);
-		L.RegFunction("SetLocationUpdateHandler", SetLocationUpdateHandler);
 		L.RegFunction("New", _CreateAndroidHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -408,71 +404,6 @@ public class AndroidHelperWrap
 			float o = obj.GetDistance(arg0, arg1, arg2, arg3);
 			LuaDLL.lua_pushnumber(L, o);
 			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int StartLocationOnce(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
-			obj.StartLocationOnce();
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int StartLocationUpdate(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
-			obj.StartLocationUpdate();
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int StopLocationUpdate(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
-			obj.StopLocationUpdate();
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SetLocationUpdateHandler(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
-			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
-			obj.SetLocationUpdateHandler(arg0);
-			return 0;
 		}
 		catch (Exception e)
 		{

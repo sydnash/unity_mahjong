@@ -42,6 +42,7 @@ function deskDetail:onInit()
 
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mJoin:addClickListener(self.onJoinClickedHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function deskDetail:onCloseClickedHandler()
@@ -59,7 +60,13 @@ function deskDetail:onJoinClickedHandler()
     self:close()
 end
 
+function deskDetail:onCloseAllUIHandler()
+    self:close()
+end
+
 function deskDetail:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    
     if self.detail ~= nil then
         self.detail:close()
         self.detail = nil

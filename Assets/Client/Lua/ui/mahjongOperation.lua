@@ -195,6 +195,8 @@ function mahjongOperation:onInit()
     self.huMahjongs     = {}
 
     self:loadMahjongs()
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 -------------------------------------------------------------------------------
@@ -1567,11 +1569,16 @@ function mahjongOperation:reset()
     self:hideOperations()
 end
 
+function mahjongOperation:onCloseAllUIHandler()
+    self:close()
+end
+
 -------------------------------------------------------------------------------
 -- 销毁
 -------------------------------------------------------------------------------
 function mahjongOperation:onDestroy()
     touch.removeListener()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
     self.diceRoot:show()
     self.centerGlass:show()

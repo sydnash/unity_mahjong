@@ -9,6 +9,7 @@ _RES_(friendsterMessage, "FriendsterUI", "FriendsterMessageUI")
 
 function friendsterMessage:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function friendsterMessage:onCloseClickedHandler()
@@ -46,7 +47,12 @@ function friendsterMessage:refreshList()
     end
 end
 
+function friendsterMessage:onCloseAllUIHandler()
+    self:close()
+end
+
 function friendsterMessage:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     self.mList:reset()
     self.super.onDestroy(self)
 end

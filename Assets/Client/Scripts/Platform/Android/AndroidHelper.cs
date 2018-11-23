@@ -224,41 +224,54 @@ public class AndroidHelper
     /// <returns></returns>
     public float GetDistance(float la1, float lo1, float la2, float lo2)
     {
-        return javaObject.Call<float>("GetDistance", la1, lo1, la2, lo2);
+        return LocationHelper.GetDistance(javaObject, la1, lo1, la2, lo2);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public void StartLocationOnce()
-    {
-        
-    }
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    //public void StartLocation()
+    //{
+    //    LocationHelper.StartLocation(javaObject);
+    //}
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public void StartLocationUpdate()
-    {
-        
-    }
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    //public void StopLocation()
+    //{
+    //    LocationHelper.StopLocation(javaObject);
+    //}
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public void StopLocationUpdate()
-    {
-        
-    }
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    ///// <param name="javaObject"></param>
+    ///// <returns></returns>
+    //public bool GetLocationStatus()
+    //{
+    //    return LocationHelper.GetStatus(javaObject);
+    //}
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="callback"></param>
-    public void SetLocationUpdateHandler(Action<string> callback)
-    {
-        UtilsHelper.SetLocationUpdateHandler(callback);
-    }
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    ///// <param name="javaObject"></param>
+    ///// <returns></returns>
+    //public float GetLocationLatitude()
+    //{
+    //    return LocationHelper.GetLatitude(javaObject);
+    //}
+
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    ///// <param name="javaObject"></param>
+    ///// <returns></returns>
+    //public float GetLocationLongitude()
+    //{
+    //    return LocationHelper.GetLongitude(javaObject);
+    //}
 
     #endregion
 

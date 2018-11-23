@@ -109,6 +109,7 @@ signalType = {
     mail                = 6,
     headerDownloaded    = "header|",
     city                = 8,
+    closeAllUI          = 9,
 }
 
 --------------------------------------------------------------

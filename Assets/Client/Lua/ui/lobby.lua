@@ -46,13 +46,13 @@ function lobby:onInit()
     signalManager.registerSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.registerSignalHandler(signalType.mail, self.onMailHandler, self)
     signalManager.registerSignalHandler(signalType.city, self.onCityChangedHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function lobby:onHeadClickedHandler()
     playButtonClickSound()
 
-    local ui = require("ui.playerInfo").new()
-    ui:set(gamepref.player)
+    local ui = require("ui.playerInfo").new(gamepref.player)
     ui:show()
 end
 
@@ -112,8 +112,7 @@ end
 function lobby:onCreateDeskClickedHandler()
     playButtonClickSound()
     
-    local ui = require("ui.createDesk").new()
-    ui:set(gamepref.city.City, 0)
+    local ui = require("ui.createDesk").new(gamepref.city.City, 0)
     ui:show()
 end
 
@@ -131,8 +130,7 @@ function lobby:onEnterQYQClickedHandler()
 
         log("query friendster list, msg = " .. table.tostring(msg))
 
-        local ui = require("ui.friendster.friendster").new()
-        ui:set(msg.Clubs)
+        local ui = require("ui.friendster.friendster").new(msg.Clubs)
         ui:show()
     end)
 end
@@ -177,7 +175,6 @@ function lobby:onMailClickedHandler()
     playButtonClickSound()
     
     local ui = require("ui.mail.mail").new()
-    ui:set(gamepref.player.mails)
     ui:show()
 end
 
@@ -251,11 +248,16 @@ function lobby:refreshMailRP()
     end
 end
 
+function lobby:onCloseAllUIHandler()
+    self:close()
+end
+
 function lobby:onDestroy()
     signalManager.unregisterSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
     signalManager.unregisterSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.unregisterSignalHandler(signalType.mail, self.onMailHandler, self)
     signalManager.unregisterSignalHandler(signalType.city, self.onCityChangedHandler, self)
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
     self.mIcon:reset()
     self.super.onDestroy(self)

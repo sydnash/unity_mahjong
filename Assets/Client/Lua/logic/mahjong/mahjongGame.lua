@@ -727,6 +727,8 @@ end
 -- 退出桌子
 -------------------------------------------------------------------------------
 function mahjongGame:exitGame()
+    closeAllUI()
+
     local loading = require("ui.loading").new()
     loading:show()
 

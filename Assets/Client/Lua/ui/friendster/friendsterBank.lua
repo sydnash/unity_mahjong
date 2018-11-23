@@ -26,6 +26,8 @@ function friendsterBank:onInit()
 
     self.mDeposit:show()
     self.mTakeout:hide()
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function friendsterBank:onCloseClickedHandler()
@@ -115,6 +117,15 @@ end
 
 function friendsterBank:set(data)
     self.data = data
+end
+
+function friendsterBank:onCloseAllUIHandler()
+    self:close()
+end
+
+function friendsterBank:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return friendsterBank

@@ -19,6 +19,8 @@ function activity:onInit()
 
     self.mActivity:show()
     self.mAffiche:hide()
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function activity:onCloseClickedHandler()
@@ -48,6 +50,15 @@ function activity:onTitlebarTabAfficheClickedHandler()
 
     self.mActivity:hide()
     self.mAffiche:show()
+end
+
+function activity:onCloseAllUIHandler()
+    self:close()
+end
+
+function activity:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return activity
