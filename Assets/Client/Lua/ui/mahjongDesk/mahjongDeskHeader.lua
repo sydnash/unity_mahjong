@@ -7,11 +7,15 @@ local mahjongClass = require("const.mahjongClass")
 local base = require("ui.common.panel")
 local mahjongDeskHeader = class("mahjongDeskHeader", base)
 
+local OnlineColor = Color.New(1, 1, 1, 1)
+local OfflineColor = Color.New(0.3, 0.3, 0.3, 1)
+
 function mahjongDeskHeader:onInit()
     self.mU:show()
     self.mP:hide()
     self:reset()
 
+    self:setOnline(true)
     self:show()
 end
 
@@ -53,9 +57,29 @@ function mahjongDeskHeader:setPlayerInfo(player)
             self.mZhuang:hide()
         end
 
+        self:setOnline(player.connected)
+
         self.mEmoji:hide()
         self.mChat:hide()
         self.mVoice:hide()
+    end
+end
+
+function mahjongDeskHeader:setMarker(marker)
+    if marker then
+        self.mZhuang:show()
+    else
+        self.mZhuang:hide()
+    end
+end
+
+function mahjongDeskHeader:setOnline(online)
+    if online then
+        self.mOffline:hide()
+        self.mIcon:setColor(OnlineColor)
+    else
+        self.mOffline:show()
+        self.mIcon:setColor(OfflineColor)
     end
 end
 

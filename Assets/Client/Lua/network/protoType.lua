@@ -54,6 +54,7 @@ return {
         clear                       = "CmdType.fly.SC.DSSClear",
         exitDesk                    = "CmdType.fly.SC.ExitGSDesk",
         otherExitDesk               = "CmdType.fly.SC.OtherExitDesk",
+        notifyConnectStatus         = "CmdType.fly.SC.NotifyConnectStatus",
         notifyExitVote              = "CmdType.fly.SC.NotifyExitVote",
         notifyExitVoteFailed        = "CmdType.fly.SC.NotifyExitVoteFailed",
         exitVote                    = "CmdType.fly.SC.ExitVote",
