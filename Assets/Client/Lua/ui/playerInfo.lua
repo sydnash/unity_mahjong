@@ -26,7 +26,14 @@ function playerInfo:onInit()
     end
 
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+    self.mTransfer:addClickListener(self.onTransferClickedHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+end
+
+function playerInfo:onTransferClickedHandler()
+    playButtonClickSound()
+    local ui = require("ui.transfer").new()
+    ui:show()
 end
 
 function playerInfo:onCloseClickedHandler()

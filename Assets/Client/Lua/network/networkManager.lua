@@ -48,6 +48,15 @@ function networkHandler.setup()
     networkManager.registerCommandHandler(protoType.sc.mail, function(msg)
         networkHandler:onMail(msg)
     end, true)
+    networkManager.registerCommandHandler(protoType.sc.notifyPropertyChange, function(data)
+        if data["coin"] then
+            gamepref.player.cards = data["coin"]
+            signalManager.signal(signalType.cardsChanged)
+        elseif data["gold"] then
+            gamepref.player.cards = data["gold"]
+            signalManager.signal(signalType.cardsChanged)
+        end
+    end, true)
 end
 
 ----------------------------------------------------------------
@@ -675,6 +684,19 @@ function networkManager.queryFriendsterInfo(friendserId, verificationCode, callb
     end)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.transferCards(id, count, callback)
+    local data = {Target = id, Value = count}
+    send(protoType.cs.transferCards, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------

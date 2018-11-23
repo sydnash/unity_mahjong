@@ -37,6 +37,7 @@ return {
         proposerQuicklyStart        = "CmdType.fly.CS.ProposerQuicklyStart",
         quicklyStartChose           = "CmdType.fly.CS.QuicklyStartChose",
         syncLocation                = "CmdType.fly.CS.SyncLocation",
+        transferCards               = "CmdType.fly.CS_TransferCoin",
     },
     -- server to client
     sc = {
@@ -66,7 +67,9 @@ return {
         mail                        = "CmdType.fly.SC.Mail",
         quicklyStartNotify          = "CmdType.fly.SC.QuicklyStartNotify",
         quicklyStartEndNotify       = "CmdType.fly.SC.QuicklyStartEndNotify",
-	    quicklyStartChose           = "CmdType.fly.SC.QuicklyStartChose",
+        quicklyStartChose           = "CmdType.fly.SC.QuicklyStartChose",
+        transferCards               = "CmdType.fly.SC_TransferCoin",
+        notifyPropertyChange        = "CmdType.fly.SC.NotifyPropertyChange",
     },
 }
 
