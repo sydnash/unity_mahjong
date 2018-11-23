@@ -18,8 +18,15 @@ local d = 160 / 255
 local DARK_COLOR  = Color.New(d, d, d, 1)
 local LIGHT_COLOR = Color.New(1, 1, 1, 1)
 
+mahjong.cmode = {
+    dark  = 1,
+    light = 2,
+}
+
 function mahjong:ctor(id)
     self.id = id
+    self.pickabled = false
+    self.cmode = mahjong.cmode.light
 
     local mtype = mahjongType[id]
     local go = modelManager.load(mtype.folder, mtype.resource)
@@ -37,20 +44,26 @@ function mahjong:ctor(id)
 end
 
 function mahjong:dark()
-    if self.mat ~= nil then
+    if self.mat ~= nil and self.cmode == mahjong.cmode.light then
+        self.cmode = mahjong.cmode.dark
         self.mat.color = DARK_COLOR
     end
 end
 
 function mahjong:light()
-    if self.mat ~= nil then
+    if self.mat ~= nil and self.cmode == mahjong.cmode.dark then
+        self.cmode = mahjong.cmode.light
         self.mat.color = LIGHT_COLOR
     end
 end
 
 function mahjong:setPickabled(pickabled)
-    local layer = pickabled and INHAND_MAHJONG_LAYER or DEFAULT_LAYER
-    self:setLayer(layer, true)
+    if self.pickabled ~= pickabled then
+        self.pickabled = pickabled
+
+        local layer = pickabled and INHAND_MAHJONG_LAYER or DEFAULT_LAYER
+        self:setLayer(layer, true)
+    end
 end
 
 function mahjong:reset()

@@ -15,51 +15,50 @@ _RES_(mahjongOperation, "DeskOperationUI", "DeskOperationUI")
 
 mahjongOperation.seats = {
     [mahjongGame.seatType.mine] = { 
-        [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.235, 0.156, -0.268), rot = Quaternion.Euler(180, 0, 0),   scl = Vector3.New(1.0, 1.0, 1.0), len = 0.50 },
+        [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.235, 0.156, -0.268), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [mahjongGame.mode.normal]   = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0),  scl = Vector3.New(1.0, 1.0, 1.0) },
-            [mahjongGame.mode.playback] = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0),  scl = Vector3.New(1.0, 1.0, 1.0) },
+            [mahjongGame.mode.normal]   = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
+            [mahjongGame.mode.playback] = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
         },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 2, 0.156, -0.360), rot = Quaternion.Euler(0, 0, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.110, 0.156, -0.140), rot = Quaternion.Euler(0, 0, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 0, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 2, 0.156, -0.360), rot = Quaternion.Euler(0, 0, 0), },
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.110, 0.156, -0.140), rot = Quaternion.Euler(0, 0, 0), },
+        [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 0, 0), },
     },
     [mahjongGame.seatType.right] = { 
-        [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.309, 0.156,  0.275), rot = Quaternion.Euler(180, 90, 0),  scl = Vector3.New(1.0, 1.0, 1.0), len = 0.50 },
+        [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.309, 0.156,  0.275), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [mahjongGame.mode.normal]   = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), scl = Vector3.New(1.0, 1.0, 1.0) },
-            [mahjongGame.mode.playback] = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), scl = Vector3.New(1.0, 1.0, 1.0) },
+            [mahjongGame.mode.normal]   = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
+            [mahjongGame.mode.playback] = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
         },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.420, 0.156, -0.320), rot = Quaternion.Euler(0, -90, 0),    scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.160, 0.156, -0.080), rot = Quaternion.Euler(0, -90, 0),    scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156,  0.320), rot = Quaternion.Euler(0, -90, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.420, 0.156, -0.320), rot = Quaternion.Euler(0, -90, 0), },
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.160, 0.156, -0.080), rot = Quaternion.Euler(0, -90, 0), },
+        [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156,  0.320), rot = Quaternion.Euler(0, -90, 0), },
     },
     [mahjongGame.seatType.top] = { 
-        [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.235, 0.156,  0.330), rot = Quaternion.Euler(180, 0, 0),   scl = Vector3.New(1.0, 1.0, 1.0), len = 0.50 },
+        [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.235, 0.156,  0.330), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [mahjongGame.mode.normal]   = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), scl = Vector3.New(1.0, 1.0, 1.0) },
-            [mahjongGame.mode.playback] = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), scl = Vector3.New(1.0, 1.0, 1.0) },
+            [mahjongGame.mode.normal]   = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
+            [mahjongGame.mode.playback] = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
         },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.360, 0.156,  0.420), rot = Quaternion.Euler(0, 180, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.100, 0.156,  0.195), rot = Quaternion.Euler(0, 180, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.hu  ] = { pos = Vector3.New(-0.290, 0.156,  0.320), rot = Quaternion.Euler(0, 180, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.360, 0.156,  0.420), rot = Quaternion.Euler(0, 180, 0), },
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.100, 0.156,  0.195), rot = Quaternion.Euler(0, 180, 0), },
+        [mahjongGame.cardType.hu  ] = { pos = Vector3.New(-0.290, 0.156,  0.320), rot = Quaternion.Euler(0, 180, 0), },
     },
     [mahjongGame.seatType.left] = { 
-        [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.310, 0.156, -0.195), rot = Quaternion.Euler(180, 90, 0),  scl = Vector3.New(1.0, 1.0, 1.0), len = 0.50 },
+        [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.310, 0.156, -0.195), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [mahjongGame.mode.normal]   = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90),  scl = Vector3.New(1.0, 1.0, 1.0) },
-            [mahjongGame.mode.playback] = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90),  scl = Vector3.New(1.0, 1.0, 1.0) },
+            [mahjongGame.mode.normal]   = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
+            [mahjongGame.mode.playback] = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
         },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.420, 0.156,  0.320), rot = Quaternion.Euler(0, 90, 0),    scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.170, 0.156,  0.150), rot = Quaternion.Euler(0, 90, 0),    scl = Vector3.New(1.0, 1.0, 1.0) },
-        [mahjongGame.cardType.hu  ] = { pos = Vector3.New(-0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 90, 0),     scl = Vector3.New(1.0, 1.0, 1.0) },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.420, 0.156,  0.320), rot = Quaternion.Euler(0, 90, 0), },
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.170, 0.156,  0.150), rot = Quaternion.Euler(0, 90, 0), },
+        [mahjongGame.cardType.hu  ] = { pos = Vector3.New(-0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 90, 0), },
     },
 }
 
 local mopaiConfig = {
     position = Vector3.New(0.255, 0.175, -0.355),
     rotation = Quaternion.Euler(-100, 0, 0),
-    scale    = Vector3.New(1, 1, 1),
 }
 
 local COUNTDOWN_SECONDS_C = 20
@@ -80,12 +79,10 @@ local function swap(ta, ia, tb, ib)
 
         a:setLocalPosition(b:getLocalPosition())
         a:setLocalRotation(b:getLocalRotation())
-        a:setLocalScale(b:getLocalScale())
         a:setVisibled(b:getVisibled())
 
         b:setLocalPosition(p)
         b:setLocalRotation(r)
-        b:setLocalScale(s)
         b:setVisibled(visible)
         --交换索引
         ta[ia] = b
@@ -326,7 +323,6 @@ function mahjongOperation:onGameSync(reenter)
 
                 m:setLocalPosition(c.pos)
                 m:setLocalRotation(c.rot)
-                m:setLocalScale(c.scl)
 
                 self.huMahjongs[v.acId] = m
             end
@@ -424,7 +420,6 @@ function mahjongOperation:relocateIdleMahjongs(visible)
 
         local o = seat[mahjongGame.cardType.idle].pos
         local r = seat[mahjongGame.cardType.idle].rot
-        local s = seat[mahjongGame.cardType.idle].scl
         local l = seat[mahjongGame.cardType.idle].len
         local d = (l - (mahjong.w * (i * 0.5))) * 0.5
 
@@ -453,7 +448,6 @@ function mahjongOperation:relocateIdleMahjongs(visible)
 
             m:setLocalPosition(p)
             m:setLocalRotation(r)
-            m:setLocalScale(s)
             m:setPickabled(false)
 
             if visible then
@@ -594,7 +588,7 @@ function mahjongOperation:onMoPai(acId, cards)
 
         self.mo:setLocalPosition(moPaiPos)
         self.mo:setLocalRotation(mopaiConfig.rotation)
-        self.mo:setLocalScale(mopaiConfig.scale)
+--        self.mo:setLocalScale(mopaiConfig.scale)
 
         if self.mo.class == player.que then
             self.mo:dark()
@@ -1086,7 +1080,6 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
     local t = self.seats[s][mahjongGame.cardType.hu]
     hu:setLocalPosition(t.pos)
     hu:setLocalRotation(t.rot)
-    hu:setLocalScale(t.scl)
 
     if acId ~= gamepref.player.acId then 
         local player = self.game:getPlayerByAcId(acId)
@@ -1255,7 +1248,6 @@ function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
 
     local o = self:getMyInhandMahjongPos(player, 1)
     local r = seat[mahjongGame.cardType.shou][self.game.mode].rot
-    local s = seat[mahjongGame.cardType.shou][self.game.mode].scl
 
     for k, m in pairs(mahjongs) do
         k = k - 1
@@ -1277,7 +1269,7 @@ function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
 
         m:setLocalPosition(p)
         m:setLocalRotation(r)
-        m:setLocalScale(s)
+--        m:setLocalScale(s)
     end
 end
 
@@ -1291,7 +1283,6 @@ function mahjongOperation:relocateChuMahjongs(player)
 
     local o = seat[mahjongGame.cardType.chu].pos
     local r = seat[mahjongGame.cardType.chu].rot
-    local s = seat[mahjongGame.cardType.chu].scl
 
     local chuMahjongs = self.chuMahjongs[acId]
 
@@ -1317,7 +1308,7 @@ function mahjongOperation:relocateChuMahjongs(player)
         m:setPickabled(false)
         m:setLocalPosition(p)
         m:setLocalRotation(r)
-        m:setLocalScale(s)
+--        m:setLocalScale(s)
     end
 end
 
@@ -1331,7 +1322,6 @@ function mahjongOperation:relocatePengMahjongs(player)
 
     local o = seat[mahjongGame.cardType.peng].pos
     local r = seat[mahjongGame.cardType.peng].rot
-    local s = seat[mahjongGame.cardType.peng].scl
 
     local pengMahjongs = self.pengMahjongs[acId]
 
@@ -1365,12 +1355,13 @@ function mahjongOperation:relocatePengMahjongs(player)
             m:setPickabled(false)
             m:setLocalPosition(p)
             m:setLocalRotation(r)
-            m:setLocalScale(s)
+--            m:setLocalScale(s)
             if not isUpon then
                 lastPengPos = Vector3.New(o.x + (mahjong.w * c) * s.x + d + mahjong.w * 0.5, y, o.z - mahjong.z * 0.5)
             end
         end
     end
+
     if turn == mahjongGame.seatType.mine then
         self.lastPengPos = lastPengPos
     end
