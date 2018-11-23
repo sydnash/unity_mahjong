@@ -106,7 +106,7 @@ function playHistory:getPlayDetail(id, round, cb)
 		return
 	end
 	
-    networkManager.getPlayHistoryDetail(2, self.m_history.Id, self.m_round - 1, function(ok, data)
+    networkManager.getPlayHistoryDetail(2, id, round - 1, function(ok, data)
         if not ok then
             cb(false)
             return 
@@ -116,7 +116,7 @@ function playHistory:getPlayDetail(id, round, cb)
             cb(true, 1) --战绩回放不存在
             return
         end
-        history.PlaybackMsg[self.m_round] = data.OnePlayback
+        history.PlaybackMsg[round] = data.OnePlayback
         cb(true, 0)
     end)
 end
