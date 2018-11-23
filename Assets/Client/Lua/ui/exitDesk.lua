@@ -48,6 +48,8 @@ function exitDesk:onInit()
         self.mAgree:addClickListener(self.onAgreeClickedHandler, self)
         self.mReject:addClickListener(self.onRejectClickedHandler, self)
     end
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function exitDesk:setPlayerState(player)
@@ -99,6 +101,15 @@ function exitDesk:update()
         self.game:agreeExit()
         self:close()
     end
+end
+
+function exitDesk:onCloseAllUIHandler()
+    self:close()
+end
+
+function exitDesk:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return exitDesk

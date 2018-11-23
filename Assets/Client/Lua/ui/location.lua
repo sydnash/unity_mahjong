@@ -71,6 +71,7 @@ function location:onInit()
     end                        
 
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
     for _, v in pairs(self.headers) do
         v.icon:hide()
@@ -113,12 +114,15 @@ function location:refreshUI()
             for j=i+1, mahjongGame.seatType.left do
                 local b = players[j]
                 if b ~= nil then
-                    local d = locationManager.distance(a, b)
                     local k = string.format("%d%d", i, j)
---                    log(string.format("distance, k = %s, d = %f", k, d))
                     local v = self.distances[k]
 
-                    v.text:setText(formatDistance(d))
+                    if a.location.status and b.location.status then
+                        local d = locationManager.distance(a.location, b.location)
+                        v.text:setText(formatDistance(d))
+                    else
+                        v.text:setText("无法计算距离")
+                    end
                     v.text:show()
 
 --                    if d <= SAVE_DISTANCE then
@@ -132,6 +136,15 @@ function location:refreshUI()
             end
         end
     end
+end
+
+function location:onCloseAllUIHandler()
+    self:close()
+end
+
+function location:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return location

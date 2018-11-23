@@ -36,6 +36,8 @@ function enterDesk:onInit()
     }
 
     self:reset()
+
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function enterDesk:onCloseClickedHandler()
@@ -139,6 +141,15 @@ function enterDesk:reset()
     for _, v in pairs(self.mDisplayerSlots) do
         v:setText("")
     end
+end
+
+function enterDesk:onCloseAllUIHandler()
+    self:close()
+end
+
+function enterDesk:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return enterDesk

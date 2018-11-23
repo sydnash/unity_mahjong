@@ -28,6 +28,8 @@ function friendsterMemberManager:onInit()
     self.mName:setText(string.empty)
 
     self:refreshAddState()
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function friendsterMemberManager:onCloseClickedHandler()
@@ -171,6 +173,15 @@ function friendsterMemberManager:refreshDeleteState()
         self.mDelete:setInteractabled(true)
         self.mDeleteZ:setSprite("light")  
     end
+end
+
+function friendsterMemberManager:onCloseAllUIHandler()
+    self:close()
+end
+
+function friendsterMemberManager:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return friendsterMemberManager

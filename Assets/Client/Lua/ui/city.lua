@@ -23,8 +23,9 @@ function city:onInit()
 
     self.mChengDu:addClickListener(self.onCityClickedHandler, self)
     self.mJinTang:addClickListener(self.onCityClickedHandler, self)
-
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function city:onCloseClickedHandler()
@@ -62,6 +63,15 @@ function city:onCityClickedHandler(sender)
     end
 
     self:close()
+end
+
+function city:onCloseAllUIHandler()
+    self:close()
+end
+
+function city:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return city

@@ -424,4 +424,11 @@ function writeCityConfig(config)
     LFS.WriteText(cityFilename, text, LFS.UTF8_WITHOUT_BOM)
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function closeAllUI()
+    signalManager.signal(signalType.closeAllUI)
+end
+
 --endregion

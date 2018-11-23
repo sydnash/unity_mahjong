@@ -14,6 +14,8 @@ function share:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mHY:addClickListener(self.onHyClickedHandler, self)
     self.mPYQ:addClickListener(self.onPyqClickedHandler, self)
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function share:onCloseClickedHandler()
@@ -41,6 +43,15 @@ function share:onPyqClickedHandler()
         platformHelper.shareImageWx(tex, thumb, true)
         textureManager.unload(tex)
     end
+end
+
+function share:onCloseAllUIHandler()
+    self:close()
+end
+
+function share:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return share

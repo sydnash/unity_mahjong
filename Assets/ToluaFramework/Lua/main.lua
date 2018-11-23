@@ -20,7 +20,7 @@ function main()
     eventManager.setup()
     sceneManager.setup()
 
-    local app = require("clientApp").new()
+    local app = require("clientApp")
     app:start()
 end
 

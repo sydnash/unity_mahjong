@@ -79,6 +79,7 @@ function friendsterDetail:onInit()
     signalManager.registerSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
     signalManager.registerSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.registerSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function friendsterDetail:onReturnClickedHandler()
@@ -109,8 +110,7 @@ end
 function friendsterDetail:onCreateClickedHandler()
     playButtonClickSound()
 
-    local ui = require("ui.createDesk").new()
-    ui:set(self.data.cityType, self.data.id)
+    local ui = require("ui.createDesk").new(self.data.cityType, self.data.id)
     ui:show()
 end
 
@@ -284,10 +284,15 @@ function friendsterDetail:onExitedHandler(friendsterId)
     self:close()
 end
 
+function friendsterDetail:onCloseAllUIHandler()
+    self:close()
+end
+
 function friendsterDetail:onDestroy()
     signalManager.unregisterSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
     signalManager.unregisterSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.unregisterSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     
     self.mMemberList:reset()
     self.mDeskList:reset()

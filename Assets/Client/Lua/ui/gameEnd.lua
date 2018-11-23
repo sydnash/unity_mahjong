@@ -55,6 +55,8 @@ function gameEnd:onInit()
     self.mShareWX:addClickListener(self.onShareWXClickedHandler, self)
     self.mShareQYQ:addClickListener(self.onShareQYQClickedHandler, self)
     self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function gameEnd:endAll()
@@ -133,6 +135,15 @@ function gameEnd:onShareXLClickedHandler()
             platformHelper.shareImageSg(tex)
         end
     end
+end
+
+function gameEnd:onCloseAllUIHandler()
+    self:close()
+end
+
+function gameEnd:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return gameEnd

@@ -37,7 +37,10 @@ function gameOver:onInit()
     self.mSharePanel:addClickListener(self.onSharePanelClickedHandler, self)
     self.mShareWX:addClickListener(self.onShareWXClickedHandler, self)
     self.mShareQYQ:addClickListener(self.onShareQYQClickedHandler, self)
-    self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)end
+    self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+end
 
 function gameOver:onConfirmClickedHandler()
     playButtonClickSound()
@@ -98,7 +101,13 @@ function gameOver:onShareXLClickedHandler()
     end
 end
 
+function gameOver:onCloseAllUIHandler()
+    self:close()
+end
+
 function gameOver:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    
     for _, v in pairs(self.items) do
         v.mIcon:setTexture(nil)
     end

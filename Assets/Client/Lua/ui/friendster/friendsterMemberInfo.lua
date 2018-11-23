@@ -16,6 +16,8 @@ function friendsterMemberInfo:onInit()
     self.mQz:hide()
     self.mExit:hide()
     self.mDissolve:hide()
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function friendsterMemberInfo:onCloseClickedHandler()
@@ -71,6 +73,15 @@ function friendsterMemberInfo:set(friendsterId, managerId, data)
     local winRate = (data.totalPlayTimes == 0) and 0 or math.floor(data.winPlayTimes / data.totalPlayTimes * 100)
     self.mWinRate:setText(string.format("胜率:%d%%", winRate))
 end
+
+function friendsterMemberInfo:onCloseAllUIHandler()
+    self:close()
+end
+
+function friendsterMemberInfo:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
+end 
 
 return friendsterMemberInfo
 

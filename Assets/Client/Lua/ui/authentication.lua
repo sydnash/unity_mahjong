@@ -13,6 +13,8 @@ function authentication:onInit()
     self.mName:addChangedListener(self.onNameChangedHandler, self)
     self.mSFZ:addChangedListener(self.onSfzChangedHandler, self)
 
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+
     self:refreshUI()
 end
 
@@ -47,6 +49,15 @@ function authentication:refreshUI()
         self.mCommit:setInteractabled(true)
         self.mCommitText:setSprite("enable")
     end
+end
+
+function authentication:onCloseAllUIHandler()
+    self:close()
+end
+
+function authentication:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return authentication

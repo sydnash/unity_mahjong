@@ -30,6 +30,8 @@ function friendsterStatistics:onInit()
 
     self.mPageHistory:show()
     self.mPageRank:hide()
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function friendsterStatistics:onReturnClickedHandler()
@@ -241,7 +243,13 @@ function friendsterStatistics:refreshRank()
     end
 end
 
+function friendsterStatistics:onCloseAllUIHandler()
+    self:close()
+end
+
 function friendsterStatistics:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+
     self.mHistoryList:reset()
     self.mRankList:reset()
 

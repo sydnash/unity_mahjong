@@ -18,13 +18,14 @@ function locationManager.stop()
 end
 
 function locationManager.getData()
-    local location = { status = false, latitude = 0, longitude = 0, timestamp = 0 }
+    local location = { status = false, latitude = 0, longitude = 0 }
     
     if input.location.status == UnityEngine.LocationServiceStatus.Running then
+        local data = input.location.lastData
+
         location.status     = true
         location.latitude   = data.latitude
         location.longitude  = data.longitude
-        location.timestamp  = data.timestamp
     end
 
     return location

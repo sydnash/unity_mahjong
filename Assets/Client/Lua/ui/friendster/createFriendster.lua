@@ -44,6 +44,8 @@ function createFriendster:onInit()
         v:setSelected(v.id == gamepref.city.City)
     end
 
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+
     self:refreshCreateState()
 end
 
@@ -119,6 +121,15 @@ function createFriendster:refreshCreateState()
         self.mCreate:setInteractabled(true)
         self.mCreateZ:setSprite("light")
     end
+end
+
+function createFriendster:onCloseAllUIHandler()
+    self:close()
+end
+
+function createFriendster:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return createFriendster

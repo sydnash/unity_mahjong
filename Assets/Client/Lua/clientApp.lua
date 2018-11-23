@@ -125,6 +125,8 @@ end
 ----------------------------------------------------------------
 local function inviteSgCallback(params)
     if clientApp.currentDesk == nil then
+        closeAllUI()
+
         local t = table.fromjson(params)
 
         local cityType = t.cityType
@@ -284,14 +286,7 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-clientApp = class("clientApp")
-
-----------------------------------------------------------------
---
-----------------------------------------------------------------
-function clientApp:ctor()
-    self.currentDesk = nil
-end
+clientApp = {}
 
 ----------------------------------------------------------------
 --
@@ -310,6 +305,9 @@ function clientApp:start()
     platformHelper.registerInviteSgCallback(inviteSgCallback)
 
     DISABLE_GLOBAL_VARIABLE_DECLARATION()
+
+    self.currentDesk = nil
+    registerUpdateListener(self.update, self)
 
     locationManager.checkEnabled()
     locationManager.start()
@@ -332,13 +330,19 @@ function clientApp:update()
                           --
                       end)
     end
+    --测试用
+    if appConfig.debug then
+        if input.GetKeyDown(keycode.C) then
+            closeAllUI()
+        end
+    end
 end
 
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
 function clientApp:onDestroy()
-    locationManager.start()
+    locationManager.stop()
 end
 
 return clientApp

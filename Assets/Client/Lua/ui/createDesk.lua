@@ -7,14 +7,21 @@ local createDesk = class("createDesk", base)
 
 _RES_(createDesk, "CreateDeskUI", "CreateDeskUI")
 
-function createDesk:ctor(callback)
-    self.callback = callback
+function createDesk:ctor(cityType, friendsterId)
+    self.cityType = cityType
+    self.gameType = gameType.mahjong
+    self.friendsterId = friendsterId
+
     self.super.ctor(self)
 end
 
 function createDesk:onInit()
+    self.config = self:readConfig()
+    self:createDetail()
+
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function createDesk:onCloseClickedHandler()
@@ -55,15 +62,6 @@ function createDesk:onCreateClickedHandler()
     self:writeConfig()
 end
 
-function createDesk:set(cityType, friendsterId)
-    self.cityType = cityType
-    self.gameType = gameType.mahjong
-    self.friendsterId = friendsterId
-
-    self.config = self:readConfig()
-    self:createDetail()
-end
-
 function createDesk:createDetail()
     if self.detail ~= nil then
         self.detail:close()
@@ -100,6 +98,8 @@ function createDesk:writeConfig()
 end
 
 function createDesk:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    
     if self.detail ~= nil then
         self.detail:close()
         self.detail = nil

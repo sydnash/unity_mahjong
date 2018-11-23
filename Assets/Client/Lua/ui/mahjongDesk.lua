@@ -58,6 +58,7 @@ function mahjongDesk:onInit()
 
     signalManager.registerSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
     signalManager.registerSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function mahjongDesk:update()
@@ -65,21 +66,16 @@ function mahjongDesk:update()
     gvoiceManager.update()
 end
 
+function mahjongDesk:onCloseAllUIHandler()
+    self:close()
+end
+
 function mahjongDesk:onDestroy()
     networkManager.unregisterCommandHandler(protoType.sc.chatMessage)
 
     signalManager.unregisterSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
     signalManager.unregisterSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
-
-    if self.settingUI ~= nil then
-        self.settingUI:close()
-        self.settingUI = nil
-    end
-
-    if self.chatUI ~= nil then
-        self.chatUI:close()
-        self.chatUI = nil
-    end
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
     self.super.onDestroy(self)
 end
@@ -218,15 +214,15 @@ end
 function mahjongDesk:onSettingClickedHandler()
     playButtonClickSound()
 
-    self.settingUI = require("ui.setting").new(self.game)
-    self.settingUI:show()
+    local ui = require("ui.setting").new(self.game)
+    ui:show()
 end
 
 function mahjongDesk:onChatClickedHandler()
     playButtonClickSound()
 
-    self.chatUI = require("ui.chat").new()
-    self.chatUI:show()
+    local ui = require("ui.chat").new()
+    ui:show()
 end
 
 function mahjongDesk:onVoiceDownClickedHandler(sender, pos)

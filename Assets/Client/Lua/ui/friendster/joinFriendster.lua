@@ -22,6 +22,8 @@ function joinFriendster:onInit()
     self.mVerification:setText(string.empty)
 
     self:refreshJoinState()
+
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function joinFriendster:onCloseClickedHandler()
@@ -96,6 +98,15 @@ function joinFriendster:refreshJoinState()
         self.mJoin:setInteractabled(true)
         self.mJoinZ:setSprite("light")
     end
+end
+
+function joinFriendster:onCloseAllUIHandler()
+    self:close()
+end
+
+function joinFriendster:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return joinFriendster

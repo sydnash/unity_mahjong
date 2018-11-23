@@ -7,10 +7,26 @@ local playerInfo = class("playerInfo", base)
 
 _RES_(playerInfo, "PlayerInfoUI", "PlayerInfoUI")
 
+function playerInfo:ctor()
+    self.data = data
+    self.super.ctor(self)
+end
+
 function playerInfo:onInit()
-    self.mClose:addClickListener(self.onCloseClickedHandler, self)
-    
+    self.mIcon:setTexture(self.data.headerTex)
+    self.mSex:setSprite("boy")
+    self.mNickname:setText(self.data.nickname)
     self.mIp:hide()
+
+    self.mId:setText(string.format("账号:%d", self.data.acId))
+
+    if not string.isNilOrEmpty(self.data.ip) then
+        self.mIp:show()
+        self.mIp:setText(string.format("IP:%s", self.data.ip))
+    end
+
+    self.mClose:addClickListener(self.onCloseClickedHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function playerInfo:onCloseClickedHandler()
@@ -18,22 +34,13 @@ function playerInfo:onCloseClickedHandler()
     self:close()
 end
 
-function playerInfo:set(data)
-    self.mIcon:setTexture(data.headerTex)
-    self.mSex:setSprite("boy")
-    self.mNickname:setText(data.nickname)
+function playerInfo:onCloseAllUIHandler()
+    self:close()
+end
 
-    self.mId:setText(string.format("账号:%d", data.acId))
-
-    if not string.isNilOrEmpty(data.ip) then
-        self.mIp:show()
-        self.mIp:setText(string.format("IP:%s", data.ip))
-    end
-
---    self.mTotalCount:setText(string.format("总局数:%d", data.totalPlayTimes))
-
---    local winRate = (data.totalPlayTimes == 0) and 0 or math.floor(data.winPlayTimes / data.totalPlayTimes * 100)
---    self.mWinRate:setText(string.format("胜率:%d%%", winRate))
+function playerInfo:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return playerInfo
