@@ -78,6 +78,47 @@ function playHistory:updateHistory(cb)
 end
 
 function playHistory:getScoreDetail(id, cb)
+    local history = self:findHistoryById(id)
+    if history.PlayTimes == 0 or (history.ScoreDetail and #history.ScoreDetail == history.PlayTimes) then
+		cb(true, 0)
+		return
+	end
+    networkManager.getPlayHistoryDetail(0, history.Id, 0, function(timeout, data)
+        if timeout then
+            cb(false)
+            return 
+        end
+        if data.RetCode ~= 0 then
+            cb(true, data.RetCode)
+            return
+        end
+		history.ScoreDetail = data.ScoreDetail
+		cb(true, 0)
+	end)
+end
+function playHistory:getPlayDetail(id, round, cb)
+    local history = self:findHistoryById(id)
+    if history.PlaybackMsg == nil then
+		history.PlaybackMsg = {}
+	end
+    if history.PlaybackMsg[round] then
+        cb(true, 0)
+		return
+	end
+	
+    networkManager.getPlayHistoryDetail(2, self.m_history.Id, self.m_round - 1, function(ok, data)
+        if not ok then
+            cb(false)
+            return 
+        end
+        local data = data.data
+        if data.RetCode ~= 0 or data.OnePlayback == "" then
+            cb(true, 1) --战绩回放不存在
+            return
+        end
+        history.PlaybackMsg[self.m_round] = data.OnePlayback
+        cb(true, 0)
+    end)
 end
 
 return playHistory
