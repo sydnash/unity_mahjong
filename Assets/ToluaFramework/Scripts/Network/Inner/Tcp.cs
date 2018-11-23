@@ -56,6 +56,11 @@ public class Tcp : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    private Queue<int> mSendMessageLengthQueue = new Queue<int>();
+
+    /// <summary>
+    /// 
+    /// </summary>
     private Queue<Action> mSendErrorCallbackQueue = new Queue<Action>();
 
     /// <summary>
@@ -143,6 +148,7 @@ public class Tcp : MonoBehaviour
             }
 
             mSendMessageQueue.Clear();
+            mSendMessageLengthQueue.Clear();
             mSendErrorCallbackQueue.Clear();
         }
         catch (Exception ex)
@@ -160,9 +166,10 @@ public class Tcp : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="msg"></param>
-    public void Send(byte[] msg, Action callback)
+    public void Send(byte[] msg, int length, Action callback)
     {
         mSendMessageQueue.Enqueue(msg);
+        mSendMessageLengthQueue.Enqueue(length);
         mSendErrorCallbackQueue.Enqueue(callback);
     }
 
@@ -218,16 +225,17 @@ public class Tcp : MonoBehaviour
                 }
 
                 //发送数据
-                if (mConnected && mSendMessageQueue.Count > 0)
+                if (mConnected && mSendMessageQueue.Count > 0 && mSendMessageLengthQueue.Count > 0)
                 {
                     byte[] msg = mSendMessageQueue.Dequeue();
+                    int length = mSendMessageLengthQueue.Dequeue();
                     Action callback = mSendErrorCallbackQueue.Dequeue();
                     int sentSize = 0;
                     SocketError err = SocketError.Success;
 
-                    while (sentSize < msg.Length)
+                    while (sentSize < length)
                     {
-                        sentSize += mSocket.Send(msg, sentSize, msg.Length - sentSize, SocketFlags.None, out err);
+                        sentSize += mSocket.Send(msg, sentSize, length - sentSize, SocketFlags.None, out err);
                         if (err != SocketError.Success)
                         {
                             callback();

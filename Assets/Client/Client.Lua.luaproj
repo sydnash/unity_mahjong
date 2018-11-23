@@ -63,6 +63,7 @@
     <Compile Include="Lua\logic\mahjong\mahjongType.lua" />
     <Compile Include="Lua\logic\manager\locationManager.lua" />
     <Compile Include="Lua\logic\manager\patchManager.lua" />
+    <Compile Include="Lua\logic\player\playHistory.lua" />
     <Compile Include="Lua\logic\touch.lua" />
     <Compile Include="Lua\network\proto.lua" />
     <Compile Include="Lua\logic\player\gamePlayer.lua" />

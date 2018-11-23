@@ -434,13 +434,13 @@ function mahjongOperation:relocateIdleMahjongs(visible)
             local w = mahjong.w * u
 
             if turn == mahjongGame.seatType.mine then
-                x = (o.x - d) - w * s.x
+                x = (o.x - d) - w
             elseif turn == mahjongGame.seatType.left then
-                z = (o.z + d) + w * s.z
+                z = (o.z + d) + w
             elseif turn == mahjongGame.seatType.right then
-                z = (o.z - d) - w * s.z
+                z = (o.z - d) - w
             else
-                x = (o.x + d) + w * s.x
+                x = (o.x + d) + w
             end
             
             local p = m:getLocalPosition()
@@ -1254,16 +1254,16 @@ function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
         local p = m:getLocalPosition()
 
         if turn == mahjongGame.seatType.mine then
-            p:Set(o.x + (mahjong.w * k) * s.x, o.y, o.z)
+            p:Set(o.x + (mahjong.w * k), o.y, o.z)
             m:setPickabled(true)
         elseif turn == mahjongGame.seatType.left then
-            p:Set(o.x, o.y, o.z + (mahjong.w * k) * s.z)
+            p:Set(o.x, o.y, o.z + (mahjong.w * k))
             m:setPickabled(false)
         elseif turn == mahjongGame.seatType.right then
-            p:Set(o.x, o.y, o.z - (mahjong.w * k) * s.z)
+            p:Set(o.x, o.y, o.z - (mahjong.w * k))
             m:setPickabled(false)
         else
-            p:Set(o.x + (mahjong.w * k) * s.x, o.y, o.z)
+            p:Set(o.x + (mahjong.w * k), o.y, o.z)
             m:setPickabled(false)
         end
 
@@ -1292,17 +1292,17 @@ function mahjongOperation:relocateChuMahjongs(player)
 
         local u = math.floor(k / 10)
         local c = k % 10
-        local y = (u < 2) and o.y or o.y + (mahjong.z * s.y)
-        local d = (u % 2) * (mahjong.h * s.z)
+        local y = (u < 2) and o.y or o.y + mahjong.z
+        local d = (u % 2) * mahjong.h
 
         if turn == mahjongGame.seatType.mine then
-            p:Set(o.x + (mahjong.w * c) * s.x, y, o.z - d)
+            p:Set(o.x + mahjong.w * c, y, o.z - d)
         elseif turn == mahjongGame.seatType.left then
-            p:Set(o.x - d, y, o.z - (mahjong.w * c) * s.z)
+            p:Set(o.x - d, y, o.z - mahjong.w * c)
         elseif turn == mahjongGame.seatType.right then
-            p:Set(o.x + d, y, o.z + (mahjong.w * c) * s.z)
+            p:Set(o.x + d, y, o.z + mahjong.w * c)
         else
-            p:Set(o.x - (mahjong.w * c) * s.x, y, o.z + d)
+            p:Set(o.x - mahjong.w * c, y, o.z + d)
         end
 
         m:setPickabled(false)
@@ -1343,13 +1343,13 @@ function mahjongOperation:relocatePengMahjongs(player)
             end 
 
             if turn == mahjongGame.seatType.mine then
-                p:Set(o.x + (mahjong.w * c) * s.x + d, y, o.z)
+                p:Set(o.x + mahjong.w * c + d, y, o.z)
             elseif turn == mahjongGame.seatType.left then
-                p:Set(o.x, y, o.z - (mahjong.w * c) * s.z - d)
+                p:Set(o.x, y, o.z - mahjong.w * c - d)
             elseif turn == mahjongGame.seatType.right then
-                p:Set(o.x, y, o.z + (mahjong.w * c) * s.z + d)
+                p:Set(o.x, y, o.z + mahjong.w * c + d)
             else
-                p:Set(o.x - (mahjong.w * c) * s.x - d, y, o.z)
+                p:Set(o.x - mahjong.w * c - d, y, o.z)
             end
 
             m:setPickabled(false)
@@ -1357,7 +1357,7 @@ function mahjongOperation:relocatePengMahjongs(player)
             m:setLocalRotation(r)
 --            m:setLocalScale(s)
             if not isUpon then
-                lastPengPos = Vector3.New(o.x + (mahjong.w * c) * s.x + d + mahjong.w * 0.5, y, o.z - mahjong.z * 0.5)
+                lastPengPos = Vector3.New(o.x + mahjong.w * c + d + mahjong.w * 0.5, y, o.z - mahjong.z * 0.5)
             end
         end
     end

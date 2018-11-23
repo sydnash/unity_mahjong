@@ -31,13 +31,14 @@ function proto.build(command, token, acid, session, payload)
     if networkConfig.encrypt then
         encrypt = aes.Encrypt(encrypt)
         encrypt = b64.Encrypt(encrypt, 0, encrypt.Length)
-        local length = cvt.Int32ToBytes(encrypt.Length + INT_BYTES_COUNT)
-
-        return cvt.ConcatBytes(length, length.Length, encrypt, encrypt.Length)
+    else
+        encrypt = cvt.StringToBytes(encrypt)
     end
 
-    local length = cvt.Int32ToBytes(string.len(encrypt) + INT_BYTES_COUNT)
-    return cvt.ConcatBytes(length, length.Length, cvt.StringToBytes(encrypt), string.len(encrypt))
+    local bytes = cvt.Int32ToBytes(encrypt.Length + INT_BYTES_COUNT)
+    local length = bytes.Length + encrypt.Length
+
+    return cvt.ConcatBytes(bytes, bytes.Length, encrypt, encrypt.Length), length
 end
 
 -------------------------------------------------------------------

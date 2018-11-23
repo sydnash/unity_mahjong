@@ -63,6 +63,8 @@ public class Utils
         return d;
     }
 
+    private static byte[] mConcatBytesBuffer = null;
+
     /// <summary>
     /// 
     /// </summary>
@@ -73,19 +75,22 @@ public class Utils
         if (a == null && b == null)
             return null;
 
-        byte[] c = new byte[asize + bsize];
+        if (mConcatBytesBuffer == null || mConcatBytesBuffer.Length < (asize + bsize))
+        {
+            mConcatBytesBuffer = new byte[asize + bsize];
+        }
 
         if (a != null)
         {
-            Array.Copy(a, 0, c, 0, asize);
+            Array.Copy(a, 0, mConcatBytesBuffer, 0, asize);
         }
 
         if (b != null)
         {
-            Array.Copy(b, 0, c, asize, bsize);
+            Array.Copy(b, 0, mConcatBytesBuffer, asize, bsize);
         }
 
-        return c;
+        return mConcatBytesBuffer;
     }
 
     /// <summary>
@@ -105,6 +110,8 @@ public class Utils
         return d;
     }
 
+    private static byte[] mTrimBytesBuffer = null;
+
     /// <summary>
     /// 
     /// </summary>
@@ -116,10 +123,13 @@ public class Utils
         int size = s.Length - length;
         if (s == null || size <= 0) return null;
 
-        byte[] d = new byte[size];
-        Array.Copy(s, length, d, 0, size);
+        if (mTrimBytesBuffer == null || mTrimBytesBuffer.Length < size)
+        {
+            mTrimBytesBuffer = new byte[size];
+        }
 
-        return d;
+        Array.Copy(s, length, mTrimBytesBuffer, 0, size);
+        return mTrimBytesBuffer;
     }
 
     /// <summary>
