@@ -3,24 +3,25 @@
 --此文件由[BabeLua]插件自动生成
 
 local base = require("ui.common.view")
-local playHistory = class("playHistory", base)
+local playHistoryDetail = class("playHistoryDetail", base)
 
-_RES_(playHistory, "PlayHistory", "PlayHistory")
+_RES_(playHistoryDetail, "PlayHistory", "PlayHistoryDetail")
 
-function playHistory:onInit()
-    self:refreshUI()
+function playHistoryDetail:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
-function playHistory:onCloseClickedHandler()
+function playHistoryDetail:onCloseClickedHandler()
     playButtonClickSound()
 
     self:close()
 end
 
-function playHistory:refreshUI()
-    local histories = gamepref.player.playHistory:getData()
+function playHistoryDetail:setHistory(historyId)
+    self.mHistoryId = historyId
+    local history = gamepref.player.playHistory:findHistoryById(historyId)
+
     local count = #histories
 
     if count <= 0 then
@@ -29,7 +30,7 @@ function playHistory:refreshUI()
         self.mEmpty:hide()
 
         local createItem = function()
-            return require("ui.playHistory.playHistoryItem").new()
+            return require("ui.playHistoryDetail.playHistoryDetailItem").new()
         end
 
         local refreshItem = function(item, index)
@@ -41,15 +42,15 @@ function playHistory:refreshUI()
     end
 end
 
-function playHistory:onCloseAllUIHandler()
+function playHistoryDetail:onCloseAllUIHandler()
     self:close()
 end
 
-function playHistory:onDestroy()
+function playHistoryDetail:onDestroy()
     self.mList:reset()
     self.super.onDestroy(self)
 end
 
-return playHistory
+return playHistoryDetail
 
 --endregion

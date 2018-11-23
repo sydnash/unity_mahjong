@@ -82,7 +82,7 @@ function playHistory:getScoreDetail(id, cb)
     if history.PlayTimes == 0 or (history.ScoreDetail and #history.ScoreDetail == history.PlayTimes) then
 		cb(true, 0)
 		return
-	end
+    end
     networkManager.getPlayHistoryDetail(0, history.Id, 0, function(timeout, data)
         if timeout then
             cb(false)
