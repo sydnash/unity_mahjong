@@ -142,7 +142,8 @@ end
 
 function lobby:onHistoryClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能暂未开放，敬请期待")
+    local ui = require("ui.playHistory.playHistory").new()
+    ui:show()
 end
 
 function lobby:onRankClickedHandler()
