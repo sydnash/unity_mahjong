@@ -206,9 +206,9 @@ end
 -------------------------------------------------------------------
 function platformHelper.getDistance(latitude1, longitude1, latitude2, longitude2)
     if deviceConfig.isAndroid then
-        AndroidHelper.instance:GetDistance(latitude1, longitude1, latitude2, longitude2)
+        return AndroidHelper.instance:GetDistance(latitude1, longitude1, latitude2, longitude2)
     elseif deviceConfig.isApple then
-        IOSHelper.instance:GetDistance(latitude1, longitude1, latitude2, longitude2)
+        return IOSHelper.instance:GetDistance(latitude1, longitude1, latitude2, longitude2)
     end
 
     return 0

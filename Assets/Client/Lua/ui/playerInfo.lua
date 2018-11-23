@@ -7,7 +7,7 @@ local playerInfo = class("playerInfo", base)
 
 _RES_(playerInfo, "PlayerInfoUI", "PlayerInfoUI")
 
-function playerInfo:ctor()
+function playerInfo:ctor(data)
     self.data = data
     self.super.ctor(self)
 end

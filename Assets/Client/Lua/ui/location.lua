@@ -9,7 +9,7 @@ local location = class("location", base)
 
 _RES_(location, "LocationUI", "LocationUI")
 
-local SAVE_DISTANCE = 100
+local SAVE_DISTANCE = 500
 local COLOR_LINE_GREEN   = Color.New(93  / 255, 191 / 255, 82  / 255, 1)
 local COLOR_LINE_RED     = Color.New(224 / 255, 100 / 255, 100 / 255, 1)
 local COLOR_TEXT_GREEN   = Color.New(45  / 255, 140 / 255, 35  / 255, 1)
@@ -119,6 +119,9 @@ function location:refreshUI()
 
                     if a.location.status and b.location.status then
                         local d = locationManager.distance(a.location, b.location)
+                        log("a.location = " .. table.tostring(a.location))
+                        log("b.location = " .. table.tostring(b.location))
+                        log("distance = " .. tostring(d))
                         v.text:setText(formatDistance(d))
                     else
                         v.text:setText("无法计算距离")
