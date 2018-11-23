@@ -517,6 +517,36 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function networkManager.quicklyStartChose(agree, callback)
+    local data = { Agree = agree }
+    send(protoType.cs.quicklyStartChose, data, function(msg)
+        if not callback then
+            return
+        end
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+function networkManager.proposerQuicklyStart(callback)
+    local data = {}
+    send(protoType.cs.proposerQuicklyStart, data, function(msg)
+        if not callback then
+            return
+        end
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function networkManager.dingque(mahjongClass, callback)
     local data = { Q = mahjongClass }
     send(protoType.cs.dpChoose, data, function(msg)

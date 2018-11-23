@@ -223,6 +223,8 @@ function mahjongDesk:onChatClickedHandler()
 
     local ui = require("ui.chat").new()
     ui:show()
+
+    --self.game:quicklyStartChose(true)
 end
 
 function mahjongDesk:onVoiceDownClickedHandler(sender, pos)

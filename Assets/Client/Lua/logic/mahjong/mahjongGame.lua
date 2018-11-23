@@ -62,7 +62,8 @@ function mahjongGame:ctor(data)
             ready = ready and v.ready
         end
 
-        if ready and (count == self.config.RenShu) then
+        --if ready and (count == self.config.RenShu) then
+        if data.Status == gameStatus.playing then
             self.deskUI:onGameSync()
             self.operationUI:onGameSync(data.Reenter)
         else
@@ -132,6 +133,15 @@ function mahjongGame:registerCommandHandlers()
     networkManager.registerCommandHandler(protoType.sc.dqDo, function(msg)
         self:onDingQueDoHandler(msg)
     end, true)
+    networkManager.registerCommandHandler(protoType.sc.quicklyStartChose, function(msg)
+        self:onQuicklyStartChose(msg)
+    end, true)
+    networkManager.registerCommandHandler(protoType.sc.quicklyStartNotify, function(msg)
+        self:onQuicklyStartNotify(msg)
+    end, true)
+    networkManager.registerCommandHandler(protoType.sc.quicklyStartEndNotify, function(msg)
+        self:onQuicklyStartEndNotify(msg)
+    end, true)
 end
 
 -------------------------------------------------------------------------------
@@ -154,6 +164,9 @@ function mahjongGame:unregisterCommandHandlers()
     networkManager.unregisterCommandHandler(protoType.sc.gameEnd)
     networkManager.unregisterCommandHandler(protoType.sc.dqHint)
     networkManager.unregisterCommandHandler(protoType.sc.dqDo)
+    networkManager.unregisterCommandHandler(protoType.sc.quicklyStartChose)
+    networkManager.unregisterCommandHandler(protoType.sc.quicklyStartNotify)
+    networkManager.unregisterCommandHandler(protoType.sc.quicklyStartEndNotify)
 end
 
 -------------------------------------------------------------------------------
@@ -236,7 +249,8 @@ function mahjongGame:syncSeats(seats)
         if player.hu ~= nil then
             local shou = player[mahjongGame.cardType.shou]
             local huInfo = player.hu[1]
-            if huInfo.HuType == 10 then --自摸
+            local detail = opType.hu.detail
+            if huInfo.HuType == detail.zimo or huInfo.HuType == detail.gangshanghua or huInfo.HuType == detail.haidilao then --自摸
                 if player.acId == gamepref.player.acId then
                     for k, u in pairs(shou) do
                         if u == player.hu[1].HuCard then
@@ -347,7 +361,7 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongGame:onFaPaiHandler(msg)
---    log("fapai, msg = " .. table.tostring(msg))
+    log("fapai, msg = " .. table.tostring(msg))
     local func = tweenFunction.new(function()
         for _, v in pairs(msg.Seats) do
             local player = self:getPlayerByAcId(v.AcId)
@@ -784,6 +798,10 @@ function mahjongGame:onExitDeskHandler(msg)
         local ui = require("ui.gameOver").new(self, datas)
         ui:show()
 
+        if self.gameEndUI ~= nil then
+            self.gameEndUI:close()
+            self.gameEndUI = nil
+        end
         self.deskUI:reset()
         self.operationUI:reset()
     else
@@ -800,6 +818,7 @@ function mahjongGame:onOtherExitHandler(msg)
 --    log("other exit, msg = " .. table.tostring(msg))
 
     if self.leftGames > 0 then
+        self.players[msg.Turn] = nil
         self.playerCount = self.playerCount - 1
         self.deskUI:onPlayerExit(msg.Turn)
     end
@@ -831,7 +850,7 @@ end
 -- 服务器通知有人投票
 -------------------------------------------------------------------------------
 function mahjongGame:onExitVoteHandler(msg)
---    log("exit vote, msg = " .. table.tostring(msg))
+    log("exit vote, msg = " .. table.tostring(msg))
     if self.exitDeskUI~= nil then
         local player = self:getPlayerByAcId(msg.AcId)
         player.exitVoteState = 1
@@ -939,6 +958,37 @@ function mahjongGame:onDingQueDoHandler(msg)
         self.operationUI:onDingQueDo(msg)
     end)
     self.messageHandlers:add(func)
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知有玩家发起快速开始投票
+-------------------------------------------------------------------------------
+function mahjongGame:onQuicklyStartNotify(msg)
+    log("mahjongGame:onQuicklyStartNotify " .. table.tostring(msg))
+end
+-------------------------------------------------------------------------------
+-- 服务器通知快速开始投票结果
+-------------------------------------------------------------------------------
+function mahjongGame:onQuicklyStartEndNotify(msg)
+    log("mahjongGame:onQuicklyStartEndNotify" .. table.tostring(msg))
+end
+-------------------------------------------------------------------------------
+-- 服务器通知有玩家选择快速开始投票
+-------------------------------------------------------------------------------
+function mahjongGame:onQuicklyStartChose(msg)
+    log("mahjongGame:onQuicklyStartChose" .. table.tostring(msg))
+end
+-------------------------------------------------------------------------------
+--发起快速开始
+-------------------------------------------------------------------------------
+function mahjongGame:proposerQuicklyStart(cb)
+    networkManager.proposerQuicklyStart(cb)
+end
+-------------------------------------------------------------------------------
+--快开始投票
+-------------------------------------------------------------------------------
+function mahjongGame:quicklyStartChose(agree, cb)
+    networkManager.quicklyStartChose(agree, cb)
 end
 
 -------------------------------------------------------------------------------

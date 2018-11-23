@@ -88,7 +88,7 @@ function gameEndItem:setPlayerInfo(player)
         p:setParent(self.mPai)
         p:show()
         p:setMahjongId(hu)
-        p:setLocalPosition(Vector3.New(x + 6, 0, 0))
+        p:setLocalPosition(Vector3.New(x + 23, 0, 0))
         p:setHighlight(true)
 
         table.insert(self.pai, p)
