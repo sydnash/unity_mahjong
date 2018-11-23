@@ -1,0 +1,19 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:cdae93f86c92599168fc64ae42ab6273:c2a6059d119c1808cc807b94c347bafe:bb725e9107b3b34e8d8d3c6fd9e25e01$
+#
+:format=40300
+:texture=PlayHistory.png
+:size=256x256
+:pivotpoints=enabled
+:borders=disabled
+
+zj_00;1;64;193;151; 0.5;0.5; 0;0;0;0
+zj_01;119;13;78;49; 0.5;0.5; 0;0;0;0
+zj_02;1;217;200;38; 0.5;0.5; 0;0;0;0
+zj_03;1;2;57;60; 0.5;0.5; 0;0;0;0
+zj_04;60;2;57;60; 0.5;0.5; 0;0;0;0
