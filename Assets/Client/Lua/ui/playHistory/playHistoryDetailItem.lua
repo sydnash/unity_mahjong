@@ -22,23 +22,43 @@ function playHistoryDetailItem:onInit()
     self.mPlay:addClickListener(self.onThisClickHandler, self)
 end
 
-
 function playHistoryDetailItem:onThisClickHandler()
-    showWaitingUI("正在拉取回放数据")
-    gamepref.player.playHistory:getPlayDetail(self.mHistoryId, self.mRound, function(ok, data)
+    showWaitingUI("正在拉取回放数据，请稍候...")
+
+    gamepref.player.playHistory:getPlayDetail(self.mHistoryId, self.mRound, function(ok, msg)
         closeWaitingUI()
+
         if not ok then
-            showMessageUI("拉取回放数据失败")
+            showMessageUI("拉取回放数据失败，请稍后重试")
             return
         end
-        if data == nil then
+
+        if msg == nil then
             showMessageUI("回放数据已经过期")
             return
         end
-        log("play back msg : " .. data)
-        -- local ui = require("ui.playHistory.playHistoryDetail").new()
-        -- ui:setHistory(self.mHistoryId)
-        -- ui:show()
+
+        local playback = table.fromjson(msg)
+        for k, v in pairs(playback) do
+            playback[k] = table.fromjson(v)
+            playback[k].Payload = table.fromjson(playback[k].Payload)
+        end
+
+        log("playback data = " .. table.tostring(playback))
+
+        local loading = require("ui.loading").new()
+        loading:show()
+
+        sceneManager.load("scene", "mahjongscene", function(completed, progress)
+            loading:setProgress(progress)
+
+            if completed then
+                local data = {}
+
+                local game = require("logic.mahjong.mahjongGame").new(data, playback)
+                loading:close()
+            end
+        end)
     end)
 end
 

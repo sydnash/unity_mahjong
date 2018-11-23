@@ -122,7 +122,7 @@ local function receive(bytes, size)
     else
         local buffer, length = cvt.ConcatBytes(networkManager.recvbuffer, networkManager.recvbuffer.Length, bytes, size)
         networkManager.recvbuffer = buffer
-        networkManager.recvbufferLength = length
+        networkManager.recvbufferLength = networkManager.recvbuffer.Length + size
     end
 
     --解析数据

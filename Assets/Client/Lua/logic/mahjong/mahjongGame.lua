@@ -51,6 +51,29 @@ function mahjongGame:ctor(data, playback)
     self.players = {}
     self.playerCount = 1
 
+    self.commandHandlers = {
+        [protoType.sc.otherEnterDesk]           = { func = self.onOtherEnterHandler,            nr = true },
+        [protoType.sc.ready]                    = { func = self.onReadyHandler,                 nr = true },
+        [protoType.sc.start]                    = { func = self.onGameStartHandler,             nr = true },
+        [protoType.sc.fapai]                    = { func = self.onFaPaiHandler,                 nr = true },
+        [protoType.sc.mopai]                    = { func = self.onMoPaiHandler,                 nr = true },
+        [protoType.sc.oplist]                   = { func = self.onOpListHandler,                nr = true },
+        [protoType.sc.opDo]                     = { func = self.onOpDoHandler,                  nr = true },
+        [protoType.sc.clear]                    = { func = self.onClearHandler,                 nr = true },
+        [protoType.sc.exitDesk]                 = { func = self.onExitDeskHandler,              nr = true },
+        [protoType.sc.otherExitDesk]            = { func = self.onOtherExitHandler,             nr = true },
+        [protoType.sc.notifyConnectStatus]      = { func = self.onOtherConnectStatusChanged,    nr = true },
+        [protoType.sc.notifyExitVote]           = { func = self.onNotifyExitVoteHandler,        nr = true },
+        [protoType.sc.notifyExitVoteFailed]     = { func = self.onNotifyExitVoteFailedHandler,  nr = true },
+        [protoType.sc.exitVote]                 = { func = self.onExitVoteHandler,              nr = true },
+        [protoType.sc.gameEnd]                  = { func = self.onGameEndHandler,               nr = true },
+        [protoType.sc.dqHint]                   = { func = self.onDingQueHintHandler,           nr = true },
+        [protoType.sc.dqDo]                     = { func = self.onDingQueDoHandler,             nr = true },
+        [protoType.sc.quicklyStartChose]        = { func = self.onQuicklyStartChose,            nr = true },
+        [protoType.sc.quicklyStartNotify]       = { func = self.onQuicklyStartNotify,           nr = true },
+        [protoType.sc.quicklyStartEndNotify]    = { func = self.onQuicklyStartEndNotify,        nr = true },
+    }
+
     if playback == nil then
         self.mode = mahjongGame.mode.normal
         self:registerCommandHandlers()
@@ -68,14 +91,6 @@ function mahjongGame:ctor(data, playback)
     self.operationUI:show()
     
     if data.Reenter ~= nil then
-        local count = 0
-        local ready = true
-    
-        for _, v in pairs(self.players) do 
-            count = count + 1
-            ready = ready and v.ready
-        end
-
         if data.Status == gameStatus.playing then
             self.deskUI:onGameSync()
             self.operationUI:onGameSync(data.Reenter)
@@ -98,95 +113,36 @@ end
 -- 注册服务器主动推送的消息的处理函数
 -------------------------------------------------------------------------------
 function mahjongGame:registerCommandHandlers()
-    networkManager.registerCommandHandler(protoType.sc.otherEnterDesk, function(msg)
-        self:onOtherEnterHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.ready, function(msg)
-        self:onReadyHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.start, function(msg)
-        self:onGameStartHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.fapai, function(msg)
-        self:onFaPaiHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.mopai, function(msg)
-        self:onMoPaiHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.oplist, function(msg)
-        self:onOpListHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.opDo, function(msg)
-        self:onOpDoHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.clear, function(msg)
-        self:onClearHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.exitDesk, function(msg)
-        self:onExitDeskHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.otherExitDesk, function(msg)
-        self:onOtherExitHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.notifyConnectStatus, function(msg)
-        self:onOtherConnectStatusChanged(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.notifyExitVote, function(msg)
-        self:onNotifyExitVoteHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.notifyExitVoteFailed, function(msg)
-        self:onNotifyExitVoteFailedHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.exitVote, function(msg)
-        self:onExitVoteHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.gameEnd, function(msg)
-        self:onGameEndHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.dqHint, function(msg)
-        self:onDingQueHintHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.dqDo, function(msg)
-        self:onDingQueDoHandler(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.quicklyStartChose, function(msg)
-        self:onQuicklyStartChose(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.quicklyStartNotify, function(msg)
-        self:onQuicklyStartNotify(msg)
-    end, true)
-    networkManager.registerCommandHandler(protoType.sc.quicklyStartEndNotify, function(msg)
-        self:onQuicklyStartEndNotify(msg)
-    end, true)
-end
-
-function mahjongGame:registerPlaybackHandlers()
-
+    for k, v in pairs(self.commandHandlers) do
+        networkManager.registerCommandHandler(k, function(msg) v.func(self, msg) end, v.nr)
+    end
 end
 
 -------------------------------------------------------------------------------
 -- 注销服务器主动推送的消息的处理函数
 -------------------------------------------------------------------------------
 function mahjongGame:unregisterCommandHandlers()
-    networkManager.unregisterCommandHandler(protoType.sc.otherEnterDesk)
-    networkManager.unregisterCommandHandler(protoType.sc.ready)
-    networkManager.unregisterCommandHandler(protoType.sc.start)
-    networkManager.unregisterCommandHandler(protoType.sc.fapai)
-    networkManager.unregisterCommandHandler(protoType.sc.mopai)
-    networkManager.unregisterCommandHandler(protoType.sc.oplist)
-    networkManager.unregisterCommandHandler(protoType.sc.opDo)
-    networkManager.unregisterCommandHandler(protoType.sc.clear)
-    networkManager.unregisterCommandHandler(protoType.sc.exitDesk)
-    networkManager.unregisterCommandHandler(protoType.sc.otherExitDesk)
-    networkManager.unregisterCommandHandler(protoType.sc.notifyExitVote)
-    networkManager.unregisterCommandHandler(protoType.sc.notifyExitVoteFailed)
-    networkManager.unregisterCommandHandler(protoType.sc.exitVote)
-    networkManager.unregisterCommandHandler(protoType.sc.gameEnd)
-    networkManager.unregisterCommandHandler(protoType.sc.dqHint)
-    networkManager.unregisterCommandHandler(protoType.sc.dqDo)
-    networkManager.unregisterCommandHandler(protoType.sc.quicklyStartChose)
-    networkManager.unregisterCommandHandler(protoType.sc.quicklyStartNotify)
-    networkManager.unregisterCommandHandler(protoType.sc.quicklyStartEndNotify)
+    for k, _ in pairs(self.commandHandlers) do
+        networkManager.unregisterCommandHandler(k)
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 注册回放数据的处理函数
+-------------------------------------------------------------------------------
+function mahjongGame:registerPlaybackHandlers(playback)
+    for _, v in pairs(playback) do
+        local func = self.commandHandlers[v.Command].func
+        func(self, v.Payload)
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 注销回放数据的处理函数
+-------------------------------------------------------------------------------
+function mahjongGame:unregisterPlaybackHandlers()
+    tweenManager.stop(self.messageHandlers)
+    tweenManager.remove(self.messageHandlers)
 end
 
 -------------------------------------------------------------------------------
@@ -1050,10 +1006,16 @@ end
 -- 销毁游戏对象
 -------------------------------------------------------------------------------
 function mahjongGame:destroy()
-    tweenManager.remove(self.messageHandlers)
-
     self.playerCount = 0
-    self:unregisterCommandHandlers()
+
+    if self.mode == mahjongGame.mode.normal then
+        self.messageHandlers:stop()
+        tweenManager.remove(self.messageHandlers)
+
+        self:unregisterCommandHandlers()
+    else
+        self:unregisterPlaybackHandlers()
+    end
 
     if self.deskUI ~= nil then
         self.deskUI:close()
