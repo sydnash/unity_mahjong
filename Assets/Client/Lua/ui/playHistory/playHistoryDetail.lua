@@ -9,37 +9,52 @@ _RES_(playHistoryDetail, "PlayHistory", "PlayHistoryDetail")
 
 function playHistoryDetail:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+
+    self.mNicknames = {
+        self.mNickname1,
+        self.mNickname2,
+        self.mNickname3,
+        self.mNickname4,
+    }
+    for _, v in pairs(self.mNicknames) do
+        v:hide()
+    end
+
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function playHistoryDetail:onCloseClickedHandler()
     playButtonClickSound()
-
     self:close()
 end
 
 function playHistoryDetail:setHistory(historyId)
+    self.mList:reset()
     self.mHistoryId = historyId
     local history = gamepref.player.playHistory:findHistoryById(historyId)
 
-    local count = #histories
-
-    if count <= 0 then
-        self.mEmpty:show()
-    else
-        self.mEmpty:hide()
-
-        local createItem = function()
-            return require("ui.playHistoryDetail.playHistoryDetailItem").new()
-        end
-
-        local refreshItem = function(item, index)
-            item:set(histories[index + 1])
-        end
-
-        self.mList:reset()
-        self.mList:set(count, createItem, refreshItem)
+    if history.ScoreDetail == nil or #history.ScoreDetail == 0 then
+        return
     end
+
+    local players = history.Players
+    for i = 1, #players do
+        self.mNicknames[i]:show()
+        self.mNicknames[i]:setText(players[i].Nickname)
+    end
+
+    local details = history.ScoreDetail
+    local count = #details
+
+    local createItem = function()
+        return require("ui.playHistory.playHistoryDetailItem").new()
+    end
+
+    local refreshItem = function(item, index)
+        item:set(details[index + 1], index + 1, historyId)
+    end
+
+    self.mList:set(count, createItem, refreshItem)
 end
 
 function playHistoryDetail:onCloseAllUIHandler()
