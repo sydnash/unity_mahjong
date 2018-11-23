@@ -730,14 +730,8 @@ end
 function mahjongGame:getSeatTypeByAcId(acId)
     local player = self:getPlayerByAcId(acId)
     local turn = player.turn
-    local mineTurn = self:getTurn(gamepref.acId)
 
-    if turn - mineTurn >= 0 then
-        return turn - mineTurn
-    end
-
-    local playerCount = self:getTotalPlayerCount()
-    return playerCount + turn - mineTurn
+    return self:getSeatType(turn)
 end
 
 -------------------------------------------------------------------------------
