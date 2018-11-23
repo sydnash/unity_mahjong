@@ -221,7 +221,7 @@ function mahjongDesk:onSettingClickedHandler()
     self.settingUI = require("ui.setting").new(self.game)
     self.settingUI:show()
 
-    --self.game:proposerQuicklyStart()
+    self.game:proposerQuicklyStart()
 end
 
 function mahjongDesk:onChatClickedHandler()
@@ -230,7 +230,7 @@ function mahjongDesk:onChatClickedHandler()
     self.chatUI = require("ui.chat").new()
     self.chatUI:show()
 
-    --self.game:quicklyStartChose(true)
+    self.game:quicklyStartChose(true)
 end
 
 function mahjongDesk:onVoiceDownClickedHandler(sender, pos)
@@ -291,6 +291,7 @@ function mahjongDesk:onGameStart()
         v:reset()
     end
 
+    self:updateHeaderZhuangStatus()
     self:updateCurrentGameIndex()
 end
 
@@ -300,6 +301,17 @@ function mahjongDesk:onGameSync()
     self.mCancel:hide()
 
     self:updateCurrentGameIndex()
+end
+
+function mahjongDesk:updateHeaderZhuangStatus()
+    for _, v in pairs(self.game.players) do 
+        local st = self.game:getSeatType(v.turn)
+        if self.game:isMarker(v.turn) then
+            self.players[v.turn]:setMarker(true)
+        else
+            self.players[v.turn]:setMarker(false)
+        end
+    end
 end
 
 function mahjongDesk:reset()
@@ -327,6 +339,12 @@ function mahjongDesk:onPlayerEnter(player)
     local p = self.players[s]
 
     p:setPlayerInfo(player)
+end
+
+function mahjongDesk:onPlayerConnectStatusChanged(player)
+    local s = self.game:getSeatType(player.turn)
+    local p = self.players[s]
+    p:setOnline(player.connected)
 end
 
 function mahjongDesk:onPlayerExit(turn)

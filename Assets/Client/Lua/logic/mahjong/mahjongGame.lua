@@ -115,6 +115,9 @@ function mahjongGame:registerCommandHandlers()
     networkManager.registerCommandHandler(protoType.sc.otherExitDesk, function(msg)
         self:onOtherExitHandler(msg)
     end, true)
+    networkManager.registerCommandHandler(protoType.sc.notifyConnectStatus, function(msg)
+        self:onOtherConnectStatusChanged(msg)
+    end, true)
     networkManager.registerCommandHandler(protoType.sc.notifyExitVote, function(msg)
         self:onNotifyExitVoteHandler(msg)
     end, true)
@@ -177,12 +180,11 @@ function mahjongGame:onEnter(msg)
     self.creator = msg.Creator
 
     local player = gamepref.player
-    player.conncted     = true
+    player.connected     = true
     player.ready        = msg.Ready
     player.turn         = msg.Turn
     player.score        = msg.Score
     player.isCreator    = self:isCreator(player.acId)
-    player.isMarker     = self:isMarker(player.turn)
     player.location     = locationManager.getData()
 
     self.players[player.turn] = player
@@ -197,6 +199,7 @@ function mahjongGame:onEnter(msg)
         self.totalMahjongCount  = msg.Reenter.TotalMJCnt
         self.leftMahjongCount   = msg.Reenter.LeftMJCnt
         self.deskStatus         = msg.Reenter.DeskStatus
+        player.isMarker         = self:isMarker(player.turn) --只有游戏中才有庄家
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
 
@@ -226,7 +229,6 @@ function mahjongGame:syncOthers(others)
         player.turn      = v.Turn
         player.score     = v.Score
         player.isCreator = self:isCreator(player.acId)
-        player.isMarker  = self:isMarker(player.turn)
         player.location  = { status = v.HasPosition, latitude = v.Latitude, longitude = v.Longitude }
 
         self.playerCount = self.playerCount + 1
@@ -241,6 +243,7 @@ function mahjongGame:syncSeats(seats)
         local player = self:getPlayerByAcId(v.AcId)
         player.que = v.QueType
         player.hu = v.HuInfo
+        player.isMarker = self:isMarker(player.turn)
 
         player[mahjongGame.cardType.shou] = v.CardsInHand
         player[mahjongGame.cardType.chu]  = v.CardsInChuPai
@@ -819,6 +822,14 @@ function mahjongGame:onOtherExitHandler(msg)
         self.players[msg.Turn] = nil
         self.playerCount = self.playerCount - 1
         self.deskUI:onPlayerExit(msg.Turn)
+    end
+end
+
+function mahjongGame:onOtherConnectStatusChanged(msg)
+    local player = self:getPlayerByAcId(msg.AcId)
+    player.connected = msg.IsConnected
+    if self.deskUI then
+        self.deskUI:onPlayerConnectStatusChanged(player)
     end
 end
 
