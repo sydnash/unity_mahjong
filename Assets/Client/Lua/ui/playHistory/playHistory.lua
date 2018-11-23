@@ -21,12 +21,24 @@ function playHistory:onCloseClickedHandler()
 end
 
 function playHistory:refreshUI()
-    local count = 0
+    local histories = gamepref.player.playHistory:getData()
+    local count = #histories
 
     if count <= 0 then
         self.mEmpty:show()
     else
         self.mEmpty:hide()
+
+        local createItem = function()
+            return require("ui.playHistory.playHistoryItem").new()
+        end
+
+        local refreshItem = function(item, index)
+            item:set(histories[index + 1])
+        end
+
+        self.mList:reset()
+        self.mList:set(count, createItem, refreshItem)
     end
 end
 

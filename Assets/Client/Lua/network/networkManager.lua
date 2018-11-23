@@ -851,6 +851,36 @@ function networkManager.syncLocation(location, callback)
     end)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.getPlayHistory(time, callback)
+    local data =  {StartTime = time}
+    send(protoType.cs.getPlayHistory, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+--typ 0 表示拉取所有详细积分数据  round没有意义
+--typ 2 表示拉取单场的对局详情  round从0开始
+function networkManager.getPlayHistoryDetail(typ, id, round, callback)
+    local data = {
+        Type  = typ,
+	    Id    = id,
+	    Round = round,
+    }
+    send(protoType.cs.getPlayHistoryDetail, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
 return networkManager
 
 --endregion

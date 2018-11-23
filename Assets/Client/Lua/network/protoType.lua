@@ -38,6 +38,9 @@ return {
         quicklyStartChose           = "CmdType.fly.CS.QuicklyStartChose",
         syncLocation                = "CmdType.fly.CS.SyncLocation",
         transferCards               = "CmdType.fly.CS_TransferCoin",
+        getPlayHistory              = "CmdType.fly.CS.GetDeskHistory",
+        getPlayHistoryDetail        = "CmdType.fly.CS.GetDeskHistoryDetail",
+        getClubPlayHistoryDetail    = "CmdType.fly.CS.ClubGetDeskHistoryDetail",
     },
     -- server to client
     sc = {
@@ -70,7 +73,12 @@ return {
         quicklyStartChose           = "CmdType.fly.SC.QuicklyStartChose",
         transferCards               = "CmdType.fly.SC_TransferCoin",
         notifyPropertyChange        = "CmdType.fly.SC.NotifyPropertyChange",
+        getPlayHistory              = "CmdType.fly.SC.GetDeskHistory",
+        getPlayHistoryDetail        = "CmdType.fly.SC.GetDeskHistoryDetail",
+        getClubPlayHistoryDetail    = "CmdType.fly.SC.ClubGetDeskHistoryDetail",
+        getClubPlayHistory          = "CmdType.fly.SC_GetClubDeskHistory",
     },
 }
+
 
 --endregion

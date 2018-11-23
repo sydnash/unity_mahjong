@@ -3,6 +3,7 @@
 --此文件由[BabeLua]插件自动生成
 
 local gamePlayer = class("gamePlayer")
+local playHistory = require("logic.player.playHistory")
 
 local urls = {
     [16903] = "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIcqbm2StHBdfNBDWr5H0WYNbQS1qicYp0cl5N3tkIsLFKDXAzURiak94QjOeI23iaxclzIM6GcudwvA/132",
@@ -16,6 +17,7 @@ function gamePlayer:ctor(acid)
     self.nickname   = string.empty
     self.headerUrl  = string.empty
     self.headerTex  = nil
+    self.playHistory = playHistory.new()
 end
 
 function gamePlayer:loadHeaderTex()
