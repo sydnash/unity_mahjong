@@ -119,9 +119,6 @@ function location:refreshUI()
 
                     if a.location.status and b.location.status then
                         local d = locationManager.distance(a.location, b.location)
-                        log("a.location = " .. table.tostring(a.location))
-                        log("b.location = " .. table.tostring(b.location))
-                        log("distance = " .. tostring(d))
                         v.text:setText(formatDistance(d))
                     else
                         v.text:setText("无法计算距离")

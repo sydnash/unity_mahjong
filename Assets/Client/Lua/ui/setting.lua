@@ -88,10 +88,11 @@ end
 function setting:onExitClickedHandler()
     playButtonClickSound()
 
+    networkManager.disconnect()
+    closeAllUI()
+
     local ui = require("ui.login").new()
     ui:show()
-
-    networkManager.disconnect()
 end
 
 function setting:onMandarinChangedHandler(sender, selected, clicked)

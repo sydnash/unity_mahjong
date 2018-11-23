@@ -23,11 +23,18 @@ mahjongGame.cardType = {
     hu   = 5,
 }
 
+mahjongGame.mode = {
+    normal   = 1,
+    playback = 2,
+}
+
 -------------------------------------------------------------------------------
 -- 构造函数
 -------------------------------------------------------------------------------
-function mahjongGame:ctor(data)
+function mahjongGame:ctor(data, playback)
     log("mahjongGame, data = " .. table.tostring(data))
+    log("mahjongGame, playback = " .. table.tostring(playback))
+
     self.messageHandlers = tweenSerial.new(false)
     self.messageHandlers:play()
     tweenManager.add(self.messageHandlers)
@@ -43,7 +50,14 @@ function mahjongGame:ctor(data)
 
     self.players = {}
     self.playerCount = 1
-    self:registerCommandHandlers()
+
+    if playback == nil then
+        self.mode = mahjongGame.mode.normal
+        self:registerCommandHandlers()
+    else
+        self.mode = mahjongGame.mode.playback
+        self:registerPlaybackHandlers(playback)
+    end
 
     self:onEnter(data)
 
@@ -62,7 +76,6 @@ function mahjongGame:ctor(data)
             ready = ready and v.ready
         end
 
-        --if ready and (count == self.config.RenShu) then
         if data.Status == gameStatus.playing then
             self.deskUI:onGameSync()
             self.operationUI:onGameSync(data.Reenter)
@@ -92,7 +105,7 @@ function mahjongGame:registerCommandHandlers()
         self:onReadyHandler(msg)
     end, true)
     networkManager.registerCommandHandler(protoType.sc.start, function(msg)
-        return self:onGameStartHandler(msg)
+        self:onGameStartHandler(msg)
     end, true)
     networkManager.registerCommandHandler(protoType.sc.fapai, function(msg)
         self:onFaPaiHandler(msg)
@@ -145,6 +158,10 @@ function mahjongGame:registerCommandHandlers()
     networkManager.registerCommandHandler(protoType.sc.quicklyStartEndNotify, function(msg)
         self:onQuicklyStartEndNotify(msg)
     end, true)
+end
+
+function mahjongGame:registerPlaybackHandlers()
+
 end
 
 -------------------------------------------------------------------------------

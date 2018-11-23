@@ -23,47 +23,69 @@ function mahjongDesk:onInit()
         [mahjongGame.seatType.left]  = self.mPlayerL, 
     }
     
-    self.mInvite:show()
+    if self.game.mode == mahjongGame.mode.normal then
+        self.mInvite:show()
+        self.mReady:show()
+        self.mCancel:hide()
+        self.mPosition:show()
+        self.mChat:show()
+        self.mVoice:show()
+    else
+        self.mInvite:hide()
+        self.mReady:hide()
+        self.mCancel:hide()
+        self.mPosition:hide()
+        self.mChat:hide()
+        self.mVoice:hide()
+    end
+
     self.mInvitePanel:hide()
     self.mVoiceTips:hide()
-    self:refreshUI()
 
-    self.mInvite:addClickListener(self.onInviteClickedHandler, self)
-    self.mInvitePanel:addClickListener(self.onInvitePanelClickedHandler, self)
-    self.mInviteWX:addClickListener(self.onInviteWXClickedHandler, self)
-    self.mInviteXL:addClickListener(self.onInviteXLClickedHandler, self)
-    self.mReady:addClickListener(self.onReadyClickedHandler, self)
-    self.mCancel:addClickListener(self.onCancelClickedHandler, self)
-    self.mPosition:addClickListener(self.onPositionClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
-    self.mChat:addClickListener(self.onChatClickedHandler, self)
-    self.mVoice:addDownListener(self.onVoiceDownClickedHandler, self)
-    self.mVoice:addMoveListener(self.onVoiceMoveClickedHandler, self)
-    self.mVoice:addUpListener(self.onVoiceUpClickedHandler, self)
     self.mGameInfo:addClickListener(self.onGameInfoClickedHandler, self)
 
-    networkManager.registerCommandHandler(protoType.sc.chatMessage, function(msg)
-        self:onChatMessageHandler(msg)
-    end, true)
+    if self.game.mode == mahjongGame.mode.normal then
+        self.mInvite:addClickListener(self.onInviteClickedHandler, self)
+        self.mInvitePanel:addClickListener(self.onInvitePanelClickedHandler, self)
+        self.mInviteWX:addClickListener(self.onInviteWXClickedHandler, self)
+        self.mInviteXL:addClickListener(self.onInviteXLClickedHandler, self)
+        self.mReady:addClickListener(self.onReadyClickedHandler, self)
+        self.mCancel:addClickListener(self.onCancelClickedHandler, self)
+        self.mPosition:addClickListener(self.onPositionClickedHandler, self)
+        self.mChat:addClickListener(self.onChatClickedHandler, self)
+        self.mVoice:addDownListener(self.onVoiceDownClickedHandler, self)
+        self.mVoice:addMoveListener(self.onVoiceMoveClickedHandler, self)
+        self.mVoice:addUpListener(self.onVoiceUpClickedHandler, self)
 
-    gvoiceManager.registerRecordFinishedHandler(function(filename)
-        self:onGVoiceRecordFinishedHandler(filename)
-    end)
-    gvoiceManager.registerPlayStartedHandler(function(filename)
-        self:onGVoicePlayStartedHandler(filename)
-    end)
-    gvoiceManager.registerPlayFinishedHandler(function(filename)
-        self:onGVoicePlayFinishedHandler(filename)
-    end)
+        networkManager.registerCommandHandler(protoType.sc.chatMessage, function(msg)
+            self:onChatMessageHandler(msg)
+        end, true)
 
-    signalManager.registerSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
-    signalManager.registerSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
+        gvoiceManager.registerRecordFinishedHandler(function(filename)
+            self:onGVoiceRecordFinishedHandler(filename)
+        end)
+        gvoiceManager.registerPlayStartedHandler(function(filename)
+            self:onGVoicePlayStartedHandler(filename)
+        end)
+        gvoiceManager.registerPlayFinishedHandler(function(filename)
+            self:onGVoicePlayFinishedHandler(filename)
+        end)
+
+        signalManager.registerSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
+        signalManager.registerSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
+    end
+
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self:refreshUI()
 end
 
 function mahjongDesk:update()
     self.mTime:setText(time.formatTime())
-    gvoiceManager.update()
+
+    if self.game.mode == mahjongGame.mode.normal then
+        gvoiceManager.update()
+    end
 end
 
 function mahjongDesk:onCloseAllUIHandler()
@@ -71,12 +93,13 @@ function mahjongDesk:onCloseAllUIHandler()
 end
 
 function mahjongDesk:onDestroy()
-    networkManager.unregisterCommandHandler(protoType.sc.chatMessage)
+    if self.game.mode == mahjongGame.mode.normal then
+        networkManager.unregisterCommandHandler(protoType.sc.chatMessage)
+        signalManager.unregisterSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
+        signalManager.unregisterSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
+    end
 
-    signalManager.unregisterSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
-    signalManager.unregisterSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-
     self.super.onDestroy(self)
 end
 
@@ -108,7 +131,9 @@ function mahjongDesk:refreshUI()
         end
     end
 
-    self:refreshInvitationButtonState()
+    if self.game.mode == mahjongGame.mode.normal then
+        self:refreshInvitationButtonState()
+    end
 end
 
 function mahjongDesk:refreshInvitationButtonState()
@@ -195,8 +220,6 @@ function mahjongDesk:onPositionClickedHandler()
     if location.status then
         networkManager.syncLocation(location, function(ok, msg)
             if ok then
-                log("location = " .. table.tostring(msg))
-
                 for _, v in pairs(msg.Locations) do
                     local player = self.game:getPlayerByAcId(v.AcId)
                     player.location.status    = v.Has
@@ -217,7 +240,7 @@ function mahjongDesk:onSettingClickedHandler()
     local ui = require("ui.setting").new(self.game)
     ui:show()
 
-    self.game:proposerQuicklyStart()
+--    self.game:proposerQuicklyStart()
 end
 
 function mahjongDesk:onChatClickedHandler()
@@ -226,7 +249,7 @@ function mahjongDesk:onChatClickedHandler()
     local ui = require("ui.chat").new()
     ui:show()
 
-    self.game:quicklyStartChose(true)
+--    self.game:quicklyStartChose(true)
 end
 
 function mahjongDesk:onVoiceDownClickedHandler(sender, pos)
