@@ -126,7 +126,7 @@ function mahjongDesk:refreshUI()
         local p = self.players[s]
         p:setPlayerInfo(v)
 
-        if self.game.status == gameStatus.playing then
+        if self.game.mode == mahjongGame.mode.playback or self.game.status == gameStatus.playing then
             p:setReady(false)
         end
     end
@@ -306,11 +306,6 @@ function mahjongDesk:onGameStart()
     self.mReady:hide()
     self.mCancel:hide()
 
-    for _, v in pairs(self.players) do
-        v:reset()
-        v:setMarker(v.isMarker)
-    end
-
     self:updateHeaderZhuangStatus()
     self:updateCurrentGameIndex()
 end
@@ -326,11 +321,7 @@ end
 function mahjongDesk:updateHeaderZhuangStatus()
     for _, v in pairs(self.game.players) do 
         local st = self.game:getSeatType(v.turn)
-        if self.game:isMarker(v.turn) then
-            self.players[v.turn]:setMarker(true)
-        else
-            self.players[v.turn]:setMarker(false)
-        end
+        self.players[st]:setMarker(v.isMarker)
     end
 end
 

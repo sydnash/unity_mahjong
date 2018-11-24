@@ -1436,14 +1436,16 @@ end
 -- 将当前turn的plane高亮
 -------------------------------------------------------------------------------
 function mahjongOperation:highlightPlaneByTurn(turn)
-    local seat = self.game:getSeatTypeFromMarker(turn)
+    local base = self.game:getSeatType(self.game.markerTurn)
+    local seat = self.game:getSeatType(turn)
+    local diff = (seat ~= nil) and (seat - base + 4) % 4 or nil
 
     for s, m in pairs(self.planeMats) do
         if m.mainTexture ~= nil then
             textureManager.unload(m.mainTexture)
         end
 
-        if seat ~= nil and s == seat then
+        if diff ~= nil and s == diff then
             m.mainTexture = textureManager.load("", "deskfw_gl")
         else
             m.mainTexture = textureManager.load("", "deskfw")
