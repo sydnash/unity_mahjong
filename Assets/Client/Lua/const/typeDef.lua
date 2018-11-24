@@ -197,4 +197,9 @@ errCodeWx = {
     ban        = -6,
 }
 
+gameMode = {
+    normal   = 1,
+    playback = 2,
+}
+
 --endregion

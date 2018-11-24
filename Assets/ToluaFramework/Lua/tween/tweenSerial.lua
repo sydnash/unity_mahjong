@@ -66,6 +66,14 @@ function tweenSerial:stop()
     self.playing = false
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function tweenSerial:clear()
+    self:stop()
+    self.queue = {}
+end
+
 return tweenSerial
 
 --endregion

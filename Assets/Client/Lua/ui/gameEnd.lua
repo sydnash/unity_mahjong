@@ -37,12 +37,18 @@ function gameEnd:onInit()
     local info = string.format("第%d/%d局  房号:%d", self.datas.finishGameCount, self.datas.totalGameCount, self.datas.deskId)
     self.mInfo:setText(info)
 
-    if self.datas.totalGameCount > self.datas.finishGameCount then
+    if self.game.mode == gameMode.playback  then
+        self.mOk:hide()
+        self.mNext:hide()
+        self.mClose:show()
+    elseif self.datas.totalGameCount > self.datas.finishGameCount then
         self.mOk:hide()
         self.mNext:show()
+        self.mClose:hide()
     else
         self.mOk:show()
         self.mNext:hide()
+        self.mClose:hide()
     end
 
     self.mSharePanel:hide()
@@ -55,6 +61,7 @@ function gameEnd:onInit()
     self.mShareWX:addClickListener(self.onShareWXClickedHandler, self)
     self.mShareQYQ:addClickListener(self.onShareQYQClickedHandler, self)
     self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)
+    self.mClose:addClickListener(self.onCloseClickedHandler, self)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -135,6 +142,11 @@ function gameEnd:onShareXLClickedHandler()
             platformHelper.shareImageSg(tex)
         end
     end
+end
+
+function gameEnd:onCloseClickedHandler()
+    playButtonClickSound()
+    self.game:exitPlayback()
 end
 
 function gameEnd:onCloseAllUIHandler()

@@ -17,8 +17,8 @@ mahjongOperation.seats = {
     [mahjongGame.seatType.mine] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.235, 0.156, -0.268), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [mahjongGame.mode.normal]   = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
-            [mahjongGame.mode.playback] = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
+            [gameMode.normal]   = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
+            [gameMode.playback] = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 2, 0.156, -0.360), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.110, 0.156, -0.140), rot = Quaternion.Euler(0, 0, 0), },
@@ -27,8 +27,8 @@ mahjongOperation.seats = {
     [mahjongGame.seatType.right] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.309, 0.156,  0.275), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [mahjongGame.mode.normal]   = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
-            [mahjongGame.mode.playback] = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
+            [gameMode.normal]   = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
+            [gameMode.playback] = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.420, 0.156, -0.320), rot = Quaternion.Euler(0, -90, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.160, 0.156, -0.080), rot = Quaternion.Euler(0, -90, 0), },
@@ -37,8 +37,8 @@ mahjongOperation.seats = {
     [mahjongGame.seatType.top] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.235, 0.156,  0.330), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [mahjongGame.mode.normal]   = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
-            [mahjongGame.mode.playback] = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
+            [gameMode.normal]   = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
+            [gameMode.playback] = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.360, 0.156,  0.420), rot = Quaternion.Euler(0, 180, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.100, 0.156,  0.195), rot = Quaternion.Euler(0, 180, 0), },
@@ -47,8 +47,8 @@ mahjongOperation.seats = {
     [mahjongGame.seatType.left] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.310, 0.156, -0.195), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [mahjongGame.mode.normal]   = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
-            [mahjongGame.mode.playback] = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
+            [gameMode.normal]   = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
+            [gameMode.playback] = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.420, 0.156,  0.320), rot = Quaternion.Euler(0, 90, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.170, 0.156,  0.150), rot = Quaternion.Euler(0, 90, 0), },
@@ -371,7 +371,7 @@ function mahjongOperation:onGameSync(reenter)
         self:setCountdownVisible(true)
     end
 
-    if self.game.mode == mahjongGame.mode.normal then
+    if self.game.mode == gameMode.normal then
         touch.addListener(self.touchHandler, self)
     end
 end
@@ -471,7 +471,7 @@ function mahjongOperation:OnFaPai()
         self:createInHandMahjongs(player)
     end
     
-    if self.game.mode == mahjongGame.mode.normal then
+    if self.game.mode == gameMode.normal then
         touch.addListener(self.touchHandler, self)
     end
 end
@@ -654,7 +654,7 @@ end
 -- 处理鼠标/手指拖拽
 -------------------------------------------------------------------------------
 function mahjongOperation:touchHandler(phase, pos)
-    if self.game.mode == mahjongGame.mode.playback then
+    if self.game.mode == gameMode.playback then
         return
     end
 
@@ -941,7 +941,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
     self.mo = nil
     soundManager.playGfx("mahjong", "chupai")
 
-    if self.game.mode == mahjongGame.mode.playback or acId ~= self.game.mainAcId then 
+    if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
         local player = self.game:getPlayerByAcId(acId)
         playMahjongSound(cards[1], player.sex)
     end
@@ -972,7 +972,7 @@ function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
 
     self:highlightPlaneByAcId(acId)
 
-    if acId ~= self.game.mainAcId then 
+    if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
         local player = self.game:getPlayerByAcId(acId)
         playMahjongOpSound(opType.peng.id, player.sex)
     end
@@ -1030,7 +1030,7 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
         self:putMahjongsToPeng(acId, mahjongs)
     end
 
-    if acId ~= self.game.mainAcId then 
+    if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
         local player = self.game:getPlayerByAcId(acId)
         playMahjongOpSound(opType.gang.id, player.sex)
     end
@@ -1089,7 +1089,7 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
     hu:setLocalPosition(t.pos)
     hu:setLocalRotation(t.rot)
 
-    if acId ~= self.game.mainAcId then 
+    if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
         local player = self.game:getPlayerByAcId(acId)
         playMahjongOpSound(opType.hu.id, player.sex)
     end
@@ -1436,14 +1436,16 @@ end
 -- 将当前turn的plane高亮
 -------------------------------------------------------------------------------
 function mahjongOperation:highlightPlaneByTurn(turn)
-    local seat = self.game:getSeatTypeFromMarker(turn)
+    local base = self.game:getSeatType(self.game.markerTurn)
+    local seat = self.game:getSeatType(turn)
+    local diff = (seat ~= nil) and (seat - base + 4) % 4 or nil
 
     for s, m in pairs(self.planeMats) do
         if m.mainTexture ~= nil then
             textureManager.unload(m.mainTexture)
         end
 
-        if seat ~= nil and s == seat then
+        if diff ~= nil and s == diff then
             m.mainTexture = textureManager.load("", "deskfw_gl")
         else
             m.mainTexture = textureManager.load("", "deskfw")
@@ -1574,7 +1576,7 @@ end
 -- 重置
 -------------------------------------------------------------------------------
 function mahjongOperation:reset()
-    if self.game.mode == mahjongGame.mode.normal then
+    if self.game.mode == gameMode.normal then
         touch.removeListener()
     end
 
@@ -1594,7 +1596,7 @@ end
 -- 销毁
 -------------------------------------------------------------------------------
 function mahjongOperation:onDestroy()
-    if self.game.mode == mahjongGame.mode.normal then
+    if self.game.mode == gameMode.normal then
         touch.removeListener()
     end
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)

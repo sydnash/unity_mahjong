@@ -23,11 +23,6 @@ mahjongGame.cardType = {
     hu   = 5,
 }
 
-mahjongGame.mode = {
-    normal   = 1,
-    playback = 2,
-}
-
 -------------------------------------------------------------------------------
 -- 构造函数
 -------------------------------------------------------------------------------
@@ -72,10 +67,10 @@ function mahjongGame:ctor(data, playback)
     }
 
     if playback == nil then
-        self.mode = mahjongGame.mode.normal
+        self.mode = gameMode.normal
         self:registerCommandHandlers()
     else
-        self.mode = mahjongGame.mode.playback
+        self.mode = gameMode.playback
         self:registerPlaybackHandlers(playback)
     end
 
@@ -86,8 +81,13 @@ function mahjongGame:ctor(data, playback)
     
     self.operationUI = require("ui.mahjongOperation").new(self)
     self.operationUI:show()
+
+    if self.mode == gameMode.playback then 
+        local ui = require("ui.playback").new(self)
+        ui:show()
+    end
     
-    if self.mode == mahjongGame.mode.normal then
+    if self.mode == gameMode.normal then
         if data.Reenter ~= nil then
             if data.Status == gameStatus.playing then
                 self.deskUI:onGameSync()
@@ -141,7 +141,7 @@ end
 -- 注销回放数据的处理函数
 -------------------------------------------------------------------------------
 function mahjongGame:unregisterPlaybackHandlers()
-    tweenManager.stop(self.messageHandlers)
+    self.messageHandlers:clear()
     tweenManager.remove(self.messageHandlers)
 end
 
@@ -330,7 +330,7 @@ function mahjongGame:onGameStartHandler(msg)
     end)
     self.messageHandlers:add(func)
 
-    if self.mode == mahjongGame.mode.normal then
+    if self.mode == gameMode.normal then
         self.messageHandlers:add(tweenDelay.new(2.5))
     end
 end
@@ -728,6 +728,10 @@ function mahjongGame:exitGame()
     self:destroy()
 end
 
+function mahjongGame:exitPlayback()
+    self:exitGame()
+end
+
 -------------------------------------------------------------------------------
 -- 退出房间的原因
 -------------------------------------------------------------------------------
@@ -1023,7 +1027,7 @@ end
 function mahjongGame:destroy()
     self.playerCount = 0
 
-    if self.mode == mahjongGame.mode.normal then
+    if self.mode == gameMode.normal then
         self.messageHandlers:stop()
         tweenManager.remove(self.messageHandlers)
 
@@ -1086,6 +1090,24 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:isPlaying()
     return self.status == deskStatus.playing
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function mahjongGame:startPlayback()
+    if self.mode == gameMode.playback then
+        self.messageHandlers:play()
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function mahjongGame:stopPlayback()
+    if self.mode == gameMode.playback then
+        self.messageHandlers:stop()
+    end
 end
 
 return mahjongGame
