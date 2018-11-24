@@ -1,8 +1,9 @@
 local playHistory = class("playHistory_data")
 
-function playHistory:ctor()
+function playHistory:ctor(clubId)
     self.mDatas = {}
     self.mLastTime = 0
+    self.mClubId = clubId
 end
 
 function playHistory:setData(data)
@@ -65,6 +66,7 @@ function playHistory:getLastTime()
     return self.mLastTime
 end
 
+--for normal
 function playHistory:updateHistory(cb)
     networkManager.getPlayHistory(self.mLastTime, function(ok, data)
         log("deskhistory:updatehistory " .. table.tostring(data))
@@ -76,7 +78,6 @@ function playHistory:updateHistory(cb)
         if cb then cb(true) end
     end)
 end
-
 function playHistory:getScoreDetail(id, cb)
     local history = self:findHistoryById(id)
     if history.PlayTimes == 0 or (history.ScoreDetail and #history.ScoreDetail == history.PlayTimes) then
