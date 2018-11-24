@@ -262,7 +262,7 @@ function mahjongDesk:onVoiceDownClickedHandler(sender, pos)
     self.voiceDownPos = pos
 
     gvoiceManager.stopPlay()
-    gvoiceManager.startRecord(LFS.CombinePath(gvoiceManager.path, tostring(gamepref.player.acId) .. ".gcv"))
+    gvoiceManager.startRecord(LFS.CombinePath(gvoiceManager.path, tostring(self.game.mainAcId) .. ".gcv"))
 end
 
 function mahjongDesk:onVoiceMoveClickedHandler(sender, pos)
@@ -287,7 +287,7 @@ function mahjongDesk:onVoiceUpClickedHandler(sender, pos)
 end
 
 function mahjongDesk:setReady(acId, ready)
-    if acId == gamepref.acId then
+    if acId == self.game.mainAcId then
         if ready then
             self.mReady:hide()
             self.mCancel:show()

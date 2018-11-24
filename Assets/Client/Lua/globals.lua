@@ -271,6 +271,27 @@ function loginServer(callback)
 
                 msg.Config  = table.fromjson(msg.Config)
                 msg.Reenter = table.fromjson(msg.Reenter)
+                msg.Players = msg.Others
+                msg.Others = nil
+
+                local me = {
+                    AcId        = gamepref.player.acId,
+                    Nickname    = gamepref.player.nickname,
+                    HeadUrl     = gamepref.player.headerUrl,
+                    Ip          = gamepref.player.ip,
+                    Sex         = gamepref.player.sex,
+                    IsConnected = true,
+                    IsLaoLai    = msg.IsLaoLai,
+                    Ready       = msg.Ready,
+                    Score       = msg.Score,
+                    Turn        = msg.Turn,
+                }
+                if gamepref.player.location then 
+                    me.HasPosition = gamepref.player.location.status
+                    me.Latitude    = gamepref.player.location.latitude
+                    me.Longitude   = gamepref.player.location.longitude
+                end
+                table.insert(msg.Players, me)
 
                 if clientApp.currentDesk ~= nil then
                     clientApp.currentDesk:onEnter(msg)

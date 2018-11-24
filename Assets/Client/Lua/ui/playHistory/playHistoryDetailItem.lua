@@ -84,7 +84,7 @@ function playHistoryDetailItem:onPlayClickHandler()
             playback[k].Payload = table.fromjson(playback[k].Payload)
         end
 
-        log("playback data = " .. table.tostring(playback))
+        log("playback = " .. table.tostring(playback))
 
         local loading = require("ui.loading").new()
         loading:show()
@@ -94,6 +94,36 @@ function playHistoryDetailItem:onPlayClickHandler()
 
             if completed then
                 local data = {}
+                local history = gamepref.player.playHistory:findHistoryById(self.mHistoryId)
+                history.PlaybackMsg = ""
+                log("history = " .. table.tostring(history))
+                data.ClubId             = history.ClubId
+                data.Config             = table.fromjson(history.DeskConfig)
+                data.Creator            = 0
+                data.DeskId             = history.DeskId
+                data.ExitVoteProposer   = 0
+                data.GameType           = history.GameType
+                data.IsInExitVote       = false
+                data.LeftTime           = data.Config.JuShu - self.mRound
+                data.LeftVoteTime       = 0
+                data.Ready              = true
+                data.Players            = history.Players
+                data.Turn               = 0
+
+                for k, v in pairs(data.Players) do
+                    v.Turn          = k - 1
+                    v.Sex           = k % 2 + 1
+                    v.IsConnected   = true
+                    v.Ready         = true
+                    v.IsLaoLai      = false
+                    v.Score         = 0
+
+                    if v.AcId == gamepref.player.acId then
+                        data.Turn = v.Turn
+                    end
+                end
+
+                closeAllUI()
 
                 local game = require("logic.mahjong.mahjongGame").new(data, playback)
                 loading:close()
