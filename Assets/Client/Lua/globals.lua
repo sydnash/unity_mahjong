@@ -150,6 +150,8 @@ end
 -- 进入桌子
 -------------------------------------------------------------
 function enterDesk(gameType, deskId, callback)
+    showWaitingUI("正在进入房间，请稍候...")
+
     --开始预加载资源
     local preload = modelManager.preload()
 
@@ -160,27 +162,92 @@ function enterDesk(gameType, deskId, callback)
 
     networkManager.checkDesk(gameType, deskId, function(ok, msg)
         if not ok then
-            callback(false, "网络繁忙，请稍后再试", preload, 0, nil)
+            closeWaitingUI()
+            showMessageUI("网络繁忙，请稍后再试", function()
+                callback(false)
+            end)
             return
         end
 
---        log("check desk, msg = " .. table.tostring(msg))
-        callback(true, string.empty, preload, 0.5, nil)
+        if msg.RetCode ~= retc.ok then
+            closeWaitingUI()
+            showMessageUI(retcText[msg.RetCode], function()
+                callback(false)
+            end)
+            return
+        end
 
         local location = locationManager.getData()
+        
         networkManager.enterDesk(gameType, deskId, location, function(ok, msg)
+            closeWaitingUI()
+
             if not ok then
-                callback(false, "网络繁忙，请稍后再试", preload, 0.5, nil)
+                showMessageUI("网络繁忙，请稍后再试", function()
+                    callback(false)
+                end)
                 return
             end
 
             if msg.RetCode ~= retc.ok then
-                callback(false, retcText[msg.RetCode], preload, 0.5, nil)
+                showMessageUI(retcText[msg.RetCode], function()
+                    callback(false)
+                end)
                 return
             end
 
---            log("enter desk, msg = " .. table.tostring(msg))
-            callback(true, string.empty, preload, 1, msg)
+            if clientApp.currentDesk ~= nil then
+                clientApp.currentDesk:destroy()
+                clientApp.currentDesk = nil
+            end
+
+            msg.Config  = table.fromjson(msg.Config)
+            msg.Reenter = table.fromjson(msg.Reenter)
+            msg.Players = msg.Others
+            msg.Others  = nil
+
+            local me = {
+                AcId        = gamepref.player.acId,
+                Nickname    = gamepref.player.nickname,
+                HeadUrl     = gamepref.player.headerUrl,
+                Ip          = gamepref.player.ip,
+                Sex         = gamepref.player.sex,
+                IsConnected = true,
+                IsLaoLai    = msg.IsLaoLai,
+                Ready       = msg.Ready,
+                Score       = msg.Score,
+                Turn        = msg.Turn,
+            }
+            if gamepref.player.location then 
+                me.HasPosition = gamepref.player.location.status
+                me.Latitude    = gamepref.player.location.latitude
+                me.Longitude   = gamepref.player.location.longitude
+            end
+            table.insert(msg.Players, me)
+
+            clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
+
+            local loading = require("ui.loading").new()
+            loading:show()
+
+            sceneManager.load("scene", "mahjongscene", function(completed, progress)
+                loading:setProgress(progress)
+
+                if completed then
+                    if preload ~= nil then
+                        preload:stop()
+                    end
+
+                    loading:close()
+                    
+                    if callback ~= nil then
+                        callback(true)
+                    end
+
+                    closeAllUI()
+                    clientApp.currentDesk:startLoop()
+                end
+            end)
         end)
     end)
 end
@@ -215,7 +282,6 @@ function loginServer(callback)
         platformHelper.setLogined(true)
         gvoiceManager.setup(tostring(gamepref.player.acId))
 
-        callback(true)
 --        log("login, msg = " .. table.tostring(msg))
 
         local cityType = 0
@@ -238,10 +304,10 @@ function loginServer(callback)
             platformHelper.clearSGInviteParam()
         end
 
-        local loading = require("ui.loading").new()
-        loading:show()
-
         if cityType == 0 and deskId == 0 then
+            local loading = require("ui.loading").new()
+            loading:show()
+
             sceneManager.load("scene", "lobbyscene", function(completed, progress)
                 loading:setProgress(progress)
 
@@ -249,73 +315,13 @@ function loginServer(callback)
                     local lobby = require("ui.lobby").new()
                     lobby:show()
 
+                    callback(true)
                     loading:close()
                 end
             end)
         else -- 如有在房间内则跳过大厅直接进入房间
-            enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
-                if not ok then
-                    loading:close()
-                    showMessageUI(errText, function()
-                        if callback ~= nil then
-                            callback(false)
-                        end
-                    end)
-                    return
-                end
-
-                if msg == nil then
-                    loading:setProgress(progress * 0.4)
-                    return
-                end
-
-                msg.Config  = table.fromjson(msg.Config)
-                msg.Reenter = table.fromjson(msg.Reenter)
-                msg.Players = msg.Others
-                msg.Others = nil
-
-                local me = {
-                    AcId        = gamepref.player.acId,
-                    Nickname    = gamepref.player.nickname,
-                    HeadUrl     = gamepref.player.headerUrl,
-                    Ip          = gamepref.player.ip,
-                    Sex         = gamepref.player.sex,
-                    IsConnected = true,
-                    IsLaoLai    = msg.IsLaoLai,
-                    Ready       = msg.Ready,
-                    Score       = msg.Score,
-                    Turn        = msg.Turn,
-                }
-                if gamepref.player.location then 
-                    me.HasPosition = gamepref.player.location.status
-                    me.Latitude    = gamepref.player.location.latitude
-                    me.Longitude   = gamepref.player.location.longitude
-                end
-                table.insert(msg.Players, me)
-
-                if clientApp.currentDesk ~= nil then
-                    clientApp.currentDesk:onEnter(msg)
-                    loading:close()
-                else
-                    sceneManager.load("scene", "mahjongscene", function(completed, progress)
-                        loading:setProgress(0.4 + 0.6 * progress)
-
-                        if completed then
-                            if preload ~= nil then
-                                preload:stop()
-                            end
-
-                            clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
-                            loading:close()
-                        end
-                    end)
-
-                    loading:setProgress(0.4)
-                end
-
-                if callback ~= nil then
-                    callback(true)
-                end
+            enterDesk(cityType, deskId, function(ok)
+                callback(ok)
             end)
         end
     end)

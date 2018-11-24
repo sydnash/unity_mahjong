@@ -53,10 +53,7 @@ end
 function deskDetail:onJoinClickedHandler()
     playButtonClickSound()
 
-    local loading = require("ui.loading").new()
-    loading:show()
-
-    signalManager.signal(signalType.enterDesk, { cityType = self.cityType, deskId = self.deskId, loading = loading })
+    enterDesk(self.cityType, self.deskId)
     self:close()
 end
 

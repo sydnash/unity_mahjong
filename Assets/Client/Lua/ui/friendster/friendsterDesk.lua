@@ -64,11 +64,7 @@ end
 
 function friendsterDesk:onAddClickedHandler()
     playButtonClickSound()
-
-    local loading = require("ui.loading").new()
-    loading:show()
-
-    signalManager.signal(signalType.enterDesk, { cityType = self.data.cityType, deskId = self.data.deskId, loading = loading })
+    enterDesk(self.data.cityType, self.data.deskId)
 end
 
 function friendsterDesk:onDestroy()

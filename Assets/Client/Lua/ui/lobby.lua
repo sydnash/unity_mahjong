@@ -43,7 +43,6 @@ function lobby:onInit()
     self:refreshMailRP()
 
     signalManager.registerSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
-    signalManager.registerSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.registerSignalHandler(signalType.mail, self.onMailHandler, self)
     signalManager.registerSignalHandler(signalType.city, self.onCityChangedHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
@@ -89,11 +88,7 @@ function lobby:onEnterDeskClickedHandler()
 
     local ui = require("ui.enterDesk").new(function(deskId)
         local cityType = gamepref.city.City
-
-        local loading = require("ui.loading").new()
-        loading:show()
-
-        self:enterDesk(loading, cityType, deskId)
+        enterDesk(cityType, deskId)
     end)
     ui:show()
 end
@@ -101,12 +96,10 @@ end
 function lobby:onReturnDeskClickedHandler()
     playButtonClickSound()
 
-    local loading = require("ui.loading").new()
-    loading:show()
-
     local cityType = clientApp.currentDesk.cityType
     local deskId = clientApp.currentDesk.deskId
-    self:enterDesk(loading, cityType, deskId)
+    
+    enterDesk(cityType, deskId)
 end
 
 function lobby:onCreateDeskClickedHandler()
@@ -188,72 +181,8 @@ function lobby:onMailClickedHandler()
     ui:show()
 end
 
-function lobby:enterDesk(loading, cityType, deskId)
-    enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
-        if not ok then
-            loading:close()
-            showMessageUI(errText)
-            return
-        end
-
-        if msg == nil then
-            loading:setProgress(progress * 0.4)
-            return
-        end
-
-        loading:setProgress(0.4)
-
-        sceneManager.load("scene", "mahjongscene", function(completed, progress)
-            loading:setProgress(0.4 + 0.6 * progress)
-
-            if completed then
-                if preload ~= nil then
-                    preload:stop()
-                end
-
-                msg.Reenter = table.fromjson(msg.Reenter)
-                msg.Config  = table.fromjson(msg.Config)
-                msg.Players = msg.Others
-                msg.Others  = nil
-
-                local me = {
-                    AcId        = gamepref.player.acId,
-                    Nickname    = gamepref.player.nickname,
-                    HeadUrl     = gamepref.player.headerUrl,
-                    Ip          = gamepref.player.ip,
-                    Sex         = gamepref.player.sex,
-                    IsConnected = true,
-                    IsLaoLai    = msg.IsLaoLai,
-                    Ready       = msg.Ready,
-                    Score       = msg.Score,
-                    Turn        = msg.Turn,
-                }
-                if gamepref.player.location then 
-                    me.HasPosition = gamepref.player.location.status
-                    me.Latitude    = gamepref.player.location.latitude
-                    me.Longitude   = gamepref.player.location.longitude
-                end
-                table.insert(msg.Players, me)
-
-                local game = require("logic.mahjong.mahjongGame").new(msg)
-                loading:close()
-            end
-        end)
-
-        self:close()
-    end)
-end
-
 function lobby:onCardsChangedHandler()
     self.mCards:setText(tostring(gamepref.player.cards))
-end
-
-function lobby:onEnterDeskHandler(args)
-    local loading = args.loading
-    local cityType = args.cityType
-    local deskId = args.deskId
-
-    self:enterDesk(loading, cityType, deskId)
 end
 
 function lobby:onMailHandler()
@@ -287,7 +216,6 @@ end
 
 function lobby:onDestroy()
     signalManager.unregisterSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
-    signalManager.unregisterSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.unregisterSignalHandler(signalType.mail, self.onMailHandler, self)
     signalManager.unregisterSignalHandler(signalType.city, self.onCityChangedHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)

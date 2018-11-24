@@ -32,17 +32,14 @@ end
 function createDesk:onCreateClickedHandler()
     playButtonClickSound()
 
-    local loading = require("ui.loading").new()
-    loading:show()
-
     local choose = table.clone(self.config[self.gameType])
     choose.Game = self.gameType
-    log("create desk, choose = " .. table.tostring(choose))
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 
+    showWaitingUI("正在创建房间，请稍候...")
+    
     networkManager.createDesk(self.cityType, choose, friendsterId, function(ok, msg)
         if not ok then
-            loading:close()
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
@@ -50,12 +47,11 @@ function createDesk:onCreateClickedHandler()
         log("create desk, msg = " .. table.tostring(msg))
 
         if msg.RetCode ~= retc.ok then
-            loading:close()
             showMessageUI(retcText[msg.RetCode])
             return
         end
 
-        signalManager.signal(signalType.enterDesk, { cityType = msg.GameType, deskId = msg.DeskId, loading = loading })
+        enterDesk(msg.GameType, msg.DeskId)
         self:close()
     end)
 

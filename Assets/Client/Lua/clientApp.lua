@@ -56,69 +56,10 @@ local function networkDisconnectedCallback()
             return
         end
 
-        enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
+        enterDesk(cityType, deskId, function(ok)
             if not ok then
-                closeWaitingUI()
-                showMessageUI(errText, function()
-                    --销毁当前游戏对象
-                    if clientApp.currentDesk ~= nil then
-                        clientApp.currentDesk:destroy()
-                        clientApp.currentDesk = nil
-                    end
-                    --返回登录界面
-                    local ui = require("ui.login").new()
-                    ui:show()
-                end)
-                return
-            end
-
-            if msg ~= nil then
-                closeWaitingUI()
-
-                msg.Config  = table.fromjson(msg.Config)
-                msg.Reenter = table.fromjson(msg.Reenter)
-                msg.Players = msg.Others
-                msg.Others  = nil
-
-                local me = {
-                    AcId        = gamepref.player.acId,
-                    Nickname    = gamepref.player.nickname,
-                    HeadUrl     = gamepref.player.headerUrl,
-                    Ip          = gamepref.player.ip,
-                    Sex         = gamepref.player.sex,
-                    IsConnected = true,
-                    IsLaoLai    = msg.IsLaoLai,
-                    Ready       = msg.Ready,
-                    Score       = msg.Score,
-                    Turn        = msg.Turn,
-                }
-                if gamepref.player.location then 
-                    me.HasPosition = gamepref.player.location.status
-                    me.Latitude    = gamepref.player.location.latitude
-                    me.Longitude   = gamepref.player.location.longitude
-                end
-                table.insert(msg.Players, me)
-                        
-                if clientApp.currentDesk ~= nil then
-                    clientApp.currentDesk:onEnter(msg)
-                    return
-                end
-
-                local loading = require("ui.loading").new()
-                loading:show()
-
-                sceneManager.load("scene", "mahjongscene", function(completed, progress)
-                    loading:setProgress(progress)
-
-                    if completed then
-                        if preload ~= nil then
-                            preload:stop()
-                        end
-
-                        clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
-                        loading:close()
-                    end
-                end)
+                local ui = require("ui.lobby").new()
+                ui:show()
             end
         end)
     end)
@@ -153,37 +94,10 @@ local function inviteSgCallback(params)
         local cityType = t.cityType
         local deskId = t.deskId
 
-        local loading = require("ui.loading").new()
-        loading:show()
-
-        enterDesk(cityType, deskId, function(ok, errText, preload, progress, msg)
+        enterDesk(cityType, deskId, function(ok)
             if not ok then
-                loading:close()
-                showMessageUI(errText)
-            else
-                if msg == nil then
-                    loading:setProgress(progress * 0.4)
-                else
-                    loading:setProgress(0.4)
-
-                    sceneManager.load("scene", "mahjongscene", function(completed, progress)
-                        loading:setProgress(0.4 + 0.6 * progress)
-
-                        if completed then
-                            if preload ~= nil then
-                                preload:stop()
-                            end
-
-                            msg.Reenter = table.fromjson(msg.Reenter)
-                            msg.Config = table.fromjson(msg.Config)
-
-                            local desk = require("logic.mahjong.mahjongGame").new(msg)
-                            loading:close()
-                        end
-                    end)
-
-                    --finish
-                end
+                local ui = require("ui.lobby").new()
+                ui:show()
             end
         end)
     end
