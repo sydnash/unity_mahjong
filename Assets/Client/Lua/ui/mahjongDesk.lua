@@ -23,7 +23,7 @@ function mahjongDesk:onInit()
         [mahjongGame.seatType.left]  = self.mPlayerL, 
     }
     
-    if self.game.mode == mahjongGame.mode.normal then
+    if self.game.mode == gameMode.normal then
         self.mInvite:show()
         self.mReady:show()
         self.mCancel:hide()
@@ -45,7 +45,7 @@ function mahjongDesk:onInit()
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
     self.mGameInfo:addClickListener(self.onGameInfoClickedHandler, self)
 
-    if self.game.mode == mahjongGame.mode.normal then
+    if self.game.mode == gameMode.normal then
         self.mInvite:addClickListener(self.onInviteClickedHandler, self)
         self.mInvitePanel:addClickListener(self.onInvitePanelClickedHandler, self)
         self.mInviteWX:addClickListener(self.onInviteWXClickedHandler, self)
@@ -83,7 +83,7 @@ end
 function mahjongDesk:update()
     self.mTime:setText(time.formatTime())
 
-    if self.game.mode == mahjongGame.mode.normal then
+    if self.game.mode == gameMode.normal then
         gvoiceManager.update()
     end
 end
@@ -93,7 +93,7 @@ function mahjongDesk:onCloseAllUIHandler()
 end
 
 function mahjongDesk:onDestroy()
-    if self.game.mode == mahjongGame.mode.normal then
+    if self.game.mode == gameMode.normal then
         networkManager.unregisterCommandHandler(protoType.sc.chatMessage)
         signalManager.unregisterSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
         signalManager.unregisterSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
@@ -126,12 +126,12 @@ function mahjongDesk:refreshUI()
         local p = self.players[s]
         p:setPlayerInfo(v)
 
-        if self.game.status == gameStatus.playing then
+        if self.game.mode == gameMode.playback or self.game.status == gameStatus.playing then
             p:setReady(false)
         end
     end
 
-    if self.game.mode == mahjongGame.mode.normal then
+    if self.game.mode == gameMode.normal then
         self:refreshInvitationButtonState()
     end
 end
@@ -262,7 +262,7 @@ function mahjongDesk:onVoiceDownClickedHandler(sender, pos)
     self.voiceDownPos = pos
 
     gvoiceManager.stopPlay()
-    gvoiceManager.startRecord(LFS.CombinePath(gvoiceManager.path, tostring(gamepref.player.acId) .. ".gcv"))
+    gvoiceManager.startRecord(LFS.CombinePath(gvoiceManager.path, tostring(self.game.mainAcId) .. ".gcv"))
 end
 
 function mahjongDesk:onVoiceMoveClickedHandler(sender, pos)
@@ -287,7 +287,7 @@ function mahjongDesk:onVoiceUpClickedHandler(sender, pos)
 end
 
 function mahjongDesk:setReady(acId, ready)
-    if acId == gamepref.acId then
+    if acId == self.game.mainAcId then
         if ready then
             self.mReady:hide()
             self.mCancel:show()
@@ -306,10 +306,6 @@ function mahjongDesk:onGameStart()
     self.mReady:hide()
     self.mCancel:hide()
 
-    for _, v in pairs(self.players) do
-        v:reset()
-    end
-
     self:updateHeaderZhuangStatus()
     self:updateCurrentGameIndex()
 end
@@ -325,17 +321,18 @@ end
 function mahjongDesk:updateHeaderZhuangStatus()
     for _, v in pairs(self.game.players) do 
         local st = self.game:getSeatType(v.turn)
-        if self.game:isMarker(v.turn) then
-            self.players[v.turn]:setMarker(true)
-        else
-            self.players[v.turn]:setMarker(false)
-        end
+        self.players[st]:setMarker(v.isMarker)
     end
 end
 
 function mahjongDesk:reset()
-    self.mInvite:show()
-    self.mReady:show()
+    if self.game.mode == gameMode.normal then
+        self.mInvite:show()
+        self.mReady:show()
+    else
+        self.mInvite:hide()
+        self.mReady:hide()
+    end
     self.mCancel:hide()
 
     for _, v in pairs(self.players) do

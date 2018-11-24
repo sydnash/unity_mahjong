@@ -1,14 +1,12 @@
 fileFormatVersion: 2
-guid: d9d79d437934b234bbf2c2f350fd876c
-timeCreated: 1542971006
+guid: 7d0157c92f871674ab96ada0e01a0e7c
+timeCreated: 1543050675
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: zj_00
-    21300002: zj_01
-    21300004: zj_02
-    21300006: zj_03
-    21300008: zj_04
+    21300000: hf_01
+    21300002: hf_02
+    21300004: hf_03
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -74,41 +72,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: zj_00
+      name: hf_01
       rect:
         serializedVersion: 2
-        x: 1
-        y: 64
-        width: 193
-        height: 151
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 48, y: 35, z: 29, w: 40}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: zj_01
-      rect:
-        serializedVersion: 2
-        x: 119
-        y: 13
-        width: 78
-        height: 49
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 15, y: 9, z: 13, w: 12}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: zj_02
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 217
-        width: 200
-        height: 38
+        x: 46
+        y: 28
+        width: 45
+        height: 43
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -116,13 +86,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: zj_03
+      name: hf_02
       rect:
         serializedVersion: 2
         x: 1
-        y: 2
-        width: 57
-        height: 60
+        y: 73
+        width: 44
+        height: 54
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,13 +100,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: zj_04
+      name: hf_03
       rect:
         serializedVersion: 2
-        x: 60
-        y: 2
-        width: 57
-        height: 60
+        x: 1
+        y: 17
+        width: 43
+        height: 54
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

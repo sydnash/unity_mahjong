@@ -16,6 +16,7 @@ TextureImporter:
     21300018: SZ_zi02
     21300020: SZ_tcyx
     21300022: SZ_zi02_1
+    21300024: hf_zi02
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -108,10 +109,24 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
+      name: hf_zi02
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 389
+        width: 137
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: SZ_01
       rect:
         serializedVersion: 2
-        x: 343
+        x: 347
         y: 391
         width: 120
         height: 37
@@ -125,7 +140,7 @@ TextureImporter:
       name: SZ_02
       rect:
         serializedVersion: 2
-        x: 343
+        x: 347
         y: 354
         width: 117
         height: 35
@@ -181,7 +196,7 @@ TextureImporter:
       name: SZ_04
       rect:
         serializedVersion: 2
-        x: 465
+        x: 469
         y: 418
         width: 10
         height: 10
@@ -196,7 +211,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 208
-        y: 354
+        y: 353
         width: 117
         height: 33
       alignment: 0
@@ -209,8 +224,8 @@ TextureImporter:
       name: SZ_06
       rect:
         serializedVersion: 2
-        x: 73
-        y: 350
+        x: 327
+        y: 316
         width: 111
         height: 36
       alignment: 0
@@ -251,8 +266,8 @@ TextureImporter:
       name: SZ_zi02
       rect:
         serializedVersion: 2
-        x: 208
-        y: 389
+        x: 73
+        y: 348
         width: 133
         height: 39
       alignment: 0
@@ -265,7 +280,7 @@ TextureImporter:
       name: SZ_zi02_1
       rect:
         serializedVersion: 2
-        x: 73
+        x: 212
         y: 388
         width: 133
         height: 40

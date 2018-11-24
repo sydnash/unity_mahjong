@@ -24,12 +24,21 @@ function setting:onInit()
         self:setLocalPosition(Vector3.New(0, -90, 0))
         self.mLobby:show()
         self.mDesk:hide()
+        self.mPlayback:hide()
 
         self.mExit:addClickListener(self.onExitClickedHandler, self)
+    elseif self.game.mode == gameMode.playback then
+        self:setLocalPosition(Vector3.New(0, -90, 0))
+        self.mLobby:hide()
+        self.mDesk:hide()
+        self.mPlayback:show()
+
+        self.mOver:addClickListener(self.onOverClickedHandler, self)
     else
         self:setLocalPosition(Vector3.New(0, -8, 0))
         self.mLobby:hide()
         self.mDesk:show()
+        self.mPlayback:hide()
 
         local lan = gamepref.getLanguage()
 
@@ -93,6 +102,11 @@ function setting:onExitClickedHandler()
 
     local ui = require("ui.login").new()
     ui:show()
+end
+
+function setting:onOverClickedHandler()
+    playButtonClickSound()
+    self.game:exitPlayback()
 end
 
 function setting:onMandarinChangedHandler(sender, selected, clicked)

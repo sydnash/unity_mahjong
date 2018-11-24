@@ -41,6 +41,9 @@ return {
         getPlayHistory              = "CmdType.fly.CS.GetDeskHistory",
         getPlayHistoryDetail        = "CmdType.fly.CS.GetDeskHistoryDetail",
         getClubPlayHistoryDetail    = "CmdType.fly.CS.ClubGetDeskHistoryDetail",
+        sharePlayHistory            = "CmdType.fly.CS.ShareHistory",
+        getSharePlayHistory         = "CmdType.fly.CS.GetShareHistory",
+        setClubDeskPayed            = "CmdType.fly.CS.ClubDeskPayed",
     },
     -- server to client
     sc = {

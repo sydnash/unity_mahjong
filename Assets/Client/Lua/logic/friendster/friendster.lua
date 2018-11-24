@@ -40,6 +40,7 @@ function friendster:ctor(id)
     self.applyCode          = 0
     self.managerAcId        = 0
     self.managerNickname    = string.empty
+    self.playHistory        = require("logic.player.playHistory").new(id)
 end
 
 function friendster:loadHeaderTex()
@@ -69,6 +70,9 @@ function friendster:setMembers(data)
 end
 
 function friendster:addMember(data)
+    if self.members == nil then
+        return
+    end
     local player = createPlayer(data)
     self.members[player.acId] = player
     self.curMemberCount = self.curMemberCount + 1
@@ -80,7 +84,13 @@ function friendster:removeMember(acId)
 end
 
 function friendster:setMemberOnlineState(acId, online)
+    if self.members == nil then
+        return
+    end
     local player = self.members[acId]
+    if player == nil then
+        return
+    end
     player.online = online
 
     if not online then
@@ -105,6 +115,9 @@ function friendster:setDesks(data)
 end
 
 function friendster:addDesk(data)
+    if self.desks == nil then
+        return
+    end
     local desk = createDesk(data)
     self.desks[desk.deskId] = desk
     self.curDeskCount = self.curDeskCount + 1
@@ -118,8 +131,14 @@ function friendster:removeDesk(deskId)
 end
 
 function friendster:addPlayerToDesk(acId, deskId)
+    if self.members == nil then
+        return
+    end
     local player = self.members[acId]
     local desk = self.desks[deskId]
+    if not player and not desk then
+        return
+    end
 
     desk:addPlayer(player)
 end

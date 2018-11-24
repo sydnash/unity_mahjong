@@ -120,13 +120,12 @@ local function receive(bytes, size)
         networkManager.recvbuffer = cvt.NewByteArray(bytes, 0, size)
         networkManager.recvbufferLength = networkManager.recvbuffer.Length
     else
-        local buffer, length = cvt.ConcatBytes(networkManager.recvbuffer, networkManager.recvbuffer.Length, bytes, size)
-        networkManager.recvbuffer = buffer
-        networkManager.recvbufferLength = networkManager.recvbuffer.Length + size
+        networkManager.recvbuffer = cvt.ConcatBytes(networkManager.recvbuffer, networkManager.recvbufferLength, bytes, size)
+        networkManager.recvbufferLength = networkManager.recvbufferLength + size
     end
 
     --解析数据
-    while networkManager.recvbuffer ~= nil do
+    while networkManager.recvbuffer ~= nil and networkManager.recvbufferLength > 0 do
         local msg, length = proto.parse(networkManager.recvbuffer)
         if length == 0 or msg == nil then 
             break 
@@ -883,6 +882,40 @@ function networkManager.getPlayHistoryDetail(typ, id, round, callback)
             callback(true, msg)
         end
     end)
+end
+function networkManager.getClubPlayHistoryDetail(clubId, typ, id, round, callback)
+    local data = {
+        ClubId = clubId,
+        Type  = typ,
+	    Id    = id,
+	    Round = round,
+    }
+    send(protoType.cs.getClubPlayHistoryDetail, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
+
+--round 从0开始
+function networkManager.sharePlayHistory(id, round, callback)
+    local data = {Id = id, Round = round}
+    send(protoType.cs.sharePlayHistory, data, callback)
+end
+
+function networkManager.getSharePlayHistory(shareId, callback)
+    local data = {ShareId = shareId}
+    send(protoType.cs.getSharePlayHistory, data, callback)
+end
+
+function networkManager.setClubDeskPayed(clubId, historyId, callback)
+    local data = {
+		ClubId = clubId,
+		Id = historyId,
+	}
+    send(protoType.cs.setClubDeskPayed, data, callback)
 end
 
 return networkManager

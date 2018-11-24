@@ -380,4 +380,28 @@ function unregisterUpdateListener(handler)
     end
 end
 
+--十六进制颜色转color  rgba "FFABCDFF"
+function hexColorToColor(colorString)
+    if not colorString then
+        return nil
+	end
+    local toTen = function (v)
+        return tonumber("0x" .. v)
+    end
+
+    local b = string.sub(colorString, 2, 2) 
+    local g = string.sub(colorString, 3, 4) 
+    local r = string.sub(colorString, 5, 6)
+    local a = string.sub(colorString, 7, 8)
+
+    local red = toTen(r)
+    local green = toTen(g)
+    local blue = toTen(b)
+    local alpha = toTen(a)
+    if red and green and blue and alpha then 
+        return Color.New(red / 255, green / 255, blue / 255, alpha / 255)
+    end
+    return nil
+end
+
 --endregion

@@ -5,11 +5,17 @@
 local base = require("ui.common.view")
 local playHistory = class("playHistory", base)
 
-_RES_(playHistory, "PlayHistory", "PlayHistory")
+_RES_(playHistory, "PlayHistoryUI", "PlayHistoryUI")
+
+function playHistory:ctor(historyContainer)
+    self.historyContainer = historyContainer
+    self.super.ctor(self)
+end
 
 function playHistory:onInit()
     self:refreshUI()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+    self.mPlayback:addClickListener(self.onPlaybackClickHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
@@ -19,8 +25,13 @@ function playHistory:onCloseClickedHandler()
     self:close()
 end
 
+function playHistory:onPlaybackClickHandler()
+    local ui = require("ui.playHistory.enterPlaybackCode").new()
+    ui:show()
+end
+
 function playHistory:refreshUI()
-    local histories = gamepref.player.playHistory:getData()
+    local histories = self.historyContainer:getData()
     local count = #histories
 
     if count <= 0 then
@@ -33,7 +44,7 @@ function playHistory:refreshUI()
         end
 
         local refreshItem = function(item, index)
-            item:set(histories[index + 1])
+            item:set(histories[index + 1], self.historyContainer)
         end
 
         self.mList:reset()

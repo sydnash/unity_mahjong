@@ -97,7 +97,8 @@ function friendsterStatistics:onRankTabYestoadyClickedHandler()
     self:refreshRank()
 end
 
-function friendsterStatistics:set(data)
+function friendsterStatistics:set(data, historyContainer)
+    self.historyContainer = historyContainer
     self.mPageHistory:show()
     self.mPageRank:hide()
 
@@ -199,7 +200,7 @@ function friendsterStatistics:refreshHistory()
         end
 
         local refreshItem = function(item, index)
-            item:set(histories[index + 1])
+            item:set(histories[index + 1], self.historyContainer)
         end
 
         self.mHistoryList:reset()

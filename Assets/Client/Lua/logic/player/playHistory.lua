@@ -1,8 +1,9 @@
 local playHistory = class("playHistory_data")
 
-function playHistory:ctor()
+function playHistory:ctor(clubId)
     self.mDatas = {}
     self.mLastTime = 0
+    self.mClubId = clubId
 end
 
 function playHistory:setData(data)
@@ -65,9 +66,29 @@ function playHistory:getLastTime()
     return self.mLastTime
 end
 
+
+function playHistory:getHistoryFunc()
+    if self.mClubId == nil then
+        return networkManager.getPlayHistory
+    else
+        return function(lasttime, cb)
+            networkManager.queryFriendsterStatistics(self.mClubId, lasttime, cb)
+        end
+    end
+end
+function playHistory:getHistoryDetailFunc()
+    if self.mClubId == nil then
+        return networkManager.getPlayHistoryDetail
+    else
+        return function(typ, historyId, round, cb)
+            networkManager.getClubPlayHistoryDetail(self.mClubId, typ, historyId, round, cb)
+        end
+    end
+end
+--for normal
 function playHistory:updateHistory(cb)
-    networkManager.getPlayHistory(self.mLastTime, function(ok, data)
-        log("deskhistory:updatehistory " .. table.tostring(data))
+    local func = self:getHistoryFunc()
+    func(self.mLastTime, function(ok, data)
         if not ok then
             if cb then cb(false) end
             return
@@ -76,14 +97,15 @@ function playHistory:updateHistory(cb)
         if cb then cb(true) end
     end)
 end
-
 function playHistory:getScoreDetail(id, cb)
     local history = self:findHistoryById(id)
     if history.PlayTimes == 0 or (history.ScoreDetail and #history.ScoreDetail == history.PlayTimes) then
 		cb(true, history.ScoreDetail)
 		return
-	end
-    networkManager.getPlayHistoryDetail(0, history.Id, 0, function(ok, data)
+    end
+    
+    local func = self:getHistoryDetailFunc()
+    func(0, history.Id, 0, function(ok, data)
         if not ok then
             cb(false)
             return 
@@ -108,7 +130,8 @@ function playHistory:getPlayDetail(id, round, cb)
 		return
 	end
 	
-    networkManager.getPlayHistoryDetail(2, id, round - 1, function(ok, data)
+    local func = self:getHistoryDetailFunc()
+    func(2, id, round - 1, function(ok, data)
         if not ok then
             cb(false)
             return 
