@@ -834,7 +834,7 @@ end
 -- “杠”
 -------------------------------------------------------------------------------
 local function opGang(game, cs)
-    local player = game:getPlayerByAcId(self.game.mainAcId)
+    local player = game:getPlayerByAcId(game.mainAcId)
     playMahjongOpSound(opType.gang.id, player.sex)
 
     game:gang(cs)

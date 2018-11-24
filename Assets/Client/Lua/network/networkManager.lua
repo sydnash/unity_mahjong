@@ -125,7 +125,7 @@ local function receive(bytes, size)
     end
 
     --解析数据
-    while networkManager.recvbuffer ~= nil do
+    while networkManager.recvbuffer ~= nil and networkManager.recvbufferLength > 0 do
         local msg, length = proto.parse(networkManager.recvbuffer)
         if length == 0 or msg == nil then 
             break 
