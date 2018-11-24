@@ -13,10 +13,10 @@ local urls = {
 }
 
 function gamePlayer:ctor(acid)
-    self.acId       = acid
-    self.nickname   = string.empty
-    self.headerUrl  = string.empty
-    self.headerTex  = nil
+    self.acId        = acid
+    self.nickname    = string.empty
+    self.headerUrl   = string.empty
+    self.headerTex   = nil
     self.playHistory = playHistory.new()
 end
 
