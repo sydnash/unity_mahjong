@@ -302,7 +302,7 @@ end
 -- 准备
 -------------------------------------------------------------------------------
 function mahjongGame:onReadyHandler(msg)
---    log("ready, msg = " .. table.tostring(msg))
+    log("ready, msg = " .. table.tostring(msg))
 
     local player = self:getPlayerByTurn(msg.Turn)
     player.ready = msg.Ready
