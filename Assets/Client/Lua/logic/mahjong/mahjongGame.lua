@@ -164,7 +164,6 @@ function mahjongGame:onEnter(msg)
         self.totalMahjongCount  = msg.Reenter.TotalMJCnt
         self.leftMahjongCount   = msg.Reenter.LeftMJCnt
         self.deskStatus         = msg.Reenter.DeskStatus
-        player.isMarker         = self:isMarker(player.turn) --只有游戏中才有庄家
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
 
@@ -316,14 +315,15 @@ end
 function mahjongGame:onGameStartHandler(msg)
 --    log("start game, msg = " .. table.tostring(msg))
     local func = tweenFunction.new(function()
-        for _, v in pairs(self.players) do
-            v.que = -1
-        end
-
         self.totalMahjongCount = msg.TotalMJCnt
         self.leftMahjongCount = self.totalMahjongCount
         self.dices = { msg.Dice1, msg.Dice2 }
         self.markerTurn = msg.Marker
+
+        for _, v in pairs(self.players) do
+            v.que = -1
+            v.isMarker = self:isMarker(v.turn)
+        end
 
         self.deskUI:onGameStart()
         self.operationUI:onGameStart()
@@ -645,13 +645,13 @@ end
 -- 根据turn获取位置
 -------------------------------------------------------------------------------
 function mahjongGame:getSeatType(turn)
+    if turn == nil or turn < 0 then return nil end
+
     local mainTurn = self:getPlayerByAcId(self.mainAcId).turn
     local playerCount = self:getTotalPlayerCount()
-    local seat = mahjongGame.seatType.mine
+    local seat = turn - mainTurn
 
-    if turn - mainTurn >= 0 then
-        seat = turn - mainTurn
-    else
+    if seat < 0 then
         seat = playerCount + turn - mainTurn
     end
 
@@ -676,6 +676,33 @@ function mahjongGame:getSeatTypeByAcId(acId)
     local turn = player.turn
 
     return self:getSeatType(turn)
+end
+
+-------------------------------------------------------------------------------
+-- 根据turn获取相对于庄家的位置
+-------------------------------------------------------------------------------
+function mahjongGame:getSeatTypeFromMarker(turn)
+    if turn < 0 then return nil end
+
+    local mainTurn = self.markerTurn
+    local playerCount = self:getTotalPlayerCount()
+    local seat = turn - mainTurn
+
+    if seat < 0 then
+        seat = playerCount + turn - mainTurn
+    end
+
+    if playerCount == 3 then
+        if seat == mahjongGame.seatType.top then
+            seat = mahjongGame.seatType.left
+        end
+    elseif playerCount == 2 then
+        if seat == mahjongGame.seatType.right then
+            seat = mahjongGame.seatType.top
+        end
+    end
+
+    return seat
 end
 
 -------------------------------------------------------------------------------
