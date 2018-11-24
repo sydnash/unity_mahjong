@@ -7,7 +7,7 @@ local gamePlayer = require("logic.player.gamePlayer")
 local base = require("ui.common.view")
 local playHistoryItem = class("playHistoryItem", base)
 
-_RES_(playHistoryItem, "PlayHistory", "PlayHistoryItem")
+_RES_(playHistoryItem, "PlayHistoryUI", "PlayHistoryItem")
 
 function playHistoryItem:onInit()
     self.players = { { root = self.mPlayerA, icon = self.mPlayerA_Icon, nickname = self.mPlayerA_Nickname, score = { p = self.mPlayerA_ScoreP, n = self.mPlayerA_ScoreN }, winner = self.mPlayerA_Winner },

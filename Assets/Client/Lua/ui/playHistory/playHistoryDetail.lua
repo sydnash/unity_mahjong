@@ -5,7 +5,7 @@
 local base = require("ui.common.view")
 local playHistoryDetail = class("playHistoryDetail", base)
 
-_RES_(playHistoryDetail, "PlayHistory", "PlayHistoryDetail")
+_RES_(playHistoryDetail, "PlayHistoryUI", "PlayHistoryDetailUI")
 
 function playHistoryDetail:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)

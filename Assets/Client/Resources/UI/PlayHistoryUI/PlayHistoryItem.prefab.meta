@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a8e9785cbb6caea4090fe9eae7de4e11
-timeCreated: 1543027541
+guid: 6c4c541dbf9ecb54ea0437122dd6624b
+timeCreated: 1542967157
 licenseType: Pro
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: 
+  assetBundleName: ui/playhistoryui/playhistoryitem
   assetBundleVariant: 

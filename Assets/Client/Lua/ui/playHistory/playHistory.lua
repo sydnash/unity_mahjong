@@ -5,7 +5,7 @@
 local base = require("ui.common.view")
 local playHistory = class("playHistory", base)
 
-_RES_(playHistory, "PlayHistory", "PlayHistory")
+_RES_(playHistory, "PlayHistoryUI", "PlayHistoryUI")
 
 function playHistory:ctor(historyContainer)
     self.historyContainer = historyContainer
