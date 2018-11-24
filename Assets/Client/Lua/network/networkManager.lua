@@ -100,8 +100,8 @@ end
 local function send(command, data, callback)
     token = networkCallbackPool:push(token + 1, callback)
 --    log("send msg, command = " .. command)
-    local msg = proto.build(command, token, gamepref.acId, gamepref.session, data)
-    tcp.send(msg, function()
+    local msg, length = proto.build(command, token, gamepref.acId, gamepref.session, data)
+    tcp.send(msg, length, function()
         networkCallbackPool:pop(token, false)
         callback(nil)
     end)
@@ -118,8 +118,11 @@ local function receive(bytes, size)
     --缓存收到的数据
     if networkManager.recvbuffer == nil then
         networkManager.recvbuffer = cvt.NewByteArray(bytes, 0, size)
+        networkManager.recvbufferLength = networkManager.recvbuffer.Length
     else
-        networkManager.recvbuffer = cvt.ConcatBytes(networkManager.recvbuffer, networkManager.recvbuffer.Length, bytes, size)
+        local buffer, length = cvt.ConcatBytes(networkManager.recvbuffer, networkManager.recvbuffer.Length, bytes, size)
+        networkManager.recvbuffer = buffer
+        networkManager.recvbufferLength = networkManager.recvbuffer.Length + size
     end
 
     --解析数据
@@ -131,6 +134,7 @@ local function receive(bytes, size)
 
         --剔除已解析过的数据
         networkManager.recvbuffer = cvt.TrimBytes(networkManager.recvbuffer, length)
+        networkManager.recvbufferLength = networkManager.recvbufferLength - length
         --触发回调
         table.insert(networkManager.messageQueue, msg)
     end

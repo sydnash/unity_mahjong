@@ -40,6 +40,7 @@
     <Folder Include="Lua\ui\friendster\" />
     <Folder Include="Lua\ui\mail\" />
     <Folder Include="Lua\ui\deskDetail\" />
+    <Folder Include="Lua\ui\playHistory\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
@@ -63,6 +64,7 @@
     <Compile Include="Lua\logic\mahjong\mahjongType.lua" />
     <Compile Include="Lua\logic\manager\locationManager.lua" />
     <Compile Include="Lua\logic\manager\patchManager.lua" />
+    <Compile Include="Lua\logic\player\playHistory.lua" />
     <Compile Include="Lua\logic\touch.lua" />
     <Compile Include="Lua\network\proto.lua" />
     <Compile Include="Lua\logic\player\gamePlayer.lua" />
@@ -116,6 +118,10 @@
     <Compile Include="Lua\ui\lobby.lua" />
     <Compile Include="Lua\ui\login.lua" />
     <Compile Include="Lua\ui\messageBox.lua" />
+    <Compile Include="Lua\ui\playHistory\playHistory.lua" />
+    <Compile Include="Lua\ui\playHistory\playHistoryDetail.lua" />
+    <Compile Include="Lua\ui\playHistory\playHistoryDetailItem.lua" />
+    <Compile Include="Lua\ui\playHistory\playHistoryItem.lua" />
     <Compile Include="Lua\ui\setting.lua" />
     <Compile Include="Lua\ui\share.lua" />
     <Compile Include="Lua\ui\waiting.lua" />

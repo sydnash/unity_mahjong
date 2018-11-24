@@ -29,12 +29,12 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function tcp.send(data, callback)
+function tcp.send(data, length, callback)
     if callback == nil then
         callback = local_empty_callback
     end
 
-    Tcp.instance:Send(data, callback)
+    Tcp.instance:Send(data, length, callback)
 end
 
 -------------------------------------------------------------------

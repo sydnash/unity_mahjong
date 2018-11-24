@@ -193,31 +193,33 @@ function lobby:enterDesk(loading, cityType, deskId)
         if not ok then
             loading:close()
             showMessageUI(errText)
-        else
-            if msg == nil then
-                loading:setProgress(progress * 0.4)
-            else
-                loading:setProgress(0.4)
-
-                sceneManager.load("scene", "mahjongscene", function(completed, progress)
-                    loading:setProgress(0.4 + 0.6 * progress)
-
-                    if completed then
-                        if preload ~= nil then
-                            preload:stop()
-                        end
-
-                        msg.Reenter = table.fromjson(msg.Reenter)
-                        msg.Config = table.fromjson(msg.Config)
-
-                        local desk = require("logic.mahjong.mahjongGame").new(msg)
-                        loading:close()
-                    end
-                end)
-
-                self:close()
-            end
+            return
         end
+
+        if msg == nil then
+            loading:setProgress(progress * 0.4)
+            return
+        end
+
+        loading:setProgress(0.4)
+
+        sceneManager.load("scene", "mahjongscene", function(completed, progress)
+            loading:setProgress(0.4 + 0.6 * progress)
+
+            if completed then
+                if preload ~= nil then
+                    preload:stop()
+                end
+
+                msg.Reenter = table.fromjson(msg.Reenter)
+                msg.Config = table.fromjson(msg.Config)
+
+                local game = require("logic.mahjong.mahjongGame").new(msg)
+                loading:close()
+            end
+        end)
+
+        self:close()
     end)
 end
 
