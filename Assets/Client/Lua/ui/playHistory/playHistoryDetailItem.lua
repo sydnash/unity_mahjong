@@ -126,6 +126,8 @@ function playHistoryDetailItem:onPlayClickHandler()
                 closeAllUI()
 
                 local game = require("logic.mahjong.mahjongGame").new(data, playback)
+                game:startLoop()
+
                 loading:close()
             end
         end)

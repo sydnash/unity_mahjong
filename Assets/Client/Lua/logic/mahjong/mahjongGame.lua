@@ -83,8 +83,6 @@ end
 -- 启动消息处理循环，并初始化UI
 -------------------------------------------------------------------------------
 function mahjongGame:startLoop()
-    self.messageHandlers:play()
-
     self.deskUI = require("ui.mahjongDesk").new(self)
     self.deskUI:show()
     
@@ -115,6 +113,8 @@ function mahjongGame:startLoop()
 
         self:syncExitVote(self.data)
     end
+
+    self.messageHandlers:play()
 end
 
 -------------------------------------------------------------------------------
