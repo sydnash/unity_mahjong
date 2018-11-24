@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/SettingUI/Atlas/SettingUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/PlaybackUI/Atlas/PlaybackUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>512</int>
+            <int>128</int>
             <key>height</key>
-            <int>512</int>
+            <int>128</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -150,7 +150,7 @@
             <key>datafile</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>SettingUI.tpsheet</filename>
+                <filename>PlaybackUI.tpsheet</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -187,7 +187,7 @@
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Polygon</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -199,167 +199,51 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Images/SZ_01.png</key>
+            <key type="filename">Images/hf_01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>30,9,60,19</rect>
+                <rect>11,11,23,21</rect>
                 <key>scale9Paddings</key>
-                <rect>30,9,60,19</rect>
+                <rect>11,11,23,21</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/SZ_02.png</key>
+            <key type="filename">Images/hf_02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>29,9,59,17</rect>
+                <rect>11,14,22,27</rect>
                 <key>scale9Paddings</key>
-                <rect>29,9,59,17</rect>
+                <rect>11,14,22,27</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/SZ_03.png</key>
+            <key type="filename">Images/hf_03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>18,18,35,35</rect>
+                <rect>11,14,21,27</rect>
                 <key>scale9Paddings</key>
-                <rect>18,18,35,35</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/SZ_03_1.png</key>
-            <key type="filename">Images/SZ_03_2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>94,11,187,22</rect>
-                <key>scale9Paddings</key>
-                <rect>94,11,187,22</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/SZ_04.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,5,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/SZ_05.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>29,8,59,17</rect>
-                <key>scale9Paddings</key>
-                <rect>29,8,59,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/SZ_06.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>28,9,55,18</rect>
-                <key>scale9Paddings</key>
-                <rect>28,9,55,18</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/SZ_tcyx.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>34,10,68,21</rect>
-                <key>scale9Paddings</key>
-                <rect>34,10,68,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/SZ_zi01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>34,10,68,20</rect>
-                <key>scale9Paddings</key>
-                <rect>34,10,68,20</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/SZ_zi02.png</key>
-            <key type="filename">Images/SZ_zi02_1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>34,10,67,21</rect>
-                <key>scale9Paddings</key>
-                <rect>34,10,67,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/hf_zi02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>34,10,69,21</rect>
-                <key>scale9Paddings</key>
-                <rect>34,10,69,21</rect>
+                <rect>11,14,21,27</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>Images/SZ_01.png</filename>
-            <filename>Images/SZ_02.png</filename>
-            <filename>Images/SZ_03.png</filename>
-            <filename>Images/SZ_03_1.png</filename>
-            <filename>Images/SZ_03_2.png</filename>
-            <filename>Images/SZ_04.png</filename>
-            <filename>Images/SZ_05.png</filename>
-            <filename>Images/SZ_06.png</filename>
-            <filename>Images/SZ_zi01.png</filename>
-            <filename>Images/SZ_zi02.png</filename>
-            <filename>Images/SZ_tcyx.png</filename>
-            <filename>Images/SZ_zi02_1.png</filename>
-            <filename>Images/hf_zi02.png</filename>
+            <filename>Images/hf_01.png</filename>
+            <filename>Images/hf_02.png</filename>
+            <filename>Images/hf_03.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

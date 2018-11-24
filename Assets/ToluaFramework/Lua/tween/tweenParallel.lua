@@ -72,6 +72,14 @@ function tweenParallel:stop()
     self.playing = false
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function tweenParallel:clear()
+    self:stop()
+    self.queue = {}
+end
+
 return tweenParallel
 
 --endregion
