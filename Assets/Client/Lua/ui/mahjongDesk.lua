@@ -308,6 +308,7 @@ function mahjongDesk:onGameStart()
 
     for _, v in pairs(self.players) do
         v:reset()
+        v:setMarker(v.isMarker)
     end
 
     self:updateHeaderZhuangStatus()

@@ -118,14 +118,14 @@ function mahjongOperation:onInit()
     self.mahjongsRootAnim:AddClip(mahjongsRootClip, mahjongsRootClip.name)
     self.mahjongsRootAnim.clip = mahjongsRootClip
 
-    local mainTurn = self.game:getTurn(self.game.mainAcId)
     self.planeRoot = find("planes")
-    self.planeRoot.transform.localRotation = Quaternion.Euler(0, 90 * mainTurn, 0)
+    self:rotatePlanes()
     --圆盘
     local circle = find("planes/cricle/Cricle_0")
     local circleMat = getComponentU(circle.gameObject, typeof(UnityEngine.MeshRenderer)).sharedMaterial
     circleMat.mainTexture = textureManager.load("", "deskfw")
     --方向指示节点
+--    local planeNames = { "plane02", "plane01", "plane01", "plane01" }
     self.planeMats = {}
     for i=mahjongGame.seatType.mine, mahjongGame.seatType.left do
         local a = (i + 2 == 5) and 1 or i + 2
@@ -268,6 +268,8 @@ end
 -- 游戏开始
 -------------------------------------------------------------------------------
 function mahjongOperation:onGameStart()
+    self:rotatePlanes()
+
     self.countdownTick = -1
     self:highlightPlaneByTurn(-1)
     self:setCountdownVisible(false)
@@ -463,6 +465,8 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongOperation:OnFaPai()
+    self:highlightPlaneByTurn(self.game.markerTurn)
+
     for _, player in pairs(self.game.players) do
         self:createInHandMahjongs(player)
     end
@@ -650,6 +654,10 @@ end
 -- 处理鼠标/手指拖拽
 -------------------------------------------------------------------------------
 function mahjongOperation:touchHandler(phase, pos)
+    if self.game.mode == mahjongGame.mode.playback then
+        return
+    end
+
     local camera = GameObjectPicker.instance.camera
 
     if phase == touch.phaseType.began then
@@ -933,7 +941,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
     self.mo = nil
     soundManager.playGfx("mahjong", "chupai")
 
-    if acId ~= self.game.mainAcId then 
+    if self.game.mode == mahjongGame.mode.playback or acId ~= self.game.mainAcId then 
         local player = self.game:getPlayerByAcId(acId)
         playMahjongSound(cards[1], player.sex)
     end
@@ -1428,12 +1436,14 @@ end
 -- 将当前turn的plane高亮
 -------------------------------------------------------------------------------
 function mahjongOperation:highlightPlaneByTurn(turn)
-    for t, m in pairs(self.planeMats) do
+    local seat = self.game:getSeatTypeFromMarker(turn)
+
+    for s, m in pairs(self.planeMats) do
         if m.mainTexture ~= nil then
             textureManager.unload(m.mainTexture)
         end
 
-        if t == turn then
+        if seat ~= nil and s == seat then
             m.mainTexture = textureManager.load("", "deskfw_gl")
         else
             m.mainTexture = textureManager.load("", "deskfw")
@@ -1627,6 +1637,18 @@ function mahjongOperation:sortInhand(player, mahjongs)
             return a.id < b.id
         end)
     end
+end
+
+function mahjongOperation:rotatePlanes()
+    local base = self.game:getSeatType(self.game.markerTurn)
+    local seat = self.game:getSeatTypeByAcId(self.game.mainAcId)
+
+    local rot = 0
+    if base ~= nil and seat ~= nil then
+        rot = 90 * (seat - base)
+    end
+
+    self.planeRoot.transform.localRotation = Quaternion.Euler(0, rot, 0)
 end
 
 return mahjongOperation
