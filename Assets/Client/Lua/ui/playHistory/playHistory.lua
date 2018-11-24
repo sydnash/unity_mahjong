@@ -10,6 +10,7 @@ _RES_(playHistory, "PlayHistory", "PlayHistory")
 function playHistory:onInit()
     self:refreshUI()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+    self.mPlayback:addClickListener(self.onPlaybackClickHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
@@ -17,6 +18,11 @@ function playHistory:onCloseClickedHandler()
     playButtonClickSound()
 
     self:close()
+end
+
+function playHistory:onPlaybackClickHandler()
+    local ui = require("ui.playHistory.enterPlaybackCode").new()
+    ui:show()
 end
 
 function playHistory:refreshUI()

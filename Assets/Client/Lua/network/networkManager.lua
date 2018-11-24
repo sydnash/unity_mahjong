@@ -885,6 +885,17 @@ function networkManager.getPlayHistoryDetail(typ, id, round, callback)
     end)
 end
 
+--round 从0开始
+function networkManager.sharePlayHistory(id, round, callback)
+    local data = {Id = id, Round = round}
+    send(protoType.cs.sharePlayHistory, data, callback)
+end
+
+function networkManager.getSharePlayHistory(shareId, callback)
+    local data = {ShareId = shareId}
+    send(protoType.cs.getSharePlayHistory, data, callback)
+end
+
 return networkManager
 
 --endregion
