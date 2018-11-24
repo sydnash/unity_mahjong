@@ -212,9 +212,9 @@ function lobby:enterDesk(loading, cityType, deskId)
                 end
 
                 msg.Reenter = table.fromjson(msg.Reenter)
-                msg.Config = table.fromjson(msg.Config)
+                msg.Config  = table.fromjson(msg.Config)
                 msg.Players = msg.Others
-                msg.Others = nil
+                msg.Others  = nil
 
                 local me = {
                     AcId        = gamepref.player.acId,

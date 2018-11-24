@@ -275,7 +275,7 @@ end
 -- 其他玩家加入
 -------------------------------------------------------------------------------
 function mahjongGame:onOtherEnterHandler(msg)
---    log("otherEnter, msg = " .. table.tostring(msg))
+    log("otherEnter, msg = " .. table.tostring(msg))
 
     local player = gamePlayer.new(msg.AcId)
 
