@@ -96,7 +96,10 @@ function friendsterDetail:onShareClickedHandler()
     playButtonClickSound()
 
     local desc = string.format("编号：%d, 邀请码：%d", self.data.id, self.data.applyCode)
-    platformHelper.shareUrlWx("亲友圈信息", desc, "www.cdbshy.com", false)
+    local image = textureManager.load(string.empty, "appIcon")
+    if image ~= nil then
+        platformHelper.shareUrlWx("亲友圈信息", desc, "www.cdbshy.com", iamge, false)
+    end
 end
 
 function friendsterDetail:onManageClickedHandler()
