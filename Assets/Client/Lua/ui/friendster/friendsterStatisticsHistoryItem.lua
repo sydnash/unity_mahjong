@@ -20,16 +20,44 @@ function friendsterStatisticsHistoryItem:onInit()
         v.root:hide()
         v.winner:hide()
     end
+
+    self.mThis:addClickListener(self.onThisClickHandler, self)
+    self.mSettle:addClickListener(self.onSettleClickHandler, self)
 end
 
-function friendsterStatisticsHistoryItem:set(data)
-    local config = table.fromjson(data.DeskConfig)
+function friendsterStatisticsHistoryItem:onThisClickHandler()
+    showWaitingUI("正在拉取对战详情")
+    self.historyContainer:getScoreDetail(self.mHistoryId, function(ok, data)
+        closeWaitingUI()
+        if not ok then
+            showMessageUI("同步战绩失败")
+            return
+        end
+        local ui = require("ui.playHistory.playHistoryDetail").new()
+        ui:setHistory(self.mHistoryId, self.historyContainer)
+        ui:show()
+    end)
+end
 
-    self.mDeskId:setText(string.format("房号:%d", data.DeskId))
-    self.mId:setText(string.format("账号:%d", data.ClubId))
-    self.mCount:setText(string.format("局数:%d/%d", data.PlayTimes, config.JuShu))
-    self.mDatetime:setText(time.formatDateTime(data.EndTime))
+function friendsterStatisticsHistoryItem:onSettleClickHandler()
+    showWaitingUI("正在通信...")
+    networkManager.setClubDeskPayed(self.historyContainer.mClubId, self.mHistoryId, function(msg)
+        closeWaitingUI()
+        if not msg then
+            showMessageUI("网络错误")
+            return
+        end
+        if msg.RetCode ~= retc.ok then
+            showMessageUI("网络错误")
+            return
+        end
+        local historyData = self.historyContainer:findHistoryById(self.mHistoryId)
+        historyData.Payed = true
+        self:updatePayedStatus(historyData)
+    end)
+end
 
+function friendsterStatisticsHistoryItem:updatePayedStatus(data)
     if data.Payed then
         self.mSettle:hide()
         self.mSettleOver:show()
@@ -37,6 +65,19 @@ function friendsterStatisticsHistoryItem:set(data)
         self.mSettle:show()
         self.mSettleOver:hide()
     end
+end
+
+function friendsterStatisticsHistoryItem:set(data, historyContainer)
+    self.historyContainer = historyContainer
+    self.mHistoryId = data.Id
+    local config = table.fromjson(data.DeskConfig)
+
+    self.mDeskId:setText(string.format("房号:%d", data.DeskId))
+    self.mId:setText(string.format("账号:%d", data.ClubId))
+    self.mCount:setText(string.format("局数:%d/%d", data.PlayTimes, config.JuShu))
+    self.mDatetime:setText(time.formatDateTime(data.EndTime))
+
+    self:updatePayedStatus(data)
 
     local players = data.Players
     local scores = data.Scores

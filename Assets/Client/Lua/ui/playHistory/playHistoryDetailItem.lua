@@ -65,7 +65,7 @@ end
 
 function playHistoryDetailItem:onPlayClickHandler()
     showWaitingUI("正在拉取回放数据，请稍候...")
-    gamepref.player.playHistory:getPlayDetail(self.mHistoryId, self.mRound, function(ok, msg)
+    self.historyContainer:getPlayDetail(self.mHistoryId, self.mRound, function(ok, msg)
         closeWaitingUI()
 
         if not ok then
@@ -94,7 +94,7 @@ function playHistoryDetailItem:onPlayClickHandler()
 
             if completed then
                 local data = {}
-                local history = gamepref.player.playHistory:findHistoryById(self.mHistoryId)
+                local history = self.historyContainer:findHistoryById(self.mHistoryId)
                 history.PlaybackMsg = ""
                 log("history = " .. table.tostring(history))
                 data.ClubId             = history.ClubId
@@ -132,7 +132,8 @@ function playHistoryDetailItem:onPlayClickHandler()
     end)
 end
 
-function playHistoryDetailItem:set(data, round, historyId)
+function playHistoryDetailItem:set(data, round, historyId, historyContainer)
+    self.historyContainer = historyContainer
     self.mHistoryId = historyId
     self.mRound = round
 

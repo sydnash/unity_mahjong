@@ -7,6 +7,11 @@ local playHistory = class("playHistory", base)
 
 _RES_(playHistory, "PlayHistory", "PlayHistory")
 
+function playHistory:ctor(historyContainer)
+    self.historyContainer = historyContainer
+    self.super.ctor(self)
+end
+
 function playHistory:onInit()
     self:refreshUI()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
@@ -26,7 +31,7 @@ function playHistory:onPlaybackClickHandler()
 end
 
 function playHistory:refreshUI()
-    local histories = gamepref.player.playHistory:getData()
+    local histories = self.historyContainer:getData()
     local count = #histories
 
     if count <= 0 then
@@ -39,7 +44,7 @@ function playHistory:refreshUI()
         end
 
         local refreshItem = function(item, index)
-            item:set(histories[index + 1])
+            item:set(histories[index + 1], self.historyContainer)
         end
 
         self.mList:reset()

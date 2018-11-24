@@ -20,6 +20,7 @@ function playHistoryDetail:onInit()
         v:hide()
     end
 
+    self.mResult:hide()
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
@@ -28,10 +29,11 @@ function playHistoryDetail:onCloseClickedHandler()
     self:close()
 end
 
-function playHistoryDetail:setHistory(historyId)
+function playHistoryDetail:setHistory(historyId, historyContainer)
+    self.historyContainer = historyContainer
     self.mList:reset()
     self.mHistoryId = historyId
-    local history = gamepref.player.playHistory:findHistoryById(historyId)
+    local history = self.historyContainer:findHistoryById(historyId)
 
     if history.ScoreDetail == nil or #history.ScoreDetail == 0 then
         return
@@ -41,6 +43,9 @@ function playHistoryDetail:setHistory(historyId)
     for i = 1, #players do
         self.mNicknames[i]:show()
         self.mNicknames[i]:setText(players[i].Nickname)
+        if players[i].AcId == gamepref.player.acId then
+            self.mResult:show()
+        end
     end
 
     local details = history.ScoreDetail
@@ -51,7 +56,7 @@ function playHistoryDetail:setHistory(historyId)
     end
 
     local refreshItem = function(item, index)
-        item:set(details[index + 1], index + 1, historyId)
+        item:set(details[index + 1], index + 1, historyId, self.historyContainer)
     end
 
     self.mList:set(count, createItem, refreshItem)

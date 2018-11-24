@@ -40,6 +40,7 @@ function friendster:ctor(id)
     self.applyCode          = 0
     self.managerAcId        = 0
     self.managerNickname    = string.empty
+    self.playHistory        = require("logic.player.playHistory").new(id)
 end
 
 function friendster:loadHeaderTex()

@@ -150,7 +150,7 @@ function lobby:onHistoryClickedHandler()
             showMessageUI("同步战绩失败")
             return
         end
-        local ui = require("ui.playHistory.playHistory").new()
+        local ui = require("ui.playHistory.playHistory").new(gamepref.player.playHistory)
         ui:show()
     end)
 end

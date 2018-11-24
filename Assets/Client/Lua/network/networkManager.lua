@@ -883,6 +883,21 @@ function networkManager.getPlayHistoryDetail(typ, id, round, callback)
         end
     end)
 end
+function networkManager.getClubPlayHistoryDetail(clubId, typ, id, round, callback)
+    local data = {
+        ClubId = clubId,
+        Type  = typ,
+	    Id    = id,
+	    Round = round,
+    }
+    send(protoType.cs.getClubPlayHistoryDetail, data, function(msg)
+        if msg == nil then
+            callback(false, nil)
+        else
+            callback(true, msg)
+        end
+    end)
+end
 
 --round 从0开始
 function networkManager.sharePlayHistory(id, round, callback)
@@ -893,6 +908,14 @@ end
 function networkManager.getSharePlayHistory(shareId, callback)
     local data = {ShareId = shareId}
     send(protoType.cs.getSharePlayHistory, data, callback)
+end
+
+function networkManager.setClubDeskPayed(clubId, historyId, callback)
+    local data = {
+		ClubId = clubId,
+		Id = historyId,
+	}
+    send(protoType.cs.setClubDeskPayed, data, callback)
 end
 
 return networkManager

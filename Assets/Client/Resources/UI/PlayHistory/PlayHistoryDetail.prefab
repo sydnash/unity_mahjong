@@ -354,6 +354,10 @@ MonoBehaviour:
     widgetType: 2
     gameObject: {fileID: 1326702158391830}
     panelScript: 
+  - variableName: mResult
+    widgetType: 0
+    gameObject: {fileID: 1865516812576614}
+    panelScript: 
 --- !u!114 &114170059543751936
 MonoBehaviour:
   m_ObjectHideFlags: 1

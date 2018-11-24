@@ -25,19 +25,20 @@ end
 
 function playHistoryItem:onThisClickHandler()
     showWaitingUI("正在拉取对战详情")
-    gamepref.player.playHistory:getScoreDetail(self.mHistoryId, function(ok, data)
+    self.historyContainer:getScoreDetail(self.mHistoryId, function(ok, data)
         closeWaitingUI()
         if not ok then
             showMessageUI("同步战绩失败")
             return
         end
         local ui = require("ui.playHistory.playHistoryDetail").new()
-        ui:setHistory(self.mHistoryId)
+        ui:setHistory(self.mHistoryId, self.historyContainer)
         ui:show()
     end)
 end
 
-function playHistoryItem:set(data)
+function playHistoryItem:set(data, historyContainer)
+    self.historyContainer = historyContainer
     local config = table.fromjson(data.DeskConfig)
 
     self.mDeskId:setText(string.format("房号:%d", data.DeskId))
