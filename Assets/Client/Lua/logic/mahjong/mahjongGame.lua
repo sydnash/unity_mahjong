@@ -21,6 +21,7 @@ mahjongGame.cardType = {
     peng = 3,
     chu  = 4,
     hu   = 5,
+    huan = 6,
 }
 
 -------------------------------------------------------------------------------
@@ -234,6 +235,7 @@ function mahjongGame:syncSeats(seats)
         player[mahjongGame.cardType.shou] = v.CardsInHand
         player[mahjongGame.cardType.chu]  = v.CardsInChuPai
         player[mahjongGame.cardType.peng] = v.ChiCheInfos
+        player[mahjongGame.cardType.huan] = {}
 
         if player.hu ~= nil then
             local shou = player[mahjongGame.cardType.shou]
@@ -251,6 +253,18 @@ function mahjongGame:syncSeats(seats)
                     table.remove(shou, 1)
                 end
             end
+        end
+
+        if v.HSZChose ~= nil then
+            for _, m in pairs(v.HSZChose) do
+                table.insert(player[mahjongGame.cardType.huan], m)
+                for k, u in pairs(player[mahjongGame.cardType.shou]) do
+                    if u == m then
+                        table.remove(player[mahjongGame.cardType.shou], k)
+                        break
+                    end
+                end
+            end 
         end
     end
 end

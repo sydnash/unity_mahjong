@@ -355,6 +355,7 @@ function mahjongOperation:onGameSync()
         self:createPengMahjongs(v)
         self:createChuMahjongs(v)
         self:createInHandMahjongs(v)
+        self:createHuanNZhangMahjongs(v)
     end
 
     local chu = nil
@@ -575,7 +576,6 @@ end
 -- 创建碰/杠牌
 -------------------------------------------------------------------------------
 function mahjongOperation:createPengMahjongs(player)
-    local mahjongs = {}
     local datas = player[mahjongGame.cardType.peng]
 
     for _, d in pairs(datas) do
@@ -590,6 +590,23 @@ function mahjongOperation:createPengMahjongs(player)
 
         self:putMahjongsToPeng(player.acId, mahjongs)
     end
+end
+
+-------------------------------------------------------------------------------
+-- 创建换牌
+-------------------------------------------------------------------------------
+function mahjongOperation:createHuanNZhangMahjongs(player)
+    local mahjongs = {}
+    local datas = player[mahjongGame.cardType.huan]
+
+    for _, v in pairs(datas) do
+        local m = self:getMahjongFromIdle(v)
+        m:show()
+        table.insert(mahjongs, m)
+        self:removeFromIdle()
+    end
+
+    self:putMahjongsToHuan(player.acId, mahjongs)
 end
 
 -------------------------------------------------------------------------------
@@ -1499,6 +1516,17 @@ function mahjongOperation:putMahjongsToPeng(acId, mahjongs)
 end
 
 -------------------------------------------------------------------------------
+-- 将mahjong放到换牌区
+-------------------------------------------------------------------------------
+function mahjongOperation:putMahjongsToHuan(acId, mahjongs)
+    self.hnzMahjongs[acId] = mahjongs
+    --测试用
+    for _, v in pairs(mahjongs) do
+        v:hide()
+    end
+end
+
+-------------------------------------------------------------------------------
 -- 将当前acid的plane高亮
 -------------------------------------------------------------------------------
 function mahjongOperation:highlightPlaneByAcId(acId)
@@ -1760,7 +1788,9 @@ function mahjongOperation:onHnzChooseClickedHandler()
     end
     networkManager.huanNZhang(data)
 
-    self.hnzMahjongs[self.game.mainAcId] = self:decreaseInhandMahjongs(self.game.mainAcId, data)
+    local mahjongs = self:decreaseInhandMahjongs(self.game.mainAcId, data)
+    self:putMahjongsToHuan(self.game.mainAcId, mahjongs)
+
     self.mHnz:hide()
 end
 
@@ -1778,16 +1808,16 @@ function mahjongOperation:onHnzChoose(msg)
             table.insert(mahjongs, v)
         end
 
-        self.hnzMahjongs[acId] = self:decreaseInhandMahjongs(acId, msg.Cs)
+        local mahjongs = self:decreaseInhandMahjongs(acId, msg.Cs)
+        self:putMahjongsToHuan(acId, mahjongs)
     else
-        if self.hnzMahjongs[acId] == nil then
-            self.hnzMahjongs[acId] = {}
-        end
+        local hms = {}
 
         for i=1, self.hnzCount do
-            table.insert(self.hnzMahjongs[acId], mahjongs[1])
+            table.insert(hms, mahjongs[1])
             table.remove(mahjongs, 1)
         end
+        self:putMahjongsToHuan(acId, hms)
 
         local player = self.game:getPlayerByAcId(acId)
         self:relocateInhandMahjongs(player, mahjongs)
@@ -1823,6 +1853,8 @@ function mahjongOperation:onHuanNZhangDo(msg)
     --重新排序手牌
     local player = self.game:getPlayerByAcId(msg.AcId)
     self:relocateInhandMahjongs(player, mahjongs)
+
+    self.hnzMahjongs = {}
 end
 
 return mahjongOperation
