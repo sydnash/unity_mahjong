@@ -7,7 +7,7 @@ local gamePlayer = require("logic.player.gamePlayer")
 local base = require("ui.common.view")
 local playHistoryDetailItem = class("playHistoryDetailItem", base)
 
-_RES_(playHistoryDetailItem, "PlayHistoryUI", "PlayHistoryDetailItem")
+_RES_(playHistoryDetailItem, "PlayHistoryUI", "PlayHistoryDetailItemUI")
 
 local scoreColor = {
     win         = hexColorToColor("d27529ff"),

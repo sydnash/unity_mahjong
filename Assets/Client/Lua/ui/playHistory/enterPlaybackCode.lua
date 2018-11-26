@@ -5,7 +5,7 @@
 local base = require("ui.common.view")
 local enterPlaybackCode = class("enterPlaybackCode", base)
 
-_RES_(enterPlaybackCode, "PlayHistory", "EnterPlaybackCodeUI")
+_RES_(enterPlaybackCode, "PlayHistoryUI", "EnterPlaybackCodeUI")
 
 function enterPlaybackCode:ctor(callback)
     self.super.ctor(self)
