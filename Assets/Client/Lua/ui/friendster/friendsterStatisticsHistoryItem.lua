@@ -102,6 +102,7 @@ function friendsterStatisticsHistoryItem:set(data, historyContainer)
         p.root:show()
         p.icon:setTexture(g.headerTex)
         p.nickname:setText(g.nickname)
+        p.winner:hide()
 
         if s >= 0 then
             p.score.p:show()
