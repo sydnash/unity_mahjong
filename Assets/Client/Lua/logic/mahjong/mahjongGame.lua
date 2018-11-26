@@ -44,12 +44,16 @@ function mahjongGame:ctor(data, playback)
     self.config             = data.Config
     self.status             = data.Status
     self.creatorAcId        = data.Creator
+    self.deskStatus         = deskStatus.none
 
     self.commandHandlers = {
         [protoType.sc.otherEnterDesk]           = { func = self.onOtherEnterHandler,            nr = true },
         [protoType.sc.ready]                    = { func = self.onReadyHandler,                 nr = true },
         [protoType.sc.start]                    = { func = self.onGameStartHandler,             nr = true },
         [protoType.sc.fapai]                    = { func = self.onFaPaiHandler,                 nr = true },
+        [protoType.sc.huanNZhangHint]           = { func = self.onHuanNZhangHintHandler,        nr = true },
+        [protoType.sc.huanNZhangChoose]         = { func = self.onHuanNZhangChooseHandler,      nr = true },
+        [protoType.sc.huanNZhangDo]             = { func = self.onHuanNZhangDoHandler,          nr = true },
         [protoType.sc.mopai]                    = { func = self.onMoPaiHandler,                 nr = true },
         [protoType.sc.oplist]                   = { func = self.onOpListHandler,                nr = true },
         [protoType.sc.opDo]                     = { func = self.onOpDoHandler,                  nr = true },
@@ -80,13 +84,17 @@ function mahjongGame:ctor(data, playback)
 end
 
 -------------------------------------------------------------------------------
--- 启动消息处理循环，并初始化UI
+-- 初始化UI并启动消息处理循环
 -------------------------------------------------------------------------------
 function mahjongGame:startLoop()
-    self.deskUI = require("ui.mahjongDesk").new(self)
+    if self.deskUI == nil then
+        self.deskUI = require("ui.mahjongDesk").new(self)
+    end
     self.deskUI:show()
     
-    self.operationUI = require("ui.mahjongOperation").new(self)
+    if self.operationUI == nil then
+        self.operationUI = require("ui.mahjongOperation").new(self)
+    end
     self.operationUI:show()
 
     if self.mode == gameMode.playback then 
@@ -98,7 +106,7 @@ function mahjongGame:startLoop()
         if self.data.Reenter ~= nil then
             if self.data.Status == gameStatus.playing then
                 self.deskUI:onGameSync()
-                self.operationUI:onGameSync(self.data.Reenter)
+                self.operationUI:onGameSync()
             else
                 for _, v in pairs(self.players) do
                     self.deskUI:setReady(v.acId, v.ready)
@@ -175,8 +183,6 @@ function mahjongGame:onEnter(msg)
         self.deskStatus         = msg.Reenter.DeskStatus
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
-
-    self:refreshUI()
 end
 
 -------------------------------------------------------------------------------
@@ -261,6 +267,10 @@ function mahjongGame:syncExitVote(msg)
             local player = self:getPlayerByAcId(v.AcId)
             player.exitVoteState = v.Status
         end
+        
+        if self.exitDeskUI ~= nil then
+            self.exitDeskUI:close()
+        end
 
         self.exitDeskUI = require("ui.exitdesk").new(self)
         self.exitDeskUI:show()
@@ -310,12 +320,15 @@ end
 -- 准备
 -------------------------------------------------------------------------------
 function mahjongGame:onReadyHandler(msg)
-    log("ready, msg = " .. table.tostring(msg))
+    local func = tweenFunction.new(function()
+        log("ready, msg = " .. table.tostring(msg))
 
-    local player = self:getPlayerByTurn(msg.Turn)
-    player.ready = msg.Ready
+        local player = self:getPlayerByTurn(msg.Turn)
+        player.ready = msg.Ready
 
-    self.deskUI:setReady(player.acId, player.ready) 
+        self.deskUI:setReady(player.acId, player.ready) 
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -350,6 +363,8 @@ end
 function mahjongGame:onFaPaiHandler(msg)
 --    log("fapai, msg = " .. table.tostring(msg))
     local func = tweenFunction.new(function()
+        self.deskStatus = deskStatus.fapai
+
         for _, v in pairs(msg.Seats) do
             local player = self:getPlayerByAcId(v.AcId)
             player[mahjongGame.cardType.shou] = v.Cards
@@ -365,6 +380,39 @@ function mahjongGame:onFaPaiHandler(msg)
     self.messageHandlers:add(func)
 end
 
+-------------------------------------------------------------------------------
+-- 提示换N张
+-------------------------------------------------------------------------------
+function mahjongGame:onHuanNZhangHintHandler(msg)
+    local func = tweenFunction.new(function()
+        log("mahjongGame:onHuanNZhangHintHandler, msg = " .. table.tostring(msg))
+        self.deskStatus = deskStatus.hsz
+        self.operationUI:onHuanNZhangHint(msg)
+    end)
+    self.messageHandlers:add(func)
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function mahjongGame:onHuanNZhangChooseHandler(msg)
+    local func = tweenFunction.new(function()
+        log("mahjongGame:onHuanNZhangChooseHandler, msg = " .. table.tostring(msg))
+        self.operationUI:onHnzChoose(msg)
+    end)
+    self.messageHandlers:add(func)
+end
+  
+-------------------------------------------------------------------------------
+-- 确定换N张
+-------------------------------------------------------------------------------                
+function mahjongGame:onHuanNZhangDoHandler(msg)
+    local func = tweenFunction.new(function()
+        log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
+        self.operationUI:onHuanNZhangDo(msg)
+    end)
+    self.messageHandlers:add(func)
+end
 -------------------------------------------------------------------------------
 -- 摸牌
 -------------------------------------------------------------------------------
@@ -391,6 +439,7 @@ end
 function mahjongGame:onOpListHandler(msg)
 --    log("oplist, msg = " .. table.tostring(msg))
     local func = tweenFunction.new(function()
+        self.deskStatus = deskStatus.playing
         self.operationUI:onOpList(msg)
     end)
     self.messageHandlers:add(func)
@@ -813,21 +862,26 @@ end
 -- 服务器通知其他玩家退出
 -------------------------------------------------------------------------------
 function mahjongGame:onOtherExitHandler(msg)
---    log("other exit, msg = " .. table.tostring(msg))
-
-    if self.leftGames > 0 then
-        self.players[msg.Turn] = nil
-        self.playerCount = self.playerCount - 1
-        self.deskUI:onPlayerExit(msg.Turn)
-    end
+    local func = tweenFunction.new(function()
+    --    log("other exit, msg = " .. table.tostring(msg))
+        if self.leftGames > 0 then
+            self.players[msg.Turn] = nil
+            self.playerCount = self.playerCount - 1
+            self.deskUI:onPlayerExit(msg.Turn)
+        end
+    end)
+    self.messageHandlers:add(func)
 end
 
 function mahjongGame:onOtherConnectStatusChanged(msg)
-    local player = self:getPlayerByAcId(msg.AcId)
-    player.connected = msg.IsConnected
-    if self.deskUI then
-        self.deskUI:onPlayerConnectStatusChanged(player)
-    end
+    local func = tweenFunction.new(function()
+        local player = self:getPlayerByAcId(msg.AcId)
+        player.connected = msg.IsConnected
+        if self.deskUI then
+            self.deskUI:onPlayerConnectStatusChanged(player)
+        end
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -847,21 +901,27 @@ end
 -- 服务器通知投票失败（有人拒绝）
 -------------------------------------------------------------------------------
 function mahjongGame:onNotifyExitVoteFailedHandler(msg)
---    log("notify exit vote failed, msg = " .. table.tostring(msg))
-    self.exitDeskUI:close()
-    self.exitDeskUI = nil
+    local func = tweenFunction.new(function()
+    --    log("notify exit vote failed, msg = " .. table.tostring(msg))
+        self.exitDeskUI:close()
+        self.exitDeskUI = nil
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
 -- 服务器通知有人投票
 -------------------------------------------------------------------------------
 function mahjongGame:onExitVoteHandler(msg)
---    log("exit vote, msg = " .. table.tostring(msg))
-    if self.exitDeskUI~= nil then
-        local player = self:getPlayerByAcId(msg.AcId)
-        player.exitVoteState = 1
-        self.exitDeskUI:setPlayerState(player)
-    end
+    local func = tweenFunction.new(function()
+    --    log("exit vote, msg = " .. table.tostring(msg))
+        if self.exitDeskUI~= nil then
+            local player = self:getPlayerByAcId(msg.AcId)
+            player.exitVoteState = 1
+            self.exitDeskUI:setPlayerState(player)
+        end
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -870,6 +930,8 @@ end
 function mahjongGame:onGameEndHandler(msg)
 --    log("game end, msg = " .. table.tostring(msg))
     local func = tweenFunction.new(function()
+        self.deskStatus = deskStatus.gameend
+
         for _, v in pairs(self.players) do
             v.que = -1
         end
@@ -955,6 +1017,8 @@ end
 function mahjongGame:onDingQueDoHandler(msg)
 --    log("ding que do, msg = " .. table.tostring(msg))
     local func = tweenFunction.new(function()
+        self.deskStatus = deskStatus.dingque
+
         for _, v in pairs(msg.Dos) do
             local player = self:getPlayerByAcId(v.AcId)
             player.que = v.Q
@@ -1002,11 +1066,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:agreeExit()
     networkManager.exitVote(true, function(ok, msg)
-        if not ok then
 
-        else
---            log("agree exit, msg = " .. tostring(msg.Agree))
-        end
     end)
 end
 
@@ -1015,11 +1075,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:rejectExit()
     networkManager.exitVote(false, function(ok, msg)
-        if not ok then
 
-        else
---            log("reject exit, msg = " .. tostring(msg.Agree))
-        end
     end)
 end
 
@@ -1045,21 +1101,6 @@ function mahjongGame:destroy()
         self:unregisterPlaybackHandlers()
     end
 
-    if self.deskUI ~= nil then
-        self.deskUI:close()
-        self.deskUI = nil
-    end
-
-    if self.operationUI ~= nil then
-        self.operationUI:close()
-        self.operationUI = nil
-    end
-
-    if self.exitDeskUI ~= nil then
-        self.exitDeskUI:close()
-        self.exitDeskUI = nil
-    end
-
     for _, v in pairs(self.players) do
         if v.acId ~= self.mainAcId then
             v:destroy()
@@ -1068,23 +1109,6 @@ function mahjongGame:destroy()
 
     self.deskId = nil
     clientApp.currentDesk = nil
-end
-
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
-function mahjongGame:refreshUI()
-    if self.deskUI ~= nil then
-        self.deskUI:refreshUI()
-    end
-
-    if self.operationUI ~= nil then
-        self.operationUI:refreshUI()
-    end
-
-    if self.exitDeskUI ~= nil then
-
-    end
 end
 
 -------------------------------------------------------------------------------

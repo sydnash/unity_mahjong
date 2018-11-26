@@ -217,8 +217,15 @@ function mahjongDesk:onPositionClickedHandler()
     playButtonClickSound()
 
     local location = locationManager.getData()
-    if location.status then
+    if not location.status then
+        local ui = require("ui.location").new(self.game)
+        ui:show()
+    else
+        showWaitingUI("正在定位各玩家位置，请稍候...")
+
         networkManager.syncLocation(location, function(ok, msg)
+            closeWaitingUI()
+
             if ok then
                 for _, v in pairs(msg.Locations) do
                     local player = self.game:getPlayerByAcId(v.AcId)
@@ -227,11 +234,11 @@ function mahjongDesk:onPositionClickedHandler()
                     player.location.longitude = v.Longitude
                 end
             end
+
+            local ui = require("ui.location").new(self.game)
+            ui:show()
         end)
     end
-
-    local ui = require("ui.location").new(self.game)
-    ui:show()
 end
 
 function mahjongDesk:onSettingClickedHandler()
@@ -306,7 +313,14 @@ function mahjongDesk:onGameStart()
     self.mReady:hide()
     self.mCancel:hide()
 
-    self:updateHeaderZhuangStatus()
+    for _, v in pairs(self.game.players) do 
+        local st = self.game:getSeatType(v.turn)
+        local hd = self.players[st]
+
+        hd:setReady(false)
+        hd:setMarker(v.isMarker)
+    end
+
     self:updateCurrentGameIndex()
 end
 
@@ -316,13 +330,6 @@ function mahjongDesk:onGameSync()
     self.mCancel:hide()
 
     self:updateCurrentGameIndex()
-end
-
-function mahjongDesk:updateHeaderZhuangStatus()
-    for _, v in pairs(self.game.players) do 
-        local st = self.game:getSeatType(v.turn)
-        self.players[st]:setMarker(v.isMarker)
-    end
 end
 
 function mahjongDesk:reset()

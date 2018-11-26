@@ -196,11 +196,6 @@ function enterDesk(gameType, deskId, callback)
                 return
             end
 
-            if clientApp.currentDesk ~= nil then
-                clientApp.currentDesk:destroy()
-                clientApp.currentDesk = nil
-            end
-
             msg.Config  = table.fromjson(msg.Config)
             msg.Reenter = table.fromjson(msg.Reenter)
             msg.Players = msg.Others
@@ -225,29 +220,34 @@ function enterDesk(gameType, deskId, callback)
             end
             table.insert(msg.Players, me)
 
-            clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
+            if clientApp.currentDesk ~= nil then
+                clientApp.currentDesk:onEnter(msg)
+                clientApp.currentDesk:startLoop()
+            else
+                clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
 
-            local loading = require("ui.loading").new()
-            loading:show()
+                local loading = require("ui.loading").new()
+                loading:show()
 
-            sceneManager.load("scene", "mahjongscene", function(completed, progress)
-                loading:setProgress(progress)
+                sceneManager.load("scene", "mahjongscene", function(completed, progress)
+                    loading:setProgress(progress)
 
-                if completed then
-                    if preload ~= nil then
-                        preload:stop()
-                    end
+                    if completed then
+                        if preload ~= nil then
+                            preload:stop()
+                        end
 
-                    loading:close()
+                        loading:close()
                     
-                    if callback ~= nil then
-                        callback(true)
-                    end
+                        if callback ~= nil then
+                            callback(true)
+                        end
 
-                    closeAllUI()
-                    clientApp.currentDesk:startLoop()
-                end
-            end)
+                        closeAllUI()
+                        clientApp.currentDesk:startLoop()
+                    end
+                end)
+            end
         end)
     end)
 end
