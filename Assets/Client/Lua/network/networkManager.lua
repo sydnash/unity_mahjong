@@ -542,6 +542,10 @@ function networkManager.quicklyStartChose(agree, callback)
         end
     end)
 end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function networkManager.proposerQuicklyStart(callback)
     local data = {}
     send(protoType.cs.proposerQuicklyStart, data, function(msg)
@@ -875,14 +879,12 @@ function networkManager.getPlayHistory(time, callback)
         end
     end)
 end
+-------------------------------------------------------------------
 --typ 0 表示拉取所有详细积分数据  round没有意义
 --typ 2 表示拉取单场的对局详情  round从0开始
+-------------------------------------------------------------------
 function networkManager.getPlayHistoryDetail(typ, id, round, callback)
-    local data = {
-        Type  = typ,
-	    Id    = id,
-	    Round = round,
-    }
+    local data = { Type = typ, Id = id, Round = round, }
     send(protoType.cs.getPlayHistoryDetail, data, function(msg)
         if msg == nil then
             callback(false, nil)
@@ -891,13 +893,12 @@ function networkManager.getPlayHistoryDetail(typ, id, round, callback)
         end
     end)
 end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function networkManager.getClubPlayHistoryDetail(clubId, typ, id, round, callback)
-    local data = {
-        ClubId = clubId,
-        Type  = typ,
-	    Id    = id,
-	    Round = round,
-    }
+    local data = { ClubId = clubId, Type = typ, Id = id, Round = round, }
     send(protoType.cs.getClubPlayHistoryDetail, data, function(msg)
         if msg == nil then
             callback(false, nil)
@@ -907,23 +908,36 @@ function networkManager.getClubPlayHistoryDetail(clubId, typ, id, round, callbac
     end)
 end
 
+-------------------------------------------------------------------
 --round 从0开始
+-------------------------------------------------------------------
 function networkManager.sharePlayHistory(id, round, callback)
-    local data = {Id = id, Round = round}
+    local data = { Id = id, Round = round }
     send(protoType.cs.sharePlayHistory, data, callback)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function networkManager.getSharePlayHistory(shareId, callback)
-    local data = {ShareId = shareId}
+    local data = { ShareId = shareId }
     send(protoType.cs.getSharePlayHistory, data, callback)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function networkManager.setClubDeskPayed(clubId, historyId, callback)
-    local data = {
-		ClubId = clubId,
-		Id = historyId,
-	}
+    local data = { ClubId = clubId, Id = historyId, }
     send(protoType.cs.setClubDeskPayed, data, callback)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.huanNZhang(cards, callback)
+    local data = { Cs = cards }
+    send(protoType.cs.huanNZhangChoose, data, callback)
 end
 
 return networkManager

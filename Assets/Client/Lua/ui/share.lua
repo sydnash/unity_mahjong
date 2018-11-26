@@ -7,7 +7,7 @@ local share = class("share", base)
 
 _RES_(share, "ShareUI", "ShareUI")
 
-local imagePath = "ShareTex"
+local imagePath = "sharetex"
 local imageName = "lobby_share_image"
 
 function share:onInit()

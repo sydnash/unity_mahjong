@@ -26,6 +26,7 @@ mahjong.cmode = {
 function mahjong:ctor(id)
     self.id = id
     self.pickabled = false
+    self.selected = false
     self.cmode = mahjong.cmode.light
 
     local mtype = mahjongType[id]
@@ -66,9 +67,20 @@ function mahjong:setPickabled(pickabled)
     end
 end
 
+function mahjong:setSelected(selected)
+    if self.selected ~= selected then
+        self.selected = selected
+
+        local pos = self:getLocalPosition()
+        pos:Set(pos.x, pos.y + mahjong.h * (selected and 0.3 or -0.3), pos.z)
+        self:setLocalPosition(pos)
+    end
+end
+
 function mahjong:reset()
     self:light()
     self:setPickabled(false)
+    self:setSelected(false)
 end
 
 function mahjong:onDestroy()

@@ -170,6 +170,7 @@ function mahjongOperation:onInit()
     self.chupaiPtr:hide()
 
     --按钮
+    self.mHnzDo:addClickListener(self.onHnzChooseClickedHandler, self)
     self.mTiao:addClickListener(self.onTiaoClickedHandler, self)
     self.mTong:addClickListener(self.onTongClickedHandler, self)
     self.mWan:addClickListener(self.onWanClickedHandler, self)
@@ -193,8 +194,9 @@ function mahjongOperation:onInit()
     self.mGang_MS_ButtonC:addClickListener(self.onGangCClickedHandler, self)
 
     self.mGang_MS:hide()
+    self.mHnz:hide()
     self.mQue:hide()
-    self.mStatus:hide()
+    self.mDQTips:hide()
     self:hideOperations()
 
     self.idleMahjongs   = {}
@@ -202,6 +204,7 @@ function mahjongOperation:onInit()
     self.chuMahjongs    = {}
     self.pengMahjongs   = {}
     self.huMahjongs     = {}
+    self.hnzMahjongs    = {}
 
     self:loadMahjongs()
 
@@ -222,7 +225,7 @@ function mahjongOperation:onInit()
 end
 
 -------------------------------------------------------------------------------
--- 预加载
+-- 加载麻将模型
 -------------------------------------------------------------------------------
 function mahjongOperation:loadMahjongs()
     for i=0, self.game:getTotalMahjongCount() - 1 do
@@ -232,13 +235,6 @@ function mahjongOperation:loadMahjongs()
 
         table.insert(self.idleMahjongs, m)
     end
-end
-
--------------------------------------------------------------------------------
---刷新UI
--------------------------------------------------------------------------------
-function mahjongOperation:refreshUI()
-
 end
 
 -------------------------------------------------------------------------------
@@ -294,6 +290,7 @@ function mahjongOperation:onGameStart()
     eventManager.registerAnimationTrigger("table_plane_down", function()
         for _, m in pairs(self.idleMahjongs) do
             m:show()
+            m:setPickabled(false)
         end
     end)
 
@@ -314,7 +311,19 @@ end
 -------------------------------------------------------------------------------
 -- 游戏同步
 -------------------------------------------------------------------------------
-function mahjongOperation:onGameSync(reenter)
+function mahjongOperation:onGameSync()
+    local reenter = self.game.data.Reenter
+
+    if self.game.deskStatus == deskStatus.hsz then
+        self.hnzCount = reenter.HSZCnt
+        self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
+
+        self.mHnz:show()
+    else
+        self.hnzCount = 0
+        self.mHnz:hide()
+    end
+
     self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
     self:relocateIdleMahjongs(true)    
 
@@ -370,7 +379,7 @@ function mahjongOperation:onGameSync(reenter)
     end
 
     if self.game.deskStatus == deskStatus.dingque then
-        self.mStatus:show()
+        self.mDQTips:show()
 
         local player = self.game:getPlayerByAcId(self.game.mainAcId)
         if player.que < 0 then
@@ -513,7 +522,7 @@ end
 -- 定缺提示
 -------------------------------------------------------------------------------
 function mahjongOperation:onDingQueHint(msg)
-    self.mStatus:show()
+    self.mDQTips:show()
     self.mQue:show()
 end
 
@@ -534,7 +543,7 @@ function mahjongOperation:onDingQueDo(msg)
 
     self:relocateInhandMahjongs(player, mahjongs)
 
-    self.mStatus:hide()
+    self.mDQTips:hide()
     self.mQue:hide()
 end
 
@@ -632,6 +641,7 @@ function mahjongOperation:onOpList(oplist)
             end
         end
 
+        self.mDQTips:hide()
         self:showOperations(infos, leftTime)
     end
 end
@@ -667,65 +677,112 @@ end
 -- 处理鼠标/手指拖拽
 -------------------------------------------------------------------------------
 function mahjongOperation:touchHandler(phase, pos)
-    if self.game.mode == gameMode.playback then
+    local ds = self.game.deskStatus
+    if self.game.mode == gameMode.playback or ds == deskStatus.none or ds == deskStatus.dingque then
         return
     end
 
     local camera = GameObjectPicker.instance.camera
 
-    if phase == touch.phaseType.began then
-        local go = GameObjectPicker.instance:Pick(pos)
-        if go ~= nil then
-            if self.mo ~= nil and self.mo.gameObject == go then
-                self.selectedMahjong = self.mo
-            else
-                local inhandMahjongs = self.inhandMahjongs[self.game.mainAcId]
-                self.selectedMahjong = self:getMahjongByGo(inhandMahjongs, go)
-            end
+    if ds == deskStatus.hsz then
+        if phase == touch.phaseType.ended then
+            local go = GameObjectPicker.instance:Pick(pos)
+            if go ~= nil then
+                if self.hnzMahjongs[self.game.mainAcId] == nil then
+                    self.hnzMahjongs[self.game.mainAcId] = {}
+                end
 
-            if self.selectedMahjong ~= nil then
-                self.selectedOrgPos = self.selectedMahjong:getPosition()
-                local cpos = camera.transform.localPosition
-                pos.z = self.selectedOrgPos.z - cpos.z
-                self.selectedLastPos = camera:ScreenToWorldPoint(pos)
+                local inhandMahjongs = self.inhandMahjongs[self.game.mainAcId]
+                local hnzQueue = self.hnzMahjongs[self.game.mainAcId]
+                local selectedMahjong = self:getMahjongByGo(inhandMahjongs, go)
+
+                if selectedMahjong.selected then
+                    selectedMahjong:setSelected(false)
+                    table.removeItem(hnzQueue, selectedMahjong)
+                    return
+                end
+
+                local chooseSameClass = true
+
+                for _, v in pairs(hnzQueue) do
+                    if v.class ~= selectedMahjong.class then
+                        chooseSameClass = false
+                        break
+                    end
+                end
+                
+                if chooseSameClass then
+                    if #hnzQueue == self.hnzCount then
+                        hnzQueue[1]:setSelected(false)
+                        table.remove(hnzQueue, 1)
+                    end
+                else
+                    for i=#hnzQueue, 1, -1 do
+                        local v = hnzQueue[i]
+                        v:setSelected(false)
+                        table.remove(hnzQueue, i)
+                    end
+                end
+
+                selectedMahjong:setSelected(true)
+                table.insert(hnzQueue, selectedMahjong)
             end
-        end
-    elseif phase == touch.phaseType.moved then
-        if self.selectedMahjong ~= nil then
-            local mpos = self.selectedMahjong:getPosition()
-            local cpos = camera.transform.localPosition
-            pos.z = mpos.z - cpos.z
-            local wpos = camera:ScreenToWorldPoint(pos)
-            local dpos = wpos - self.selectedLastPos
-            
-            mpos = Vector3.New(mpos.x + dpos.x, mpos.y + dpos.y, mpos.z)
-            self.selectedMahjong:setPosition(mpos)
-            self.selectedLastPos = wpos
         end
     else
-        if self.selectedMahjong ~= nil then
-            local mpos = self.selectedMahjong:getPosition()
-            local cpos = camera.transform.localPosition
-            pos.z = mpos.z - cpos.z
-            local wpos = camera:ScreenToWorldPoint(pos)
-            local dpos = wpos - self.selectedOrgPos
-            
-            if dpos.y < 0.04 or not self.canChuPai then
-                self.selectedMahjong:setPosition(self.selectedOrgPos)
-            else
-                local id = self.selectedMahjong.id
+        if phase == touch.phaseType.began then
+            local go = GameObjectPicker.instance:Pick(pos)
+            if go ~= nil then
+                if self.mo ~= nil and self.mo.gameObject == go then
+                    self.selectedMahjong = self.mo
+                else
+                    local inhandMahjongs = self.inhandMahjongs[self.game.mainAcId]
+                    self.selectedMahjong = self:getMahjongByGo(inhandMahjongs, go)
+                end
 
-                networkManager.chuPai({ id }, function(ok, msg)
-                    log("chu pai failed")
-                    local player = self.game:getPlayerByAcId(self.game.mainAcId)
-                    local mahjongs = self.inhandMahjongs[self.game.mainAcId]
-                    self:relocateInhandMahjongs(player, mahjongs)
-                end)
-
-                playMahjongSound(id, 1)
+                if self.selectedMahjong ~= nil then
+                    self.selectedOrgPos = self.selectedMahjong:getPosition()
+                    local cpos = camera.transform.localPosition
+                    pos.z = self.selectedOrgPos.z - cpos.z
+                    self.selectedLastPos = camera:ScreenToWorldPoint(pos)
+                end
             end
+        elseif phase == touch.phaseType.moved then
+            if self.selectedMahjong ~= nil then
+                local mpos = self.selectedMahjong:getPosition()
+                local cpos = camera.transform.localPosition
+                pos.z = mpos.z - cpos.z
+                local wpos = camera:ScreenToWorldPoint(pos)
+                local dpos = wpos - self.selectedLastPos
+            
+                mpos = Vector3.New(mpos.x + dpos.x, mpos.y + dpos.y, mpos.z)
+                self.selectedMahjong:setPosition(mpos)
+                self.selectedLastPos = wpos
+            end
+        else
+            if self.selectedMahjong ~= nil then
+                local mpos = self.selectedMahjong:getPosition()
+                local cpos = camera.transform.localPosition
+                pos.z = mpos.z - cpos.z
+                local wpos = camera:ScreenToWorldPoint(pos)
+                local dpos = wpos - self.selectedOrgPos
+            
+                if dpos.y < 0.04 or not self.canChuPai then
+                    self.selectedMahjong:setPosition(self.selectedOrgPos)
+                else
+                    local id = self.selectedMahjong.id
 
-            self.selectedMahjong = nil
+                    networkManager.chuPai({ id }, function(ok, msg)
+                        log("chu pai failed")
+                        local player = self.game:getPlayerByAcId(self.game.mainAcId)
+                        local mahjongs = self.inhandMahjongs[self.game.mainAcId]
+                        self:relocateInhandMahjongs(player, mahjongs)
+                    end)
+
+                    playMahjongSound(id, 1)
+                end
+
+                self.selectedMahjong = nil
+            end
         end
     end
 end
@@ -958,6 +1015,8 @@ function mahjongOperation:onOpDoChu(acId, cards)
         local player = self.game:getPlayerByAcId(acId)
         playMahjongSound(cards[1], player.sex)
     end
+
+    self.mDQTips:hide()
 end
 
 -------------------------------------------------------------------------------
@@ -1168,6 +1227,7 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
     for _, id in pairs(datas) do
         local m = self:getMahjongFromIdle(id)
         m:show()
+        m:setPickabled(true)
         table.insert(mahjongs, m)
         self:removeFromIdle()
 
@@ -1189,6 +1249,8 @@ end
 -- 将麻将m插入到手牌中
 -------------------------------------------------------------------------------
 function mahjongOperation:insertMahjongToInhand(m)
+    m:setPickabled(true)
+
     local mahjongs = self.inhandMahjongs[self.game.mainAcId]
     table.insert(mahjongs, m)
 
@@ -1207,6 +1269,7 @@ function mahjongOperation:decreaseInhandMahjongs(acId, datas)
         for _, id in pairs(datas) do
             for k, v in pairs(mahjongs) do
                 if v.id == id then
+                    v:setPickabled(false)
                     table.insert(decreaseMahjongs, v)
                     table.remove(mahjongs, k)
                     break
@@ -1609,6 +1672,7 @@ end
 -- 销毁
 -------------------------------------------------------------------------------
 function mahjongOperation:onDestroy()
+    log("=======================================")
     if self.game.mode == gameMode.normal then
         touch.removeListener()
     end
@@ -1654,6 +1718,9 @@ function mahjongOperation:sortInhand(player, mahjongs)
     end
 end
 
+-------------------------------------------------------------------------------
+-- 旋转方位标志牌
+-------------------------------------------------------------------------------
 function mahjongOperation:rotatePlanes()
     local base = self.game:getSeatType(self.game.markerTurn)
     local seat = self.game:getSeatTypeByAcId(self.game.mainAcId)
@@ -1664,6 +1731,98 @@ function mahjongOperation:rotatePlanes()
     end
 
     self.planeRoot.transform.localRotation = Quaternion.Euler(0, rot, 0)
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function mahjongOperation:onHuanNZhangHint(msg)
+    self.hnzCount = msg.Count
+    self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
+    self.mHnz:show()
+end
+
+-------------------------------------------------------------------------------
+-- 通知服务器换N张
+-------------------------------------------------------------------------------
+function mahjongOperation:onHnzChooseClickedHandler()
+    playButtonClickSound()
+
+    local hnzQueue = self.hnzMahjongs[self.game.mainAcId]
+    if #hnzQueue < self.hnzCount then
+        showMessageUI(string.format("请先选择%d张同花色的牌", self.hnzCount))
+        return
+    end
+
+    local data = {}
+    for _, v in pairs(self.hnzMahjongs[self.game.mainAcId]) do
+        table.insert(data, v.id)
+    end
+    networkManager.huanNZhang(data)
+
+    self.hnzMahjongs[self.game.mainAcId] = self:decreaseInhandMahjongs(self.game.mainAcId, data)
+    self.mHnz:hide()
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知换N张
+-------------------------------------------------------------------------------
+function mahjongOperation:onHnzChoose(msg)
+    local acId = msg.AcId
+    local mahjongs = self.inhandMahjongs[acId]
+
+    if acId == self.game.mainAcId then
+        --先把换的牌放回手牌，因为客户端选择的和服务器通知的可能不一致
+        for _, v in pairs(self.hnzMahjongs[acId]) do
+            v:setPickabled(true)
+            table.insert(mahjongs, v)
+        end
+
+        self.hnzMahjongs[acId] = self:decreaseInhandMahjongs(acId, msg.Cs)
+    else
+        if self.hnzMahjongs[acId] == nil then
+            self.hnzMahjongs[acId] = {}
+        end
+
+        for i=1, self.hnzCount do
+            table.insert(self.hnzMahjongs[acId], mahjongs[1])
+            table.remove(mahjongs, 1)
+        end
+
+        local player = self.game:getPlayerByAcId(acId)
+        self:relocateInhandMahjongs(player, mahjongs)
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知确定换N张
+-------------------------------------------------------------------------------
+function mahjongOperation:onHuanNZhangDo(msg)
+    for k, v in pairs(self.hnzMahjongs) do
+        if k ~= msg.AcId then
+            local mahjongs = self.inhandMahjongs[k]
+            for _, u in pairs(v) do
+                table.insert(mahjongs, u)
+            end
+            local player = self.game:getPlayerByAcId(k)
+            self:relocateInhandMahjongs(player, mahjongs)
+        end
+    end
+
+    local temp = self.hnzMahjongs[msg.AcId]--删除的牌
+    for k, id in pairs(msg.I) do
+        local m, queue, idx = self:getMahjongFromIdle(id)
+        swap(temp, k, queue, idx)
+    end
+    --把增加的牌插入手牌
+    local mahjongs = self.inhandMahjongs[msg.AcId]
+    for _, v in pairs(temp) do
+        v:setPickabled(true)
+        table.insert(mahjongs, v)
+    end
+    --重新排序手牌
+    local player = self.game:getPlayerByAcId(msg.AcId)
+    self:relocateInhandMahjongs(player, mahjongs)
 end
 
 return mahjongOperation
