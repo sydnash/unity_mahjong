@@ -13,20 +13,16 @@ function errorMessage:onInit()
     end
 
     self.mQuit:addClickListener(self.onQuitClickedHandler, self)
-    self.mCommit:addClickListener(self.onCommitClickedHandler, self)
 end
 
-function errorMessage:setErrorMessage(errorMessage)
-    self.mText:setText(errorMessage)
+function errorMessage:appendErrorMessage(errorMessage)
+    local text = string.format("%s\n-----------------------------\n%s", self.mText:getText(), errorMessage)
+    self.mText:setText(text)
 end
 
 function errorMessage:onQuitClickedHandler()
     playButtonClickSound()
     Application.Quit()
-end
-
-function errorMessage:onCommitClickedHandler()
-    playButtonClickSound()
 end
 
 return errorMessage
