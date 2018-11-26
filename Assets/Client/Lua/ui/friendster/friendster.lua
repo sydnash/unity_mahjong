@@ -104,7 +104,6 @@ function friendster:onInit()
         self:onNotifyFriendster(msg)
     end, true)
 
-    signalManager.registerSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     
     self:refreshList()
@@ -239,10 +238,6 @@ function friendster:refreshList()
             self.mList:set(count, createItem, refreshItem)
         end
     end
-end
-
-function friendster:onEnterDeskHandler()
-    self:close()
 end
 
 function friendster:onNotifyFriendster(msg)
@@ -384,7 +379,6 @@ end
 
 function friendster:onDestroy()
     networkManager.unregisterCommandHandler(protoType.sc.notifyFriendster)
-    signalManager.unregisterSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
     self.mList:reset()

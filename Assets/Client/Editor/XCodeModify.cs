@@ -62,7 +62,7 @@ public class XCodeModify
 		File.Copy(Application.dataPath.Replace("Assets", "modifyForIOS/UnityAppController.mm"), Path.Combine(path, "Classes/UnityAppController.mm"));
 		//File.Move(Path.Combine(path, "Libraries/Plugins/OpenSDK1.8.1/libWeChatSDK.a"), Path.Combine(path, "Classes/libWeChatSDK.a"));
 
-		proj.UpdateBuildProperty(target, "OTHER_LDFLAGS", new List<string>() { "-Objc", "-all_load" }, new List<string>() { "-Objc" });
+		proj.UpdateBuildProperty(target, "OTHER_LDFLAGS", new List<string>() { "-force_load",  "Libraries/Plugins/iOS/wechat/sdk/libWeChatSDK.a", "-Objc", /*"-all_load"*/ }, new List<string>() { "-Objc" });
 		//proj.SetBuildProperty(target, "IPHONEOS_DEPLOYMENT_TARGET", "8.0");
 		proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
 

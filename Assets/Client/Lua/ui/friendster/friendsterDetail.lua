@@ -77,7 +77,6 @@ function friendsterDetail:onInit()
     self.mStatistics:hide()
 
     signalManager.registerSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
-    signalManager.registerSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.registerSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -254,10 +253,6 @@ function friendsterDetail:onCardsChangedHandler()
     self.mCards:setText(tostring(self.data.cards))
 end
 
-function friendsterDetail:onEnterDeskHandler()
-    self:close()
-end
-
 function friendsterDetail:onMessageOptHandler(args)
     local acId = args.acId
 
@@ -291,7 +286,6 @@ end
 
 function friendsterDetail:onDestroy()
     signalManager.unregisterSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
-    signalManager.unregisterSignalHandler(signalType.enterDesk, self.onEnterDeskHandler, self)
     signalManager.unregisterSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     

@@ -30,8 +30,10 @@ function mahjongGame:ctor(data, playback)
     log("mahjongGame, data = " .. table.tostring(data))
     log("mahjongGame, playback = " .. table.tostring(playback))
 
+    self.data = data
+    self.playback = playback
+
     self.messageHandlers = tweenSerial.new(false)
-    self.messageHandlers:play()
     tweenManager.add(self.messageHandlers)
 
     self.totalMahjongCount  = 108
@@ -75,7 +77,12 @@ function mahjongGame:ctor(data, playback)
     end
 
     self:onEnter(data)
+end
 
+-------------------------------------------------------------------------------
+-- 启动消息处理循环，并初始化UI
+-------------------------------------------------------------------------------
+function mahjongGame:startLoop()
     self.deskUI = require("ui.mahjongDesk").new(self)
     self.deskUI:show()
     
@@ -88,10 +95,10 @@ function mahjongGame:ctor(data, playback)
     end
     
     if self.mode == gameMode.normal then
-        if data.Reenter ~= nil then
-            if data.Status == gameStatus.playing then
+        if self.data.Reenter ~= nil then
+            if self.data.Status == gameStatus.playing then
                 self.deskUI:onGameSync()
-                self.operationUI:onGameSync(data.Reenter)
+                self.operationUI:onGameSync(self.data.Reenter)
             else
                 for _, v in pairs(self.players) do
                     self.deskUI:setReady(v.acId, v.ready)
@@ -104,8 +111,10 @@ function mahjongGame:ctor(data, playback)
             self.deskUI:setReady(player.acId, player.ready)
         end
 
-        self:syncExitVote(data)
+        self:syncExitVote(self.data)
     end
+
+    self.messageHandlers:play()
 end
 
 -------------------------------------------------------------------------------
@@ -275,7 +284,7 @@ end
 -- 其他玩家加入
 -------------------------------------------------------------------------------
 function mahjongGame:onOtherEnterHandler(msg)
---    log("otherEnter, msg = " .. table.tostring(msg))
+    log("otherEnter, msg = " .. table.tostring(msg))
 
     local player = gamePlayer.new(msg.AcId)
 

@@ -85,6 +85,7 @@
     <Compile Include="Lua\ui\location.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
     <Compile Include="Lua\ui\mail\mailItem.lua" />
+    <Compile Include="Lua\ui\playback.lua" />
     <Compile Include="Lua\ui\playerInfo.lua" />
     <Compile Include="Lua\ui\friendster\friendsterMemberInfo.lua" />
     <Compile Include="Lua\ui\friendster\friendsterMemberManager.lua" />
