@@ -44,6 +44,7 @@ function createFriendster:onInit()
         v:setSelected(v.id == gamepref.city.City)
     end
 
+    self.cityId = gamepref.city.City
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
     self:refreshCreateState()
