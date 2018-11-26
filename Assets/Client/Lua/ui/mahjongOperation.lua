@@ -214,13 +214,8 @@ function mahjongOperation:onInit()
     local newH = inhandCameraW / inhandCamera.aspect
 
     local inhandCameraBottom = inhandCamera.transform.position.y - inhandCameraH
-    local mineShouPosY = self.seats[mahjongGame.seatType.mine][mahjongGame.cardType.shou][gameMode.normal].pos.y
-    local cameraBottomDisMjy = mineShouPosY - inhandCameraBottom
-
     inhandCamera.orthographicSize = newH
-
-    local newBottom = mineShouPosY - cameraBottomDisMjy
-    local newy = newBottom + newH
+    local newy = inhandCameraBottom + newH
 
     log("new camera pos y " .. tostring(newy))
     inhandCamera.transform.position = Vector3.New(inhandCamera.transform.position.x, newy, inhandCamera.transform.position.z)
