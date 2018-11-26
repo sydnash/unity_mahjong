@@ -154,6 +154,16 @@ friendsterNotifyType = {
     applyEnterRequest   = 12,
     playerPlayInClub    = 13,
     playerPlayEndClub   = 14,
+    deskJuShuChanged    = 15,
+}
+friendsterDeskStatus = {
+    wait            = 0,
+    playing         = 1,
+}
+friendsterPlayerDeskStatus = {
+    idle            = 0,
+    indesk          = 1,
+    playing         = 2,
 }
 
 --------------------------------------------------------------

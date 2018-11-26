@@ -97,7 +97,7 @@ function friendsterDetail:onShareClickedHandler()
     local desc = string.format("编号：%d, 邀请码：%d", self.data.id, self.data.applyCode)
     local image = textureManager.load(string.empty, "appIcon")
     if image ~= nil then
-        platformHelper.shareUrlWx("亲友圈信息", desc, "www.cdbshy.com", iamge, false)
+        platformHelper.shareUrlWx("亲友圈信息", desc, "www.cdbshy.com", image, false)
     end
 end
 
@@ -235,31 +235,18 @@ function friendsterDetail:onStatisticsClickedHandler()
     showWaitingUI("正在获取亲友圈统计数据，请稍候")
     local startTime = time.today() - time.SECONDS_PER_DAY
 
-    self.data.playHistory:updateHistory(function(ok)
+    local playHistory = gamepref.player:getFriendsterPlayHistory(self.data.id)
+    playHistory:updateHistory(function(ok)
+        closeWaitingUI()
         if not ok then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
         local ui = require("ui.friendster.friendsterStatistics").new()
-        local history = self.data.playHistory:getData()
-        ui:set(history, self.data.playHistory)
+        local histories = playHistory:getData()
+        ui:set(histories, playHistory)
         ui:show()
     end)
-
-    -- networkManager.queryFriendsterStatistics(self.data.id, startTime, function(ok, msg)
-    --     closeWaitingUI()
-
-    --     if not ok then
-    --         showMessageUI("网络繁忙，请稍后再试")
-    --         return
-    --     end
-
-    --     log("query friendster history, msg = " .. table.tostring(msg))
-
-    --     local ui = require("ui.friendster.friendsterStatistics").new()
-    --     ui:set(msg)
-    --     ui:show()
-    -- end)
 end
 
 function friendsterDetail:onCardsChangedHandler()

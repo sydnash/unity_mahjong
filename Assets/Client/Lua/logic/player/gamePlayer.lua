@@ -18,6 +18,7 @@ function gamePlayer:ctor(acid)
     self.headerUrl   = string.empty
     self.headerTex   = nil
     self.playHistory = playHistory.new()
+    self.friendsterPlayHistories = {}
 end
 
 function gamePlayer:loadHeaderTex()
@@ -92,6 +93,15 @@ function gamePlayer:destroy()
         textureManager.unload(self.headerTex, false)
         self.headerTex = nil
     end
+end
+
+function gamePlayer:getFriendsterPlayHistory(friendsterId)
+    local t = self.friendsterPlayHistories[friendsterId]
+    if not t then
+        t = playHistory.new(friendsterId)
+        self.friendsterPlayHistories[friendsterId] = t
+    end
+    return t
 end
 
 return gamePlayer
