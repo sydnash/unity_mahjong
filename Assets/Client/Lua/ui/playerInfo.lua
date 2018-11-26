@@ -28,7 +28,7 @@ function playerInfo:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mTransfer:addClickListener(self.onTransferClickedHandler, self)
 
-    self.mTransfer:hide()
+    --self.mTransfer:hide()
     if gamepref.player.userType == userType.transfer or gamepref.player.userType == userType.operation then
         self.mTransfer:show()
     end
@@ -44,6 +44,7 @@ end
 
 function playerInfo:onCloseClickedHandler()
     playButtonClickSound()
+    log("------------------------------------------")
     self:close()
 end
 

@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 114324623539299748}
   - component: {fileID: 114712752574970868}
   m_Layer: 5
-  m_Name: PlayHistoryDetailItemUI
+  m_Name: PlayHistoryDetailItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

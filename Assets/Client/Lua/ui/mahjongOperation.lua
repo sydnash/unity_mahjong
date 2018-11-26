@@ -206,6 +206,24 @@ function mahjongOperation:onInit()
     self:loadMahjongs()
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+
+    local oriScreenAspect = 16 / 9
+    local inhandCamera = GameObjectPicker.instance.camera
+    local inhandCameraH = inhandCamera.orthographicSize
+    local inhandCameraW = inhandCameraH * oriScreenAspect
+    local newH = inhandCameraW / inhandCamera.aspect
+
+    local inhandCameraBottom = inhandCamera.transform.position.y - inhandCameraH
+    local mineShouPosY = self.seats[mahjongGame.seatType.mine][mahjongGame.cardType.shou][gameMode.normal].pos.y
+    local cameraBottomDisMjy = mineShouPosY - inhandCameraBottom
+
+    inhandCamera.orthographicSize = newH
+
+    local newBottom = mineShouPosY - cameraBottomDisMjy
+    local newy = newBottom + newH
+
+    log("new camera pos y " .. tostring(newy))
+    inhandCamera.transform.position = Vector3.New(inhandCamera.transform.position.x, newy, inhandCamera.transform.position.z)
 end
 
 -------------------------------------------------------------------------------

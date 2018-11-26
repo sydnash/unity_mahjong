@@ -298,6 +298,14 @@ function friendster:onNotifyFriendster(msg)
         if self.detailUI ~= nil then
             self.detailUI:refreshUI()
         end
+    elseif t == friendsterNotifyType.deskJuShuChanged then
+        local desk = lc.desks[d.DeskId]
+        if desk then
+            desk.playedCount = d.CurJu
+            if self.detailUI ~= nil then
+                self.detailUI:refreshDeskList()
+            end
+        end
     elseif t == friendsterNotifyType.friendsterDestroy then
         self.friendsters[d.ClubId] = nil
 

@@ -49,6 +49,7 @@ end
 
 function friendsterDetailMemberItem:onDestroy()
     self.mIcon:reset()
+    self.super.onDestroy(self)
 end
 
 return friendsterDetailMemberItem

@@ -690,6 +690,14 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function networkManager.modifyFriendsterDesc(friendsterId, desc, callback)
+    local data = {ClubId = friendsterId, Desc = desc}
+    send(protoType.cs.modifyFriendsterDesc, data, callback)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function networkManager.transferCards(id, count, callback)
     local data = {Target = id, Value = count}
     send(protoType.cs.transferCards, data, function(msg)

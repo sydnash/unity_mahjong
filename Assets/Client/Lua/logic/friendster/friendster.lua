@@ -40,7 +40,21 @@ function friendster:ctor(id)
     self.applyCode          = 0
     self.managerAcId        = 0
     self.managerNickname    = string.empty
-    self.playHistory        = require("logic.player.playHistory").new(id)
+end
+
+function friendster:setData(data)
+    local lc = self
+    lc.name             = data.ClubName
+    lc.headerUrl        = data.HeadUrl
+    lc:loadHeaderTex()
+    lc.cityType         = data.GameType
+    lc.cards            = data.CurCardNum
+    lc.maxMemberCount   = data.MaxMemberCnt
+    lc.curMemberCount   = data.CurMemberCnt
+    lc.applyCode        = data.ApplyCode
+    lc.managerAcId      = data.AcId
+    lc.managerNickname  = data.NickName
+    lc.applyList        = data.ApplyList or {}
 end
 
 function friendster:loadHeaderTex()
@@ -126,6 +140,9 @@ function friendster:addDesk(data)
 end
 
 function friendster:removeDesk(deskId)
+    if not self.desks then
+        return
+    end
     self.desks[deskId] = nil
     self.curDeskCount = self.curDeskCount - 1
 end
@@ -145,6 +162,9 @@ end
 
 function friendster:removePlayerFromDesk(acId, deskId)
     local desk = self.desks[deskId]
+    if not desk then
+        return
+    end
     desk:removePlayer(acId)
 end
 
