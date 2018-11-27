@@ -7,6 +7,51 @@ local login = class("login", base)
 
 _RES_(login, "LoginUI", "LoginUI")
 
+-------------------------------------------------------------------------------------------
+--测试服列表代码开始
+-------------------------------------------------------------------------------------------
+local networkConfig = require("config.networkConfig")
+local saveFile = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "serverChose.txt")
+local function readServerConfig()
+    local text = LFS.ReadText(saveFile, LFS.UTF8_WITHOUT_BOM)
+
+    if string.isNilOrEmpty(text) then
+        return {
+            ["chose"] = "testServer"
+        }
+    end
+
+    return loadstring(text)()
+end
+local function writeServerConfig(config)
+    local text = "return " .. table.tostring(config)
+    LFS.WriteText(saveFile, text, LFS.UTF8_WITHOUT_BOM)
+end
+
+function login:onLocalServerChangedHandler(sender, selected)
+    if selected then
+        self:choseLoginServer(sender.serverName)
+    end
+end
+function login:onTestServerChangedHandler(sender, selected)
+    if selected then
+        self:choseLoginServer(sender.serverName)
+    end
+end
+function login:onReleaseServerChangedHandler(sender, selected)
+    if selected then
+        self:choseLoginServer(sender.serverName)
+    end
+end
+function login:choseLoginServer(name)
+    self.serverConfig.chose = name
+    networkConfig.setServer(networkConfig[name])
+    writeServerConfig(self.serverConfig)
+end
+----------------------------------------------------------------------------------------------
+--测试服列表代码结束
+----------------------------------------------------------------------------------------------
+
 function login:onInit()
     self.mCityText:setSprite(cityTypeSID[gamepref.city.City])
 
@@ -22,6 +67,34 @@ function login:onInit()
     self.mWechatLogin:addClickListener(self.onWechatLoginClickedHandler, self)
     self.mGuestLogin:addClickListener(self.onGuestLoginClickedHandler, self)
     self.mAgreement:addChangedListener(self.onAgreementChangedHandler, self)
+
+    if gameConfig.serverList ~= nil then
+        self.mTestNode:show()
+        self.mReleaseServer:addChangedListener(self.onReleaseServerChangedHandler, self)
+        self.mTestServer:addChangedListener(self.onTestServerChangedHandler, self)
+        self.mLocalServer:addChangedListener(self.onLocalServerChangedHandler, self)
+        self.mReleaseServer.serverName = "releaseServer"
+        self.mTestServer.serverName = "testServer"
+        self.mLocalServer.serverName = "localServer"
+
+        local tmp = {
+            localServer     = self.mLocalServer,
+            testServer      = self.mTestServer,
+            releaseServer   = self.mReleaseServer,
+        }
+        for k , v in pairs(tmp) do
+            v:hide()
+            if gameConfig.serverList[k] then
+                v:show()
+            end
+        end
+        self.serverConfig = readServerConfig()
+        tmp[self.serverConfig.chose]:setSelected(true)
+    end
+    if gameConfig.debug and deviceConfig.isMobile then
+        self.mGuestLogin:show()
+        self.mWechatLogin:show()
+    end
 
     signalManager.registerSignalHandler(signalType.city, self.onCityChangedHandler, self)
 end
@@ -47,12 +120,13 @@ function login:onWechatLoginClickedHandler()
         if ok then
             self:close()
         end
-    end)
+    end, networkManager.loginWx)
 end
 
 function login:onGuestLoginClickedHandler()
     playButtonClickSound()
 
+    log("debug" .. table.tostring(networkConfig.server))
     self.mWechatLogin:setInteractabled(false)
     self.mGuestLogin:setInteractabled(false)
     --登录服务器
@@ -63,7 +137,7 @@ function login:onGuestLoginClickedHandler()
         if ok then
             self:close()
         end
-    end)
+    end, networkManager.loginGuest)
 end
 
 function login:onAgreementChangedHandler(sender, selected, clicked)

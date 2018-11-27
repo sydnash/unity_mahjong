@@ -168,7 +168,7 @@ function mahjongDesk:onInviteWXClickedHandler()
     if image ~= nil then
         platformHelper.shareUrlWx("好友邀请", 
                                   self:getInvitationInfo(), 
-                                  "http://www.cdbshy.com/", 
+                                  networkConfig.server.shareURL,
                                   image,
                                   false)
         textureManager.unload(image)
@@ -188,8 +188,8 @@ function mahjongDesk:onInviteXLClickedHandler()
                                          self:getInvitationInfo(), 
                                          image,
                                          table.tojson(params),
-                                         "http://www.cdbshy.com/",
-                                         "http://www.cdbshy.com/")
+                                         networkConfig.server.shareURL,
+                                         networkConfig.server.shareURL)
         textureManager.unload(image)
     end
 

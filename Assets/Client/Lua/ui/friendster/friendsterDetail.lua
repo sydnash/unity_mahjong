@@ -97,7 +97,7 @@ function friendsterDetail:onShareClickedHandler()
     local desc = string.format("编号：%d, 邀请码：%d", self.data.id, self.data.applyCode)
     local image = textureManager.load(string.empty, "appIcon")
     if image ~= nil then
-        platformHelper.shareUrlWx("亲友圈信息", desc, "www.cdbshy.com", image, false)
+        platformHelper.shareUrlWx("亲友圈信息", desc, networkConfig.server.shareURL, image, false)
     end
 end
 
