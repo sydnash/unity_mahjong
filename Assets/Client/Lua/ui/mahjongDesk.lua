@@ -122,7 +122,7 @@ function mahjongDesk:refreshUI()
     self:updateLeftMahjongCount()
 
     for _, v in pairs(self.game.players) do
-        local s = self.game:getSeatType(v.turn)
+        local s = self.game:getSeatTypeByAcId(v.acId)
         local p = self.players[s]
         p:setPlayerInfo(v)
 
@@ -314,7 +314,7 @@ function mahjongDesk:onGameStart()
     self.mCancel:hide()
 
     for _, v in pairs(self.game.players) do 
-        local st = self.game:getSeatType(v.turn)
+        local st = self.game:getSeatTypeByAcId(v.acId)
         local hd = self.players[st]
 
         hd:setReady(false)
@@ -358,22 +358,22 @@ end
 function mahjongDesk:onPlayerEnter(player)
     self:refreshInvitationButtonState()
 
-    local s = self.game:getSeatType(player.turn)
+    local s = self.game:getSeatTypeByAcId(player.acId)
     local p = self.players[s]
 
     p:setPlayerInfo(player)
 end
 
 function mahjongDesk:onPlayerConnectStatusChanged(player)
-    local s = self.game:getSeatType(player.turn)
+    local s = self.game:getSeatTypeByAcId(player.acId)
     local p = self.players[s]
     p:setOnline(player.connected)
 end
 
-function mahjongDesk:onPlayerExit(turn)
+function mahjongDesk:onPlayerExit(msg)
     self:refreshInvitationButtonState()
 
-    local s = self.game:getSeatType(turn)
+    local s = self.game:getSeatTypeByAcId(msg.AcId)
     local p = self.players[s]
 
     p:setPlayerInfo(nil)
@@ -417,7 +417,7 @@ end
 function mahjongDesk:onDingQueDo(msg)
     for _, v in pairs(msg.Dos) do
         local player = self.game:getPlayerByAcId(v.AcId)
-        local seat = self.game:getSeatType(player.turn)
+        local seat = self.game:getSeatTypeByAcId(player.acId)
         self.players[seat]:showDingQue(v.Q)
     end
 end

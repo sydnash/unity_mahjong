@@ -97,7 +97,7 @@ function location:refreshUI()
     local players = {}
 
     for _, v in pairs(self.game.players) do
-        local s = self.game:getSeatType(v.turn)
+        local s = self.game:getSeatTypeByAcId(v.acId)
         local header = self.headers[s]
 
         header.icon:show()

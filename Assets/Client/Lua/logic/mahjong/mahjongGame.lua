@@ -175,8 +175,8 @@ function mahjongGame:onEnter(msg)
     self:syncPlayers(msg.Players)
 
     if msg.Reenter ~= nil then
-        self.markerTurn         = msg.Reenter.MarkerTurn
-        self.curOpTurn          = msg.Reenter.CurOpTurn
+        self.markerAcId         = msg.Reenter.MarkerAcId
+        self.curOpAcId          = msg.Reenter.CurOpAcId
         self.curOpType          = msg.Reenter.CurOpType
         self.dices              = { msg.Reenter.Dice1, msg.Reenter.Dice2 }
         self.totalMahjongCount  = msg.Reenter.TotalMJCnt
@@ -193,13 +193,8 @@ function mahjongGame:syncPlayers(players)
     self.mainAcId = players[1].acId
 
     for _, v in pairs(players) do
-        log("acid = " .. tostring(v.AcId) .. ", turn = " .. tostring(v.Turn))
-        local player = self.players[v.Turn]
-
-        if player == nil or player.acId ~= v.AcId then
-            player = gamePlayer.new(v.AcId)
-            self.players[v.Turn] = player
-        end
+        local player = gamePlayer.new(v.AcId)
+        self.players[v.AcId] = player
 
         player.headerUrl = v.HeadUrl
         player:loadHeaderTex()
@@ -230,7 +225,7 @@ function mahjongGame:syncSeats(seats)
         local player = self:getPlayerByAcId(v.AcId)
         player.que = v.QueType
         player.hu = v.HuInfo
-        player.isMarker = self:isMarker(player.turn)
+        player.isMarker = self:isMarker(player.acId)
 
         player[mahjongGame.cardType.shou] = v.CardsInHand
         player[mahjongGame.cardType.chu]  = v.CardsInChuPai
@@ -324,7 +319,7 @@ function mahjongGame:onOtherEnterHandler(msg)
     player.score        = msg.Score
     player.location     = { status = msg.HasPosition, latitude = msg.Latitude, longitude = msg.Longitude }
 
-    self.players[player.turn] = player
+    self.players[player.acId] = player
     self.playerCount = self.playerCount + 1
 
     self.deskUI:onPlayerEnter(player)
@@ -337,7 +332,7 @@ function mahjongGame:onReadyHandler(msg)
     local func = tweenFunction.new(function()
         log("ready, msg = " .. table.tostring(msg))
 
-        local player = self:getPlayerByTurn(msg.Turn)
+        local player = self:getPlayerByAcId(msg.AcId)
         player.ready = msg.Ready
 
         self.deskUI:setReady(player.acId, player.ready) 
@@ -354,11 +349,11 @@ function mahjongGame:onGameStartHandler(msg)
         self.totalMahjongCount = msg.TotalMJCnt
         self.leftMahjongCount = self.totalMahjongCount
         self.dices = { msg.Dice1, msg.Dice2 }
-        self.markerTurn = msg.Marker
+        self.markerAcId = msg.MarkerAcId
 
         for _, v in pairs(self.players) do
             v.que = -1
-            v.isMarker = self:isMarker(v.turn)
+            v.isMarker = self:isMarker(v.acId)
         end
 
         self.deskUI:onGameStart()
@@ -421,11 +416,25 @@ end
 -- 确定换N张
 -------------------------------------------------------------------------------                
 function mahjongGame:onHuanNZhangDoHandler(msg)
-    local func = tweenFunction.new(function()
-        log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
-        self.operationUI:onHuanNZhangDo(msg)
-    end)
-    self.messageHandlers:add(func)
+    if self.mode == gameMode.normal then
+        self.messageHandlers:add(tweenDelay.new(1))
+        --显示动画
+        self.messageHandlers:add(tweenDelay.new(1))
+
+        local func = tweenFunction.new(function()
+            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
+            self.operationUI:onHuanNZhangDo(msg)
+        end)
+        self.messageHandlers:add(func)
+    else
+        local func = tweenFunction.new(function()
+            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
+            self.operationUI:onHuanNZhangDoPlayback(msg)
+        end)
+        self.messageHandlers:add(func)
+        --延时
+        self.messageHandlers:add(tweenDelay.new(1))
+    end
 end
 -------------------------------------------------------------------------------
 -- 摸牌
@@ -630,31 +639,10 @@ function mahjongGame:onOpDoGuo(acId)
 end
 
 -------------------------------------------------------------------------------
--- 通过acid获取玩家
--------------------------------------------------------------------------------
-function mahjongGame:getPlayerByAcId(acId)
-    for _, v in pairs(self.players) do 
-        if v.acId == acId then
-            return v
-        end
-    end
-
-    return nil
-end
-
--------------------------------------------------------------------------------
 -- 通过turn获取玩家
 -------------------------------------------------------------------------------
-function mahjongGame:getPlayerByTurn(turn)
-    return self.players[turn]
-end
-
--------------------------------------------------------------------------------
--- 获取我的Turn值
--------------------------------------------------------------------------------
-function mahjongGame:getTurn(acId)
-    local player = self:getPlayerByAcId(acId)
-    return player.turn
+function mahjongGame:getPlayerByAcId(acId)
+    return self.players[acId]
 end
 
 -------------------------------------------------------------------------------
@@ -702,63 +690,25 @@ end
 -------------------------------------------------------------------------------
 -- 获取庄家的Turn
 -------------------------------------------------------------------------------
-function mahjongGame:getMarkerTurn()
-    return self.markerTurn
+function mahjongGame:getMarkerPlayer()
+    return self.players[self.markerAcId]
 end
 
 -------------------------------------------------------------------------------
 -- 获取庄家的Turn
 -------------------------------------------------------------------------------
-function mahjongGame:isMarker(turn)
-    return self.markerTurn == turn
-end
-
--------------------------------------------------------------------------------
--- 根据turn获取位置
--------------------------------------------------------------------------------
-function mahjongGame:getSeatType(turn)
-    if turn == nil or turn < 0 then return nil end
-
-    local mainTurn = self:getPlayerByAcId(self.mainAcId).turn
-    local playerCount = self:getTotalPlayerCount()
-    local seat = turn - mainTurn
-
-    if seat < 0 then
-        seat = playerCount + turn - mainTurn
-    end
-
-    if playerCount == 3 then
-        if seat == mahjongGame.seatType.top then
-            seat = mahjongGame.seatType.left
-        end
-    elseif playerCount == 2 then
-        if seat == mahjongGame.seatType.right then
-            seat = mahjongGame.seatType.top
-        end
-    end
-
-    return seat
+function mahjongGame:isMarker(acId)
+    return self.markerAcId == acId
 end
 
 -------------------------------------------------------------------------------
 -- 根据acId获取位置
 -------------------------------------------------------------------------------
 function mahjongGame:getSeatTypeByAcId(acId)
-    local player = self:getPlayerByAcId(acId)
-    local turn = player.turn
-
-    return self:getSeatType(turn)
-end
-
--------------------------------------------------------------------------------
--- 根据turn获取相对于庄家的位置
--------------------------------------------------------------------------------
-function mahjongGame:getSeatTypeFromMarker(turn)
-    if turn < 0 then return nil end
-
-    local mainTurn = self.markerTurn
-    local playerCount = self:getTotalPlayerCount()
+    local mainTurn = self:getPlayerByAcId(self.mainAcId).turn
+    local turn = self:getPlayerByAcId(acId).turn
     local seat = turn - mainTurn
+    local playerCount = self:getTotalPlayerCount()
 
     if seat < 0 then
         seat = playerCount + turn - mainTurn
@@ -844,16 +794,16 @@ function mahjongGame:onExitDeskHandler(msg)
 
         for _, p in pairs(self.players) do
             local d = { acId            = p.acId, 
-                        headerTex       = self.players[p.turn].headerTex,
+                        headerTex       = self.players[p.acId].headerTex,
                         nickname        = p.nickname, 
                         totalScore      = totalScores[p.acId], 
                         turn            = p.turn, 
-                        seat            = self:getSeatType(p.turn),
+                        seat            = self:getSeatTypeByAcId(p.acId),
                         isCreator       = self:isCreator(p.acId),
                         isWinner        = false,
             }
 
-            datas.players[p.turn] = d
+            datas.players[p.acId] = d
         end
 
         local ui = require("ui.gameOver").new(self, datas)
@@ -879,9 +829,9 @@ function mahjongGame:onOtherExitHandler(msg)
     local func = tweenFunction.new(function()
     --    log("other exit, msg = " .. table.tostring(msg))
         if self.leftGames > 0 then
-            self.players[msg.Turn] = nil
+            self.players[msg.AcId] = nil
             self.playerCount = self.playerCount - 1
-            self.deskUI:onPlayerExit(msg.Turn)
+            self.deskUI:onPlayerExit(msg)
         end
     end)
     self.messageHandlers:add(func)
@@ -972,12 +922,12 @@ function mahjongGame:onGameEndHandler(msg)
         for _, v in pairs(specialData.PlayerInfos) do
             local p = self:getPlayerByAcId(v.AcId)
             local d = { acId            = v.AcId, 
-                        headerTex       = self.players[p.turn].headerTex,
+                        headerTex       = self.players[p.acId].headerTex,
                         nickname        = p.nickname, 
                         score           = v.Score,
                         totalScore      = totalScores[v.AcId], 
                         turn            = p.turn, 
-                        seat            = self:getSeatType(p.turn),
+                        seat            = self:getSeatTypeByAcId(p.acId),
                         inhand          = v.ShouPai,
                         hu              = v.Hu,
                         isCreator       = self:isCreator(v.AcId),
@@ -1002,7 +952,7 @@ function mahjongGame:onGameEndHandler(msg)
                 end
             end
 
-            datas.players[p.turn] = d
+            datas.players[p.acId] = d
         end
 
         self.gameEndUI = require("ui.gameEnd").new(self, datas)

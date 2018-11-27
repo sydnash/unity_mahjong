@@ -140,7 +140,7 @@ function mahjongOperation:onInit()
 
         self.planeMats[i] = mat
     end
-    self:highlightPlaneByTurn(-1)
+    self:darkPlanes()
     --骰子节点和动画
     self.diceRoot = find("shaizi")
     self.diceRootAnim = getComponentU(self.diceRoot.gameObject, typeof(UnityEngine.Animation))
@@ -284,7 +284,7 @@ function mahjongOperation:onGameStart()
     self:rotatePlanes()
 
     self.countdownTick = -1
-    self:highlightPlaneByTurn(-1)
+    self:darkPlanes()
     self:setCountdownVisible(false)
     self.chupaiPtr:hide()
 
@@ -346,7 +346,7 @@ function mahjongOperation:onGameSync()
                     m = mahjong.new(mid)
                 end
 
-                local s = self.game:getSeatType(v.turn)
+                local s = self.game:getSeatTypeByAcId(v.acId)
                 local c = self.seats[s][mahjongGame.cardType.hu]
 
                 m:setLocalPosition(c.pos)
@@ -392,7 +392,7 @@ function mahjongOperation:onGameSync()
         end
     elseif self.game.deskStatus == deskStatus.playing then
         self:onOpList(reenter.CurOpList)
-        self:highlightPlaneByTurn(reenter.CurOpTurn)
+        self:highlightPlaneByAcId(reenter.CurOpAcId)
         self.turnCountdown = COUNTDOWN_SECONDS_C
         self.countdownTick = time.realtimeSinceStartup()
         self:setCountdownVisible(true)
@@ -419,33 +419,29 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:relocateIdleMahjongs(visible)
     local mahjongCount = self.game:getTotalMahjongCount()
-    local playerCount  = 4 --self.game:getTotalPlayerCount()
-    local markerTurn   = self.game:getMarkerTurn()
-    local playerStart  = (self.game.dices[1] + self.game.dices[2] + markerTurn) % playerCount - 1
+    local markerTurn   = self.game:getMarkerPlayer().turn
+    local playerStart  = (self.game.dices[1] + self.game.dices[2] + markerTurn) % 4 - 1
 
     local dirMahjongCnt = {}
-    for i = 0, playerCount-1 do
+    for i = 0, 3 do
         dirMahjongCnt[i] = 0
     end
     local i = 0
     while mahjongCount > 0 do
         mahjongCount = mahjongCount - 2
-        dirMahjongCnt[i%playerCount] = dirMahjongCnt[i%playerCount] + 1
+        dirMahjongCnt[i%4] = dirMahjongCnt[i%4] + 1
         i = i + 1
     end
 
     local acc = 1
-    for dir = playerStart, playerStart-playerCount+1, -1 do
-        -- local player = self.game:getPlayerByTurn((playerCount+t) % playerCount)
-
+    for dir = playerStart, playerStart-3, -1 do
         if dir < 0 then
             dir = dir + 4
         end
         local i = dirMahjongCnt[dir]
         i = i * 2
 
-        local turn = dir --self.game:getSeatType(player.turn)
-        local seat = self.seats[turn]
+        local seat = self.seats[dir]
 
         local o = seat[mahjongGame.cardType.idle].pos
         local r = seat[mahjongGame.cardType.idle].rot
@@ -462,11 +458,11 @@ function mahjongOperation:relocateIdleMahjongs(visible)
             local z = o.z
             local w = mahjong.w * u
 
-            if turn == mahjongGame.seatType.mine then
+            if dir == mahjongGame.seatType.mine then
                 x = (o.x - d) - w
-            elseif turn == mahjongGame.seatType.left then
+            elseif dir == mahjongGame.seatType.left then
                 z = (o.z + d) + w
-            elseif turn == mahjongGame.seatType.right then
+            elseif dir == mahjongGame.seatType.right then
                 z = (o.z - d) - w
             else
                 x = (o.x + d) + w
@@ -492,7 +488,7 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongOperation:OnFaPai()
-    self:highlightPlaneByTurn(self.game.markerTurn)
+    self:highlightPlaneByAcId(self.game.markerAcId)
 
     for _, player in pairs(self.game.players) do
         self:createInHandMahjongs(player)
@@ -1269,7 +1265,7 @@ end
 -------------------------------------------------------------------------------
 -- 将麻将m插入到手牌中
 -------------------------------------------------------------------------------
-function mahjongOperation:insertMahjongToInhand(m)
+function mahjongOperation:insertMahjongToInhand(m, relocate)
     m:setPickabled(true)
 
     local mahjongs = self.inhandMahjongs[self.game.mainAcId]
@@ -1317,20 +1313,18 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:getMyInhandMahjongPos(player, index) 
     index = index - 1
-    local turn = self.game:getSeatType(player.turn)
-    local seat = self.seats[turn]
+    local dir = self.game:getSeatTypeByAcId(player.acId)
+    local seat = self.seats[dir]
     local o = seat[mahjongGame.cardType.shou][self.game.mode].pos
     o = Vector3.New(o.x, o.y, o.z)
-    if turn == mahjongGame.seatType.mine then
+    if dir == mahjongGame.seatType.mine then
         if self.lastPengPos then
             local sceneCamera = UnityEngine.Camera.main
             local screenPos = sceneCamera:WorldToScreenPoint(self.lastPengPos)
-            --log("sc1 " .. screenPos.x .. "  " .. screenPos.y)
             local inhandCamera = GameObjectPicker.instance.camera
             local direct = o - inhandCamera.transform.position
             local project = Vector3.Project(direct, inhandCamera.transform.forward)
             screenPos.x = screenPos.x + 30
-            --log("sc2 " .. screenPos.x .. "  " .. screenPos.y)
             local wp = inhandCamera:ScreenToWorldPoint(Vector3.New(screenPos.x, screenPos.y, project.magnitude))
             wp.x = wp.x + mahjong.w * 0.5
             o.x = wp.x
@@ -1348,8 +1342,8 @@ function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
 
     self:sortInhand(player, mahjongs)
 
-    local turn = self.game:getSeatType(player.turn)
-    local seat = self.seats[turn]
+    local dir = self.game:getSeatTypeByAcId(player.acId)
+    local seat = self.seats[dir]
 
     local o = self:getMyInhandMahjongPos(player, 1)
     local r = seat[mahjongGame.cardType.shou][self.game.mode].rot
@@ -1358,13 +1352,13 @@ function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
         k = k - 1
         local p = m:getLocalPosition()
 
-        if turn == mahjongGame.seatType.mine then
+        if dir == mahjongGame.seatType.mine then
             p:Set(o.x + (mahjong.w * k), o.y, o.z)
             m:setPickabled(true)
-        elseif turn == mahjongGame.seatType.left then
+        elseif dir == mahjongGame.seatType.left then
             p:Set(o.x, o.y, o.z + (mahjong.w * k))
             m:setPickabled(false)
-        elseif turn == mahjongGame.seatType.right then
+        elseif dir == mahjongGame.seatType.right then
             p:Set(o.x, o.y, o.z - (mahjong.w * k))
             m:setPickabled(false)
         else
@@ -1374,7 +1368,6 @@ function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
 
         m:setLocalPosition(p)
         m:setLocalRotation(r)
---        m:setLocalScale(s)
     end
 end
 
@@ -1383,8 +1376,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:relocateChuMahjongs(player)
     local acId = player.acId
-    local turn = self.game:getSeatType(player.turn)
-    local seat = self.seats[turn]
+    local dir = self.game:getSeatTypeByAcId(acId)
+    local seat = self.seats[dir]
 
     local o = seat[mahjongGame.cardType.chu].pos
     local r = seat[mahjongGame.cardType.chu].rot
@@ -1400,11 +1393,11 @@ function mahjongOperation:relocateChuMahjongs(player)
         local y = (u < 2) and o.y or o.y + mahjong.z
         local d = (u % 2) * mahjong.h
 
-        if turn == mahjongGame.seatType.mine then
+        if dir == mahjongGame.seatType.mine then
             p:Set(o.x + mahjong.w * c, y, o.z - d)
-        elseif turn == mahjongGame.seatType.left then
+        elseif dir == mahjongGame.seatType.left then
             p:Set(o.x - d, y, o.z - mahjong.w * c)
-        elseif turn == mahjongGame.seatType.right then
+        elseif dir == mahjongGame.seatType.right then
             p:Set(o.x + d, y, o.z + mahjong.w * c)
         else
             p:Set(o.x - mahjong.w * c, y, o.z + d)
@@ -1413,7 +1406,6 @@ function mahjongOperation:relocateChuMahjongs(player)
         m:setPickabled(false)
         m:setLocalPosition(p)
         m:setLocalRotation(r)
---        m:setLocalScale(s)
     end
 end
 
@@ -1422,8 +1414,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:relocatePengMahjongs(player)
     local acId = player.acId
-    local turn = self.game:getSeatType(player.turn)
-    local seat = self.seats[turn]
+    local dir = self.game:getSeatTypeByAcId(acId)
+    local seat = self.seats[dir]
 
     local o = seat[mahjongGame.cardType.peng].pos
     local r = seat[mahjongGame.cardType.peng].rot
@@ -1447,11 +1439,11 @@ function mahjongOperation:relocatePengMahjongs(player)
                 isUpon = true
             end 
 
-            if turn == mahjongGame.seatType.mine then
+            if dir == mahjongGame.seatType.mine then
                 p:Set(o.x + mahjong.w * c + d, y, o.z)
-            elseif turn == mahjongGame.seatType.left then
+            elseif dir == mahjongGame.seatType.left then
                 p:Set(o.x, y, o.z - mahjong.w * c - d)
-            elseif turn == mahjongGame.seatType.right then
+            elseif dir == mahjongGame.seatType.right then
                 p:Set(o.x, y, o.z + mahjong.w * c + d)
             else
                 p:Set(o.x - mahjong.w * c - d, y, o.z)
@@ -1467,11 +1459,11 @@ function mahjongOperation:relocatePengMahjongs(player)
         end
     end
 
-    if turn == mahjongGame.seatType.mine then
+    if dir == mahjongGame.seatType.mine then
         self.lastPengPos = lastPengPos
     end
 
-    if turn == mahjongGame.seatType.mine then
+    if dir == mahjongGame.seatType.mine then
         local player = self.game:getPlayerByAcId(self.game.mainAcId)
         local mahjongs = self.inhandMahjongs[self.game.mainAcId]
         self:relocateInhandMahjongs(player, mahjongs)
@@ -1525,18 +1517,22 @@ end
 function mahjongOperation:putMahjongsToHuan(acId, mahjongs)
     self.hnzMahjongs[acId] = mahjongs
 
-    local s = self.game:getSeatTypeByAcId(acId)
-    local o = seat[mahjongGame.cardType.huan].pos
-    local r = seat[mahjongGame.cardType.huan].rot
     
-    local offset = (mahjong.w * 0.5) * ((self.hnzCount + 1) % 2)
+    local t = self.game:getSeatTypeByAcId(acId)
+    local s = self.seats[t]
+    local o = s[mahjongGame.cardType.huan].pos
+    local r = s[mahjongGame.cardType.huan].rot
+    
+    local m = self.game:getSeatTypeByAcId(acId)
+    local c = mahjong.w * (self.hnzCount - 1) / 2
+
     for k, v in pairs(mahjongs) do
         local p = v:getLocalPosition()
 
-        if s == mahjongGame.seatType.mine or s == mahjongGame.seatType.top then
-            p:Set(o.x, o.y, o.z)
+        if m == mahjongGame.seatType.mine or m == mahjongGame.seatType.top then
+            p:Set((k - 1) * mahjong.w - c, o.y, o.z)
         else
-            p:Set(o.x, o.y, o.z)
+            p:Set(o.x, o.y, (k - 1) * mahjong.w - c)
         end
 
         v:setLocalPosition(p)
@@ -1548,30 +1544,37 @@ end
 -- 将当前acid的plane高亮
 -------------------------------------------------------------------------------
 function mahjongOperation:highlightPlaneByAcId(acId)
-    local player = self.game:getPlayerByAcId(acId)
-    local turn = player and player.turn or -1
+    if self.game.markerAcId == nil or acId <= 0 then
+        self:darkPlanes()
+    else
+        local base = self.game:getSeatTypeByAcId(self.game.markerAcId)
+        local seat = self.game:getSeatTypeByAcId(acId)
+        local diff = (seat ~= nil) and (seat - base + 4) % 4 or nil
 
-    self:highlightPlaneByTurn(turn)
+        for s, m in pairs(self.planeMats) do
+            if m.mainTexture ~= nil then
+                textureManager.unload(m.mainTexture)
+            end
+
+            if diff ~= nil and s == diff then
+                m.mainTexture = textureManager.load("", "deskfw_gl")
+            else
+                m.mainTexture = textureManager.load("", "deskfw")
+            end
+        end
+    end
 end
 
 -------------------------------------------------------------------------------
--- 将当前turn的plane高亮
+-- 将当前acid的plane高亮
 -------------------------------------------------------------------------------
-function mahjongOperation:highlightPlaneByTurn(turn)
-    local base = self.game:getSeatType(self.game.markerTurn)
-    local seat = self.game:getSeatType(turn)
-    local diff = (seat ~= nil) and (seat - base + 4) % 4 or nil
-
-    for s, m in pairs(self.planeMats) do
+function mahjongOperation:darkPlanes()
+    for _, m in pairs(self.planeMats) do
         if m.mainTexture ~= nil then
             textureManager.unload(m.mainTexture)
         end
 
-        if diff ~= nil and s == diff then
-            m.mainTexture = textureManager.load("", "deskfw_gl")
-        else
-            m.mainTexture = textureManager.load("", "deskfw")
-        end
+        m.mainTexture = textureManager.load("", "deskfw")
     end
 end
 
@@ -1718,7 +1721,6 @@ end
 -- 销毁
 -------------------------------------------------------------------------------
 function mahjongOperation:onDestroy()
-    log("=======================================")
     if self.game.mode == gameMode.normal then
         touch.removeListener()
     end
@@ -1768,15 +1770,17 @@ end
 -- 旋转方位标志牌
 -------------------------------------------------------------------------------
 function mahjongOperation:rotatePlanes()
-    local base = self.game:getSeatType(self.game.markerTurn)
-    local seat = self.game:getSeatTypeByAcId(self.game.mainAcId)
+    if self.game.markerAcId ~= nil then
+        local base = self.game:getSeatTypeByAcId(self.game.markerAcId)
+        local seat = self.game:getSeatTypeByAcId(self.game.mainAcId)
 
-    local rot = 0
-    if base ~= nil and seat ~= nil then
-        rot = 90 * (seat - base)
+        local rot = 0
+        if base ~= nil and seat ~= nil then
+            rot = 90 * (seat - base)
+        end
+
+        self.planeRoot.transform.localRotation = Quaternion.Euler(0, rot, 0)
     end
-
-    self.planeRoot.transform.localRotation = Quaternion.Euler(0, rot, 0)
 end
 
 -------------------------------------------------------------------------------
@@ -1873,6 +1877,10 @@ function mahjongOperation:onHuanNZhangDo(msg)
     self:relocateInhandMahjongs(player, mahjongs)
 
     self.hnzMahjongs = {}
+end
+
+function mahjongOperation:onHuanNZhangDoPlayback(msg)
+
 end
 
 return mahjongOperation
