@@ -266,11 +266,11 @@ function loginServer(callback, func)
     --登录服务器
     local loginImp = func
 
-    loginImp(function(ok, msg)
+    loginImp(function(msg)
         closeWaitingUI()
         platformHelper.setLogined(false)
 
-        if not ok then
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试", function()
                 callback(false)
             end)

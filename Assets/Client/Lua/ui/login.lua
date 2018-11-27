@@ -23,6 +23,7 @@ local function readServerConfig()
 
     return loadstring(text)()
 end
+
 local function writeServerConfig(config)
     local text = "return " .. table.tostring(config)
     LFS.WriteText(saveFile, text, LFS.UTF8_WITHOUT_BOM)
@@ -33,21 +34,25 @@ function login:onLocalServerChangedHandler(sender, selected)
         self:choseLoginServer(sender.serverName)
     end
 end
+
 function login:onTestServerChangedHandler(sender, selected)
     if selected then
         self:choseLoginServer(sender.serverName)
     end
 end
+
 function login:onReleaseServerChangedHandler(sender, selected)
     if selected then
         self:choseLoginServer(sender.serverName)
     end
 end
+
 function login:choseLoginServer(name)
     self.serverConfig.chose = name
     networkConfig.setServer(networkConfig[name])
     writeServerConfig(self.serverConfig)
 end
+
 ----------------------------------------------------------------------------------------------
 --测试服列表代码结束
 ----------------------------------------------------------------------------------------------

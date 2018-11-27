@@ -274,7 +274,7 @@ local function loginC(text, callback)
     local o = table.fromjson(text)
 
     if o.retcode ~= retc.ok then
-        callback(false, nil)
+        callback(nil)
         return
     end
 
@@ -290,13 +290,13 @@ local function loginC(text, callback)
 
     networkManager.connect(host, port, function(connected)
         if not connected then
-            callback(false, nil)
+            callback(nil)
         else
             local loginType = 1
             local data = { AcId = acid, Session = session, LoginType = loginType }
             send(protoType.cs.loginHs, data, function(msg)
                 if msg == nil then
-                    callback(false, nil)
+                    callback(nil)
                 else
                     gamepref.session    = msg.Session
                     gamepref.acId       = msg.AcId
@@ -313,7 +313,7 @@ local function loginC(text, callback)
                     gamepref.player.userType   = msg.UserType
                     gamepref.player:setMails(msg.Mails)
 
-                    callback(true, msg)
+                    callback(msg)
                 end
             end)
         end
@@ -332,7 +332,7 @@ function networkManager.loginGuest(callback)
     local loginURL = networkConfig.server.guestURL
     http.getText(loginURL .. "?" .. form, timeout, function(ok, text)
         if (not ok) or string.isNilOrEmpty(text) then
-            callback(false, nil)
+            callback(nil)
             return
         end
         
@@ -348,7 +348,7 @@ function networkManager.loginWx(callback)
 
     platformHelper.registerLoginWxCallback(function(json)
         if string.isNilOrEmpty(json) then
-            callback(false, nil)
+            callback(nil)
             return
         end
 
@@ -362,7 +362,7 @@ function networkManager.loginWx(callback)
 
             http.getText(accessUrl, timeout, function(ok, text)
                 if (not ok) or string.isNilOrEmpty(text) then
-                    callback(false, nil)
+                    callback(nil)
                     return
                 end
 
