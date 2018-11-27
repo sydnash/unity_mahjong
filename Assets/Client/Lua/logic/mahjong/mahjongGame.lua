@@ -97,6 +97,8 @@ function mahjongGame:startLoop()
         self.operationUI = require("ui.mahjongOperation").new(self)
     end
     self.operationUI:show()
+    self.deskUI:reset()
+    self.operationUI:reset()
 
     if self.mode == gameMode.playback then 
         local ui = require("ui.playback").new(self)
