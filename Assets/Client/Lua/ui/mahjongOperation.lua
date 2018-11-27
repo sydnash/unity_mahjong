@@ -67,6 +67,10 @@ local mopaiConfig = {
 
 local COUNTDOWN_SECONDS_C = 20
 
+local ROTATION_90_DEGREE  = Quaternion.Euler(0,  90, 0)
+local ROTATION_180_DEGREE = Quaternion.Euler(0, 180, 0)
+local ROTATION_270_DEGREE = Quaternion.Euler(0, -90, 0)
+
 -------------------------------------------------------------------------------
 -- 交换两个牌
 -------------------------------------------------------------------------------
@@ -106,6 +110,7 @@ end
 -- 初始化
 -------------------------------------------------------------------------------
 function mahjongOperation:onInit()
+    log("1111111111111111111111")
     self.turnCountdown = COUNTDOWN_SECONDS_C
     self.countdownTick = -1
 
@@ -121,20 +126,22 @@ function mahjongOperation:onInit()
     local mahjongsRootClip = animationManager.load("mahjongroot", "mahjongroot")
     self.mahjongsRootAnim:AddClip(mahjongsRootClip, mahjongsRootClip.name)
     self.mahjongsRootAnim.clip = mahjongsRootClip
-
-    self.planeRoot = find("planes")
-    self:rotatePlanes()
     --圆盘
     local circle = find("planes/cricle/Cricle_0")
     local circleMat = getComponentU(circle.gameObject, typeof(UnityEngine.MeshRenderer)).sharedMaterial
     circleMat.mainTexture = textureManager.load("", "deskfw")
     --方向指示节点
---    local planeNames = { "plane02", "plane01", "plane01", "plane01" }
+    self.planeRoot = find("planes")
+    self:rotatePlanes()
+    local planeNames = { 
+        [mahjongGame.seatType.mine]  = "plane02/plane02_0", 
+        [mahjongGame.seatType.right] = "plane03/plane03_0", 
+        [mahjongGame.seatType.top]   = "plane04/plane04_0", 
+        [mahjongGame.seatType.left]  = "plane01/plane01_0", 
+    }
     self.planeMats = {}
     for i=mahjongGame.seatType.mine, mahjongGame.seatType.left do
-        local a = (i + 2 == 5) and 1 or i + 2
-
-        local go = findChild(self.planeRoot.transform, string.format("plane0%d/plane0%d_0", a, a))
+        local go = findChild(self.planeRoot.transform, planeNames[i])
         local mesh = getComponentU(go.gameObject, typeof(UnityEngine.MeshRenderer))
         local mat = mesh.sharedMaterial
 
@@ -201,6 +208,7 @@ function mahjongOperation:onInit()
     self.mHnz:hide()
     self.mQue:hide()
     self.mDQTips:hide()
+    self.mHnzNotify:hide()
     self:hideOperations()
 
     self.idleMahjongs   = {}
@@ -531,8 +539,10 @@ end
 -- 定缺结束
 -------------------------------------------------------------------------------
 function mahjongOperation:onDingQueDo(msg)
-    local player = self.game:getPlayerByAcId(self.game.mainAcId)
-    local mahjongs = self.inhandMahjongs[self.game.mainAcId]
+    local acId = self.game.mainAcId
+
+    local player = self.game:getPlayerByAcId(acId)
+    local mahjongs = self.inhandMahjongs[acId]
 
     for _, v in pairs(mahjongs) do
         if v.class == player.que then
@@ -542,7 +552,7 @@ function mahjongOperation:onDingQueDo(msg)
         end  
     end
 
-    self:relocateInhandMahjongs(player, mahjongs)
+    self:relocateInhandMahjongs(acId)
 
     self.mDQTips:hide()
     self.mQue:hide()
@@ -790,12 +800,11 @@ function mahjongOperation:touchHandler(phase, pos)
 
                     networkManager.chuPai({ id }, function(ok, msg)
                         log("chu pai failed")
-                        local player = self.game:getPlayerByAcId(self.game.mainAcId)
-                        local mahjongs = self.inhandMahjongs[self.game.mainAcId]
-                        self:relocateInhandMahjongs(player, mahjongs)
+                        self:relocateInhandMahjongs(self.game.mainAcId)
                     end)
 
-                    playMahjongSound(id, 1)
+                    local player = self.game:getPlayerByAcId(self.game.mainAcId)
+                    playMahjongSound(id, player.sex)
                 end
 
                 self.selectedMahjong = nil
@@ -1258,8 +1267,7 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
         end
     end
 
-    local player = self.game:getPlayerByAcId(acId)
-    self:relocateInhandMahjongs(player, mahjongs)
+    self:relocateInhandMahjongs(acId)
 end
 
 -------------------------------------------------------------------------------
@@ -1270,9 +1278,7 @@ function mahjongOperation:insertMahjongToInhand(m, relocate)
 
     local mahjongs = self.inhandMahjongs[self.game.mainAcId]
     table.insert(mahjongs, m)
-
-    local player = self.game:getPlayerByAcId(self.game.mainAcId)
-    self:relocateInhandMahjongs(player, mahjongs)
+    self:relocateInhandMahjongs(self.game.mainAcId)
 end
 
 -------------------------------------------------------------------------------
@@ -1302,8 +1308,7 @@ function mahjongOperation:decreaseInhandMahjongs(acId, datas)
         end
     end
 
-    local player = self.game:getPlayerByAcId(acId)
-    self:relocateInhandMahjongs(player, mahjongs)
+    self:relocateInhandMahjongs(acId)
 
     return decreaseMahjongs
 end
@@ -1335,10 +1340,9 @@ function mahjongOperation:getMyInhandMahjongPos(player, index)
     return o
 end
 
-function mahjongOperation:relocateInhandMahjongs(player, mahjongs)
-    if mahjongs == nil then
-        return
-    end
+function mahjongOperation:relocateInhandMahjongs(acId)
+    local player = self.game:getPlayerByAcId(acId)
+    local mahjongs = self.inhandMahjongs[acId]
 
     self:sortInhand(player, mahjongs)
 
@@ -1464,9 +1468,7 @@ function mahjongOperation:relocatePengMahjongs(player)
     end
 
     if dir == mahjongGame.seatType.mine then
-        local player = self.game:getPlayerByAcId(self.game.mainAcId)
-        local mahjongs = self.inhandMahjongs[self.game.mainAcId]
-        self:relocateInhandMahjongs(player, mahjongs)
+        self:relocateInhandMahjongs(self.game.mainAcId)
     end
 end
 
@@ -1583,58 +1585,17 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:clear(forceDestroy)
 --    log("clear, forceDestroy = " .. tostring(forceDestroy))
-
     self.lastPengPos = nil
-    if forceDestroy then
-        -- 直接删除
-        for _, m in pairs(self.idleMahjongs) do
+
+    local function destroy(m)
+        if m ~= nil then
             m:destroy()
         end
-        self.idleMahjongs = {}
+    end
 
-        for _, p in pairs(self.game.players) do
-            local inhand = self.inhandMahjongs[p.acId]
-            if inhand ~= nil then
-                for _, v in pairs(inhand) do
-                    v:destroy()
-                end
-            end
-
-            local peng = self.pengMahjongs[p.acId]
-            if peng ~= nil then
-                for _, u in pairs(peng) do
-                    for _, v in pairs(u) do
-                        v:destroy()
-                    end
-                end
-            end
-
-            local chu = self.chuMahjongs[p.acId]
-            if chu ~= nil then
-                for _, v in pairs(chu) do
-                    v:destroy()
-                end
-            end
-
-            local hu = self.huMahjongs[package.acId]
-            if hu ~= nil then
-                hu:destroy()
-            end
-
-            self.inhandMahjongs[p.acId] = nil
-            self.chuMahjongs[p.acId]    = nil
-            self.pengMahjongs[p.acId]   = nil
-            self.huMahjongs[p.acId]     = nil
-        end
-    else
-        -- 不强制删除，则将麻将重新有序地放回idle列表并剔除重复id（一炮多响会出现一个id对应多个麻将实体）
-        local set = {}
-
-        local function insert(m)
-            if m == nil then
-                return
-            end
-
+    local set = {}
+    local function insert(m)
+        if m ~= nil then
             if set[m.id] == nil then
                 m:reset()
                 m:hide()
@@ -1643,49 +1604,59 @@ function mahjongOperation:clear(forceDestroy)
                 m:destroy()
             end
         end
+    end
 
-        if self.mo ~= nil then
-            insert(self.mo)
+    local func = forceDestroy and destroy or insert
+
+    for _, m in pairs(self.idleMahjongs) do
+        func(m)
+    end
+    self.idleMahjongs = {}
+
+    for _, p in pairs(self.game.players) do
+        local inhand = self.inhandMahjongs[p.acId]
+        if inhand ~= nil then
+            for _, v in pairs(inhand) do
+                func(v)
+            end
         end
 
-        for _, m in pairs(self.idleMahjongs) do
-            insert(m)
-        end
-        self.idleMahjongs = {}
-
-        for _, p in pairs(self.game.players) do
-            local inhand = self.inhandMahjongs[p.acId]
-            if inhand ~= nil then
-                for _, v in pairs(inhand) do
-                    insert(v)
+        local peng = self.pengMahjongs[p.acId]
+        if peng ~= nil then
+            for _, u in pairs(peng) do
+                for _, v in pairs(u) do
+                    func(v)
                 end
             end
-
-            local peng = self.pengMahjongs[p.acId]
-            if peng ~= nil then
-                for _, u in pairs(peng) do
-                    for _, v in pairs(u) do
-                        insert(v)
-                    end
-                end
-            end
-
-            local chu = self.chuMahjongs[p.acId]
-            if chu ~= nil then
-                for _, v in pairs(chu) do
-                    insert(v)
-                end
-            end
-
-            local hu = self.huMahjongs[p.acId]
-            insert(hu)
-
-            self.inhandMahjongs[p.acId] = nil
-            self.chuMahjongs[p.acId]    = nil
-            self.pengMahjongs[p.acId]   = nil
-            self.huMahjongs[p.acId]     = nil
         end
 
+        local chu = self.chuMahjongs[p.acId]
+        if chu ~= nil then
+            for _, v in pairs(chu) do
+                func(v)
+            end
+        end
+
+        local hu = self.huMahjongs[p.acId]
+        if hu ~= nil then
+            func(hu)
+        end
+
+        local huan = self.hnzMahjongs[p.acId]
+        if huan ~= nil then
+            for _, v in pairs(huan) do
+                func(v)
+            end
+        end
+
+        self.inhandMahjongs[p.acId] = nil
+        self.chuMahjongs[p.acId]    = nil
+        self.pengMahjongs[p.acId]   = nil
+        self.huMahjongs[p.acId]     = nil
+        self.hnzMahjongs[p.acId]    = nil
+    end
+
+    if not forceDestroy then
         for _, v in pairs(set) do
             table.insert(self.idleMahjongs, v)
         end
@@ -1710,6 +1681,12 @@ function mahjongOperation:reset()
     self.countdown:show()
 
     self:clear(false)
+
+    self.mGang_MS:hide()
+    self.mHnz:hide()
+    self.mQue:hide()
+    self.mDQTips:hide()
+    self.mHnzNotify:hide()
     self:hideOperations()
 end
 
@@ -1841,8 +1818,7 @@ function mahjongOperation:onHnzChoose(msg)
         end
         self:putMahjongsToHuan(acId, hms)
 
-        local player = self.game:getPlayerByAcId(acId)
-        self:relocateInhandMahjongs(player, mahjongs)
+        self:relocateInhandMahjongs(acId)
     end
 end
 
@@ -1850,37 +1826,107 @@ end
 -- 服务器通知确定换N张
 -------------------------------------------------------------------------------
 function mahjongOperation:onHuanNZhangDo(msg)
-    for k, v in pairs(self.hnzMahjongs) do
-        if k ~= msg.AcId then
-            local mahjongs = self.inhandMahjongs[k]
-            for _, u in pairs(v) do
-                table.insert(mahjongs, u)
+    local animation = tweenSerial.new(true)
+
+    animation:add(tweenDelay.new(0.5))
+    animation:add(tweenFunction.new(function()
+        local text = string.empty
+        local playerCount = self.game:getTotalPlayerCount()
+
+        if playerCount == 4 then
+            if msg.R == 1 then
+                text = "逆时针交换"
+            elseif msg.R == 2 then
+                text = "对家交换"
+            else
+                text = "顺时针交换"
             end
-            local player = self.game:getPlayerByAcId(k)
-            self:relocateInhandMahjongs(player, mahjongs)
+        elseif playerCount == 3 then
+            if msg.R == 1 then
+                text = "逆时针交换"
+            else
+                text = "顺时针交换"
+            end
+        else
+            text = "相互交换"
         end
-    end
 
-    local temp = self.hnzMahjongs[msg.AcId]--删除的牌
-    for k, id in pairs(msg.I) do
-        local m, queue, idx = self:getMahjongFromIdle(id)
-        swap(temp, k, queue, idx)
-    end
-    --把增加的牌插入手牌
-    local mahjongs = self.inhandMahjongs[msg.AcId]
-    for _, v in pairs(temp) do
-        v:setPickabled(true)
-        table.insert(mahjongs, v)
-    end
-    --重新排序手牌
-    local player = self.game:getPlayerByAcId(msg.AcId)
-    self:relocateInhandMahjongs(player, mahjongs)
+        self.mHnzNotify:show(text)
+    end))
+    animation:add(tweenDelay.new(0.8))
+    animation:add(tweenFunction.new(function()
+        self.mHnzNotify:hide()
+    end))
+    animation:add(tweenDelay.new(0.5))
+    animation:add(tweenFunction.new(function()
+        for k, v in pairs(self.hnzMahjongs) do
+            if k ~= msg.AcId then
+                local mahjongs = self.inhandMahjongs[k]
+                for _, u in pairs(v) do
+                    table.insert(mahjongs, u)
+                end
+                self:relocateInhandMahjongs(k)
+            end
+        end
 
-    self.hnzMahjongs = {}
+        local temp = self.hnzMahjongs[msg.AcId]--删除的牌
+        self.hnzMahjongs = {}
+
+        for k, id in pairs(msg.I) do
+            local m, queue, idx = self:getMahjongFromIdle(id)
+            swap(temp, k, queue, idx)
+        end
+        --把增加的牌插入手牌
+        local mahjongs = self.inhandMahjongs[msg.AcId]
+        for _, v in pairs(temp) do
+            v:setPickabled(true)
+            table.insert(mahjongs, v)
+        end
+        --重新排序手牌
+        self:relocateInhandMahjongs(msg.AcId)
+    end))
+
+    tweenManager.add(animation)
+    animation:play()
 end
 
+-------------------------------------------------------------------------------
+-- 回放换N张
+-------------------------------------------------------------------------------
 function mahjongOperation:onHuanNZhangDoPlayback(msg)
+    local animation = tweenSerial.new(true)
+    local huanMahjongs = {}
 
+    animation:add(tweenFunction.new(function()
+        for _, v in pairs(msg.Dos) do
+            self.hnzCount = #v.D
+
+            local temp = self:decreaseInhandMahjongs(v.AcId, v.D)
+            self:putMahjongsToHuan(v.AcId, temp)
+
+            for _, u in pairs(temp) do
+                table.insert(huanMahjongs, u)
+            end 
+        end
+    end))
+    animation:add(tweenDelay.new(1.5))
+    animation:add(tweenFunction.new(function()
+        for _, v in pairs(msg.Dos) do
+            local mahjongs = self.inhandMahjongs[v.AcId]
+            for _, u in pairs(v.I) do
+                for _, h in pairs(huanMahjongs) do
+                    if h.id == u then
+                        table.insert(mahjongs, h)
+                        break
+                    end
+                end
+            end
+            self:relocateInhandMahjongs(v.AcId)
+        end
+    end))
+
+    tweenManager.add(animation)
+    animation:play()
 end
 
 return mahjongOperation

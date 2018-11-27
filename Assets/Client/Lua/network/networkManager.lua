@@ -307,7 +307,7 @@ local function loginC(text, callback)
                     gamepref.player:loadHeaderTex()
                     gamepref.player.nickname   = msg.Nickname
                     gamepref.player.ip         = msg.Ip
-                    gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.box, sexType.girl)
+                    gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.boy, sexType.girl)
                     gamepref.player.laolai     = msg.IsLaoLai
                     gamepref.player.cards      = msg.Coin
                     gamepref.player.userType   = msg.UserType
@@ -810,6 +810,11 @@ function networkManager.replyFriendsterRequest(friendsterId, acId, agree, callba
             callback(true, msg)
         end
     end)
+end
+
+function networkManager.dissolveFriendsterDesk(friendsterId, cityType, deskId, callback)
+    local data = { ClubId = friendsterId, GameType = cityType, DeskId = deskId, }
+    send(protoType.cs.dissolveFriendsterDesk, data, callback)
 end
 
 -------------------------------------------------------------------

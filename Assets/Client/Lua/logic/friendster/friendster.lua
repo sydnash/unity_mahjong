@@ -132,6 +132,7 @@ function friendster:addDesk(data)
     if self.desks == nil then
         return
     end
+
     local desk = createDesk(data)
     self.desks[desk.deskId] = desk
     self.curDeskCount = self.curDeskCount + 1

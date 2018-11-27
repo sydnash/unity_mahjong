@@ -32,7 +32,7 @@ function lobby:onInit()
     self.mAuthenticate:addClickListener(self.onAuthenticateClickedHandler, self)
     self.mMail:addClickListener(self.onMailClickedHandler, self)
 
-    if clientApp.currentDesk ~= nil and clientApp.currentDesk.deskId ~= nil then
+    if gamepref.player.currentDesk ~= nil then
         self.mReturnDesk:show()
         self.mCreateDesk:hide()
     else
@@ -45,6 +45,7 @@ function lobby:onInit()
     signalManager.registerSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
     signalManager.registerSignalHandler(signalType.mail, self.onMailHandler, self)
     signalManager.registerSignalHandler(signalType.city, self.onCityChangedHandler, self)
+    signalManager.registerSignalHandler(signalType.deskDestroy, self.onDeskDestroyHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
@@ -96,8 +97,8 @@ end
 function lobby:onReturnDeskClickedHandler()
     playButtonClickSound()
 
-    local cityType = clientApp.currentDesk.cityType
-    local deskId = clientApp.currentDesk.deskId
+    local cityType = gamepref.player.currentDesk.cityType
+    local deskId = gamepref.player.currentDesk.deskId
     
     enterDesk(cityType, deskId)
 end
@@ -193,6 +194,15 @@ function lobby:onCityChangedHandler(city)
     self.mCityText:setSprite(cityTypeSID[city])
 end
 
+function lobby:onDeskDestroyHandler(deskId)
+    if gamepref.player.currentDesk == nil or gamepref.player.currentDesk.deskId == deskId then
+        self.mReturnDesk:hide()
+        self.mCreateDesk:show()
+
+        gamepref.player.currentDesk = nil
+    end
+end
+
 function lobby:refreshMailRP()
     local newmail = false
 
@@ -218,6 +228,7 @@ function lobby:onDestroy()
     signalManager.unregisterSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
     signalManager.unregisterSignalHandler(signalType.mail, self.onMailHandler, self)
     signalManager.unregisterSignalHandler(signalType.city, self.onCityChangedHandler, self)
+    signalManager.unregisterSignalHandler(signalType.deskDestroy, self.onDeskDestroyHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
     self.mIcon:reset()

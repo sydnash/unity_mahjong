@@ -593,6 +593,7 @@
                 <false/>
             </struct>
             <key type="filename">Images/QYQ_zi15.png</key>
+            <key type="filename">Images/QYQ_zi16.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -849,6 +850,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/zz_zi01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,9,35,19</rect>
+                <key>scale9Paddings</key>
+                <rect>18,9,35,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../../FriendsterUI/Atlas/Images/GY_dyj.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -952,6 +966,8 @@
             <filename>Images/ZM_zi11.png</filename>
             <filename>Images/ZM_zi12.png</filename>
             <filename>Images/ZM_tx01.png</filename>
+            <filename>Images/zz_zi01.png</filename>
+            <filename>Images/QYQ_zi16.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

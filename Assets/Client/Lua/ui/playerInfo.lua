@@ -14,7 +14,7 @@ end
 
 function playerInfo:onInit()
     self.mIcon:setTexture(self.data.headerTex)
-    self.mSex:setSprite("boy")
+    self.mSex:setSprite((gamepref.player.sex == sexType.boy) and "boy" or "girl")
     self.mNickname:setText(self.data.nickname)
     self.mIp:hide()
 

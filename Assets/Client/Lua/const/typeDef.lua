@@ -22,7 +22,7 @@ language = {
 --
 --------------------------------------------------------------
 sexType = {
-    box  = 1,
+    boy  = 1,
     girl = 2,
 }
 
@@ -122,7 +122,7 @@ signalType = {
     chatText            = 1,
     chatEmoji           = 2,
     cardsChanged        = 3,
---    enterDesk           = 4,
+    deskDestroy         = 4,
     friendsterMessageOp = 5,
     mail                = 6,
     headerDownloaded    = "header|",

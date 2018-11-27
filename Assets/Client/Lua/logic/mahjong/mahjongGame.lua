@@ -46,6 +46,7 @@ function mahjongGame:ctor(data, playback)
     self.status             = data.Status
     self.creatorAcId        = data.Creator
     self.deskStatus         = deskStatus.none
+    self.canBack            = true
 
     self.commandHandlers = {
         [protoType.sc.otherEnterDesk]           = { func = self.onOtherEnterHandler,            nr = true },
@@ -76,6 +77,8 @@ function mahjongGame:ctor(data, playback)
     if playback == nil then
         self.mode = gameMode.normal
         self:registerCommandHandlers()
+
+        gamepref.player.currentDesk = { cityType = self.cityType, deskId = self.deskId }
     else
         self.mode = gameMode.playback
         self:registerPlaybackHandlers(playback)
@@ -184,6 +187,7 @@ function mahjongGame:onEnter(msg)
         self.totalMahjongCount  = msg.Reenter.TotalMJCnt
         self.leftMahjongCount   = msg.Reenter.LeftMJCnt
         self.deskStatus         = msg.Reenter.DeskStatus
+        self.canBack            = (self.deskStatus == deskStatus.none)
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
 end
@@ -202,7 +206,7 @@ function mahjongGame:syncPlayers(players)
         player:loadHeaderTex()
         player.nickname  = v.Nickname
         player.ip        = v.Ip
-        player.sex       = Mathf.Clamp(v.Sex, sexType.box, sexType.girl)
+        player.sex       = Mathf.Clamp(v.Sex, sexType.boy, sexType.girl)
         player.laolai    = v.IsLaoLai
         player.connected = v.IsConnected
         player.ready     = v.Ready
@@ -347,6 +351,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onGameStartHandler(msg)
 --    log("start game, msg = " .. table.tostring(msg))
+    self.canBack = false
+
     local func = tweenFunction.new(function()
         self.totalMahjongCount = msg.TotalMJCnt
         self.leftMahjongCount = self.totalMahjongCount
@@ -419,24 +425,20 @@ end
 -------------------------------------------------------------------------------                
 function mahjongGame:onHuanNZhangDoHandler(msg)
     if self.mode == gameMode.normal then
-        self.messageHandlers:add(tweenDelay.new(1))
-        --显示动画
-        self.messageHandlers:add(tweenDelay.new(1))
-
         local func = tweenFunction.new(function()
-            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
+--            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
             self.operationUI:onHuanNZhangDo(msg)
         end)
         self.messageHandlers:add(func)
     else
         local func = tweenFunction.new(function()
-            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
+--            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
             self.operationUI:onHuanNZhangDoPlayback(msg)
         end)
         self.messageHandlers:add(func)
-        --延时
-        self.messageHandlers:add(tweenDelay.new(1))
     end
+    --延时，等待交互动画完成
+    self.messageHandlers:add(tweenDelay.new(2))
 end
 -------------------------------------------------------------------------------
 -- 摸牌
@@ -531,8 +533,6 @@ function mahjongGame:endGame()
             return
         end
 
---        self.deskId = nil
-
         self.leftVoteSeconds    = msg.LeftTime
         self.exitVoteProposer   = msg.Proposer
 
@@ -540,6 +540,8 @@ function mahjongGame:endGame()
             self.exitDeskUI = require("ui.exitDesk").new(self)
             self.exitDeskUI:show()
         else
+            gamepref.player.currentDesk = nil
+            signalManager.signal(signalType.deskDestroy, self.deskId)
             self:exitGame()
         end
     end)
@@ -760,7 +762,14 @@ end
 -- 退出房间的原因
 -------------------------------------------------------------------------------
 local exitReason = {
-    voteExit = 5,
+    playerExit      = 0,
+    creatorExit     = 1,
+    timeEnd         = 2,
+    deskDestroy     = 3,
+    enterTimeout    = 4,
+    voteExit        = 5, --投票退出
+    gameClosed      = 6,
+    cloesByManager  = 7, --房间被亲友圈管理员关闭
 }
 
 -------------------------------------------------------------------------------
@@ -815,8 +824,20 @@ function mahjongGame:onExitDeskHandler(msg)
             self.gameEndUI:close()
             self.gameEndUI = nil
         end
+
         self.deskUI:reset()
         self.operationUI:reset()
+
+        gamepref.player.currentDesk = nil
+        signalManager.signal(signalType.deskDestroy, self.deskId)
+    elseif msg.Reason == exitReason.cloesByManager then
+        --被亲友圈管理员关闭
+        showMessageUI("牌桌已被亲友圈管理员，如有疑问请咨询亲友圈管理员或代理",
+                      function()
+                        gamepref.player.currentDesk = nil
+                        signalManager.signal(signalType.deskDestroy, self.deskId)
+                        self:exitGame()
+                      end)
     else
         if self.gameEndUI ~= nil then
             self.gameEndUI:endAll()
@@ -1074,6 +1095,10 @@ function mahjongGame:destroy()
         end
     end
 
+    self.deskUI = nil
+    self.operationUI = nil
+    self.exitDeskUI = nil
+
     self.deskId = nil
     clientApp.currentDesk = nil
 end
@@ -1090,6 +1115,13 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:isPlaying()
     return self.status == deskStatus.playing
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function mahjongGame:canBackToLobby()
+    return self.canBack
 end
 
 -------------------------------------------------------------------------------

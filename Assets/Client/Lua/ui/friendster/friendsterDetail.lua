@@ -125,7 +125,7 @@ function friendsterDetail:set(data)
 end
 
 function friendsterDetail:refreshUI()
-    if self.data.managerAcId == gamepref.acId then
+    if self.data.managerAcId == gamepref.player.acId then
         self.mMail:show()
         self.mBank:show()
         self.mStatistics:show()
@@ -176,10 +176,14 @@ function friendsterDetail:refreshDeskList()
 
     for i=1, deskCount, 2 do
         local L = desks[i]
+        L.friendsterId = self.data.id
+        L.managerAcId = self.data.managerAcId
 
         local R = nil 
         if i + 1 <= deskCount then
             R = desks[i + 1]
+            R.friendsterId = self.data.id
+            R.managerAcId = self.data.managerAcId
         end
 
         table.insert(deskRows, { L = L, R = R })
