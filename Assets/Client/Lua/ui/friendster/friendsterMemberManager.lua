@@ -48,15 +48,15 @@ function friendsterMemberManager:onQueryClickedHandler()
     local id = tonumber(self.mId:getText())
 
     showWaitingUI("正在查询玩家信息，请稍候")
-    networkManager.queryAcId(id, function(ok, msg)
+    networkManager.queryAcId(id, function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
 
-        log("query player info, msg = " .. table.tostring(msg))
+--        log("query player info, msg = " .. table.tostring(msg))
         self.mName:setText(cutoutString(msg.Nickname, gameConfig.nicknameMaxLength))
     end)
 end
@@ -101,15 +101,15 @@ function friendsterMemberManager:onAddClickedHandler()
     local acid = tonumber(self.mId:getText())
 
     showWaitingUI("正在将玩家添加到亲友圈，请稍候")
-    networkManager.addAcIdToFriendster(self.friendsterId, acid, function(ok, msg)
+    networkManager.addAcIdToFriendster(self.friendsterId, acid, function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
 
-        log("add player to friendster, msg = " .. table.tostring(msg))
+--        log("add player to friendster, msg = " .. table.tostring(msg))
 
         if msg.RetCode ~= retc.ok then
             showMessageUI(retcText[msg.RetCode])
@@ -127,15 +127,15 @@ function friendsterMemberManager:onDeleteClickedHandler()
     local acid = tonumber(self.mId:getText())
 
     showWaitingUI("正在将玩家从亲友圈中删除，请稍候")
-    networkManager.deleteAcIdFromFriendster(self.friendsterId, acid, function(ok, msg)
+    networkManager.deleteAcIdFromFriendster(self.friendsterId, acid, function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
 
-        log("delete player from friendster, msg = " .. table.tostring(msg))
+--        log("delete player from friendster, msg = " .. table.tostring(msg))
 
         if msg.RetCode ~= retc.ok then
             showMessageUI(retcText[msg.RetCode])

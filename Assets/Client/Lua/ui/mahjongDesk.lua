@@ -223,10 +223,10 @@ function mahjongDesk:onPositionClickedHandler()
     else
         showWaitingUI("正在定位各玩家位置，请稍候...")
 
-        networkManager.syncLocation(location, function(ok, msg)
+        networkManager.syncLocation(location, function(msg)
             closeWaitingUI()
 
-            if ok then
+            if msg ~= nil then
                 for _, v in pairs(msg.Locations) do
                     local player = self.game:getPlayerByAcId(v.AcId)
                     player.location.status    = v.Has

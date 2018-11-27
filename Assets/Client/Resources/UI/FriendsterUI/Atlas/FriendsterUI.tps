@@ -820,6 +820,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/QYQ_zi14_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>34,10,68,21</rect>
+                <key>scale9Paddings</key>
+                <rect>34,10,68,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/ZY_1_01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -906,6 +919,7 @@
             <filename>Images/QYQ_zi06_h.png</filename>
             <filename>Images/QYQ_zi07_h.png</filename>
             <filename>Images/QYQ_zi08_h.png</filename>
+            <filename>Images/QYQ_zi14_1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

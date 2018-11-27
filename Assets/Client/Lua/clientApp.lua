@@ -65,14 +65,11 @@ local errorMessageUI = nil
 local function tracebackHandler(errorMessage)
     logError(errorMessage)
 
-    if appConfig.debug and deviceConfig.isMobile then
-        if errorMessageUI == nil then
-            errorMessageUI = require("ui.errorMessage").new()
-            errorMessageUI:show()
-        end
-
-        errorMessageUI:appendErrorMessage(errorMessage)
+    if errorMessageUI == nil then
+        errorMessageUI = require("ui.errorMessage").new()
+        errorMessageUI:show()
     end
+    errorMessageUI:appendErrorMessage(errorMessage)
 
     --断开网络，主要是中断消息接收和处理的过程
     networkManager.disconnect()

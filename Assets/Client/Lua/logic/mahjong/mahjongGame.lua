@@ -296,8 +296,8 @@ end
 -- 准备状态
 -------------------------------------------------------------------------------
 function mahjongGame:ready(ready)
-    networkManager.ready(ready, function(ok, msg)
-        if not ok then
+    networkManager.ready(ready, function(msg)
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
         else
             self:onReadyHandler(msg)
@@ -521,9 +521,9 @@ end
 -- 结束一局
 -------------------------------------------------------------------------------
 function mahjongGame:endGame()
-    networkManager.destroyDesk(function(ok, msg)
+    networkManager.destroyDesk(function(msg)
 --        log("end game, msg = " .. table.tostring(msg))
-        if not ok then
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
@@ -551,7 +551,7 @@ end
 -- CS 过
 -------------------------------------------------------------------------------
 function mahjongGame:guo()
-    networkManager.guoPai(function(ok, msg)
+    networkManager.guoPai(function(msg)
     end)
 end
 
@@ -559,7 +559,7 @@ end
 -- CS 报
 -------------------------------------------------------------------------------
 --function mahjongGame:bao()
---    networkManager.baoPai(function(ok, msg)
+--    networkManager.baoPai(function(msg)
 --    end)
 --end
 
@@ -567,7 +567,7 @@ end
 -- CS 吃
 -------------------------------------------------------------------------------
 function mahjongGame:chi(cards)
-    networkManager.chiPai(cards, function(ok, msg)
+    networkManager.chiPai(cards, function(msg)
     end)
 end
 
@@ -575,7 +575,7 @@ end
 -- CS 碰
 -------------------------------------------------------------------------------
 function mahjongGame:peng(cards)
-    networkManager.pengPai(cards, function(ok, msg)
+    networkManager.pengPai(cards, function(msg)
     end)
 end
 
@@ -584,7 +584,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:gang(cards)
 --    log("mahjongGame.gang, cards = " .. table.tostring(cards))
-    networkManager.gangPai(cards, function(ok, msg)
+    networkManager.gangPai(cards, function(msg)
     end)
 end
 
@@ -592,7 +592,7 @@ end
 -- CS 胡
 -------------------------------------------------------------------------------
 function mahjongGame:hu(cards)
-    networkManager.huPai(cards, function(ok, msg)
+    networkManager.huPai(cards, function(msg)
     end)
 end
 
@@ -1024,37 +1024,40 @@ end
 function mahjongGame:onQuicklyStartNotify(msg)
     log("mahjongGame:onQuicklyStartNotify " .. table.tostring(msg))
 end
+
 -------------------------------------------------------------------------------
 -- 服务器通知快速开始投票结果
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartEndNotify(msg)
     log("mahjongGame:onQuicklyStartEndNotify" .. table.tostring(msg))
 end
+
 -------------------------------------------------------------------------------
 -- 服务器通知有玩家选择快速开始投票
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartChose(msg)
     log("mahjongGame:onQuicklyStartChose" .. table.tostring(msg))
 end
+
 -------------------------------------------------------------------------------
 --发起快速开始
 -------------------------------------------------------------------------------
-function mahjongGame:proposerQuicklyStart(cb)
-    networkManager.proposerQuicklyStart(cb)
+function mahjongGame:proposerQuicklyStart(callback)
+    networkManager.proposerQuicklyStart(callback)
 end
+
 -------------------------------------------------------------------------------
 --快开始投票
 -------------------------------------------------------------------------------
-function mahjongGame:quicklyStartChose(agree, cb)
-    networkManager.quicklyStartChose(agree, cb)
+function mahjongGame:quicklyStartChose(agree, callback)
+    networkManager.quicklyStartChose(agree, callback)
 end
 
 -------------------------------------------------------------------------------
 -- 同意解散房间
 -------------------------------------------------------------------------------
 function mahjongGame:agreeExit()
-    networkManager.exitVote(true, function(ok, msg)
-
+    networkManager.exitVote(true, function(msg)
     end)
 end
 
@@ -1062,8 +1065,7 @@ end
 -- 拒绝解散房间
 -------------------------------------------------------------------------------
 function mahjongGame:rejectExit()
-    networkManager.exitVote(false, function(ok, msg)
-
+    networkManager.exitVote(false, function(msg)
     end)
 end
 

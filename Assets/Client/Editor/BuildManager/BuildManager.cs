@@ -64,6 +64,9 @@ public class BuildManager : EditorWindow
             {
                 case BuildTarget.Android:
                     suffix = "apk";
+                    PlayerSettings.Android.keystorePass = "com.bshy.mahjong";
+                    PlayerSettings.Android.keyaliasName = "mahjong";
+                    PlayerSettings.Android.keyaliasPass = "com.bshy.mahjong";
                     break;
                 case BuildTarget.iOS:
                     suffix = string.Empty;

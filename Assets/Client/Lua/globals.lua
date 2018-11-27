@@ -165,8 +165,8 @@ function enterDesk(gameType, deskId, callback)
         callback = function(ok) end
     end
 
-    networkManager.checkDesk(gameType, deskId, function(ok, msg)
-        if not ok then
+    networkManager.checkDesk(gameType, deskId, function(msg)
+        if msg == nil then
             closeWaitingUI()
             showMessageUI("网络繁忙，请稍后再试", function()
                 callback(false)
@@ -184,10 +184,10 @@ function enterDesk(gameType, deskId, callback)
 
         local location = locationManager.getData()
         
-        networkManager.enterDesk(gameType, deskId, location, function(ok, msg)
+        networkManager.enterDesk(gameType, deskId, location, function(msg)
             closeWaitingUI()
 
-            if not ok then
+            if msg == nil then
                 showMessageUI("网络繁忙，请稍后再试", function()
                     callback(false)
                 end)
