@@ -22,6 +22,7 @@ function transfer:onInit()
 
     self.mId:setText(string.empty)
     self.mCount:setText(string.empty)
+    self.mNickname:setText(string.empty)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -108,16 +109,24 @@ function transfer:onTransferClickedHandler()
 end
 
 function transfer:onIdChangedHandler()
+    local text = self.mId:getText()
+    if text == "-" then
+        self.mId:setText(string.empty)
+    end
     local id = tonumber(self.mId:getText())
     if id ~= nil and id < 0 then
-        self.mId:setText(tostring(id))
+        self.mId:setText(tostring(-id))
     end
 end
 
 function transfer:onCountChangeHandler()
-    local count = tonumber(self.mId:getText())
+    local text = self.mCount:getText()
+    if text == "-" then
+        self.mCount:setText(string.empty)
+    end
+    local count = tonumber(self.mCount:getText())
     if count ~= nil and count < 0 then
-        self.mId:setText(tostring(count))
+        self.mCount:setText(tostring(-count))
     end
 end
 

@@ -35,19 +35,11 @@ local function networkDisconnectedCallback()
                 clientApp.currentDesk = nil
             end
 
-            local ui = showMessageUI("与服务器失去连接，是否重新登录？", 
-                                     function()--确定：重新登录
-                                         loginServer(function(ok)
-                                             if not ok then
-                                                 local ui = require("ui.login").new()
-                                                 ui:show()
-                                             end
-                                         end)
-                                     end,
-                                     function()--取消：回到登录界面
-                                         local ui = require("ui.login").new()
-                                         ui:show()
-                                     end)
+            local ui = showMessageUI("与服务器失去连接，请重新登录。", 
+                                    function()--确定：回到登录界面
+                                        local ui = require("ui.login").new()
+                                        ui:show()
+                                    end)
             return
         end
 
