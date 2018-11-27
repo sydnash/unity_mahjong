@@ -38,8 +38,6 @@ function enterPlaybackCode:onInit()
     }
 
     self:reset()
-
-    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function enterPlaybackCode:onCloseClickedHandler()

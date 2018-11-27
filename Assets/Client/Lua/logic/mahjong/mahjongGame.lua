@@ -956,6 +956,7 @@ function mahjongGame:onGameEndHandler(msg)
 
             datas.players[p.acId] = d
         end
+        datas.scoreChanges = specialData.ScoreChanges
 
         self.gameEndUI = require("ui.gameEnd").new(self, datas)
         self.gameEndUI:show()

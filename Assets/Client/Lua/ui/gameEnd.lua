@@ -101,6 +101,8 @@ end
 
 function gameEnd:onRecordClickedHandler()
     playButtonClickSound()
+    local ui = require ("ui.GameEnd.ScoreDetail").new(self.datas.scoreChanges)
+    ui:show()
 end
 
 function gameEnd:onShareWXClickedHandler()

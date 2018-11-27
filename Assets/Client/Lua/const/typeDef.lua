@@ -60,6 +60,18 @@ retc = {
     playerIsAlreadyInClub           = 1027,
 }
 
+fanXingType = {
+    su                  = 0,
+    qingYiSe            = 1,
+    qiDui               = 2,
+    daDuiZi             = 3,
+    jinGouDiao          = 4,
+    hunYiSe             = 5,
+    jiangDui            = 6,
+    yaoJiu              = 7,
+    menQing             = 8,
+    zhongZhang          = 9,
+}
 --------------------------------------------------------------
 --
 --------------------------------------------------------------
@@ -73,6 +85,8 @@ opType = {
                         bagangwithmoney     = 1, 
                         bagangwithoutmoney  = 2, 
                         minggang            = 3, 
+	                    zhuanyu             = 32,
+                        fanyu               = 33,
              } 
     },
     hu = { id = 5, 
@@ -83,6 +97,10 @@ opType = {
                       gangshangpao  = 14, 
                       haidilao      = 15,
                       haidipao      = 16, 
+                      tianhu        = 17,
+	                  dihu          = 18,
+	                  chahuazhu     = 30,
+	                  chajiao       = 31,
            } 
     },
     guo  = { id = 6, },

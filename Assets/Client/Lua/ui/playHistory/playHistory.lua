@@ -57,6 +57,7 @@ function playHistory:onCloseAllUIHandler()
 end
 
 function playHistory:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     self.mList:reset()
     self.super.onDestroy(self)
 end

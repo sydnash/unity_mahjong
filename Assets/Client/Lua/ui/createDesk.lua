@@ -93,6 +93,10 @@ function createDesk:writeConfig()
     end
 end
 
+function createDesk:onCloseAllUIHandler()
+    self:close()
+end
+
 function createDesk:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     
