@@ -108,11 +108,11 @@ end
 -------------------------------------------------------------------
 function platformHelper.shareInvitationSg(title, description, image, params, androidDownloadUrl, iOSDownloadUrl)
     if string.isNilOrEmpty(androidDownloadUrl) then
-        androidDownloadUrl = "http://www.cdbshy.com/"
+        androidDownloadUrl = networkConfig.server.shareURL
     end
 
     if string.isNilOrEmpty(iOSDownloadUrl) then
-        iOSDownloadUrl = "http://www.cdbshy.com/"
+        iOSDownloadUrl = networkConfig.server.shareURL
     end
 
     if deviceConfig.isAndroid then

@@ -255,11 +255,11 @@ end
 -------------------------------------------------------------
 -- 登录服务器
 -------------------------------------------------------------
-function loginServer(callback)
+function loginServer(callback, func)
     showWaitingUI("正在登录中，请稍候...")
 
     --登录服务器
-    local loginImp = deviceConfig.isMobile and networkManager.loginWx or networkManager.login
+    local loginImp = func
 
     loginImp(function(ok, msg)
         closeWaitingUI()

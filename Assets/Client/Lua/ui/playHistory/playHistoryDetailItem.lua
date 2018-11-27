@@ -56,7 +56,7 @@ function playHistoryDetailItem:onShareClickHandler()
         if image ~= nil then
             platformHelper.shareUrlWx(title,
                                     desc,
-                                    "http://www.cdbshy.com/", 
+                                    networkConfig.server.shareURL,
                                     image,
                                     false)
         end

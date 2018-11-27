@@ -323,13 +323,14 @@ end
 -------------------------------------------------------------------
 -- 游客登录
 -------------------------------------------------------------------
-function networkManager.login(callback)
+function networkManager.loginGuest(callback)
     log("networkManager.login")
 
     local form = table.toUrlArgs({ mac = getDeviceId() })
     local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
-    http.getText(networkConfig.gameURL .. "?" .. form, timeout, function(ok, text)
+    local loginURL = networkConfig.server.guestURL
+    http.getText(loginURL .. "?" .. form, timeout, function(ok, text)
         if (not ok) or string.isNilOrEmpty(text) then
             callback(false, nil)
             return
@@ -367,7 +368,8 @@ function networkManager.loginWx(callback)
 
                 local p = table.fromjson(text)
                 local form = table.toUrlArgs({ wxtoken = p.refresh_token, appclass = "mj" })
-                http.getText(networkConfig.gameURL .. "?" .. form, timeout, function(ok, text)
+                local loginURL = networkConfig.server.wechatURL
+                http.getText(loginURL .. "?" .. form, timeout, function(ok, text)
                     loginC(text, callback)
                 end)
             end)
