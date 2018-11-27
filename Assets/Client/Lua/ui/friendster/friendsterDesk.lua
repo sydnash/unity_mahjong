@@ -20,14 +20,19 @@ function friendsterDesk:onClickedHandler()
     if self.data ~= nil then
         playButtonClickSound()
 
-        local ui = require("ui.deskDetail").new(self.data.cityType, self.data.gameType, self.data.config, true, self.data.deskId)
+        local ui = require("ui.deskDetail").new(self.data.cityType, 
+                                                self.data.gameType,
+                                                self.data.friendsterId, 
+                                                self.data.config, 
+                                                true, 
+                                                self.data.deskId, 
+                                                self.data.managerAcId)
         ui:show()
     end
 end
 
 function friendsterDesk:set(data)
     self.data = data
-    log(data)
 
     if self.data ~= nil then
         self.mNum:setText(string.format("（第%d/%d局）", self.data.playedCount, self.data.totalCount))

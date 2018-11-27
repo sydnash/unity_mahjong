@@ -812,6 +812,11 @@ function networkManager.replyFriendsterRequest(friendsterId, acId, agree, callba
     end)
 end
 
+function networkManager.dissolveFriendsterDesk(friendsterId, cityType, deskId, callback)
+    local data = { ClubId = friendsterId, GameType = cityType, DeskId = deskId, }
+    send(protoType.cs.dissolveFriendsterDesk, data, callback)
+end
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------

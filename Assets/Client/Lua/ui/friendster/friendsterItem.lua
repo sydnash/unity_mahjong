@@ -65,6 +65,7 @@ function friendsterItem:set(data)
 
     self.mIcon:setTexture(data.headerTex)
     self.mName:setText(cutoutString(data.name, gameConfig.friendsterNameMaxLength))
+    self.mCity:setText(string.format("区域:%s", cityName[data.cityType]))
     self.mId:setText(string.format("编号:%d", data.id))
     self.mCount:setText(string.format("人数:%d/%d", data.curMemberCount, data.maxMemberCount))
 end

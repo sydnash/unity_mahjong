@@ -425,7 +425,12 @@ end
 function mahjongDesk:onGameInfoClickedHandler()
     playButtonClickSound()
 
-    local ui = require("ui.deskDetail").new(self.game.cityType, self.game.gameType, self.game.config)
+    local ui = require("ui.deskDetail").new(self.game.cityType, 
+                                            self.game.gameType, 
+                                            nil,
+                                            self.game.config,
+                                            false,
+                                            nil)
     ui:show()
 end
 

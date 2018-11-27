@@ -110,6 +110,7 @@ end
 -- 初始化
 -------------------------------------------------------------------------------
 function mahjongOperation:onInit()
+    log("1111111111111111111111")
     self.turnCountdown = COUNTDOWN_SECONDS_C
     self.countdownTick = -1
 

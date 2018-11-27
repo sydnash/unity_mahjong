@@ -270,9 +270,15 @@ function friendster:onNotifyFriendster(msg)
     elseif t == friendsterNotifyType.deskDestroy then
         if lc ~= nil then
             lc:removeDesk(d.DeskId)
+
             if self.detailUI ~= nil then
                 self.detailUI:refreshUI()
                 self.detailUI:refreshDeskList()
+            end
+
+            if gamepref.player.currentDesk ~= nil and gamepref.player.currentDesk.deskId == d.DeskId then
+                gamepref.player.currentDesk = nil
+                signalManager.signal(signalType.deskDestroy, d.DeskId)
             end
         end
     elseif t == friendsterNotifyType.deskPlayerEnter then

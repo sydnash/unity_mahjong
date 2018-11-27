@@ -66,6 +66,12 @@ function setting:onInit()
             self.mDissolveText:setSprite("tc")
         end
 
+        if self.game:canBackToLobby() then
+            self.mBack:setInteractabled(true)
+        else
+            self.mBack:setInteractabled(false)
+        end
+
         self.mMandarin:addChangedListener(self.onMandarinChangedHandler, self)
         self.mSichuan:addChangedListener(self.onSichuanChangedHandler, self)
         self.m3DModel:addChangedListener(self.on3DModelChangedHandler, self)
