@@ -65,17 +65,21 @@ local function networkDisconnectedCallback()
     end)
 end
 
+local errorMessageUI = nil
+
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
 local function tracebackHandler(errorMessage)
     logError(errorMessage)
 
-    local ui = require("ui.errorMessage").new()
-    ui:show()
+    if appConfig.debug and deviceConfig.isMobile then
+        if errorMessageUI == nil then
+            errorMessageUI = require("ui.errorMessage").new()
+            errorMessageUI:show()
+        end
 
-    if appConfig.debug and not deviceConfig.isMobile then
-        ui:setErrorMessage(errorMessage)
+        errorMessageUI:appendErrorMessage(errorMessage)
     end
 
     --断开网络，主要是中断消息接收和处理的过程

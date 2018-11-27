@@ -160,6 +160,10 @@ function enterDesk(gameType, deskId, callback)
     end
     preload:start()
 
+    if callback == nil then
+        callback = function(ok) end
+    end
+
     networkManager.checkDesk(gameType, deskId, function(ok, msg)
         if not ok then
             closeWaitingUI()
