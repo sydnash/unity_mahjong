@@ -307,7 +307,7 @@ local function loginC(text, callback)
                     gamepref.player:loadHeaderTex()
                     gamepref.player.nickname   = msg.Nickname
                     gamepref.player.ip         = msg.Ip
-                    gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.box, sexType.girl)
+                    gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.boy, sexType.girl)
                     gamepref.player.laolai     = msg.IsLaoLai
                     gamepref.player.cards      = msg.Coin
                     gamepref.player.userType   = msg.UserType

@@ -200,7 +200,7 @@ function mahjongGame:syncPlayers(players)
         player:loadHeaderTex()
         player.nickname  = v.Nickname
         player.ip        = v.Ip
-        player.sex       = Mathf.Clamp(v.Sex, sexType.box, sexType.girl)
+        player.sex       = Mathf.Clamp(v.Sex, sexType.boy, sexType.girl)
         player.laolai    = v.IsLaoLai
         player.connected = v.IsConnected
         player.ready     = v.Ready
@@ -417,24 +417,20 @@ end
 -------------------------------------------------------------------------------                
 function mahjongGame:onHuanNZhangDoHandler(msg)
     if self.mode == gameMode.normal then
-        self.messageHandlers:add(tweenDelay.new(1))
-        --显示动画
-        self.messageHandlers:add(tweenDelay.new(1))
-
         local func = tweenFunction.new(function()
-            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
+--            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
             self.operationUI:onHuanNZhangDo(msg)
         end)
         self.messageHandlers:add(func)
     else
         local func = tweenFunction.new(function()
-            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
+--            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
             self.operationUI:onHuanNZhangDoPlayback(msg)
         end)
         self.messageHandlers:add(func)
-        --延时
-        self.messageHandlers:add(tweenDelay.new(1))
     end
+    --延时，等待交互动画完成
+    self.messageHandlers:add(tweenDelay.new(2))
 end
 -------------------------------------------------------------------------------
 -- 摸牌
@@ -529,8 +525,6 @@ function mahjongGame:endGame()
             return
         end
 
---        self.deskId = nil
-
         self.leftVoteSeconds    = msg.LeftTime
         self.exitVoteProposer   = msg.Proposer
 
@@ -538,6 +532,9 @@ function mahjongGame:endGame()
             self.exitDeskUI = require("ui.exitDesk").new(self)
             self.exitDeskUI:show()
         else
+            self.deskId = nil
+            clientApp.currentDesk = nil
+
             self:exitGame()
         end
     end)
@@ -1071,8 +1068,9 @@ function mahjongGame:destroy()
         end
     end
 
-    self.deskId = nil
-    clientApp.currentDesk = nil
+    self.deskUI = nil
+    self.operationUI = nil
+    self.exitDeskUI = nil
 end
 
 -------------------------------------------------------------------------------

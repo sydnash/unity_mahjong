@@ -442,7 +442,8 @@ function mahjongDesk:onChatMessageHandler(msg)
         player:showChatText(content)
 
         if not string.isNilOrEmpty(audio) then
-
+            local path = (player.sex == sexType.boy) and "chat/text/boy" or "chat/text/girl"
+            soundManager.playGfx(path, audio)
         end
     elseif msg.Type == chatType.emoji then
         local content = chatConfig.emoji[msg.Data].content
@@ -470,7 +471,8 @@ function mahjongDesk:onChatTextSignalHandler(key)
     player:showChatText(content)
 
     if not string.isNilOrEmpty(audio) then
-
+        local path = (gamepref.player.sex == sexType.boy) and "chat/text/boy" or "chat/text/girl"
+        soundManager.playGfx(path, audio)
     end
 end
 
@@ -482,7 +484,7 @@ function mahjongDesk:onChatEmojiSignalHandler(key)
     player:showChatEmoji(content)
 
     if not string.isNilOrEmpty(audio) then
-
+        
     end
 end
 

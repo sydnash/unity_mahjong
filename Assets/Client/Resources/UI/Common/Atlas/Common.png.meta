@@ -101,6 +101,7 @@ TextureImporter:
     21300188: ZM_zi11
     21300190: ZM_zi12
     21300192: ZM_tx01
+    21300194: zz_zi01
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -756,7 +757,7 @@ TextureImporter:
       name: GY_dyj
       rect:
         serializedVersion: 2
-        x: 824
+        x: 825
         y: 368
         width: 97
         height: 30
@@ -1121,7 +1122,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 753
-        y: 345
+        y: 306
         width: 69
         height: 69
       alignment: 0
@@ -1246,7 +1247,7 @@ TextureImporter:
       name: ZM_tx01
       rect:
         serializedVersion: 2
-        x: 923
+        x: 924
         y: 279
         width: 95
         height: 95
@@ -1404,6 +1405,20 @@ TextureImporter:
         y: 484
         width: 113
         height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: zz_zi01
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 377
+        width: 70
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
