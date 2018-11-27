@@ -10,6 +10,7 @@ require("config.deskDetailConfig")
 
 deviceConfig    = require("config.deviceConfig")
 gameConfig      = require("config.gameConfig")
+networkConfig   = require("config.networkConfig")
 gamepref        = require("logic.gamepref")
 platformHelper  = require("platform.platformHelper")
 networkManager  = require("network.networkManager")
