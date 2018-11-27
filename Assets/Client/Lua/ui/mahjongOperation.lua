@@ -1730,6 +1730,9 @@ end
 -- 手牌排序
 -------------------------------------------------------------------------------
 function mahjongOperation:sortInhand(player, mahjongs)
+    if mahjongs == nil then
+        return
+    end
     if player.acId == self.game.mainAcId then
         table.sort(mahjongs, function(a, b)
             if a.class == player.que and b.class ~= player.que then
