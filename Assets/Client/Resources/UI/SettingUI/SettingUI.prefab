@@ -2109,11 +2109,11 @@ MonoBehaviour:
     gameObject: {fileID: 1197066359054288}
     panelScript: 
   - variableName: mMandarin
-    widgetType: 6
+    widgetType: 16
     gameObject: {fileID: 1989236422481266}
     panelScript: 
   - variableName: mSichuan
-    widgetType: 6
+    widgetType: 16
     gameObject: {fileID: 1030897283670152}
     panelScript: 
   - variableName: m3DModel

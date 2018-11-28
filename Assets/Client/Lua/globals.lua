@@ -87,7 +87,7 @@ end
 -------------------------------------------------------------
 function playMahjongSound(mahjongId, sex)
     local folder = (sex == sexType.boy) and "mahjong/boy" or "mahjong/girl"
-    local resource = gamepref.getLanguage() .. mahjongType[mahjongId].audio
+    local resource = gamepref.getLanguage() .. "_" .. mahjongType[mahjongId].audio
 
     return soundManager.playGfx(folder, resource)
 end
@@ -107,13 +107,9 @@ local opsounds = {
 -------------------------------------------------------------
 function playMahjongOpSound(optype, sex)
     local folder = (sex == sexType.boy) and "mahjong/boy" or "mahjong/girl"
-    local resource = opsounds[optype]
+    local resource = gamepref.getLanguage() .. "_" .. opsounds[optype]
 
     return soundManager.playGfx(folder, resource)
-end
-
-local function writeIcon(bytes)
-    return nil
 end
 
 -------------------------------------------------------------

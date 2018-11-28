@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 995a1dd542fed6740997c4c6a7dc1bbe
+timeCreated: 1543371501
+licenseType: Pro
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: sound/mahjong/girl/sc_girl_9wan
+  assetBundleVariant: 

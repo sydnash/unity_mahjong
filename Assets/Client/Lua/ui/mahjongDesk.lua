@@ -430,7 +430,8 @@ function mahjongDesk:onGameInfoClickedHandler()
                                             nil,
                                             self.game.config,
                                             false,
-                                            nil)
+                                            self.game.deskId,
+                                            0)
     ui:show()
 end
 

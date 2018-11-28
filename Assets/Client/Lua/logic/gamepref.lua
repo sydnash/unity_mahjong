@@ -50,6 +50,7 @@ end
 -------------------------------------------------------------
 local function getLanguage()
     if not PlayerPrefs.HasKey(language_key) then
+        log("11111111111111111111111111111111111111111111")
         return language.mandarin
     end
 
