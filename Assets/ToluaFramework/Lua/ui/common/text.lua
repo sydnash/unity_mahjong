@@ -23,6 +23,10 @@ function text:setText(text)
     self.component.text = text
 end
 
+function text:getText()
+    return self.component.text
+end
+
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
