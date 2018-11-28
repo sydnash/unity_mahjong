@@ -18,16 +18,23 @@ local d = 160 / 255
 local DARK_COLOR  = Color.New(d, d, d, 1)
 local LIGHT_COLOR = Color.New(1, 1, 1, 1)
 
-mahjong.cmode = {
+local colorMode = {
     dark  = 1,
     light = 2,
+}
+
+mahjong.shadowMode = {
+    noshadow = 0,
+    pa       = 1,
+    yang     = 2,
+    li       = 3
 }
 
 function mahjong:ctor(id)
     self.id = id
     self.pickabled = false
     self.selected = false
-    self.cmode = mahjong.cmode.light
+    self.cmode = colorMode.light
 
     local mtype = mahjongType[id]
     local go = modelManager.load(mtype.folder, mtype.resource)
@@ -38,6 +45,16 @@ function mahjong:ctor(id)
     local r = getComponentU(c.gameObject, typeof(UnityEngine.MeshRenderer))
     self.mat = r.material
 
+    self.shadows = {
+        [mahjong.shadowMode.pa]     = self:findChild("mj_shadow_pa"),
+        [mahjong.shadowMode.yang]   = self:findChild("mj_shadow_yang"),
+        [mahjong.shadowMode.li]     = self:findChild("mj_shadow_li"),
+    }
+    self.shadowMode = mahjong.shadowMode.noshadow
+    for _, v in pairs(self.shadows) do
+        v:hide()
+    end
+
     self.name  = mtype.name
     self.class = mtype.class
 
@@ -45,15 +62,15 @@ function mahjong:ctor(id)
 end
 
 function mahjong:dark()
-    if self.mat ~= nil and self.cmode == mahjong.cmode.light then
-        self.cmode = mahjong.cmode.dark
+    if self.mat ~= nil and self.cmode == colorMode.light then
+        self.cmode = colorMode.dark
         self.mat.color = DARK_COLOR
     end
 end
 
 function mahjong:light()
-    if self.mat ~= nil and self.cmode == mahjong.cmode.dark then
-        self.cmode = mahjong.cmode.light
+    if self.mat ~= nil and self.cmode == colorMode.dark then
+        self.cmode = colorMode.light
         self.mat.color = LIGHT_COLOR
     end
 end
@@ -77,10 +94,29 @@ function mahjong:setSelected(selected)
     end
 end
 
+function mahjong:setShadowMode(shadowMode)
+    if self.shadowMode ~= shadowMode then
+        for _, v in pairs(self.shadows) do
+            v:hide()
+        end
+
+        if shadowMode ~= mahjong.shadowMode.noshadow then
+            self.shadows[shadowMode]:show()
+        end
+
+        self.shadowMode = shadowMode
+    end
+end
+
+function mahjong:getShadowMode()
+    return self.shadowMode
+end
+
 function mahjong:reset()
     self:light()
     self:setPickabled(false)
     self:setSelected(false)
+    self:setShadowMode(mahjong.shadowMode.noshadow)
 end
 
 function mahjong:onDestroy()

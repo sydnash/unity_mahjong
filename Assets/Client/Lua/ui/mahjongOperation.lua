@@ -28,7 +28,7 @@ mahjongOperation.seats = {
     [mahjongGame.seatType.right] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.309, 0.156,  0.275), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [gameMode.normal]   = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
+            [gameMode.normal]   = { pos = Vector3.New( 0.370, 0.168,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
             [gameMode.playback] = { pos = Vector3.New( 0.370, 0.156,  0.228), rot = Quaternion.Euler(0, -90, 0), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.420, 0.156, -0.320 + mahjong.w * 2), rot = Quaternion.Euler(0, -90, 0), },
@@ -39,7 +39,7 @@ mahjongOperation.seats = {
     [mahjongGame.seatType.top] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.235, 0.156,  0.330), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [gameMode.normal]   = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
+            [gameMode.normal]   = { pos = Vector3.New(-0.215, 0.168,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
             [gameMode.playback] = { pos = Vector3.New(-0.215, 0.156,  0.425), rot = Quaternion.Euler(0, 180, 0), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.360, 0.156,  0.420), rot = Quaternion.Euler(0, 180, 0), },
@@ -50,7 +50,7 @@ mahjongOperation.seats = {
     [mahjongGame.seatType.left] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.310, 0.156, -0.195), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [gameMode.normal]   = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
+            [gameMode.normal]   = { pos = Vector3.New(-0.370, 0.168, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
             [gameMode.playback] = { pos = Vector3.New(-0.370, 0.156, -0.180), rot = Quaternion.Euler(0, 90, 0), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.420, 0.156,  0.320), rot = Quaternion.Euler(0, 90, 0), },
@@ -84,14 +84,18 @@ local function swap(ta, ia, tb, ib)
         local r = a:getLocalRotation()
         local s = a:getLocalScale()
         local visible = a:getVisibled()
+        local shadowMode = a:getShadowMode()
 
         a:setLocalPosition(b:getLocalPosition())
         a:setLocalRotation(b:getLocalRotation())
         a:setVisibled(b:getVisibled())
+        a:setShadowMode(b:getShadowMode())
 
         b:setLocalPosition(p)
         b:setLocalRotation(r)
         b:setVisibled(visible)
+        b:setShadowMode(shadowMode)
+
         --交换索引
         ta[ia] = b
         tb[ib] = a
@@ -231,7 +235,6 @@ function mahjongOperation:onInit()
     inhandCamera.orthographicSize = newH
     local newy = inhandCameraBottom + newH
 
-    log("new camera pos y " .. tostring(newy))
     inhandCamera.transform.position = Vector3.New(inhandCamera.transform.position.x, newy, inhandCamera.transform.position.z)
 end
 
@@ -482,6 +485,12 @@ function mahjongOperation:relocateIdleMahjongs(visible)
             m:setLocalRotation(r)
             m:setPickabled(false)
 
+            if math.abs(v) > 0.01 then
+                m:setShadowMode(mahjong.shadowMode.pa)
+            else 
+                m:setShadowMode(mahjong.shadowMode.noshadow)
+            end
+
             if visible then
                 m:show()
             else
@@ -640,7 +649,6 @@ function mahjongOperation:onMoPai(acId, cards)
 
         self.mo:setLocalPosition(moPaiPos)
         self.mo:setLocalRotation(mopaiConfig.rotation)
---        self.mo:setLocalScale(mopaiConfig.scale)
 
         if self.mo.class == player.que then
             self.mo:dark()
@@ -649,6 +657,7 @@ function mahjongOperation:onMoPai(acId, cards)
         end
 
         self.mo:setPickabled(true)
+        self.mo:setShadowMode(mahjong.shadowMode.noshadow)
         self.mo:show()
     end
 end
@@ -1176,6 +1185,7 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
     end
     
     hu:setPickabled(false)
+    hu:setShadowMode(mahjong.shadowMode.yang)
     self.huMahjongs[acId] = hu
 
     local s = self.game:getSeatTypeByAcId(acId)
@@ -1250,6 +1260,7 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
         local m = self:getMahjongFromIdle(id)
         m:show()
         m:setPickabled(true)
+
         table.insert(mahjongs, m)
         self:removeFromIdle()
 
@@ -1260,6 +1271,9 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
             else
                 m:light()
             end
+            m:setShadowMode(mahjong.shadowMode.noshadow)
+        else
+            m:setShadowMode(mahjong.shadowMode.li)
         end
     end
 
@@ -1269,8 +1283,9 @@ end
 -------------------------------------------------------------------------------
 -- 将麻将m插入到手牌中
 -------------------------------------------------------------------------------
-function mahjongOperation:insertMahjongToInhand(m, relocate)
+function mahjongOperation:insertMahjongToInhand(m)
     m:setPickabled(true)
+    m:setShadowMode(mahjong.shadowMode.noshadow)
 
     local mahjongs = self.inhandMahjongs[self.game.mainAcId]
     table.insert(mahjongs, m)
@@ -1369,6 +1384,12 @@ function mahjongOperation:relocateInhandMahjongs(acId)
 
             m:setLocalPosition(p)
             m:setLocalRotation(r)
+
+            if acId == self.game.mainAcId then
+                m:setShadowMode(mahjong.shadowMode.noshadow)
+            else
+                m:setShadowMode(mahjong.shadowMode.li)
+            end
         end
     end
 end
@@ -1408,6 +1429,7 @@ function mahjongOperation:relocateChuMahjongs(player)
         m:setPickabled(false)
         m:setLocalPosition(p)
         m:setLocalRotation(r)
+        m:setShadowMode(mahjong.shadowMode.yang)
     end
 end
 
@@ -1454,18 +1476,18 @@ function mahjongOperation:relocatePengMahjongs(player)
             m:setPickabled(false)
             m:setLocalPosition(p)
             m:setLocalRotation(r)
---            m:setLocalScale(s)
+
             if not isUpon then
+                m:setShadowMode(mahjong.shadowMode.yang)
                 lastPengPos = Vector3.New(o.x + mahjong.w * c + d + mahjong.w * 0.5, y, o.z - mahjong.z * 0.5)
+            else
+                m:setShadowMode(mahjong.shadowMode.noshadow)
             end
         end
     end
 
     if dir == mahjongGame.seatType.mine then
         self.lastPengPos = lastPengPos
-    end
-
-    if dir == mahjongGame.seatType.mine then
         self:relocateInhandMahjongs(self.game.mainAcId)
     end
 end
@@ -1492,6 +1514,8 @@ function mahjongOperation:putMahjongToChu(acId, mj)
     end
 
     table.insert(self.chuMahjongs[acId], mj)
+    mj:setPickabled(false)
+    mj:setShadowMode(mahjong.shadowMode.yang)
 
     local player = self.game:getPlayerByAcId(acId)
     self:relocateChuMahjongs(player)
@@ -1507,6 +1531,10 @@ function mahjongOperation:putMahjongsToPeng(acId, mahjongs)
 
     table.insert(self.pengMahjongs[acId], mahjongs)
 
+    for _, v in pairs(mahjongs) do
+        v:setShadowMode(mahjong.shadowMode.yang)
+    end
+
     local player = self.game:getPlayerByAcId(acId)
     self:relocatePengMahjongs(player)
 end
@@ -1516,7 +1544,6 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:putMahjongsToHuan(acId, mahjongs)
     self.hnzMahjongs[acId] = mahjongs
-
     
     local t = self.game:getSeatTypeByAcId(acId)
     local s = self.seats[t]
@@ -1537,6 +1564,8 @@ function mahjongOperation:putMahjongsToHuan(acId, mahjongs)
 
         v:setLocalPosition(p)
         v:setLocalRotation(r)
+        v:setPickabled(false)
+        v:setShadowMode(mahjong.shadowMode.pa)
     end
 end
 
@@ -1898,6 +1927,11 @@ function mahjongOperation:onHuanNZhangDo(msg)
         local mahjongs = self.inhandMahjongs[msg.AcId]
         for _, v in pairs(temp) do
             v:setPickabled(true)
+            if msg.AcId == self.game.mainAcId then
+                v:setShadowMode(mahjong.shadowMode.noshadow)
+            else
+                v:setShadowMode(mahjong.shadowMode.li)
+            end
             table.insert(mahjongs, v)
         end
         --重新排序手牌
@@ -1935,6 +1969,11 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
                 for _, h in pairs(huanMahjongs) do
                     if h.id == u then
                         table.insert(mahjongs, h)
+                        if v.AcId == self.game.mainAcId then
+                            h:setShadowMode(mahjong.shadowMode.noshadow)
+                        else
+                            h:setShadowMode(mahjong.shadowMode.li)
+                        end
                         break
                     end
                 end
