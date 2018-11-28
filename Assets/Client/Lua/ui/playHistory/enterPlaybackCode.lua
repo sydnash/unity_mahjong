@@ -133,21 +133,75 @@ function enterPlaybackCode:enter()
     showWaitingUI("正在拉取回放数据")
     networkManager.getSharePlayHistory(shareId, function(msg)
         closeWaitingUI()
-        if not msg then
-            showMessageUI("网络错误")
+
+        if msg == nil then
+            showMessageUI("网络繁忙，请稍后再试")
             return
         end
+
         local history = msg.History
         if msg.RetCode ~= 0 or history.PlayDetail == nil or history.PlayDetail[1] == nil or history.PlayDetail[1] == "" then
-            showMessageUI(string.format("分享码:%d已经失效", shareId))
+            showMessageUI(string.format("分享码[%d]已经失效", shareId))
             return
         end
-        history.PlaybackMsg = {}
+        
+        local playback = table.fromjson(history.PlayDetail[1])
+        for k, v in pairs(playback) do
+            playback[k] = table.fromjson(v)
+            playback[k].Payload = table.fromjson(playback[k].Payload)
+        end
         local round = msg.Round + 1
-        history.PlaybackMsg[round] = history.PlayDetail[1]
+
+        history.PlaybackMsg = {}
+        history.PlaybackMsg[round] = playback
         history.PlayDetail = nil
 
-        --history  round 然后进入回放
+        local loading = require("ui.loading").new()
+        loading:show()
+
+        sceneManager.load("scene", "mahjongscene", function(completed, progress)
+            loading:setProgress(progress)
+
+            if completed then
+                local data = {}
+--                local history = self.historyContainer:findHistoryById(self.mHistoryId)
+--                history.PlaybackMsg = ""
+--                log("history = " .. table.tostring(history))
+                data.ClubId             = history.ClubId
+                data.Config             = table.fromjson(history.DeskConfig)
+                data.Creator            = 0
+                data.DeskId             = history.DeskId
+                data.ExitVoteProposer   = 0
+                data.GameType           = history.GameType
+                data.IsInExitVote       = false
+                data.LeftTime           = data.Config.JuShu - round
+                data.LeftVoteTime       = 0
+                data.Ready              = true
+                data.Players            = history.Players
+                data.Turn               = 0
+
+                for k, v in pairs(data.Players) do
+                    v.Turn          = k - 1
+                    v.Sex           = k % 2 + 1
+                    v.IsConnected   = true
+                    v.Ready         = true
+                    v.IsLaoLai      = false
+                    v.Score         = 0
+
+                    if v.AcId == gamepref.player.acId then
+                        data.Turn = v.Turn
+                    end
+                end
+
+                closeAllUI()
+
+                local game = require("logic.mahjong.mahjongGame").new(data, playback)
+                game:startLoop()
+
+                loading:close()
+            end
+        end)
+
         self:close()
     end)
 end

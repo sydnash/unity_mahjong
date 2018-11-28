@@ -84,7 +84,7 @@ function playHistoryDetailItem:onPlayClickHandler()
             playback[k].Payload = table.fromjson(playback[k].Payload)
         end
 
-        log("playback = " .. table.tostring(playback))
+--        log("playback = " .. table.tostring(playback))
 
         local loading = require("ui.loading").new()
         loading:show()

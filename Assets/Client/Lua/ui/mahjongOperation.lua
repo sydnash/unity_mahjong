@@ -1611,6 +1611,11 @@ function mahjongOperation:clear(forceDestroy)
     end
     self.idleMahjongs = {}
 
+    if self.mo ~= nil then
+        func(self.mo)
+        self.mo = nil
+    end
+
     for _, p in pairs(self.game.players) do
         local inhand = self.inhandMahjongs[p.acId]
         if inhand ~= nil then
@@ -1660,7 +1665,10 @@ function mahjongOperation:clear(forceDestroy)
         end
     end
 
+<<<<<<< HEAD
     self.mo = nil
+=======
+>>>>>>> 41d6bc6e66a932163333367c6d75e7da3529ea4e
     self.selectedMahjong = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
@@ -1702,9 +1710,9 @@ function mahjongOperation:onDestroy()
     end
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
-    self.diceRoot:show()
-    self.centerGlass:show()
-    self.countdown:show()
+--    self.diceRoot:show()
+--    self.centerGlass:show()
+--    self.countdown:show()
 
     self:clear(true)
 
