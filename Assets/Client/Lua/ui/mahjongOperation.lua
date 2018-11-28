@@ -29,9 +29,9 @@ mahjongOperation.seats = {
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.309, 0.156,  0.275), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
             [gameMode.normal]   = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
-            [gameMode.playback] = { pos = Vector3.New( 0.370, 0.167,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
+            [gameMode.playback] = { pos = Vector3.New( 0.370, 0.156,  0.228), rot = Quaternion.Euler(0, -90, 0), },
         },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.420, 0.156, -0.320), rot = Quaternion.Euler(0, -90, 0), },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.420, 0.156, -0.320 + mahjong.w * 2), rot = Quaternion.Euler(0, -90, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.160, 0.156, -0.080), rot = Quaternion.Euler(0, -90, 0), },
         [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156,  0.320), rot = Quaternion.Euler(0, -90, 0), },
         [mahjongGame.cardType.huan] = { pos = Vector3.New( 0.200, 0.156,  0.004), rot = Quaternion.Euler(180, 90, 0), },
@@ -40,7 +40,7 @@ mahjongOperation.seats = {
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.235, 0.156,  0.330), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
             [gameMode.normal]   = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
-            [gameMode.playback] = { pos = Vector3.New(-0.215, 0.167,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
+            [gameMode.playback] = { pos = Vector3.New(-0.215, 0.156,  0.425), rot = Quaternion.Euler(0, 180, 0), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.360, 0.156,  0.420), rot = Quaternion.Euler(0, 180, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.100, 0.156,  0.195), rot = Quaternion.Euler(0, 180, 0), },
@@ -51,7 +51,7 @@ mahjongOperation.seats = {
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.310, 0.156, -0.195), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
             [gameMode.normal]   = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
-            [gameMode.playback] = { pos = Vector3.New(-0.370, 0.167, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
+            [gameMode.playback] = { pos = Vector3.New(-0.370, 0.156, -0.180), rot = Quaternion.Euler(0, 90, 0), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.420, 0.156,  0.320), rot = Quaternion.Euler(0, 90, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.170, 0.156,  0.150), rot = Quaternion.Euler(0, 90, 0), },
@@ -1736,8 +1736,8 @@ function mahjongOperation:sortInhand(player, mahjongs)
     if mahjongs == nil then
         return
     end
-    if player.acId == self.game.mainAcId then
-        table.sort(mahjongs, function(a, b)
+    if player.acId == self.game.mainAcId then 
+        table.bubbleSort(mahjongs, function(a, b)
             if a.class == player.que and b.class ~= player.que then
                 return false
             elseif b.class == player.que and a.class ~= player.que then
@@ -1746,6 +1746,18 @@ function mahjongOperation:sortInhand(player, mahjongs)
 
             return a.id < b.id
         end)
+    else
+        if self.game.mode == gameMode.playback then
+            table.bubbleSort(mahjongs, function(a, b)
+                if a.class == player.que and b.class ~= player.que then
+                    return true
+                elseif b.class == player.que and a.class ~= player.que then
+                    return false
+                end
+
+                return a.id > b.id
+            end)
+        end
     end
 end
 

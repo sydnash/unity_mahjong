@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 68e2a02be18797347abac5cff651f4c7
-timeCreated: 1543371500
+guid: 8aaadad30ebb40b43b5c716b8c9ed715
+timeCreated: 1543399990
 licenseType: Pro
 AudioImporter:
   externalObjects: {}
@@ -20,5 +20,5 @@ AudioImporter:
   ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: sound/mahjong/girl/sc_girl_4tiao
+  assetBundleName: sound/mahjong/girl/sc_3wan
   assetBundleVariant: 

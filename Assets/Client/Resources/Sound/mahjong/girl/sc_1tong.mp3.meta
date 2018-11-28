@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 89a2e444182e1c746bf64119bc6749b6
-timeCreated: 1543371500
+guid: e33a5ec92cb75f84190dcb677757a2ac
+timeCreated: 1543399991
 licenseType: Pro
 AudioImporter:
   externalObjects: {}
@@ -20,5 +20,5 @@ AudioImporter:
   ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: sound/mahjong/girl/sc_girl_hu_zimo
+  assetBundleName: sound/mahjong/girl/sc_1tong
   assetBundleVariant: 

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a9ed7984e43a20145b14301a2f5642e6
-timeCreated: 1543371501
+guid: 0754e81ef639c1441a20ab1bd29e1fca
+timeCreated: 1543399990
 licenseType: Pro
 AudioImporter:
   externalObjects: {}
@@ -20,5 +20,5 @@ AudioImporter:
   ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: sound/mahjong/girl/sc_girl_1tong
+  assetBundleName: sound/mahjong/girl/sc_2tong
   assetBundleVariant: 

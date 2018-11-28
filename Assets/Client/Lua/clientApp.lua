@@ -23,26 +23,30 @@ end
 ----------------------------------------------------------------
 -- 断开连接后的回调
 ----------------------------------------------------------------
-local function networkDisconnectedCallback()
-    showWaitingUI("正在尝试重连，请稍候...")
+local function networkDisconnectedCallback(idx)
 
+    if idx ~= nil and idx > 5 then
+        closeWaitingUI()
+        if clientApp.currentDesk ~= nil then
+            clientApp.currentDesk:destroy()
+            clientApp.currentDesk = nil
+        end
+
+        closeAllUI()
+        networkManager.disconnect()
+
+        showMessageUI("与服务器失去连接，请重新登录。", 
+                        function()--确定：回到登录界面
+                            local ui = require("ui.login").new()
+                            ui:show()
+                        end)
+        return
+    end
+    local idx = idx or 1
+    showWaitingUI(string.format("正在尝试重连(%d/5)，请稍候...", idx))
     networkManager.reconnect(gamepref.host, gamepref.port, function(connected, curCoin, cityType, deskId)
         if not connected then
-            closeWaitingUI()
-
-            if clientApp.currentDesk ~= nil then
-                clientApp.currentDesk:destroy()
-                clientApp.currentDesk = nil
-            end
-
-            closeAllUI()
-            networkManager.disconnect()
-
-            showMessageUI("与服务器失去连接，请重新登录。", 
-                          function()--确定：回到登录界面
-                              local ui = require("ui.login").new()
-                              ui:show()
-                          end)
+            networkDisconnectedCallback(idx + 1)
             return
         end
 

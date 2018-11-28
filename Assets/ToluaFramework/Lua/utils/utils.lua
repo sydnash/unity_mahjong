@@ -404,4 +404,9 @@ function hexColorToColor(colorString)
     return nil
 end
 
+function printError(msg)
+    log("ERR" .. tostring(msg))
+    log(debug.traceback("", 2))
+end
+
 --endregion

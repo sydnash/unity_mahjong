@@ -17,10 +17,6 @@ function playHistoryItem:onInit()
     }
 
     self.mThis:addClickListener(self.onThisClickHandler, self)
-    for _, v in pairs(self.players) do
-        v.root:hide()
-        v.winner:hide()
-    end
 end
 
 function playHistoryItem:onThisClickHandler()
@@ -38,6 +34,11 @@ function playHistoryItem:onThisClickHandler()
 end
 
 function playHistoryItem:set(data, historyContainer)
+    for _, v in pairs(self.players) do
+        v.root:hide()
+        v.winner:hide()
+    end
+
     self.historyContainer = historyContainer
     local config = table.fromjson(data.DeskConfig)
 
@@ -62,6 +63,7 @@ function playHistoryItem:set(data, historyContainer)
         end
     end
 
+    log("--------------------------" .. table.tostring(data))
     for i=1, #players do
         local d = players[i]
         local s = scores[i]

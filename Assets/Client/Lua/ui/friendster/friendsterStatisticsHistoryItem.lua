@@ -16,11 +16,6 @@ function friendsterStatisticsHistoryItem:onInit()
                      { root = self.mPlayerD, icon = self.mPlayerD_Icon, nickname = self.mPlayerD_Nickname, score = { p = self.mPlayerD_ScoreP, n = self.mPlayerD_ScoreN }, winner = self.mPlayerD_Winner },
     }
 
-    for _, v in pairs(self.players) do
-        v.root:hide()
-        v.winner:hide()
-    end
-
     self.mThis:addClickListener(self.onThisClickHandler, self)
     self.mSettle:addClickListener(self.onSettleClickHandler, self)
 end
@@ -68,6 +63,11 @@ function friendsterStatisticsHistoryItem:updatePayedStatus(data)
 end
 
 function friendsterStatisticsHistoryItem:set(data, historyContainer)
+    for _, v in pairs(self.players) do
+        v.root:hide()
+        v.winner:hide()
+    end
+
     self.historyContainer = historyContainer
     self.mHistoryId = data.Id
     local config = table.fromjson(data.DeskConfig)

@@ -164,9 +164,6 @@ function enterPlaybackCode:enter()
 
             if completed then
                 local data = {}
---                local history = self.historyContainer:findHistoryById(self.mHistoryId)
---                history.PlaybackMsg = ""
---                log("history = " .. table.tostring(history))
                 data.ClubId             = history.ClubId
                 data.Config             = table.fromjson(history.DeskConfig)
                 data.Creator            = 0
