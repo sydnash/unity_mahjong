@@ -955,7 +955,8 @@ function mahjongGame:onGameEndHandler(msg)
                         hu              = v.Hu,
                         isCreator       = self:isCreator(v.AcId),
                         isWinner        = false,
-    --                    que             = 1,
+                        que             = p.que,
+                        seatType        = self:getSeatTypeByAcId(v.AcId),
             }
 
             for k, u in pairs(d.inhand) do 
@@ -975,8 +976,12 @@ function mahjongGame:onGameEndHandler(msg)
                 end
             end
 
-            datas.players[p.acId] = d
+            --datas.players[p.acId] = d
+            table.insert(datas.players, d)
         end
+        table.sort(datas.players, function(t1, t2)
+            return t1.seatType < t2.seatType
+        end)
         datas.scoreChanges = specialData.ScoreChanges
 
         self.gameEndUI = require("ui.gameEnd").new(self, datas)
