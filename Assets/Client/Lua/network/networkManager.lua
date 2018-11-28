@@ -282,7 +282,7 @@ local function loginC(text, callback)
 
     networkManager.connect(host, port, function(connected)
         if not connected then
-            callback(nil)
+            networkManager.disconnectedCallback()
         else
             local loginType = 1
             local data = { AcId = acid, Session = session, LoginType = loginType }

@@ -134,6 +134,7 @@ function login:onGuestLoginClickedHandler()
     log("debug" .. table.tostring(networkConfig.server))
     self.mWechatLogin:setInteractabled(false)
     self.mGuestLogin:setInteractabled(false)
+
     --登录服务器
     loginServer(function(ok)
         self.mWechatLogin:setInteractabled(true)

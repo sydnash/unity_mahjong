@@ -79,7 +79,7 @@ local function tracebackHandler(errorMessage)
 end
 
 ----------------------------------------------------------------
---
+-- 闲聊邀请的回调
 ----------------------------------------------------------------
 local function inviteSgCallback(params)
     if clientApp.currentDesk == nil then
@@ -177,7 +177,7 @@ local function checkPatches(downloadui)
                 size = size + v.size
             end
 
-            showMessageUI("检测到" .. BKMGT(size) .."新资源，是否立即更新？",
+            showMessageUI("检测到" .. BKMGT(size) .."新资源，是否立即下载更新？",
                           function()
                               downloadPatches(plist, size, plistText, downloadui)
                           end,
