@@ -36,6 +36,8 @@ local function networkDisconnectedCallback()
             end
 
             closeAllUI()
+            networkManager.disconnect()
+
             showMessageUI("与服务器失去连接，请重新登录。", 
                           function()--确定：回到登录界面
                               local ui = require("ui.login").new()
