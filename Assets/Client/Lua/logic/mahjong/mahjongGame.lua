@@ -918,11 +918,6 @@ function mahjongGame:onGameEndHandler(msg)
 --    log("game end, msg = " .. table.tostring(msg))
     local func = tweenFunction.new(function()
         self.deskStatus = deskStatus.gameend
-
-        for _, v in pairs(self.players) do
-            v.que = -1
-        end
-
         self.leftGames = msg.LeftTime
 
         local datas = { deskId          = self.deskId,
@@ -987,6 +982,9 @@ function mahjongGame:onGameEndHandler(msg)
         self.gameEndUI = require("ui.gameEnd").new(self, datas)
         self.gameEndUI:show()
 
+        for _, v in pairs(self.players) do
+            v.que = -1
+        end
         self.deskUI:reset()
         self.operationUI:reset()
     end)

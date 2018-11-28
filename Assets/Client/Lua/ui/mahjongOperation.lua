@@ -1661,6 +1661,7 @@ function mahjongOperation:clear(forceDestroy)
     end
 
     self.mo = nil
+    self.selectedMahjong = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
 --    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
