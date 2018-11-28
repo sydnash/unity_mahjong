@@ -1706,9 +1706,9 @@ function mahjongOperation:onDestroy()
     end
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
-    self.diceRoot:show()
-    self.centerGlass:show()
-    self.countdown:show()
+--    self.diceRoot:show()
+--    self.centerGlass:show()
+--    self.countdown:show()
 
     self:clear(true)
 

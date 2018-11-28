@@ -329,6 +329,13 @@ function mahjongDesk:onGameSync()
     self.mReady:hide()
     self.mCancel:hide()
 
+    for _, v in pairs(self.game.players) do 
+        local st = self.game:getSeatTypeByAcId(v.acId)
+        local hd = self.players[st]
+
+        hd:setPlayerInfo(v)
+    end
+
     self:updateCurrentGameIndex()
 end
 
