@@ -27,12 +27,6 @@ function playHistoryDetailItem:onInit()
         self.mScore3,
         self.mScore4,
     }
-    for _, v in pairs(self.mScores) do
-        v:hide()
-    end
-    self.mResult:hide()
-    self.mPlay:addClickListener(self.onPlayClickHandler, self)
-    self.mShare:addClickListener(self.onShareClickHandler, self)
 end
 
 function playHistoryDetailItem:onShareClickHandler()
@@ -95,7 +89,6 @@ function playHistoryDetailItem:onPlayClickHandler()
             if completed then
                 local data = {}
                 local history = self.historyContainer:findHistoryById(self.mHistoryId)
-                history.PlaybackMsg = ""
                 log("history = " .. table.tostring(history))
                 data.ClubId             = history.ClubId
                 data.Config             = table.fromjson(history.DeskConfig)
@@ -135,6 +128,12 @@ function playHistoryDetailItem:onPlayClickHandler()
 end
 
 function playHistoryDetailItem:set(data, round, historyId, historyContainer)
+    for _, v in pairs(self.mScores) do
+        v:hide()
+    end
+    self.mResult:hide()
+    self.mPlay:addClickListener(self.onPlayClickHandler, self)
+    self.mShare:addClickListener(self.onShareClickHandler, self)
     self.historyContainer = historyContainer
     self.mHistoryId = historyId
     self.mRound = round

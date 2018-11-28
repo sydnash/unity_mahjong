@@ -168,11 +168,11 @@ end
 -- 进入房间
 -------------------------------------------------------------------------------
 function mahjongGame:onEnter(msg)
+    self.data = msg
     self.players = {}
     self.playerCount = 0
     self.leftGames = msg.LeftTime
     self.creator = msg.Creator
-
     self:syncPlayers(msg.Players)
 
     if msg.Reenter ~= nil then
