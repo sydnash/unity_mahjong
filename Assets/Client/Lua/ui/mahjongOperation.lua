@@ -1665,10 +1665,6 @@ function mahjongOperation:clear(forceDestroy)
         end
     end
 
-<<<<<<< HEAD
-    self.mo = nil
-=======
->>>>>>> 41d6bc6e66a932163333367c6d75e7da3529ea4e
     self.selectedMahjong = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
