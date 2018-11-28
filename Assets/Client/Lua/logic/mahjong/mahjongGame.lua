@@ -229,6 +229,7 @@ end
 function mahjongGame:syncSeats(seats)
     for _, v in pairs(seats) do
         local player = self:getPlayerByAcId(v.AcId)
+        player.ready = false --如果游戏中，清除ready状态
         player.que = v.QueType
         player.hu = v.HuInfo
         player.isMarker = self:isMarker(player.acId)
