@@ -81,7 +81,7 @@ opType = {
     chi  = { id = 2, },
     peng = { id = 3, },
     gang = { id = 4, 
-             detail = { angang              = 0, 
+             detail = { angang              = 4, 
                         bagangwithmoney     = 1, 
                         bagangwithoutmoney  = 2, 
                         minggang            = 3, 

@@ -16,7 +16,7 @@ function gameEndItem:setPlayerInfo(player)
     self.mId:setText(string.format("帐号:%d", player.acId))
     self.mScore:setScore(player.score)
 
-    if player.que ~= nil then
+    if player.que ~= nil and player.que > 0 then
         self.mQue:setSprite(getMahjongClassName(player.que))
         self.mQue:show()
     end
