@@ -119,6 +119,7 @@
     <Compile Include="Lua\ui\lobby.lua" />
     <Compile Include="Lua\ui\login.lua" />
     <Compile Include="Lua\ui\messageBox.lua" />
+    <Compile Include="Lua\ui\playHistory\enterPlaybackCode.lua" />
     <Compile Include="Lua\ui\playHistory\playHistory.lua" />
     <Compile Include="Lua\ui\playHistory\playHistoryDetail.lua" />
     <Compile Include="Lua\ui\playHistory\playHistoryDetailItem.lua" />
