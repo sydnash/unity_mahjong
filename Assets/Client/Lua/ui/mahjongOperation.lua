@@ -1085,6 +1085,7 @@ end
 -- 杠
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
+    self:endChuPai()
     local detail = opType.gang.detail
 
     if t == detail.minggang then
@@ -1170,6 +1171,17 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
                 hu = v
                 table.remove(chu, k)
                 break
+            end
+        end
+        if hu == nil then --如果是抢杠，在出牌里面搜不到，要去碰牌里面搜
+            local pengMahjongs = self.pengMahjongs[beAcId]
+            for i, mahjongs in pairs(pengMahjongs) do
+                for k, m in pairs(mahjongs) do 
+                    if m.id == beCard then
+                        hu = v
+                        table.remove(mahjongs, k)
+                    end
+                end
             end
         end
 
