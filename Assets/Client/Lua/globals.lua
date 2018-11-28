@@ -87,7 +87,11 @@ end
 -------------------------------------------------------------
 function playMahjongSound(mahjongId, sex)
     local folder = (sex == sexType.boy) and "mahjong/boy" or "mahjong/girl"
-    local resource = gamepref.getLanguage() .. "_" .. mahjongType[mahjongId].audio
+    local prefix = gamepref.getLanguage()
+    if not string.isNilOrEmpty(prefix) then
+        prefix = prefix .. "_"
+    end
+    local resource = prefix .. mahjongType[mahjongId].audio
 
     return soundManager.playGfx(folder, resource)
 end
@@ -107,7 +111,11 @@ local opsounds = {
 -------------------------------------------------------------
 function playMahjongOpSound(optype, sex)
     local folder = (sex == sexType.boy) and "mahjong/boy" or "mahjong/girl"
-    local resource = gamepref.getLanguage() .. "_" .. opsounds[optype]
+    local prefix = gamepref.getLanguage()
+    if not string.isNilOrEmpty(prefix) then
+        prefix = prefix .. "_"
+    end
+    local resource = prefix .. opsounds[optype]
 
     return soundManager.playGfx(folder, resource)
 end

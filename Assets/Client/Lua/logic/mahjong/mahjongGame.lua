@@ -109,17 +109,13 @@ function mahjongGame:startLoop()
     end
     
     if self.mode == gameMode.normal then
+        log("mahjongGame.startLoop  1")
         if self.data.Reenter ~= nil then
-            if self.data.Status == gameStatus.playing then
-                self.deskUI:onGameSync()
-                self.operationUI:onGameSync()
-            else
-                for _, v in pairs(self.players) do
-                    self.deskUI:setReady(v.acId, v.ready)
-                end
-            end
-
+            log("mahjongGame.startLoop  2")
+            self.deskUI:onGameSync()
             self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
+            self.operationUI:onGameSync()
+            log("mahjongGame.startLoop  3")
         else
             local player = self:getPlayerByAcId(self.mainAcId)
             self.deskUI:setReady(player.acId, player.ready)
@@ -1119,7 +1115,7 @@ end
 -- 
 -------------------------------------------------------------------------------
 function mahjongGame:isPlaying()
-    return self.status == deskStatus.playing
+    return self.data.Status == gameStatus.playing
 end
 
 -------------------------------------------------------------------------------
