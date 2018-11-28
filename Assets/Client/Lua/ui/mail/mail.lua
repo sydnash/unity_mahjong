@@ -35,13 +35,13 @@ function mail:onDeleteClickedHandler()
     playButtonClickSound()
 
     if self.curMail ~= nil then
-        networkManager.deleteMail(self.curMail.id, function(ok, msg)
-            if not ok then
+        networkManager.deleteMail(self.curMail.id, function(msg)
+            if msg == nil then
                 showMessageUI("网络繁忙，请稍后再试")
                 return
             end
 
-            log("delete a mail, msg = " .. table.tostring(msg))
+--            log("delete a mail, msg = " .. table.tostring(msg))
 
             if not msg.Ok then
                 showMessageUI("邮件删除失败，请稍后重试")
@@ -58,13 +58,13 @@ function mail:onGetClickedHandler()
     playButtonClickSound()
 
     if self.curMail ~= nil then
-        networkManager.getRewardsFromMail(self.curMail.id, function(ok, msg)
-            if not ok then
+        networkManager.getRewardsFromMail(self.curMail.id, function(msg)
+            if msg == nil then
                 showMessageUI("网络繁忙，请稍后再试")
                 return
             end
 
-            log("get rewards from mail, msg = " .. table.tostring(msg))
+--            log("get rewards from mail, msg = " .. table.tostring(msg))
 
             if not msg.Ok then
                 showMessageUI("领取失败，请稍后重试\n如有疑问请咨询代理")
@@ -154,8 +154,8 @@ function mail:openMail(mail, index)
     self:refreshContent(mail)
 
     if mail.status == mailStatus.notRead then
-        networkManager.openMail(mail.id, function(ok, msg)
-            log("open a mail, msg = " .. table.tostring(msg))
+        networkManager.openMail(mail.id, function(msg)
+--            log("open a mail, msg = " .. table.tostring(msg))
             if msg ~= nil then
                 local mail = gamepref.player:getMail(msg.MailId)
                 mail.status = mailStatus.read

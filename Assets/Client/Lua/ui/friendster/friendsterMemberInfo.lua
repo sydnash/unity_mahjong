@@ -11,11 +11,13 @@ function friendsterMemberInfo:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mExit:addClickListener(self.onExitClickedHandler, self)
     self.mDissolve:addClickListener(self.onDissolveClickedHandler, self)
+    self.mDelete:addClickListener(self.onDeleteClickedHandler, self)
 
     self.mIp:hide()
     self.mQz:hide()
     self.mExit:hide()
     self.mDissolve:hide()
+    self.mDelete:hide()
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -29,7 +31,7 @@ function friendsterMemberInfo:onExitClickedHandler()
     playButtonClickSound()
     
     networkManager.exitFriendster(self.friendsterId, function(msg)
-        log("exit friendster, msg = " .. table.tostring(msg))
+--        log("exit friendster, msg = " .. table.tostring(msg))
         signalManager.signal(signalType.friendsterExitedSignal, self.friendsterId)
         self:close()
     end)
@@ -39,13 +41,38 @@ function friendsterMemberInfo:onDissolveClickedHandler()
     playButtonClickSound()
 
     networkManager.dissolveFriendster(self.friendsterId, function(msg)
-        log("dissolve friendster, msg = " .. table.tostring(msg))
+--        log("dissolve friendster, msg = " .. table.tostring(msg))
+        self:close()
+    end)
+end
+
+function friendsterMemberInfo:onDeleteClickedHandler()
+    playButtonClickSound()
+
+    showWaitingUI("正在将玩家从亲友圈中删除，请稍候")
+    networkManager.deleteAcIdFromFriendster(self.friendsterId, self.data.acId, function(msg)
+        closeWaitingUI()
+
+        if msg == nil then
+            showMessageUI("网络繁忙，请稍后再试")
+            return
+        end
+
+--        log("delete player from friendster, msg = " .. table.tostring(msg))
+
+        if msg.RetCode ~= retc.ok then
+            showMessageUI(retcText[msg.RetCode])
+            return
+        end
+
+        showMessageUI("玩家已经从亲友圈中删除")
         self:close()
     end)
 end
 
 function friendsterMemberInfo:set(friendsterId, managerId, data)
     self.friendsterId = friendsterId
+    self.data = data
 
     self.mIcon:setTexture(data.headerTex)
     self.mSex:setSprite("boy")
@@ -54,11 +81,14 @@ function friendsterMemberInfo:set(friendsterId, managerId, data)
     if managerId == data.acId then
         self.mQz:show()
 
-        if data.acId == gamepref.acId then
+        if data.acId == gamepref.player.acId then
             self.mDissolve:show()
         else
             self.mExit:show()
         end
+    else
+        self.mQz:hide()
+        self.mDelete:show()
     end
 
     self.mId:setText(string.format("账号:%d", data.acId))

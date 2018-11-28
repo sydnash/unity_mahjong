@@ -136,8 +136,7 @@ end
 
 function gvoiceManager.onUploadedHandler(ok, filename, fileid)
     if gvoiceManager.status then
-        networkManager.sendChatMessage(chatType.voice, fileid, function(ok, msg)
-        
+        networkManager.sendChatMessage(chatType.voice, fileid, function(msg)
         end)
     end
 end

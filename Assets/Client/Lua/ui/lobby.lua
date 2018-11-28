@@ -114,15 +114,15 @@ function lobby:onEnterQYQClickedHandler()
     playButtonClickSound()
     
     showWaitingUI("正在获取亲友圈数据，请稍候...")
-    networkManager.queryFriendsterList(function(ok, msg)
+    networkManager.queryFriendsterList(function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if msg == nil then
             showMessageUI("获取亲友圈数据失败")
             return
         end
 
-        log("query friendster list, msg = " .. table.tostring(msg))
+--        log("query friendster list, msg = " .. table.tostring(msg))
 
         local ui = require("ui.friendster.friendster").new(msg.Clubs)
         ui:show()

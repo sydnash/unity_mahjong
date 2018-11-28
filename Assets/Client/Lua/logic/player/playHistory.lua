@@ -66,59 +66,66 @@ function playHistory:getLastTime()
     return self.mLastTime
 end
 
-
 function playHistory:getHistoryFunc()
     if self.mClubId == nil then
         return networkManager.getPlayHistory
     else
-        return function(lasttime, cb)
-            networkManager.queryFriendsterStatistics(self.mClubId, lasttime, cb)
+        return function(lasttime, callback)
+            networkManager.queryFriendsterStatistics(self.mClubId, lasttime, callback)
         end
     end
 end
+
 function playHistory:getHistoryDetailFunc()
     if self.mClubId == nil then
         return networkManager.getPlayHistoryDetail
     else
-        return function(typ, historyId, round, cb)
-            networkManager.getClubPlayHistoryDetail(self.mClubId, typ, historyId, round, cb)
+        return function(typ, historyId, round, callback)
+            networkManager.getClubPlayHistoryDetail(self.mClubId, typ, historyId, round, callback)
         end
     end
 end
+
 --for normal
-function playHistory:updateHistory(cb)
+function playHistory:updateHistory(callback)
     local func = self:getHistoryFunc()
-    func(self.mLastTime, function(ok, data)
-        if not ok then
-            if cb then cb(false) end
+    func(self.mLastTime, function(data)
+        if data == nil then
+            if callback then callback(false) end
             return
         end
+
         self:setData(data)
-        if cb then cb(true) end
+        if callback then callback(true) end
     end)
 end
-function playHistory:getScoreDetail(id, cb)
+
+function playHistory:getScoreDetail(id, callback)
     local history = self:findHistoryById(id)
+
     if history.PlayTimes == 0 or (history.ScoreDetail and #history.ScoreDetail == history.PlayTimes) then
-		cb(true, history.ScoreDetail)
+		callback(true, history.ScoreDetail)
 		return
     end
     
     local func = self:getHistoryDetailFunc()
-    func(0, history.Id, 0, function(ok, data)
-        if not ok then
-            cb(false)
+    func(0, history.Id, 0, function(data)
+        if data == nil then
+            callback(false)
             return 
         end
+
         if data.RetCode ~= retc.ok then
-            cb(true, nil)
+            callback(true, nil)
             return
         end
-		history.ScoreDetail = data.ScoreDetail
-		cb(true, history.ScoreDetail)
+		
+        history.ScoreDetail = data.ScoreDetail
+		callback(true, history.ScoreDetail)
 	end)
 end
-function playHistory:getPlayDetail(id, round, cb)
+
+function playHistory:getPlayDetail(id, round, callback)
     local history = self:findHistoryById(id)
 
     if history.PlaybackMsg == nil then
@@ -126,24 +133,24 @@ function playHistory:getPlayDetail(id, round, cb)
 	end
 
     if history.PlaybackMsg[round] then
-        cb(true, history.PlaybackMsg[round])
+        callback(true, history.PlaybackMsg[round])
 		return
 	end
 	
     local func = self:getHistoryDetailFunc()
-    func(2, id, round - 1, function(ok, data)
-        if not ok then
-            cb(false)
+    func(2, id, round - 1, function(data)
+        if data == nil then
+            callback(false)
             return 
         end
 
         if data.RetCode ~= retc.ok or data.OnePlayback == "" then
-            cb(true, nil) --战绩回放不存在
+            callback(true, nil) --战绩回放不存在
             return
         end
 
         history.PlaybackMsg[round] = data.OnePlayback
-        cb(true, history.PlaybackMsg[round])
+        callback(true, history.PlaybackMsg[round])
     end)
 end
 

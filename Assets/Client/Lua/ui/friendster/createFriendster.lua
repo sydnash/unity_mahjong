@@ -79,10 +79,10 @@ function createFriendster:onCreateClickedHandler()
     playButtonClickSound()
 
     showWaitingUI("正在创建亲友圈")
-    networkManager.createFriendster(self.cityId, self.mName:getText(), function(ok, msg)
+    networkManager.createFriendster(self.cityId, self.mName:getText(), function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end

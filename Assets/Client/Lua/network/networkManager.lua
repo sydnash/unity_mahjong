@@ -46,7 +46,8 @@ local networkHandler = class("networkHandler")
 ----------------------------------------------------------------
 function networkHandler.setup()
     networkManager.registerCommandHandler(protoType.sc.mail, function(msg)
-        networkHandler:onMail(msg)
+        gamepref.player:addMail(msg)
+        signalManager.signal(signalType.mail)
     end, true)
     networkManager.registerCommandHandler(protoType.sc.notifyPropertyChange, function(data)
         if data["coin"] then
@@ -57,15 +58,6 @@ function networkHandler.setup()
             signalManager.signal(signalType.cardsChanged)
         end
     end, true)
-end
-
-----------------------------------------------------------------
---
-----------------------------------------------------------------
-function networkHandler:onMail(msg)
-    log("recv a mail, msg = " .. table.tostring(msg))
-    gamepref.player:addMail(msg)
-    signalManager.signal(signalType.mail)
 end
 
 
@@ -274,7 +266,7 @@ local function loginC(text, callback)
     local o = table.fromjson(text)
 
     if o.retcode ~= retc.ok then
-        callback(false, nil)
+        callback(nil)
         return
     end
 
@@ -290,13 +282,13 @@ local function loginC(text, callback)
 
     networkManager.connect(host, port, function(connected)
         if not connected then
-            callback(false, nil)
+            callback(nil)
         else
             local loginType = 1
             local data = { AcId = acid, Session = session, LoginType = loginType }
             send(protoType.cs.loginHs, data, function(msg)
                 if msg == nil then
-                    callback(false, nil)
+                    callback(nil)
                 else
                     gamepref.session    = msg.Session
                     gamepref.acId       = msg.AcId
@@ -313,7 +305,7 @@ local function loginC(text, callback)
                     gamepref.player.userType   = msg.UserType
                     gamepref.player:setMails(msg.Mails)
 
-                    callback(true, msg)
+                    callback(msg)
                 end
             end)
         end
@@ -332,7 +324,7 @@ function networkManager.loginGuest(callback)
     local loginURL = networkConfig.server.guestURL
     http.getText(loginURL .. "?" .. form, timeout, function(ok, text)
         if (not ok) or string.isNilOrEmpty(text) then
-            callback(false, nil)
+            callback(nil)
             return
         end
         
@@ -348,7 +340,7 @@ function networkManager.loginWx(callback)
 
     platformHelper.registerLoginWxCallback(function(json)
         if string.isNilOrEmpty(json) then
-            callback(false, nil)
+            callback(nil)
             return
         end
 
@@ -362,7 +354,7 @@ function networkManager.loginWx(callback)
 
             http.getText(accessUrl, timeout, function(ok, text)
                 if (not ok) or string.isNilOrEmpty(text) then
-                    callback(false, nil)
+                    callback(nil)
                     return
                 end
 
@@ -384,13 +376,7 @@ end
 -------------------------------------------------------------------
 function networkManager.createDesk(cityType, choose, clubId, callback)
     local data = { GameType = cityType, ConfigChoose = table.tojson(choose), ClubId = clubId }
-    send(protoType.cs.createDesk, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.createDesk, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -398,13 +384,7 @@ end
 -------------------------------------------------------------------
 function networkManager.checkDesk(cityType, deskId, callback)
     local data = { GameType = cityType, DeskId = deskId }
-    send(protoType.cs.checkDesk, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.checkDesk, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -417,14 +397,7 @@ function networkManager.enterDesk(cityType, deskId, location, callback)
                    Longitude    = location.longitude, 
                    HasPosition  = location.status 
     }
-
-    send(protoType.cs.enterGSDesk, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.enterGSDesk, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -432,13 +405,7 @@ end
 -------------------------------------------------------------------
 function networkManager.ready(ready, callback)
     local data = {IsReady = ready}
-    send(protoType.cs.ready, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.ready, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -446,9 +413,7 @@ end
 -------------------------------------------------------------------
 function networkManager.chuPai(cards, callback)
     local data = { Op = opType.chu.id, Chose = { Cs = cards } }
-    send(protoType.cs.opChoose, data, function(msg)
-        callback(false, nil)
-    end)
+    send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -456,9 +421,7 @@ end
 -------------------------------------------------------------------
 function networkManager.chiPai(cards, callback)
     local data = { Op = opType.chi.id, Chose = { Cs = cards } }
-    send(protoType.cs.opChoose, data, function(msg)
-        callback(false, nil)
-    end)
+    send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -466,9 +429,7 @@ end
 -------------------------------------------------------------------
 function networkManager.pengPai(cards, callback)
     local data = { Op = opType.peng.id, Chose = { Cs = cards } }
-    send(protoType.cs.opChoose, data, function(msg)
-        callback(false, nil)
-    end)
+    send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -476,9 +437,7 @@ end
 -------------------------------------------------------------------
 function networkManager.gangPai(cards, callback)
     local data = { Op = opType.gang.id, Chose = { Cs = cards } }
-    send(protoType.cs.opChoose, data, function(msg)
-        callback(false, nil)
-    end)
+    send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -486,9 +445,7 @@ end
 -------------------------------------------------------------------
 function networkManager.huPai(cards, callback)
     local data = { Op = opType.hu.id, Chose = { Cs = cards } }
-    send(protoType.cs.opChoose, data, function(msg)
-        callback(false, nil)
-    end)
+    send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -496,22 +453,14 @@ end
 -------------------------------------------------------------------
 function networkManager.guoPai(callback)
     local data = { Op = opType.guo.id }
-    send(protoType.cs.opChoose, data, function(msg)
-        callback(false, nil)
-    end)
+    send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function networkManager.destroyDesk(callback)
-    send(protoType.cs.exitDesk, table.empty, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.exitDesk, table.empty, callback)
 end
 
 -------------------------------------------------------------------
@@ -519,13 +468,7 @@ end
 -------------------------------------------------------------------
 function networkManager.exitVote(agree, callback)
     local data = { Agree = agree }
-    send(protoType.cs.exitVote, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.exitVote, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -533,33 +476,14 @@ end
 -------------------------------------------------------------------
 function networkManager.quicklyStartChose(agree, callback)
     local data = { Agree = agree }
-    send(protoType.cs.quicklyStartChose, data, function(msg)
-        if not callback then
-            return
-        end
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.quicklyStartChose, data, callback)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function networkManager.proposerQuicklyStart(callback)
-    local data = {}
-    send(protoType.cs.proposerQuicklyStart, data, function(msg)
-        if not callback then
-            return
-        end
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.proposerQuicklyStart, table.empty, callback)
 end
 
 -------------------------------------------------------------------
@@ -567,9 +491,7 @@ end
 -------------------------------------------------------------------
 function networkManager.dingque(mahjongClass, callback)
     local data = { Q = mahjongClass }
-    send(protoType.cs.dpChoose, data, function(msg)
-        callback(false, nil)
-    end)
+    send(protoType.cs.dpChoose, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -577,22 +499,14 @@ end
 -------------------------------------------------------------------
 function networkManager.sendChatMessage(chatType, chatContent, callback)
     local data = { Type = chatType, Data = chatContent }
-    send(protoType.cs.chatMessage, data, function(msg)
-        callback(false, nil)
-    end)
+    send(protoType.cs.chatMessage, data, callback)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function networkManager.queryFriendsterList(callback)
-    send(protoType.cs.queryFriendsterList, table.empty, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.queryFriendsterList, table.empty, callback)
 end
 
 -------------------------------------------------------------------
@@ -600,13 +514,7 @@ end
 -------------------------------------------------------------------
 function networkManager.createFriendster(city, name, callback)
     local data = { ClubName = name, ClubDesc = string.empty, GameType = city, ClubIcon = string.empty }
-    send(protoType.cs.createFriendster, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.createFriendster, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -614,13 +522,7 @@ end
 -------------------------------------------------------------------
 function networkManager.dissolveFriendster(friendsterId, callback)
     local data = { ClubId = friendsterId }
-    send(protoType.cs.dissolveFriendster, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.dissolveFriendster, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -628,13 +530,7 @@ end
 -------------------------------------------------------------------
 function networkManager.joinFriendster(friendsterId, verificationCode, callback)
     local data = { ClubId = friendsterId, Code = verificationCode }
-    send(protoType.cs.joinFriendster, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.joinFriendster, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -642,13 +538,7 @@ end
 -------------------------------------------------------------------
 function networkManager.exitFriendster(friendsterId, callback)
     local data = { ClubId = friendsterId }
-    send(protoType.cs.exitFriendster, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.exitFriendster, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -656,13 +546,7 @@ end
 -------------------------------------------------------------------
 function networkManager.queryFriendsterMembers(friendserId, callback)
     local data = { ClubId = friendserId }
-    send(protoType.cs.queryFriendsterMembers, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.queryFriendsterMembers, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -670,13 +554,7 @@ end
 -------------------------------------------------------------------
 function networkManager.queryFriendsterDesks(friendserId, callback)
     local data = { ClubId = friendserId }
-    send(protoType.cs.queryFriendsterDesks, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.queryFriendsterDesks, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -684,13 +562,7 @@ end
 -------------------------------------------------------------------
 function networkManager.queryFriendsterInfo(friendserId, verificationCode, callback)
     local data = { ClubId = friendserId, Code = verificationCode }
-    send(protoType.cs.queryFriendsterInfo, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.queryFriendsterInfo, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -706,26 +578,15 @@ end
 -------------------------------------------------------------------
 function networkManager.transferCards(id, count, callback)
     local data = {Target = id, Value = count}
-    send(protoType.cs.transferCards, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.transferCards, data, callback)
 end
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function networkManager.queryAcId(acId, callback)
     local data = { AcId = acId }
-    send(protoType.cs.queryAcId, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.queryAcId, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -733,13 +594,7 @@ end
 -------------------------------------------------------------------
 function networkManager.addAcIdToFriendster(friendserId, acId, callback)
     local data = { ClubId = friendserId, AcId = acId }
-    send(protoType.cs.addAcIdToFriendster, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.addAcIdToFriendster, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -747,13 +602,7 @@ end
 -------------------------------------------------------------------
 function networkManager.deleteAcIdFromFriendster(friendserId, acId, callback)
     local data = { ClubId = friendserId, AcId = acId }
-    send(protoType.cs.deleteAcIdFromFriendster, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.deleteAcIdFromFriendster, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -761,13 +610,7 @@ end
 -------------------------------------------------------------------
 function networkManager.depositToFriendsterBank(friendsterId, value, callback)
     local data = { ClubId = friendsterId, Count = value }
-    send(protoType.cs.depositToFriendsterBank, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.depositToFriendsterBank, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -775,13 +618,7 @@ end
 -------------------------------------------------------------------
 function networkManager.takeoutFromFriendsterBank(friendsterId, value, callback)
     local data = { ClubId = friendsterId, Count = value }
-    send(protoType.cs.takeoutFromFriendsterBank, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.takeoutFromFriendsterBank, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -789,13 +626,7 @@ end
 -------------------------------------------------------------------
 function networkManager.queryFriendsterStatistics(friendsterId, startTime, callback)
     local data = { ClubId = friendsterId, StartTime = startTime }
-    send(protoType.cs.queryFriendsterStatistics, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.queryFriendsterStatistics, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -803,15 +634,12 @@ end
 -------------------------------------------------------------------
 function networkManager.replyFriendsterRequest(friendsterId, acId, agree, callback)
     local data = { ClubId = friendsterId, AcId = acId, Agree = agree }
-    send(protoType.cs.replyFriendsterRequest, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.replyFriendsterRequest, data, callback)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function networkManager.dissolveFriendsterDesk(friendsterId, cityType, deskId, callback)
     local data = { ClubId = friendsterId, GameType = cityType, DeskId = deskId, }
     send(protoType.cs.dissolveFriendsterDesk, data, callback)
@@ -822,13 +650,7 @@ end
 -------------------------------------------------------------------
 function networkManager.deleteMail(mailId, callback)
     local data = { mailId = mailId, Op = 1 }
-    send(protoType.cs.mailOp, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.mailOp, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -836,13 +658,7 @@ end
 -------------------------------------------------------------------
 function networkManager.openMail(mailId, callback)
     local data = { mailId = mailId, Op = 2 }
-    send(protoType.cs.mailOp, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.mailOp, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -850,13 +666,7 @@ end
 -------------------------------------------------------------------
 function networkManager.getRewardsFromMail(mailId, callback)
     local data = { mailId = mailId, Op = 3 }
-    send(protoType.cs.mailOp, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.mailOp, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -864,13 +674,7 @@ end
 -------------------------------------------------------------------
 function networkManager.syncLocation(location, callback)
     local data = { Latitude = location.latitude, Longitude = location.longitude, Has = location.status }
-    send(protoType.cs.syncLocation, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.syncLocation, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -878,27 +682,16 @@ end
 -------------------------------------------------------------------
 function networkManager.getPlayHistory(time, callback)
     local data =  {StartTime = time}
-    send(protoType.cs.getPlayHistory, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.getPlayHistory, data, callback)
 end
+
 -------------------------------------------------------------------
 --typ 0 表示拉取所有详细积分数据  round没有意义
 --typ 2 表示拉取单场的对局详情  round从0开始
 -------------------------------------------------------------------
 function networkManager.getPlayHistoryDetail(typ, id, round, callback)
     local data = { Type = typ, Id = id, Round = round, }
-    send(protoType.cs.getPlayHistoryDetail, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.getPlayHistoryDetail, data, callback)
 end
 
 -------------------------------------------------------------------
@@ -906,13 +699,7 @@ end
 -------------------------------------------------------------------
 function networkManager.getClubPlayHistoryDetail(clubId, typ, id, round, callback)
     local data = { ClubId = clubId, Type = typ, Id = id, Round = round, }
-    send(protoType.cs.getClubPlayHistoryDetail, data, function(msg)
-        if msg == nil then
-            callback(false, nil)
-        else
-            callback(true, msg)
-        end
-    end)
+    send(protoType.cs.getClubPlayHistoryDetail, data, callback)
 end
 
 -------------------------------------------------------------------

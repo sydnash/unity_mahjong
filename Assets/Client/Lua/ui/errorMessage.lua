@@ -8,15 +8,11 @@ local errorMessage = class("errorMessage", base)
 _RES_(errorMessage, "ErrorCommitUI", "ErrorCommitUI")
 
 function errorMessage:onInit()
-    if not deviceConfig.isMobile then
-        self.mCommit:hide()
-    end
-
     self.mQuit:addClickListener(self.onQuitClickedHandler, self)
 end
 
-function errorMessage:appendErrorMessage(errorMessage)
-    local text = string.format("%s\n-----------------------------\n%s", self.mText:getText(), errorMessage)
+function errorMessage:appendErrorMessage(message)
+    local text = string.format("%s\n-----------------------------\n%s", self.mText:getText(), message)
     self.mText:setText(text)
 end
 

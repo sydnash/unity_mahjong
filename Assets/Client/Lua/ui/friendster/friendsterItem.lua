@@ -21,8 +21,8 @@ function friendsterItem:onClickedHandler()
     local friendsterId = self.data.id
 
     showWaitingUI("正在获取亲友圈数据，请稍候...")
-    networkManager.queryFriendsterMembers(friendsterId, function(ok, msg)
-        if not ok then
+    networkManager.queryFriendsterMembers(friendsterId, function(msg)
+        if msg == nil then
             closeWaitingUI()
             showWaitingUI("网络繁忙，请稍后再试")
             return
@@ -34,13 +34,13 @@ function friendsterItem:onClickedHandler()
             return
         end
 
-        log("query friendster members, msg = " .. table.tostring(msg))
+--        log("query friendster members, msg = " .. table.tostring(msg))
         self.data:setMembers(msg.Players)
 
-        networkManager.queryFriendsterDesks(friendsterId, function(ok, msg)
+        networkManager.queryFriendsterDesks(friendsterId, function(msg)
             closeWaitingUI()
 
-            if not ok then
+            if msg == nil then
                 showWaitingUI("网络繁忙，请稍后再试")
                 return
             end
@@ -50,7 +50,7 @@ function friendsterItem:onClickedHandler()
                 return
             end
 
-            log("query friendster desks, msg = " .. table.tostring(msg))
+--            log("query friendster desks, msg = " .. table.tostring(msg))
             self.data:setDesks(msg.Desks)
 
             if self.callback ~= nil then

@@ -38,15 +38,15 @@ function joinFriendster:onQueryClickedHandler()
     local vc = self.mVerification:getText()
 
     showWaitingUI("正在查询亲友圈信息，请稍候")
-    networkManager.queryFriendsterInfo(id, vc, function(ok, msg)
+    networkManager.queryFriendsterInfo(id, vc, function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
 
-        log("query friendster info, msg = " .. table.tostring(msg))
+--        log("query friendster info, msg = " .. table.tostring(msg))
 
         if msg.RetCode ~= retc.ok then
             showMessageUI(retcText[msg.RetCode])
@@ -64,15 +64,15 @@ function joinFriendster:onJoinClickedHandler()
     local vc = self.mVerification:getText()
 
     showWaitingUI("正在加入亲友圈，请稍候")
-    networkManager.joinFriendster(id, vc, function(ok, msg)
+    networkManager.joinFriendster(id, vc, function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
 
-        log("join friendster, msg = " .. table.tostring(msg))
+--        log("join friendster, msg = " .. table.tostring(msg))
 
         showMessageUI("加入亲友圈申请发送成功，等待群主审核")
         self:close()

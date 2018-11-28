@@ -110,7 +110,6 @@ end
 -- 初始化
 -------------------------------------------------------------------------------
 function mahjongOperation:onInit()
-    log("1111111111111111111111")
     self.turnCountdown = COUNTDOWN_SECONDS_C
     self.countdownTick = -1
 
@@ -798,7 +797,7 @@ function mahjongOperation:touchHandler(phase, pos)
                 else
                     local id = self.selectedMahjong.id
 
-                    networkManager.chuPai({ id }, function(ok, msg)
+                    networkManager.chuPai({ id }, function(msg)
                         log("chu pai failed")
                         self:relocateInhandMahjongs(self.game.mainAcId)
                     end)
@@ -855,9 +854,8 @@ end
 function mahjongOperation:onTiaoClickedHandler()
     playButtonClickSound()
 
-    networkManager.dingque(mahjongClass.tiao, function(ok, msg)
+    networkManager.dingque(mahjongClass.tiao, function(msg)
     end)
-
     self.mQue:hide()
 end
 
@@ -867,9 +865,8 @@ end
 function mahjongOperation:onTongClickedHandler()
     playButtonClickSound()
 
-    networkManager.dingque(mahjongClass.tong, function(ok, msg)
+    networkManager.dingque(mahjongClass.tong, function(msg)
     end)
-
     self.mQue:hide()
 end
 
@@ -879,9 +876,8 @@ end
 function mahjongOperation:onWanClickedHandler()
     playButtonClickSound()
 
-    networkManager.dingque(mahjongClass.wan, function(ok, msg)
+    networkManager.dingque(mahjongClass.wan, function(msg)
     end)
-
     self.mQue:hide()
 end
 
@@ -1344,34 +1340,36 @@ function mahjongOperation:relocateInhandMahjongs(acId)
     local player = self.game:getPlayerByAcId(acId)
     local mahjongs = self.inhandMahjongs[acId]
 
-    self:sortInhand(player, mahjongs)
+    if mahjongs ~= nil then
+        self:sortInhand(player, mahjongs)
 
-    local dir = self.game:getSeatTypeByAcId(player.acId)
-    local seat = self.seats[dir]
+        local dir = self.game:getSeatTypeByAcId(player.acId)
+        local seat = self.seats[dir]
 
-    local o = self:getMyInhandMahjongPos(player, 1)
-    local r = seat[mahjongGame.cardType.shou][self.game.mode].rot
+        local o = self:getMyInhandMahjongPos(player, 1)
+        local r = seat[mahjongGame.cardType.shou][self.game.mode].rot
 
-    for k, m in pairs(mahjongs) do
-        k = k - 1
-        local p = m:getLocalPosition()
+        for k, m in pairs(mahjongs) do
+            k = k - 1
+            local p = m:getLocalPosition()
 
-        if dir == mahjongGame.seatType.mine then
-            p:Set(o.x + (mahjong.w * k), o.y, o.z)
-            m:setPickabled(true)
-        elseif dir == mahjongGame.seatType.left then
-            p:Set(o.x, o.y, o.z + (mahjong.w * k))
-            m:setPickabled(false)
-        elseif dir == mahjongGame.seatType.right then
-            p:Set(o.x, o.y, o.z - (mahjong.w * k))
-            m:setPickabled(false)
-        else
-            p:Set(o.x + (mahjong.w * k), o.y, o.z)
-            m:setPickabled(false)
+            if dir == mahjongGame.seatType.mine then
+                p:Set(o.x + (mahjong.w * k), o.y, o.z)
+                m:setPickabled(true)
+            elseif dir == mahjongGame.seatType.left then
+                p:Set(o.x, o.y, o.z + (mahjong.w * k))
+                m:setPickabled(false)
+            elseif dir == mahjongGame.seatType.right then
+                p:Set(o.x, o.y, o.z - (mahjong.w * k))
+                m:setPickabled(false)
+            else
+                p:Set(o.x + (mahjong.w * k), o.y, o.z)
+                m:setPickabled(false)
+            end
+
+            m:setLocalPosition(p)
+            m:setLocalRotation(r)
         end
-
-        m:setLocalPosition(p)
-        m:setLocalRotation(r)
     end
 end
 

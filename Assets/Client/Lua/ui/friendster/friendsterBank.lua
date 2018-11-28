@@ -75,10 +75,10 @@ function friendsterBank:onDepositClickedHandler()
     local value = tonumber(self.mCurrent:getText())
 
     showWaitingUI("正在存入房卡，请稍候")
-    networkManager.depositToFriendsterBank(self.data.id, value, function(ok, msg)
+    networkManager.depositToFriendsterBank(self.data.id, value, function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
@@ -98,10 +98,10 @@ function friendsterBank:onTakeoutClickedHandler()
     local value = tonumber(self.mCurrent:getText())
 
     showWaitingUI("正在取出房卡，请稍候")
-    networkManager.takeoutFromFriendsterBank(self.data.id, value, function(ok, msg)
+    networkManager.takeoutFromFriendsterBank(self.data.id, value, function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end

@@ -38,8 +38,8 @@ function createDesk:onCreateClickedHandler()
 
     showWaitingUI("正在创建房间，请稍候...")
     
-    networkManager.createDesk(self.cityType, choose, friendsterId, function(ok, msg)
-        if not ok then
+    networkManager.createDesk(self.cityType, choose, friendsterId, function(msg)
+        if msg == nil then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end

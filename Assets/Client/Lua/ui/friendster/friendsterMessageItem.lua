@@ -16,7 +16,7 @@ function friendsterMessageItem:onRejectClickedHandler()
     playButtonClickSound()
 
     networkManager.replyFriendsterRequest(self.friendsterId, self.acId, false, function(msg)
-        log("reject friendster apply, msg = " .. table.tostring(msg))
+--        log("reject friendster apply, msg = " .. table.tostring(msg))
         signalManager.signal(signalType.friendsterMessageOp, { friendsterId = self.friendsterId, acId = self.acId })
     end)
 end
@@ -25,7 +25,7 @@ function friendsterMessageItem:onAgreeClickedHandler()
     playButtonClickSound()
 
     networkManager.replyFriendsterRequest(self.friendsterId, self.acId, true, function(msg)
-        log("agree friendster apply, msg = " .. table.tostring(msg))
+--        log("agree friendster apply, msg = " .. table.tostring(msg))
         signalManager.signal(signalType.friendsterMessageOp, { friendsterId = self.friendsterId, acId = self.acId })
     end)
 end
