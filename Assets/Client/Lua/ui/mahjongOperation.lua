@@ -1611,6 +1611,11 @@ function mahjongOperation:clear(forceDestroy)
     end
     self.idleMahjongs = {}
 
+    if self.mo ~= nil then
+        func(self.mo)
+        self.mo = nil
+    end
+
     for _, p in pairs(self.game.players) do
         local inhand = self.inhandMahjongs[p.acId]
         if inhand ~= nil then
@@ -1660,7 +1665,7 @@ function mahjongOperation:clear(forceDestroy)
         end
     end
 
-    self.mo = nil
+    self.selectedMahjong = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
 --    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
