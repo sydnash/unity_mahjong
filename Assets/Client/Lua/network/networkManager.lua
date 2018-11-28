@@ -137,9 +137,17 @@ end
 function networkManager.setup(disconnectedCallback)
     networkManager.messageQueue = {}
     networkManager.messageDeadline = time.realtimeSinceStartup()
-    networkManager.disconnectedCallback = disconnectedCallback
+    networkManager.disconnectedCallback_ = disconnectedCallback
 
     networkHandler.setup()
+end
+
+function networkManager.disconnectedCallback()
+    if networkManager.updateHandler ~= nil then
+         unregisterUpdateListener(networkManager.updateHandler)
+         networkManager.updateHandler = nil
+    end
+    networkManager.disconnectedCallback_()
 end
 
 -------------------------------------------------------------------
@@ -200,9 +208,10 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.connect(host, port, callback)
+function networkManager.connect(host, port, connectedCallback, connecttimeoutCallback, disconnectedCallback)
     local timeout = networkConfig.tcpTimeout * 1000 -- 转为毫秒
 
+    tcp.connected = false
     tcp.connect(host, port, timeout, function(connected)
         if connected then
             tcp.registerReceivedCallback(receive)
@@ -217,23 +226,33 @@ function networkManager.connect(host, port, callback)
             end
         end
 
-        if callback ~= nil then
-            callback(connected)
+        if connected then
+            tcp.connected = true
+            connectedCallback()
+        else
+            if tcp.connected then
+                disconnectedCallback()
+            else
+                connecttimeoutCallback()
+            end
         end
     end)
 end
 
 function networkManager.reconnect(host, port, callback)
     networkManager.connect(host, port, function(connected)
-        if not connected then
-            callback(false, -1, -1, -1)
-        else
-            local data = { Session = gamepref.session, AcId = gamepref.acId, Level = 1, }
-            send(protoType.cs.reconnect, data, function(msg)
-                log("reconnect, msg = " ..  table.tostring(msg))
-                callback(msg.Ok, msg.CurCoin, msg.GameType, msg.DeskId)
-            end)
-        end
+        --connected
+        local data = { Session = gamepref.session, AcId = gamepref.acId, Level = 1, }
+        send(protoType.cs.reconnect, data, function(msg)
+            log("reconnect, msg = " ..  table.tostring(msg))
+            callback(msg.Ok, msg.CurCoin, msg.GameType, msg.DeskId)
+        end)
+    end, function()
+        --timeout
+        callback(false, -1, -1, -1)
+    end, function()
+        --disconenct
+        networkManager.disconnectedCallback()
     end)
 end
 
@@ -281,34 +300,37 @@ local function loginC(text, callback)
     gamepref.port    = port
 
     networkManager.connect(host, port, function(connected)
-        if not connected then
-            networkManager.disconnectedCallback()
-        else
-            local loginType = 1
-            local data = { AcId = acid, Session = session, LoginType = loginType }
-            send(protoType.cs.loginHs, data, function(msg)
-                if msg == nil then
-                    callback(nil)
-                else
-                    gamepref.session    = msg.Session
-                    gamepref.acId       = msg.AcId
-                    gamepref.desk       = { cityType = msg.DeskInfo.GameType, deskId = msg.DeskInfo.DeskId, }
-                    gamepref.player     = require("logic.player.gamePlayer").new(msg.AcId)
-                            
-                    gamepref.player.headerUrl  = msg.HeadUrl
-                    gamepref.player:loadHeaderTex()
-                    gamepref.player.nickname   = msg.Nickname
-                    gamepref.player.ip         = msg.Ip
-                    gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.boy, sexType.girl)
-                    gamepref.player.laolai     = msg.IsLaoLai
-                    gamepref.player.cards      = msg.Coin
-                    gamepref.player.userType   = msg.UserType
-                    gamepref.player:setMails(msg.Mails)
+        --connected
+        local loginType = 1
+        local data = { AcId = acid, Session = session, LoginType = loginType }
+        send(protoType.cs.loginHs, data, function(msg)
+            if msg == nil then
+                callback(nil)
+            else
+                gamepref.session    = msg.Session
+                gamepref.acId       = msg.AcId
+                gamepref.desk       = { cityType = msg.DeskInfo.GameType, deskId = msg.DeskInfo.DeskId, }
+                gamepref.player     = require("logic.player.gamePlayer").new(msg.AcId)
+                        
+                gamepref.player.headerUrl  = msg.HeadUrl
+                gamepref.player:loadHeaderTex()
+                gamepref.player.nickname   = msg.Nickname
+                gamepref.player.ip         = msg.Ip
+                gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.boy, sexType.girl)
+                gamepref.player.laolai     = msg.IsLaoLai
+                gamepref.player.cards      = msg.Coin
+                gamepref.player.userType   = msg.UserType
+                gamepref.player:setMails(msg.Mails)
 
-                    callback(msg)
-                end
-            end)
-        end
+                callback(msg)
+            end
+        end)
+    end, function()
+        --connect timeout
+        callback(nil)
+    end, function()
+        --disconnectd
+        networkManager.disconnectedCallback()
     end)
 end 
 
