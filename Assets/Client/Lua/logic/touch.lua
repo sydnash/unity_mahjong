@@ -22,7 +22,7 @@ local function position()
 end
 
 local function update()
-    if phase == touch.phaseType.ended then
+    if phase == touch.phaseType.ended or pahse == touch.phaseType.canceled then
         if not deviceConfig.isMobile then
             if Input.GetMouseButtonDown(0) then
                 phase = touch.phaseType.began
