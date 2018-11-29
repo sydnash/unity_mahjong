@@ -13,6 +13,7 @@ public class UtilsWrap
 		L.RegFunction("BytesToInt32", BytesToInt32);
 		L.RegFunction("NewByteArray", NewByteArray);
 		L.RegFunction("NewEmptyByteArray", NewEmptyByteArray);
+		L.RegFunction("CopyBytes", CopyBytes);
 		L.RegFunction("ConcatBytes", ConcatBytes);
 		L.RegFunction("SubBytes", SubBytes);
 		L.RegFunction("TrimBytes", TrimBytes);
@@ -161,6 +162,27 @@ public class UtilsWrap
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
 			byte[] o = Utils.NewEmptyByteArray(arg0);
 			ToLua.Push(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CopyBytes(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 5);
+			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			byte[] arg2 = ToLua.CheckByteBuffer(L, 3);
+			int arg3 = (int)LuaDLL.luaL_checknumber(L, 4);
+			int arg4 = (int)LuaDLL.luaL_checknumber(L, 5);
+			int o = Utils.CopyBytes(arg0, arg1, arg2, arg3, arg4);
+			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}
 		catch (Exception e)
