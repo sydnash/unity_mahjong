@@ -114,7 +114,7 @@ function friendsterStatisticsHistoryItem:set(data, historyContainer)
             p.score.n:setText(tostring(s))
         end
 
-        if s == max then
+        if s == max s > 0 then
             p.winner:show()
         end
     end

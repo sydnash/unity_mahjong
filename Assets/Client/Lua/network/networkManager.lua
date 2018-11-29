@@ -208,7 +208,7 @@ function networkManager.update()
 
     if networkManager.hasPingPong then
         local ping = networkConfig.ping
-        local pong = math.max(ping + 0.5, networkConfig.pong)
+        local pong = math.max(ping + 5, networkConfig.pong)
         --发送心跳包
         if now - networkManager.pingTick > ping then
             send(protoType.hb, table.empty, function(msg)
