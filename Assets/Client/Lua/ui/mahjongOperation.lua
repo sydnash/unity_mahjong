@@ -793,7 +793,7 @@ function mahjongOperation:touchHandler(phase, pos)
                 self.selectedMahjong:setPosition(mpos)
                 self.selectedLastPos = wpos
             end
-        else
+        elseif
             if self.selectedMahjong ~= nil then
                 local mpos = self.selectedMahjong:getPosition()
                 local cpos = camera.transform.localPosition
