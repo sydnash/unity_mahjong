@@ -1285,7 +1285,11 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
             end
             m:setShadowMode(mahjong.shadowMode.noshadow)
         else
-            m:setShadowMode(mahjong.shadowMode.li)
+            if self.game.mode == gameMode.playback then
+                m:setShadowMode(mahjong.shadowMode.yang)
+            else
+                m:setShadowMode(mahjong.shadowMode.li)
+            end
         end
     end
 
@@ -1400,7 +1404,11 @@ function mahjongOperation:relocateInhandMahjongs(acId)
             if acId == self.game.mainAcId then
                 m:setShadowMode(mahjong.shadowMode.noshadow)
             else
-                m:setShadowMode(mahjong.shadowMode.li)
+                if self.game.mode == gameMode.playback then
+                    m:setShadowMode(mahjong.shadowMode.yang)
+                else
+                    m:setShadowMode(mahjong.shadowMode.li)
+                end
             end
         end
     end
@@ -1942,7 +1950,11 @@ function mahjongOperation:onHuanNZhangDo(msg)
             if msg.AcId == self.game.mainAcId then
                 v:setShadowMode(mahjong.shadowMode.noshadow)
             else
-                v:setShadowMode(mahjong.shadowMode.li)
+                if self.game.mode == gameMode.playback then
+                    m:setShadowMode(mahjong.shadowMode.yang)
+                else
+                    v:setShadowMode(mahjong.shadowMode.li)
+                end
             end
             table.insert(mahjongs, v)
         end
@@ -1984,7 +1996,11 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
                         if v.AcId == self.game.mainAcId then
                             h:setShadowMode(mahjong.shadowMode.noshadow)
                         else
-                            h:setShadowMode(mahjong.shadowMode.li)
+                            if self.game.mode == gameMode.playback then
+                                m:setShadowMode(mahjong.shadowMode.yang)
+                            else
+                                h:setShadowMode(mahjong.shadowMode.li)
+                            end
                         end
                         break
                     end

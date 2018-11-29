@@ -44,7 +44,6 @@ end
 
 function playerInfo:onCloseClickedHandler()
     playButtonClickSound()
-    log("------------------------------------------")
     self:close()
 end
 
