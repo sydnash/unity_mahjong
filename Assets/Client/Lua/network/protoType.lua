@@ -50,6 +50,7 @@ return {
     },
     -- server to client
     sc = {
+        authorErrorNotify           = "CmdType.fly.SC.AuthorErr",
         loginHs                     = "CmdType.fly.SC.LoginHs",
         createDesk                  = "CmdType.fly.SC.CreateDesk",
         checkDesk                   = "CmdType.fly.SC.CheckDesk",

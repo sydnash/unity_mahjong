@@ -130,7 +130,7 @@ public class Tcp : MonoBehaviour
         }
         catch (Exception ex)
         {
-            //Logger.LogError(ex.Message);
+            Logger.LogError(ex.Message);
         }
     }
 
@@ -240,6 +240,7 @@ public class Tcp : MonoBehaviour
                         {
                             callback();
                             Logger.LogError(string.Format("tcp send data failed, err = {0}", err));
+                            mSocket.Close();
 
                             break;
                         }
@@ -247,15 +248,16 @@ public class Tcp : MonoBehaviour
                 }
 
                 //收取数据
-                if (mConnected && mSocket.Available > 0)
+                //if (mConnected && mSocket.Available > 0)
+                if (mConnected)
                 {
                     SocketError err = SocketError.Success;
                     int receivedSize = mSocket.Receive(mReceivedBuffer, 0, BUFFER_SIZE, SocketFlags.None, out err);
 
-                    if (err != SocketError.Success)
+                    if ((err == SocketError.Success && receivedSize == 0) || (err != SocketError.Success && err != SocketError.WouldBlock))
                     {
-                        Logger.LogError(string.Format("tcp recv data failed, err = {0}", err));
-                        mReceivedCallback(null, -1);
+                        Logger.LogError(string.Format("tcp recv data failed, err = {0} receive size = {1}", err, receivedSize));
+                        mSocket.Close();
                     }
                     else if (receivedSize > 0 && mReceivedCallback != null)
                     {
@@ -292,7 +294,7 @@ public class Tcp : MonoBehaviour
         }
         catch (Exception ex)
         {
-            //Logger.LogError(ex.Message);
+            Logger.LogError(ex.Message);
         }
     }
 
