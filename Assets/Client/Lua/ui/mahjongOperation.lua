@@ -1015,7 +1015,12 @@ function mahjongOperation:virtureChu(mj)
     local r = seat[mahjongGame.cardType.chu].rot
     local chuMahjongs = self.chuMahjongs[acId]
 
-    local k = #chuMahjongs
+    local k
+    if chuMahjongs == nil then
+        k = 0
+    else
+        k = #chuMahjongs
+    end
     local u = math.floor(k / 10)
     local c = k % 10
     local y = (u < 2) and o.y or o.y + mahjong.z
