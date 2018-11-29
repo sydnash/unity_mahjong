@@ -6,9 +6,10 @@ local touch = class("touch")
 local Input = UnityEngine.Input
 
 touch.phaseType = {
-    began = 1,
-    moved = 2,
-    ended = 3,
+    began       = 1,
+    moved       = 2,
+    ended       = 3,
+    canceled    = 4,
 }
 
 local phase = touch.phaseType.ended
@@ -21,7 +22,7 @@ local function position()
 end
 
 local function update()
-    if phase == touch.phaseType.ended then
+    if phase == touch.phaseType.ended or pahse == touch.phaseType.canceled then
         if not deviceConfig.isMobile then
             if Input.GetMouseButtonDown(0) then
                 phase = touch.phaseType.began
@@ -51,8 +52,12 @@ local function update()
                 elseif t.phase == TouchPhase.Moved then
                     phase = touch.phaseType.moved
                 elseif t.phase == TouchPhase.Canceled then
-                    log("touch canceled.")
+                    phase = touch.phaseType.canceled
                 end
+            else
+                phase = touch.phaseType.canceled
+                phaseCallback(phaseCallbackTarget, phase, Vector2.New(0, 0))
+                return
             end
         end
 
