@@ -826,13 +826,11 @@ function mahjongGame:onExitDeskHandler(msg)
         self.operationUI:reset()
 
         gamepref.player.currentDesk = nil
-        signalManager.signal(signalType.deskDestroy, self.deskId)
     elseif msg.Reason == exitReason.cloesByManager then
         --被亲友圈管理员关闭
         showMessageUI("牌桌已被亲友圈管理员，如有疑问请咨询亲友圈管理员或代理",
                       function()
                         gamepref.player.currentDesk = nil
-                        signalManager.signal(signalType.deskDestroy, self.deskId)
                         self:exitGame()
                       end)
     else
@@ -840,6 +838,7 @@ function mahjongGame:onExitDeskHandler(msg)
             self.gameEndUI:endAll()
         end
     end
+    signalManager.signal(signalType.deskDestroy, self.deskId)
 end
 
 -------------------------------------------------------------------------------

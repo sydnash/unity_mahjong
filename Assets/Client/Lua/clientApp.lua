@@ -50,6 +50,7 @@ local function networkDisconnectedCallback(idx)
             return
         end
 
+        networkManager.startPingPong()
         if deskId <= 0 then
             closeWaitingUI()
             return

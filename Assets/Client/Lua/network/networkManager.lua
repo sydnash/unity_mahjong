@@ -58,6 +58,22 @@ function networkHandler.setup()
             signalManager.signal(signalType.cardsChanged)
         end
     end, true)
+    networkManager.registerCommandHandler(protoType.sc.authorErrorNotify, function()
+        --直接显示登录失效，重新登录，并且关闭网络连接
+        closeWaitingUI()
+        if clientApp.currentDesk ~= nil then
+            clientApp.currentDesk:destroy()
+            clientApp.currentDesk = nil
+        end
+        closeAllUI()
+        networkManager.disconnect()
+
+        showMessageUI("登录失效，请重新登录",
+                        function()--确定：回到登录界面
+                            local ui = require("ui.login").new()
+                            ui:show()
+                        end)
+    end)
 end
 
 
@@ -143,22 +159,38 @@ function networkManager.setup(disconnectedCallback)
 end
 
 function networkManager.disconnectedCallback()
-    if networkManager.updateHandler ~= nil then
-         unregisterUpdateListener(networkManager.updateHandler)
-         networkManager.updateHandler = nil
-    end
+    networkManager.authored = false
+    networkManager.stopUpdateHandler()
     networkManager.disconnectedCallback_()
 end
+-------------------------------------------------------------------
+--心跳 管理
+-------------------------------------------------------------------
+function networkManager.startPingPong()
+    networkManager.hasPingPong = true
+    networkManager.authored = true
+end
+-------------------------------------------------------------------
+--update 管理
+-------------------------------------------------------------------
+function networkManager.startUpdateHandler()
+    local now = time.realtimeSinceStartup()
+    networkManager.pingTick = now
+    networkManager.pongTick = now
 
--------------------------------------------------------------------
---
--------------------------------------------------------------------
-function networkManager.release()
+    if networkManager.updateHandler == nil then
+        networkManager.updateTick = now
+        networkManager.updateHandler = registerUpdateListener(networkManager.update, nil)
+    end
+end
+
+function networkManager.stopUpdateHandler()
     if networkManager.updateHandler ~= nil then
          unregisterUpdateListener(networkManager.updateHandler)
          networkManager.updateHandler = nil
     end
 
+    networkManager.hasPingPong = false
     networkManager.updateTick = 0
 end
 
@@ -171,22 +203,25 @@ function networkManager.update()
     if now - networkManager.updateTick < 0.2 then
         return
     end
+    networkManager.updateTick = now
 
-    local ping = networkConfig.ping
-    local pong = math.max(ping + 0.5, networkConfig.pong)
-    --发送心跳包
-    if now - networkManager.pingTick > ping then
-        send(protoType.hb, table.empty, function(msg)
-            networkManager.pongTick = time.realtimeSinceStartup()
-        end)
-        networkManager.pingTick = time.realtimeSinceStartup()
-    end
-    --检查心跳是否超时
-    if now - networkManager.pongTick > pong then
-        networkManager.disconnect()
+    if networkManager.hasPingPong then
+        local ping = networkConfig.ping
+        local pong = math.max(ping + 0.5, networkConfig.pong)
+        --发送心跳包
+        if now - networkManager.pingTick > ping then
+            send(protoType.hb, table.empty, function(msg)
+                networkManager.pongTick = time.realtimeSinceStartup()
+            end)
+            networkManager.pingTick = time.realtimeSinceStartup()
+        end
+        --检查心跳是否超时
+        if now - networkManager.pongTick > pong then
+            networkManager.disconnect()
 
-        if networkManager.disconnectedCallback ~= nil then
-            networkManager.disconnectedCallback()
+            if networkManager.disconnectedCallback ~= nil then
+                networkManager.disconnectedCallback()
+            end
         end
     end
     --处理消息队列
@@ -215,15 +250,7 @@ function networkManager.connect(host, port, connectedCallback, connecttimeoutCal
     tcp.connect(host, port, timeout, function(connected)
         if connected then
             tcp.registerReceivedCallback(receive)
-
-            local now = time.realtimeSinceStartup()
-            networkManager.pingTick = now
-            networkManager.pongTick = now
-
-            if networkManager.updateHandler == nil then
-                networkManager.updateTick = now
-                networkManager.updateHandler = registerUpdateListener(networkManager.update, nil)
-            end
+            networkManager.startUpdateHandler()
         end
 
         if connected then
@@ -240,10 +267,14 @@ function networkManager.connect(host, port, connectedCallback, connecttimeoutCal
 end
 
 function networkManager.reconnect(host, port, callback)
+    log("start reconnect start")
     networkManager.connect(host, port, function(connected)
+        networkManager.startUpdateHandler()
         --connected
+        log("connected")
         local data = { Session = gamepref.session, AcId = gamepref.acId, Level = 1, }
         send(protoType.cs.reconnect, data, function(msg)
+            log("reconnect msg = " .. tostring(msg))
             log("reconnect, msg = " ..  table.tostring(msg))
             callback(msg.Ok, msg.CurCoin, msg.GameType, msg.DeskId)
         end)
@@ -252,7 +283,11 @@ function networkManager.reconnect(host, port, callback)
         callback(false, -1, -1, -1)
     end, function()
         --disconenct
-        networkManager.disconnectedCallback()
+        if networkManager.authored then
+            networkManager.disconnectedCallback()
+        else
+            callback(false, -1, -1, -1)
+        end
     end)
 end
 
@@ -260,7 +295,7 @@ end
 --
 -------------------------------------------------------------------
 function networkManager.disconnect()
-    networkManager.release()
+    networkManager.stopUpdateHandler()
     tcp.disconnect()
 end
 
@@ -321,6 +356,7 @@ local function loginC(text, callback)
                 gamepref.player.cards      = msg.Coin
                 gamepref.player.userType   = msg.UserType
                 gamepref.player:setMails(msg.Mails)
+                networkManager.startPingPong()
 
                 callback(msg)
             end
