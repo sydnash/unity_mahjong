@@ -54,6 +54,10 @@ end
 --
 -------------------------------------------------------------------
 function tcp:send(data, length, callback)
+    if self.status == tcpStatus.connected then
+        self.tcp:Send(data, length)
+        return
+    end
     table.insert(self.sendMsgQueue, {data = data, length = length})
 end
 

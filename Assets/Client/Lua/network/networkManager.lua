@@ -160,6 +160,7 @@ function networkManager.setup(disconnectedCallback)
 end
 
 function networkManager.disconnectedCallback()
+    printError("dis connect callback. ")
     networkManager.authored = false
     networkManager.stopUpdateHandler()
     networkManager.disconnectedCallback_()
@@ -204,7 +205,6 @@ function networkManager.update()
     if now - networkManager.updateTick < 0.2 then
         return
     end
-    networkManager.updateTick = now
 
     if networkManager.hasPingPong then
         local ping = networkConfig.ping
