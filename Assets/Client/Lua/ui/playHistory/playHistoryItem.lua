@@ -63,7 +63,6 @@ function playHistoryItem:set(data, historyContainer)
         end
     end
 
-    log("--------------------------" .. table.tostring(data))
     for i=1, #players do
         local d = players[i]
         local s = scores[i]

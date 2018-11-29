@@ -40,9 +40,8 @@ public class DelegateFactory
 		dict.Add(typeof(System.Action<bool,string>), factory.System_Action_bool_string);
 		dict.Add(typeof(System.Action<bool,byte[]>), factory.System_Action_bool_bytes);
 		dict.Add(typeof(System.Action<bool,UnityEngine.Texture2D,byte[]>), factory.System_Action_bool_UnityEngine_Texture2D_bytes);
-		dict.Add(typeof(System.Action<bool>), factory.System_Action_bool);
-		dict.Add(typeof(System.Action<byte[],int>), factory.System_Action_bytes_int);
 		dict.Add(typeof(System.Action<string>), factory.System_Action_string);
+		dict.Add(typeof(System.Action<bool>), factory.System_Action_bool);
 		dict.Add(typeof(System.Action<bool,string,string>), factory.System_Action_bool_string_string);
 
 		DelegateTraits<System.Action>.Init(factory.System_Action);
@@ -68,9 +67,8 @@ public class DelegateFactory
 		DelegateTraits<System.Action<bool,string>>.Init(factory.System_Action_bool_string);
 		DelegateTraits<System.Action<bool,byte[]>>.Init(factory.System_Action_bool_bytes);
 		DelegateTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Init(factory.System_Action_bool_UnityEngine_Texture2D_bytes);
-		DelegateTraits<System.Action<bool>>.Init(factory.System_Action_bool);
-		DelegateTraits<System.Action<byte[],int>>.Init(factory.System_Action_bytes_int);
 		DelegateTraits<System.Action<string>>.Init(factory.System_Action_string);
+		DelegateTraits<System.Action<bool>>.Init(factory.System_Action_bool);
 		DelegateTraits<System.Action<bool,string,string>>.Init(factory.System_Action_bool_string_string);
 
 		TypeTraits<System.Action>.Init(factory.Check_System_Action);
@@ -96,9 +94,8 @@ public class DelegateFactory
 		TypeTraits<System.Action<bool,string>>.Init(factory.Check_System_Action_bool_string);
 		TypeTraits<System.Action<bool,byte[]>>.Init(factory.Check_System_Action_bool_bytes);
 		TypeTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Init(factory.Check_System_Action_bool_UnityEngine_Texture2D_bytes);
-		TypeTraits<System.Action<bool>>.Init(factory.Check_System_Action_bool);
-		TypeTraits<System.Action<byte[],int>>.Init(factory.Check_System_Action_bytes_int);
 		TypeTraits<System.Action<string>>.Init(factory.Check_System_Action_string);
+		TypeTraits<System.Action<bool>>.Init(factory.Check_System_Action_bool);
 		TypeTraits<System.Action<bool,string,string>>.Init(factory.Check_System_Action_bool_string_string);
 
 		StackTraits<System.Action>.Push = factory.Push_System_Action;
@@ -124,9 +121,8 @@ public class DelegateFactory
 		StackTraits<System.Action<bool,string>>.Push = factory.Push_System_Action_bool_string;
 		StackTraits<System.Action<bool,byte[]>>.Push = factory.Push_System_Action_bool_bytes;
 		StackTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Push = factory.Push_System_Action_bool_UnityEngine_Texture2D_bytes;
-		StackTraits<System.Action<bool>>.Push = factory.Push_System_Action_bool;
-		StackTraits<System.Action<byte[],int>>.Push = factory.Push_System_Action_bytes_int;
 		StackTraits<System.Action<string>>.Push = factory.Push_System_Action_string;
+		StackTraits<System.Action<bool>>.Push = factory.Push_System_Action_bool;
 		StackTraits<System.Action<bool,string,string>>.Push = factory.Push_System_Action_bool_string_string;
 	}
     
@@ -1578,122 +1574,6 @@ public class DelegateFactory
 		ToLua.Push(L, o);
 	}
 
-	class System_Action_bool_Event : LuaDelegate
-	{
-		public System_Action_bool_Event(LuaFunction func) : base(func) { }
-		public System_Action_bool_Event(LuaFunction func, LuaTable self) : base(func, self) { }
-
-		public void Call(bool param0)
-		{
-			func.BeginPCall();
-			func.Push(param0);
-			func.PCall();
-			func.EndPCall();
-		}
-
-		public void CallWithSelf(bool param0)
-		{
-			func.BeginPCall();
-			func.Push(self);
-			func.Push(param0);
-			func.PCall();
-			func.EndPCall();
-		}
-	}
-
-	public System.Action<bool> System_Action_bool(LuaFunction func, LuaTable self, bool flag)
-	{
-		if (func == null)
-		{
-			System.Action<bool> fn = delegate(bool param0) { };
-			return fn;
-		}
-
-		if(!flag)
-		{
-			System_Action_bool_Event target = new System_Action_bool_Event(func);
-			System.Action<bool> d = target.Call;
-			target.method = d.Method;
-			return d;
-		}
-		else
-		{
-			System_Action_bool_Event target = new System_Action_bool_Event(func, self);
-			System.Action<bool> d = target.CallWithSelf;
-			target.method = d.Method;
-			return d;
-		}
-	}
-
-	bool Check_System_Action_bool(IntPtr L, int pos)
-	{
-		return TypeChecker.CheckDelegateType(typeof(System.Action<bool>), L, pos);
-	}
-
-	void Push_System_Action_bool(IntPtr L, System.Action<bool> o)
-	{
-		ToLua.Push(L, o);
-	}
-
-	class System_Action_bytes_int_Event : LuaDelegate
-	{
-		public System_Action_bytes_int_Event(LuaFunction func) : base(func) { }
-		public System_Action_bytes_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
-
-		public void Call(byte[] param0, int param1)
-		{
-			func.BeginPCall();
-			func.Push(param0);
-			func.Push(param1);
-			func.PCall();
-			func.EndPCall();
-		}
-
-		public void CallWithSelf(byte[] param0, int param1)
-		{
-			func.BeginPCall();
-			func.Push(self);
-			func.Push(param0);
-			func.Push(param1);
-			func.PCall();
-			func.EndPCall();
-		}
-	}
-
-	public System.Action<byte[],int> System_Action_bytes_int(LuaFunction func, LuaTable self, bool flag)
-	{
-		if (func == null)
-		{
-			System.Action<byte[],int> fn = delegate(byte[] param0, int param1) { };
-			return fn;
-		}
-
-		if(!flag)
-		{
-			System_Action_bytes_int_Event target = new System_Action_bytes_int_Event(func);
-			System.Action<byte[],int> d = target.Call;
-			target.method = d.Method;
-			return d;
-		}
-		else
-		{
-			System_Action_bytes_int_Event target = new System_Action_bytes_int_Event(func, self);
-			System.Action<byte[],int> d = target.CallWithSelf;
-			target.method = d.Method;
-			return d;
-		}
-	}
-
-	bool Check_System_Action_bytes_int(IntPtr L, int pos)
-	{
-		return TypeChecker.CheckDelegateType(typeof(System.Action<byte[],int>), L, pos);
-	}
-
-	void Push_System_Action_bytes_int(IntPtr L, System.Action<byte[],int> o)
-	{
-		ToLua.Push(L, o);
-	}
-
 	class System_Action_string_Event : LuaDelegate
 	{
 		public System_Action_string_Event(LuaFunction func) : base(func) { }
@@ -1747,6 +1627,63 @@ public class DelegateFactory
 	}
 
 	void Push_System_Action_string(IntPtr L, System.Action<string> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_bool_Event : LuaDelegate
+	{
+		public System_Action_bool_Event(LuaFunction func) : base(func) { }
+		public System_Action_bool_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(bool param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(bool param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<bool> System_Action_bool(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<bool> fn = delegate(bool param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_bool_Event target = new System_Action_bool_Event(func);
+			System.Action<bool> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_bool_Event target = new System_Action_bool_Event(func, self);
+			System.Action<bool> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_bool(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<bool>), L, pos);
+	}
+
+	void Push_System_Action_bool(IntPtr L, System.Action<bool> o)
 	{
 		ToLua.Push(L, o);
 	}

@@ -84,13 +84,14 @@ end
 protoType               = require("network.protoType")
 
 local http              = require("network.http")
-local tcp               = require("network.tcp")
+local tcpClass          = require("network.tcp")
 local proto             = require("network.proto")
 local networkConfig     = require("config.networkConfig")
 local cvt               = Utils
 
 local networkManager    = class("networkManager")
 
+local tcp = tcpClass.new()
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
@@ -109,7 +110,7 @@ local function send(command, data, callback)
     token = networkCallbackPool:push(token + 1, callback)
 --    log("send msg, command = " .. command)
     local msg, length = proto.build(command, token, gamepref.acId, gamepref.session, data)
-    tcp.send(msg, length, function()
+    tcp:send(msg, length, function()
         networkCallbackPool:pop(token, false)
         callback(nil)
     end)
@@ -243,32 +244,22 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.connect(host, port, connectedCallback, connecttimeoutCallback, disconnectedCallback)
+function networkManager.author(host, port, connectedCallback, connecttimeoutCallback, disconnectedCallback)
+    networkManager.authored = false
     local timeout = networkConfig.tcpTimeout * 1000 -- 转为毫秒
-
-    tcp.connected = false
-    tcp.connect(host, port, timeout, function(connected)
-        if connected then
-            tcp.registerReceivedCallback(receive)
-            networkManager.startUpdateHandler()
-        end
-
-        if connected then
-            tcp.connected = true
-            connectedCallback()
-        else
-            if tcp.connected then
-                disconnectedCallback()
-            else
-                connecttimeoutCallback()
-            end
-        end
+    tcp:connect(host, port, timeout, function()
+        tcp:registerReceivedCallback(receive)
+        networkManager.startUpdateHandler()
+        connectedCallback()
+    end, function()
+        connecttimeoutCallback()
+    end, function()
+        disconnectedCallback()
     end)
 end
 
 function networkManager.reconnect(host, port, callback)
-    log("start reconnect start")
-    networkManager.connect(host, port, function(connected)
+    networkManager.author(host, port, function(connected)
         networkManager.startUpdateHandler()
         --connected
         log("connected")
@@ -296,7 +287,7 @@ end
 -------------------------------------------------------------------
 function networkManager.disconnect()
     networkManager.stopUpdateHandler()
-    tcp.disconnect()
+    tcp:disconnect()
 end
 
 -------------------------------------------------------------------
@@ -334,7 +325,7 @@ local function loginC(text, callback)
     gamepref.host    = host
     gamepref.port    = port
 
-    networkManager.connect(host, port, function(connected)
+    networkManager.author(host, port, function(connected)
         --connected
         local loginType = 1
         local data = { AcId = acid, Session = session, LoginType = loginType }
@@ -366,7 +357,11 @@ local function loginC(text, callback)
         callback(nil)
     end, function()
         --disconnectd
-        networkManager.disconnectedCallback()
+        if networkManager.authored then
+            networkManager.disconnectedCallback()
+        else
+            callback(nil)
+        end
     end)
 end 
 

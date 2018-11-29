@@ -6,16 +6,38 @@ public class TcpWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Tcp), typeof(UnityEngine.MonoBehaviour));
+		L.BeginClass(typeof(Tcp), typeof(System.Object));
 		L.RegFunction("Connect", Connect);
 		L.RegFunction("Disconnect", Disconnect);
 		L.RegFunction("Send", Send);
-		L.RegFunction("RegisterReceivedCallback", RegisterReceivedCallback);
-		L.RegFunction("UnregisterReceivedCallback", UnregisterReceivedCallback);
-		L.RegFunction("__eq", op_Equality);
+		L.RegFunction("Receive", Receive);
+		L.RegFunction("New", _CreateTcp);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("instance", get_instance, null);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int _CreateTcp(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 0)
+			{
+				Tcp obj = new Tcp();
+				ToLua.PushObject(L, obj);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: Tcp.New");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -23,14 +45,13 @@ public class TcpWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 5);
+			ToLua.CheckArgsCount(L, 3);
 			Tcp obj = (Tcp)ToLua.CheckObject<Tcp>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
-			int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
-			System.Action<bool> arg3 = (System.Action<bool>)ToLua.CheckDelegate<System.Action<bool>>(L, 5);
-			obj.Connect(arg0, arg1, arg2, arg3);
-			return 0;
+			int o = obj.Connect(arg0, arg1);
+			LuaDLL.lua_pushinteger(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
@@ -59,63 +80,12 @@ public class TcpWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 4);
+			ToLua.CheckArgsCount(L, 3);
 			Tcp obj = (Tcp)ToLua.CheckObject<Tcp>(L, 1);
 			byte[] arg0 = ToLua.CheckByteBuffer(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
-			System.Action arg2 = (System.Action)ToLua.CheckDelegate<System.Action>(L, 4);
-			obj.Send(arg0, arg1, arg2);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int RegisterReceivedCallback(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			Tcp obj = (Tcp)ToLua.CheckObject<Tcp>(L, 1);
-			System.Action<byte[],int> arg0 = (System.Action<byte[],int>)ToLua.CheckDelegate<System.Action<byte[],int>>(L, 2);
-			obj.RegisterReceivedCallback(arg0);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int UnregisterReceivedCallback(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			Tcp obj = (Tcp)ToLua.CheckObject<Tcp>(L, 1);
-			obj.UnregisterReceivedCallback();
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int op_Equality(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.Object arg0 = (UnityEngine.Object)ToLua.ToObject(L, 1);
-			UnityEngine.Object arg1 = (UnityEngine.Object)ToLua.ToObject(L, 2);
-			bool o = arg0 == arg1;
-			LuaDLL.lua_pushboolean(L, o);
+			int o = obj.Send(arg0, arg1);
+			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -125,11 +95,15 @@ public class TcpWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_instance(IntPtr L)
+	static int Receive(IntPtr L)
 	{
 		try
 		{
-			ToLua.Push(L, Tcp.instance);
+			ToLua.CheckArgsCount(L, 2);
+			Tcp obj = (Tcp)ToLua.CheckObject<Tcp>(L, 1);
+			byte[] arg0 = ToLua.CheckByteBuffer(L, 2);
+			int o = obj.Receive(arg0);
+			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}
 		catch (Exception e)
