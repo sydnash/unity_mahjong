@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 267eef0b02f85c24bb110d5017398a06
-timeCreated: 1543393462
+guid: 9d58c0e82d9f60d4dbe08b549bc4a2fc
+timeCreated: 1543455522
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -8,7 +8,7 @@ TextureImporter:
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -99,5 +99,5 @@ TextureImporter:
     physicsShape: []
   spritePackingTag: 
   userData: 
-  assetBundleName: texture/mj_shadow
+  assetBundleName: texture/mj_shadow_w
   assetBundleVariant: 
