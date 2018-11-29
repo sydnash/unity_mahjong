@@ -62,11 +62,41 @@ public class Utils
 
         return d;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="length"></param>
+    /// <returns></returns>
     public static byte[] NewEmptyByteArray(int length)
     {
-        if (length == 0) return null;
-        byte[] d = new byte[length];
-        return d;
+        if (length <= 0) return null;
+        return new byte[length];
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="fromOffset"></param>
+    /// <param name="to"></param>
+    /// <param name="toOffset"></param>
+    /// <param name="length"></param>
+    /// <returns></returns>
+    public static int CopyBytes(byte[] from, int fromOffset, byte[] to, int toOffset, int length)
+    {
+        if (from == null || to == null || length <= 0) return 0;
+
+        fromOffset = Mathf.Max(fromOffset, 0);
+        toOffset = Mathf.Max(toOffset, 0);
+
+        int size = Mathf.Min(from.Length - fromOffset, to.Length - toOffset, length);
+        if (size > 0)
+        {
+            Array.Copy(from, fromOffset, to, toOffset, size);
+        }
+
+        return size;
     }
 
     private static byte[] mConcatBytesBuffer = null;
