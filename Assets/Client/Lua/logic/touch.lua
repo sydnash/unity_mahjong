@@ -50,6 +50,8 @@ local function update()
                     phase = touch.phaseType.ended
                 elseif t.phase == TouchPhase.Moved then
                     phase = touch.phaseType.moved
+                elseif t.phase == TouchPhase.Canceled then
+                    log("touch canceled.")
                 end
             end
         end
