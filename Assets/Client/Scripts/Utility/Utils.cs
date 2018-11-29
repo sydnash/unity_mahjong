@@ -62,6 +62,12 @@ public class Utils
 
         return d;
     }
+    public static byte[] NewEmptyByteArray(int length)
+    {
+        if (length == 0) return null;
+        byte[] d = new byte[length];
+        return d;
+    }
 
     private static byte[] mConcatBytesBuffer = null;
 
