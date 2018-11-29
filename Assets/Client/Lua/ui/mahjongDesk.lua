@@ -505,7 +505,8 @@ function mahjongDesk:onGVoiceRecordFinishedHandler(filename)
     local player = self.players[mahjongGame.seatType.mine]
     player.filename = filename
 
-    gvoiceManager.play(filename)
+    local ret = gvoiceManager.play(filename)
+    log("on gvoice recode finishaed handler : " .. tostring(ret))
 end
 
 function mahjongDesk:onGVoicePlayStartedHandler(filename)
