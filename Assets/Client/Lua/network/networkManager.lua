@@ -378,8 +378,8 @@ function networkManager.loginGuest(callback)
     local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
     local loginURL = networkConfig.server.guestURL
-    http.getText(loginURL .. "?" .. form, timeout, function(ok, text)
-        if (not ok) or string.isNilOrEmpty(text) then
+    http.getText(loginURL .. "?" .. form, timeout, function(text)
+        if string.isNilOrEmpty(text) then
             callback(nil)
             return
         end
@@ -408,8 +408,8 @@ function networkManager.loginWx(callback)
             local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
             local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
-            http.getText(accessUrl, timeout, function(ok, text)
-                if (not ok) or string.isNilOrEmpty(text) then
+            http.getText(accessUrl, timeout, function(text)
+                if string.isNilOrEmpty(text) then
                     callback(nil)
                     return
                 end
@@ -417,8 +417,12 @@ function networkManager.loginWx(callback)
                 local p = table.fromjson(text)
                 local form = table.toUrlArgs({ wxtoken = p.refresh_token, appclass = "mj" })
                 local loginURL = networkConfig.server.wechatURL
-                http.getText(loginURL .. "?" .. form, timeout, function(ok, text)
-                    loginC(text, callback)
+                http.getText(loginURL .. "?" .. form, timeout, function(text)
+                    if string.isNilOrEmpty(text) then
+                        callback(nil)
+                    else
+                        loginC(text, callback)
+                    end
                 end)
             end)
         end

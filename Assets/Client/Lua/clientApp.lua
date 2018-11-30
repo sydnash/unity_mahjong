@@ -117,8 +117,8 @@ local function downloadPatches(patchlist, size, plistText, downloadui)
 
     local function downloadC(files, callback)
         local failedList = {}
-        patchManager.downloadPatches(files, function(url, name, ok, bytes)
-            if not ok then
+        patchManager.downloadPatches(files, function(url, name, bytes)
+            if bytes == nil then
                 table.insert(failedList, { name = name })
             else
                 successfulCount = successfulCount + 1

@@ -15,23 +15,18 @@ patchManager.PATCHLIST_FILE_NAME = "patchlist.txt"
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
-local function downloadAnyText(urls, callback)
-    local index = 1
+local function downloadAnyFile(urls, callback)
+    local function onDownloaded(text)
+        callback(text)
 
-    local function onDownloaded(ok, text)
-        if not ok then
-            index = index + 1
-            if index <= #urls then
-                http.getText(urls[index], 20 * 1000, onDownloaded)
-            else
-                callback(nil)
-            end
-        else
-            callback(text)
+        if #urls > 0 then
+            http.getFile(urls[1], 20 * 1000, onDownloaded)
+            table.remove(urls, 1)
         end
     end
 
-    http.getText(urls[index], 20 * 1000, onDownloaded)
+    http.getFile(urls[1], 20 * 1000, onDownloaded)
+    table.remove(urls, 1)
 end
 
 -------------------------------------------------------------------
@@ -43,19 +38,15 @@ local function downloadOfflineVersionFile(callback)
         LFS.CombinePath("file:///" .. LFS.LOCALIZED_DATA_PATH, patchManager.PATCHLIST_FILE_NAME),
     }
 
-    downloadAnyText(urls, callback)
+    downloadAnyFile(urls, callback)
 end
 
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
 local function downloadOnlineVersionFile(callback)
-    http.getText(patchUrl, 20 * 1000, function(ok, text)
-        if not ok then
-            callback(nil)
-        else
-            callback(text)
-        end
+    http.getText(patchUrl, 20 * 1000, function(text)
+        callback(text)
     end)
 end
 
@@ -110,12 +101,16 @@ end
 -- 
 -------------------------------------------------------------------
 function patchManager.downloadPatches(files, callback)
-    log(files)
     for _, v in pairs(files) do
-        local url = networkConfig.patchURL .. v.name
-        http.getBytes(url, networkConfig.patchTimeout * 1000, function(ok, bytes)
+        local url = networkConfig.patchURL .. files[1]
+
+        http.getBytes(url, networkConfig.patchTimeout * 1000, function(bytes)
             if callback ~= nil then
-                callback(url, v.name, ok, bytes)
+                callback(url, v.name, bytes)
+            end
+            
+            if #files > 0 then
+                download(files)
             end
         end)
     end

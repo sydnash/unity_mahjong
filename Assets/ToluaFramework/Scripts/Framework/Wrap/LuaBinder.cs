@@ -170,12 +170,12 @@ public static class LuaBinder
 		L.RegFunction("Func_int_int", System_Func_int_int);
 		L.RegFunction("Action_UnityEngine_AsyncOperation", System_Action_UnityEngine_AsyncOperation);
 		L.RegFunction("Action_bool_float", System_Action_bool_float);
-		L.RegFunction("Action_bool_string", System_Action_bool_string);
-		L.RegFunction("Action_bool_bytes", System_Action_bool_bytes);
-		L.RegFunction("Action_bool_UnityEngine_Texture2D_bytes", System_Action_bool_UnityEngine_Texture2D_bytes);
+		L.RegFunction("Action_bytes", System_Action_bytes);
+		L.RegFunction("Action_UnityEngine_Texture2D_bytes", System_Action_UnityEngine_Texture2D_bytes);
 		L.RegFunction("Action_string", System_Action_string);
 		L.RegFunction("Action_bool", System_Action_bool);
 		L.RegFunction("Action_bool_string_string", System_Action_bool_string_string);
+		L.RegFunction("Action_bool_string", System_Action_bool_string);
 		L.EndModule();
 		L.EndModule();
 		L.BeginPreLoad();
@@ -736,7 +736,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_bool_string(IntPtr L)
+	static int System_Action_bytes(IntPtr L)
 	{
 		try
 		{
@@ -745,13 +745,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateTraits<System.Action<bool,string>>.Create(func);
+				Delegate arg1 = DelegateTraits<System.Action<byte[]>>.Create(func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<System.Action<bool,string>>.Create(func, self);
+				Delegate arg1 = DelegateTraits<System.Action<byte[]>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -763,7 +763,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_bool_bytes(IntPtr L)
+	static int System_Action_UnityEngine_Texture2D_bytes(IntPtr L)
 	{
 		try
 		{
@@ -772,40 +772,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateTraits<System.Action<bool,byte[]>>.Create(func);
+				Delegate arg1 = DelegateTraits<System.Action<UnityEngine.Texture2D,byte[]>>.Create(func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<System.Action<bool,byte[]>>.Create(func, self);
-				ToLua.Push(L, arg1);
-			}
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_bool_UnityEngine_Texture2D_bytes(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-
-			if (count == 1)
-			{
-				Delegate arg1 = DelegateTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Create(func);
-				ToLua.Push(L, arg1);
-			}
-			else
-			{
-				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<System.Action<bool,UnityEngine.Texture2D,byte[]>>.Create(func, self);
+				Delegate arg1 = DelegateTraits<System.Action<UnityEngine.Texture2D,byte[]>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -887,6 +860,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateTraits<System.Action<bool,string,string>>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_bool_string(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<System.Action<bool,string>>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<System.Action<bool,string>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

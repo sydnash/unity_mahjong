@@ -227,7 +227,7 @@ public class GVoiceEngine
     {
         if (mCloudVoice != null)
         {
-            mCloudVoice.StopPlayFile();
+            return (GCloudVoiceErr.GCLOUD_VOICE_SUCC == (GCloudVoiceErr)mCloudVoice.StopPlayFile());
         }
 
         return false;
