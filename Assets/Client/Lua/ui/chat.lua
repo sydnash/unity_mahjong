@@ -74,7 +74,7 @@ function chat:onInit()
         if k > min then
             v:hide()
         else
-            v.key = tostring(k)
+            v.key = k
             v:addClickListener(self.onTextClickedHandler, self)
             local c = getComponentU(v.gameObject, typeof(UIText))
             c.text = chatConfig.text[k].content
@@ -119,7 +119,7 @@ end
 function chat:onTextClickedHandler(sender)
     playButtonClickSound()
 
-    networkManager.sendChatMessage(chatType.text, sender.key)
+    networkManager.sendChatMessage(chatType.text, tostring(sender.key))
     signalManager.signal(signalType.chatText, sender.key)
 
     self:close()

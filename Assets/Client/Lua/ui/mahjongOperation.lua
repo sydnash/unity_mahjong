@@ -1297,6 +1297,21 @@ function mahjongOperation:getMahjongFromIdle(mid)
             end
         end
     end
+    --从扣起来的换n张里面找
+    for acid, h in pairs(self.hnzMahjongs) do
+        if acid ~= self.game.mainAcId then
+            for k, v in pairs(h) do
+                if v.id == mid then
+                    if #self.idleMahjongs > 0 then
+                        swap(h, k, self.idleMahjongs, index)
+                        return v, self.idleMahjongs, index
+                    else
+                        return v, h, k
+                    end
+                end
+            end
+        end
+    end
         
     log("connot find pai [id = " .. tostring(mid) .. "] from idle.")
     return nil, nil, nil

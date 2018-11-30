@@ -111,7 +111,6 @@ local function send(command, data, callback)
 --    log("send msg, command = " .. command)
     local msg, length = proto.build(command, token, gamepref.acId, gamepref.session, data)
 
-    log(string.format("=====proto:build  msg:len(%d)  (%d)", length, cvt.BytesToInt32(msg, 0)))
 
     tcp:send(msg, length, function()
         networkCallbackPool:pop(token, false)
@@ -140,7 +139,7 @@ local function receive(bytes, size)
 
     --解析数据
     while receiveBuffer ~= nil and receiveBufferLenght > 0 do
-        local msg, length = proto.parse(receiveBuffer)
+        local msg, length = proto.parse(receiveBuffer, receiveBufferLenght)
         if length == 0 or msg == nil then 
             break 
         end
@@ -165,7 +164,6 @@ function networkManager.setup(disconnectedCallback)
 end
 
 function networkManager.disconnectedCallback()
-    printError("dis connect callback. ")
     networkManager.authored = false
     networkManager.stopUpdateHandler()
     networkManager.disconnectedCallback_()

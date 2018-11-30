@@ -112,6 +112,9 @@ function enterPlaybackCode:onDeleteClickedHandler()
     playButtonClickSound()
 
     local length = #self.numbers
+    if length <= 0 then
+        return
+    end
     self.mDisplayerSlots[length]:setText("")
 
     table.remove(self.numbers)
