@@ -42,10 +42,10 @@ function transfer:onQueryClickedHandler()
     end
     
     showWaitingUI("正在查询玩家信息，请稍候")
-    networkManager.queryAcId(id, function(ok, msg)
+    networkManager.queryAcId(id, function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if not msg then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
@@ -82,10 +82,10 @@ function transfer:onTransferClickedHandler()
     end
 
     showWaitingUI(string.format("正在转账给玩家（%d）", id))
-    networkManager.transferCards(id, vc, function(ok, msg)
+    networkManager.transferCards(id, vc, function(msg)
         closeWaitingUI()
 
-        if not ok then
+        if not msg then
             showMessageUI("网络繁忙，请稍后再试")
             return
         end
