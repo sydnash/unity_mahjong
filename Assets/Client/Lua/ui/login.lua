@@ -131,7 +131,6 @@ end
 function login:onGuestLoginClickedHandler()
     playButtonClickSound()
 
-    log("debug" .. table.tostring(networkConfig.server))
     self.mWechatLogin:setInteractabled(false)
     self.mGuestLogin:setInteractabled(false)
 

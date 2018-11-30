@@ -70,7 +70,7 @@ local errorMessageUI = nil
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-local function tracebackHandler(errorMessage)
+local function tracebackHandler(errorMessage, debug)
     logError(errorMessage)
 
     if errorMessageUI == nil then
@@ -78,6 +78,7 @@ local function tracebackHandler(errorMessage)
         errorMessageUI:show()
     end
     errorMessageUI:appendErrorMessage(errorMessage)
+    errorMessageUI:setDebug(debug)
 
     --断开网络，主要是中断消息接收和处理的过程
     networkManager.disconnect()
