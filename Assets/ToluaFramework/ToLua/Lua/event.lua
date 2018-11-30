@@ -166,7 +166,7 @@ _event.__call = function(self, ...)
 
 	for i, f in ilist(_list) do		
 		self.current = i
-        if not f.immediatelyRemove then
+        if not i.immediatelyRemove then
 		    local flag, msg = f(...)
 		
 		    if not flag then			
@@ -175,7 +175,7 @@ _event.__call = function(self, ...)
 			    error(msg)				
 		    end
         end
-        f.immediatelyRemove = nil
+        i.immediatelyRemove = nil
 	end	
 
 	local opList = self.opList	

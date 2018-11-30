@@ -111,8 +111,6 @@ local function send(command, data, callback)
 --    log("send msg, command = " .. command)
     local msg, length = proto.build(command, token, gamepref.acId, gamepref.session, data)
 
-    log(string.format("=====proto:build  msg:len(%d)  (%d)", length, cvt.BytesToInt32(msg, 0)))
-
     tcp:send(msg, length, function()
         networkCallbackPool:pop(token, false)
         callback(nil)
