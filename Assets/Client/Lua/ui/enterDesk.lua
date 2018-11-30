@@ -112,9 +112,10 @@ function enterDesk:onDeleteClickedHandler()
     playButtonClickSound()
 
     local length = #self.numbers
-    self.mDisplayerSlots[length]:setText("")
-
-    table.remove(self.numbers)
+    if length > 0 then
+        self.mDisplayerSlots[length]:setText("")
+        table.remove(self.numbers)
+    end
 end
 
 function enterDesk:onResetClickedHandler()

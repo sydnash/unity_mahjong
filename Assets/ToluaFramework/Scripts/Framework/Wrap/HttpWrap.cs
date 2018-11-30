@@ -7,34 +7,13 @@ public class HttpWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(Http), typeof(UnityEngine.MonoBehaviour));
-		L.RegFunction("RequestText", RequestText);
 		L.RegFunction("RequestBytes", RequestBytes);
 		L.RegFunction("RequestTexture", RequestTexture);
-		L.RegFunction("Reset", Reset);
+		L.RegFunction("RequestFile", RequestFile);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
 		L.EndClass();
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int RequestText(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 5);
-			Http obj = (Http)ToLua.CheckObject<Http>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
-			System.Action<bool,string> arg3 = (System.Action<bool,string>)ToLua.CheckDelegate<System.Action<bool,string>>(L, 5);
-			obj.RequestText(arg0, arg1, arg2, arg3);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -47,7 +26,7 @@ public class HttpWrap
 			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
-			System.Action<bool,byte[]> arg3 = (System.Action<bool,byte[]>)ToLua.CheckDelegate<System.Action<bool,byte[]>>(L, 5);
+			System.Action<byte[]> arg3 = (System.Action<byte[]>)ToLua.CheckDelegate<System.Action<byte[]>>(L, 5);
 			obj.RequestBytes(arg0, arg1, arg2, arg3);
 			return 0;
 		}
@@ -65,7 +44,7 @@ public class HttpWrap
 			ToLua.CheckArgsCount(L, 3);
 			Http obj = (Http)ToLua.CheckObject<Http>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			System.Action<bool,UnityEngine.Texture2D,byte[]> arg1 = (System.Action<bool,UnityEngine.Texture2D,byte[]>)ToLua.CheckDelegate<System.Action<bool,UnityEngine.Texture2D,byte[]>>(L, 3);
+			System.Action<UnityEngine.Texture2D,byte[]> arg1 = (System.Action<UnityEngine.Texture2D,byte[]>)ToLua.CheckDelegate<System.Action<UnityEngine.Texture2D,byte[]>>(L, 3);
 			obj.RequestTexture(arg0, arg1);
 			return 0;
 		}
@@ -76,13 +55,15 @@ public class HttpWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Reset(IntPtr L)
+	static int RequestFile(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
+			ToLua.CheckArgsCount(L, 3);
 			Http obj = (Http)ToLua.CheckObject<Http>(L, 1);
-			obj.Reset();
+			string arg0 = ToLua.CheckString(L, 2);
+			System.Action<string> arg1 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 3);
+			obj.RequestFile(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)

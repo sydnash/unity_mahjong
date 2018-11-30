@@ -35,13 +35,57 @@ public class Http : MonoBehaviour
         /// <summary>
         /// 
         /// </summary>
+        public Action<byte[]> callback = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="request"></param>
         /// <param name="url"></param>
-        public RequestArgs(string url, string method, int timeout)
+        public RequestArgs(string url, 
+                           string method, 
+                           int timeout, 
+                           Action<byte[]> callback)
         {
-            this.url = url;
-            this.method = method.ToUpper();
-            this.timeout = timeout;
+            this.url        = url;
+            this.method     = method.ToUpper();
+            this.timeout    = timeout;
+            this.callback   = callback;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ResponseArgs
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string url;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public byte[] bytes;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Action<byte[]> callback;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="callback"></param>
+        public ResponseArgs(string url,
+                            byte[] bytes,
+                            Action<byte[]> callback)
+        {
+            this.url        = url;
+            this.bytes      = bytes;
+            this.callback   = callback;
         }
     }
 
@@ -52,22 +96,22 @@ public class Http : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, Action<bool, string>> mTextCallbackDict = new Dictionary<string, Action<bool, string>>();
+    private Thread[] mThreads = new Thread[5];
 
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, Action<bool, byte[]>> mByteCallbackDict = new Dictionary<string, Action<bool, byte[]>>();
+    private AutoResetEvent mEvent = new AutoResetEvent(false);
 
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, Action<bool, Texture2D, byte[]>> mTextureCallbackDict = new Dictionary<string, Action<bool, Texture2D, byte[]>>();
+    private Queue<RequestArgs> mRequestQueue = new Queue<RequestArgs>();
 
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, byte[]> mResponseDict = new Dictionary<string, byte[]>();
+    private Queue<ResponseArgs> mResponseQueue = new Queue<ResponseArgs>();
 
     #endregion
 
@@ -95,26 +139,13 @@ public class Http : MonoBehaviour
     /// </summary>
     /// <param name="url"></param>
     /// <param name="callback"></param>
-    public void RequestText(string url, string method, int timeout, Action<bool, string> callback)
+    public void RequestBytes(string url, string method, int timeout, Action<byte[]> callback)
     {
-        if (mTextCallbackDict.ContainsKey(url))
+        lock (mRequestQueue)
         {
-            mTextCallbackDict[url] = callback;
+            mRequestQueue.Enqueue(new RequestArgs(url, method, timeout, callback));
         }
-        else
-        {
-            mTextCallbackDict.Add(url, callback);
-        }
-
-        if (url.StartsWith("file:///"))
-        {
-            StartCoroutine(LoadFileCoroutine(url));
-        }
-        else
-        {
-            Thread thread = new Thread(OnRequest);
-            thread.Start(new RequestArgs(url, method, timeout));
-        }
+        mEvent.Set();
     }
 
     /// <summary>
@@ -122,19 +153,9 @@ public class Http : MonoBehaviour
     /// </summary>
     /// <param name="url"></param>
     /// <param name="callback"></param>
-    public void RequestBytes(string url, string method, int timeout, Action<bool, byte[]> callback)
+    public void RequestTexture(string url, Action<Texture2D, byte[]> callback)
     {
-        if (mByteCallbackDict.ContainsKey(url))
-        {
-            mByteCallbackDict[url] = callback;
-        }
-        else
-        {
-            mByteCallbackDict.Add(url, callback);
-        }
-
-        Thread thread = new Thread(OnRequest);
-        thread.Start(new RequestArgs(url, method, timeout));
+        StartCoroutine(LoadTextureCoroutine(url, callback));
     }
 
     /// <summary>
@@ -142,33 +163,9 @@ public class Http : MonoBehaviour
     /// </summary>
     /// <param name="url"></param>
     /// <param name="callback"></param>
-    public void RequestTexture(string url, Action<bool, Texture2D, byte[]> callback)
+    public void RequestFile(string url, Action<string> callback)
     {
-        if (mTextureCallbackDict.ContainsKey(url))
-        {
-            mTextureCallbackDict[url] = callback;
-        }
-        else
-        {
-            mTextureCallbackDict.Add(url, callback);
-        }
-        
-        StartCoroutine(LoadTextureCoroutine(url));
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void Reset()
-    {
-        mTextCallbackDict.Clear();
-        mByteCallbackDict.Clear();
-        mTextureCallbackDict.Clear();
-
-        lock (mResponseDict)
-        {
-            mResponseDict.Clear();
-        }
+        StartCoroutine(LoadFileCoroutine(url, callback));
     }
 
     #endregion
@@ -182,6 +179,12 @@ public class Http : MonoBehaviour
     {
         mInstance = this;
         DontDestroyOnLoad(gameObject);
+
+        for (int i=0; i<5; i++)
+        {
+            mThreads[i] = new Thread(OnRequest);
+            mThreads[i].Start();
+        }
     }
 
     /// <summary>
@@ -189,84 +192,101 @@ public class Http : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        lock (mResponseDict)
+        ResponseArgs args = null;
+
+        lock (mResponseQueue)
         {
-            foreach (KeyValuePair<string, byte[]> p in mResponseDict)
+            if (mResponseQueue.Count > 0)
             {
-                string k = p.Key;
-                byte[] v = p.Value;
-               
-                if (mTextCallbackDict.ContainsKey(k))//文本回调
-                {
-                    Action<bool, string> callback = mTextCallbackDict[k];
-
-                    mResponseDict.Remove(k);
-                    mTextCallbackDict.Remove(k);
-
-                    if (v != null)
-                    {
-                        callback(true, Encoding.UTF8.GetString(v));
-                    }
-                    else
-                    {
-                        callback(false, string.Empty);
-                    }
-
-                    break;
-                }
-                else if (mByteCallbackDict.ContainsKey(k))//字节回调
-                {
-                    Action<bool, byte[]> callback = mByteCallbackDict[k];
-
-                    mResponseDict.Remove(k);
-                    mByteCallbackDict.Remove(k);
-
-                    callback(v != null, v);
-                    break;
-                }
+                args = mResponseQueue.Dequeue();
             }
+        }
+
+        if (args != null)
+        {
+            byte[] bytes = args.bytes;
+            Action<byte[]> callback = args.callback;
+
+            callback(bytes);
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="obj"></param>
-    private void OnRequest(object obj)
+    private void OnDestroy()
     {
-        RequestArgs args = obj as RequestArgs;
-        HttpWebRequest request = WebRequest.Create(args.url) as HttpWebRequest;
+        mEvent.Close();
 
-        if (args.url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+        foreach (Thread t in mThreads)
         {
-            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-            request.ProtocolVersion = HttpVersion.Version10;
+            t.Abort();
         }
 
-        try
+        mRequestQueue.Clear();
+        mResponseQueue.Clear();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="obj"></param>
+    private void OnRequest()
+    {
+        while (true)
         {
-            if (request == null)
+            RequestArgs args = null;
+
+            lock (mRequestQueue)
             {
-                AddReqponse(args.url);
+                if (mRequestQueue.Count > 0)
+                {
+                    args = mRequestQueue.Dequeue();
+                }
             }
-            else
-            {
-                request.Method = args.method;
-                request.Timeout = args.timeout;
-                request.ReadWriteTimeout = args.timeout;
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 
-                OnResponse(response, args.url);
+            if (args != null)
+            {
+                HttpWebRequest request = WebRequest.Create(args.url) as HttpWebRequest;
+
+                if (args.url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+                {
+                    ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+                    request.ProtocolVersion = HttpVersion.Version10;
+                }
+
+                try
+                {
+                    if (request == null)
+                    {
+                        AddReqponse(args.url, null, args.callback);
+                    }
+                    else
+                    {
+                        request.Method = args.method;
+                        request.Timeout = args.timeout;
+                        request.ReadWriteTimeout = args.timeout;
+                        HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+
+                        OnResponse(response, args.url, args.callback);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AddReqponse(args.url, null, args.callback);
+                    Logger.LogError(ex.Message + "\n" + ex.StackTrace);
+                }
+                finally
+                {
+                    request.Abort();
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            AddReqponse(args.url);
-            Logger.LogError(ex.Message + "\n" + ex.StackTrace);
-        }
-        finally
-        {
-            request.Abort();
+
+            if (mRequestQueue.Count == 0)
+            {
+                //挂起线程
+                mEvent.WaitOne();
+            }
         }
     }
 
@@ -274,7 +294,7 @@ public class Http : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="result"></param>
-    private void OnResponse(HttpWebResponse response, string url)
+    private void OnResponse(HttpWebResponse response, string url, Action<byte[]> callback)
     {
         try
         {
@@ -292,17 +312,17 @@ public class Http : MonoBehaviour
                 }
 
                 responseStream.Close();
-                AddReqponse(url, bytes);
+                AddReqponse(url, bytes, callback);
             }
             else
             {
-                AddReqponse(url);
+                AddReqponse(url, null, callback);
                 Logger.LogError("http failed: " + response.StatusDescription);
             }
         }
         catch (Exception ex)
         {
-            AddReqponse(url);
+            AddReqponse(url, null, callback);
             Logger.LogError(ex.Message + "\n" + ex.StackTrace);
         }
         finally
@@ -318,11 +338,11 @@ public class Http : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="url"></param>
-    private void AddReqponse(string url, byte[] bytes = null)
+    private void AddReqponse(string url, byte[] bytes, Action<byte[]> callback)
     {
-        lock (mResponseDict)
+        lock (mResponseQueue)
         {
-            mResponseDict.Add(url, bytes);
+            mResponseQueue.Enqueue(new ResponseArgs(url, bytes, callback));
         }
     }
 
@@ -331,7 +351,7 @@ public class Http : MonoBehaviour
     /// </summary>
     /// <param name="args"></param>
     /// <returns></returns>
-    private IEnumerator LoadTextureCoroutine(string url)
+    private IEnumerator LoadTextureCoroutine(string url, Action<Texture2D, byte[]> callback)
     {
         WWW www = new WWW(url);
 
@@ -340,20 +360,13 @@ public class Http : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        if (mTextureCallbackDict.ContainsKey(url))
+        if (string.IsNullOrEmpty(www.error))
         {
-            Action<bool, Texture2D, byte[]> callback = mTextureCallbackDict[url];
-
-            if (string.IsNullOrEmpty(www.error))
-            {
-                callback(true, www.texture, www.bytes);
-            }
-            else
-            {
-                callback(false, null, null);
-            }
-
-            mTextureCallbackDict.Remove(url);
+            callback(www.texture, www.bytes);
+        }
+        else
+        {
+            callback(null, null);
         }
 
         yield return new WaitForEndOfFrame();
@@ -363,8 +376,9 @@ public class Http : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="url"></param>
+    /// <param name="callback"></param>
     /// <returns></returns>
-    private IEnumerator LoadFileCoroutine(string url)
+    private IEnumerator LoadFileCoroutine(string url, Action<string> callback)
     {
         WWW www = new WWW(url);
 
@@ -373,20 +387,13 @@ public class Http : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        if (mTextCallbackDict.ContainsKey(url))
+        if (string.IsNullOrEmpty(www.error))
         {
-            Action<bool, string> callback = mTextCallbackDict[url];
-
-            if (string.IsNullOrEmpty(www.error))
-            {
-                callback(true, www.text);
-            }
-            else
-            {
-                callback(false, string.Empty);
-            }
-
-            mTextCallbackDict.Remove(url);
+            callback(www.text);
+        }
+        else
+        {
+            callback(string.Empty);
         }
 
         yield return new WaitForEndOfFrame();
