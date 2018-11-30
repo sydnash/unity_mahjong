@@ -263,10 +263,8 @@ function networkManager.reconnect(host, port, callback)
     networkManager.author(host, port, function(connected)
         networkManager.startUpdateHandler()
         --connected
-        log("connected")
         local data = { Session = gamepref.session, AcId = gamepref.acId, Level = 1, }
         send(protoType.cs.reconnect, data, function(msg)
-            log("reconnect msg = " .. tostring(msg))
             log("reconnect, msg = " ..  table.tostring(msg))
             callback(msg.Ok, msg.CurCoin, msg.GameType, msg.DeskId)
         end)
