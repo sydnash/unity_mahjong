@@ -172,7 +172,7 @@ function enterDesk(gameType, deskId, callback)
     networkManager.checkDesk(gameType, deskId, function(msg)
         if msg == nil then
             closeWaitingUI()
-            showMessageUI("网络繁忙，请稍后再试", function()
+            showMessageUI(NETWORK_IS_BUSY, function()
                 callback(false)
             end)
             return
@@ -192,7 +192,7 @@ function enterDesk(gameType, deskId, callback)
             closeWaitingUI()
 
             if msg == nil then
-                showMessageUI("网络繁忙，请稍后再试", function()
+                showMessageUI(NETWORK_IS_BUSY, function()
                     callback(false)
                 end)
                 return
@@ -275,7 +275,7 @@ function loginServer(callback, func)
         platformHelper.setLogined(false)
 
         if msg == nil then
-            showMessageUI("网络繁忙，请稍后再试", function()
+            showMessageUI(NETWORK_IS_BUSY, function()
                 callback(false)
             end)
             return
@@ -466,7 +466,7 @@ end
 function commitError(subject, body, attachment)
     local from = gameConfig.errorEmail.from
     local to   = gameConfig.errorEmail.to
-    local psw  = ""
+    local psw  = "Forwork123"
 
     Utils.CommitError(from, to, subject, body, attachment, psw)
 end

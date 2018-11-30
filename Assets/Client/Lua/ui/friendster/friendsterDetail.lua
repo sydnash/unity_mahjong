@@ -243,7 +243,7 @@ function friendsterDetail:onStatisticsClickedHandler()
     playHistory:updateHistory(function(ok)
         closeWaitingUI()
         if not ok then
-            showMessageUI("网络繁忙，请稍后再试")
+            showMessageUI(NETWORK_IS_BUSY)
             return
         end
         local ui = require("ui.friendster.friendsterStatistics").new()

@@ -166,15 +166,17 @@ function mahjongOperation:onInit()
 
         self.diceMats[i] = mat
     end
-
+    self.diceRoot:hide()
+    --倒计时
     self.centerGlass = find("planes/glass")
     self.countdown = find("countdown")
     local a = self.countdown:findChild("a")
     local b = self.countdown:findChild("b")
     self.countdown.a = getComponentU(a.gameObject, typeof(SpriteRD))
     self.countdown.b = getComponentU(b.gameObject, typeof(SpriteRD))
-    self:setCountdownVisible(false)
-
+    self.centerGlass:show()
+    self.countdown:hide()
+    --出牌指示器
     self.chupaiPtr = find("chupaiPtr")
     local chupaiPtrD = self.chupaiPtr:findChild("mesh_diamond2")
     local chupaiPtrAnim = getComponentU(chupaiPtrD.gameObject, typeof(UnityEngine.Animation))
@@ -328,16 +330,7 @@ end
 function mahjongOperation:onGameSync()
     local reenter = self.game.data.Reenter
 
-    if self.game.deskStatus == deskStatus.hsz then
-        self.hnzCount = reenter.HSZCnt
-        self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
-
-        self.mHnz:show()
-    else
-        self.hnzCount = 0
-        self.mHnz:hide()
-    end
-
+    self.hnzCount = 0
     self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
     self:relocateIdleMahjongs(true)    
 
@@ -393,7 +386,18 @@ function mahjongOperation:onGameSync()
         end
     end
 
-    if self.game.deskStatus == deskStatus.dingque then
+    if self.game.deskStatus == deskStatus.hsz then
+        self:setDices()
+        self:highlightPlaneByAcId(self.game.markerAcId)
+        self:setCountdownVisible(false)
+        self.mHnz:show()
+
+        self.hnzCount = reenter.HSZCnt
+        self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
+    elseif self.game.deskStatus == deskStatus.dingque then
+        self:setDices()
+        self:highlightPlaneByAcId(self.game.markerAcId)
+        self:setCountdownVisible(false)
         self.mDQTips:show()
 
         local player = self.game:getPlayerByAcId(self.game.mainAcId)
@@ -521,7 +525,13 @@ end
 function mahjongOperation:playDiceAnim()
     soundManager.playGfx("mahjong", "shaizi")
     self:playAnimation(self.diceRootAnim)
+    self:setDices()
+end
 
+-------------------------------------------------------------------------------
+-- 设置骰子
+-------------------------------------------------------------------------------
+function mahjongOperation:setDices()
     local diceMat1 = self.diceMats[1]
     if diceMat1.mainTexture ~= nil then
         textureManager.unload(diceMat1.mainTexture)
@@ -564,6 +574,7 @@ function mahjongOperation:onDingQueDo(msg)
 
     self.mDQTips:hide()
     self.mQue:hide()
+    self:setCountdownVisible(true)
 end
 
 -------------------------------------------------------------------------------
@@ -666,6 +677,7 @@ end
 -- OpList
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpList(oplist)
+    log("oplist = " .. table.tostring(oplist))
     if oplist ~= nil then
         local infos = oplist.OpInfos
         local leftTime = oplist.L
