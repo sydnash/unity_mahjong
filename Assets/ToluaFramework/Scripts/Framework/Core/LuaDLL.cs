@@ -1142,8 +1142,9 @@ namespace LuaInterface
         public static extern bool tolua_isvptrtable(IntPtr L, int index);
 
         public static int toluaL_exception(IntPtr L, Exception e)
-        {            
-            LuaException.luaStack = new LuaException(e.Message, e, 2);            
+        {
+            LuaException.luaStack = new LuaException(e.Message, e, 2);
+            //callGDBTRANCEBACK(L, e.Message);     
             return tolua_error(L, e.Message);
         }
 
@@ -1153,11 +1154,24 @@ namespace LuaInterface
             {
                 msg = e.Message;
             }
-            
+
             LuaException.luaStack = new LuaException(msg, e, 2);
+            //callGDBTRANCEBACK(L, msg);
             return tolua_error(L, msg);
         }
 
+        public static void callGDBTRANCEBACK(IntPtr L, string msg)
+        {
+            LuaDLL.lua_getglobal(L, "_GDB_TRACKBACK_");//自定义的错误追踪函数_GDB_TRACKBACK_定义在utils/utils.lua中
+
+            if (!LuaDLL.lua_isfunction(L, -1))
+            {
+                LuaDLL.lua_pop(L, 1);
+                return;
+            }
+            LuaDLL.lua_pushstring(L, msg);
+            LuaDLL.lua_call(L, 1, 0);
+        }
         //适配函数
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int tolua_loadbuffer(IntPtr luaState, byte[] buff, int size, string name);

@@ -88,7 +88,7 @@ function playHistoryItem:set(data, historyContainer)
             p.score.n:setText(tostring(s))
         end
 
-        if s == max then
+        if s == max and s > 0 then
             p.winner:show()
         end
     end

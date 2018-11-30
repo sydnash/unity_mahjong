@@ -1883,7 +1883,7 @@ function mahjongOperation:onHnzChooseClickedHandler()
     playButtonClickSound()
 
     local hnzQueue = self.hnzMahjongs[self.game.mainAcId]
-    if #hnzQueue < self.hnzCount then
+    if not hnzQueue or #hnzQueue ~= self.hnzCount then
         showMessageUI(string.format("请先选择%d张同花色的牌", self.hnzCount))
         return
     end
