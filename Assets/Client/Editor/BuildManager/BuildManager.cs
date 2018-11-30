@@ -64,6 +64,7 @@ public class BuildManager : EditorWindow
             {
                 case BuildTarget.Android:
                     suffix = "apk";
+                    PlayerSettings.Android.keystoreName = Application.dataPath + "/Keystore/mahjong.keystore";
                     PlayerSettings.Android.keystorePass = "com.bshy.mahjong";
                     PlayerSettings.Android.keyaliasName = "mahjong";
                     PlayerSettings.Android.keyaliasPass = "com.bshy.mahjong";
