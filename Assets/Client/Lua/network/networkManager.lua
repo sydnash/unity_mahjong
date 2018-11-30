@@ -246,6 +246,7 @@ end
 -------------------------------------------------------------------
 function networkManager.author(host, port, connectedCallback, connecttimeoutCallback, disconnectedCallback)
     networkManager.authored = false
+    networkManager.recvbufferLength = 0
     local timeout = networkConfig.tcpTimeout * 1000 -- 转为毫秒
     tcp:connect(host, port, timeout, function()
         tcp:registerReceivedCallback(receive)
@@ -287,6 +288,7 @@ end
 -------------------------------------------------------------------
 function networkManager.disconnect()
     networkManager.stopUpdateHandler()
+    networkManager.recvbufferLength = 0
     tcp:disconnect()
 end
 

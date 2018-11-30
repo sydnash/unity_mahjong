@@ -22,6 +22,15 @@ public class Tcp
 
     #region Public
 
+    public enum TcpError {
+        Success                                 = 0,
+        CatchException                          = -1000,
+        NormalError                             = -1,
+        SendNotSuccess                          = -2,
+        ReceiveZeroLen                          = -3,
+        ReceiveNotSuccessAndNotWouldBlock       = -4,
+    }
+
     public Tcp()
     {
         mSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -40,16 +49,16 @@ public class Tcp
         try {
             if (mSocket.Connected)
             {
-                return 0;
+                return (int)TcpError.Success;
             }
             mSocket.Connect(host, port);
             if (mSocket.Connected)
             {
-                return 0;
+                return (int)TcpError.Success;
             }
-            return -1;
+            return (int)TcpError.NormalError;
         } catch {
-            return -1;
+            return (int)TcpError.CatchException;
         }
     }
 
@@ -91,12 +100,12 @@ public class Tcp
                 sentSize += mSocket.Send(msg, sentSize, length - sentSize, SocketFlags.None, out err);
                 if (err != SocketError.Success)
                 {
-                    return -1;
+                    return (int)TcpError.SendNotSuccess;
                 }
             }
-            return 0;
+            return (int)TcpError.Success;
         } catch {
-            return -1;
+            return (int)TcpError.NormalError;
         }
     }
     /// <summary>
@@ -110,17 +119,21 @@ public class Tcp
             SocketError err = SocketError.Success;
             int receivedSize = mSocket.Receive(buffer, 0, buffer.Length, SocketFlags.None, out err);
 
-            if ((err == SocketError.Success && receivedSize == 0) || (err != SocketError.Success && err != SocketError.WouldBlock))
+            if (err == SocketError.Success && receivedSize == 0)
             {
-                return -1;
+                return (int)TcpError.ReceiveZeroLen;
+            } 
+            else if (err != SocketError.Success && err != SocketError.WouldBlock)
+            {
+                return (int)TcpError.ReceiveNotSuccessAndNotWouldBlock;
             }
             else if (receivedSize > 0)
             {
                 return receivedSize;
             }
-            return 0;
+            return (int)TcpError.Success;
         } catch {
-            return -1;
+            return (int)TcpError.CatchException;
         }
     }
 
