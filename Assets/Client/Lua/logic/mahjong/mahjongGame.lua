@@ -848,9 +848,10 @@ function mahjongGame:onOtherExitHandler(msg)
     local func = tweenFunction.new(function()
     --    log("other exit, msg = " .. table.tostring(msg))
         if self.leftGames > 0 then
+            local seatType = self:getSeatTypeByAcId(msg.AcId)
             self.players[msg.AcId] = nil
             self.playerCount = self.playerCount - 1
-            self.deskUI:onPlayerExit(msg)
+            self.deskUI:onPlayerExit(seatType, msg)
         end
     end)
     self.messageHandlers:add(func)

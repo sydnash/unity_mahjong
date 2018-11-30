@@ -377,11 +377,10 @@ function mahjongDesk:onPlayerConnectStatusChanged(player)
     p:setOnline(player.connected)
 end
 
-function mahjongDesk:onPlayerExit(msg)
+function mahjongDesk:onPlayerExit(seatType, msg)
     self:refreshInvitationButtonState()
 
-    local s = self.game:getSeatTypeByAcId(msg.AcId)
-    local p = self.players[s]
+    local p = self.players[seatType]
 
     p:setPlayerInfo(nil)
 end
