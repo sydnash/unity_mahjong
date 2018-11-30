@@ -144,7 +144,7 @@ end
 
 function mahjongDeskHeader:hideChatVoice()
     self.mVoice:hide()
-    self.showChatTimestamp = nil
+    self.showVoiceTimestamp = nil
 end
 
 function mahjongDeskHeader:update()
