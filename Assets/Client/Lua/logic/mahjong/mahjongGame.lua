@@ -778,6 +778,9 @@ function mahjongGame:onExitDeskHandler(msg)
     local func = tweenFunction.new(function()
 --        log("exit desk, msg = " .. table.tostring(msg))
 
+        gamepref.player.currentDesk = nil
+        signalManager.signal(signalType.deskDestroy, self.deskId)
+
         if msg.Reason == exitReason.voteExit then
             --投票解散房间，关闭投票界面并显示大结算界面
             if self.exitDeskUI ~= nil then
@@ -827,13 +830,10 @@ function mahjongGame:onExitDeskHandler(msg)
 
             self.deskUI:reset()
             self.operationUI:reset()
-
-            gamepref.player.currentDesk = nil
         elseif msg.Reason == exitReason.cloesByManager then
             --被亲友圈管理员关闭
             showMessageUI("牌桌已被亲友圈管理员，如有疑问请咨询亲友圈管理员或代理",
                           function()
-                            gamepref.player.currentDesk = nil
                             self:exitGame()
                           end)
         else
@@ -841,7 +841,6 @@ function mahjongGame:onExitDeskHandler(msg)
                 self.gameEndUI:endAll()
             end
         end
-        signalManager.signal(signalType.deskDestroy, self.deskId)
     end)
     self.messageHandlers:add(func)
 end

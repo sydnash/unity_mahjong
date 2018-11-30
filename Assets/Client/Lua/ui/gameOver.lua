@@ -44,6 +44,7 @@ end
 
 function gameOver:onConfirmClickedHandler()
     playButtonClickSound()
+    gamepref.player.currentDesk = nil
 
     self.game:exitGame() 
     self:close()
