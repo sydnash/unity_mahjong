@@ -13,6 +13,7 @@ local tcpStatus = {
 
 function tcp:ctor()
     self.receiveBuffer = cvt.NewEmptyByteArray(2 * 1024 * 1024)
+    self.sendBuffer = cvt.NewEmptyByteArray(2 * 1024)
     self:disconnect()
 end
 
@@ -21,7 +22,7 @@ function tcp:disconnect()
         self.tcp:Disconnect()
     end
     self.status = tcpStatus.disconnected
-    self.sendMsgQueue = {}
+    self.sendBufferSize = 0
     if self.updateHandler then
         unregisterUpdateListener(updateHandler)
         self.updateHandler = nil
@@ -54,7 +55,8 @@ end
 --
 -------------------------------------------------------------------
 function tcp:send(data, length, callback)
-    table.insert(self.sendMsgQueue, {data = data, length = length})
+    self.sendBuffer = cvt.ConcatBytes(self.sendBuffer, self.sendBuffer, self.sendBufferSize, data, length)
+    self.sendBufferSize = self.sendBufferSize + length
 end
 
 -------------------------------------------------------------------
@@ -87,10 +89,9 @@ function tcp:update()
             end
         end
     elseif self.status == tcpStatus.connected then
-        if #self.sendMsgQueue > 0 then
-            local msg = self.sendMsgQueue[1]
-            table.remove(self.sendMsgQueue, 1)
-            self.tcp:Send(msg.data, msg.length)
+        if self.sendBufferSize > 0 then
+            self.tcp:Send(self.sendBuffer, self.sendBufferSize)
+            self.sendBufferSize = 0
         end
 
         local receiveSize = self.tcp:Receive(self.receiveBuffer)
