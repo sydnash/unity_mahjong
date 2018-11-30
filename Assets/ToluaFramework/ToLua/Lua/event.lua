@@ -118,11 +118,14 @@ function _event:AddListener(handle)
 	end	
 end
 
-function _event:RemoveListener(handle)	
+function _event:RemoveListener(handle, immediately)	
 	assert(handle)	
 
-	if self.lock then		
-		table.insert(self.opList, function() self.list:remove(handle) end)				
+	if self.lock then	
+        if immediately then
+            handle.immediatelyRemove = true
+        end
+        table.insert(self.opList, function() self.list:remove(handle) end)
 	else
 		self.list:remove(handle)
 	end
@@ -162,14 +165,17 @@ _event.__call = function(self, ...)
 	local ilist = ilist				
 
 	for i, f in ilist(_list) do		
-		self.current = i						
-		local flag, msg = f(...)
+		self.current = i
+        if not f.immediatelyRemove then
+		    local flag, msg = f(...)
 		
-		if not flag then			
-			_list:remove(i)			
-			self.lock = false		
-			error(msg)				
-		end
+		    if not flag then			
+			    _list:remove(i)			
+			    self.lock = false		
+			    error(msg)				
+		    end
+        end
+        f.immediatelyRemove = nil
 	end	
 
 	local opList = self.opList	

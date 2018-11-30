@@ -68,8 +68,10 @@ function setting:onInit()
 
         if self.game:canBackToLobby() then
             self.mBack:setInteractabled(true)
+            self.mBackText:setSprite("enable")
         else
             self.mBack:setInteractabled(false)
+            self.mBackText:setSprite("disable")
         end
 
         self.mMandarin:addChangedListener(self.onMandarinChangedHandler, self)

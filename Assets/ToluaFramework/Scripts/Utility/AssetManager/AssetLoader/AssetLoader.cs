@@ -51,7 +51,7 @@ public class AssetLoader
     /// <summary>
     /// 
     /// </summary>
-    private float mUnloadDelayTime = 0.2f;
+    private float mUnloadDelayTime = 2f;
 
     /// <summary>
     /// 

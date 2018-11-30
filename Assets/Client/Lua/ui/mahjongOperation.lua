@@ -807,10 +807,10 @@ function mahjongOperation:touchHandler(phase, pos)
                     local id = self.selectedMahjong.id
 
                     networkManager.chuPai({ id }, function(msg)
-                        log("chu pai failed")
                         self:relocateInhandMahjongs(self.game.mainAcId)
                     end)
 
+                    self:virtureChu(self.selectedMahjong)
                     local player = self.game:getPlayerByAcId(self.game.mainAcId)
                     playMahjongSound(id, player.sex)
                 end
@@ -1006,6 +1006,42 @@ end
 -------------------------------------------------------------------------------
 -- 出牌
 -------------------------------------------------------------------------------
+function mahjongOperation:virtureChu(mj)
+    mj:setShadowMode(mahjong.shadowMode.yang)
+    local acId = self.game.mainAcId
+    local dir = self.game:getSeatTypeByAcId(acId)
+    local seat = self.seats[dir]
+    local o = seat[mahjongGame.cardType.chu].pos
+    local r = seat[mahjongGame.cardType.chu].rot
+    local chuMahjongs = self.chuMahjongs[acId]
+
+    local k
+    if chuMahjongs == nil then
+        k = 0
+    else
+        k = #chuMahjongs
+    end
+    local u = math.floor(k / 10)
+    local c = k % 10
+    local y = (u < 2) and o.y or o.y + mahjong.z
+    local d = (u % 2) * mahjong.h
+    local p = mj:getLocalPosition()
+    p:Set(o.x + mahjong.w * c, y, o.z - d)
+    mj:setPickabled(false)
+    mj:setLocalPosition(p)
+    mj:setLocalRotation(r)
+    mj:setShadowMode(mahjong.shadowMode.yang)
+
+    local c = mj:getLocalPosition()
+    local p = self.chupaiPtr:getLocalPosition()
+    p:Set(c.x, c.y + mahjong.z * 0.55 + 0.035, c.z)
+    self.chupaiPtr:setLocalPosition(p)
+    self.chupaiPtr:show()
+    mj:light()
+
+    self.virtureChuMahjong = mj
+end
+
 function mahjongOperation:onOpDoChu(acId, cards)
     self:endChuPai()
     local chu = nil
@@ -1013,6 +1049,9 @@ function mahjongOperation:onOpDoChu(acId, cards)
     if acId == self.game.mainAcId and self.mo ~= nil and cards[1] == self.mo.id then
         self:putMahjongToChu(acId, self.mo)
         chu = self.mo
+        if self.virtureChuMahjong and self.virtureChuMahjong.id ~= cards[1] then
+            self:relocateInhandMahjongs()
+        end
     else
         if acId == self.game.mainAcId and self.mo ~= nil then
             self:insertMahjongToInhand(self.mo)
@@ -1047,6 +1086,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
         playMahjongSound(cards[1], player.sex)
     end
 
+    self.virtureChuMahjong = nil
     self.mDQTips:hide()
 end
 
@@ -1631,16 +1671,18 @@ end
 -- 重置
 -------------------------------------------------------------------------------
 function mahjongOperation:clear(forceDestroy)
---    log("clear, forceDestroy = " .. tostring(forceDestroy))
+    log("clear start, idle count = " .. tostring(#self.idleMahjongs))
+    
     self.lastPengPos = nil
-
+    local set = {}
+    
     local function destroy(m)
-        if m ~= nil then
+        if m ~= nil and set[m.id] == nil then
+            set[m.id] = true
             m:destroy()
         end
     end
 
-    local set = {}
     local function insert(m)
         if m ~= nil then
             if set[m.id] == nil then
@@ -1717,7 +1759,7 @@ function mahjongOperation:clear(forceDestroy)
     self.selectedMahjong = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
---    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
+    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
 end
 
 -------------------------------------------------------------------------------
@@ -1843,7 +1885,7 @@ function mahjongOperation:onHnzChooseClickedHandler()
     playButtonClickSound()
 
     local hnzQueue = self.hnzMahjongs[self.game.mainAcId]
-    if #hnzQueue < self.hnzCount then
+    if not hnzQueue or #hnzQueue ~= self.hnzCount then
         showMessageUI(string.format("请先选择%d张同花色的牌", self.hnzCount))
         return
     end
@@ -1997,7 +2039,7 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
                             h:setShadowMode(mahjong.shadowMode.noshadow)
                         else
                             if self.game.mode == gameMode.playback then
-                                m:setShadowMode(mahjong.shadowMode.yang)
+                                h:setShadowMode(mahjong.shadowMode.yang)
                             else
                                 h:setShadowMode(mahjong.shadowMode.li)
                             end

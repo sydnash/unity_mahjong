@@ -306,26 +306,28 @@ end
 -- 其他玩家加入
 -------------------------------------------------------------------------------
 function mahjongGame:onOtherEnterHandler(msg)
-    log("otherEnter, msg = " .. table.tostring(msg))
+    local func = tweenFunction.new(function()
+        log("otherEnter, msg = " .. table.tostring(msg))
+        local player = gamePlayer.new(msg.AcId)
 
-    local player = gamePlayer.new(msg.AcId)
+        player.headerUrl    = msg.HeadUrl
+        player:loadHeaderTex()
+        player.nickname     = msg.Nickname
+        player.ip           = msg.Ip
+        player.sex          = msg.Sex
+        player.laolai       = msg.IsLaoLai
+        player.connected    = msg.IsConnected
+        player.ready        = msg.Ready
+        player.turn         = msg.Turn
+        player.score        = msg.Score
+        player.location     = { status = msg.HasPosition, latitude = msg.Latitude, longitude = msg.Longitude }
 
-    player.headerUrl    = msg.HeadUrl
-    player:loadHeaderTex()
-    player.nickname     = msg.Nickname
-    player.ip           = msg.Ip
-    player.sex          = msg.Sex
-    player.laolai       = msg.IsLaoLai
-    player.connected    = msg.IsConnected
-    player.ready        = msg.Ready
-    player.turn         = msg.Turn
-    player.score        = msg.Score
-    player.location     = { status = msg.HasPosition, latitude = msg.Latitude, longitude = msg.Longitude }
+        self.players[player.acId] = player
+        self.playerCount = self.playerCount + 1
 
-    self.players[player.acId] = player
-    self.playerCount = self.playerCount + 1
-
-    self.deskUI:onPlayerEnter(player)
+        self.deskUI:onPlayerEnter(player)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -773,72 +775,74 @@ local exitReason = {
 -- 服务器通知直接退出
 -------------------------------------------------------------------------------
 function mahjongGame:onExitDeskHandler(msg)
---    log("exit desk, msg = " .. table.tostring(msg))
-
-    if msg.Reason == exitReason.voteExit then
-        --投票解散房间，关闭投票界面并显示大结算界面
-        if self.exitDeskUI ~= nil then
-            self.exitDeskUI:close()
-        end
-
-        local datas = { deskId          = self.deskId,
-                        totalGameCount  = self:getTotalGameCount(),
-                        finishGameCount = self:getTotalGameCount() - self:getLeftGameCount(),
-                        players         = {},
-        }
-
-        local totalScores = { }
-
-        if string.isNilOrEmpty(msg.Special) then
-            for _, p in pairs(self.players) do
-                totalScores[p.acId] = 0
-            end
-        else
-            local special = table.fromjson(msg.Special)
-            for _, v in pairs(special.TotalResuts) do
-                totalScores[v.AcId] = v.Score
-            end
-        end
-
-        for _, p in pairs(self.players) do
-            local d = { acId            = p.acId, 
-                        headerTex       = self.players[p.acId].headerTex,
-                        nickname        = p.nickname, 
-                        totalScore      = totalScores[p.acId], 
-                        turn            = p.turn, 
-                        seat            = self:getSeatTypeByAcId(p.acId),
-                        isCreator       = self:isCreator(p.acId),
-                        isWinner        = false,
-            }
-
-            datas.players[p.acId] = d
-        end
-
-        local ui = require("ui.gameOver").new(self, datas)
-        ui:show()
-
-        if self.gameEndUI ~= nil then
-            self.gameEndUI:close()
-            self.gameEndUI = nil
-        end
-
-        self.deskUI:reset()
-        self.operationUI:reset()
+    local func = tweenFunction.new(function()
+--        log("exit desk, msg = " .. table.tostring(msg))
 
         gamepref.player.currentDesk = nil
-    elseif msg.Reason == exitReason.cloesByManager then
-        --被亲友圈管理员关闭
-        showMessageUI("牌桌已被亲友圈管理员，如有疑问请咨询亲友圈管理员或代理",
-                      function()
-                        gamepref.player.currentDesk = nil
-                        self:exitGame()
-                      end)
-    else
-        if self.gameEndUI ~= nil then
-            self.gameEndUI:endAll()
+        signalManager.signal(signalType.deskDestroy, self.deskId)
+
+        if msg.Reason == exitReason.voteExit then
+            --投票解散房间，关闭投票界面并显示大结算界面
+            if self.exitDeskUI ~= nil then
+                self.exitDeskUI:close()
+            end
+
+            local datas = { deskId          = self.deskId,
+                            totalGameCount  = self:getTotalGameCount(),
+                            finishGameCount = self:getTotalGameCount() - self:getLeftGameCount(),
+                            players         = {},
+            }
+
+            local totalScores = { }
+
+            if string.isNilOrEmpty(msg.Special) then
+                for _, p in pairs(self.players) do
+                    totalScores[p.acId] = 0
+                end
+            else
+                local special = table.fromjson(msg.Special)
+                for _, v in pairs(special.TotalResuts) do
+                    totalScores[v.AcId] = v.Score
+                end
+            end
+
+            for _, p in pairs(self.players) do
+                local d = { acId            = p.acId, 
+                            headerTex       = self.players[p.acId].headerTex,
+                            nickname        = p.nickname, 
+                            totalScore      = totalScores[p.acId], 
+                            turn            = p.turn, 
+                            seat            = self:getSeatTypeByAcId(p.acId),
+                            isCreator       = self:isCreator(p.acId),
+                            isWinner        = false,
+                }
+
+                datas.players[p.acId] = d
+            end
+
+            local ui = require("ui.gameOver").new(self, datas)
+            ui:show()
+
+            if self.gameEndUI ~= nil then
+                self.gameEndUI:close()
+                self.gameEndUI = nil
+            end
+
+            self.deskUI:reset()
+            self.operationUI:reset()
+        elseif msg.Reason == exitReason.cloesByManager then
+            --被亲友圈管理员关闭
+            showMessageUI("牌桌已被亲友圈管理员，如有疑问请咨询亲友圈管理员或代理",
+                          function()
+                            self:exitGame()
+                          end)
+        else
+            if self.gameEndUI ~= nil then
+                self.gameEndUI:endAll()
+            end
         end
-    end
-    signalManager.signal(signalType.deskDestroy, self.deskId)
+    end)
+    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -848,9 +852,10 @@ function mahjongGame:onOtherExitHandler(msg)
     local func = tweenFunction.new(function()
     --    log("other exit, msg = " .. table.tostring(msg))
         if self.leftGames > 0 then
+            local seatType = self:getSeatTypeByAcId(msg.AcId)
             self.players[msg.AcId] = nil
             self.playerCount = self.playerCount - 1
-            self.deskUI:onPlayerExit(msg)
+            self.deskUI:onPlayerExit(seatType, msg)
         end
     end)
     self.messageHandlers:add(func)

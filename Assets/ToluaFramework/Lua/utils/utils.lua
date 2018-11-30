@@ -357,6 +357,15 @@ function _GDB_TRACKBACK_(errorMessage)
     end
 end
 
+function printError(msg)
+    msg = "ERR: " .. msg
+    local trance = debug.traceback("", 2)
+    msg = msg .. "\n" .. trance
+    if _gdb_tracebackk_callback_ ~= nil then
+        _gdb_tracebackk_callback_(msg, debug)
+    end
+    log(msg)
+end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
@@ -376,7 +385,7 @@ end
 -------------------------------------------------------------------
 function unregisterUpdateListener(handler)
     if handler ~= nil then
-        UpdateBeat:RemoveListener(handler)
+        UpdateBeat:RemoveListener(handler, true)
     end
 end
 
@@ -402,11 +411,6 @@ function hexColorToColor(colorString)
         return Color.New(red / 255, green / 255, blue / 255, alpha / 255)
     end
     return nil
-end
-
-function printError(msg)
-    log("ERR" .. tostring(msg))
-    log(debug.traceback("", 2))
 end
 
 --endregion

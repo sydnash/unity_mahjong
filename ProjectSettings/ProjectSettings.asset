@@ -226,7 +226,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
+  AndroidKeystoreName: D:/Works/CompanyProjects/tdqp_android/Assets/Keystore/mahjong.keystore
   AndroidKeyaliasName: mahjong
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
@@ -693,6 +693,7 @@ PlayerSettings:
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
     1: DEBUG_WITH_EXTRA_FILES
+    7: 
   platformArchitecture: {}
   scriptingBackend: {}
   incrementalIl2cppBuild: {}

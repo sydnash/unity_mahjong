@@ -78,7 +78,18 @@ public class LuaLooper : MonoBehaviour
     void ThrowException()
     {
         string error = luaState.LuaToString(-1);
-        luaState.LuaPop(2);                
+
+        luaState.LuaPop(2);
+        luaState.LuaGetGlobal("_GDB_TRACKBACK_");
+        if (luaState.lua_isfunction(-1)) 
+        {
+            luaState.LuaPushString(error);
+            luaState.LuaCall(1, 0);
+        }
+        else
+        {
+            luaState.LuaPop(1);
+        }
         throw new LuaException(error, LuaException.GetLastError());
     }
 

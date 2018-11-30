@@ -99,12 +99,13 @@ function gvoiceManager.play(filename)
         soundManager.setBGMVolume(0)
         soundManager.setSFXVolume(0)
 
-        if playStartedCallback ~= nil then
+        local ret = GVoiceEngine.instance:StartPlay(filename)
+        if ret and playStartedCallback ~= nil then
             playStartedCallback(filename)
         end
-
-        GVoiceEngine.instance:StartPlay(filename)
+        return ret
     end
+    return false
 end
 
 function gvoiceManager.startPlay(filename, fileid)
@@ -135,7 +136,7 @@ function gvoiceManager.reset()
 end
 
 function gvoiceManager.onUploadedHandler(ok, filename, fileid)
-    if gvoiceManager.status then
+    if gvoiceManager.status and ok then
         networkManager.sendChatMessage(chatType.voice, fileid, function(msg)
         end)
     end

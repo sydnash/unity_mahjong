@@ -160,6 +160,7 @@ function networkManager.setup(disconnectedCallback)
 end
 
 function networkManager.disconnectedCallback()
+    printError("dis connect callback. ")
     networkManager.authored = false
     networkManager.stopUpdateHandler()
     networkManager.disconnectedCallback_()
@@ -204,11 +205,10 @@ function networkManager.update()
     if now - networkManager.updateTick < 0.2 then
         return
     end
-    networkManager.updateTick = now
 
     if networkManager.hasPingPong then
         local ping = networkConfig.ping
-        local pong = math.max(ping + 0.5, networkConfig.pong)
+        local pong = math.max(ping + 5, networkConfig.pong)
         --发送心跳包
         if now - networkManager.pingTick > ping then
             send(protoType.hb, table.empty, function(msg)
@@ -246,6 +246,7 @@ end
 -------------------------------------------------------------------
 function networkManager.author(host, port, connectedCallback, connecttimeoutCallback, disconnectedCallback)
     networkManager.authored = false
+    networkManager.recvbufferLength = 0
     local timeout = networkConfig.tcpTimeout * 1000 -- 转为毫秒
     tcp:connect(host, port, timeout, function()
         tcp:registerReceivedCallback(receive)
@@ -262,10 +263,8 @@ function networkManager.reconnect(host, port, callback)
     networkManager.author(host, port, function(connected)
         networkManager.startUpdateHandler()
         --connected
-        log("connected")
         local data = { Session = gamepref.session, AcId = gamepref.acId, Level = 1, }
         send(protoType.cs.reconnect, data, function(msg)
-            log("reconnect msg = " .. tostring(msg))
             log("reconnect, msg = " ..  table.tostring(msg))
             callback(msg.Ok, msg.CurCoin, msg.GameType, msg.DeskId)
         end)
@@ -287,6 +286,7 @@ end
 -------------------------------------------------------------------
 function networkManager.disconnect()
     networkManager.stopUpdateHandler()
+    networkManager.recvbufferLength = 0
     tcp:disconnect()
 end
 

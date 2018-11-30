@@ -377,11 +377,10 @@ function mahjongDesk:onPlayerConnectStatusChanged(player)
     p:setOnline(player.connected)
 end
 
-function mahjongDesk:onPlayerExit(msg)
+function mahjongDesk:onPlayerExit(seatType, msg)
     self:refreshInvitationButtonState()
 
-    local s = self.game:getSeatTypeByAcId(msg.AcId)
-    local p = self.players[s]
+    local p = self.players[seatType]
 
     p:setPlayerInfo(nil)
 end
@@ -505,7 +504,8 @@ function mahjongDesk:onGVoiceRecordFinishedHandler(filename)
     local player = self.players[mahjongGame.seatType.mine]
     player.filename = filename
 
-    gvoiceManager.play(filename)
+    local ret = gvoiceManager.play(filename)
+    log("on gvoice recode finishaed handler : " .. tostring(ret))
 end
 
 function mahjongDesk:onGVoicePlayStartedHandler(filename)

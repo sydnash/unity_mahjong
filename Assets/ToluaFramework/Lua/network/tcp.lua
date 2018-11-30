@@ -12,7 +12,7 @@ local tcpStatus = {
 }
 
 function tcp:ctor()
-    self.receiveBuffer = cvt.NewEmptyByteArray(4 * 1024 * 1024)
+    self.receiveBuffer = cvt.NewEmptyByteArray(2 * 1024 * 1024)
     self:disconnect()
 end
 
@@ -97,6 +97,7 @@ function tcp:update()
         if receiveSize > 0 then
             self.receiveCallback(self.receiveBuffer, receiveSize)
         elseif receiveSize < 0 then
+            printError(string.format("tcp receive size %d", receiveSize))
             self:disconnect()
             self:onDisconnected()
         end

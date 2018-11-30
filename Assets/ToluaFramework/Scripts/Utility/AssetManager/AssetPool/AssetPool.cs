@@ -109,7 +109,8 @@ public class AssetPool
             if (asset != null)
             {
                 queue.Push(asset);
-                mDependentBundlePool.Unload(assetName);
+                //如果执行下面的unload，会出现某些prefab丢失材质的问题，所以暂时先屏蔽
+                //mDependentBundlePool.Unload(assetName);
             }
 
             return asset;

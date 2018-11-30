@@ -74,7 +74,7 @@ function chat:onInit()
         if k > min then
             v:hide()
         else
-            v.key = k
+            v.key = tostring(k)
             v:addClickListener(self.onTextClickedHandler, self)
             local c = getComponentU(v.gameObject, typeof(UIText))
             c.text = chatConfig.text[v.key].content
