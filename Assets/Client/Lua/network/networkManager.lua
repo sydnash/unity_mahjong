@@ -164,7 +164,6 @@ function networkManager.setup(disconnectedCallback)
 end
 
 function networkManager.disconnectedCallback()
-    printError("dis connect callback. ")
     networkManager.authored = false
     networkManager.stopUpdateHandler()
     networkManager.disconnectedCallback_()
