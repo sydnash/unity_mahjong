@@ -110,6 +110,9 @@ local function send(command, data, callback)
     token = networkCallbackPool:push(token + 1, callback)
 --    log("send msg, command = " .. command)
     local msg, length = proto.build(command, token, gamepref.acId, gamepref.session, data)
+
+    log(string.format("=====proto:build  msg:len(%d)  (%d)", length, cvt.BytesToInt32(msg, 0)))
+
     tcp:send(msg, length, function()
         networkCallbackPool:pop(token, false)
         callback(nil)
@@ -119,30 +122,32 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+local receiveBuffer = nil
+local receiveBufferLenght = 0
 local function receive(bytes, size)
     if bytes == nil and size < 0 then
         return
     end
     
     --缓存收到的数据
-    if networkManager.recvbuffer == nil then
-        networkManager.recvbuffer = cvt.NewByteArray(bytes, 0, size)
-        networkManager.recvbufferLength = networkManager.recvbuffer.Length
+    if receiveBuffer == nil then
+        receiveBuffer = cvt.NewByteArray(bytes, 0, size)
+        receiveBufferLenght = size
     else
-        networkManager.recvbuffer = cvt.ConcatBytes(networkManager.recvbuffer, networkManager.recvbufferLength, bytes, size)
-        networkManager.recvbufferLength = networkManager.recvbufferLength + size
+        receiveBuffer = cvt.ConcatBytes(receiveBuffer, receiveBuffer, receiveBufferLenght, bytes, size)
+        receiveBufferLenght = receiveBufferLenght + size
     end
 
     --解析数据
-    while networkManager.recvbuffer ~= nil and networkManager.recvbufferLength > 0 do
-        local msg, length = proto.parse(networkManager.recvbuffer)
+    while receiveBuffer ~= nil and receiveBufferLenght > 0 do
+        local msg, length = proto.parse(receiveBuffer)
         if length == 0 or msg == nil then 
             break 
         end
 
         --剔除已解析过的数据
-        networkManager.recvbuffer = cvt.TrimBytes(networkManager.recvbuffer, length)
-        networkManager.recvbufferLength = networkManager.recvbufferLength - length
+        receiveBuffer = cvt.TrimBytes(receiveBuffer, length)
+        receiveBufferLenght = receiveBufferLenght - length
         --触发回调
         table.insert(networkManager.messageQueue, msg)
     end
@@ -246,7 +251,7 @@ end
 -------------------------------------------------------------------
 function networkManager.author(host, port, connectedCallback, connecttimeoutCallback, disconnectedCallback)
     networkManager.authored = false
-    networkManager.recvbufferLength = 0
+    receiveBufferLenght = 0
     local timeout = networkConfig.tcpTimeout * 1000 -- 转为毫秒
     tcp:connect(host, port, timeout, function()
         tcp:registerReceivedCallback(receive)
@@ -286,7 +291,7 @@ end
 -------------------------------------------------------------------
 function networkManager.disconnect()
     networkManager.stopUpdateHandler()
-    networkManager.recvbufferLength = 0
+    receiveBufferLenght = 0
     tcp:disconnect()
 end
 

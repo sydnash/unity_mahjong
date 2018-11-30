@@ -14,6 +14,7 @@ local cvt  = Utils
 local INT_BYTES_COUNT = 4
 local CHECKSUM_LENGTH = 32
 
+local sendBuffer = cvt.NewEmptyByteArray(1 * 1024)
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
@@ -38,7 +39,8 @@ function proto.build(command, token, acid, session, payload)
     local bytes = cvt.Int32ToBytes(encrypt.Length + INT_BYTES_COUNT)
     local length = bytes.Length + encrypt.Length
 
-    return cvt.ConcatBytes(bytes, bytes.Length, encrypt, encrypt.Length), length
+    sendBuffer = cvt.ConcatBytes(sendBuffer, bytes, bytes.Length, encrypt, encrypt.Length)
+    return sendBuffer, length
 end
 
 -------------------------------------------------------------------

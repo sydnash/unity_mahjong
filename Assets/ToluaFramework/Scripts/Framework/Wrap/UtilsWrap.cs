@@ -196,12 +196,13 @@ public class UtilsWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 4);
+			ToLua.CheckArgsCount(L, 5);
 			byte[] arg0 = ToLua.CheckByteBuffer(L, 1);
-			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
-			byte[] arg2 = ToLua.CheckByteBuffer(L, 3);
-			int arg3 = (int)LuaDLL.luaL_checknumber(L, 4);
-			byte[] o = Utils.ConcatBytes(arg0, arg1, arg2, arg3);
+			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 3);
+			byte[] arg3 = ToLua.CheckByteBuffer(L, 4);
+			int arg4 = (int)LuaDLL.luaL_checknumber(L, 5);
+			byte[] o = Utils.ConcatBytes(arg0, arg1, arg2, arg3, arg4);
 			ToLua.Push(L, o);
 			return 1;
 		}
