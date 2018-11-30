@@ -2037,7 +2037,7 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
                             h:setShadowMode(mahjong.shadowMode.noshadow)
                         else
                             if self.game.mode == gameMode.playback then
-                                m:setShadowMode(mahjong.shadowMode.yang)
+                                h:setShadowMode(mahjong.shadowMode.yang)
                             else
                                 h:setShadowMode(mahjong.shadowMode.li)
                             end
