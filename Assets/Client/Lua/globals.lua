@@ -132,14 +132,14 @@ function downloadIcon(url, callback)
     local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "wxicons", hash .. ".jpg")
 
     --先本地查找，没找到再从网上下载
-    http.getTexture2D("file:///" .. path, function(ok, tex, bytes)
-        if ok and tex ~= nil then
+    http.getTexture2D("file:///" .. path, function(tex, bytes)
+        if tex ~= nil then
             if callback ~= nil then
                 callback(tex)
             end
         else
-            http.getTexture2D(url, function(ok, tex, bytes)
-                if ok and tex ~= nil then
+            http.getTexture2D(url, function(tex, bytes)
+                if tex ~= nil then
                     LFS.WriteBytes(path, bytes)
 
                     if callback ~= nil then
