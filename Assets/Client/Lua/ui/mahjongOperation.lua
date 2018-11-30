@@ -1671,16 +1671,18 @@ end
 -- 重置
 -------------------------------------------------------------------------------
 function mahjongOperation:clear(forceDestroy)
---    log("clear, forceDestroy = " .. tostring(forceDestroy))
+    log("clear start, idle count = " .. tostring(#self.idleMahjongs))
+    
     self.lastPengPos = nil
-
+    local set = {}
+    
     local function destroy(m)
-        if m ~= nil then
+        if m ~= nil and set[m.id] == nil then
+            set[m.id] = true
             m:destroy()
         end
     end
 
-    local set = {}
     local function insert(m)
         if m ~= nil then
             if set[m.id] == nil then
@@ -1757,7 +1759,7 @@ function mahjongOperation:clear(forceDestroy)
     self.selectedMahjong = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
---    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
+    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
 end
 
 -------------------------------------------------------------------------------
