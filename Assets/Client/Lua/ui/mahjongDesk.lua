@@ -448,8 +448,10 @@ function mahjongDesk:onChatMessageHandler(msg)
     local player = self.players[seat]
 
     if msg.Type == chatType.text then
-        local content = chatConfig.text[msg.Data].content
-        local audio = chatConfig.text[msg.Data].audio
+        local k = tonumber(msg.Data)
+
+        local content = chatConfig.text[k].content
+        local audio = chatConfig.text[k].audio
 
         player:showChatText(content)
 

@@ -15,6 +15,10 @@ local ret = {
         testServer      = true,
         releaseServer   = false,
     },
+    errorEmail = {
+        from = "",
+        to = "",
+    }
 }
 
 --ret.serverList              = nil

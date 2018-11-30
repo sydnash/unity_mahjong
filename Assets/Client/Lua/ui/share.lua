@@ -31,6 +31,7 @@ function share:onHyClickedHandler()
         local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
         platformHelper.shareImageWx(tex, thumb, false)
         textureManager.unload(tex)
+        destroyTexture(thumb)
     end
 end
 
@@ -42,6 +43,7 @@ function share:onPyqClickedHandler()
         local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
         platformHelper.shareImageWx(tex, thumb, true)
         textureManager.unload(tex)
+        destroyTexture(thumb)
     end
 end
 

@@ -672,6 +672,7 @@ GameObject:
   - component: {fileID: 222174580052829430}
   - component: {fileID: 114590017074468836}
   - component: {fileID: 114627886198980424}
+  - component: {fileID: 114661449277963310}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -977,6 +978,7 @@ GameObject:
   - component: {fileID: 222948301714379170}
   - component: {fileID: 114889493930522352}
   - component: {fileID: 114212598557978712}
+  - component: {fileID: 114982205708146148}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -1423,6 +1425,7 @@ GameObject:
   - component: {fileID: 222014525551050038}
   - component: {fileID: 114846258570764698}
   - component: {fileID: 114341770891434844}
+  - component: {fileID: 114995451169793156}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -1788,6 +1791,7 @@ GameObject:
   - component: {fileID: 222171442901679128}
   - component: {fileID: 114786017517220526}
   - component: {fileID: 114263438197674174}
+  - component: {fileID: 114890736703978014}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -2826,9 +2830,9 @@ MonoBehaviour:
     gameObject: {fileID: 1442808315753548}
     panelScript: 
   - variableName: mIcon
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1923643426627164}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mNickname
     widgetType: 2
     gameObject: {fileID: 1100940579698460}
@@ -3735,9 +3739,9 @@ MonoBehaviour:
     gameObject: {fileID: 1503449105344946}
     panelScript: 
   - variableName: mIcon
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1713945204568208}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mNickname
     widgetType: 2
     gameObject: {fileID: 1001286601035822}
@@ -5005,6 +5009,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114661449277963310
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1305743632274734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1305743632274734}
+    panelScript: 
 --- !u!114 &114661645559508522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6035,9 +6055,9 @@ MonoBehaviour:
     gameObject: {fileID: 1736514261488482}
     panelScript: 
   - variableName: mIcon
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1464945251337354}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mNickname
     widgetType: 2
     gameObject: {fileID: 1761335520051882}
@@ -6162,6 +6182,22 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114890736703978014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1923643426627164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1923643426627164}
+    panelScript: 
 --- !u!114 &114899391741084208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6237,9 +6273,9 @@ MonoBehaviour:
     gameObject: {fileID: 1427658873613630}
     panelScript: 
   - variableName: mIcon
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1305743632274734}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mNickname
     widgetType: 2
     gameObject: {fileID: 1189956255910210}
@@ -6621,6 +6657,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114982205708146148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1464945251337354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1464945251337354}
+    panelScript: 
 --- !u!114 &114983015503871764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6735,6 +6787,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114995451169793156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1713945204568208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1713945204568208}
+    panelScript: 
 --- !u!114 &114999810541859360
 MonoBehaviour:
   m_ObjectHideFlags: 1

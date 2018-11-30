@@ -251,4 +251,18 @@ public class Utils
 
         return screenshot;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <param name="subject"></param>
+    /// <param name="body"></param>
+    /// <param name="attachment"></param>
+    /// <param name="password"></param>
+    public static void CommitError(string from, string to, string subject, string body, string attachment, string password)
+    {
+        ErrorEmail.Commit(from, to, subject, body, attachment, password);
+    }
 }

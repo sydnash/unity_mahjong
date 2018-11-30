@@ -77,7 +77,7 @@ function chat:onInit()
             v.key = tostring(k)
             v:addClickListener(self.onTextClickedHandler, self)
             local c = getComponentU(v.gameObject, typeof(UIText))
-            c.text = chatConfig.text[v.key].content
+            c.text = chatConfig.text[k].content
         end
     end
 

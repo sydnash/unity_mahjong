@@ -115,6 +115,7 @@ function gameEnd:onShareWXClickedHandler()
         if tex ~= nil then
             local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
             platformHelper.shareImageWx(tex, thumb, false)
+            destroyTexture(thumb)
         end
     end
 end
@@ -129,6 +130,7 @@ function gameEnd:onShareQYQClickedHandler()
         if tex ~= nil then
             local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
             platformHelper.shareImageWx(tex, thumb, true)
+            destroyTexture(thumb)
         end
     end
 end
