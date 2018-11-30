@@ -28,7 +28,7 @@ function mahjongDeskHeader:setPlayerInfo(player)
         self.mU:hide()
         self.mP:show()
 
-        self.mIcon:setTexture(player.headerTex)
+        self.mIcon:setPlayer(player)
 
         self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
         self.mScore:setText(string.format("分数:%d", player.score or 0))
@@ -179,7 +179,7 @@ function mahjongDeskHeader:reset()
 end
 
 function mahjongDeskHeader:onDestroy()
-    self.mIcon:setTexture(nil)
+    self.mIcon:reset()
     self.super.onDestroy(self)
 end
 

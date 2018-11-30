@@ -460,4 +460,24 @@ function closeAllUI()
     signalManager.signal(signalType.closeAllUI)
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function commitError(subject, body, attachment)
+    local from = gameConfig.errorEmail.from
+    local to   = gameConfig.errorEmail.to
+    local psw  = ""
+
+    Utils.CommitError(from, to, subject, body, attachment, psw)
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function destroyTexture(tex)
+    if tex ~= nil then
+        GameObject.DestroyImmediate(tex, true)
+    end
+end
+
 --endregion
