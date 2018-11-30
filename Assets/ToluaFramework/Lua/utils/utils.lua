@@ -385,7 +385,7 @@ end
 -------------------------------------------------------------------
 function unregisterUpdateListener(handler)
     if handler ~= nil then
-        UpdateBeat:RemoveListener(handler)
+        UpdateBeat:RemoveListener(handler, true)
     end
 end
 
