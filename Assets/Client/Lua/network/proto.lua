@@ -46,11 +46,11 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function proto.parse(bytes)
+function proto.parse(bytes, bufferLen)
     if bytes.Length >= INT_BYTES_COUNT then            
         local length = cvt.BytesToInt32(bytes, 0)
     
-        if length <= bytes.Length then
+        if length <= bufferLen then
             local decrypt = nil
 
             if networkConfig.encrypt then

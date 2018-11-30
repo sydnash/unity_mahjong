@@ -139,7 +139,7 @@ local function receive(bytes, size)
 
     --解析数据
     while receiveBuffer ~= nil and receiveBufferLenght > 0 do
-        local msg, length = proto.parse(receiveBuffer)
+        local msg, length = proto.parse(receiveBuffer, receiveBufferLenght)
         if length == 0 or msg == nil then 
             break 
         end
