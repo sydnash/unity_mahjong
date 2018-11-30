@@ -836,6 +836,17 @@ function mahjongGame:onExitDeskHandler(msg)
                           function()
                             self:exitGame()
                           end)
+        elseif msg.Reason == exitReason.playerExit then
+        elseif msg.Reason == exitReason.creatorExit or msg.Reason == exitReason.deskDestroy then
+            showMessageUI("桌子已经解散",
+                          function()
+                            self:exitGame()
+                          end)
+        elseif msg.Reason == exitReason.gameClosed then
+            showMessageUI("服务器正在进行维护",
+                          function()
+                            self:exitGame()
+                          end)
         else
             if self.gameEndUI ~= nil then
                 self.gameEndUI:endAll()
