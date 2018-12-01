@@ -15,30 +15,16 @@ patchManager.PATCHLIST_FILE_NAME = "patchlist.txt"
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
-local function downloadAnyFile(urls, callback)
-    local function onDownloaded(text)
-        callback(text)
+local function downloadOfflineVersionFile()
+    local filename = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH,  LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME)
+    local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
 
-        if #urls > 0 then
-            http.getFile(urls[1], 20 * 1000, onDownloaded)
-            table.remove(urls, 1)
-        end
+    if string.isNilOrEmpty(text) then
+        filename = LFS.CombinePath(patchManager.PATCHLIST_FILE_NAME)
+        text = LFS.ReadTextFromResources(filename)
     end
 
-    http.getFile(urls[1], 20 * 1000, onDownloaded)
-    table.remove(urls, 1)
-end
-
--------------------------------------------------------------------
--- 
--------------------------------------------------------------------
-local function downloadOfflineVersionFile(callback)
-    local urls = {
-        LFS.CombinePath("file:///" .. LFS.DOWNLOAD_DATA_PATH,  LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME),
-        LFS.CombinePath("file:///" .. LFS.LOCALIZED_DATA_PATH, patchManager.PATCHLIST_FILE_NAME),
-    }
-
-    downloadAnyFile(urls, callback)
+    return text
 end
 
 -------------------------------------------------------------------
@@ -75,25 +61,23 @@ end
 -- 
 -------------------------------------------------------------------
 function patchManager.checkPatches(callback)
-    downloadOfflineVersionFile(function(ofvt)
-        local offlineVersionText = ofvt
+    local offlineVersionText = downloadOfflineVersionFile()
+
+    if string.isNilOrEmpty(offlineVersionText) then
+        callback(nil, nil)
+        return
+    end
+
+    downloadOnlineVersionFile(function(onvt)
+        local onlineVersionText = onvt
 
         if string.isNilOrEmpty(offlineVersionText) then
-            callback(false, nil)
+            callback(nil, nil)
             return
         end
 
-        downloadOnlineVersionFile(function(onvt)
-            local onlineVersionText = onvt
-
-            if string.isNilOrEmpty(offlineVersionText) then
-                callback(false, nil)
-                return
-            end
-
-            local plist = filterPatchList(offlineVersionText, onlineVersionText)
-            callback(true, plist, onlineVersionText)
-        end)
+        local plist = filterPatchList(offlineVersionText, onlineVersionText)
+        callback(plist, onlineVersionText)
     end)
 end
 

@@ -88,6 +88,16 @@ public static class LFS
     /// <summary>
     /// 
     /// </summary>
+    /// <returns></returns>
+    public static string ReadTextFromResources(string filename)
+    {
+        TextAsset asset = Resources.Load<TextAsset>(filename);
+        return (asset == null) ? null : asset.text;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="filename"></param>
     /// <param name="content"></param>
     public static void WriteBytes(string filename, byte[] content)

@@ -164,17 +164,17 @@ end
 --
 ----------------------------------------------------------------
 local function checkPatches(downloadui)
-    showWaitingUI()
+    showWaitingUI("正在检测可更新资源，请稍候")
 
-    patchManager.checkPatches(function(ok, plist, plistText)
+    patchManager.checkPatches(function(plist, plistText)
         closeWaitingUI()
 
-        if not ok then
+        if plist == nil or plistText == nil then
             showMessageUI("更新检测失败")
             return
         end
 
-        if plist == nil or #plist == 0 then
+        if #plist == 0 then--未检测到更新
             local login = require("ui.login").new()
             login:show()
 
@@ -200,7 +200,7 @@ end
 --
 ----------------------------------------------------------------
 local function patch()
-    if deviceConfig.isMobile and gameConfig.patchEnabled then
+    if gameConfig.patchEnabled then
         local loading = require("ui.loading").new()
         loading:show()
 

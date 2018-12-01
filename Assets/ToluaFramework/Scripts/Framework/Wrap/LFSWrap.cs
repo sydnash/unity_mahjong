@@ -10,6 +10,7 @@ public class LFSWrap
 		L.RegFunction("CombinePath", CombinePath);
 		L.RegFunction("WriteText", WriteText);
 		L.RegFunction("ReadText", ReadText);
+		L.RegFunction("ReadTextFromResources", ReadTextFromResources);
 		L.RegFunction("WriteBytes", WriteBytes);
 		L.RegFunction("ReadBytes", ReadBytes);
 		L.RegFunction("MoveFile", MoveFile);
@@ -89,6 +90,23 @@ public class LFSWrap
 			string arg0 = ToLua.CheckString(L, 1);
 			System.Text.Encoding arg1 = (System.Text.Encoding)ToLua.CheckObject<System.Text.Encoding>(L, 2);
 			string o = LFS.ReadText(arg0, arg1);
+			LuaDLL.lua_pushstring(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ReadTextFromResources(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			string o = LFS.ReadTextFromResources(arg0);
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}

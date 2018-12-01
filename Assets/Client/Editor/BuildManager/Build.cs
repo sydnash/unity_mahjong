@@ -49,6 +49,8 @@ public class Build
         AssetBundleBrowser.AssetBundleBrowserMain.ExecuteBuild(buildTarget, targetDir);
     }
 
+    private const string PATCHLIST_FILE_NAME = "patchlist.txt";
+
     /// <summary>
     /// 
     /// </summary>
@@ -96,7 +98,7 @@ public class Build
         sb.Append("}");
 
         string text = sb.ToString();
-        LFS.WriteText(LFS.CombinePath(Application.streamingAssetsPath, "patchlist.txt"), text, LFS.UTF8_WITHOUT_BOM);
+        LFS.WriteText(LFS.CombinePath(Application.streamingAssetsPath, PATCHLIST_FILE_NAME), text, LFS.UTF8_WITHOUT_BOM);
     }
 
     /// <summary>
@@ -106,8 +108,8 @@ public class Build
     {
         string patchDir = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, "Patch");
 
-        string from = LFS.CombinePath(patchDir, "patchlist.txt");
-        string to = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "patchlist.txt");
+        string from = LFS.CombinePath(patchDir, PATCHLIST_FILE_NAME);
+        string to = LFS.CombinePath(Application.dataPath, "Resources", PATCHLIST_FILE_NAME);
 
         LFS.CopyFile(from, to);
         EditorUtility.DisplayDialog("Build", "Copy Patchlist to StreamingAssets over", "OK");
@@ -118,8 +120,12 @@ public class Build
     /// </summary>
     public static void PrepareRes()
     {
-        LFS.MoveDir(LFS.CombinePath(Application.dataPath, "Client/Resources"), 
-                    LFS.CombinePath(Application.dataPath, "Client/_Resources"));
+        string from = LFS.CombinePath(Application.dataPath, "Client/Resources");
+        string to = LFS.CombinePath(Application.dataPath, "Client/_Resources");
+        
+        LFS.MoveDir(from, to);
+        LFS.MoveFile(LFS.CombinePath(to, PATCHLIST_FILE_NAME), LFS.CombinePath(from, PATCHLIST_FILE_NAME));
+
         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
     }
 
