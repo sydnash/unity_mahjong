@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 66a23ebce37460543a09bedfc15f9610
-timeCreated: 1535724004
+timeCreated: 1543669624
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -41,6 +41,7 @@ TextureImporter:
     21300068: DL_di01
     21300070: DL_di02
     21300072: mask
+    21300074: gy_lw
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -137,7 +138,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 157
+        y: 87
         width: 68
         height: 68
       alignment: 0
@@ -150,8 +151,8 @@ TextureImporter:
       name: bird01
       rect:
         serializedVersion: 2
-        x: 280
-        y: 107
+        x: 218
+        y: 167
         width: 67
         height: 66
       alignment: 0
@@ -164,8 +165,8 @@ TextureImporter:
       name: bird02
       rect:
         serializedVersion: 2
-        x: 279
-        y: 35
+        x: 213
+        y: 304
         width: 67
         height: 67
       alignment: 0
@@ -179,7 +180,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 87
+        y: 17
         width: 68
         height: 68
       alignment: 0
@@ -192,8 +193,8 @@ TextureImporter:
       name: bird04
       rect:
         serializedVersion: 2
-        x: 141
-        y: 17
+        x: 144
+        y: 373
         width: 67
         height: 68
       alignment: 0
@@ -206,8 +207,8 @@ TextureImporter:
       name: bird05
       rect:
         serializedVersion: 2
-        x: 210
-        y: 17
+        x: 144
+        y: 303
         width: 67
         height: 68
       alignment: 0
@@ -220,8 +221,8 @@ TextureImporter:
       name: bird06
       rect:
         serializedVersion: 2
-        x: 346
-        y: 249
+        x: 277
+        y: 236
         width: 67
         height: 66
       alignment: 0
@@ -235,7 +236,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 280
-        y: 175
+        y: 375
         width: 67
         height: 67
       alignment: 0
@@ -248,8 +249,8 @@ TextureImporter:
       name: bird08
       rect:
         serializedVersion: 2
-        x: 1
-        y: 17
+        x: 71
+        y: 87
         width: 68
         height: 68
       alignment: 0
@@ -262,8 +263,8 @@ TextureImporter:
       name: bird09
       rect:
         serializedVersion: 2
-        x: 144
-        y: 443
+        x: 213
+        y: 373
         width: 65
         height: 68
       alignment: 0
@@ -276,7 +277,7 @@ TextureImporter:
       name: bird10
       rect:
         serializedVersion: 2
-        x: 278
+        x: 349
         y: 378
         width: 61
         height: 64
@@ -290,8 +291,8 @@ TextureImporter:
       name: bird11
       rect:
         serializedVersion: 2
-        x: 341
-        y: 384
+        x: 350
+        y: 255
         width: 55
         height: 58
       alignment: 0
@@ -304,8 +305,8 @@ TextureImporter:
       name: bird12
       rect:
         serializedVersion: 2
-        x: 396
-        y: 326
+        x: 410
+        y: 267
         width: 57
         height: 56
       alignment: 0
@@ -318,8 +319,8 @@ TextureImporter:
       name: bird13
       rect:
         serializedVersion: 2
-        x: 209
-        y: 314
+        x: 418
+        y: 386
         width: 63
         height: 61
       alignment: 0
@@ -332,8 +333,8 @@ TextureImporter:
       name: bird14
       rect:
         serializedVersion: 2
-        x: 211
-        y: 446
+        x: 282
+        y: 308
         width: 66
         height: 65
       alignment: 0
@@ -346,7 +347,7 @@ TextureImporter:
       name: bird15
       rect:
         serializedVersion: 2
-        x: 71
+        x: 79
         y: 157
         width: 68
         height: 68
@@ -361,7 +362,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 71
-        y: 87
+        y: 17
         width: 68
         height: 68
       alignment: 0
@@ -374,8 +375,8 @@ TextureImporter:
       name: bird17
       rect:
         serializedVersion: 2
-        x: 71
-        y: 17
+        x: 141
+        y: 87
         width: 68
         height: 68
       alignment: 0
@@ -389,7 +390,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 141
-        y: 157
+        y: 17
         width: 68
         height: 68
       alignment: 0
@@ -402,8 +403,8 @@ TextureImporter:
       name: bird19
       rect:
         serializedVersion: 2
-        x: 141
-        y: 87
+        x: 144
+        y: 443
         width: 68
         height: 68
       alignment: 0
@@ -417,7 +418,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 144
-        y: 244
+        y: 233
         width: 67
         height: 68
       alignment: 0
@@ -430,8 +431,8 @@ TextureImporter:
       name: bird21
       rect:
         serializedVersion: 2
-        x: 211
-        y: 174
+        x: 149
+        y: 163
         width: 67
         height: 68
       alignment: 0
@@ -444,8 +445,8 @@ TextureImporter:
       name: bird22
       rect:
         serializedVersion: 2
-        x: 213
-        y: 244
+        x: 211
+        y: 93
         width: 67
         height: 68
       alignment: 0
@@ -458,7 +459,7 @@ TextureImporter:
       name: bird23
       rect:
         serializedVersion: 2
-        x: 279
+        x: 214
         y: 444
         width: 68
         height: 67
@@ -472,8 +473,8 @@ TextureImporter:
       name: bird24
       rect:
         serializedVersion: 2
-        x: 144
-        y: 378
+        x: 351
+        y: 448
         width: 65
         height: 63
       alignment: 0
@@ -486,8 +487,8 @@ TextureImporter:
       name: bird25
       rect:
         serializedVersion: 2
-        x: 334
-        y: 317
+        x: 412
+        y: 325
         width: 60
         height: 59
       alignment: 0
@@ -500,8 +501,8 @@ TextureImporter:
       name: bird26
       rect:
         serializedVersion: 2
-        x: 455
-        y: 456
+        x: 407
+        y: 210
         width: 55
         height: 55
       alignment: 0
@@ -514,8 +515,8 @@ TextureImporter:
       name: bird27
       rect:
         serializedVersion: 2
-        x: 274
-        y: 314
+        x: 350
+        y: 315
         width: 58
         height: 61
       alignment: 0
@@ -528,8 +529,8 @@ TextureImporter:
       name: bird28
       rect:
         serializedVersion: 2
-        x: 282
-        y: 245
+        x: 213
+        y: 235
         width: 62
         height: 67
       alignment: 0
@@ -543,7 +544,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 211
-        y: 104
+        y: 23
         width: 67
         height: 68
       alignment: 0
@@ -556,8 +557,8 @@ TextureImporter:
       name: DL_di01
       rect:
         serializedVersion: 2
-        x: 144
-        y: 314
+        x: 418
+        y: 449
         width: 63
         height: 62
       alignment: 0
@@ -570,13 +571,13 @@ TextureImporter:
       name: DL_di02
       rect:
         serializedVersion: 2
-        x: 398
-        y: 470
+        x: 464
+        y: 224
         width: 44
         height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 10, y: 9, z: 8, w: 12}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -609,11 +610,25 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
+      name: gy_lw
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 157
+        width: 76
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 24, y: 25, z: 23, w: 25}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: mask
       rect:
         serializedVersion: 2
-        x: 211
-        y: 377
+        x: 284
+        y: 444
         width: 65
         height: 67
       alignment: 0

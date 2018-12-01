@@ -118,14 +118,14 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-local function downloadPatches(patchlist, size, versText, plistText, loading)
-    log("downloadPatches")
+local function downloadPatches(url, patchlist, size, versText, plistText, loading)
+    log("downloadPatches, url = " .. url)
     local totalCount        = #patchlist
     local successfulCount   = 0
 
     local function downloadC(files, callback)
         local failedList = {}
-        patchManager.downloadPatches(files, function(url, name, bytes)
+        patchManager.downloadPatches(url, files, function(url, name, bytes)
             if bytes == nil then
                 table.insert(failedList, { name = name })
             else
@@ -175,16 +175,15 @@ end
 --
 ----------------------------------------------------------------
 local function checkPatches()
-    log("checkPatches")
     local loading = require("ui.loading").new()
     loading:show()
 
     showWaitingUI("正在检测可更新资源，请稍候")
 
-    patchManager.checkPatches(function(plist, versText, plistText)
+    patchManager.checkPatches(function(plist, versText, plistText, url)
         closeWaitingUI()
 
-        if plist == nil or versText == nil or plistText == nil then
+        if plist == nil then
             showMessageUI("更新检测失败")
             return
         end
@@ -204,7 +203,7 @@ local function checkPatches()
 
             showMessageUI("检测到" .. BKMGT(size) .."新资源，是否立即下载更新？",
                           function()
-                              downloadPatches(plist, size, versText, plistText, loading)
+                              downloadPatches(url, plist, size, versText, plistText, loading)
                           end,
                           function()
                               Application.Quit()

@@ -102,6 +102,7 @@ function patchManager.checkPatches(callback)
         local onlineVersion = loadstring(onlineVersionText)()
 
         if onlineVersion.num <= offlineVersion.num then
+            callback({}, true, true)
             return
         end
         log("patchManager.checkPatches  4")
@@ -112,11 +113,11 @@ function patchManager.checkPatches(callback)
             return
         end
         log("patchManager.checkPatches  5, url = " .. onlineVersion.url)
-        downloadOnlinePatchlistFile(onlineVersion.url, function(onpt)
+        downloadOnlinePatchlistFile(networkConfig.patchURL, function(onpt)
             local onlinePatchlistText = onpt
 
             local plist = filterPatchList(offlinePatchlistText, onlinePatchlistText)
-            callback(plist, onlineVersionText, onlinePatchlistText)
+            callback(plist, onlineVersionText, onlinePatchlistText, onlineVersion.url)
         end)
     end)
 end
@@ -124,17 +125,13 @@ end
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
-function patchManager.downloadPatches(files, callback)
+function patchManager.downloadPatches(url, files, callback)
     for _, v in pairs(files) do
-        local url = networkConfig.patchURL .. files[1]
+        local www = url .. v.name
 
-        http.getBytes(url, networkConfig.patchTimeout * 1000, function(bytes)
+        http.getBytes(www, networkConfig.patchTimeout * 1000, function(bytes)
             if callback ~= nil then
-                callback(url, v.name, bytes)
-            end
-            
-            if #files > 0 then
-                download(files)
+                callback(www, v.name, bytes)
             end
         end)
     end
