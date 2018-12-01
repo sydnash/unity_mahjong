@@ -212,12 +212,14 @@ function mahjongOperation:onInit()
     self.mHnzNotify:hide()
     self:hideOperations()
 
-    self.idleMahjongs   = {}
-    self.inhandMahjongs = {}
-    self.chuMahjongs    = {}
-    self.pengMahjongs   = {}
-    self.huMahjongs     = {}
-    self.hnzMahjongs    = {}
+    self.mahjongs           = {}
+    self.idleMahjongs       = {}
+    self.inhandMahjongs     = {}
+    self.chuMahjongs        = {}
+    self.pengMahjongs       = {}
+    self.huMahjongs         = {}
+    self.hnzMahjongs        = {}
+    self.redundancyMahjongs = {}
 
     self:loadMahjongs()
 
@@ -246,6 +248,7 @@ function mahjongOperation:loadMahjongs()
         m:setParent(self.mahjongsRoot)
 
         table.insert(self.idleMahjongs, m)
+        table.insert(self.mahjongs, m)
     end
 end
 
@@ -342,7 +345,7 @@ function mahjongOperation:onGameSync()
                 else
                     --如一炮双响的时候，会出现无法从idle列表中搜索到牌的情况
                     --此时，就直接创建一个新的麻将对象
-                    m = mahjong.new(mid)
+                    m = self:createRedundancyMahjong(mid)
                 end
 
                 local s = self.game:getSeatTypeByAcId(v.acId)
@@ -1236,7 +1239,7 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
         if hu == nil then
             --如一炮双响的时候，会出现无法从idle列表中搜索到牌的情况
             --此时，就直接创建一个新的麻将对象
-            hu = mahjong.new(beCard)
+            hu = self:createRedundancyMahjong(beCard)
         end
 
         if self.chupaiPtr.mahjongId == beCard then
@@ -1691,81 +1694,24 @@ function mahjongOperation:darkPlanes()
 end
 
 -------------------------------------------------------------------------------
+-- 创建冗余麻将牌对象
+-------------------------------------------------------------------------------
+function mahjongOperation:createRedundancyMahjong(mahjongId)
+    local m = mahjong.new(mahjongId)
+    table.insert(self.redundancyMahjongs, m)
+
+    return m
+end 
+
+-------------------------------------------------------------------------------
 -- 重置
 -------------------------------------------------------------------------------
 function mahjongOperation:clear(forceDestroy)
     log("clear start, idle count = " .. tostring(#self.idleMahjongs))
-    
-    self.lastPengPos = nil
-    local set = {}
-    
-    local function destroy(m)
-        if m ~= nil and set[m.id] == nil then
-            set[m.id] = true
-            m:destroy()
-        end
-    end
 
-    local function insert(m)
-        if m ~= nil then
-            if set[m.id] == nil then
-                m:reset()
-                m:hide()
-                set[m.id] = m
-            else
-                m:destroy()
-            end
-        end
-    end
-
-    local func = forceDestroy and destroy or insert
-
-    for _, m in pairs(self.idleMahjongs) do
-        func(m)
-    end
     self.idleMahjongs = {}
 
-    if self.mo ~= nil then
-        func(self.mo)
-        self.mo = nil
-    end
-
     for _, p in pairs(self.game.players) do
-        local inhand = self.inhandMahjongs[p.acId]
-        if inhand ~= nil then
-            for _, v in pairs(inhand) do
-                func(v)
-            end
-        end
-
-        local peng = self.pengMahjongs[p.acId]
-        if peng ~= nil then
-            for _, u in pairs(peng) do
-                for _, v in pairs(u) do
-                    func(v)
-                end
-            end
-        end
-
-        local chu = self.chuMahjongs[p.acId]
-        if chu ~= nil then
-            for _, v in pairs(chu) do
-                func(v)
-            end
-        end
-
-        local hu = self.huMahjongs[p.acId]
-        if hu ~= nil then
-            func(hu)
-        end
-
-        local huan = self.hnzMahjongs[p.acId]
-        if huan ~= nil then
-            for _, v in pairs(huan) do
-                func(v)
-            end
-        end
-
         self.inhandMahjongs[p.acId] = nil
         self.chuMahjongs[p.acId]    = nil
         self.pengMahjongs[p.acId]   = nil
@@ -1773,15 +1719,23 @@ function mahjongOperation:clear(forceDestroy)
         self.hnzMahjongs[p.acId]    = nil
     end
 
-    if not forceDestroy then
-        for _, v in pairs(set) do
-            table.insert(self.idleMahjongs, v)
+    if forceDestroy then
+        for _, m in pairs(self.mahjongs) do
+            m:destroy()
+        end
+        self.mahjongs = {}
+    else
+        for _, m in pairs(self.mahjongs) do
+            table.insert(self.idleMahjongs, m)
         end
     end
 
+    self.mo = nil
+    self.lastPengPos = nil
     self.selectedMahjong = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
+
     log("clear over, idle count = " .. tostring(#self.idleMahjongs))
 end
 
