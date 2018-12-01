@@ -2893,6 +2893,10 @@ MonoBehaviour:
     widgetType: 0
     gameObject: {fileID: 1900098174581314}
     panelScript: 
+  - variableName: mIconClick
+    widgetType: 5
+    gameObject: {fileID: 1923643426627164}
+    panelScript: 
 --- !u!114 &114199721328960644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3801,6 +3805,10 @@ MonoBehaviour:
   - variableName: mOffline
     widgetType: 0
     gameObject: {fileID: 1884095227402080}
+    panelScript: 
+  - variableName: mIconClick
+    widgetType: 5
+    gameObject: {fileID: 1713945204568208}
     panelScript: 
 --- !u!114 &114469657293197916
 MonoBehaviour:
@@ -6114,6 +6122,10 @@ MonoBehaviour:
     widgetType: 0
     gameObject: {fileID: 1933174231311432}
     panelScript: 
+  - variableName: mIconClick
+    widgetType: 5
+    gameObject: {fileID: 1464945251337354}
+    panelScript: 
 --- !u!114 &114889208861955868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6335,6 +6347,10 @@ MonoBehaviour:
   - variableName: mOffline
     widgetType: 0
     gameObject: {fileID: 1605065469952494}
+    panelScript: 
+  - variableName: mIconClick
+    widgetType: 5
+    gameObject: {fileID: 1305743632274734}
     panelScript: 
 --- !u!114 &114940663026749494
 MonoBehaviour:

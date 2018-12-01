@@ -100,6 +100,7 @@ function mahjongGame:startLoop()
         self.operationUI = require("ui.mahjongOperation").new(self)
     end
     self.operationUI:show()
+
     self.deskUI:reset()
     self.operationUI:reset()
 
@@ -109,13 +110,10 @@ function mahjongGame:startLoop()
     end
     
     if self.mode == gameMode.normal then
-        log("mahjongGame.startLoop  1")
         if self.data.Reenter ~= nil then
-            log("mahjongGame.startLoop  2")
             self.deskUI:onGameSync()
             self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
             self.operationUI:onGameSync()
-            log("mahjongGame.startLoop  3")
         else
             local player = self:getPlayerByAcId(self.mainAcId)
             self.deskUI:setReady(player.acId, player.ready)

@@ -82,6 +82,22 @@ function playButtonClickSound()
     soundManager.playUI(string.empty, "click")
 end
 
+local chatConfig = require("config.chatConfig")
+
+-------------------------------------------------------------
+-- 播放聊天的音效
+-------------------------------------------------------------
+function playChatTextSound(key, sex)
+    local folder = (sex == sexType.boy) and "chat/text/boy" or "chat/text/girl"
+    local prefix = gamepref.getLanguage()
+    if not string.isNilOrEmpty(prefix) then
+        prefix = prefix .. "_"
+    end
+    local resource = prefix .. chatConfig.text[key].audio
+
+    return soundManager.playGfx(folder, resource)
+end
+
 -------------------------------------------------------------
 -- 播放麻将的音效
 -------------------------------------------------------------

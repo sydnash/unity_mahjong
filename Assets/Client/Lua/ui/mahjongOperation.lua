@@ -67,10 +67,6 @@ local mopaiConfig = {
 
 local COUNTDOWN_SECONDS_C = 20
 
-local ROTATION_90_DEGREE  = Quaternion.Euler(0,  90, 0)
-local ROTATION_180_DEGREE = Quaternion.Euler(0, 180, 0)
-local ROTATION_270_DEGREE = Quaternion.Euler(0, -90, 0)
-
 -------------------------------------------------------------------------------
 -- 交换两个牌
 -------------------------------------------------------------------------------
@@ -385,7 +381,7 @@ function mahjongOperation:onGameSync()
             break
         end
     end
-
+    log("deskStatus.hsz = " .. tostring(deskStatus.hsz))
     if self.game.deskStatus == deskStatus.hsz then
         self:setDices()
         self:highlightPlaneByAcId(self.game.markerAcId)
@@ -1797,9 +1793,9 @@ function mahjongOperation:reset()
         touch.removeListener()
     end
 
-    self.diceRoot:show()
+    self.diceRoot:hide()
     self.centerGlass:show()
-    self.countdown:show()
+    self.countdown:hide()
 
     self:clear(false)
 

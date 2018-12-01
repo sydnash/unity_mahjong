@@ -455,20 +455,13 @@ function mahjongDesk:onChatMessageHandler(msg)
 
         header:showChatText(content)
 
-        if not string.isNilOrEmpty(audio) then
-            local player = self.game:getPlayerByAcId(msg.AcId)
-            local path = (player.sex == sexType.boy) and "chat/text/boy" or "chat/text/girl"
-            soundManager.playGfx(path, audio)
-        end
+        local player = self.game:getPlayerByAcId(msg.AcId)
+        playChatTextSound(k, player.sex)
     elseif msg.Type == chatType.emoji then
         local content = chatConfig.emoji[msg.Data].content
         local audio = chatConfig.emoji[msg.Data].audio
 
         header:showChatEmoji(content)
-
-        if not string.isNilOrEmpty(audio) then
-
-        end
     elseif msg.Type == chatType.voice then
         local fileid = msg.Data
         local filename = LFS.CombinePath(gvoiceManager.path, Hash.GetHash(fileid) .. ".gcv")
@@ -480,15 +473,11 @@ end
 
 function mahjongDesk:onChatTextSignalHandler(key)
     local content = chatConfig.text[key].content
-    local audio = chatConfig.text[key].audio
 
     local header = self.headers[mahjongGame.seatType.mine]
     header:showChatText(content)
 
-    if not string.isNilOrEmpty(audio) then
-        local path = (gamepref.player.sex == sexType.boy) and "chat/text/boy" or "chat/text/girl"
-        soundManager.playGfx(path, audio)
-    end
+    playChatTextSound(key, gamepref.player.sex)
 end
 
 function mahjongDesk:onChatEmojiSignalHandler(key)

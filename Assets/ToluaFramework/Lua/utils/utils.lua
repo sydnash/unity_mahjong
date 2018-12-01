@@ -193,6 +193,21 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function findButton(transform, name)
+    assert(transform ~= nil, "can't find a child for nil")
+
+    local child = transform:Find(name)
+    if child ~= nil then
+        local button = require("ui.common.button")
+        return button.new(child.gameObject)
+    end
+
+    return nil
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function findToggle(transform, name)
     assert(transform ~= nil, "can't find a child for nil")
 

@@ -21,6 +21,8 @@ function mahjongDeskHeader:onInit()
 end
 
 function mahjongDeskHeader:setPlayerInfo(player)
+    self.player = player
+
     if player == nil then
         self.mU:show()
         self.mP:hide()
@@ -63,7 +65,14 @@ function mahjongDeskHeader:setPlayerInfo(player)
         self.mEmoji:hide()
         self.mChat:hide()
         self.mVoice:hide()
+
+        self.mIconClick:addClickListener(self.onIconClickedHandler, self)
     end
+end
+
+function mahjongDeskHeader:onIconClickedHandler()
+    local ui = require("ui.playerinfo").new(self.player)
+    ui:show()
 end
 
 function mahjongDeskHeader:setMarker(marker)

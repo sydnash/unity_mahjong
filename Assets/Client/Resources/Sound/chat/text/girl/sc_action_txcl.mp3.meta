@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: e6646ffb72a3d8241b40609454a8a2b4
+timeCreated: 1543630379
+licenseType: Pro
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: sound/chat/text/girl/sc_action_txcl
+  assetBundleVariant: 
