@@ -109,16 +109,15 @@ function mahjongGame:startLoop()
     end
     
     if self.mode == gameMode.normal then
-        log("mahjongGame.startLoop  1")
         if self.data.Reenter ~= nil then
-            log("mahjongGame.startLoop  2")
             self.deskUI:onGameSync()
             self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
             self.operationUI:onGameSync()
-            log("mahjongGame.startLoop  3")
         else
-            local player = self:getPlayerByAcId(self.mainAcId)
-            self.deskUI:setReady(player.acId, player.ready)
+            for _, player in pairs(self.players) do
+                self.deskUI:setReady(player.acId, player.ready)
+                self.deskUI:setScore(player.acId, player.score)
+            end
         end
 
         self:syncExitVote(self.data)
@@ -945,6 +944,7 @@ function mahjongGame:onGameEndHandler(msg)
     
         for _, v in pairs(preData.TotalResuts) do
             totalScores[v.AcId] = v.Score
+            self.players[v.AcId].score = v.Score
         end
 
         local specialData = table.fromjson(special.SpecialData)
@@ -996,6 +996,7 @@ function mahjongGame:onGameEndHandler(msg)
 
         for _, v in pairs(self.players) do
             v.que = -1
+            self.deskUI:setScore(v.acId, v.score)
         end
         self.deskUI:reset()
         self.operationUI:reset()

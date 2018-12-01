@@ -31,7 +31,7 @@ function mahjongDeskHeader:setPlayerInfo(player)
         self.mIcon:setPlayer(player)
 
         self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
-        self.mScore:setText(string.format("分数:%d", player.score or 0))
+        self:setScore(player.score)
         self:setReady(player.ready)
 
         if player.que ~= nil and player.que >= 0 then
@@ -64,6 +64,10 @@ function mahjongDeskHeader:setPlayerInfo(player)
         self.mChat:hide()
         self.mVoice:hide()
     end
+end
+
+function mahjongDeskHeader:setScore(score)
+    self.mScore:setText(string.format("分数:%d", score or 0))
 end
 
 function mahjongDeskHeader:setMarker(marker)

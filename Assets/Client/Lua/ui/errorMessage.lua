@@ -12,7 +12,7 @@ function errorMessage:onInit()
 end
 
 function errorMessage:appendErrorMessage(message)
-    local text = string.format("%s\n-----------------------------\n%s", self.mText:getText(), message)
+    local text = string.format("%s\n-----------------------------\n%s", message, self.mText:getText())
     self.mText:setText(text)
 end
 
