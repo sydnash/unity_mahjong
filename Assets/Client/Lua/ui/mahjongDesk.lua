@@ -470,7 +470,7 @@ function mahjongDesk:onChatMessageHandler(msg)
         local fileid = msg.Data
         local filename = LFS.CombinePath(gvoiceManager.path, Hash.GetHash(fileid) .. ".gcv")
 
-        header.filename = filename
+        --header.filename = filename
         gvoiceManager.startPlay(filename, fileid)
     end
 end
@@ -498,7 +498,7 @@ end
 
 function mahjongDesk:onGVoiceRecordFinishedHandler(filename)
     local header = self.headers[mahjongGame.seatType.mine]
-    header.filename = filename
+    --header.filename = filename
 
     local ret = gvoiceManager.play(filename)
 --    log("on gvoice recode finishaed handler : " .. tostring(ret))

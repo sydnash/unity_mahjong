@@ -70,7 +70,7 @@ function mahjongDeskHeader:setPlayerInfo(player)
 end
 
 function mahjongDeskHeader:onIconClickedHandler()
-    local ui = require("ui.playerinfo").new(self.player)
+    local ui = require("ui.playerinfo").new(self.player, desk)
     ui:show()
 end
 

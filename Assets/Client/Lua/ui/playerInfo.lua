@@ -7,9 +7,10 @@ local playerInfo = class("playerInfo", base)
 
 _RES_(playerInfo, "PlayerInfoUI", "PlayerInfoUI")
 
-function playerInfo:ctor(data)
+function playerInfo:ctor(data, desk)
     self.data = data
     self.super.ctor(self)
+    self.isDesk = desk
 end
 
 function playerInfo:onInit()
@@ -31,6 +32,9 @@ function playerInfo:onInit()
     self.mTransfer:hide()
     if gamepref.player.userType == userType.transfer or gamepref.player.userType == userType.operation then
         self.mTransfer:show()
+    end
+    if self.isDesk then
+        self.isDesk = true
     end
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
