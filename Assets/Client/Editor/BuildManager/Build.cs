@@ -98,21 +98,9 @@ public class Build
         sb.Append("}");
 
         string text = sb.ToString();
-        LFS.WriteText(LFS.CombinePath(Application.streamingAssetsPath, PATCHLIST_FILE_NAME), text, LFS.UTF8_WITHOUT_BOM);
-    }
+        LFS.WriteText(LFS.CombinePath(Application.dataPath, "Resources", PATCHLIST_FILE_NAME), text, LFS.UTF8_WITHOUT_BOM);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    static void CopyPatchlistToStreamingAssets()
-    {
-        string patchDir = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, "Patch");
-
-        string from = LFS.CombinePath(patchDir, PATCHLIST_FILE_NAME);
-        string to = LFS.CombinePath(Application.dataPath, "Resources", PATCHLIST_FILE_NAME);
-
-        LFS.CopyFile(from, to);
-        EditorUtility.DisplayDialog("Build", "Copy Patchlist to StreamingAssets over", "OK");
+        AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
     }
 
     /// <summary>
