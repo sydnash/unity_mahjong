@@ -18,8 +18,7 @@ local function downloadOfflineVersionFile()
     local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
 
     if string.isNilOrEmpty(text) then
-        filename = LFS.CombinePath(patchManager.VERSION_FILE_NAME)
-        text = LFS.ReadTextFromResources(filename)
+        text = LFS.ReadTextFromResources("version")
     end
 
     return text
@@ -43,8 +42,7 @@ local function downloadOfflinePatchlistFile()
     local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
 
     if string.isNilOrEmpty(text) then
-        filename = LFS.CombinePath(patchManager.PATCHLIST_FILE_NAME)
-        text = LFS.ReadTextFromResources(filename)
+        text = LFS.ReadTextFromResources("patchlist")
     end
 
     return text
@@ -64,7 +62,7 @@ end
 -- 
 -------------------------------------------------------------------
 local function filterPatchList(offlineVersionText, onlineVersionText)
-    local retb = nil
+    local retb = {}
     
     local oftb = loadstring(offlineVersionText)()
     local ontb = loadstring(onlineVersionText)()
@@ -72,8 +70,7 @@ local function filterPatchList(offlineVersionText, onlineVersionText)
     for k, v in pairs(ontb) do
         local u = oftb[k]
 
-        if v.hash ~= u.hash or v.size ~= u.size then
-            if retb == nil then retb = {} end
+        if u == nil or v.hash ~= u.hash or v.size ~= u.size then
             table.insert(retb, { name = k, size = v.size })
         end
     end
@@ -85,13 +82,14 @@ end
 -- 
 -------------------------------------------------------------------
 function patchManager.checkPatches(callback)
+    log("patchManager.checkPatches  1")
     local offlineVersionText = downloadOfflineVersionFile()
 
     if string.isNilOrEmpty(offlineVersionText) then
         callback(nil, nil, nil)
         return
     end
-
+    log("patchManager.checkPatches  2")
     downloadOnlineVersionFile(networkConfig.patchURL, function(onvt)
         local onlineVersionText = onvt
 
@@ -99,21 +97,21 @@ function patchManager.checkPatches(callback)
             callback(nil, nil, nil)
             return
         end
-
+        log("patchManager.checkPatches  3")
         local offlineVersion = loadstring(offlineVersionText)()
         local onlineVersion = loadstring(onlineVersionText)()
 
         if onlineVersion.num <= offlineVersion.num then
             return
         end
-
+        log("patchManager.checkPatches  4")
         local offlinePatchlistText = downloadOfflinePatchlistFile()
 
         if string.isNilOrEmpty(offlinePatchlistText) then
             callback(nil, nil, nil)
             return
         end
-
+        log("patchManager.checkPatches  5, url = " .. onlineVersion.url)
         downloadOnlinePatchlistFile(onlineVersion.url, function(onpt)
             local onlinePatchlistText = onpt
 

@@ -119,6 +119,7 @@ end
 --
 ----------------------------------------------------------------
 local function downloadPatches(patchlist, size, versText, plistText, loading)
+    log("downloadPatches")
     local totalCount        = #patchlist
     local successfulCount   = 0
 
@@ -154,7 +155,7 @@ local function downloadPatches(patchlist, size, versText, plistText, loading)
                               end)
             else
                 local vpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.VERSION_FILE_NAME)
-                LFS.WriteText(vpath, plistText, LFS.UTF8_WITHOUT_BOM)
+                LFS.WriteText(vpath, versText, LFS.UTF8_WITHOUT_BOM)
 
                 local ppath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME)
                 LFS.WriteText(ppath, plistText, LFS.UTF8_WITHOUT_BOM)
@@ -174,6 +175,7 @@ end
 --
 ----------------------------------------------------------------
 local function checkPatches()
+    log("checkPatches")
     local loading = require("ui.loading").new()
     loading:show()
 
@@ -186,13 +188,15 @@ local function checkPatches()
             showMessageUI("更新检测失败")
             return
         end
-
+        log("checkPatches   1")
         if #plist == 0 then--未检测到更新
+            log("checkPatches   2")
             local login = require("ui.login").new()
             login:show()
 
             loading:close()
         else
+            log("checkPatches   3")
             local size = 0
             for _, v in pairs(plist) do
                 size = size + v.size

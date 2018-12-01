@@ -4,7 +4,7 @@
 
 local ret = {
     fps                     = 30,       --帧率
-    patchEnabled            = false,    --是否启用热更
+    patchEnabled            = true,     --是否启用热更
     nicknameMaxLength       = 5,        --玩家昵称可显示的最大长度
     friendsterNameMaxLength = 10,       --亲友圈名称可显示的最大长度
     thumbSize               = 150,      --缩略图尺寸
