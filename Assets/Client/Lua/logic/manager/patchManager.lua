@@ -5,18 +5,41 @@
 local networkConfig = require("config.networkConfig")
 local http          = require("network.http")
 
-local localizedVerPath  = LFS.LOCALIZED_DATA_PATH
-local downloadedDataPath = LFS.DOWNLOAD_DATA_PATH
-local patchUrl = networkConfig.patchURL .. "patchlist.txt"
-
 local patchManager = {}
+
+patchManager.VERSION_FILE_NAME   = "version.txt"
 patchManager.PATCHLIST_FILE_NAME = "patchlist.txt"
 
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
 local function downloadOfflineVersionFile()
-    local filename = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH,  LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME)
+    local filename = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH,  LFS.OS_PATH, patchManager.VERSION_FILE_NAME)
+    local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
+
+    if string.isNilOrEmpty(text) then
+        filename = LFS.CombinePath(patchManager.VERSION_FILE_NAME)
+        text = LFS.ReadTextFromResources(filename)
+    end
+
+    return text
+end
+
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+local function downloadOnlineVersionFile(url, callback)
+    url = LFS.CombinePath(url, patchManager.VERSION_FILE_NAME)
+    http.getText(url, 20 * 1000, function(text)
+        callback(text)
+    end)
+end
+
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+local function downloadOfflinePatchlistFile()
+    local filename = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME)
     local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
 
     if string.isNilOrEmpty(text) then
@@ -30,8 +53,9 @@ end
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
-local function downloadOnlineVersionFile(callback)
-    http.getText(patchUrl, 20 * 1000, function(text)
+local function downloadOnlinePatchlistFile(url, callback)
+    url = LFS.CombinePath(url, patchManager.PATCHLIST_FILE_NAME)
+    http.getText(url, 20 * 1000, function(text)
         callback(text)
     end)
 end
@@ -64,20 +88,38 @@ function patchManager.checkPatches(callback)
     local offlineVersionText = downloadOfflineVersionFile()
 
     if string.isNilOrEmpty(offlineVersionText) then
-        callback(nil, nil)
+        callback(nil, nil, nil)
         return
     end
 
-    downloadOnlineVersionFile(function(onvt)
+    downloadOnlineVersionFile(networkConfig.patchURL, function(onvt)
         local onlineVersionText = onvt
 
-        if string.isNilOrEmpty(offlineVersionText) then
-            callback(nil, nil)
+        if string.isNilOrEmpty(onlineVersionText) then
+            callback(nil, nil, nil)
             return
         end
 
-        local plist = filterPatchList(offlineVersionText, onlineVersionText)
-        callback(plist, onlineVersionText)
+        local offlineVersion = loadstring(offlineVersionText)()
+        local onlineVersion = loadstring(onlineVersionText)()
+
+        if onlineVersion.num <= offlineVersion.num then
+            return
+        end
+
+        local offlinePatchlistText = downloadOfflinePatchlistFile()
+
+        if string.isNilOrEmpty(offlinePatchlistText) then
+            callback(nil, nil, nil)
+            return
+        end
+
+        downloadOnlinePatchlistFile(onlineVersion.url, function(onpt)
+            local onlinePatchlistText = onpt
+
+            local plist = filterPatchList(offlinePatchlistText, onlinePatchlistText)
+            callback(plist, onlineVersionText, onlinePatchlistText)
+        end)
     end)
 end
 

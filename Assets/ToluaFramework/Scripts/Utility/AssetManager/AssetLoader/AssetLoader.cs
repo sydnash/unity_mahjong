@@ -153,6 +153,17 @@ public class AssetLoader
         get { return mDependentBundlePool; }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="assetPath"></param>
+    /// <param name="assetName"></param>
+    /// <returns></returns>
+    public static string CreateAssetKey(string assetPath, string assetName)
+    {
+        return LFS.CombinePath(assetPath, assetName).Replace("/", "|");
+    }
+
     #endregion
 
     #region Private
@@ -185,12 +196,14 @@ public class AssetLoader
         if (mDependentManifest == null)
             return;
 
+        string key = CreateAssetKey(assetPath, assetName);
+
         string target = LFS.CombinePath(mPath, assetPath, assetName);
         string[] dependentNames = mDependentManifest.GetAllDependencies(target);
 
         foreach (string dependentName in dependentNames)
         {
-            dependentBundlePool.Load(assetName, dependentName);
+            dependentBundlePool.Load(assetName, dependentName, key);
         }
     }
 

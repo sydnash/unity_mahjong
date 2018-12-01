@@ -118,7 +118,7 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-local function downloadPatches(patchlist, size, plistText, downloadui)
+local function downloadPatches(patchlist, size, versText, plistText, loading)
     local totalCount        = #patchlist
     local successfulCount   = 0
 
@@ -134,7 +134,7 @@ local function downloadPatches(patchlist, size, plistText, downloadui)
                 LFS.WriteBytes(path, bytes)
             end
 
-            downloadui:setProgress(math.min(1, successfulCount / totalCount))
+            loading:setProgress(math.min(1, successfulCount / totalCount))
 
             if successfulCount + #failedList == totalCount then
                 callback(failedList)
@@ -153,13 +153,16 @@ local function downloadPatches(patchlist, size, plistText, downloadui)
                                   Application.Quit()
                               end)
             else
-                local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME)
-                LFS.WriteText(path, plistText, LFS.UTF8_WITHOUT_BOM)
+                local vpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.VERSION_FILE_NAME)
+                LFS.WriteText(vpath, plistText, LFS.UTF8_WITHOUT_BOM)
+
+                local ppath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME)
+                LFS.WriteText(ppath, plistText, LFS.UTF8_WITHOUT_BOM)
 
                 local login = require("ui.login").new()
                 login:show()
 
-                downloadui:close()
+                loading:close()
             end
         end)
     end
@@ -170,13 +173,16 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-local function checkPatches(downloadui)
+local function checkPatches()
+    local loading = require("ui.loading").new()
+    loading:show()
+
     showWaitingUI("正在检测可更新资源，请稍候")
 
-    patchManager.checkPatches(function(plist, plistText)
+    patchManager.checkPatches(function(plist, versText, plistText)
         closeWaitingUI()
 
-        if plist == nil or plistText == nil then
+        if plist == nil or versText == nil or plistText == nil then
             showMessageUI("更新检测失败")
             return
         end
@@ -185,7 +191,7 @@ local function checkPatches(downloadui)
             local login = require("ui.login").new()
             login:show()
 
-            downloadui:close()
+            loading:close()
         else
             local size = 0
             for _, v in pairs(plist) do
@@ -194,7 +200,7 @@ local function checkPatches(downloadui)
 
             showMessageUI("检测到" .. BKMGT(size) .."新资源，是否立即下载更新？",
                           function()
-                              downloadPatches(plist, size, plistText, downloadui)
+                              downloadPatches(plist, size, versText, plistText, loading)
                           end,
                           function()
                               Application.Quit()
@@ -208,19 +214,12 @@ end
 ----------------------------------------------------------------
 local function patch()
     if gameConfig.patchEnabled then
-        local loading = require("ui.loading").new()
-        loading:show()
-
         checkPatches(loading)
     else
         local login = require("ui.login").new()
         login:show()
     end
 end
-
----------------------------------------------------------------
---
----------------------------------------------------------------
 
 
 
@@ -279,7 +278,7 @@ function clientApp:update()
                       end)
     end
     --测试用
-    if appConfig.debug then
+    if appConfig.debug and not deviceConfig.isMobile then
         if input.GetKeyDown(keycode.C) then
             commitError("error提交测试", "error提交测试-body")
         end

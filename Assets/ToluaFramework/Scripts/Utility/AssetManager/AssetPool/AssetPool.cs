@@ -53,14 +53,15 @@ public class AssetPool
     public Object Alloc(string assetPath, string assetName)
     {
         Object asset = null;
+        string key = AssetLoader.CreateAssetKey(assetPath, assetName);
 
-        if (mDic.ContainsKey(assetName))
+        if (mDic.ContainsKey(key))
         {
-            ObjectQueue queue = mDic[assetName];
+            ObjectQueue queue = mDic[key];
             if (queue.count > 0)
             {
                 asset = queue.Pop() as Object;
-                mDependentBundlePool.Reload(asset.name);
+                mDependentBundlePool.Reload(key);
             }
             else
             {
@@ -69,18 +70,19 @@ public class AssetPool
 
             if (asset != null)
             {
+                asset.name = key;
                 queue.activedCount++;
             }
         }
         else
         {
             ObjectQueue queue = CreateObjectQueue();
+            mDic.Add(key, queue);
 
             asset = LoadAsset(assetPath, assetName);
-            mDic.Add(asset.name, queue);
-
             if (asset != null)
             {
+                asset.name = key;
                 queue.activedCount++;
             }
         }
@@ -95,12 +97,13 @@ public class AssetPool
     /// <param name="assetName"></param>
     public Object Preload(string assetPath, string assetName, int maxCount = 1)
     {
-        ObjectQueue queue = mDic.ContainsKey(assetName) ? mDic[assetName] : null;
+        string key = AssetLoader.CreateAssetKey(assetPath, assetName);
+        ObjectQueue queue = mDic.ContainsKey(key) ? mDic[key] : null;
 
         if (queue == null)
         {
             queue = CreateObjectQueue();
-            mDic.Add(assetName, queue);
+            mDic.Add(key, queue);
         }
 
         if (queue.count < maxCount)
@@ -108,6 +111,7 @@ public class AssetPool
             Object asset = LoadAsset(assetPath, assetName);
             if (asset != null)
             {
+                asset.name = key;
                 queue.Push(asset);
                 //如果执行下面的unload，会出现某些prefab丢失材质的问题，所以暂时先屏蔽
                 //mDependentBundlePool.Unload(assetName);
@@ -128,19 +132,19 @@ public class AssetPool
         if (asset == null)
             return false;
 
-        string name = asset.name;
-        if (mDic.ContainsKey(name))
+        string key = asset.name;
+        if (mDic.ContainsKey(key))
         {
-            ObjectQueue queue = mDic[name];
+            ObjectQueue queue = mDic[key];
             queue.Push(asset);
             queue.activedCount--;
 
-            mDependentBundlePool.Unload(name);
+            mDependentBundlePool.Unload(key);
 
             return true;
         }
 
-        Logger.LogWarning(string.Format("[{0}] didn't load from assetpool！", name));
+        Logger.LogWarning(string.Format("[{0}] didn't load from assetpool！", key));
         return false;
     }
 
@@ -215,7 +219,6 @@ public class AssetPool
             if (!mReference)
             {
                 asset = Object.Instantiate(asset);
-                asset.name = asset.name.Replace("(Clone)", "");
             }
         }
         else

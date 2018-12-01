@@ -10,7 +10,7 @@ tpsheetFileNames:
 - Assets/Client/Artistic/Atlas/CreateDeskUI/Atlas/CreateDeskUI.tpsheet
 - Assets/Client/Artistic/Atlas/DeskOperationUI/Atlas/DeskOperationUI.tpsheet
 - Assets/Client/Artistic/Atlas/DeskUI/Atlas/DeskUI.tpsheet
-- Assets/Client/Artistic/Atlas/Emoji/Atlas/ChatUI.tpsheet
+- Assets/Client/Artistic/Atlas/Emoji/Atlas/Emoji.tpsheet
 - Assets/Client/Artistic/Atlas/EnterDeskUI/Atlas/EnterDeskUI.tpsheet
 - Assets/Client/Artistic/Atlas/ExitDeskUI/Atlas/ExxitDeskUI.tpsheet
 - Assets/Client/Artistic/Atlas/FriendsterUI/Atlas/FriendsterUI.tpsheet
@@ -39,7 +39,7 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/CreateDeskUI/Atlas/CreateDeskUI.png
 - Assets/Client/Artistic/Atlas/DeskOperationUI/Atlas/DeskOperationUI.png
 - Assets/Client/Artistic/Atlas/DeskUI/Atlas/DeskUI.png
-- Assets/Client/Artistic/Atlas/Emoji/Atlas/ChatUI.png
+- Assets/Client/Artistic/Atlas/Emoji/Atlas/Emoji.png
 - Assets/Client/Artistic/Atlas/EnterDeskUI/Atlas/EnterDeskUI.png
 - Assets/Client/Artistic/Atlas/ExitDeskUI/Atlas/ExxitDeskUI.png
 - Assets/Client/Artistic/Atlas/FriendsterUI/Atlas/FriendsterUI.png

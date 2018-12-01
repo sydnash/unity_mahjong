@@ -51,20 +51,20 @@ public class DependentBundlePool
     /// <param name="assetName"></param>
     /// <param name="dependentBundleName"></param>
     /// <param name="checkExists"></param>
-    public void Load(string assetName, string dependentBundleName)
+    public void Load(string assetName, string dependentBundleName, string key)
     {
         LoadBundle(dependentBundleName);
 
-        if (!mAssetDict.ContainsKey(assetName))
+        if (!mAssetDict.ContainsKey(key))
         {
             HashSet<string> set = new HashSet<string>();
             set.Add(dependentBundleName);
 
-            mAssetDict.Add(assetName, set);
+            mAssetDict.Add(key, set);
         }
         else
         {
-            HashSet<string> set = mAssetDict[assetName];
+            HashSet<string> set = mAssetDict[key];
             set.Add(dependentBundleName);
         }
     }
@@ -73,11 +73,11 @@ public class DependentBundlePool
     /// 
     /// </summary>
     /// <param name="assetName"></param>
-    public void Reload(string assetName)
+    public void Reload(string key)
     {
-        if (mAssetDict.ContainsKey(assetName))
+        if (mAssetDict.ContainsKey(key))
         {
-            HashSet<string> set = mAssetDict[assetName];
+            HashSet<string> set = mAssetDict[key];
 
             foreach (string bundleName in set)
             {
@@ -90,11 +90,11 @@ public class DependentBundlePool
     /// 
     /// </summary>
     /// <param name="assetName"></param>
-    public void Unload(string assetName)
+    public void Unload(string key)
     {
-        if (mAssetDict.ContainsKey(assetName))
+        if (mAssetDict.ContainsKey(key))
         {
-            HashSet<string> dependentBundleNames = mAssetDict[assetName];
+            HashSet<string> dependentBundleNames = mAssetDict[key];
 
             foreach (string bundleName in dependentBundleNames)
             {

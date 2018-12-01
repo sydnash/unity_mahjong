@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Resources/UI/Emoji/Atlas/ChatUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/Emoji/Atlas/Emoji.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -150,7 +150,7 @@
             <key>datafile</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>ChatUI.tpsheet</filename>
+                <filename>Emoji.tpsheet</filename>
             </struct>
         </map>
         <key>multiPack</key>
