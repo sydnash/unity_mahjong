@@ -56,6 +56,10 @@ local function networkDisconnectedCallback(idx)
             return
         end
 
+        if clientApp.curGameDesk:isPlayback() then
+            return
+        end
+
         enterDesk(cityType, deskId, function(ok)
             if not ok then
                 local ui = require("ui.lobby").new()
@@ -98,6 +102,9 @@ local function inviteSgCallback(params)
         local cityType = t.cityType
         local deskId = t.deskId
 
+        if clientApp.curGameDesk:isPlayback() then
+            return
+        end
         enterDesk(cityType, deskId, function(ok)
             if not ok then
                 local ui = require("ui.lobby").new()

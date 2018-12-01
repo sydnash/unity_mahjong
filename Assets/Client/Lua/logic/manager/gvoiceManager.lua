@@ -76,7 +76,10 @@ function gvoiceManager.stopRecord(cancel)
                 recordFinishedCallback(recordFilename)
             end
 
-            GVoiceEngine.instance:Upload(recordFilename, timeout)
+            local bytes = LFS.ReadBytes(recordFilename)
+            if bytes.Length > 0 then
+                GVoiceEngine.instance:Upload(recordFilename, timeout)
+            end
         end
 
         soundManager.setBGMVolume(gamepref.getBGMVolume())
@@ -94,10 +97,15 @@ end
 
 function gvoiceManager.play(filename)
     if gvoiceManager.status then
+        local bytes = LFS.ReadBytes(filename)
+        if bytes.Length <= 0 then
+            return false
+        end
         isPlaying = true
 
         soundManager.setBGMVolume(0)
         soundManager.setSFXVolume(0)
+
 
         local ret = GVoiceEngine.instance:StartPlay(filename)
         if ret and playStartedCallback ~= nil then

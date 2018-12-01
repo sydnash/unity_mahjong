@@ -197,6 +197,7 @@ function enterPlaybackCode:enter()
 
                 local game = require("logic.mahjong.mahjongGame").new(data, playback)
                 game:startLoop()
+                clientApp.currentDesk = game
 
                 loading:close()
             end

@@ -2,8 +2,6 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local mahjongGame = require("logic.mahjong.mahjongGame")
-
 local base = require("ui.common.view")
 local gameEnd = class("gameEnd", base)
 
