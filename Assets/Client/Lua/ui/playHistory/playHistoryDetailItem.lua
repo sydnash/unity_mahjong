@@ -27,6 +27,8 @@ function playHistoryDetailItem:onInit()
         self.mScore3,
         self.mScore4,
     }
+    self.mPlay:addClickListener(self.onPlayClickHandler, self)
+    self.mShare:addClickListener(self.onShareClickHandler, self)
 end
 
 function playHistoryDetailItem:onShareClickHandler()
@@ -120,6 +122,7 @@ function playHistoryDetailItem:onPlayClickHandler()
 
                 local game = require("logic.mahjong.mahjongGame").new(data, playback)
                 game:startLoop()
+                clientApp.currentDesk = game
 
                 loading:close()
             end
@@ -132,8 +135,6 @@ function playHistoryDetailItem:set(data, round, historyId, historyContainer)
         v:hide()
     end
     self.mResult:hide()
-    self.mPlay:addClickListener(self.onPlayClickHandler, self)
-    self.mShare:addClickListener(self.onShareClickHandler, self)
     self.historyContainer = historyContainer
     self.mHistoryId = historyId
     self.mRound = round

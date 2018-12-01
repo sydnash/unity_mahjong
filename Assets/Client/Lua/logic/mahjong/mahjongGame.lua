@@ -87,6 +87,10 @@ function mahjongGame:ctor(data, playback)
     self:onEnter(data)
 end
 
+function mahjongGame:stopLoop()
+    self.messageHandlers:stop()
+    self.messageHandlers:clear()
+end
 -------------------------------------------------------------------------------
 -- 初始化UI并启动消息处理循环
 -------------------------------------------------------------------------------
@@ -168,6 +172,10 @@ end
 -- 进入房间
 -------------------------------------------------------------------------------
 function mahjongGame:onEnter(msg)
+    if not self:isPlayback() then
+        self.messageHandlers:clear()
+    end
+
     self.data = msg
     self.players = {}
     self.playerCount = 0
@@ -1099,10 +1107,10 @@ end
 function mahjongGame:destroy()
     self.playerCount = 0
 
+    self.messageHandlers:stop()
+    self.messageHandlers:clear()
+    tweenManager.remove(self.messageHandlers)
     if self.mode == gameMode.normal then
-        self.messageHandlers:stop()
-        tweenManager.remove(self.messageHandlers)
-
         self:unregisterCommandHandlers()
     else
         self:unregisterPlaybackHandlers()
@@ -1159,6 +1167,10 @@ function mahjongGame:stopPlayback()
     if self.mode == gameMode.playback then
         self.messageHandlers:stop()
     end
+end
+
+function mahjongGame:isPlayback()
+    return self.mode == gameMode.playback
 end
 
 return mahjongGame
