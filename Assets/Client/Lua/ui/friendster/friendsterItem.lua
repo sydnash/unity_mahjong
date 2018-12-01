@@ -24,7 +24,7 @@ function friendsterItem:onClickedHandler()
     networkManager.queryFriendsterMembers(friendsterId, function(msg)
         if msg == nil then
             closeWaitingUI()
-            showWaitingUI("网络繁忙，请稍后再试")
+            showWaitingUI(NETWORK_IS_BUSY)
             return
         end
 
@@ -41,7 +41,7 @@ function friendsterItem:onClickedHandler()
             closeWaitingUI()
 
             if msg == nil then
-                showWaitingUI("网络繁忙，请稍后再试")
+                showWaitingUI(NETWORK_IS_BUSY)
                 return
             end
 

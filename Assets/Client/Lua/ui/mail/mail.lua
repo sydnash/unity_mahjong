@@ -37,7 +37,7 @@ function mail:onDeleteClickedHandler()
     if self.curMail ~= nil then
         networkManager.deleteMail(self.curMail.id, function(msg)
             if msg == nil then
-                showMessageUI("网络繁忙，请稍后再试")
+                showMessageUI(NETWORK_IS_BUSY)
                 return
             end
 
@@ -60,7 +60,7 @@ function mail:onGetClickedHandler()
     if self.curMail ~= nil then
         networkManager.getRewardsFromMail(self.curMail.id, function(msg)
             if msg == nil then
-                showMessageUI("网络繁忙，请稍后再试")
+                showMessageUI(NETWORK_IS_BUSY)
                 return
             end
 

@@ -41,11 +41,11 @@ function createDesk:onCreateClickedHandler()
     networkManager.createDesk(self.cityType, choose, friendsterId, function(msg)
         closeWaitingUI()
         if msg == nil then
-            showMessageUI("网络繁忙，请稍后再试")
+            showMessageUI(NETWORK_IS_BUSY)
             return
         end
 
-        log("create desk, msg = " .. table.tostring(msg))
+--        log("create desk, msg = " .. table.tostring(msg))
 
         if msg.RetCode ~= retc.ok then
             showMessageUI(retcText[msg.RetCode])

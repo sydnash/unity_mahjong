@@ -16,7 +16,7 @@ function mahjongDesk:ctor(game)
 end
 
 function mahjongDesk:onInit()
-    self.players = { 
+    self.headers = { 
         [mahjongGame.seatType.mine]  = self.mPlayerM, 
         [mahjongGame.seatType.right] = self.mPlayerR, 
         [mahjongGame.seatType.top]   = self.mPlayerT, 
@@ -104,16 +104,16 @@ function mahjongDesk:onDestroy()
 end
 
 function mahjongDesk:refreshUI()
-    for _, p in pairs(self.players) do
+    for _, p in pairs(self.headers) do
         
     end
 
     local totalCount = self.game:getTotalPlayerCount()
     if totalCount == 3 then
-        self.players[mahjongGame.seatType.top]:hide()
+        self.headers[mahjongGame.seatType.top]:hide()
     elseif totalCount == 2 then
-        self.players[mahjongGame.seatType.left]:hide()
-        self.players[mahjongGame.seatType.right]:hide()
+        self.headers[mahjongGame.seatType.left]:hide()
+        self.headers[mahjongGame.seatType.right]:hide()
     end
 
     self.mDeskID:setText(string.format("房号:%d", self.game.deskId))
@@ -123,7 +123,7 @@ function mahjongDesk:refreshUI()
 
     for _, v in pairs(self.game.players) do
         local s = self.game:getSeatTypeByAcId(v.acId)
-        local p = self.players[s]
+        local p = self.headers[s]
         p:setPlayerInfo(v)
 
         if self.game.mode == gameMode.playback or self.game.status == gameStatus.playing then
@@ -308,7 +308,7 @@ function mahjongDesk:setReady(acId, ready)
         end
     else
         local seat = self.game:getSeatTypeByAcId(acId)
-        self.players[seat]:setReady(ready)
+        self.headers[seat]:setReady(ready)
     end
 end
 
@@ -319,7 +319,7 @@ function mahjongDesk:onGameStart()
 
     for _, v in pairs(self.game.players) do 
         local st = self.game:getSeatTypeByAcId(v.acId)
-        local hd = self.players[st]
+        local hd = self.headers[st]
 
         hd:setReady(false)
         hd:setMarker(v.isMarker)
@@ -335,7 +335,7 @@ function mahjongDesk:onGameSync()
 
     for _, v in pairs(self.game.players) do 
         local st = self.game:getSeatTypeByAcId(v.acId)
-        local hd = self.players[st]
+        local hd = self.headers[st]
 
         hd:setPlayerInfo(v)
     end
@@ -353,7 +353,7 @@ function mahjongDesk:reset()
     end
     self.mCancel:hide()
 
-    for _, v in pairs(self.players) do
+    for _, v in pairs(self.headers) do
         v:reset()
     end
 end
@@ -370,40 +370,40 @@ function mahjongDesk:onPlayerEnter(player)
     self:refreshInvitationButtonState()
 
     local s = self.game:getSeatTypeByAcId(player.acId)
-    local p = self.players[s]
+    local p = self.headers[s]
 
     p:setPlayerInfo(player)
 end
 
 function mahjongDesk:onPlayerConnectStatusChanged(player)
     local s = self.game:getSeatTypeByAcId(player.acId)
-    local p = self.players[s]
+    local p = self.headers[s]
     p:setOnline(player.connected)
 end
 
 function mahjongDesk:onPlayerExit(seatType, msg)
     self:refreshInvitationButtonState()
 
-    local p = self.players[seatType]
+    local p = self.headers[seatType]
 
     p:setPlayerInfo(nil)
 end
 
 function mahjongDesk:onPlayerPeng(acId)
     local s = self.game:getSeatTypeByAcId(acId)
-    local p = self.players[s]
+    local p = self.headers[s]
     p:playGfx("peng")
 end
 
 function mahjongDesk:onPlayerGang(acId)
     local s = self.game:getSeatTypeByAcId(acId)
-    local p = self.players[s]
+    local p = self.headers[s]
     p:playGfx("gang")
 end
 
 function mahjongDesk:onPlayerHu(acId, t)
     local s = self.game:getSeatTypeByAcId(acId)
-    local p = self.players[s]
+    local p = self.headers[s]
 
     local detail = opType.hu.detail
 
@@ -428,7 +428,7 @@ function mahjongDesk:onDingQueDo(msg)
     for _, v in pairs(msg.Dos) do
         local player = self.game:getPlayerByAcId(v.AcId)
         local seat = self.game:getSeatTypeByAcId(player.acId)
-        self.players[seat]:showDingQue(v.Q)
+        self.headers[seat]:showDingQue(v.Q)
     end
 end
 
@@ -449,7 +449,7 @@ function mahjongDesk:onChatMessageHandler(msg)
 --    log("chat message, msg = " .. table.tostring(msg))
     
     local seat = self.game:getSeatTypeByAcId(msg.AcId)
-    local player = self.players[seat]
+    local header = self.headers[seat]
 
     if msg.Type == chatType.text then
         local k = tonumber(msg.Data)
@@ -457,9 +457,10 @@ function mahjongDesk:onChatMessageHandler(msg)
         local content = chatConfig.text[k].content
         local audio = chatConfig.text[k].audio
 
-        player:showChatText(content)
+        header:showChatText(content)
 
         if not string.isNilOrEmpty(audio) then
+            local player = self.game:getPlayerByAcId(msg.AcId)
             local path = (player.sex == sexType.boy) and "chat/text/boy" or "chat/text/girl"
             soundManager.playGfx(path, audio)
         end
@@ -467,7 +468,7 @@ function mahjongDesk:onChatMessageHandler(msg)
         local content = chatConfig.emoji[msg.Data].content
         local audio = chatConfig.emoji[msg.Data].audio
 
-        player:showChatEmoji(content)
+        header:showChatEmoji(content)
 
         if not string.isNilOrEmpty(audio) then
 
@@ -476,7 +477,7 @@ function mahjongDesk:onChatMessageHandler(msg)
         local fileid = msg.Data
         local filename = LFS.CombinePath(gvoiceManager.path, Hash.GetHash(fileid) .. ".gcv")
 
-        player.filename = filename
+        header.filename = filename
         gvoiceManager.startPlay(filename, fileid)
     end
 end
@@ -485,8 +486,8 @@ function mahjongDesk:onChatTextSignalHandler(key)
     local content = chatConfig.text[key].content
     local audio = chatConfig.text[key].audio
 
-    local player = self.players[mahjongGame.seatType.mine]
-    player:showChatText(content)
+    local header = self.headers[mahjongGame.seatType.mine]
+    header:showChatText(content)
 
     if not string.isNilOrEmpty(audio) then
         local path = (gamepref.player.sex == sexType.boy) and "chat/text/boy" or "chat/text/girl"
@@ -498,8 +499,8 @@ function mahjongDesk:onChatEmojiSignalHandler(key)
     local content = chatConfig.emoji[key].content
     local audio = chatConfig.emoji[key].audio
 
-    local player = self.players[mahjongGame.seatType.mine]
-    player:showChatEmoji(content)
+    local header = self.headers[mahjongGame.seatType.mine]
+    header:showChatEmoji(content)
 
     if not string.isNilOrEmpty(audio) then
         
@@ -507,15 +508,15 @@ function mahjongDesk:onChatEmojiSignalHandler(key)
 end
 
 function mahjongDesk:onGVoiceRecordFinishedHandler(filename)
-    local player = self.players[mahjongGame.seatType.mine]
-    player.filename = filename
+    local header = self.headers[mahjongGame.seatType.mine]
+    header.filename = filename
 
     local ret = gvoiceManager.play(filename)
-    log("on gvoice recode finishaed handler : " .. tostring(ret))
+--    log("on gvoice recode finishaed handler : " .. tostring(ret))
 end
 
 function mahjongDesk:onGVoicePlayStartedHandler(filename)
-    for _, v in pairs(self.players) do
+    for _, v in pairs(self.headers) do
         if v.filename == filename then
             v:showChatVoice()
             break
@@ -524,7 +525,7 @@ function mahjongDesk:onGVoicePlayStartedHandler(filename)
 end
 
 function mahjongDesk:onGVoicePlayFinishedHandler(filename)
-    for _, v in pairs(self.players) do
+    for _, v in pairs(self.headers) do
         if v.filename == filename then
             v:hideChatVoice()
             break

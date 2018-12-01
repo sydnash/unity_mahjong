@@ -16,8 +16,8 @@ local ret = {
         releaseServer   = false,
     },
     errorEmail = {
-        from = "",
-        to = "",
+        from = "xieheng@cdbshy.com",
+        to   = "xieheng@cdbshy.com",
     }
 }
 

@@ -294,7 +294,7 @@ end
 function mahjongGame:ready(ready)
     networkManager.ready(ready, function(msg)
         if msg == nil then
-            showMessageUI("网络繁忙，请稍后再试")
+            showMessageUI(NETWORK_IS_BUSY)
         else
             self:onReadyHandler(msg)
         end
@@ -522,7 +522,7 @@ function mahjongGame:endGame()
     networkManager.destroyDesk(function(msg)
 --        log("end game, msg = " .. table.tostring(msg))
         if msg == nil then
-            showMessageUI("网络繁忙，请稍后再试")
+            showMessageUI(NETWORK_IS_BUSY)
             return
         end
 

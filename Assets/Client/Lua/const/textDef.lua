@@ -2,6 +2,8 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+NETWORK_IS_BUSY = "网络繁忙，请稍后再试"
+
 retcText = {
     [retc.ok]                              = "成功",
     [retc.authorFailed]                    = "授权失败",

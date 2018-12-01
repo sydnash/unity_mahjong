@@ -138,7 +138,7 @@ function enterPlaybackCode:enter()
         closeWaitingUI()
 
         if msg == nil then
-            showMessageUI("网络繁忙，请稍后再试")
+            showMessageUI(NETWORK_IS_BUSY)
             return
         end
 
