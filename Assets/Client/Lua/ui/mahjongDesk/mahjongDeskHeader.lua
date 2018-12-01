@@ -18,6 +18,7 @@ function mahjongDeskHeader:onInit()
 
     self:setOnline(true)
     self:show()
+    self.mIconClick:addClickListener(self.onIconClickedHandler, self)
 end
 
 function mahjongDeskHeader:setPlayerInfo(player)
@@ -65,8 +66,6 @@ function mahjongDeskHeader:setPlayerInfo(player)
         self.mEmoji:hide()
         self.mChat:hide()
         self.mVoice:hide()
-
-        self.mIconClick:addClickListener(self.onIconClickedHandler, self)
     end
 end
 
