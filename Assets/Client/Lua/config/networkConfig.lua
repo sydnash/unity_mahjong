@@ -2,7 +2,7 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local patchURL = "http://127.0.0.1:8000/patches/"
+local patchURL = "http://127.0.0.1:8000/"
 local gameURL  = "http://login.cdbshy.com:17776/"
 local gameURL  = "http://test.cdbshy.com:17776/"
 local gameURL  = "http://192.168.0.80:17776/"

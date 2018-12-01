@@ -47,6 +47,11 @@ public class LuaResLoader : LuaFileUtils
         {
             buffer = ReadDownLoadFile(fileName);
         }
+        //byte[] buffer = ReadDownLoadFile(fileName);
+        //if (buffer == null)
+        //{
+        //    buffer = ReadResourceFile(fileName);
+        //}
 
         Debug.Assert(buffer != null);
         buffer = MD5.Decrypt(buffer);        

@@ -1732,6 +1732,11 @@ function mahjongOperation:clear(forceDestroy)
         end
     end
 
+    for _, m in pairs(self.redundancyMahjongs) do
+        m:destroy()
+    end
+    self.redundancyMahjongs = {}
+
     self.mo = nil
     self.lastPengPos = nil
     self.selectedMahjong = nil

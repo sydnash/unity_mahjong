@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/WaitingUI/Atlas/WaitingUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -449,6 +449,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/gy_lw.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,17,38,34</rect>
+                <key>scale9Paddings</key>
+                <rect>19,17,38,34</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/mask.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -500,6 +513,7 @@
             <filename>Images/DL_di01.png</filename>
             <filename>Images/DL_di02.png</filename>
             <filename>Images/mask.png</filename>
+            <filename>Images/gy_lw.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

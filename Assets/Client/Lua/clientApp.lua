@@ -118,13 +118,14 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-local function downloadPatches(patchlist, size, versText, plistText, loading)
+local function downloadPatches(url, patchlist, size, versText, plistText, loading)
+    log("downloadPatches, url = " .. url)
     local totalCount        = #patchlist
     local successfulCount   = 0
 
     local function downloadC(files, callback)
         local failedList = {}
-        patchManager.downloadPatches(files, function(url, name, bytes)
+        patchManager.downloadPatches(url, files, function(url, name, bytes)
             if bytes == nil then
                 table.insert(failedList, { name = name })
             else
@@ -154,7 +155,7 @@ local function downloadPatches(patchlist, size, versText, plistText, loading)
                               end)
             else
                 local vpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.VERSION_FILE_NAME)
-                LFS.WriteText(vpath, plistText, LFS.UTF8_WITHOUT_BOM)
+                LFS.WriteText(vpath, versText, LFS.UTF8_WITHOUT_BOM)
 
                 local ppath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME)
                 LFS.WriteText(ppath, plistText, LFS.UTF8_WITHOUT_BOM)
@@ -179,20 +180,22 @@ local function checkPatches()
 
     showWaitingUI("正在检测可更新资源，请稍候")
 
-    patchManager.checkPatches(function(plist, versText, plistText)
+    patchManager.checkPatches(function(plist, versText, plistText, url)
         closeWaitingUI()
 
-        if plist == nil or versText == nil or plistText == nil then
+        if plist == nil then
             showMessageUI("更新检测失败")
             return
         end
-
+        log("checkPatches   1")
         if #plist == 0 then--未检测到更新
+            log("checkPatches   2")
             local login = require("ui.login").new()
             login:show()
 
             loading:close()
         else
+            log("checkPatches   3")
             local size = 0
             for _, v in pairs(plist) do
                 size = size + v.size
@@ -200,7 +203,7 @@ local function checkPatches()
 
             showMessageUI("检测到" .. BKMGT(size) .."新资源，是否立即下载更新？",
                           function()
-                              downloadPatches(plist, size, versText, plistText, loading)
+                              downloadPatches(url, plist, size, versText, plistText, loading)
                           end,
                           function()
                               Application.Quit()
