@@ -77,7 +77,7 @@ function gvoiceManager.stopRecord(cancel)
             end
 
             local bytes = LFS.ReadBytes(recordFilename)
-            if bytes.Length > 0 then
+            if bytes and bytes.Length > 0 then
                 GVoiceEngine.instance:Upload(recordFilename, timeout)
             end
         end
@@ -98,7 +98,7 @@ end
 function gvoiceManager.play(filename)
     if gvoiceManager.status then
         local bytes = LFS.ReadBytes(filename)
-        if bytes.Length <= 0 then
+        if not bytes or bytes.Length <= 0 then
             return false
         end
         isPlaying = true
