@@ -295,7 +295,7 @@ end
 
 function mahjongDesk:setScore(acId, score)
     local seat = self.game:getSeatTypeByAcId(acId)
-    self.players[seat]:setScore(score)
+    self.headers[seat]:setScore(score)
 end
 function mahjongDesk:setReady(acId, ready)
     if acId == self.game.mainAcId then
