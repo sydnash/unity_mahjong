@@ -128,7 +128,7 @@ function mahjongOperation:onInit()
     --圆盘
     local circle = find("planes/cricle/Cricle_0")
     local circleMat = getComponentU(circle.gameObject, typeof(UnityEngine.MeshRenderer)).sharedMaterial
-    circleMat.mainTexture = textureManager.load("", "deskfw")
+    circleMat.mainTexture = textureManager.load(string.empty, "deskfw")
     --方向指示节点
     self.planeRoot = find("planes")
     self:rotatePlanes()
@@ -1672,9 +1672,9 @@ function mahjongOperation:highlightPlaneByAcId(acId)
             end
 
             if diff ~= nil and s == diff then
-                m.mainTexture = textureManager.load("", "deskfw_gl")
+                m.mainTexture = textureManager.load(string.empty, "deskfw_gl")
             else
-                m.mainTexture = textureManager.load("", "deskfw")
+                m.mainTexture = textureManager.load(string.empty, "deskfw")
             end
         end
     end
@@ -1689,7 +1689,7 @@ function mahjongOperation:darkPlanes()
             textureManager.unload(m.mainTexture)
         end
 
-        m.mainTexture = textureManager.load("", "deskfw")
+        m.mainTexture = textureManager.load(string.empty, "deskfw")
     end
 end
 
@@ -1707,7 +1707,7 @@ end
 -- 重置
 -------------------------------------------------------------------------------
 function mahjongOperation:clear(forceDestroy)
-    log("clear start, idle count = " .. tostring(#self.idleMahjongs))
+--    log("clear start, idle count = " .. tostring(#self.idleMahjongs))
 
     self.idleMahjongs = {}
 
@@ -1726,6 +1726,8 @@ function mahjongOperation:clear(forceDestroy)
         self.mahjongs = {}
     else
         for _, m in pairs(self.mahjongs) do
+            m:reset()
+            m:hide()
             table.insert(self.idleMahjongs, m)
         end
     end
@@ -1736,7 +1738,7 @@ function mahjongOperation:clear(forceDestroy)
     self.chupaiPtr:hide()
     self.canChuPai = false
 
-    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
+--    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
 end
 
 -------------------------------------------------------------------------------

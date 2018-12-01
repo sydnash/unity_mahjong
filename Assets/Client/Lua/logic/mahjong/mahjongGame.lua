@@ -935,8 +935,9 @@ end
 -- 服务器通知牌局结束
 -------------------------------------------------------------------------------
 function mahjongGame:onGameEndHandler(msg)
---    log("game end, msg = " .. table.tostring(msg))
+    self.messageHandlers:add(tweenDelay.new(2))
     local func = tweenFunction.new(function()
+--    log("game end, msg = " .. table.tostring(msg))
         self.deskStatus = deskStatus.gameend
         self.leftGames = msg.LeftTime
 

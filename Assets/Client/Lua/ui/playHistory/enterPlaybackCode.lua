@@ -115,7 +115,7 @@ function enterPlaybackCode:onDeleteClickedHandler()
     if length <= 0 then
         return
     end
-    self.mDisplayerSlots[length]:setText("")
+    self.mDisplayerSlots[length]:setText(string.empty)
 
     table.remove(self.numbers)
 end
@@ -143,7 +143,7 @@ function enterPlaybackCode:enter()
         end
 
         local history = msg.History
-        if msg.RetCode ~= 0 or history.PlayDetail == nil or history.PlayDetail[1] == nil or history.PlayDetail[1] == "" then
+        if msg.RetCode ~= 0 or history.PlayDetail == nil or string.isNilOrEmpty(history.PlayDetail[1]) then
             showMessageUI(string.format("分享码[%d]已经失效", shareId))
             return
         end
@@ -211,7 +211,7 @@ function enterPlaybackCode:reset()
     self.numbers = {}
 
     for _, v in pairs(self.mDisplayerSlots) do
-        v:setText("")
+        v:setText(string.empty)
     end
 end
 

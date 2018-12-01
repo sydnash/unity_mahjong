@@ -144,7 +144,7 @@ function playHistory:getPlayDetail(id, round, callback)
             return 
         end
 
-        if data.RetCode ~= retc.ok or data.OnePlayback == "" then
+        if data.RetCode ~= retc.ok or string.isNilOrEmpty(data.OnePlayback) then
             callback(true, nil) --战绩回放不存在
             return
         end

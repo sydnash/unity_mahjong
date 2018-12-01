@@ -113,7 +113,7 @@ function enterDesk:onDeleteClickedHandler()
 
     local length = #self.numbers
     if length > 0 then
-        self.mDisplayerSlots[length]:setText("")
+        self.mDisplayerSlots[length]:setText(string.empty)
         table.remove(self.numbers)
     end
 end
@@ -140,7 +140,7 @@ function enterDesk:reset()
     self.numbers = {}
 
     for _, v in pairs(self.mDisplayerSlots) do
-        v:setText("")
+        v:setText(string.empty)
     end
 end
 

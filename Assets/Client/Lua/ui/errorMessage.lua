@@ -28,7 +28,7 @@ end
 function errorMessage:onQuitClickedHandler()
     playButtonClickSound()
     if self.debug then
-        self.mText:setText("")
+        self.mText:setText(string.empty)
         self:close()
         return
     end

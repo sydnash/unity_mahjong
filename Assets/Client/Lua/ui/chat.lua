@@ -6,7 +6,7 @@ local chatConfig    = require("config.chatConfig")
 local UIText        = UnityEngine.UI.Text
 
 local base = require("ui.common.view")
-local chat = class("", base)
+local chat = class("chat", base)
 
 _RES_(chat, "ChatUI", "ChatUI")
 
