@@ -65,11 +65,11 @@ function mahjongDesk:onInit()
         gvoiceManager.registerRecordFinishedHandler(function(filename)
             self:onGVoiceRecordFinishedHandler(filename)
         end)
-        gvoiceManager.registerPlayStartedHandler(function(filename)
-            self:onGVoicePlayStartedHandler(filename)
+        gvoiceManager.registerPlayStartedHandler(function(filename, acId)
+            self:onGVoicePlayStartedHandler(filename, acId)
         end)
-        gvoiceManager.registerPlayFinishedHandler(function(filename)
-            self:onGVoicePlayFinishedHandler(filename)
+        gvoiceManager.registerPlayFinishedHandler(function(filename, acId)
+            self:onGVoicePlayFinishedHandler(filename, acId)
         end)
 
         signalManager.registerSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
@@ -471,7 +471,7 @@ function mahjongDesk:onChatMessageHandler(msg)
         local filename = LFS.CombinePath(gvoiceManager.path, Hash.GetHash(fileid) .. ".gcv")
 
         --header.filename = filename
-        gvoiceManager.startPlay(filename, fileid, acId)
+        gvoiceManager.startPlay(filename, fileid, msg.AcId)
     end
 end
 
@@ -505,6 +505,7 @@ function mahjongDesk:onGVoiceRecordFinishedHandler(filename)
 end
 
 function mahjongDesk:onGVoicePlayStartedHandler(filename, acId)
+    log("gvoice started handler " .. tostring(acId))
     for _, v in pairs(self.headers) do
         if v.acId == acId then
             v:showChatVoice()
@@ -514,6 +515,7 @@ function mahjongDesk:onGVoicePlayStartedHandler(filename, acId)
 end
 
 function mahjongDesk:onGVoicePlayFinishedHandler(filename, acId)
+    log("gvoice stoped handler " .. tostring(acId))
     for _, v in pairs(self.headers) do
         if v.acId == acId then
             v:hideChatVoice()

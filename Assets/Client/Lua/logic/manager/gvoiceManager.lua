@@ -104,6 +104,7 @@ function gvoiceManager.play(filename, acId)
         end
         isPlaying = true
 
+        log("gvoice start play : "  .. tostring(bytes.Length) .. " " .. tostring(acId) .. " " .. filename)
         soundManager.setBGMVolume(0)
         soundManager.setSFXVolume(0)
 
@@ -111,6 +112,8 @@ function gvoiceManager.play(filename, acId)
         if ret and playStartedCallback ~= nil then
             if not acId then
                 acId = gvoiceManager.fileNameToAcId[filename]
+            else
+                gvoiceManager.fileNameToAcId[filename] = acId
             end
             playStartedCallback(filename, acId)
         end
@@ -167,6 +170,8 @@ end
 
 function gvoiceManager.onPlayFinishedHandler(ok, filename)
     if gvoiceManager.status and playFinishedCallback ~= nil then
+        log("gvoice finishd handler " .. filename)
+        log("gvoice " .. table.tostring(gvoiceManager.fileNameToAcId))
         local acId = gvoiceManager.fileNameToAcId[filename]
         playFinishedCallback(filename, acId)
         --语音播放完后立即删除对应的文件
