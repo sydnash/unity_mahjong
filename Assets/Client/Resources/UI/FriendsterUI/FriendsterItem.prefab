@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 224581243868097078}
   - component: {fileID: 222122828215760360}
   - component: {fileID: 114172729710364896}
+  - component: {fileID: 114187406764030306}
   m_Layer: 5
   m_Name: Head
   m_TagString: Untagged
@@ -218,6 +219,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114187406764030306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1605582273156128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1025881657661294}
+    panelScript: 
 --- !u!114 &114200929083473528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -231,9 +248,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mWidgets:
   - variableName: mIcon
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1025881657661294}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mName
     widgetType: 2
     gameObject: {fileID: 1764880277671632}
