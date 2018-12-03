@@ -23,12 +23,13 @@ end
 
 function mahjongDeskHeader:setPlayerInfo(player)
     self.player = player
-    self.acId = player.acId
 
     if player == nil then
         self.mU:show()
         self.mP:hide()
+        self.acId = nil
     else
+        self.acId = player.acId
         self.mU:hide()
         self.mP:show()
 

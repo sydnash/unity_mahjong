@@ -167,7 +167,11 @@ end
 
 function gvoiceManager.onDownloadedHandler(ok, filename, fileid)
     if gvoiceManager.status then
-        table.insert(gvoiceManager.downloadFileQueue, 1, {filename = filename})
+        if fileid then
+            table.insert(gvoiceManager.downloadFileQueue, {filename = filename})
+        else
+            table.insert(gvoiceManager.downloadFileQueue, 1, {filename = filename})
+        end
         gvoiceManager.checkHasNewFileNeedPlay()
     end
 end
