@@ -101,6 +101,7 @@ end
 
 function gvoiceManager.play(filename, acId)
     if gvoiceManager.status then
+        log("==========================" .. tostring(filename))
         local bytes = LFS.ReadBytes(filename)
         if not bytes or bytes.Length <= 0 then
             return false
@@ -166,7 +167,7 @@ end
 
 function gvoiceManager.onDownloadedHandler(ok, filename, fileid)
     if gvoiceManager.status then
-        table.insert(gvoiceManager.downloadFileQueue, {filename = filename})
+        table.insert(gvoiceManager.downloadFileQueue, 1, {filename = filename})
         gvoiceManager.checkHasNewFileNeedPlay()
     end
 end
@@ -180,7 +181,8 @@ function gvoiceManager.checkHasNewFileNeedPlay()
     end
     local msg = gvoiceManager.downloadFileQueue[1]
     table.remove(gvoiceManager.downloadFileQueue, 1)
-    gvoiceManager:play(msg.filename)
+    log("=========================" .. table.tostring(msg.filename))
+    gvoiceManager.play(msg.filename)
 end
 
 function gvoiceManager.onPlayFinishedHandler(ok, filename)

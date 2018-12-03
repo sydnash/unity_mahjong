@@ -470,7 +470,7 @@ function mahjongDesk:onChatMessageHandler(msg)
         local audio = chatConfig.emoji[msg.Data].audio
 
         header:showChatEmoji(content)
-    elseif msg.Type == charType.cmsg then
+    elseif msg.Type == chatType.cmsg then
         header:showChatText(text)
     elseif msg.Type == chatType.voice then
         local fileid = msg.Data
