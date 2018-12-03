@@ -79,7 +79,7 @@ function mahjongDesk:onInit()
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     self:refreshUI()
-    self.gvoiceRecordfileId = 0
+    self.gvoiceRecordfileId = 1
 end
 
 function mahjongDesk:update()
