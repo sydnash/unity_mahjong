@@ -11,13 +11,13 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 30
-  companyName: bshy
-  productName: mahjong
+  companyName: "\u6210\u90FD\u5DF4\u8700\u4E92\u5A31\u79D1\u6280\u6709\u9650\u516C\u53F8"
+  productName: "\u5E7A\u4E5D\u9EBB\u5C06"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
-  m_ShowUnitySplashScreen: 1
-  m_ShowUnitySplashLogo: 1
+  m_ShowUnitySplashScreen: 0
+  m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 1
   m_SplashScreenAnimation: 1
   m_SplashScreenLogoStyle: 1
@@ -39,7 +39,8 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos: []
-  m_VirtualRealitySplashScreen: {fileID: 0}
+  m_VirtualRealitySplashScreen: {fileID: 2800000, guid: d753ec840b0dd414799b376ec8317088,
+    type: 3}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 640
   defaultScreenHeight: 360
@@ -224,8 +225,8 @@ PlayerSettings:
   tvOSManualSigningProvisioningProfileID: 
   appleEnableAutomaticSigning: 2
   AndroidTargetDevice: 0
-  AndroidSplashScreenScale: 0
-  androidSplashScreen: {fileID: 0}
+  AndroidSplashScreenScale: 2
+  androidSplashScreen: {fileID: 2800000, guid: d753ec840b0dd414799b376ec8317088, type: 3}
   AndroidKeystoreName: D:/Works/CompanyProjects/tdqp_android/Assets/Keystore/mahjong.keystore
   AndroidKeyaliasName: mahjong
   AndroidTVCompatibility: 1

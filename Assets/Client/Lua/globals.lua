@@ -170,7 +170,7 @@ end
 -------------------------------------------------------------
 -- 进入桌子
 -------------------------------------------------------------
-function enterDesk(gameType, deskId, callback)
+function enterDesk(gameType, deskId, callback, loading)
     showWaitingUI("正在进入房间，请稍候...")
 
     --开始预加载资源
@@ -251,27 +251,20 @@ function enterDesk(gameType, deskId, callback)
             else
                 clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
 
-                local loading = require("ui.loading").new()
-                loading:show()
+                if preload ~= nil then
+                    preload:stop()
+                end
 
-                sceneManager.load("scene", "mahjongscene", function(completed, progress)
-                    loading:setProgress(progress)
-
-                    if completed then
-                        if preload ~= nil then
-                            preload:stop()
-                        end
-
-                        loading:close()
+                if loading ~= nil then
+                    loading:close()
+                end
                     
-                        if callback ~= nil then
-                            callback(true)
-                        end
+                if callback ~= nil then
+                    callback(true)
+                end
 
-                        closeAllUI()
-                        clientApp.currentDesk:startLoop()
-                    end
-                end)
+                closeAllUI()
+                clientApp.currentDesk:startLoop()
             end
         end)
     end)
@@ -316,7 +309,6 @@ function loginServer(callback, func)
         if deskInfo ~= nil and deskInfo.DeskId > 0 then
             cityType = deskInfo.GameType
             deskId = deskInfo.DeskId
---            log(string.format("get desk from DeskInfo, cityType = %d, deskId = %d", cityType, deskId))
         else
             local params = platformHelper.getParamsSg()--检查闲聊的邀请数据
             if not string.isNilOrEmpty(params) then
@@ -324,31 +316,30 @@ function loginServer(callback, func)
 
                 cityType = t.cityType
                 deskId = t.deskId
---                log(string.format("get desk from XianLiao, cityType = %d, deskId = %d", cityType, deskId))
             end
             platformHelper.clearSGInviteParam()
         end
 
-        if cityType == 0 and deskId == 0 then
-            local loading = require("ui.loading").new()
-            loading:show()
+        local loading = require("ui.loading").new()
+        loading:show()
 
-            sceneManager.load("scene", "lobbyscene", function(completed, progress)
-                loading:setProgress(progress)
+        sceneManager.load("scene", "mahjongscene", function(completed, progress)
+            loading:setProgress(progress)
 
-                if completed then
+            if completed then
+                if cityType == 0 and deskId == 0 then
                     local lobby = require("ui.lobby").new()
                     lobby:show()
 
                     callback(true)
                     loading:close()
+                else -- 如有在房间内则跳过大厅直接进入房间
+                    enterDesk(cityType, deskId, function(ok)
+                        callback(ok)
+                    end, loading)
                 end
-            end)
-        else -- 如有在房间内则跳过大厅直接进入房间
-            enterDesk(cityType, deskId, function(ok)
-                callback(ok)
-            end)
-        end
+            end
+        end)
     end)
 end
 

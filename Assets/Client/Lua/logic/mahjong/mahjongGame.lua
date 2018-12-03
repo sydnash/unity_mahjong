@@ -744,19 +744,8 @@ end
 function mahjongGame:exitGame()
     closeAllUI()
 
-    local loading = require("ui.loading").new()
-    loading:show()
-
-    sceneManager.load("scene", "lobbyscene", function(completed, progress)
-        loading:setProgress(progress)
-
-        if completed then
-            local lobby = require("ui.lobby").new()
-            lobby:show()
-
-            loading:close()
-        end
-    end)
+    local lobby = require("ui.lobby").new()
+    lobby:show()
 
     self:destroy()
 end

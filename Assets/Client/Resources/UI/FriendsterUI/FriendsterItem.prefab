@@ -249,7 +249,7 @@ MonoBehaviour:
   mWidgets:
   - variableName: mIcon
     widgetType: 1
-    gameObject: {fileID: 1025881657661294}
+    gameObject: {fileID: 1605582273156128}
     panelScript: ui.header
   - variableName: mName
     widgetType: 2
