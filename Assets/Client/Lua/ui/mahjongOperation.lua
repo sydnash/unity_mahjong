@@ -861,10 +861,11 @@ function mahjongOperation:touchHandler(phase, pos)
                         playMahjongSound(id, player.sex)
 
                         self.curSelectedMahjong = nil
-                        self.selectedMahjong = nil
                     end
                 end
             end
+
+            self.selectedMahjong = nil
         end
     end
 end

@@ -71,6 +71,7 @@ function mahjongDeskHeader:setPlayerInfo(player)
 end
 
 function mahjongDeskHeader:onIconClickedHandler()
+    playButtonClickSound()
     local ui = require("ui.playerinfo").new(self.player, desk)
     ui:show()
 end

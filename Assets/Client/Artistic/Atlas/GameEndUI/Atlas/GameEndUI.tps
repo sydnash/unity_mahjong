@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/GameEndUI/Atlas/GameEndUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/GameEndUI/Atlas/GameEndUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>1024</int>
+            <int>512</int>
             <key>height</key>
-            <int>1024</int>
+            <int>512</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -245,9 +245,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>285,32,569,64</rect>
+                <rect>39,32,78,64</rect>
                 <key>scale9Paddings</key>
-                <rect>285,32,569,64</rect>
+                <rect>39,32,78,64</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -321,13 +321,13 @@
         <array>
             <filename>Images/JS_an_ls.png</filename>
             <filename>Images/JS_di01.png</filename>
-            <filename>Images/JS_di02.png</filename>
             <filename>Images/JS_dian.png</filename>
             <filename>Images/JS_zi01.png</filename>
             <filename>Images/JS_di01_1.png</filename>
             <filename>Images/JS_di02_1.png</filename>
             <filename>Images/fx_di01.png</filename>
             <filename>Images/hf_zi01.png</filename>
+            <filename>Images/JS_di02.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

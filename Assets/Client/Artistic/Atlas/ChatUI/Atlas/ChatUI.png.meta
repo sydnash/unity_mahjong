@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 326f62300a6251342be465c27eae70d3
-timeCreated: 1538217912
+timeCreated: 1543822833
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -28,6 +28,10 @@ TextureImporter:
     21300042: HF_di01
     21300044: HF_dian
     21300046: HF_jt
+    21300048: HF_an_sf
+    21300050: HF_di_01
+    21300052: HF_di01_1
+    21300054: HF_jt_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -124,7 +128,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 89
+        y: 209
         width: 65
         height: 302
       alignment: 0
@@ -137,8 +141,8 @@ TextureImporter:
       name: HF_an_01_1
       rect:
         serializedVersion: 2
-        x: 865
-        y: 906
+        x: 135
+        y: 394
         width: 43
         height: 117
       alignment: 0
@@ -152,7 +156,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 68
-        y: 89
+        y: 209
         width: 65
         height: 302
       alignment: 0
@@ -165,10 +169,24 @@ TextureImporter:
       name: HF_an_02_1
       rect:
         serializedVersion: 2
-        x: 910
-        y: 859
+        x: 1
+        y: 43
         width: 39
         height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: HF_an_sf
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 451
+        width: 112
+        height: 60
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,8 +198,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 983
-        width: 674
+        y: 1
+        width: 184
         height: 40
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -193,13 +211,41 @@ TextureImporter:
       name: HF_di01
       rect:
         serializedVersion: 2
-        x: 677
-        y: 393
-        width: 186
-        height: 630
+        x: 42
+        y: 71
+        width: 130
+        height: 136
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 90, y: 0, z: 90, w: 0}
+      border: {x: 30, y: 27, z: 21, w: 30}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: HF_di01_1
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 289
+        width: 118
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 26, y: 28, z: 29, w: 22}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: HF_di_01
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 216
+        width: 67
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 19, y: 24, z: 19, w: 20}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -207,8 +253,8 @@ TextureImporter:
       name: HF_dian
       rect:
         serializedVersion: 2
-        x: 1
-        y: 39
+        x: 42
+        y: 63
         width: 6
         height: 6
       alignment: 0
@@ -221,10 +267,24 @@ TextureImporter:
       name: HF_jt
       rect:
         serializedVersion: 2
-        x: 1
-        y: 47
+        x: 180
+        y: 409
         width: 31
         height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: HF_jt_1
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 287
+        width: 37
+        height: 105
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
