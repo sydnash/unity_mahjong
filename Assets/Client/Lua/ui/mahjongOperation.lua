@@ -1819,10 +1819,6 @@ function mahjongOperation:onDestroy()
     end
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
---    self.diceRoot:show()
---    self.centerGlass:show()
---    self.countdown:show()
-
     self:clear(true)
 
     for _, v in pairs(self.diceMats) do
@@ -1838,6 +1834,11 @@ function mahjongOperation:onDestroy()
             v.mainTexture = nil
         end
     end
+
+    self.diceRoot:show()
+    self.centerGlass:show()
+    self.countdown:show()
+    self.chupaiPtr:show()
 
     self.super.onDestroy(self)
 end
