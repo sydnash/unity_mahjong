@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: c2733a40300346a41899f37fcd8306b2
-timeCreated: 1536108542
+timeCreated: 1543824850
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -202,8 +202,8 @@ TextureImporter:
       name: fx_di01
       rect:
         serializedVersion: 2
-        x: 573
-        y: 860
+        x: 1
+        y: 348
         width: 422
         height: 163
       alignment: 0
@@ -216,8 +216,8 @@ TextureImporter:
       name: hf_zi01
       rect:
         serializedVersion: 2
-        x: 797
-        y: 817
+        x: 425
+        y: 470
         width: 78
         height: 41
       alignment: 0
@@ -230,8 +230,8 @@ TextureImporter:
       name: JS_an_ls
       rect:
         serializedVersion: 2
-        x: 573
-        y: 811
+        x: 1
+        y: 5
         width: 114
         height: 47
       alignment: 0
@@ -245,12 +245,12 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 875
-        width: 570
+        y: 198
+        width: 156
         height: 148
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 76, y: 60, z: 76, w: 63}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -259,9 +259,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 595
-        width: 569
-        height: 148
+        y: 54
+        width: 150
+        height: 142
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -272,13 +272,13 @@ TextureImporter:
       name: JS_di02
       rect:
         serializedVersion: 2
-        x: 1
-        y: 745
-        width: 570
+        x: 153
+        y: 68
+        width: 156
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 76, y: 60, z: 76, w: 60}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -286,10 +286,10 @@ TextureImporter:
       name: JS_di02_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 465
-        width: 569
-        height: 128
+        x: 159
+        y: 224
+        width: 149
+        height: 122
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -300,8 +300,8 @@ TextureImporter:
       name: JS_dian
       rect:
         serializedVersion: 2
-        x: 997
-        y: 1017
+        x: 505
+        y: 505
         width: 6
         height: 6
       alignment: 0
@@ -314,8 +314,8 @@ TextureImporter:
       name: JS_zi01
       rect:
         serializedVersion: 2
-        x: 689
-        y: 819
+        x: 117
+        y: 13
         width: 106
         height: 39
       alignment: 0

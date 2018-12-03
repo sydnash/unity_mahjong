@@ -21,6 +21,7 @@ function chat:onInit()
     self.mMask:addClickListener(self.onCloseClickedHandler, self)
     self.mEmojiTab:addChangedListener(self.onEmojiTabChangedHandler, self)
     self.mTextTab:addChangedListener(self.onTextTabChangedHandler, self)
+    self.mSend:addClickListener(self.onSendClickedHandler, self)
     --表情
     local emojis = {
         self.mEmoji01,
@@ -123,6 +124,17 @@ function chat:onTextClickedHandler(sender)
     signalManager.signal(signalType.chatText, sender.key)
 
     self:close()
+end
+
+function chat:onSendClickedHandler()
+    playButtonClickSound()
+
+    local text = self.mInput:getText()
+    if not string.isNilOrEmpty(text) then
+        text = cutoutString(text, gameConfig.messageTextMaxLength)
+        networkManager.sendChatMessage(chatType.cmsg, text)
+        signalManager.signal(signalType.chatCMsg, text)
+    end
 end
 
 function chat:onCloseAllUIHandler()

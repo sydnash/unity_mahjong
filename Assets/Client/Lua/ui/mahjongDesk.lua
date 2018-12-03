@@ -74,6 +74,7 @@ function mahjongDesk:onInit()
 
         signalManager.registerSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
         signalManager.registerSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
+        signalManager.registerSignalHandler(signalType.chatCMsg,  self.onChatCMsgSignalHandler, self)
     end
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
@@ -116,7 +117,7 @@ function mahjongDesk:refreshUI()
         self.headers[mahjongGame.seatType.right]:hide()
     end
 
-    self.mDeskID:setText(string.format("房号:%d", self.game.deskId))
+    self.mDeskID:setText(string.format("%s%s:%d", cityName[self.game.cityType], gameName[self.game.gameType], self.game.deskId))
     self:updateCurrentGameIndex()
     self.mTime:setText(time.formatTime())
     self:updateLeftMahjongCount()
@@ -466,6 +467,8 @@ function mahjongDesk:onChatMessageHandler(msg)
         local audio = chatConfig.emoji[msg.Data].audio
 
         header:showChatEmoji(content)
+    elseif msg.Type == charType.cmsg then
+        header:showChatText(text)
     elseif msg.Type == chatType.voice then
         local fileid = msg.Data
         local filename = LFS.CombinePath(gvoiceManager.path, Hash.GetHash(fileid) .. ".gcv")
@@ -490,10 +493,11 @@ function mahjongDesk:onChatEmojiSignalHandler(key)
 
     local header = self.headers[mahjongGame.seatType.mine]
     header:showChatEmoji(content)
+end
 
-    if not string.isNilOrEmpty(audio) then
-        
-    end
+function mahjongDesk:onChatCMsgSignalHandler(text)
+    local header = self.headers[mahjongGame.seatType.mine]
+    header:showChatText(text)
 end
 
 function mahjongDesk:onGVoiceRecordFinishedHandler(filename)

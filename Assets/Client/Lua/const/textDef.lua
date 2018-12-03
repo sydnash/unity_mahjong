@@ -35,6 +35,10 @@ retcText = {
     [retc.playerIsAlreadyInClub]           = "玩家已经在亲友圈",
 }
 
+gameName = {
+    [gameType.mahjong] = "麻将",
+}
+
 cityName = {
     [cityType.chengdu] = "成都",
     [cityType.jintang] = "金堂",
