@@ -283,7 +283,7 @@ function clientApp:update()
     --测试用
     if appConfig.debug and not deviceConfig.isMobile then
         if input.GetKeyDown(keycode.C) then
-            commitError("error提交测试", "error提交测试-body")
+
         end
     end
 end

@@ -166,7 +166,10 @@ public class AndroidHelper
     /// <param name="args"></param>
     public void OnLoginWxHandler(string json)
     {
-        WechatHelper.OnLoginHandler(json);
+        if (!string.IsNullOrEmpty(json))
+        {
+            WechatHelper.OnLoginHandler(json);
+        }
     }
 
     /// <summary>
@@ -175,7 +178,10 @@ public class AndroidHelper
     /// <param name="json"></param>
     public void OnInviteSgHandler(string json)
     {
-        UpdripsHelper.OnInviteHandler(json);
+        if (!string.IsNullOrEmpty(json))
+        {
+            UpdripsHelper.OnInviteHandler(json);
+        }
     }
 
     /// <summary>

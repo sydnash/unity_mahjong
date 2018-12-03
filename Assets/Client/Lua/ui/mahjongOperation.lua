@@ -669,6 +669,10 @@ function mahjongOperation:onMoPai(acId, cards)
         self.mo:setPickabled(true)
         self.mo:setShadowMode(mahjong.shadowMode.noshadow)
         self.mo:show()
+
+        if self.curSelectedMahjong ~= nil then
+            self.curSelectedMahjong:setSelected(false)
+        end
     end
 end
 
@@ -812,21 +816,54 @@ function mahjongOperation:touchHandler(phase, pos)
                 local wpos = camera:ScreenToWorldPoint(pos)
                 local dpos = wpos - self.selectedOrgPos
             
-                if dpos.y < 0.04 or not self.canChuPai then
+                if not self.canChuPai then
                     self.selectedMahjong:setPosition(self.selectedOrgPos)
+                    if self.curSelectedMahjong == nil then
+                        self.curSelectedMahjong = self.selectedMahjong
+                        self.curSelectedMahjong:setSelected(true)
+                    else
+                        if self.selectedMahjong.id ~= self.curSelectedMahjong.id then
+                            self.curSelectedMahjong:setSelected(false)
+                            self.curSelectedMahjong = self.selectedMahjong
+                            self.curSelectedMahjong:setSelected(true)
+                        else
+                            self.curSelectedMahjong:setSelected(false)
+                            self.curSelectedMahjong = nil
+                        end
+                    end
                 else
-                    local id = self.selectedMahjong.id
+                    if dpos.y < 0.04 and (self.curSelectedMahjong == nil or self.curSelectedMahjong.id ~= self.selectedMahjong.id) then
+                        self.selectedMahjong:setPosition(self.selectedOrgPos)
 
-                    networkManager.chuPai({ id }, function(msg)
-                        self:relocateInhandMahjongs(self.game.mainAcId)
-                    end)
+                        if self.curSelectedMahjong == nil then
+                            self.curSelectedMahjong = self.selectedMahjong
+                            self.curSelectedMahjong:setSelected(true)
+                        else
+                            if self.selectedMahjong.id ~= self.curSelectedMahjong.id then
+                                self.curSelectedMahjong:setSelected(false)
+                                self.curSelectedMahjong = self.selectedMahjong
+                                self.curSelectedMahjong:setSelected(true)
+                            else
+                                self.curSelectedMahjong:setSelected(false)
+                                self.curSelectedMahjong = nil
+                            end
+                        end
+                    else
+                        local id = self.selectedMahjong.id
 
-                    self:virtureChu(self.selectedMahjong)
-                    local player = self.game:getPlayerByAcId(self.game.mainAcId)
-                    playMahjongSound(id, player.sex)
+                        networkManager.chuPai({ id }, function(msg)
+                            self:relocateInhandMahjongs(self.game.mainAcId)
+                        end)
+
+                        self:virtureChu(self.selectedMahjong)
+
+                        local player = self.game:getPlayerByAcId(self.game.mainAcId)
+                        playMahjongSound(id, player.sex)
+
+                        self.curSelectedMahjong = nil
+                        self.selectedMahjong = nil
+                    end
                 end
-
-                self.selectedMahjong = nil
             end
         end
     end

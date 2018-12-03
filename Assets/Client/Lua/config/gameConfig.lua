@@ -15,10 +15,6 @@ local ret = {
         testServer      = true,
         releaseServer   = false,
     },
-    errorEmail = {
-        from = "xieheng@cdbshy.com",
-        to   = "xieheng@cdbshy.com",
-    }
 }
 
 --ret.serverList              = nil
