@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Resources/UI/ChatUI/Atlas/ChatUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/ChatUI/Atlas/ChatUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>1024</int>
+            <int>512</int>
             <key>height</key>
-            <int>1024</int>
+            <int>512</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -239,6 +239,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/HF_an_sf.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>28,15,56,30</rect>
+                <key>scale9Paddings</key>
+                <rect>28,15,56,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/HF_di.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -262,6 +275,32 @@
                 <rect>47,158,93,315</rect>
                 <key>scale9Paddings</key>
                 <rect>47,158,93,315</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/HF_di01_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>30,26,59,51</rect>
+                <key>scale9Paddings</key>
+                <rect>30,26,59,51</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/HF_di_01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,17,33,35</rect>
+                <key>scale9Paddings</key>
+                <rect>17,17,33,35</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -291,6 +330,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/HF_jt_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,26,19,53</rect>
+                <key>scale9Paddings</key>
+                <rect>9,26,19,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -302,6 +354,10 @@
             <filename>Images/HF_di01.png</filename>
             <filename>Images/HF_dian.png</filename>
             <filename>Images/HF_jt.png</filename>
+            <filename>Images/HF_an_sf.png</filename>
+            <filename>Images/HF_di_01.png</filename>
+            <filename>Images/HF_di01_1.png</filename>
+            <filename>Images/HF_jt_1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

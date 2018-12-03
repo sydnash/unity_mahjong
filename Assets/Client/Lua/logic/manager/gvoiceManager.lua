@@ -29,6 +29,7 @@ function gvoiceManager.setup(userId)
 
             gvoiceManager.status = ok
             gvoiceManager.fileNameToAcId = {}
+            gvoiceManager.downloadFileQueue = {}
         end)
 
         GVoiceEngine.instance:SetMaxMessageLength(gameConfig.gvoiceMaxLength * 1000)
@@ -47,6 +48,8 @@ function gvoiceManager.update()
             table.remove(playQueue, 1)
             GVoiceEngine.instance:Download(o.fileid, o.filename, timeout)
         end
+
+        gvoiceManager.checkHasNewFileNeedPlay()
     end
 end
 
@@ -61,7 +64,7 @@ function gvoiceManager.startRecord(filename)
 
         soundManager.setBGMVolume(0)
         soundManager.setSFXVolume(0)
-        gvoiceManager.stopPlay()
+        --gvoiceManager.stopPlay()
 
         GVoiceEngine.instance:StartRecord(filename)
     end
@@ -126,6 +129,10 @@ function gvoiceManager.startPlay(filename, fileid, acId)
     if gvoiceManager.status then
         playDownloaded = true
         gvoiceManager.fileNameToAcId[filename] = acId
+        if fileid == nil then
+            gvoiceManager.onDownloadedHandler(true, filename)
+            return
+        end
         table.insert(playQueue, { filename = filename, fileid = fileid })
     end
 end
@@ -159,13 +166,21 @@ end
 
 function gvoiceManager.onDownloadedHandler(ok, filename, fileid)
     if gvoiceManager.status then
-        if playDownloaded and (not isRecording) then
-            gvoiceManager.play(filename)
-        else
-            LFS.RemoveFile(filename)--语音下载完后如果不播放就立即删除对应的文件
-            isPlaying = false
-        end
+        table.insert(gvoiceManager.downloadFileQueue, {filename = filename})
+        gvoiceManager.checkHasNewFileNeedPlay()
     end
+end
+
+function gvoiceManager.checkHasNewFileNeedPlay()
+    if gvoiceManager.isPlaying then
+        return
+    end
+    if #gvoiceManager.downloadFileQueue == 0 then
+        return
+    end
+    local msg = gvoiceManager.downloadFileQueue[1]
+    table.remove(gvoiceManager.downloadFileQueue, 1)
+    gvoiceManager:play(msg.filename)
 end
 
 function gvoiceManager.onPlayFinishedHandler(ok, filename)
@@ -174,6 +189,7 @@ function gvoiceManager.onPlayFinishedHandler(ok, filename)
         log("gvoice " .. table.tostring(gvoiceManager.fileNameToAcId))
         local acId = gvoiceManager.fileNameToAcId[filename]
         playFinishedCallback(filename, acId)
+        gvoiceManager.fileNameToAcId[filename] = nil
         --语音播放完后立即删除对应的文件
         LFS.RemoveFile(filename)
         isPlaying = false

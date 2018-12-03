@@ -4,20 +4,20 @@
 # To import these sprites into your Unity project, download "TexturePackerImporter":
 # http://www.codeandweb.com/texturepacker/unity
 #
-# $TexturePacker:SmartUpdate:11146d223c3254722de9303b7b35ec2d:19f75a3d1f1c5aa13cf99724922e02e8:07572e78c16285a778b971c868fd9e79$
+# $TexturePacker:SmartUpdate:08aa28d834b2c945d0d8c254517f050b:30b2d6140ec8066e6f6fb020f5adc722:07572e78c16285a778b971c868fd9e79$
 #
 :format=40300
 :texture=GameEndUI.png
-:size=1024x1024
+:size=512x512
 :pivotpoints=enabled
 :borders=disabled
 
-fx_di01;573;860;422;163; 0.5;0.5; 0;0;0;0
-hf_zi01;797;817;78;41; 0.5;0.5; 0;0;0;0
-JS_an_ls;573;811;114;47; 0.5;0.5; 0;0;0;0
-JS_di01;1;875;570;148; 0.5;0.5; 0;0;0;0
-JS_di01_1;1;595;569;148; 0.5;0.5; 0;0;0;0
-JS_di02;1;745;570;128; 0.5;0.5; 0;0;0;0
-JS_di02_1;1;465;569;128; 0.5;0.5; 0;0;0;0
-JS_dian;997;1017;6;6; 0.5;0.5; 0;0;0;0
-JS_zi01;689;819;106;39; 0.5;0.5; 0;0;0;0
+fx_di01;1;348;422;163; 0.5;0.5; 0;0;0;0
+hf_zi01;425;470;78;41; 0.5;0.5; 0;0;0;0
+JS_an_ls;1;5;114;47; 0.5;0.5; 0;0;0;0
+JS_di01;1;198;156;148; 0.5;0.5; 0;0;0;0
+JS_di01_1;1;54;150;142; 0.5;0.5; 0;0;0;0
+JS_di02;153;68;156;128; 0.5;0.5; 0;0;0;0
+JS_di02_1;159;224;149;122; 0.5;0.5; 0;0;0;0
+JS_dian;505;505;6;6; 0.5;0.5; 0;0;0;0
+JS_zi01;117;13;106;39; 0.5;0.5; 0;0;0;0

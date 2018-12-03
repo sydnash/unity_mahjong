@@ -113,6 +113,7 @@ chatType = {
     voice = 0,
     text  = 1,
     emoji = 2,
+    cmsg  = 3,--输入的文字
 }
 
 --------------------------------------------------------------
@@ -121,13 +122,14 @@ chatType = {
 signalType = {
     chatText            = 1,
     chatEmoji           = 2,
-    cardsChanged        = 3,
-    deskDestroy         = 4,
-    friendsterMessageOp = 5,
-    mail                = 6,
+    chatCMsg            = 3,
+    cardsChanged        = 4,
+    deskDestroy         = 5,
+    friendsterMessageOp = 6,
+    mail                = 7,
     headerDownloaded    = "header|",
-    city                = 8,
-    closeAllUI          = 9,
+    city                = 9,
+    closeAllUI          = 10,
 }
 
 --------------------------------------------------------------
