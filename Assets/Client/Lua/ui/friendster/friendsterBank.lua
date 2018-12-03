@@ -7,6 +7,11 @@ local friendsterBank = class("friendsterBank", base)
 
 _RES_(friendsterBank, "FriendsterUI", "FriendsterBankUI")
 
+function friendsterBank:ctor(data)
+    self.data = data
+    self.super.ctor(self)
+end
+
 function friendsterBank:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mTabDeposit:addClickListener(self.onTabDepositClickedHandler, self)
@@ -72,7 +77,7 @@ end
 function friendsterBank:onDepositClickedHandler()
     playButtonClickSound()
 
-    local value = tonumber(self.mCurrent:getText())
+    local value = math.min(gamepref.player.cards, tonumber(self.mCurrent:getText()))
 
     showWaitingUI("正在存入房卡，请稍候")
     networkManager.depositToFriendsterBank(self.data.id, value, function(msg)
@@ -95,7 +100,7 @@ end
 function friendsterBank:onTakeoutClickedHandler()
     playButtonClickSound()
 
-    local value = tonumber(self.mCurrent:getText())
+    local value = math.min(self.data.cards, tonumber(self.mCurrent:getText()))
 
     showWaitingUI("正在取出房卡，请稍候")
     networkManager.takeoutFromFriendsterBank(self.data.id, value, function(msg)
@@ -113,10 +118,6 @@ function friendsterBank:onTakeoutClickedHandler()
         signalManager.signal(signalType.cardsChanged)
         self:close()
     end)
-end
-
-function friendsterBank:set(data)
-    self.data = data
 end
 
 function friendsterBank:onCloseAllUIHandler()

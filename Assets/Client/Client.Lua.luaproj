@@ -72,6 +72,7 @@
     <Compile Include="Lua\network\protoType.lua" />
     <Compile Include="Lua\platform\platformHelper.lua" />
     <Compile Include="Lua\ui\activity.lua" />
+    <Compile Include="Lua\ui\agreement.lua" />
     <Compile Include="Lua\ui\authentication.lua" />
     <Compile Include="Lua\ui\chat.lua" />
     <Compile Include="Lua\ui\city.lua" />
