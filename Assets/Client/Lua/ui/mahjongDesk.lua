@@ -506,10 +506,11 @@ end
 
 function mahjongDesk:onGVoicePlayStartedHandler(filename)
     for _, v in pairs(self.headers) do
-        if v.filename == filename then
+        --if v.filename == filename then
+            v.filename = filename
             v:showChatVoice()
-            break
-        end
+        --    break
+        --end
     end
 end
 
