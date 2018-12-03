@@ -28,6 +28,7 @@ function gvoiceManager.setup(userId)
             end
 
             gvoiceManager.status = ok
+            gvoiceManager.fileNameToAcId = {}
         end)
 
         GVoiceEngine.instance:SetMaxMessageLength(gameConfig.gvoiceMaxLength * 1000)
@@ -95,7 +96,7 @@ function gvoiceManager.registerPlayFinishedHandler(callback)
     playFinishedCallback = callback
 end
 
-function gvoiceManager.play(filename)
+function gvoiceManager.play(filename, acId)
     if gvoiceManager.status then
         local bytes = LFS.ReadBytes(filename)
         if not bytes or bytes.Length <= 0 then
@@ -106,19 +107,22 @@ function gvoiceManager.play(filename)
         soundManager.setBGMVolume(0)
         soundManager.setSFXVolume(0)
 
-
         local ret = GVoiceEngine.instance:StartPlay(filename)
         if ret and playStartedCallback ~= nil then
-            playStartedCallback(filename)
+            if not acId then
+                acId = gvoiceManager.fileNameToAcId[filename]
+            end
+            playStartedCallback(filename, acId)
         end
         return ret
     end
     return false
 end
 
-function gvoiceManager.startPlay(filename, fileid)
+function gvoiceManager.startPlay(filename, fileid, acId)
     if gvoiceManager.status then
         playDownloaded = true
+        gvoiceManager.fileNameToAcId[filename] = acId
         table.insert(playQueue, { filename = filename, fileid = fileid })
     end
 end
@@ -163,7 +167,8 @@ end
 
 function gvoiceManager.onPlayFinishedHandler(ok, filename)
     if gvoiceManager.status and playFinishedCallback ~= nil then
-        playFinishedCallback(filename)
+        local acId = gvoiceManager.fileNameToAcId[filename]
+        playFinishedCallback(filename, acId)
         --语音播放完后立即删除对应的文件
         LFS.RemoveFile(filename)
         isPlaying = false
