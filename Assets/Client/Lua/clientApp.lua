@@ -56,7 +56,7 @@ local function networkDisconnectedCallback(idx)
             return
         end
 
-        if clientApp.currentDesk:isPlayback() then
+        if clientApp.currentDesk and clientApp.currentDesk:isPlayback() then
             return
         end
 
@@ -102,7 +102,7 @@ local function inviteSgCallback(params)
         local cityType = t.cityType
         local deskId = t.deskId
 
-        if clientApp.currentDesk:isPlayback() then
+        if clientApp.currentDesk and clientApp.currentDesk:isPlayback() then
             return
         end
         enterDesk(cityType, deskId, function(ok)
