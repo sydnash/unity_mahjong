@@ -36,6 +36,13 @@ function tweenFunction:stop()
 
 end
 
+-------------------------------------------------------------------
+-- speed is between 0.01 and 100
+-------------------------------------------------------------------
+function tweenFunction:setSpeed(speed)
+    --
+end
+
 return tweenFunction
 
 --endregion

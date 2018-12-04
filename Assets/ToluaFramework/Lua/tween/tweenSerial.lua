@@ -74,6 +74,15 @@ function tweenSerial:clear()
     self.queue = {}
 end
 
+-------------------------------------------------------------------
+-- speed is between 0.01 and 100
+-------------------------------------------------------------------
+function tweenSerial:setSpeed(speed)
+    for _, v in pairs(self.queue) do
+        v:setSpeed(speed)
+    end
+end
+
 return tweenSerial
 
 --endregion

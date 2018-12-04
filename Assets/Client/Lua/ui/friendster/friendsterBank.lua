@@ -75,7 +75,15 @@ function friendsterBank:onTabTakeoutClickedHandler()
 end
 
 function friendsterBank:onDepositClickedHandler()
-    local value = math.min(gamepref.player.cards, tonumber(self.mCurrent:getText()))
+    local text = self.mCurrent:getText()
+    
+    if string.isNilOrEmpty(text) then
+        showMessageUI("请输入存入的房卡数量")
+        playButtonClickSound()
+        return
+    end
+
+    local value = math.min(gamepref.player.cards, tonumber(text))
 
     showWaitingUI("正在存入房卡，请稍候")
     networkManager.depositToFriendsterBank(self.data.id, value, function(msg)
@@ -98,7 +106,15 @@ function friendsterBank:onDepositClickedHandler()
 end
 
 function friendsterBank:onTakeoutClickedHandler()
-    local value = math.min(self.data.cards, tonumber(self.mCurrent:getText()))
+    local text = self.mCurrent:getText()
+    
+    if string.isNilOrEmpty(text) then
+        showMessageUI("请输入取出的房卡数量")
+        playButtonClickSound()
+        return
+    end
+
+    local value = math.min(self.data.cards, tonumber(text))
 
     showWaitingUI("正在取出房卡，请稍候")
     networkManager.takeoutFromFriendsterBank(self.data.id, value, function(msg)

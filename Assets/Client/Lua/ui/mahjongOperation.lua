@@ -20,7 +20,7 @@ mahjongOperation.seats = {
             [gameMode.normal]   = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
             [gameMode.playback] = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
         },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 1, 0.156, -0.360), rot = Quaternion.Euler(0, 0, 0), },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 1, 0.156, -0.340), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.110, 0.156, -0.140), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.huan] = { pos = Vector3.New( 0,     0.156, -0.180), rot = Quaternion.Euler(180, 0, 0), },
@@ -256,6 +256,10 @@ end
 -- 主要处理中间的倒计时
 -------------------------------------------------------------------------------
 function mahjongOperation:update()
+    if self.game.mode == gameMode.playback then
+        return
+    end
+
     if self.countdownTick ~= nil and self.countdownTick > 0 and self.turnCountdown > 0 then
         local now = time.realtimeSinceStartup()
         local delta = math.floor(now - self.countdownTick)
@@ -280,7 +284,9 @@ function mahjongOperation:setCountdownVisible(visible)
     if visible then
         self.diceRoot:hide()
         self.centerGlass:show()
-        self.countdown:show()
+        if self.game.mode == gameMode.normal then
+            self.countdown:show()
+        end
     else
         self.diceRoot:show()
         self.centerGlass:hide()
@@ -384,7 +390,7 @@ function mahjongOperation:onGameSync()
             break
         end
     end
-    log("deskStatus.hsz = " .. tostring(deskStatus.hsz))
+    
     if self.game.deskStatus == deskStatus.hsz then
         self:setDices()
         self:highlightPlaneByAcId(self.game.markerAcId)

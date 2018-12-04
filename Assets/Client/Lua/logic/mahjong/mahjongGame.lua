@@ -623,7 +623,7 @@ end
 -- SC 碰
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoPeng(acId, cards, beAcId, beCard)
-    log("mahjongGame:onOpDoPeng, acId = " .. tostring(acId))
+--    log("mahjongGame:onOpDoPeng, acId = " .. tostring(acId))
     self.deskUI:onPlayerPeng(acId)
     self.operationUI:onOpDoPeng(acId, cards, beAcId, beCard)
 end

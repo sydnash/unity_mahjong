@@ -80,6 +80,15 @@ function tweenParallel:clear()
     self.queue = {}
 end
 
+-------------------------------------------------------------------
+-- speed is between 0.01 and 100
+-------------------------------------------------------------------
+function tweenParallel:setSpeed(speed)
+    for _, v in pairs(self.queue) do
+        v:setSpeed(speed)
+    end
+end
+
 return tweenParallel
 
 --endregion
