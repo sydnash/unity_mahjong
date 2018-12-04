@@ -25,8 +25,9 @@ function playback:onInit()
     self.mSlow:addClickListener(self.onSlowClickedHandler, self)
     self.mQuick:addClickListener(self.onQuickClickedHandler, self)
 
-    self.mSpeedL:setText("x " .. tostring(self.speed))
-    self.mSpeedR:setText("x " .. tostring(self.speed))
+    local speedText = tostring(self.speed) .. "倍速"
+    self.mSpeedL:setText(speedText)
+    self.mSpeedR:setText(speedText)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -53,8 +54,9 @@ function playback:onSlowClickedHandler()
     self.speed = math.max(0.2, self.speed - 0.2)
     self.game.messageHandlers:setSpeed(self.speed)
 
-    self.mSpeedL:setText("x " .. tostring(self.speed))
-    self.mSpeedR:setText("x " .. tostring(self.speed))
+    local speedText = tostring(self.speed) .. "倍速"
+    self.mSpeedL:setText(speedText)
+    self.mSpeedR:setText(speedText)
 
     playButtonClickSound()
 end
@@ -63,8 +65,9 @@ function playback:onQuickClickedHandler()
     self.speed = math.min(2, self.speed + 0.2)
     self.game.messageHandlers:setSpeed(self.speed)
 
-    self.mSpeedL:setText("x " .. tostring(self.speed))
-    self.mSpeedR:setText("x " .. tostring(self.speed))
+    local speedText = tostring(self.speed) .. "倍速"
+    self.mSpeedL:setText(speedText)
+    self.mSpeedR:setText(speedText)
 
     playButtonClickSound()
 end

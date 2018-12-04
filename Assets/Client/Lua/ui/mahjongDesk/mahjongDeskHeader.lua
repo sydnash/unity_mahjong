@@ -35,7 +35,6 @@ function mahjongDeskHeader:setPlayerInfo(player)
 
         self.mIcon:setTexture(player.acId, player.headerTex)
 
-        self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
         self:setScore(player.score)
         self:setReady(player.ready)
 
