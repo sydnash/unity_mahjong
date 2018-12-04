@@ -2044,7 +2044,18 @@ function mahjongOperation:onHuanNZhangDo(msg)
         end
         --重新排序手牌
         self:relocateInhandMahjongs(msg.AcId)
+
+        for _, v in pairs(temp) do
+            local pos = v:getLocalPosition()
+            local target = pos:Clone()
+            pos.y = pos.y + mahjong.h * 0.3
+            v:setLocalPosition(pos)
+            local mv = tweenPosition.new(v, 1.3, pos, target, nil)
+            tweenManager.add(mv)
+            mv:play()
+        end
     end))
+    animation:add(tweenDelay.new(1.4))
 
     tweenManager.add(animation)
     animation:play()
