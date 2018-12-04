@@ -328,11 +328,14 @@ local function loginC(text, callback)
     gamepref.host    = host
     gamepref.port    = port
 
+    log("loginC start")
     networkManager.author(host, port, function(connected)
         --connected
+        log("loginC start connected")
         local loginType = 1
         local data = { AcId = acid, Session = session, LoginType = loginType }
         send(protoType.cs.loginHs, data, function(msg)
+            log("loginC start complete")
             if msg == nil then
                 callback(nil)
             else

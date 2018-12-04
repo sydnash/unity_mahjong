@@ -657,7 +657,13 @@ function mahjongOperation:onMoPai(acId, cards)
         local moPaiPos = self:getMyInhandMahjongPos(player, #mahjongs + 1)
         moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
 
+        local to = Vector3.New(moPaiPos.x, moPaiPos.y, moPaiPos.z)
+        moPaiPos.y = moPaiPos.y + 0.04
         self.mo:setLocalPosition(moPaiPos)
+        local mv = tweenPosition.new(self.mo, 0.04, moPaiPos, to, nil)
+        tweenManager.add(mv)
+        mv:play()
+
         self.mo:setLocalRotation(mopaiConfig.rotation)
 
         if self.mo.class == player.que then
