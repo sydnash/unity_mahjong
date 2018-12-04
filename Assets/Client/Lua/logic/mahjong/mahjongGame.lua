@@ -79,7 +79,10 @@ function mahjongGame:ctor(data, playback)
         self.mode = gameMode.normal
         self:registerCommandHandlers()
 
-        gamepref.player.currentDesk = { cityType = self.cityType, deskId = self.deskId }
+        gamepref.player.currentDesk = { cityType = self.cityType, 
+                                        deskId = self.deskId, 
+                                        friendsterId = self.friendsterId 
+        }
     else
         self.mode = gameMode.playback
         self:registerPlaybackHandlers(playback)

@@ -100,6 +100,18 @@ function friendster:onInit()
     self.mPageRows:show()
     self.mPageGuide:hide()
 
+    self.guideDots = {
+        self.mDotA,
+        self.mDotB,
+        self.mDotC,
+        self.mDotD,
+        self.mDotE,
+        self.mDotF,
+        self.mDotG,
+    }
+    self.mDotA:setSprite("light")
+    self.mGuideView:addChangedListener(self.onGuidePageChangedHandler, self)
+
     networkManager.registerCommandHandler(protoType.sc.notifyFriendster, function(msg) 
         self:onNotifyFriendster(msg)
     end, true)
@@ -377,6 +389,16 @@ function friendster:onNotifyFriendster(msg)
             if self.detailUI ~= nil then
                 self.detailUI:refreshUI()
             end
+        end
+    end
+end
+
+function friendster:onGuidePageChangedHandler(pageIndex)
+    for k, v in pairs(self.guideDots) do
+        if k == pageIndex + 1 then
+            v:setSprite("light")
+        else
+            v:setSprite("dark")
         end
     end
 end
