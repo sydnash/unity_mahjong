@@ -8,7 +8,7 @@ local lobby = class("lobby", base)
 _RES_(lobby, "LobbyUI", "LobbyUI")
 
 function lobby:onInit()
-    self.mIcon:setPlayer(gamepref.player)
+    self.mIcon:setTexture(gamepref.player.acId, gamepref.player.headerTex)
     self.mNickname:setText(cutoutString(gamepref.player.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText("帐号:" .. gamepref.player.acId)
     self.mCards:setText(tostring(gamepref.player.cards))

@@ -63,13 +63,22 @@ function friendsterDetail:ctor(callback)
 end
 
 function friendsterDetail:onInit()
-    self.mReturn:addClickListener(self.onReturnClickedHandler, self)
+    self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mShare:addClickListener(self.onShareClickedHandler, self)
     self.mManage:addClickListener(self.onManageClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
+    self.mReturn:addClickListener(self.onReturnClickedHandler, self)
     self.mMail:addClickListener(self.onMailClickedHandler, self)
     self.mBank:addClickListener(self.onBankClickedHandler, self)
     self.mStatistics:addClickListener(self.onStatisticsClickedHandler, self)
+
+    if gamepref.player.currentDesk == nil then
+        self.mCreate:show()
+        self.mReturn:hide()
+    else
+        self.mCreate:hide()
+        self.mReturn:show()
+    end
 
     self.mMail:hide()
     self.mMailRP:hide()
@@ -81,7 +90,7 @@ function friendsterDetail:onInit()
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
-function friendsterDetail:onReturnClickedHandler()
+function friendsterDetail:onCloseClickedHandler()
     playButtonClickSound()
 
     if self.callback ~= nil then
@@ -93,11 +102,13 @@ end
 
 function friendsterDetail:onShareClickedHandler()
     playButtonClickSound()
-
-    local desc = string.format("编号：%d, 邀请码：%s", self.data.id, self.data.applyCode)
-    local image = textureManager.load(string.empty, "appIcon")
+    
+    local title = string.format("%s邀请您加入幺九麻将", gamepref.player.nickname)
+    local desc = string.format("点击亲友圈输入编号：%d，邀请码：%s加入亲友圈开始游戏", self.data.id, self.data.applyCode)
+    local url = networkConfig.server.shareURL
+    local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then
-        platformHelper.shareUrlWx("亲友圈信息", desc, networkConfig.server.shareURL, image, false)
+        platformHelper.shareUrlWx(title, desc, url, image, false)
     end
 end
 
@@ -114,6 +125,15 @@ function friendsterDetail:onCreateClickedHandler()
 
     local ui = require("ui.createDesk").new(self.data.cityType, self.data.id)
     ui:show()
+end
+
+function friendsterDetail:onReturnClickedHandler()
+    playButtonClickSound()
+
+    local cityType = gamepref.player.currentDesk.cityType
+    local deskId = gamepref.player.currentDesk.deskId
+    
+    enterDesk(cityType, deskId)
 end
 
 function friendsterDetail:set(data)
@@ -228,8 +248,7 @@ end
 function friendsterDetail:onBankClickedHandler()
     playButtonClickSound()
     
-    local ui = require("ui.friendster.friendsterBank").new()
-    ui:set(self.data)
+    local ui = require("ui.friendster.friendsterBank").new(self.data)
     ui:show()
 end
 

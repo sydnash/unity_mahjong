@@ -6,11 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ToluaFramework/Scene/main.unity
+    path: Assets/ToluaFramework/Scene/Main.unity
     guid: 772707f36e2dac24f92557820d126a21
-  - enabled: 1
-    path: Assets/Client/Scene/lobbyscene.unity
-    guid: d5e0fe79e30e77847a8b7a863b43c59e
   - enabled: 1
     path: Assets/Client/Scene/mahjongscene.unity
     guid: 29ef00cbced9b5048b80cb3c543b403e

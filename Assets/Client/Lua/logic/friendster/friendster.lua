@@ -71,7 +71,7 @@ function friendster:loadHeaderTex()
 
             self.headerTex = tex
             
-            local signalId = signalType.headerDownloaded .. tostring(self.acId)
+            local signalId = signalType.headerDownloaded .. tostring(self.id)
             signalManager.signal(signalId, self.headerTex)
         end)
     end

@@ -28,7 +28,7 @@ function friendsterDetailMemberItem:set(friendsterId, managerId, data)
     self.data = data
 
     --self.mIcon:setTexture(data.headerTex)
-    self.mIcon:setPlayer(data)
+    self.mIcon:setTexture(data.acId, data.headerTex)
     self.mNickname:setText(cutoutString(data.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText(string.format("账号:%d", data.acId))
 

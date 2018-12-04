@@ -11,7 +11,7 @@ function gameEndItem:onInit()
 end
 
 function gameEndItem:setPlayerInfo(player)
-    self.mHeader:setPlayer(player)
+    self.mHeader:setTexture(player.acId, player.headerTex)
     self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
     self.mId:setText(string.format("帐号:%d", player.acId))
     self.mScore:setScore(player.score)

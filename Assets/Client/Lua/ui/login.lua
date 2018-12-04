@@ -72,6 +72,7 @@ function login:onInit()
     self.mWechatLogin:addClickListener(self.onWechatLoginClickedHandler, self)
     self.mGuestLogin:addClickListener(self.onGuestLoginClickedHandler, self)
     self.mAgreement:addChangedListener(self.onAgreementChangedHandler, self)
+    self.mUser:addClickListener(self.onUserClickedHandler, self)
 
     if gameConfig.serverList ~= nil then
         self.mTestNode:show()
@@ -148,6 +149,13 @@ end
 function login:onAgreementChangedHandler(sender, selected, clicked)
     self.mWechatLogin:setInteractabled(selected)
     self.mGuestLogin:setInteractabled(selected)
+end
+
+function login:onUserClickedHandler()
+    playButtonClickSound();
+
+    local ui = require("ui.agreement").new()
+    ui:show()
 end
 
 function login:onCityChangedHandler(city)

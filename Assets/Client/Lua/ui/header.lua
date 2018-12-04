@@ -9,13 +9,13 @@ function header:onInit()
     self:reset()
 end
 
-function header:setPlayer(player)
+function header:setTexture(id, tex)
     self:reset()
 
-    self.signalId = signalType.headerDownloaded .. tostring(player.acId)
+    self.signalId = signalType.headerDownloaded .. tostring(id)
     signalManager.registerSignalHandler(self.signalId, self.onHeaderDownloadedHandler, self)
 
-    self.mIcon:setTexture(player.headerTex)
+    self.mIcon:setTexture(tex)
 end
 
 function header:setColor(color)
