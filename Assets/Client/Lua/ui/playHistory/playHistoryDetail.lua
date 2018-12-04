@@ -25,8 +25,8 @@ function playHistoryDetail:onInit()
 end
 
 function playHistoryDetail:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function playHistoryDetail:setHistory(historyId, historyContainer)

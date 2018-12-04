@@ -86,55 +86,53 @@ function chat:onInit()
 end
 
 function chat:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function chat:onEmojiTabChangedHandler(selected)
     if selected then
-        playButtonClickSound()
-
         self.mEmojiPage:show()
         self.mTextPage:hide()
+
+        playButtonClickSound()
     end
 end
 
 function chat:onTextTabChangedHandler(selected)
     if selected then
-        playButtonClickSound()
-
         self.mEmojiPage:hide()
         self.mTextPage:show()
+
+        playButtonClickSound()
     end
 end
 
 function chat:onEmojiClickedHandler(sender)
-    playButtonClickSound()
-
     networkManager.sendChatMessage(chatType.emoji, sender.key)
     signalManager.signal(signalType.chatEmoji, sender.key)
 
     self:close()
+    playButtonClickSound()
 end
 
 function chat:onTextClickedHandler(sender)
-    playButtonClickSound()
-
     networkManager.sendChatMessage(chatType.text, tostring(sender.key))
     signalManager.signal(signalType.chatText, sender.key)
 
     self:close()
+    playButtonClickSound()
 end
 
 function chat:onSendClickedHandler()
-    playButtonClickSound()
-
     local text = self.mInput:getText()
     if not string.isNilOrEmpty(text) then
         text = cutoutString(text, gameConfig.messageTextMaxLength)
         networkManager.sendChatMessage(chatType.cmsg, text)
         signalManager.signal(signalType.chatCMsg, text)
     end
+
+    playButtonClickSound()
 end
 
 function chat:onCloseAllUIHandler()

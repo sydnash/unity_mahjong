@@ -20,9 +20,8 @@ function playHistory:onInit()
 end
 
 function playHistory:onCloseClickedHandler()
-    playButtonClickSound()
-
     self:close()
+    playButtonClickSound()
 end
 
 function playHistory:onPlaybackClickHandler()

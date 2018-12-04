@@ -89,8 +89,8 @@ function location:onInit()
 end
 
 function location:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function location:refreshUI()

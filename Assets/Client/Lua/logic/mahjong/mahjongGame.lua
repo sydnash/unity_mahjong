@@ -41,7 +41,8 @@ function mahjongGame:ctor(data, playback)
     self.leftMahjongCount   = 0
     self.deskId             = data.DeskId
     self.cityType           = data.GameType
-    self.gameType           = gameType.mahjong
+    self.gameType           = data.Config.Game
+    self.friendsterId       = data.ClubId
     self.config             = data.Config
     self.status             = data.Status
     self.creatorAcId        = data.Creator
@@ -547,8 +548,8 @@ function mahjongGame:endGame()
             self.exitDeskUI = require("ui.exitDesk").new(self)
             self.exitDeskUI:show()
         else
-            gamepref.player.currentDesk = nil
             signalManager.signal(signalType.deskDestroy, self.deskId)
+            gamepref.player.currentDesk = nil
             self:exitGame()
         end
     end)
@@ -607,6 +608,7 @@ end
 -- SC 出牌
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoChu(acId, cards)
+    self.deskUI:onOpDoChu(acId, cards)
     self.operationUI:onOpDoChu(acId, cards)
 end
 
@@ -775,8 +777,8 @@ function mahjongGame:onExitDeskHandler(msg)
     local func = tweenFunction.new(function()
 --        log("exit desk, msg = " .. table.tostring(msg))
 
-        gamepref.player.currentDesk = nil
         signalManager.signal(signalType.deskDestroy, self.deskId)
+        gamepref.player.currentDesk = nil
 
         if msg.Reason == exitReason.voteExit then
             --投票解散房间，关闭投票界面并显示大结算界面

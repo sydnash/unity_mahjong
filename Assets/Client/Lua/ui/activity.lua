@@ -24,13 +24,11 @@ function activity:onInit()
 end
 
 function activity:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function activity:onTitlebarTabActivityClickedHandler()
-    playButtonClickSound()
-
     self.mTitlebarTabActivity:hide()
     self.mTitlebarTabActivityS:show()
     self.mTitlebarTabAffiche:show()
@@ -38,11 +36,11 @@ function activity:onTitlebarTabActivityClickedHandler()
 
     self.mActivity:show()
     self.mAffiche:hide()
+
+    playButtonClickSound()
 end
 
 function activity:onTitlebarTabAfficheClickedHandler()
-    playButtonClickSound()
-
     self.mTitlebarTabActivity:show()
     self.mTitlebarTabActivityS:hide()
     self.mTitlebarTabAffiche:hide()
@@ -50,6 +48,8 @@ function activity:onTitlebarTabAfficheClickedHandler()
 
     self.mActivity:hide()
     self.mAffiche:show()
+
+    playButtonClickSound()
 end
 
 function activity:onCloseAllUIHandler()

@@ -41,58 +41,58 @@ function enterPlaybackCode:onInit()
 end
 
 function enterPlaybackCode:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNum0ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(0)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNum1ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(1)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNum2ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(2)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNum3ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(3)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNum4ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(4)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNum5ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(5)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNum6ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(6)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNum7ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(7)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNum8ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(8)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNum9ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(9)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onNumberClickedHandler(num)
@@ -109,20 +109,17 @@ function enterPlaybackCode:onNumberClickedHandler(num)
 end
 
 function enterPlaybackCode:onDeleteClickedHandler()
-    playButtonClickSound()
-
     local length = #self.numbers
-    if length <= 0 then
-        return
+    if length > 0 then
+        self.mDisplayerSlots[length]:setText(string.empty)
+        table.remove(self.numbers)
     end
-    self.mDisplayerSlots[length]:setText(string.empty)
-
-    table.remove(self.numbers)
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:onResetClickedHandler()
-    playButtonClickSound()
     self:reset()
+    playButtonClickSound()
 end
 
 function enterPlaybackCode:enter()

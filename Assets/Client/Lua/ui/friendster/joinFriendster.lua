@@ -27,13 +27,11 @@ function joinFriendster:onInit()
 end
 
 function joinFriendster:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function joinFriendster:onQueryClickedHandler()
-    playButtonClickSound()
-
     local id = tonumber(self.mId:getText())
     local vc = self.mVerification:getText()
 
@@ -55,11 +53,11 @@ function joinFriendster:onQueryClickedHandler()
         
         self.mName:setText(msg.ClubName)
     end)
+
+    playButtonClickSound()
 end
 
 function joinFriendster:onJoinClickedHandler()
-    playButtonClickSound()
-
     local id = tonumber(self.mId:getText())
     local vc = self.mVerification:getText()
 
@@ -77,6 +75,8 @@ function joinFriendster:onJoinClickedHandler()
         showMessageUI("加入亲友圈申请发送成功，等待群主审核")
         self:close()
     end)
+
+    playButtonClickSound()
 end
 
 function joinFriendster:onIdChangedHandler()

@@ -41,58 +41,58 @@ function enterDesk:onInit()
 end
 
 function enterDesk:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function enterDesk:onNum0ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(0)
+    playButtonClickSound()
 end
 
 function enterDesk:onNum1ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(1)
+    playButtonClickSound()
 end
 
 function enterDesk:onNum2ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(2)
+    playButtonClickSound()
 end
 
 function enterDesk:onNum3ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(3)
+    playButtonClickSound()
 end
 
 function enterDesk:onNum4ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(4)
+    playButtonClickSound()
 end
 
 function enterDesk:onNum5ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(5)
+    playButtonClickSound()
 end
 
 function enterDesk:onNum6ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(6)
+    playButtonClickSound()
 end
 
 function enterDesk:onNum7ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(7)
+    playButtonClickSound()
 end
 
 function enterDesk:onNum8ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(8)
+    playButtonClickSound()
 end
 
 function enterDesk:onNum9ClickedHandler()
-    playButtonClickSound()
     self:onNumberClickedHandler(9)
+    playButtonClickSound()
 end
 
 function enterDesk:onNumberClickedHandler(num)
@@ -109,18 +109,18 @@ function enterDesk:onNumberClickedHandler(num)
 end
 
 function enterDesk:onDeleteClickedHandler()
-    playButtonClickSound()
-
     local length = #self.numbers
     if length > 0 then
         self.mDisplayerSlots[length]:setText(string.empty)
         table.remove(self.numbers)
     end
+
+    playButtonClickSound()
 end
 
 function enterDesk:onResetClickedHandler()
-    playButtonClickSound()
     self:reset()
+    playButtonClickSound()
 end
 
 function enterDesk:enter()

@@ -51,24 +51,22 @@ function createFriendster:onInit()
 end
 
 function createFriendster:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function createFriendster:onExpandClickedHandler()
-    playButtonClickSound()
-
     self.mExpand:hide()
     self.mUnexpand:show()
     self.mCityList:show()
+    playButtonClickSound()
 end
 
 function createFriendster:onUnexpandClickedHandler()
-    playButtonClickSound()
-
     self.mExpand:show()
     self.mUnexpand:hide()
     self.mCityList:hide()
+    playButtonClickSound()
 end
 
 function createFriendster:onNameChangedHandler()
@@ -76,8 +74,6 @@ function createFriendster:onNameChangedHandler()
 end
 
 function createFriendster:onCreateClickedHandler()
-    playButtonClickSound()
-
     showWaitingUI("正在创建亲友圈")
     networkManager.createFriendster(self.cityId, self.mName:getText(), function(msg)
         closeWaitingUI()
@@ -100,16 +96,17 @@ function createFriendster:onCreateClickedHandler()
 
         self:close()
     end)
+
+    playButtonClickSound()
 end
 
 function createFriendster:onCityChangedHandler(sender, selected, clicked)
     if clicked and selected then
-        playButtonClickSound()
-
         self.cityId = sender.id
         self.mCity:setText(cityName[sender.id])
 
         self:refreshCreateState()
+        playButtonClickSound()
     end
 end
 

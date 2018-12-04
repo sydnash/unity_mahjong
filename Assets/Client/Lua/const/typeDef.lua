@@ -136,8 +136,25 @@ signalType = {
 --
 --------------------------------------------------------------
 cityType = {
-    chengdu = 1000,
-    jintang = 3,   
+    chengdu     = 1000, --成都
+    wenjiang    = 1,    --温江
+    pixian      = 2,    --郫县
+    jintang     = 3,    --金堂
+    huayang     = 4,    --华阳
+    dayi        = 5,    --大邑
+    qionglai    = 6,    --邛崃
+    suining     = 7,    --遂宁
+    renshou     = 8,    --仁寿
+    jianyang    = 9,    --简阳
+    zhongjiang  = 10,   --中江
+    guanghan    = 11,   --广汉
+    xichong     = 12,   --西充
+    nanchong    = 13,   --南充
+    maoxian     = 14,   --茂县
+    anyue       = 15,   --安岳
+    tianquan    = 16,   --天泉
+    yingjing    = 17,   --荥经
+    jiangyou    = 18,   --江油
 }
 
 --------------------------------------------------------------
@@ -152,7 +169,13 @@ cityTypeSID = {
 --
 --------------------------------------------------------------
 gameType = {
-    mahjong = 5,
+    doushisi    = 2, --斗十四
+    erqishi     = 3, --贰柒拾
+    paodekuai   = 4, --跑得快
+    mahjong     = 5, --麻将
+    doudizhu    = 6, --斗地主
+    hundizhu    = 7, --荤地主
+    dpd14       = 8, --短牌斗十四
 }
 
 --------------------------------------------------------------

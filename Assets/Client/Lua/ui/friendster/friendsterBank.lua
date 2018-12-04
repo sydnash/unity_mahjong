@@ -36,13 +36,11 @@ function friendsterBank:onInit()
 end
 
 function friendsterBank:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function friendsterBank:onTabDepositClickedHandler()
-    playButtonClickSound()
-
     self.mTabDeposit:hide()
     self.mTabDepositS:show()
     self.mTabTakeout:show()
@@ -55,11 +53,11 @@ function friendsterBank:onTabDepositClickedHandler()
 
     self.mDeposit:show()
     self.mTakeout:hide()
+
+    playButtonClickSound()
 end
 
 function friendsterBank:onTabTakeoutClickedHandler()
-    playButtonClickSound()
-
     self.mTabDeposit:show()
     self.mTabDepositS:hide()
     self.mTabTakeout:hide()
@@ -72,11 +70,11 @@ function friendsterBank:onTabTakeoutClickedHandler()
 
     self.mDeposit:hide()
     self.mTakeout:show()
+
+    playButtonClickSound()
 end
 
 function friendsterBank:onDepositClickedHandler()
-    playButtonClickSound()
-
     local value = math.min(gamepref.player.cards, tonumber(self.mCurrent:getText()))
 
     showWaitingUI("正在存入房卡，请稍候")
@@ -95,11 +93,11 @@ function friendsterBank:onDepositClickedHandler()
         signalManager.signal(signalType.cardsChanged)
         self:close()
     end)
+
+    playButtonClickSound()
 end
 
 function friendsterBank:onTakeoutClickedHandler()
-    playButtonClickSound()
-
     local value = math.min(self.data.cards, tonumber(self.mCurrent:getText()))
 
     showWaitingUI("正在取出房卡，请稍候")
@@ -118,6 +116,8 @@ function friendsterBank:onTakeoutClickedHandler()
         signalManager.signal(signalType.cardsChanged)
         self:close()
     end)
+
+    playButtonClickSound()
 end
 
 function friendsterBank:onCloseAllUIHandler()
