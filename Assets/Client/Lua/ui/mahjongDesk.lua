@@ -166,9 +166,9 @@ end
 function mahjongDesk:onInviteWXClickedHandler()
     playButtonClickSound()
 
-    local image = textureManager.load(string.empty, "appIcon")
+    local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then
-        platformHelper.shareUrlWx("好友邀请", 
+        platformHelper.shareUrlWx(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.gameType], self.game.deskId), 
                                   self:getInvitationInfo(), 
                                   networkConfig.server.shareURL,
                                   image,
@@ -182,7 +182,7 @@ end
 function mahjongDesk:onInviteXLClickedHandler()
     playButtonClickSound()
 
-    local image = textureManager.load(string.empty, "appIcon")
+    local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then
         local params = { cityType = self.game.cityType, deskId = self.game.deskId, }
 
@@ -200,7 +200,7 @@ end
 
 function mahjongDesk:getInvitationInfo()
     local prefix = (self.friendsterId == nil) and string.empty or string.format("亲友圈：%d，", self.friendsterId)
-    return string.format("%s类型：血战到底，人数：%d/%d", 
+    return string.format("%s，人数：%d/%d", 
                          prefix,
                          self.game:getPlayerCount(),
                          self.game:getTotalPlayerCount())

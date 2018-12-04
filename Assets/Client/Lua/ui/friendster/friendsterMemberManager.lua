@@ -14,7 +14,6 @@ end
 
 function friendsterMemberManager:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
-    self.mId:addChangedListener(self.onIdChangedHandler, self)
     self.mQuery:addClickListener(self.onQueryClickedHandler, self)
     self.mTabAdd:addClickListener(self.onTabAddClickedHandler, self)
     self.mTabDelete:addClickListener(self.onTabDeleteClickedHandler, self)
@@ -32,8 +31,6 @@ function friendsterMemberManager:onInit()
     self.mId:setText(string.empty)
     self.mName:setText(string.empty)
 
-    self:refreshAddState()
-
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
@@ -42,13 +39,16 @@ function friendsterMemberManager:onCloseClickedHandler()
     playButtonClickSound()
 end
 
-function friendsterMemberManager:onIdChangedHandler()
-    self:refreshAddState()
-    self:refreshDeleteState()
-end
-
 function friendsterMemberManager:onQueryClickedHandler()
-    local id = tonumber(self.mId:getText())
+    local text = self.mId:getText()
+
+    if string.isNilOrEmpty(text) then
+        showMessageUI("请输入玩家账号")
+        playButtonClickSound()
+        return
+    end
+
+    local id = tonumber(text)
 
     showWaitingUI("正在查询玩家信息，请稍候")
     networkManager.queryAcId(id, function(msg)
@@ -59,7 +59,6 @@ function friendsterMemberManager:onQueryClickedHandler()
             return
         end
 
---        log("query player info, msg = " .. table.tostring(msg))
         self.mName:setText(cutoutString(msg.Nickname, gameConfig.nicknameMaxLength))
     end)
 
@@ -78,7 +77,6 @@ function friendsterMemberManager:onTabAddClickedHandler()
     self.mId:setText(string.empty)
     self.mName:setText(string.empty)
 
-    self:refreshAddState()
     playButtonClickSound()
 end
 
@@ -94,12 +92,19 @@ function friendsterMemberManager:onTabDeleteClickedHandler()
     self.mId:setText(string.empty)
     self.mName:setText(string.empty)
 
-    self:refreshDeleteState()
     playButtonClickSound()
 end
 
 function friendsterMemberManager:onAddClickedHandler()
-    local acid = tonumber(self.mId:getText())
+    local text = self.mId:getText()
+
+    if string.isNilOrEmpty(text) then
+        showMessageUI("请输入玩家账号")
+        playButtonClickSound()
+        return
+    end
+
+    local acid = tonumber(text)
 
     showWaitingUI("正在将玩家添加到亲友圈，请稍候")
     networkManager.addAcIdToFriendster(self.friendsterId, acid, function(msg)
@@ -125,7 +130,15 @@ function friendsterMemberManager:onAddClickedHandler()
 end
 
 function friendsterMemberManager:onDeleteClickedHandler()
-    local acid = tonumber(self.mId:getText())
+    local text = self.mId:getText()
+
+    if string.isNilOrEmpty(text) then
+        showMessageUI("请输入玩家账号")
+        playButtonClickSound()
+        return
+    end
+
+    local acid = tonumber(text)
 
     showWaitingUI("正在将玩家从亲友圈中删除，请稍候")
     networkManager.deleteAcIdFromFriendster(self.friendsterId, acid, function(msg)
@@ -148,30 +161,6 @@ function friendsterMemberManager:onDeleteClickedHandler()
     end)
 
     playButtonClickSound()
-end
-
-function friendsterMemberManager:refreshAddState()
-    local acid = self.mId:getText()
-
-    if string.isNilOrEmpty(acid) then
-        self.mAdd:setInteractabled(false)    
-        self.mAddZ:setSprite("gray")
-    else
-        self.mAdd:setInteractabled(true)
-        self.mAddZ:setSprite("light")
-    end
-end
-
-function friendsterMemberManager:refreshDeleteState()
-    local acid = self.mId:getText()
-
-    if string.isNilOrEmpty(acid) then
-        self.mDelete:setInteractabled(false)  
-        self.mDeleteZ:setSprite("gray")  
-    else
-        self.mDelete:setInteractabled(true)
-        self.mDeleteZ:setSprite("light")  
-    end
 end
 
 function friendsterMemberManager:onCloseAllUIHandler()
