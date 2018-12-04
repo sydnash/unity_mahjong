@@ -169,10 +169,63 @@ end
 function setting:onBackClickedHandler()
     if self.game ~= nil then
         self.game:exitGame()
-        self:close()
     end
 
+    if gamepref.player.currentDesk ~= nil then
+        local friendsterId = gamepref.player.currentDesk.friendsterId
+        self:openFriendsterUI(friendsterId)
+    end
+
+    self:close()
     playButtonClickSound()
+end
+
+function setting:openFriendsterUI(friendsterId)
+    if friendsterId == nil or friendsterId <= 0 then
+        return
+    end
+
+    showWaitingUI("请稍候...")
+    networkManager.queryFriendsterList(function(msg)
+        if msg == nil then
+            closeWaitingUI()
+            return
+        end
+
+        local ui = require("ui.friendster.friendster").new(msg.Clubs)
+        ui:show()
+
+        local data = ui.friendsters[friendsterId]
+        if data ~= nil then
+            showWaitingUI("请稍候...")
+
+            networkManager.queryFriendsterMembers(friendsterId, function(msg)
+                if msg == nil or msg.RetCode ~= retc.ok then
+                    closeWaitingUI()
+                    return
+                end
+
+                data:setMembers(msg.Players)
+
+                networkManager.queryFriendsterDesks(friendsterId, function(msg)
+                    closeWaitingUI()
+
+                    if msg == nil or msg.RetCode ~= retc.ok then
+                        return
+                    end
+
+                    data:setDesks(msg.Desks)
+
+                    local detail = require("ui.friendster.friendsterDetail").new(data)
+                    detail:show()
+
+                    detail:refreshUI()
+                    detail:refreshMemberList()
+                    detail:refreshDeskList()
+                end)
+            end)
+        end
+    end)
 end
 
 function setting:onCloseAllUIHandler()

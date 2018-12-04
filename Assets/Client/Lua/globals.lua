@@ -52,6 +52,7 @@ function showWaitingUI(text)
         waiting_ui = waiting.new(text)
     else
         waiting_ui:setText(text)
+        waiting_ui:setAsLastSibling()
     end
 
     waiting_ui:show()

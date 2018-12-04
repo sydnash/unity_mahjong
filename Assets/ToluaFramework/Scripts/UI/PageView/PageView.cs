@@ -78,6 +78,33 @@ public class PageView : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="listener"></param>
+    public void AddListener(Action<int> listener)
+    {
+        OnPageChanged += listener;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="listener"></param>
+    public void RemoveListener(Action<int> listener)
+    {
+        OnPageChanged -= listener;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="listener"></param>
+    public void RemoveAllListeners()
+    {
+        OnPageChanged = null;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public void Reset()
     {
         mScrollRect.horizontalNormalizedPosition = 0;
