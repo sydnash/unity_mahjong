@@ -143,6 +143,13 @@ function friendster:addDesk(data)
     return desk
 end
 
+function friendster:getDeskByDeskId(deskId)
+    if self.desks == nil then
+        return nil
+    end
+    return self.desks[deskId]
+end
+
 function friendster:removeDesk(deskId)
     if not self.desks then
         return

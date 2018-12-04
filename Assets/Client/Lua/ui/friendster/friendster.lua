@@ -249,6 +249,7 @@ function friendster:onNotifyFriendster(msg)
 
     local lc = self.friendsters[d.ClubId]
 
+    log("on notify friednster msg: " .. table.tostring(msg))
     if t == friendsterNotifyType.createDesk then
         if lc ~= nil then
             lc:addDesk(d.DeskInfo)
@@ -260,7 +261,7 @@ function friendster:onNotifyFriendster(msg)
         end
     elseif t == friendsterNotifyType.deskStart then
         if lc ~= nil then
-            local desk = lc.desks[d.DeskId]
+            local desk = lc:getDeskByDeskId(d.DeskId)
             if desk ~= nil then
                 desk.state = friendsterDeskStatus.playing
             end
@@ -302,7 +303,7 @@ function friendster:onNotifyFriendster(msg)
             self.detailUI:refreshUI()
         end
     elseif t == friendsterNotifyType.deskJuShuChanged then
-        local desk = lc.desks[d.DeskId]
+        local desk = lc:getDeskByDeskId(d.DeskId)
         if desk then
             desk.playedCount = d.CurJu
             if self.detailUI ~= nil then
