@@ -104,10 +104,10 @@ function lobby:onReturnDeskClickedHandler()
 end
 
 function lobby:onCreateDeskClickedHandler()
-    playButtonClickSound()
     
     local ui = require("ui.createDesk").new(gamepref.city.City, 0)
     ui:show()
+    playButtonClickSound()
 end
 
 function lobby:onEnterQYQClickedHandler()

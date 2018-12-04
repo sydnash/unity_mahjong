@@ -101,14 +101,12 @@ end
 
 function gvoiceManager.play(filename, acId)
     if gvoiceManager.status then
-        log("==========================" .. tostring(filename))
         local bytes = LFS.ReadBytes(filename)
         if not bytes or bytes.Length <= 0 then
             return false
         end
         isPlaying = true
 
-        log("gvoice start play : "  .. tostring(bytes.Length) .. " " .. tostring(acId) .. " " .. filename)
         soundManager.setBGMVolume(0)
         soundManager.setSFXVolume(0)
 
@@ -185,14 +183,12 @@ function gvoiceManager.checkHasNewFileNeedPlay()
     end
     local msg = gvoiceManager.downloadFileQueue[1]
     table.remove(gvoiceManager.downloadFileQueue, 1)
-    log("=========================" .. table.tostring(msg.filename))
     gvoiceManager.play(msg.filename)
 end
 
 function gvoiceManager.onPlayFinishedHandler(ok, filename)
     if gvoiceManager.status and playFinishedCallback ~= nil then
         log("gvoice finishd handler " .. filename)
-        log("gvoice " .. table.tostring(gvoiceManager.fileNameToAcId))
         local acId = gvoiceManager.fileNameToAcId[filename]
         playFinishedCallback(filename, acId)
         gvoiceManager.fileNameToAcId[filename] = nil
