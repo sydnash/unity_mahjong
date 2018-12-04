@@ -13,8 +13,8 @@ function friendsterMessage:onInit()
 end
 
 function friendsterMessage:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function friendsterMessage:set(friendsterId, data)

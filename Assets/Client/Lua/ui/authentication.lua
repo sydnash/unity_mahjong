@@ -19,8 +19,8 @@ function authentication:onInit()
 end
 
 function authentication:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function authentication:onNameChangedHandler(name)
@@ -32,10 +32,10 @@ function authentication:onSfzChangedHandler(sfz)
 end
 
 function authentication:onCommitClickedHandler()
-    playButtonClickSound()
-
     showMessageUI("实名认证提交成功！")
     self:close()
+
+    playButtonClickSound()
 end
 
 function authentication:refreshUI()

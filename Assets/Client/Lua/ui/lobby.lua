@@ -50,17 +50,17 @@ function lobby:onInit()
 end
 
 function lobby:onHeadClickedHandler()
-    playButtonClickSound()
-
     local ui = require("ui.playerInfo").new(gamepref.player)
     ui:show()
+
+    playButtonClickSound()
 end
 
 function lobby:onSwitchCityClickedHandler()
-    playButtonClickSound()
-
     local ui = require("ui.city").new()
     ui:show()
+
+    playButtonClickSound()
 end
 
 function lobby:onAddRoomCardClickedHandler()
@@ -73,10 +73,10 @@ function lobby:onHelpClickedHandler()
 end
 
 function lobby:onSettingClickedHandler()
-    playButtonClickSound()
-    
     local ui = require("ui.setting").new()
     ui:show()
+
+    playButtonClickSound()
 end
 
 function lobby:onAccuseClickedHandler()
@@ -85,13 +85,13 @@ function lobby:onAccuseClickedHandler()
 end
 
 function lobby:onEnterDeskClickedHandler()
-    playButtonClickSound()
-
     local ui = require("ui.enterDesk").new(function(deskId)
         local cityType = gamepref.city.City
         enterDesk(cityType, deskId)
     end)
     ui:show()
+
+    playButtonClickSound()
 end
 
 function lobby:onReturnDeskClickedHandler()
@@ -104,9 +104,9 @@ function lobby:onReturnDeskClickedHandler()
 end
 
 function lobby:onCreateDeskClickedHandler()
-    
     local ui = require("ui.createDesk").new(gamepref.city.City, 0)
     ui:show()
+
     playButtonClickSound()
 end
 
@@ -155,31 +155,31 @@ function lobby:onRankClickedHandler()
 end
 
 function lobby:onActivityClickedHandler()
-    playButtonClickSound()
-
     local ui = require("ui.activity").new()
     ui:show()
+
+    playButtonClickSound()
 end
 
 function lobby:onShareClickedHandler()
-    playButtonClickSound()
-    
     local ui = require("ui.share").new()
     ui:show()
+
+    playButtonClickSound()
 end
 
 function lobby:onAuthenticateClickedHandler()
-    playButtonClickSound()
-
     local ui = require("ui.authentication").new()
     ui:show()
+
+    playButtonClickSound()
 end
 
 function lobby:onMailClickedHandler()
-    playButtonClickSound()
-    
     local ui = require("ui.mail.mail").new()
     ui:show()
+
+    playButtonClickSound()
 end
 
 function lobby:onCardsChangedHandler()
@@ -195,11 +195,9 @@ function lobby:onCityChangedHandler(city)
 end
 
 function lobby:onDeskDestroyHandler(deskId)
-    if gamepref.player.currentDesk == nil or gamepref.player.currentDesk.deskId == deskId then
+    if gamepref.player.currentDesk ~= nil and gamepref.player.currentDesk.deskId == deskId then
         self.mReturnDesk:hide()
         self.mCreateDesk:show()
-
-        gamepref.player.currentDesk = nil
     end
 end
 

@@ -55,20 +55,17 @@ function deskDetail:onInit()
 end
 
 function deskDetail:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function deskDetail:onJoinClickedHandler()
-    playButtonClickSound()
-
     enterDesk(self.cityType, self.deskId)
     self:close()
+    playButtonClickSound()
 end
 
 function deskDetail:onDissolveClickedHandler()
-    playButtonClickSound()
-
     networkManager.dissolveFriendsterDesk(self.friendsterId, self.cityType, self.deskId, function(msg)
         if msg == nil then
             showMessageUI(NETWORK_IS_BUSY)
@@ -83,6 +80,7 @@ function deskDetail:onDissolveClickedHandler()
         showMessageUI(string.format("房间[%d]已经解散", self.deskId))
     end)
     self:close()
+    playButtonClickSound()
 end
 
 function deskDetail:onCloseAllUIHandler()

@@ -110,13 +110,11 @@ function friendster:onInit()
 end
 
 function friendster:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function friendster:onMyClickedHandler()
-    playButtonClickSound()
-
     self.mTabMyS:show()
     self.mTabMyU:hide()
     self.mTabJoinedS:hide()
@@ -132,11 +130,11 @@ function friendster:onMyClickedHandler()
 
     self.filter = filter.my
     self:refreshList()
+
+    playButtonClickSound()
 end
 
 function friendster:onJoinedClickedHandler()
-    playButtonClickSound()
-
     self.mTabMyS:hide()
     self.mTabMyU:show()
     self.mTabJoinedS:show()
@@ -152,11 +150,11 @@ function friendster:onJoinedClickedHandler()
 
     self.filter = filter.joined
     self:refreshList()
+
+    playButtonClickSound()
 end
 
 function friendster:onGuideClickedHandler()
-    playButtonClickSound()
-
     self.mTabMyS:hide()
     self.mTabMyU:show()
     self.mTabJoinedS:hide()
@@ -168,11 +166,10 @@ function friendster:onGuideClickedHandler()
     self.mPageGuide:show()
 
     self.filter = filter.none
+    playButtonClickSound()
 end
 
 function friendster:onCreateClickedHandler()
-    playButtonClickSound()
-
     if gamepref.player.userType == userType.proxy or gamepref.player.userType == userType.operation then
         local ui = require("ui.friendster.createFriendster").new(function(friendster)
             local lc = createFriendsterLC(friendster)
@@ -189,13 +186,15 @@ function friendster:onCreateClickedHandler()
     else
         showMessageUI("您不是代理没有创建亲友圈的权限，\n可以联系客服成为代理哦")
     end
+
+    playButtonClickSound()
 end
 
 function friendster:onJoinClickedHandler()
-    playButtonClickSound()
-
     local ui = require("ui.friendster.joinFriendster").new()
     ui:show()
+
+    playButtonClickSound()
 end
 
 function friendster:refreshList()
@@ -220,14 +219,17 @@ function friendster:refreshList()
 
             local createItem = function()
                 return require("ui.friendster.friendsterItem").new(function(data)
-                    self.detailUI = require("ui.friendster.friendsterDetail").new(function()
+                    self.detailUI = require("ui.friendster.friendsterDetail").new(data, function()
                         if self.detailUI ~= nil then
                             self.detailUI:close()
                             self.detailUI = nil
                         end
                     end)
-                    self.detailUI:set(data)
                     self.detailUI:show()
+
+                    self.detailUI:refreshUI()
+                    self.detailUI:refreshMemberList()
+                    self.detailUI:refreshDeskList()
                 end)
             end
 
@@ -241,7 +243,7 @@ function friendster:refreshList()
 end
 
 function friendster:onNotifyFriendster(msg)
-    log("friendster:onNotifyFriendster, msg = " .. table.tostring(msg))
+--    log("friendster:onNotifyFriendster, msg = " .. table.tostring(msg))
     local t = msg.Type
     local d = table.fromjson(msg.Msg) 
 
@@ -277,8 +279,8 @@ function friendster:onNotifyFriendster(msg)
             end
 
             if gamepref.player.currentDesk ~= nil and gamepref.player.currentDesk.deskId == d.DeskId then
-                gamepref.player.currentDesk = nil
                 signalManager.signal(signalType.deskDestroy, d.DeskId)
+                gamepref.player.currentDesk = nil
             end
         end
     elseif t == friendsterNotifyType.deskPlayerEnter then

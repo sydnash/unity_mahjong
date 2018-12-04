@@ -84,6 +84,17 @@ function tweenManager.remove(tween)
     end
 end
 
+-------------------------------------------------------------------
+-- scaling is between 0.01 and 100
+-------------------------------------------------------------------
+function tweenManager.scaleTime(scaling)
+    if queue == nil then return end
+
+    for _, v in pairs(queue) do
+        v:scaleTime(scaling)
+    end
+end
+
 return tweenManager
 
 --endregion

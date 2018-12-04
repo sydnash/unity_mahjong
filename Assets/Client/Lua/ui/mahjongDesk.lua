@@ -166,9 +166,9 @@ end
 function mahjongDesk:onInviteWXClickedHandler()
     playButtonClickSound()
 
-    local image = textureManager.load(string.empty, "appIcon")
+    local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then
-        platformHelper.shareUrlWx("好友邀请", 
+        platformHelper.shareUrlWx(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.gameType], self.game.deskId), 
                                   self:getInvitationInfo(), 
                                   networkConfig.server.shareURL,
                                   image,
@@ -182,11 +182,11 @@ end
 function mahjongDesk:onInviteXLClickedHandler()
     playButtonClickSound()
 
-    local image = textureManager.load(string.empty, "appIcon")
+    local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then
         local params = { cityType = self.game.cityType, deskId = self.game.deskId, }
 
-        platformHelper.shareInvitationSg("好友邀请", 
+        platformHelper.shareInvitationSg(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.gameType], self.game.deskId), 
                                          self:getInvitationInfo(), 
                                          image,
                                          table.tojson(params),
@@ -199,8 +199,9 @@ function mahjongDesk:onInviteXLClickedHandler()
 end
 
 function mahjongDesk:getInvitationInfo()
-    return string.format("房号：%d，类型：血战到底，人数：%d/%d", 
-                         self.game.deskId, 
+    local prefix = (self.friendsterId == nil) and string.empty or string.format("亲友圈：%d，", self.friendsterId)
+    return string.format("%s，人数：%d/%d", 
+                         prefix,
                          self.game:getPlayerCount(),
                          self.game:getTotalPlayerCount())
 end
@@ -244,21 +245,17 @@ function mahjongDesk:onPositionClickedHandler()
 end
 
 function mahjongDesk:onSettingClickedHandler()
-    playButtonClickSound()
-
     local ui = require("ui.setting").new(self.game)
     ui:show()
 
---    self.game:proposerQuicklyStart()
+    playButtonClickSound()
 end
 
 function mahjongDesk:onChatClickedHandler()
-    playButtonClickSound()
-
     local ui = require("ui.chat").new()
     ui:show()
 
---    self.game:quicklyStartChose(true)
+    playButtonClickSound()
 end
 
 function mahjongDesk:onVoiceDownClickedHandler(sender, pos)
@@ -436,9 +433,11 @@ function mahjongDesk:onDingQueDo(msg)
     end
 end
 
-function mahjongDesk:onGameInfoClickedHandler()
-    playButtonClickSound()
+function mahjongDesk:onOpDoChu(acId, cards)
+    
+end
 
+function mahjongDesk:onGameInfoClickedHandler()
     local ui = require("ui.deskDetail").new(self.game.cityType, 
                                             self.game.gameType, 
                                             nil,
@@ -447,6 +446,7 @@ function mahjongDesk:onGameInfoClickedHandler()
                                             self.game.deskId,
                                             0)
     ui:show()
+    playButtonClickSound()
 end
 
 function mahjongDesk:onChatMessageHandler(msg)

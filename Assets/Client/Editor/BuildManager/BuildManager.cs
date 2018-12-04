@@ -77,14 +77,23 @@ public class BuildManager : EditorWindow
                     break;
             }
 
-            string targetName = mDevelopment ? "debug" : "release";
+            string targetName = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_") + (mDevelopment ? "debug" : "release") + "_mahjong";
             var targetPath = EditorUtility.SaveFilePanel( "Build", "", targetName, suffix);
 
             if (!string.IsNullOrEmpty(targetPath))
             {
+                string companyName = PlayerSettings.companyName;
+                string productName = PlayerSettings.productName;
+
+                PlayerSettings.companyName = "成都巴蜀互娱科技有限公司";
+                PlayerSettings.productName = "幺九麻将";
+
                 if (mProcessResources) Build.PrepareRes();
                 string err = Build.BuildPackage(targetPath, mTargetPlatform, mDevelopment);
                 if (mProcessResources) Build.ResetRes();
+
+                PlayerSettings.companyName = companyName;
+                PlayerSettings.productName = productName;
 
                 EditorUtility.DisplayDialog("Build", string.IsNullOrEmpty(err) ? "Build succeeded" : "Build failed", "OK");
             }

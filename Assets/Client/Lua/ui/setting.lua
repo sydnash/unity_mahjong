@@ -86,10 +86,9 @@ function setting:onInit()
 end
 
 function setting:onCloseClickedHandler()
-    playButtonClickSound()
-
     gamepref.save()
     self:close()
+    playButtonClickSound()
 end
 
 function setting:onBGMVolumeChangedHandler(value)
@@ -103,77 +102,77 @@ function setting:onSFXVolumeChangedHandler(value)
 end
 
 function setting:onExitClickedHandler()
-    playButtonClickSound()
-
     networkManager.disconnect()
     closeAllUI()
 
     local ui = require("ui.login").new()
     ui:show()
+
+    playButtonClickSound()
 end
 
 function setting:onOverClickedHandler()
-    playButtonClickSound()
     self.game:exitPlayback()
+    playButtonClickSound()
 end
 
 function setting:onMandarinChangedHandler(sender, selected, clicked)
     if clicked then
-        playButtonClickSound()
-
         if selected then
             gamepref.setLanguage(language.mandarin)
         end
+
+        playButtonClickSound()
     end
 end
 
 function setting:onSichuanChangedHandler(sender, selected, clicked)
     if clicked then
-        playButtonClickSound()
-
         if selected then
             gamepref.setLanguage(language.sichuan)
         end
+
+        playButtonClickSound()
     end
 end
 
 function setting:on3DModelChangedHandler(sender, selected, clicked)
     if clicked then
-        playButtonClickSound()
-
         if selected then
             --
         end
+
+        playButtonClickSound()
     end
 end
 
 function setting:onWechatHeaderChangedHandler(sender, selected, clicked)
     if clicked then
-        playButtonClickSound()
-
         if selected then
             --
         end
+
+        playButtonClickSound()
     end
 end
 
 
 function setting:onDissolveClickedHandler()
-    playButtonClickSound()
-
     if self.game ~= nil then
         self.game:endGame()
         self:close()
     end
+
+    playButtonClickSound()
 end
 
 function setting:onBackClickedHandler()
-    playButtonClickSound()
-    
     if self.game ~= nil then
         self.game:exitGame()
         self:close()
     end
+
+    playButtonClickSound()
 end
 
 function setting:onCloseAllUIHandler()

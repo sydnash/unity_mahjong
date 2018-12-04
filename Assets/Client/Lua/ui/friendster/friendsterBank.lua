@@ -36,13 +36,11 @@ function friendsterBank:onInit()
 end
 
 function friendsterBank:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function friendsterBank:onTabDepositClickedHandler()
-    playButtonClickSound()
-
     self.mTabDeposit:hide()
     self.mTabDepositS:show()
     self.mTabTakeout:show()
@@ -55,11 +53,11 @@ function friendsterBank:onTabDepositClickedHandler()
 
     self.mDeposit:show()
     self.mTakeout:hide()
+
+    playButtonClickSound()
 end
 
 function friendsterBank:onTabTakeoutClickedHandler()
-    playButtonClickSound()
-
     self.mTabDeposit:show()
     self.mTabDepositS:hide()
     self.mTabTakeout:hide()
@@ -72,12 +70,20 @@ function friendsterBank:onTabTakeoutClickedHandler()
 
     self.mDeposit:hide()
     self.mTakeout:show()
+
+    playButtonClickSound()
 end
 
 function friendsterBank:onDepositClickedHandler()
-    playButtonClickSound()
+    local text = self.mCurrent:getText()
+    
+    if string.isNilOrEmpty(text) then
+        showMessageUI("请输入存入的房卡数量")
+        playButtonClickSound()
+        return
+    end
 
-    local value = math.min(gamepref.player.cards, tonumber(self.mCurrent:getText()))
+    local value = math.min(gamepref.player.cards, tonumber(text))
 
     showWaitingUI("正在存入房卡，请稍候")
     networkManager.depositToFriendsterBank(self.data.id, value, function(msg)
@@ -95,12 +101,20 @@ function friendsterBank:onDepositClickedHandler()
         signalManager.signal(signalType.cardsChanged)
         self:close()
     end)
+
+    playButtonClickSound()
 end
 
 function friendsterBank:onTakeoutClickedHandler()
-    playButtonClickSound()
+    local text = self.mCurrent:getText()
+    
+    if string.isNilOrEmpty(text) then
+        showMessageUI("请输入取出的房卡数量")
+        playButtonClickSound()
+        return
+    end
 
-    local value = math.min(self.data.cards, tonumber(self.mCurrent:getText()))
+    local value = math.min(self.data.cards, tonumber(text))
 
     showWaitingUI("正在取出房卡，请稍候")
     networkManager.takeoutFromFriendsterBank(self.data.id, value, function(msg)
@@ -118,6 +132,8 @@ function friendsterBank:onTakeoutClickedHandler()
         signalManager.signal(signalType.cardsChanged)
         self:close()
     end)
+
+    playButtonClickSound()
 end
 
 function friendsterBank:onCloseAllUIHandler()

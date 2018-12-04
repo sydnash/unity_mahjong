@@ -41,14 +41,14 @@ function playerInfo:onInit()
 end
 
 function playerInfo:onTransferClickedHandler()
-    playButtonClickSound()
     local ui = require("ui.transfer").new()
     ui:show()
+    playButtonClickSound()
 end
 
 function playerInfo:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function playerInfo:onCloseAllUIHandler()

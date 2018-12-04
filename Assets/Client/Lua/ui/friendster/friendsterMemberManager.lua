@@ -7,9 +7,13 @@ local friendsterMemberManager = class("friendsterMemberManager", base)
 
 _RES_(friendsterMemberManager, "FriendsterUI", "FriendsterMemberManagerUI")
 
+function friendsterMemberManager:ctor(friendsterId)
+    self.friendsterId = friendsterId
+    self.super.ctor(self)
+end
+
 function friendsterMemberManager:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
-    self.mId:addChangedListener(self.onIdChangedHandler, self)
     self.mQuery:addClickListener(self.onQueryClickedHandler, self)
     self.mTabAdd:addClickListener(self.onTabAddClickedHandler, self)
     self.mTabDelete:addClickListener(self.onTabDeleteClickedHandler, self)
@@ -27,25 +31,24 @@ function friendsterMemberManager:onInit()
     self.mId:setText(string.empty)
     self.mName:setText(string.empty)
 
-    self:refreshAddState()
-
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function friendsterMemberManager:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
-end
-
-function friendsterMemberManager:onIdChangedHandler()
-    self:refreshAddState()
-    self:refreshDeleteState()
+    playButtonClickSound()
 end
 
 function friendsterMemberManager:onQueryClickedHandler()
-    playButtonClickSound()
+    local text = self.mId:getText()
 
-    local id = tonumber(self.mId:getText())
+    if string.isNilOrEmpty(text) then
+        showMessageUI("请输入玩家账号")
+        playButtonClickSound()
+        return
+    end
+
+    local id = tonumber(text)
 
     showWaitingUI("正在查询玩家信息，请稍候")
     networkManager.queryAcId(id, function(msg)
@@ -56,14 +59,13 @@ function friendsterMemberManager:onQueryClickedHandler()
             return
         end
 
---        log("query player info, msg = " .. table.tostring(msg))
         self.mName:setText(cutoutString(msg.Nickname, gameConfig.nicknameMaxLength))
     end)
+
+    playButtonClickSound()
 end
 
 function friendsterMemberManager:onTabAddClickedHandler()
-    playButtonClickSound()
-
     self.mTabAdd:hide()
     self.mTabAddS:show()
     self.mTabDelete:show()
@@ -75,12 +77,10 @@ function friendsterMemberManager:onTabAddClickedHandler()
     self.mId:setText(string.empty)
     self.mName:setText(string.empty)
 
-    self:refreshAddState()
+    playButtonClickSound()
 end
 
 function friendsterMemberManager:onTabDeleteClickedHandler()
-    playButtonClickSound()
-
     self.mTabAdd:show()
     self.mTabAddS:hide()
     self.mTabDelete:hide()
@@ -92,13 +92,19 @@ function friendsterMemberManager:onTabDeleteClickedHandler()
     self.mId:setText(string.empty)
     self.mName:setText(string.empty)
 
-    self:refreshDeleteState()
+    playButtonClickSound()
 end
 
 function friendsterMemberManager:onAddClickedHandler()
-    playButtonClickSound()
+    local text = self.mId:getText()
 
-    local acid = tonumber(self.mId:getText())
+    if string.isNilOrEmpty(text) then
+        showMessageUI("请输入玩家账号")
+        playButtonClickSound()
+        return
+    end
+
+    local acid = tonumber(text)
 
     showWaitingUI("正在将玩家添加到亲友圈，请稍候")
     networkManager.addAcIdToFriendster(self.friendsterId, acid, function(msg)
@@ -119,12 +125,20 @@ function friendsterMemberManager:onAddClickedHandler()
         showMessageUI("玩家已经添加到亲友圈")
         self:close()
     end)
+
+    playButtonClickSound()
 end
 
 function friendsterMemberManager:onDeleteClickedHandler()
-    playButtonClickSound()
+    local text = self.mId:getText()
 
-    local acid = tonumber(self.mId:getText())
+    if string.isNilOrEmpty(text) then
+        showMessageUI("请输入玩家账号")
+        playButtonClickSound()
+        return
+    end
+
+    local acid = tonumber(text)
 
     showWaitingUI("正在将玩家从亲友圈中删除，请稍候")
     networkManager.deleteAcIdFromFriendster(self.friendsterId, acid, function(msg)
@@ -145,34 +159,8 @@ function friendsterMemberManager:onDeleteClickedHandler()
         showMessageUI("玩家已经从亲友圈中删除")
         self:close()
     end)
-end
 
-function friendsterMemberManager:set(friendsterId)
-    self.friendsterId = friendsterId
-end
-
-function friendsterMemberManager:refreshAddState()
-    local acid = self.mId:getText()
-
-    if string.isNilOrEmpty(acid) then
-        self.mAdd:setInteractabled(false)    
-        self.mAddZ:setSprite("gray")
-    else
-        self.mAdd:setInteractabled(true)
-        self.mAddZ:setSprite("light")
-    end
-end
-
-function friendsterMemberManager:refreshDeleteState()
-    local acid = self.mId:getText()
-
-    if string.isNilOrEmpty(acid) then
-        self.mDelete:setInteractabled(false)  
-        self.mDeleteZ:setSprite("gray")  
-    else
-        self.mDelete:setInteractabled(true)
-        self.mDeleteZ:setSprite("light")  
-    end
+    playButtonClickSound()
 end
 
 function friendsterMemberManager:onCloseAllUIHandler()

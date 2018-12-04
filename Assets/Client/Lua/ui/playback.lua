@@ -8,7 +8,9 @@ local playback = class("playback", base)
 _RES_(playback, "PlaybackUI", "PlaybackUI")
 
 function playback:ctor(game)
-    self.game = game
+    self.game  = game
+    self.speed = 1
+
     self.super.ctor(self)
 end
 
@@ -16,28 +18,55 @@ function playback:onInit()
     self.mPlay:hide()
     self.mPause:show()
 
+    self.game.messageHandlers:setSpeed(self.speed)
+
     self.mPlay:addClickListener(self.onPlayClickedHandler, self)
     self.mPause:addClickListener(self.onPauseClickedHandler, self)
-    self.mPlay:addClickListener(self.onPlayClickedHandler, self)
-    self.mPlay:addClickListener(self.onPlayClickedHandler, self)
+    self.mSlow:addClickListener(self.onSlowClickedHandler, self)
+    self.mQuick:addClickListener(self.onQuickClickedHandler, self)
+
+    self.mSpeedL:setText("x " .. tostring(self.speed))
+    self.mSpeedR:setText("x " .. tostring(self.speed))
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function playback:onPlayClickedHandler()
-    playButtonClickSound()
     self.game:startPlayback()
 
     self.mPlay:hide()
     self.mPause:show()
+
+    playButtonClickSound()
 end
 
 function playback:onPauseClickedHandler()
-    playButtonClickSound()
     self.game:stopPlayback()
 
     self.mPlay:show()
     self.mPause:hide()
+
+    playButtonClickSound()
+end
+
+function playback:onSlowClickedHandler()
+    self.speed = math.max(0.2, self.speed - 0.2)
+    self.game.messageHandlers:setSpeed(self.speed)
+
+    self.mSpeedL:setText("x " .. tostring(self.speed))
+    self.mSpeedR:setText("x " .. tostring(self.speed))
+
+    playButtonClickSound()
+end
+
+function playback:onQuickClickedHandler()
+    self.speed = math.min(2, self.speed + 0.2)
+    self.game.messageHandlers:setSpeed(self.speed)
+
+    self.mSpeedL:setText("x " .. tostring(self.speed))
+    self.mSpeedR:setText("x " .. tostring(self.speed))
+
+    playButtonClickSound()
 end
 
 function playback:onCloseAllUIHandler()
@@ -45,6 +74,7 @@ function playback:onCloseAllUIHandler()
 end
 
 function playback:onDestroy()
+    self.speed = 1
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     self.super.onDestroy(self)
 end 

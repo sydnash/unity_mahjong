@@ -8,6 +8,7 @@ local tweenScale = class("tweenScale")
 --
 -------------------------------------------------------------------
 function tweenScale:ctor(target, duration, from, to, callback)
+    self.speed      = 1
     self.target     = target
     self.duration   = math.max(0.01, duration)
     self.from       = (from == nil) and target.transform.localScale or from
@@ -31,7 +32,7 @@ end
 -------------------------------------------------------------------
 function tweenScale:update()
     if self.playing and not self.finished then
-        local deltaTime = time.realtimeSinceStartup() - self.timestamp
+        local deltaTime = (time.realtimeSinceStartup() - self.timestamp) * self.speed
 
         if deltaTime >= self.duration then
             self.target:setLocalScale(self.to)
@@ -52,6 +53,13 @@ end
 function tweenScale:stop()
     self.playing  = false
     self.finished = true
+end
+
+-------------------------------------------------------------------
+-- speed is between 0.01 and 100
+-------------------------------------------------------------------
+function tweenScale:setSpeed(speed)
+    self.speed = math.min(100, math.max(0.01, speed))
 end
 
 return tweenScale

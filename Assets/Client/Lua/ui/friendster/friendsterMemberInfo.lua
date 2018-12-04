@@ -23,32 +23,28 @@ function friendsterMemberInfo:onInit()
 end
 
 function friendsterMemberInfo:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function friendsterMemberInfo:onExitClickedHandler()
-    playButtonClickSound()
-    
     networkManager.exitFriendster(self.friendsterId, function(msg)
 --        log("exit friendster, msg = " .. table.tostring(msg))
         signalManager.signal(signalType.friendsterExitedSignal, self.friendsterId)
         self:close()
     end)
+    playButtonClickSound()
 end
 
 function friendsterMemberInfo:onDissolveClickedHandler()
-    playButtonClickSound()
-
     networkManager.dissolveFriendster(self.friendsterId, function(msg)
 --        log("dissolve friendster, msg = " .. table.tostring(msg))
         self:close()
     end)
+    playButtonClickSound()
 end
 
 function friendsterMemberInfo:onDeleteClickedHandler()
-    playButtonClickSound()
-
     showWaitingUI("正在将玩家从亲友圈中删除，请稍候")
     networkManager.deleteAcIdFromFriendster(self.friendsterId, self.data.acId, function(msg)
         closeWaitingUI()
@@ -68,6 +64,8 @@ function friendsterMemberInfo:onDeleteClickedHandler()
         showMessageUI("玩家已经从亲友圈中删除")
         self:close()
     end)
+
+    playButtonClickSound()
 end
 
 function friendsterMemberInfo:set(friendsterId, managerId, data)
@@ -88,7 +86,10 @@ function friendsterMemberInfo:set(friendsterId, managerId, data)
         end
     else
         self.mQz:hide()
-        self.mDelete:show()
+
+        if managerId == gamepref.player.acId then
+            self.mDelete:show()
+        end
     end
 
     self.mId:setText(string.format("账号:%d", data.acId))

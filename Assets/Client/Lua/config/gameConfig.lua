@@ -2,7 +2,7 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local ret = {
+local gameConfig = {
     fps                     = 30,       --帧率
     patchEnabled            = false,    --是否启用热更
     nicknameMaxLength       = 5,        --玩家昵称可显示的最大长度
@@ -18,7 +18,8 @@ local ret = {
     },
 }
 
---ret.serverList              = nil
+--gameConfig.serverList = nil
 
-return ret
+return gameConfig
+
 --endregion

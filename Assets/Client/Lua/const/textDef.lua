@@ -36,12 +36,35 @@ retcText = {
 }
 
 gameName = {
-    [gameType.mahjong] = "麻将",
+    [gameType.doushisi]    = "斗十四",
+    [gameType.erqishi]     = "贰柒拾",
+    [gameType.paodekuai]   = "跑得快",
+    [gameType.mahjong]     = "麻将",
+    [gameType.doudizhu]    = "斗地主",
+    [gameType.hundizhu]    = "荤地主",
+    [gameType.dpd14]       = "短牌斗十四",
 }
 
 cityName = {
-    [cityType.chengdu] = "成都",
-    [cityType.jintang] = "金堂",
+    [cityType.chengdu]      = "成都",
+    [cityType.wenjiang]     = "温江",   
+    [cityType.pixian]       = "郫县",     
+    [cityType.jintang]      = "金堂",    
+    [cityType.huayang]      = "华阳",    
+    [cityType.dayi]         = "大邑",
+    [cityType.qionglai]     = "邛崃",
+    [cityType.suining]      = "遂宁",
+    [cityType.renshou]      = "仁寿",
+    [cityType.jianyang]     = "简阳",
+    [cityType.zhongjiang]   = "中江", 
+    [cityType.guanghan]     = "广汉",
+    [cityType.xichong]      = "西充",
+    [cityType.nanchong]     = "南充",
+    [cityType.maoxian]      = "茂县",
+    [cityType.anyue]        = "安岳",
+    [cityType.tianquan]     = "天泉",
+    [cityType.yingjing]     = "荥经",
+    [cityType.jiangyou]     = "江油",
 }
 
 mailGiftName = {
