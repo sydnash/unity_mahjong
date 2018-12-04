@@ -8,7 +8,7 @@ function friendsterDesk:ctor(data)
     self.deskId = data.DeskId
     self.cityType = data.GameType
     self.seatCount = data.SeatCnt
-    self.state = 0
+    self.state = data.Status
 
     self.config = table.fromjson(data.Config)
     self.gameType = self.config.Game

@@ -838,9 +838,6 @@ function mahjongOperation:touchHandler(phase, pos)
                             self.curSelectedMahjong:setSelected(false)
                             self.curSelectedMahjong = self.selectedMahjong
                             self.curSelectedMahjong:setSelected(true)
-                        else
-                            self.curSelectedMahjong:setSelected(false)
-                            self.curSelectedMahjong = nil
                         end
                     end
                 else
@@ -874,6 +871,11 @@ function mahjongOperation:touchHandler(phase, pos)
 
                         self.curSelectedMahjong = nil
                     end
+                end
+            else
+                if self.curSelectedMahjong then
+                    self.curSelectedMahjong:setSelected(false)
+                    self.curSelectedMahjong = nil
                 end
             end
 
@@ -1492,6 +1494,11 @@ function mahjongOperation:relocateInhandMahjongs(acId)
 
         local dir = self.game:getSeatTypeByAcId(player.acId)
         local seat = self.seats[dir]
+        if dir == mahjongGame.seatType.mine then
+            if self.curSelectedMahjong then
+                self.curSelectedMahjong = nil
+            end
+        end
 
         local o = self:getMyInhandMahjongPos(player, 1)
         local r = seat[mahjongGame.cardType.shou][self.game.mode].rot
