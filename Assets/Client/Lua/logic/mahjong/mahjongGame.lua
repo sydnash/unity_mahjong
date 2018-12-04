@@ -1100,6 +1100,7 @@ function mahjongGame:destroy()
     self.messageHandlers:stop()
     self.messageHandlers:clear()
     tweenManager.remove(self.messageHandlers)
+
     if self.mode == gameMode.normal then
         self:unregisterCommandHandlers()
     else

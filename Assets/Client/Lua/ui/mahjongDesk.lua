@@ -99,6 +99,7 @@ function mahjongDesk:onDestroy()
         networkManager.unregisterCommandHandler(protoType.sc.chatMessage)
         signalManager.unregisterSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
         signalManager.unregisterSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
+        signalManager.unregisterSignalHandler(signalType.chatCMsg,  self.onChatCMsgSignalHandler, self)
     end
 
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)

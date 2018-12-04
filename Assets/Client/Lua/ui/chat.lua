@@ -126,12 +126,15 @@ end
 
 function chat:onSendClickedHandler()
     local text = self.mInput:getText()
+    self.mInput:setText(string.empty)
+
     if not string.isNilOrEmpty(text) then
         text = cutoutString(text, gameConfig.messageTextMaxLength)
         networkManager.sendChatMessage(chatType.cmsg, text)
         signalManager.signal(signalType.chatCMsg, text)
     end
 
+    self:close()
     playButtonClickSound()
 end
 
