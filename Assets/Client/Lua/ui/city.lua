@@ -29,8 +29,8 @@ function city:onInit()
 end
 
 function city:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function city:onRegionClickedHandler(sender)
@@ -51,8 +51,6 @@ function city:onRegionClickedHandler(sender)
 end
 
 function city:onCityClickedHandler(sender)
-    playButtonClickSound()
-
     local cityType = sender.id
     if gamepref.city.City ~= cityType then
         gamepref.city.Region = self.regionId
@@ -63,6 +61,7 @@ function city:onCityClickedHandler(sender)
     end
 
     self:close()
+    playButtonClickSound()
 end
 
 function city:onCloseAllUIHandler()

@@ -12,8 +12,8 @@ function agreement:onInit()
 end
 
 function agreement:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 return agreement

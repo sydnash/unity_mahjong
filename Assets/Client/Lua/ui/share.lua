@@ -19,8 +19,8 @@ function share:onInit()
 end
 
 function share:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function share:onHyClickedHandler()

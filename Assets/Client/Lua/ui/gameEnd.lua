@@ -72,35 +72,34 @@ function gameEnd:endAll()
 end
 
 function gameEnd:onOkClickedHandler()
-    playButtonClickSound()
-
     local ui = require("ui.gameOver").new(self.game, self.datas)
     ui:show()
 
     self:close() 
+    playButtonClickSound()
 end
 
 function gameEnd:onNextClickedHandler()
-    playButtonClickSound()
-
     self:close()
-    self.game:ready(true)  
+    self.game:ready(true)
+    playButtonClickSound()
 end
 
 function gameEnd:onShareClickedHandler()
-    playButtonClickSound()
     self.mSharePanel:show()
+    playButtonClickSound()
 end
 
 function gameEnd:onSharePanelClickedHandler()
-    playButtonClickSound()
     self.mSharePanel:hide()
+    playButtonClickSound()
 end
 
 function gameEnd:onRecordClickedHandler()
-    playButtonClickSound()
     local ui = require ("ui.GameEnd.ScoreDetail").new(self.datas.scoreChanges)
     ui:show()
+
+    playButtonClickSound()
 end
 
 function gameEnd:onShareWXClickedHandler()
@@ -147,8 +146,8 @@ function gameEnd:onShareXLClickedHandler()
 end
 
 function gameEnd:onCloseClickedHandler()
-    playButtonClickSound()
     self.game:exitPlayback()
+    playButtonClickSound()
 end
 
 function gameEnd:onCloseAllUIHandler()

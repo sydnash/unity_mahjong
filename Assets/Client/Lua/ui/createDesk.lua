@@ -7,6 +7,8 @@ local createDesk = class("createDesk", base)
 
 _RES_(createDesk, "CreateDeskUI", "CreateDeskUI")
 
+local detailConfigs = {}
+
 function createDesk:ctor(cityType, friendsterId)
     self.cityType = cityType
     self.gameType = gameType.mahjong
@@ -25,13 +27,11 @@ function createDesk:onInit()
 end
 
 function createDesk:onCloseClickedHandler()
-    playButtonClickSound()
     self:close()
+    playButtonClickSound()
 end
 
 function createDesk:onCreateClickedHandler()
-    playButtonClickSound()
-
     local choose = table.clone(self.config[self.gameType])
     choose.Game = self.gameType
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
@@ -57,6 +57,7 @@ function createDesk:onCreateClickedHandler()
     end)
 
     self:writeConfig()
+    playButtonClickSound()
 end
 
 function createDesk:createDetail()
@@ -74,14 +75,22 @@ function createDesk:createDetail()
 end
 
 function createDesk:readConfig()
-    local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "CreateDeskConfigs", cityTypeSID[self.cityType] .. ".txt")
-    local text = LFS.ReadText(path, LFS.UTF8_WITHOUT_BOM)
+    local config = detailConfigs[self.cityType]
 
-    if string.isNilOrEmpty(text) then
-        return deskDetailConfig[self.cityType]
+    if config == nil then
+        local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "CreateDeskConfigs", cityTypeSID[self.cityType] .. ".txt")
+        local text = LFS.ReadText(path, LFS.UTF8_WITHOUT_BOM)
+
+        if string.isNilOrEmpty(text) then
+            config = deskDetailConfig[self.cityType]
+        else
+            config = loadstring(text)()
+        end
+
+        detailConfigs[self.cityType] = config
     end
 
-    return loadstring(text)()
+    return config
 end
 
 function createDesk:writeConfig()

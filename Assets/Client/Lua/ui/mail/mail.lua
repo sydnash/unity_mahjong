@@ -25,15 +25,12 @@ function mail:onInit()
 end
 
 function mail:onCloseClickedHandler()
-    playButtonClickSound()
-
     self:close()
     signalManager.signal(signalType.mail)
+    playButtonClickSound()
 end
 
 function mail:onDeleteClickedHandler()
-    playButtonClickSound()
-
     if self.curMail ~= nil then
         networkManager.deleteMail(self.curMail.id, function(msg)
             if msg == nil then
@@ -52,11 +49,11 @@ function mail:onDeleteClickedHandler()
             self:refreshMails(gamepref.player.mails)
         end)
     end
+
+    playButtonClickSound()
 end
 
 function mail:onGetClickedHandler()
-    playButtonClickSound()
-
     if self.curMail ~= nil then
         networkManager.getRewardsFromMail(self.curMail.id, function(msg)
             if msg == nil then
@@ -87,6 +84,8 @@ function mail:onGetClickedHandler()
             self:refreshContent(mail)
         end)
     end
+
+    playButtonClickSound()
 end
 
 function mail:onMailHandler()

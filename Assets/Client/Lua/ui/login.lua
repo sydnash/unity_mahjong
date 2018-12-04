@@ -106,15 +106,13 @@ function login:onInit()
 end
 
 function login:onSwitchCityClickedHandler()
-    playButtonClickSound()
-
     local ui = require("ui.city").new()
     ui:show()
+
+    playButtonClickSound()
 end
 
 function login:onWechatLoginClickedHandler()
-    playButtonClickSound()
-
     self.mWechatLogin:setInteractabled(false)
     self.mGuestLogin:setInteractabled(false)
 
@@ -127,11 +125,11 @@ function login:onWechatLoginClickedHandler()
             self:close()
         end
     end, networkManager.loginWx)
+
+    playButtonClickSound()
 end
 
 function login:onGuestLoginClickedHandler()
-    playButtonClickSound()
-
     self.mWechatLogin:setInteractabled(false)
     self.mGuestLogin:setInteractabled(false)
 
@@ -144,18 +142,24 @@ function login:onGuestLoginClickedHandler()
             self:close()
         end
     end, networkManager.loginGuest)
+
+    playButtonClickSound()
 end
 
 function login:onAgreementChangedHandler(sender, selected, clicked)
+    if clicked then
+        playButtonClickSound()
+    end
+
     self.mWechatLogin:setInteractabled(selected)
     self.mGuestLogin:setInteractabled(selected)
 end
 
 function login:onUserClickedHandler()
-    playButtonClickSound();
-
     local ui = require("ui.agreement").new()
     ui:show()
+
+    playButtonClickSound();
 end
 
 function login:onCityChangedHandler(city)

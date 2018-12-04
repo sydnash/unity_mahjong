@@ -57,7 +57,8 @@ local function getSoredDesks(desks)
     return d
 end
 
-function friendsterDetail:ctor(callback)
+function friendsterDetail:ctor(data, callback)
+    self.data = data
     self.callback = callback
     self.super.ctor(self)
 end
@@ -80,6 +81,8 @@ function friendsterDetail:onInit()
         self.mReturn:show()
     end
 
+    self.mShare:hide()
+    self.mManage:hide()
     self.mMail:hide()
     self.mMailRP:hide()
     self.mBank:hide()
@@ -87,24 +90,24 @@ function friendsterDetail:onInit()
 
     signalManager.registerSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
     signalManager.registerSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
+    signalManager.registerSignalHandler(signalType.deskDestroy, self.onDeskDestroyHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function friendsterDetail:onCloseClickedHandler()
-    playButtonClickSound()
-
     if self.callback ~= nil then
         self.callback()
     end
 
     self:close()
+    playButtonClickSound()
 end
 
 function friendsterDetail:onShareClickedHandler()
     playButtonClickSound()
     
-    local title = string.format("%s邀请您加入幺九麻将", gamepref.player.nickname)
-    local desc = string.format("点击亲友圈输入编号：%d，邀请码：%s加入亲友圈开始游戏", self.data.id, self.data.applyCode)
+    local title = string.format("%s 邀请您加入幺九麻将", gamepref.player.nickname)
+    local desc = string.format("点击亲友圈，输入编号[%d]和邀请码[%s]加入亲友圈开始游戏", self.data.id, self.data.applyCode)
     local url = networkConfig.server.shareURL
     local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then
@@ -113,39 +116,38 @@ function friendsterDetail:onShareClickedHandler()
 end
 
 function friendsterDetail:onManageClickedHandler()
-    playButtonClickSound()
-
-    local ui = require("ui.friendster.friendsterMemberManager").new()
-    ui:set(self.data.id)
+    local ui = require("ui.friendster.friendsterMemberManager").new(self.data.id)
     ui:show()
+
+    playButtonClickSound()
 end
 
 function friendsterDetail:onCreateClickedHandler()
-    playButtonClickSound()
+    local citySid = cityTypeSID[self.data.cityType]
+    if citySid == nil then
+        showMessageUI(string.format("暂不支持%s地区创建%s房间", cityName[self.cityType], gameName[self.gameType]))
+        playButtonClickSound()
+        return
+    end
 
     local ui = require("ui.createDesk").new(self.data.cityType, self.data.id)
     ui:show()
+
+    playButtonClickSound()
 end
 
 function friendsterDetail:onReturnClickedHandler()
-    playButtonClickSound()
-
     local cityType = gamepref.player.currentDesk.cityType
     local deskId = gamepref.player.currentDesk.deskId
     
     enterDesk(cityType, deskId)
-end
-
-function friendsterDetail:set(data)
-    self.data = data
-
-    self:refreshUI()
-    self:refreshMemberList()
-    self:refreshDeskList()
+    playButtonClickSound()
 end
 
 function friendsterDetail:refreshUI()
     if self.data.managerAcId == gamepref.player.acId then
+        self.mShare:show()
+        self.mManage:show()
         self.mMail:show()
         self.mBank:show()
         self.mStatistics:show()
@@ -238,18 +240,18 @@ function friendsterDetail:refreshDeskList()
 end
 
 function friendsterDetail:onMailClickedHandler()
-    playButtonClickSound()
-    
     self.messageUI = require("ui.friendster.friendsterMessage").new()
     self.messageUI:set(self.data.id, self.data.applyList)
     self.messageUI:show()
+
+    playButtonClickSound()
 end
 
 function friendsterDetail:onBankClickedHandler()
-    playButtonClickSound()
-    
     local ui = require("ui.friendster.friendsterBank").new(self.data)
     ui:show()
+
+    playButtonClickSound()
 end
 
 function friendsterDetail:onStatisticsClickedHandler()
@@ -295,13 +297,23 @@ function friendsterDetail:onMessageOptHandler(args)
     end
 end
 
-function friendsterDetail:onDissolvedHandler(friendsterId)
-    self:close()
+function friendsterDetail:onDeskDestroyHandler(deskId)
+    if gamepref.player.currentDesk ~= nil and gamepref.player.currentDesk.deskId == deskId then
+        self.mCreate:show()
+        self.mReturn:hide()
+    else
+        self.mCreate:hide()
+        self.mReturn:show()
+    end
 end
 
-function friendsterDetail:onExitedHandler(friendsterId)
-    self:close()
-end
+--function friendsterDetail:onDissolvedHandler(friendsterId)
+--    self:close()
+--end
+
+--function friendsterDetail:onExitedHandler(friendsterId)
+--    self:close()
+--end
 
 function friendsterDetail:onCloseAllUIHandler()
     self:close()
@@ -310,6 +322,7 @@ end
 function friendsterDetail:onDestroy()
     signalManager.unregisterSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
     signalManager.unregisterSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
+    signalManager.unregisterSignalHandler(signalType.deskDestroy, self.onDeskDestroyHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     
     self.mMemberList:reset()
