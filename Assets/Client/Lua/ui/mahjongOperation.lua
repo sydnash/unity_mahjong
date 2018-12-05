@@ -221,6 +221,13 @@ function mahjongOperation:onInit()
     self.hnzMahjongs        = {}
     self.redundancyMahjongs = {}
 
+    self.chuPaiHintParent = {
+        [mahjongGame.seatType.top]      = self.mChuT,
+        [mahjongGame.seatType.left]     = self.mChuL,
+        [mahjongGame.seatType.right]    = self.mChuR,
+    }
+    self.mChuPaiHint:hide()
+
     self:loadMahjongs()
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
@@ -239,6 +246,25 @@ function mahjongOperation:loadMahjongs()
         table.insert(self.idleMahjongs, m)
         table.insert(self.mahjongs, m)
     end
+end
+
+function mahjongOperation:showChuPaiHint(acId, id)
+    self:hideChuPaiHint()
+    local st = self.game:getSeatTypeByAcId(acId)
+    local parent = self.chuPaiHintParent[st]
+    if not parent then
+        return
+    end
+    self.mChuPaiHint:show()
+    self.mChuPaiHint:setParent(parent)
+    self.mChuPaiHint:setLocalPosition(Vector3.zero)
+
+    local spriteName = mahjongType[id].name
+    self.mChuPaiHintImg:setSprite(spriteName)
+end
+
+function mahjongOperation:hideChuPaiHint()
+    self.mChuPaiHint:hide()
 end
 
 -------------------------------------------------------------------------------
@@ -362,7 +388,7 @@ function mahjongOperation:onGameSync()
 
     local chu = nil
 
-    for _, u in pairs(self.chuMahjongs) do
+    for acId, u in pairs(self.chuMahjongs) do
         for _, v in pairs(u) do
             if v.id == reenter.CurDiPai then
                 chu = v
@@ -376,6 +402,7 @@ function mahjongOperation:onGameSync()
             p:Set(c.x, c.y + mahjong.z * 0.55 + 0.025, c.z)
             self.chupaiPtr:setLocalPosition(p)
             self.chupaiPtr:show()
+            self:showChuPaiHint(acId, chu.id)
 
             break
         end
@@ -1096,6 +1123,7 @@ function mahjongOperation:virtureChu(mj)
 end
 
 function mahjongOperation:onOpDoChu(acId, cards)
+    self:hideChuPaiHint()
     self:endChuPai()
     local chu = nil
 
@@ -1139,6 +1167,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
         playMahjongSound(cards[1], player.sex)
     end
 
+    self:showChuPaiHint(acId, cards[1])
     self.virtureChuMahjong = nil
     self.mDQTips:hide()
 end
@@ -1147,6 +1176,7 @@ end
 -- 碰
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
+    self:hideChuPaiHint()
     local beAcId = beAcId[1]
 
     local pengMahjongs = self:decreaseInhandMahjongs(acId, cards)
@@ -1178,6 +1208,7 @@ end
 -- 杠
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
+    self:hideChuPaiHint()
     self:endChuPai()
     local detail = opType.gang.detail
 
@@ -1237,6 +1268,7 @@ end
 -- 胡
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
+    self:hideChuPaiHint()
     local hu = nil
     local detail = opType.hu.detail
 
