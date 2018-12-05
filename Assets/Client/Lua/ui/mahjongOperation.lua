@@ -1843,6 +1843,13 @@ function mahjongOperation:onDestroy()
     end
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
+    if self.hnzAnimation ~= nil then
+        self.hnzAnimation:stop()
+        self.hnzAnimation:clear()
+        tweenManager.remove(self.hnzAnimation)
+        self.hnzAnimation = nil
+    end
+
     self:clear(true)
 
     for _, v in pairs(self.diceMats) do
@@ -2070,10 +2077,10 @@ end
 -- 回放换N张
 -------------------------------------------------------------------------------
 function mahjongOperation:onHuanNZhangDoPlayback(msg)
-    local animation = tweenSerial.new(true)
+    self.hnzAnimation = tweenSerial.new(true)
     local huanMahjongs = {}
 
-    animation:add(tweenFunction.new(function()
+    self.hnzAnimation:add(tweenFunction.new(function()
         for _, v in pairs(msg.Dos) do
             self.hnzCount = #v.D
 
@@ -2085,8 +2092,8 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
             end 
         end
     end))
-    animation:add(tweenDelay.new(1.5))
-    animation:add(tweenFunction.new(function()
+    self.hnzAnimation:add(tweenDelay.new(1.5))
+    self.hnzAnimation:add(tweenFunction.new(function()
         for _, v in pairs(msg.Dos) do
             local mahjongs = self.inhandMahjongs[v.AcId]
             for _, u in pairs(v.I) do
@@ -2110,8 +2117,8 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
         end
     end))
 
-    tweenManager.add(animation)
-    animation:play()
+    tweenManager.add(self.hnzAnimation)
+    self.hnzAnimation:play()
 end
 
 return mahjongOperation
