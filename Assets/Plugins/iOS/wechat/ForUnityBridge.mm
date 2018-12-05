@@ -196,6 +196,8 @@ extern "C"
 
         UnitySendMessage("IOSMessageHandler", "OnWXLoginCallback", [param UTF8String]);
     }else if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
+        NSString *param = [NSString stringWithFormat:@"{\"errCode\": %d }", resp.errCode];
+        UnitySendMessage("IOSMessageHandler", "OnWxShareCallback", [param UTF8String]);
         //UnitySendMessage("ShareManager", "WechatCallBack",[[NSString stringWithFormat:@"%d",((SendMessageToWXResp*)resp).errCode] UTF8String]);
     }
     /*else if ([resp isKindOfClass:[PayResp class]]){

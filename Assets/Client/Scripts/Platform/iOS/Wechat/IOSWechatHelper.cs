@@ -14,6 +14,7 @@ public class IOSWechatHelper
 	/// 
 	/// </summary>
 	private static Action<string> mLoginCallback = null;
+	private static Action<string> mShareCallback = null;
 
 	#endregion
 
@@ -44,7 +45,10 @@ public class IOSWechatHelper
 	{
 		mLoginCallback = callback;
 	}
-
+	public static void RegisterShareCallback(Action<string> callback)
+	{
+		mShareCallback = callback;
+	}
 	/// <summary>
 	/// 
 	/// </summary>
@@ -113,6 +117,15 @@ public class IOSWechatHelper
 		if (mLoginCallback != null)
 		{
 			mLoginCallback(json);
+		}
+	}
+
+	public static void OnShareHandler(string json)
+	{
+		Logger.Log ("WX.OnWxShareHandler: json = " + json);
+		if (mShareCallback != null)
+		{
+			mShareCallback(json);
 		}
 	}
 

@@ -8,11 +8,13 @@ public class IOSHelperWrap
 	{
 		L.BeginClass(typeof(IOSHelper), typeof(System.Object));
 		L.RegFunction("RegisterLoginWXCallback", RegisterLoginWXCallback);
+		L.RegFunction("RegisterShareWXCallback", RegisterShareWXCallback);
 		L.RegFunction("LoginWX", LoginWX);
 		L.RegFunction("ShareTextWX", ShareTextWX);
 		L.RegFunction("ShareUrlWX", ShareUrlWX);
 		L.RegFunction("ShareImageWX", ShareImageWX);
 		L.RegFunction("OnLoginWxHandler", OnLoginWxHandler);
+		L.RegFunction("OnWxShareHandler", OnWxShareHandler);
 		L.RegFunction("RegisterInviteSGCallback", RegisterInviteSGCallback);
 		L.RegFunction("SetLogined", SetLogined);
 		L.RegFunction("ShareTextSG", ShareTextSG);
@@ -69,6 +71,23 @@ public class IOSHelperWrap
 			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
 			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
 			obj.RegisterLoginWXCallback(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RegisterShareWXCallback(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
+			obj.RegisterShareWXCallback(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -160,6 +179,23 @@ public class IOSHelperWrap
 			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			obj.OnLoginWxHandler(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnWxShareHandler(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.OnWxShareHandler(arg0);
 			return 0;
 		}
 		catch (Exception e)

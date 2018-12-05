@@ -46,6 +46,11 @@ public class IOSMessageHandler : MonoBehaviour
 		UtilsHelper.OnLocationUpdate (param);
 	}
 
+
+	public void OnWxShareCallback(string json)
+	{
+		IOSHelper.instance.OnWxShareHandler (json);
+	}
 	#endregion
 
 	#region Private
