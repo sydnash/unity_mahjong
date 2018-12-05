@@ -109,6 +109,11 @@ function friendster:onInit()
         self.mDotF,
         self.mDotG,
     }
+
+    self.mGuideView:reset()
+    for _, v in pairs(self.guideDots) do
+        v:setSprite("dark")
+    end
     self.mDotA:setSprite("light")
     self.mGuideView:addChangedListener(self.onGuidePageChangedHandler, self)
 

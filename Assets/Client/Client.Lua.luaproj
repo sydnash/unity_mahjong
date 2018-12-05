@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Lua\clientApp.lua" />
     <Compile Include="Lua\config\chatConfig.lua" />
+    <Compile Include="Lua\config\costConfig.lua" />
     <Compile Include="Lua\config\deskDetailConfig.lua" />
     <Compile Include="Lua\config\deviceConfig.lua" />
     <Compile Include="Lua\config\gameConfig.lua" />
@@ -82,6 +83,8 @@
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDesk.lua" />
     <Compile Include="Lua\ui\friendster\friendsterBank.lua" />
+    <Compile Include="Lua\ui\friendster\winnerDetail.lua" />
+    <Compile Include="Lua\ui\friendster\winnerDetailItem.lua" />
     <Compile Include="Lua\ui\header.lua" />
     <Compile Include="Lua\ui\location.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
