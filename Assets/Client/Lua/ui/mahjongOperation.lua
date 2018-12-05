@@ -225,22 +225,6 @@ function mahjongOperation:onInit()
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
-    local oriScreenAspect = 16 / 9
-    local inhandCamera = GameObjectPicker.instance.camera
-
-    local cmap = getComponentU(inhandCamera, typeof(CustomMapComponent))
-    if not cmap:ContainsKey("fixCameranParam") then
-        local inhandCameraH = inhandCamera.orthographicSize
-        local inhandCameraW = inhandCameraH * oriScreenAspect
-        local newH = inhandCameraW / inhandCamera.aspect
-
-        local inhandCameraBottom = inhandCamera.transform.position.y - inhandCameraH
-        inhandCamera.orthographicSize = newH
-        local newy = inhandCameraBottom + newH
-        inhandCamera.transform.position = Vector3.New(inhandCamera.transform.position.x, newy, inhandCamera.transform.position.z)
-
-        cmap:Add("CustomMapComponent", "true")
-    end
 end
 
 -------------------------------------------------------------------------------

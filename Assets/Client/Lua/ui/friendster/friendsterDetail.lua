@@ -364,7 +364,7 @@ function friendsterDetail:onDestroy()
     signalManager.unregisterSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
     signalManager.unregisterSignalHandler(signalType.deskDestroy, self.onDeskDestroyHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    signalManager.unregisterSignalHandler(signalType.refreshFriendsterDetailInfo, self.onCloseAllUIHandler, self)
+    signalManager.unregisterSignalHandler(signalType.refreshFriendsterDetailInfo, self.onReconnectedHandler, self)
     
     self.mMemberList:reset()
     self.mDeskList:reset()

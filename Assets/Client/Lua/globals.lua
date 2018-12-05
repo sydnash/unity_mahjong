@@ -271,6 +271,19 @@ function enterDesk(gameType, deskId, callback, loading)
     end)
 end
 
+local function fixInhandCameraParam()
+    local oriScreenAspect = 16 / 9
+    local inhandCamera = GameObjectPicker.instance.camera
+    local inhandCameraH = inhandCamera.orthographicSize
+    local inhandCameraW = inhandCameraH * oriScreenAspect
+    local newH = inhandCameraW / inhandCamera.aspect
+
+    local inhandCameraBottom = inhandCamera.transform.position.y - inhandCameraH
+    inhandCamera.orthographicSize = newH
+    local newy = inhandCameraBottom + newH
+    inhandCamera.transform.position = Vector3.New(inhandCamera.transform.position.x, newy, inhandCamera.transform.position.z)
+end
+
 -------------------------------------------------------------
 -- 登录服务器
 -------------------------------------------------------------
@@ -328,6 +341,7 @@ function loginServer(callback, func)
             loading:setProgress(progress)
 
             if completed then
+                fixInhandCameraParam()
                 if cityType == 0 and deskId == 0 then
                     local lobby = require("ui.lobby").new()
                     lobby:show()
