@@ -15,7 +15,15 @@ function share:onInit()
     self.mHY:addClickListener(self.onHyClickedHandler, self)
     self.mPYQ:addClickListener(self.onPyqClickedHandler, self)
 
+    self:updateTips()
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+end
+
+function share:updateTips()
+    local cnt = gamepref.player.shareConfig.count
+    local curCnt = gamepref.player.shareFKTimes
+    local text = string.format("每日不足%d张可以获得%d次分享补充房卡的机会（%d/%d）", gamepref.player.shareConfig.lowLimit, cnt, curCnt, cnt)
+    self.mTips:setText(text)
 end
 
 function share:onCloseClickedHandler()
@@ -35,15 +43,47 @@ function share:onHyClickedHandler()
     end
 end
 
+function share:claimShareCardsReward()
+    if gamepref.player.cards >= gamepref.player.shareConfig.lowLimit then
+        return
+    end
+    if gamepref.player.shareFKTimes >= gamepref.player.shareConfig.count then
+        return
+    end
+
+    showWaitingUI("正在领取房卡...")
+    networkManager.claimShareReward(function(msg)
+        closeWaitingUI()
+        if not msg then
+            showMessageUI("领取失败。")
+        end
+
+        gamepref.player.cards = msg.CurCoin
+        signalManager.signal(signalType.cardsChanged)
+        local claimedCnt = msg.ClaimedCnt
+        gamepref.player.shareFKTimes = claimedCnt
+
+        self:updateTips()
+        if not msg.Ok then
+            gameAssistant.showHintAlertUI("领取失败")
+            return
+        end
+        self:updateTips()
+        showMessageUI(string.format("成功领取%d张房卡", msg.AddCoin))
+    end)
+end
+
 function share:onPyqClickedHandler()
     playButtonClickSound()
 
+    self:claimShareCardsReward()
     local tex = textureManager.load(imagePath, imageName)
     if tex ~= nil then
         local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
         platformHelper.registerShareWXCallback(function(jsonstr)
             platformHelper.registerShareWXCallback(nil)
             local obj = json.decode(jsonstr)
+            self:claimShareCardsReward()
         end)
         platformHelper.shareImageWx(tex, thumb, true)
         textureManager.unload(tex)

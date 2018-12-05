@@ -344,14 +344,27 @@ local function loginC(text, callback)
                 gamepref.desk       = { cityType = msg.DeskInfo.GameType, deskId = msg.DeskInfo.DeskId, }
                 gamepref.player     = require("logic.player.gamePlayer").new(msg.AcId)
                         
-                gamepref.player.headerUrl  = msg.HeadUrl
+                gamepref.player.headerUrl       = msg.HeadUrl
                 gamepref.player:loadHeaderTex()
-                gamepref.player.nickname   = msg.Nickname
-                gamepref.player.ip         = msg.Ip
-                gamepref.player.sex        = Mathf.Clamp(msg.Sex, sexType.boy, sexType.girl)
-                gamepref.player.laolai     = msg.IsLaoLai
-                gamepref.player.cards      = msg.Coin
-                gamepref.player.userType   = msg.UserType
+                gamepref.player.nickname        = msg.Nickname
+                gamepref.player.ip              = msg.Ip
+                gamepref.player.sex             = Mathf.Clamp(msg.Sex, sexType.boy, sexType.girl)
+                gamepref.player.laolai          = msg.IsLaoLai
+                gamepref.player.cards           = msg.Coin
+                gamepref.player.userType        = msg.UserType
+                gamepref.player.shareFKTimes    = msg.ShareCnt
+
+                msg.ShareConfig                 = json.decode(msg.ShareConfig)
+                gamepref.player.shareConfig     = {}
+                gamepref.player.shareConfig.jqReward        = msg.ShareConfig.JQReward
+                gamepref.player.shareConfig.jqMaxCnt        = msg.ShareConfig.JQMaxCnt
+                gamepref.player.shareConfig.jqLogin         = msg.ShareConfig.JQLogin
+                gamepref.player.shareConfig.dayLoginMaxCnt  = msg.ShareConfig.DayLoginMaxCnt
+                --每日分享参数 少于lowlimit可以得房卡，最多count次，一次玲却reward张
+                gamepref.player.shareConfig.lowLimit        = msg.ShareConfig.LowLimit
+                gamepref.player.shareConfig.count           = msg.ShareConfig.Count
+                gamepref.player.shareConfig.reward          = msg.ShareConfig.Reward
+
                 gamepref.player:setMails(msg.Mails)
                 networkManager.startPingPong()
 
@@ -450,6 +463,13 @@ function networkManager.checkDesk(cityType, deskId, callback)
     send(protoType.cs.checkDesk, data, callback)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.claimShareReward(callback)
+    local data = {}
+    send(protoType.cs.claimShareReward, data, callback)
+end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
