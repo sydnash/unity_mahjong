@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/Mahjong/Atlas/Mahjong.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/Mahjong/Atlas/Mahjong.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -320,6 +320,60 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/mj_su_1tiao_l.png</key>
+            <key type="filename">Images/mj_su_1tong_l.png</key>
+            <key type="filename">Images/mj_su_1wan_l.png</key>
+            <key type="filename">Images/mj_su_2tiao_l.png</key>
+            <key type="filename">Images/mj_su_2tong_l.png</key>
+            <key type="filename">Images/mj_su_2wan_l.png</key>
+            <key type="filename">Images/mj_su_3tiao_l.png</key>
+            <key type="filename">Images/mj_su_3tong_l.png</key>
+            <key type="filename">Images/mj_su_3wan_l.png</key>
+            <key type="filename">Images/mj_su_4tiao_l.png</key>
+            <key type="filename">Images/mj_su_4tong_l.png</key>
+            <key type="filename">Images/mj_su_4wan_l.png</key>
+            <key type="filename">Images/mj_su_5tiao_l.png</key>
+            <key type="filename">Images/mj_su_5tong_l.png</key>
+            <key type="filename">Images/mj_su_5wan_l.png</key>
+            <key type="filename">Images/mj_su_6tiao_l.png</key>
+            <key type="filename">Images/mj_su_6tong_l.png</key>
+            <key type="filename">Images/mj_su_6wan_l.png</key>
+            <key type="filename">Images/mj_su_7tiao_l.png</key>
+            <key type="filename">Images/mj_su_7tong_l.png</key>
+            <key type="filename">Images/mj_su_7wan_l.png</key>
+            <key type="filename">Images/mj_su_8tiao_l.png</key>
+            <key type="filename">Images/mj_su_8tong_l.png</key>
+            <key type="filename">Images/mj_su_8wan_l.png</key>
+            <key type="filename">Images/mj_su_9tiao_l.png</key>
+            <key type="filename">Images/mj_su_9tong_l.png</key>
+            <key type="filename">Images/mj_su_9wan_l.png</key>
+            <key type="filename">Images/mj_su_fbaiban_l.png</key>
+            <key type="filename">Images/mj_su_fbei_l.png</key>
+            <key type="filename">Images/mj_su_fdong_l.png</key>
+            <key type="filename">Images/mj_su_ffa_l.png</key>
+            <key type="filename">Images/mj_su_fnan_l.png</key>
+            <key type="filename">Images/mj_su_fxi_l.png</key>
+            <key type="filename">Images/mj_su_fzhong_l.png</key>
+            <key type="filename">Images/mj_su_schun_l.png</key>
+            <key type="filename">Images/mj_su_sdong_l.png</key>
+            <key type="filename">Images/mj_su_sju_l.png</key>
+            <key type="filename">Images/mj_su_slan_l.png</key>
+            <key type="filename">Images/mj_su_smei_l.png</key>
+            <key type="filename">Images/mj_su_sqiu_l.png</key>
+            <key type="filename">Images/mj_su_sxia_l.png</key>
+            <key type="filename">Images/mj_su_szu_l.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,21,31,42</rect>
+                <key>scale9Paddings</key>
+                <rect>15,21,31,42</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -408,6 +462,48 @@
             <filename>Images/mj_su_sxia.png</filename>
             <filename>Images/mj_su_szu.png</filename>
             <filename>Images/JS_huk.png</filename>
+            <filename>Images/mj_su_1tiao_l.png</filename>
+            <filename>Images/mj_su_1tong_l.png</filename>
+            <filename>Images/mj_su_1wan_l.png</filename>
+            <filename>Images/mj_su_2tiao_l.png</filename>
+            <filename>Images/mj_su_2tong_l.png</filename>
+            <filename>Images/mj_su_2wan_l.png</filename>
+            <filename>Images/mj_su_3tiao_l.png</filename>
+            <filename>Images/mj_su_3tong_l.png</filename>
+            <filename>Images/mj_su_3wan_l.png</filename>
+            <filename>Images/mj_su_4tiao_l.png</filename>
+            <filename>Images/mj_su_4tong_l.png</filename>
+            <filename>Images/mj_su_4wan_l.png</filename>
+            <filename>Images/mj_su_5tiao_l.png</filename>
+            <filename>Images/mj_su_5tong_l.png</filename>
+            <filename>Images/mj_su_5wan_l.png</filename>
+            <filename>Images/mj_su_6tiao_l.png</filename>
+            <filename>Images/mj_su_6tong_l.png</filename>
+            <filename>Images/mj_su_6wan_l.png</filename>
+            <filename>Images/mj_su_7tiao_l.png</filename>
+            <filename>Images/mj_su_7tong_l.png</filename>
+            <filename>Images/mj_su_7wan_l.png</filename>
+            <filename>Images/mj_su_8tiao_l.png</filename>
+            <filename>Images/mj_su_8tong_l.png</filename>
+            <filename>Images/mj_su_8wan_l.png</filename>
+            <filename>Images/mj_su_9tiao_l.png</filename>
+            <filename>Images/mj_su_9tong_l.png</filename>
+            <filename>Images/mj_su_9wan_l.png</filename>
+            <filename>Images/mj_su_fbaiban_l.png</filename>
+            <filename>Images/mj_su_fbei_l.png</filename>
+            <filename>Images/mj_su_fdong_l.png</filename>
+            <filename>Images/mj_su_ffa_l.png</filename>
+            <filename>Images/mj_su_fnan_l.png</filename>
+            <filename>Images/mj_su_fxi_l.png</filename>
+            <filename>Images/mj_su_fzhong_l.png</filename>
+            <filename>Images/mj_su_schun_l.png</filename>
+            <filename>Images/mj_su_sdong_l.png</filename>
+            <filename>Images/mj_su_sju_l.png</filename>
+            <filename>Images/mj_su_slan_l.png</filename>
+            <filename>Images/mj_su_smei_l.png</filename>
+            <filename>Images/mj_su_sqiu_l.png</filename>
+            <filename>Images/mj_su_sxia_l.png</filename>
+            <filename>Images/mj_su_szu_l.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
