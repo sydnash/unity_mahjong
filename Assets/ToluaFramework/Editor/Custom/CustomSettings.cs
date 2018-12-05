@@ -204,6 +204,7 @@ public static class CustomSettings
         _GT(typeof(Base64)),
         _GT(typeof(AnimationEventManager)),
         _GT(typeof(GameObjectPicker)),
+        _GT(typeof(CustomMapComponent)),
         _GT(typeof(Logger)),
         _GT(typeof(UnityEngine.UI.Sprite)),
         _GT(typeof(SpriteRD)),

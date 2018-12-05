@@ -26,6 +26,7 @@ public static class LuaBinder
 		Base64Wrap.Register(L);
 		AnimationEventManagerWrap.Register(L);
 		GameObjectPickerWrap.Register(L);
+		CustomMapComponentWrap.Register(L);
 		LoggerWrap.Register(L);
 		SpriteRDWrap.Register(L);
 		AndroidHelperWrap.Register(L);
