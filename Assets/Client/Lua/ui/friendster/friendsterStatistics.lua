@@ -114,7 +114,7 @@ function friendsterStatistics:set(data, historyContainer)
     local today = time.today()
     local yestoday = today - time.SECONDS_PER_DAY
 
-    local fillRankData = function(filter, players, scores)
+    local fillRankData = function(deskId, filter, players, scores, endTime)
         local r = self.rank[filter]
 
         local max = -100000000
@@ -141,12 +141,23 @@ function friendsterStatistics:set(data, historyContainer)
                 g.nickname = p.Nickname
                 g.score = scores[k]
                 g.playTimes = 1
-                g.winnerTimes = (scores[k] == max) and 1 or 0
+                g.winnerTimes = 0
+                g.winnerDetail = {}
+
+                if g.score == max then
+                    g.winnerTimes = 1
+                    table.insert(g.winnerDetail, { deskId = deskId, score = scores[k], endTime = endTime })
+                end
 
                 table.insert(r, g)
             else
                 g.score = g.score + scores[k]
-                g.playTimes = g.playTimes + ((scores[k] == max) and 1 or 0)
+                g.playTimes = g.playTimes + 1
+
+                if g.score == max then
+                    g.winnerTimes = g.winnerTimes + 1
+                    table.insert(g.winnerDetail, { deskId = deskId, score = scores[k], endTime = endTime })
+                end
             end
         end
     end
@@ -158,10 +169,10 @@ function friendsterStatistics:set(data, historyContainer)
 
         if v.EndTime >= today then
             table.insert(self.history[filter.today], v)
-            fillRankData(filter.today, v.Players, v.Scores)
+            fillRankData(v.DeskId, filter.today, v.Players, v.Scores, v.EndTime)
         elseif v.EndTime >= yestoday then
             table.insert(self.history[filter.yestoday], v)
-            fillRankData(filter.yestoday, v.Players, v.Scores)
+            fillRankData(v.DeskId, filter.yestoday, v.Players, v.Scores, v.EndTime)
         end
     end
 

@@ -324,7 +324,8 @@ function mahjongOperation:onGameStart()
     self:relocateIdleMahjongs(false)
 
     eventManager.registerAnimationTrigger("table_plane_down", function()
-        for _, m in pairs(self.idleMahjongs) do
+        for i=1, self.game.totalMahjongCount do
+            local m = self.idleMahjongs[i]
             m:show()
             m:setPickabled(false)
         end

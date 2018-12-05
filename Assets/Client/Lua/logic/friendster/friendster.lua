@@ -88,8 +88,9 @@ end
 
 function friendster:addMember(data)
     if self.members == nil then
-        return
+        self.members = {}
     end
+
     local player = createPlayer(data)
     self.members[player.acId] = player
     self.curMemberCount = self.curMemberCount + 1
@@ -104,14 +105,14 @@ function friendster:setMemberOnlineState(acId, online)
     if self.members == nil then
         return
     end
-    local player = self.members[acId]
-    if player == nil then
-        return
-    end
-    player.online = online
 
-    if not online then
-        player.lastOnlineTime = time.now()
+    local player = self.members[acId]
+    if player ~= nil then
+        player.online = online
+
+        if not online then
+            player.lastOnlineTime = time.now()
+        end
     end
 end
 
@@ -133,7 +134,7 @@ end
 
 function friendster:addDesk(data)
     if self.desks == nil then
-        return
+        self.desks = {}
     end
 
     local desk = createDesk(data)
@@ -147,23 +148,27 @@ function friendster:getDeskByDeskId(deskId)
     if self.desks == nil then
         return nil
     end
+
     return self.desks[deskId]
 end
 
 function friendster:removeDesk(deskId)
-    if not self.desks then
+    if self.desks == nil then
         return
     end
+
     self.desks[deskId] = nil
     self.curDeskCount = self.curDeskCount - 1
 end
 
 function friendster:addPlayerToDesk(acId, deskId)
-    if self.members == nil then
+    if self.members == nil or self.desks == nil then
         return
     end
+
     local player = self.members[acId]
     local desk = self.desks[deskId]
+
     if not player and not desk then
         return
     end
@@ -172,11 +177,12 @@ function friendster:addPlayerToDesk(acId, deskId)
 end
 
 function friendster:removePlayerFromDesk(acId, deskId)
-    local desk = self.desks[deskId]
-    if not desk then
-        return
+    if self.desks ~= nil then
+        local desk = self.desks[deskId]
+        if desk ~= nil then
+            desk:removePlayer(acId)
+        end
     end
-    desk:removePlayer(acId)
 end
 
 function friendster:destroy()
