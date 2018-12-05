@@ -35,6 +35,10 @@ public class IOSHelper
 	{
 		IOSWechatHelper.RegisterLoginCallback(callback);
 	}
+	public void RegisterShareWXCallback(Action<string> callback)
+	{
+		IOSWechatHelper.RegisterShareCallback(callback);
+	}
 		
 
 	/// <summary>
@@ -82,6 +86,11 @@ public class IOSHelper
 	public void OnLoginWxHandler(string json)
 	{
 		IOSWechatHelper.OnLoginHandler(json);
+	}
+
+	public void OnWxShareHandler(string json)
+	{
+		IOSWechatHelper.OnShareHandler (json);
 	}
 
 	#endregion

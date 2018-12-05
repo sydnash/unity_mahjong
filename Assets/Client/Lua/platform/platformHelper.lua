@@ -18,6 +18,16 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function platformHelper.registerShareWXCallback(callback)
+    if deviceConfig.isAndroid then
+    elseif deviceConfig.isApple then
+        IOSHelper.instance:RegisterShareWXCallback(callback)
+    end
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function platformHelper.registerInviteSgCallback(callback)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:RegisterInviteSGCallback(callback)
