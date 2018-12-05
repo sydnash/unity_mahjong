@@ -11,10 +11,10 @@ function playHistory:setData(data)
         return
     end
     if self.mDatas == nil then
-        self.mDatas = data
-    else
-        self:insertHistory(data)
+        self.mDatas = {}
     end
+        
+    self:insertHistory(data)
     self:sort()
 end
 
