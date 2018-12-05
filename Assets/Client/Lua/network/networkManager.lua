@@ -328,14 +328,10 @@ local function loginC(text, callback)
     gamepref.host    = host
     gamepref.port    = port
 
-    log("loginC start")
     networkManager.author(host, port, function(connected)
-        --connected
-        log("loginC start connected")
         local loginType = 1
         local data = { AcId = acid, Session = session, LoginType = loginType }
         send(protoType.cs.loginHs, data, function(msg)
-            log("loginC start complete")
             if msg == nil then
                 callback(nil)
             else
@@ -388,8 +384,6 @@ end
 -- 游客登录
 -------------------------------------------------------------------
 function networkManager.loginGuest(callback)
-    log("networkManager.login")
-
     local form = table.toUrlArgs({ mac = getDeviceId() })
     local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
@@ -407,9 +401,7 @@ end
 -------------------------------------------------------------------
 -- 微信登录
 -------------------------------------------------------------------
-function networkManager.loginWx(callback)  
-    log("networkManager.loginWx")
-
+function networkManager.loginWx(callback) 
     platformHelper.registerLoginWxCallback(function(json)
         if string.isNilOrEmpty(json) then
             callback(nil)
@@ -419,29 +411,31 @@ function networkManager.loginWx(callback)
         local resp = table.fromjson(json)
             
         if resp.errCode ~= errCodeWx.ok then
+            callback(nil)
             showMessageUI("微信登录失败：" .. errTextWx[resp.errCode])
-        else
-            local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
-            local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
+            return
+        end
 
-            http.getText(accessUrl, timeout, function(text)
+        local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
+        local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
+
+        http.getText(accessUrl, timeout, function(text)
+            if string.isNilOrEmpty(text) then
+                callback(nil)
+                return
+            end
+
+            local p = table.fromjson(text)
+            local form = table.toUrlArgs({ wxtoken = p.refresh_token, appclass = "mj" })
+            local loginURL = networkConfig.server.wechatURL
+            http.getText(loginURL .. "?" .. form, timeout, function(text)
                 if string.isNilOrEmpty(text) then
                     callback(nil)
-                    return
+                else
+                    loginC(text, callback)
                 end
-
-                local p = table.fromjson(text)
-                local form = table.toUrlArgs({ wxtoken = p.refresh_token, appclass = "mj" })
-                local loginURL = networkConfig.server.wechatURL
-                http.getText(loginURL .. "?" .. form, timeout, function(text)
-                    if string.isNilOrEmpty(text) then
-                        callback(nil)
-                    else
-                        loginC(text, callback)
-                    end
-                end)
             end)
-        end
+        end)
     end)
 
     platformHelper.loginWx()
