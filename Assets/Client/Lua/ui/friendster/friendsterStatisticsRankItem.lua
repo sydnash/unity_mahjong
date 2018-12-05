@@ -21,7 +21,7 @@ end
 function friendsterStatisticsRankItem:set(data)
     self.data = data
 
-    self.mIcon:setTexture(data.headerTex)
+    self.mIcon:setTexture(data.acId, data.headerTex)
     self.mNickname:setText(cutoutString(data.nickname, gameConfig.nicknameMaxLength))
     self.mId:setText(tostring(data.acId))
     self.mWinner:setText(string.format("%d次", data.winnerTimes))
@@ -36,12 +36,7 @@ end
 
 function friendsterStatisticsRankItem:onDestroy()
     self.mSearch:show()
-
-    local tex = self.mIcon:getTexture()
-    if tex ~= nil then
-        textureManager.unload(tex, true)
-        self.mIcon:setTexture(nil)
-    end
+    self.mIcon:reset()
 
     self.super.onDestroy(self)
 end
