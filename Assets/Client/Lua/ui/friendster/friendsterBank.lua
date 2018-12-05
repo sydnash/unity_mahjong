@@ -83,6 +83,11 @@ function friendsterBank:onDepositClickedHandler()
         return
     end
 
+    if gamepref.player.cards == 0 then
+        self:close()
+        showMessageUI("房卡不足")
+        return
+    end
     local value = math.min(gamepref.player.cards, tonumber(text))
 
     showWaitingUI("正在存入房卡，请稍候")
@@ -94,12 +99,21 @@ function friendsterBank:onDepositClickedHandler()
             return
         end
 
---        log("deposit to friendster bank, msg = " .. table.tostring(msg))
-        self.data.cards = self.data.cards + value
-        gamepref.player.cards = gamepref.player.cards - value
+        if msg.RetCode ~= retc.ok then
+            showMessageUI(retcText[msg.RetCode])
+            return
+        end
+        -- log("deposit to friendster bank, msg = " .. table.tostring(msg))
+
+        local value = math.abs(gamepref.player.cards - msg.CurCoin)
+
+        self.data.cards = msg.CurClubCoin
+        gamepref.player.cards = msg.CurCoin
 
         signalManager.signal(signalType.cardsChanged)
         self:close()
+
+        showMessageUI(string.format("成功存入%d张房卡", value))
     end)
 
     playButtonClickSound()
@@ -114,6 +128,11 @@ function friendsterBank:onTakeoutClickedHandler()
         return
     end
 
+    if self.data.cards == 0 then
+        self:close()
+        showMessageUI("房卡不足")
+        return
+    end
     local value = math.min(self.data.cards, tonumber(text))
 
     showWaitingUI("正在取出房卡，请稍候")
@@ -125,12 +144,21 @@ function friendsterBank:onTakeoutClickedHandler()
             return
         end
 
---        log("takeout from friendster bank, msg = " .. table.tostring(msg))
-        self.data.cards = self.data.cards - value
-        gamepref.player.cards = gamepref.player.cards + value
+        if msg.RetCode ~= retc.ok then
+            showMessageUI(retcText[msg.RetCode])
+            return
+        end
+        -- log("takeout from friendster bank, msg = " .. table.tostring(msg))
+
+        local value = math.abs(gamepref.player.cards - msg.CurCoin)
+
+        self.data.cards = msg.CurClubCoin
+        gamepref.player.cards = msg.CurCoin
 
         signalManager.signal(signalType.cardsChanged)
         self:close()
+
+        showMessageUI(string.format("成功取出%d张房卡", value))
     end)
 
     playButtonClickSound()

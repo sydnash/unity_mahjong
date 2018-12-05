@@ -148,6 +148,7 @@ end
 function friendsterDetail:onReconnectedHandler()
     local friendsterId = self.data.id
     showWaitingUI("正在同步亲友圈数据，请稍候...")
+    self.mySelf = self
     networkManager.queryFriendsterMembers(friendsterId, function(msg)
         if msg == nil then
             closeWaitingUI()
@@ -158,6 +159,9 @@ function friendsterDetail:onReconnectedHandler()
         if msg.RetCode ~= retc.ok then
             closeWaitingUI()
             showWaitingUI(retcText[msg.RetCode])
+            return
+        end
+        if not self.mySelf then
             return
         end
 
@@ -175,6 +179,11 @@ function friendsterDetail:onReconnectedHandler()
                 showWaitingUI(retcText[msg.RetCode])
                 return
             end
+
+            if not self.mySelf then
+                return
+            end
+
             self.data:setDesks(msg.Desks)
             
             self:refreshUI()
@@ -366,6 +375,7 @@ function friendsterDetail:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     signalManager.unregisterSignalHandler(signalType.refreshFriendsterDetailInfo, self.onReconnectedHandler, self)
     
+    self.mySelf = nil
     self.mMemberList:reset()
     self.mDeskList:reset()
 
