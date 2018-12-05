@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 114384201548264320}
   - component: {fileID: 114507732470740716}
   m_Layer: 5
-  m_Name: Cast
+  m_Name: Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -719,6 +719,10 @@ MonoBehaviour:
   - variableName: mDetailRoot
     widgetType: 0
     gameObject: {fileID: 1006987909526252}
+    panelScript: 
+  - variableName: mCost
+    widgetType: 2
+    gameObject: {fileID: 1197163196468086}
     panelScript: 
 --- !u!114 &114018625758663986
 MonoBehaviour:

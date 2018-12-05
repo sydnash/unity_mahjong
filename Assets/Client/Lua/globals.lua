@@ -278,10 +278,14 @@ local function fixInhandCameraParam()
     local inhandCameraW = inhandCameraH * oriScreenAspect
     local newH = inhandCameraW / inhandCamera.aspect
 
-    local inhandCameraBottom = inhandCamera.transform.position.y - inhandCameraH
+    local inhandCameraT = inhandCamera.transform
+    local inhandCameraP = inhandCameraT.position
+
+    local inhandCameraBottom = inhandCameraP.y - inhandCameraH
     inhandCamera.orthographicSize = newH
     local newy = inhandCameraBottom + newH
-    inhandCamera.transform.position = Vector3.New(inhandCamera.transform.position.x, newy, inhandCamera.transform.position.z)
+
+    inhandCameraT.position = Vector3.New(inhandCameraP.x, newy, inhandCameraP.z)
 end
 
 -------------------------------------------------------------

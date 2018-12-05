@@ -30,12 +30,15 @@ public class Build
             {
                 int start = dir.Length + 1;
                 string path = file.Substring(start).Replace(".lua", ".bytes");
-
+                EditorUtility.DisplayProgressBar("Build", path, 0.0f);
                 byte[] bytes = MD5.Encrypt(File.ReadAllBytes(file));
                 string filename = LFS.CombinePath(targetPath, path);
                 LFS.WriteBytes(filename, bytes);
+                EditorUtility.DisplayProgressBar("Build", path, 1.0f);
             }
         }
+
+        EditorUtility.ClearProgressBar();
     }
 
     /// <summary>
@@ -99,8 +102,6 @@ public class Build
 
         string text = sb.ToString();
         LFS.WriteText(LFS.CombinePath(Application.dataPath, "Resources", PATCHLIST_FILE_NAME), text, LFS.UTF8_WITHOUT_BOM);
-
-        AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
     }
 
     /// <summary>
