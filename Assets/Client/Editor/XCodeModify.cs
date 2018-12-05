@@ -43,6 +43,7 @@ public class XCodeModify
 		} catch(Exception e) {
 		}
 
+
 		//添加xcode默认framework引用
 		proj.AddFrameworkToProject(target, "libz.tbd", false);
 		proj.AddFrameworkToProject(target, "libsqlite3.0.tbd", false);
@@ -55,6 +56,9 @@ public class XCodeModify
 		proj.AddFrameworkToProject(target, "CoreLocation.framework", false);
 		proj.AddFrameworkToProject(target, "AudioToolbox.framework", false);
 		proj.AddFrameworkToProject(target, "AVFoundation.framework", false);
+		proj.AddFrameworkToProject(target, "StoreKit.framework", false);
+
+		proj.AddCapability(target, PBXCapabilityType.InAppPurchase);
 
 		//File.Delete(Path.Combine(path, "Classes/UnityAppController.h"));
 		File.Delete(Path.Combine(path, "Classes/UnityAppController.mm"));
@@ -66,6 +70,11 @@ public class XCodeModify
 		//proj.SetBuildProperty(target, "IPHONEOS_DEPLOYMENT_TARGET", "8.0");
 		proj.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
 
+		string compileToolDir = Application.dataPath.Replace("Assets", "tools/compileios");
+		string[] files = Directory.GetFiles(compileToolDir);
+		foreach (var file in files) {
+			File.Copy(file, Path.Combine(path, Path.GetFileName(file)));
+		}
 	
 		string debugConfig = proj.BuildConfigByName(target, "Debug");
 		string releaseConfig = proj.BuildConfigByName(target, "Release");
