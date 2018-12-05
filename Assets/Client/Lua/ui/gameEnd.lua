@@ -34,7 +34,7 @@ function gameEnd:onInit()
         items[i]:hide()
     end
 
-    local info = string.format("第%d/%d局  房号:%d （%s）", 
+    local info = string.format("第%d/%d局  房号:%d  %s", 
                                self.datas.finishGameCount, 
                                self.datas.totalGameCount, 
                                self.datas.deskId,

@@ -41,7 +41,7 @@ function tweenParallel:update()
         local temp = {}
 
         for k, v in pairs(self.queue) do
-            if v.playing then
+            if not v.playing then
                 v:play()
             end
 

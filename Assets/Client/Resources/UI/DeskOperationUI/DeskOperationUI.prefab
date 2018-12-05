@@ -2094,7 +2094,7 @@ MonoBehaviour:
     widgetType: 0
     gameObject: {fileID: 1128240397654326}
     panelScript: 
-  - variableName: HnzNotifyText
+  - variableName: mHnzNotifyText
     widgetType: 2
     gameObject: {fileID: 1357257936395546}
     panelScript: 
