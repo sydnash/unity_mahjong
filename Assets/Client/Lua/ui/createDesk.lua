@@ -80,7 +80,10 @@ function createDesk:createDetail()
     local layout = deskDetailLayout[self.cityType][self.gameType]
     local config = self.config[self.gameType]
 
-    self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, true)
+    self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, true, function(renshu, jushu)
+        local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
+        self.mCost:setText(tostring(cost))
+    end)
     self.detail:setParent(self.mDetailRoot)
     self.detail:show()
 end

@@ -37,10 +37,11 @@ end
 
 local MAX_GROUP_COUNT = 15
 
-function detailPanel:ctor(layout, config, interactable)
+function detailPanel:ctor(layout, config, interactable, callback)
     self.layout = layout
     self.config = config
     self.interactable = interactable
+    self.callback = callback
 
     self.super.ctor(self)
 end
@@ -127,6 +128,15 @@ function detailPanel:onGroupItemChangedHandler(sender, selected, clicked)
     end
 
     setTextColor(sender.label, selected)
+
+    if selected then
+        if sender.key == "RenShu" or sender.key == "JuShu" then
+            if self.callback ~= nil then
+                local c = self.config
+                self.callback(c.RenShu, c.JuShu)
+            end
+        end
+    end
 end
 
 function detailPanel:onSwitchOffGroupItemChangedHandler(sender, selected, clicked)
