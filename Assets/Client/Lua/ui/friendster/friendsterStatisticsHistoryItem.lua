@@ -100,7 +100,7 @@ function friendsterStatisticsHistoryItem:set(data, historyContainer)
 
         local p = self.players[i]
         p.root:show()
-        p.icon:setTexture(g.headerTex)
+        p.icon:setTexture(g.acId, g.headerTex)
         p.nickname:setText(g.nickname)
         p.winner:hide()
 
@@ -122,11 +122,7 @@ end
 
 function friendsterStatisticsHistoryItem:onDestroy()
     for _, v in pairs(self.players) do
-        local tex = v.icon:getTexture()
-        if tex ~= nil then
-            textureManager.unload(tex, true)
-            v.icon:setTexture(nil)
-        end
+        v.icon:reset()
     end
 
     self.super.onDestroy(self)

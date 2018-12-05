@@ -18,6 +18,10 @@ function header:setTexture(id, tex)
     self.mIcon:setTexture(tex)
 end
 
+function header:getTexture()
+    return self.mIcon:getTexture()
+end
+
 function header:setColor(color)
     self.mIcon:setColor(color)
 end
@@ -31,10 +35,7 @@ function header:reset()
         signalManager.unregisterSignalHandler(self.signalId, self.onHeaderDownloadedHandler, self)
     end
 
-    local tex = self.mIcon:getTexture()
-    if tex ~= nil then
-        self.mIcon:setTexture(nil)
-    end
+    self.mIcon:setTexture(nil)
 end
 
 function header:onDestroy()
