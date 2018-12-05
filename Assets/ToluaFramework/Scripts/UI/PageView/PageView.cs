@@ -181,7 +181,7 @@ public class PageView : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// <summary>
     /// 
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         mScrollRect = GetComponent<ScrollRect>();
         float width = GetComponent<RectTransform>().rect.width;

@@ -121,6 +121,8 @@ function friendster:onInit()
         self:onNotifyFriendster(msg)
     end, true)
 
+    
+
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     
     self:refreshList()
