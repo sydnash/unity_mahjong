@@ -446,7 +446,7 @@ function mahjongGame:onHuanNZhangDoHandler(msg)
         self.messageHandlers:add(func)
     end
     --延时，等待交互动画完成
-    self.messageHandlers:add(tweenDelay.new(2))
+    self.messageHandlers:add(tweenDelay.new(2.5))
 end
 -------------------------------------------------------------------------------
 -- 摸牌

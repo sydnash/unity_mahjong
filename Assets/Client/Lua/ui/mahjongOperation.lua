@@ -228,10 +228,12 @@ function mahjongOperation:onInit()
     }
     self.mChuPaiHint:hide()
 
+    self.animationManager = tweenParallel.new(false)
+    tweenManager.add(self.animationManager)
+    self.animationManager:play()
+
     self:loadMahjongs()
-
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-
 end
 
 -------------------------------------------------------------------------------
@@ -1860,11 +1862,11 @@ function mahjongOperation:onDestroy()
     end
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
-    if self.hnzAnimation ~= nil then
-        self.hnzAnimation:stop()
-        self.hnzAnimation:clear()
-        tweenManager.remove(self.hnzAnimation)
-        self.hnzAnimation = nil
+    if self.animationManager ~= nil then
+        self.animationManager:stop()
+        self.animationManager:clear()
+        tweenManager.remove(self.animationManager)
+        self.animationManager = nil
     end
 
     self:clear(true)
@@ -2003,41 +2005,49 @@ function mahjongOperation:onHnzChoose(msg)
 end
 
 -------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+local function getHnzNotifyText(R, playerCount) 
+    local text = string.empty
+
+    if playerCount == 4 then
+        if R == 1 then
+            text = "逆时针交换"
+        elseif R == 2 then
+            text = "对家交换"
+        else
+            text = "顺时针交换"
+        end
+    elseif playerCount == 3 then
+        if R == 1 then
+            text = "逆时针交换"
+        else
+            text = "顺时针交换"
+        end
+    else
+        text = "相互交换"
+    end
+
+    return text
+end
+
+-------------------------------------------------------------------------------
 -- 服务器通知确定换N张
 -------------------------------------------------------------------------------
 function mahjongOperation:onHuanNZhangDo(msg)
     local animation = tweenSerial.new(true)
 
-    animation:add(tweenDelay.new(0.5))
+    animation:add(tweenDelay.new(0.2))
     animation:add(tweenFunction.new(function()
-        local text = string.empty
-        local playerCount = self.game:getTotalPlayerCount()
-
-        if playerCount == 4 then
-            if msg.R == 1 then
-                text = "逆时针交换"
-            elseif msg.R == 2 then
-                text = "对家交换"
-            else
-                text = "顺时针交换"
-            end
-        elseif playerCount == 3 then
-            if msg.R == 1 then
-                text = "逆时针交换"
-            else
-                text = "顺时针交换"
-            end
-        else
-            text = "相互交换"
-        end
-
-        self.mHnzNotify:show(text)
+        local text = getHnzNotifyText(msg.R, self.game:getTotalPlayerCount())
+        self.mHnzNotifyText:setText(text)
+        self.mHnzNotify:show()
     end))
-    animation:add(tweenDelay.new(0.8))
+    animation:add(tweenDelay.new(0.7))
     animation:add(tweenFunction.new(function()
         self.mHnzNotify:hide()
     end))
-    animation:add(tweenDelay.new(0.5))
+    animation:add(tweenDelay.new(0.2))
     animation:add(tweenFunction.new(function()
         for k, v in pairs(self.hnzMahjongs) do
             if k ~= msg.AcId then
@@ -2074,30 +2084,34 @@ function mahjongOperation:onHuanNZhangDo(msg)
         --重新排序手牌
         self:relocateInhandMahjongs(msg.AcId)
 
+        local tp = tweenParallel.new(true)
+        animation:add(tp)
+
         for _, v in pairs(temp) do
-            local pos = v:getLocalPosition()
-            local target = pos:Clone()
-            pos.y = pos.y + mahjong.h * 0.3
-            v:setLocalPosition(pos)
-            local mv = tweenPosition.new(v, 1.3, pos, target, nil)
-            tweenManager.add(mv)
-            mv:play()
+            local from = v:getLocalPosition()
+            local to = from:Clone()
+            from.y = from.y + mahjong.h * 0.3
+            v:setLocalPosition(from)
+
+            local ts = tweenSerial.new(true)
+            ts:add(tweenDelay.new(1.0))
+            ts:add(tweenPosition.new(v, 0.1, from, to, nil))
+
+            tp:add(ts)
         end
     end))
-    animation:add(tweenDelay.new(1.4))
 
-    tweenManager.add(animation)
-    animation:play()
+    self.animationManager:add(animation)
 end
 
 -------------------------------------------------------------------------------
 -- 回放换N张
 -------------------------------------------------------------------------------
 function mahjongOperation:onHuanNZhangDoPlayback(msg)
-    self.hnzAnimation = tweenSerial.new(true)
+    local animation = tweenSerial.new(true)
     local huanMahjongs = {}
 
-    self.hnzAnimation:add(tweenFunction.new(function()
+    animation:add(tweenFunction.new(function()
         for _, v in pairs(msg.Dos) do
             self.hnzCount = #v.D
 
@@ -2109,16 +2123,29 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
             end 
         end
     end))
-    self.hnzAnimation:add(tweenDelay.new(1.5))
-    self.hnzAnimation:add(tweenFunction.new(function()
+    animation:add(tweenDelay.new(0.2))
+    animation:add(tweenFunction.new(function()
+        local text = getHnzNotifyText(msg.Dos[1].R, self.game:getTotalPlayerCount())
+        self.mHnzNotifyText:setText(text)
+        self.mHnzNotify:show()
+    end))
+    animation:add(tweenDelay.new(0.7))
+    animation:add(tweenFunction.new(function()
+        self.mHnzNotify:hide()
+    end))
+    animation:add(tweenDelay.new(0.2))
+    animation:add(tweenFunction.new(function()
         for _, v in pairs(msg.Dos) do
             local mahjongs = self.inhandMahjongs[v.AcId]
+            local temp = {}
+
             for _, u in pairs(v.I) do
                 for _, h in pairs(huanMahjongs) do
                     if h.id == u then
                         table.insert(mahjongs, h)
                         if v.AcId == self.game.mainAcId then
                             h:setShadowMode(mahjong.shadowMode.noshadow)
+                            table.insert(temp, h)
                         else
                             if self.game.mode == gameMode.playback then
                                 h:setShadowMode(mahjong.shadowMode.yang)
@@ -2131,11 +2158,28 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
                 end
             end
             self:relocateInhandMahjongs(v.AcId)
+            
+            if v.AcId == self.game.mainAcId then
+                local tp = tweenParallel.new(true)
+                animation:add(tp)
+
+                for _, m in pairs(temp) do
+                    local from = m:getLocalPosition()
+                    local to = from:Clone()
+                    from.y = from.y + mahjong.h * 0.3
+                    m:setLocalPosition(from)
+
+                    local ts = tweenSerial.new(true)
+                    ts:add(tweenDelay.new(1.0))
+                    ts:add(tweenPosition.new(m, 0.1, from, to, nil))
+
+                    tp:add(ts)
+                end
+            end
         end
     end))
 
-    tweenManager.add(self.hnzAnimation)
-    self.hnzAnimation:play()
+    self.animationManager:add(animation)
 end
 
 return mahjongOperation
