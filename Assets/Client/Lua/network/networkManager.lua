@@ -356,7 +356,7 @@ local function loginC(text, callback)
                 gamepref.player.shareConfig.jqMaxCnt        = msg.ShareConfig.JQMaxCnt
                 gamepref.player.shareConfig.jqLogin         = msg.ShareConfig.JQLogin
                 gamepref.player.shareConfig.dayLoginMaxCnt  = msg.ShareConfig.DayLoginMaxCnt
-                --每日分享参数 少于lowlimit可以得房卡，最多count次，一次玲却reward张
+                --每日分享参数 少于lowlimit可以得房卡，最多count次，一次领取count张房卡
                 gamepref.player.shareConfig.lowLimit        = msg.ShareConfig.LowLimit
                 gamepref.player.shareConfig.count           = msg.ShareConfig.Count
                 gamepref.player.shareConfig.reward          = msg.ShareConfig.Reward
