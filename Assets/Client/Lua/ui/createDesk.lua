@@ -2,11 +2,14 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local costConfig = require("config.costConfig")
+
 local base = require("ui.common.view")
 local createDesk = class("createDesk", base)
 
 _RES_(createDesk, "CreateDeskUI", "CreateDeskUI")
 
+local CONFIGS_FOLDER = "CreateDeskConfigs"
 local detailConfigs = {}
 
 function createDesk:ctor(cityType, friendsterId)
@@ -21,8 +24,16 @@ function createDesk:onInit()
     self.config = self:readConfig()
     self:createDetail()
 
+    local gameConfig = self.config[self.gameType]
+    local renshu = gameConfig.RenShu
+    local jushu  = gameConfig.JuShu
+
+    local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
+    self.mCost:setText(tostring(cost))
+
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
+
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
@@ -69,7 +80,10 @@ function createDesk:createDetail()
     local layout = deskDetailLayout[self.cityType][self.gameType]
     local config = self.config[self.gameType]
 
-    self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, true)
+    self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, true, function(renshu, jushu)
+        local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
+        self.mCost:setText(tostring(cost))
+    end)
     self.detail:setParent(self.mDetailRoot)
     self.detail:show()
 end
@@ -78,7 +92,7 @@ function createDesk:readConfig()
     local config = detailConfigs[self.cityType]
 
     if config == nil then
-        local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "CreateDeskConfigs", cityTypeSID[self.cityType] .. ".txt")
+        local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, CONFIGS_FOLDER, cityTypeSID[self.cityType] .. ".txt")
         local text = LFS.ReadText(path, LFS.UTF8_WITHOUT_BOM)
 
         if string.isNilOrEmpty(text) then
@@ -98,7 +112,7 @@ function createDesk:writeConfig()
     if not string.isNilOrEmpty(text) then
         text = "return " .. text
 
-        local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "CreateDeskConfigs", cityTypeSID[self.cityType] .. ".txt")
+        local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, CONFIGS_FOLDER, cityTypeSID[self.cityType] .. ".txt")
         LFS.WriteText(path, text, LFS.UTF8_WITHOUT_BOM)
     end
 end

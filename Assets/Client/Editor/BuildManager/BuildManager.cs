@@ -16,7 +16,12 @@ public class BuildManager : EditorWindow
 #endif
 
     private bool mDevelopment = true;
+    private bool mBuildLua = true;
+    private bool mBuildBundle = true;
+    private bool mBuildPatch = true;
+    private bool mBuildPackage = true;
     private bool mProcessResources = false;
+    private string mPackagePath = string.Empty;
 
     [MenuItem("Window/Build Manager #&B", priority = 2051)]
     private static void Init()
@@ -33,55 +38,91 @@ public class BuildManager : EditorWindow
         GUILayout.Space(10);
 
         mTargetPlatform = (BuildTarget)EditorGUILayout.EnumPopup("Platform", mTargetPlatform);
-        mDevelopment = EditorGUILayout.Toggle("Development", mDevelopment);
-        mProcessResources = EditorGUILayout.Toggle("Process resources", mProcessResources);
+        mDevelopment    = EditorGUILayout.Toggle("Development", mDevelopment);
+        mBuildLua       = EditorGUILayout.Toggle("Build Lua", mBuildLua);
+        mBuildBundle    = EditorGUILayout.Toggle("Build Bundle", mBuildBundle);
+        mBuildPatch     = EditorGUILayout.Toggle("Build Patch", mBuildPatch);
+        mBuildPackage   = EditorGUILayout.Toggle("Build Package", mBuildPackage);
+
+        if (mBuildPackage)
+        {
+            mProcessResources = EditorGUILayout.Toggle("Process Resources", mProcessResources);
+
+            EditorGUILayout.BeginHorizontal();
+            {
+                EditorGUILayout.TextField("Package Path", mPackagePath);
+                if (GUILayout.Button("...", GUILayout.Width(30)))
+                {
+                    string packagePath = EditorUtility.SaveFolderPanel("Build", mPackagePath, string.Empty);
+
+                    if (!string.IsNullOrEmpty(packagePath))
+                    {
+                        mPackagePath = packagePath;
+                    }
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+        }
 
         GUILayout.Space(10);
 
-        if (GUILayout.Button("Build Lua"))
+        if (GUILayout.Button("Build"))
         {
-            Build.BuildLuaFiles();
-            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-            EditorUtility.DisplayDialog("Build", "Build lua over", "OK");
-        }
+            string timestamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
 
-        if (GUILayout.Button("Build Bundle"))
-        {
-            Build.BuildAssetBundles(mTargetPlatform);
-            EditorUtility.DisplayDialog("Build", "Build bundle over", "OK");
-        }
-
-        if (GUILayout.Button("Build Patchlist"))
-        {
-            Build.BuildPatchlist();
-            EditorUtility.DisplayDialog("Build", "Build patchlist over", "OK");
-        }
-
-        if (GUILayout.Button("Build Package"))
-        {
-            string suffix = string.Empty;
-            switch (mTargetPlatform)
+            if (mBuildLua)
             {
-                case BuildTarget.Android:
-                    suffix = "apk";
-                    PlayerSettings.Android.keystoreName = Application.dataPath + "/Keystore/mahjong.keystore";
-                    PlayerSettings.Android.keystorePass = "com.bshy.mahjong";
-                    PlayerSettings.Android.keyaliasName = "mahjong";
-                    PlayerSettings.Android.keyaliasPass = "com.bshy.mahjong";
-                    break;
-                case BuildTarget.iOS:
-                    suffix = string.Empty;
-                    break;
-                default:
-                    suffix = "exe";
-                    break;
+                Build.BuildLuaFiles();
+                Debug.Log(timestamp + ": build lua over");
             }
 
-            string targetName = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_") + (mDevelopment ? "debug" : "release") + "_mahjong";
-            var targetPath = EditorUtility.SaveFilePanel( "Build", "", targetName, suffix);
-
-            if (!string.IsNullOrEmpty(targetPath))
+            if (mBuildBundle)
             {
+                Build.BuildAssetBundles(mTargetPlatform);
+                Debug.Log(timestamp + ": build bundle over");
+            }
+
+            if (mBuildPatch)
+            {
+                Build.BuildPatchlist();
+
+                string patchPath = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, "Patches");
+                LFS.MakeDir(patchPath);
+
+                string luaFrom = LFS.CombinePath(Application.dataPath, "Resources/Lua");
+                string luaTo = LFS.CombinePath(patchPath, "Lua");
+                LFS.CopyDir(luaFrom, luaTo);
+
+                string resFrom = LFS.CombinePath(Application.streamingAssetsPath, "Res");
+                string resTo = LFS.CombinePath(patchPath, "Res");
+                LFS.CopyDir(resFrom, resTo);
+
+                Debug.Log(timestamp + ": build patch over");
+            }
+
+            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+
+            if (mBuildPackage && !string.IsNullOrEmpty(mPackagePath))
+            {
+                string packageName = string.Empty;
+
+                switch (mTargetPlatform)
+                {
+                    case BuildTarget.Android:
+                        packageName = timestamp + "_mahjong_" + (mDevelopment ? "debug" : "release") + ".apk";
+                        PlayerSettings.Android.keystoreName = Application.dataPath + "/Keystore/mahjong.keystore";
+                        PlayerSettings.Android.keystorePass = "com.bshy.mahjong";
+                        PlayerSettings.Android.keyaliasName = "mahjong";
+                        PlayerSettings.Android.keyaliasPass = "com.bshy.mahjong";
+                        break;
+                    case BuildTarget.iOS:
+                        packageName = "mahjong_" + (mDevelopment ? "debug" : "release");
+                        break;
+                    default:
+                        packageName = timestamp + "_mahjong_" + (mDevelopment ? "debug" : "release") + ".exe";
+                        break;
+                }
+
                 string companyName = PlayerSettings.companyName;
                 string productName = PlayerSettings.productName;
 
@@ -89,13 +130,16 @@ public class BuildManager : EditorWindow
                 PlayerSettings.productName = "幺九麻将";
 
                 if (mProcessResources) Build.PrepareRes();
-                string err = Build.BuildPackage(targetPath, mTargetPlatform, mDevelopment);
+                packageName = LFS.CombinePath(mPackagePath, packageName);
+                string err = Build.BuildPackage(packageName, mTargetPlatform, mDevelopment);
                 if (mProcessResources) Build.ResetRes();
 
                 PlayerSettings.companyName = companyName;
                 PlayerSettings.productName = productName;
 
                 EditorUtility.DisplayDialog("Build", string.IsNullOrEmpty(err) ? "Build succeeded" : "Build failed", "OK");
+
+                Debug.Log(timestamp + ": build package over");
             }
         }
     }

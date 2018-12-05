@@ -7,6 +7,9 @@ public class PageViewWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(PageView), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("AddListener", AddListener);
+		L.RegFunction("RemoveListener", RemoveListener);
+		L.RegFunction("RemoveAllListeners", RemoveAllListeners);
 		L.RegFunction("Reset", Reset);
 		L.RegFunction("PageTo", PageTo);
 		L.RegFunction("OnBeginDrag", OnBeginDrag);
@@ -16,6 +19,56 @@ public class PageViewWrap
 		L.RegVar("OnPageChanged", get_OnPageChanged, set_OnPageChanged);
 		L.RegVar("current", get_current, null);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AddListener(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			PageView obj = (PageView)ToLua.CheckObject<PageView>(L, 1);
+			System.Action<int> arg0 = (System.Action<int>)ToLua.CheckDelegate<System.Action<int>>(L, 2);
+			obj.AddListener(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RemoveListener(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			PageView obj = (PageView)ToLua.CheckObject<PageView>(L, 1);
+			System.Action<int> arg0 = (System.Action<int>)ToLua.CheckDelegate<System.Action<int>>(L, 2);
+			obj.RemoveListener(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RemoveAllListeners(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PageView obj = (PageView)ToLua.CheckObject<PageView>(L, 1);
+			obj.RemoveAllListeners();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

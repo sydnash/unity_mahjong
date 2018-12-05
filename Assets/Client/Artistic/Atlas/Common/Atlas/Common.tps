@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/Common/Atlas/Common.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/Common/Atlas/Common.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">

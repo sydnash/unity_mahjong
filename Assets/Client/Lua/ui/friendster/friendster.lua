@@ -100,6 +100,18 @@ function friendster:onInit()
     self.mPageRows:show()
     self.mPageGuide:hide()
 
+    self.guideDots = {
+        self.mDotA,
+        self.mDotB,
+        self.mDotC,
+        self.mDotD,
+        self.mDotE,
+        self.mDotF,
+        self.mDotG,
+    }
+    self.mDotA:setSprite("light")
+    self.mGuideView:addChangedListener(self.onGuidePageChangedHandler, self)
+
     networkManager.registerCommandHandler(protoType.sc.notifyFriendster, function(msg) 
         self:onNotifyFriendster(msg)
     end, true)
@@ -249,6 +261,7 @@ function friendster:onNotifyFriendster(msg)
 
     local lc = self.friendsters[d.ClubId]
 
+    log("on notify friednster msg: " .. table.tostring(msg))
     if t == friendsterNotifyType.createDesk then
         if lc ~= nil then
             lc:addDesk(d.DeskInfo)
@@ -260,7 +273,7 @@ function friendster:onNotifyFriendster(msg)
         end
     elseif t == friendsterNotifyType.deskStart then
         if lc ~= nil then
-            local desk = lc.desks[d.DeskId]
+            local desk = lc:getDeskByDeskId(d.DeskId)
             if desk ~= nil then
                 desk.state = friendsterDeskStatus.playing
             end
@@ -302,7 +315,7 @@ function friendster:onNotifyFriendster(msg)
             self.detailUI:refreshUI()
         end
     elseif t == friendsterNotifyType.deskJuShuChanged then
-        local desk = lc.desks[d.DeskId]
+        local desk = lc:getDeskByDeskId(d.DeskId)
         if desk then
             desk.playedCount = d.CurJu
             if self.detailUI ~= nil then
@@ -377,6 +390,16 @@ function friendster:onNotifyFriendster(msg)
             if self.detailUI ~= nil then
                 self.detailUI:refreshUI()
             end
+        end
+    end
+end
+
+function friendster:onGuidePageChangedHandler(pageIndex)
+    for k, v in pairs(self.guideDots) do
+        if k == pageIndex + 1 then
+            v:setSprite("light")
+        else
+            v:setSprite("dark")
         end
     end
 end

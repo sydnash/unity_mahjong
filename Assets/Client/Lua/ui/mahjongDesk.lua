@@ -99,6 +99,7 @@ function mahjongDesk:onDestroy()
         networkManager.unregisterCommandHandler(protoType.sc.chatMessage)
         signalManager.unregisterSignalHandler(signalType.chatText,  self.onChatTextSignalHandler,  self)
         signalManager.unregisterSignalHandler(signalType.chatEmoji, self.onChatEmojiSignalHandler, self)
+        signalManager.unregisterSignalHandler(signalType.chatCMsg,  self.onChatCMsgSignalHandler, self)
     end
 
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
@@ -199,26 +200,24 @@ function mahjongDesk:onInviteXLClickedHandler()
 end
 
 function mahjongDesk:getInvitationInfo()
-    local prefix = (self.friendsterId == nil) and string.empty or string.format("亲友圈：%d，", self.friendsterId)
+    local friendsterId = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d，", self.game.friendsterId)
     return string.format("%s，人数：%d/%d", 
-                         prefix,
+                         friendsterId,
                          self.game:getPlayerCount(),
                          self.game:getTotalPlayerCount())
 end
 
 function mahjongDesk:onReadyClickedHandler()
-    playButtonClickSound()
     self.game:ready(true)
+    playButtonClickSound()
 end
 
 function mahjongDesk:onCancelClickedHandler()
-    playButtonClickSound()
     self.game:ready(false)
+    playButtonClickSound()
 end
 
 function mahjongDesk:onPositionClickedHandler()
-    playButtonClickSound()
-
     local location = locationManager.getData()
     if not location.status then
         local ui = require("ui.location").new(self.game)
@@ -242,6 +241,8 @@ function mahjongDesk:onPositionClickedHandler()
             ui:show()
         end)
     end
+
+    playButtonClickSound()
 end
 
 function mahjongDesk:onSettingClickedHandler()

@@ -156,51 +156,40 @@ function enterPlaybackCode:enter()
         history.PlaybackMsg[round] = playback
         history.PlayDetail = nil
 
-        local loading = require("ui.loading").new()
-        loading:show()
+        local data = {}
+        data.ClubId             = history.ClubId
+        data.Config             = table.fromjson(history.DeskConfig)
+        data.Creator            = 0
+        data.DeskId             = history.DeskId
+        data.ExitVoteProposer   = 0
+        data.GameType           = history.GameType
+        data.IsInExitVote       = false
+        data.LeftTime           = data.Config.JuShu - round
+        data.LeftVoteTime       = 0
+        data.Ready              = true
+        data.Players            = history.Players
+        data.Turn               = 0
 
-        sceneManager.load("scene", "mahjongscene", function(completed, progress)
-            loading:setProgress(progress)
+        for k, v in pairs(data.Players) do
+            v.Turn          = k - 1
+            v.Sex           = k % 2 + 1
+            v.IsConnected   = true
+            v.Ready         = true
+            v.IsLaoLai      = false
+            v.Score         = 0
 
-            if completed then
-                local data = {}
-                data.ClubId             = history.ClubId
-                data.Config             = table.fromjson(history.DeskConfig)
-                data.Creator            = 0
-                data.DeskId             = history.DeskId
-                data.ExitVoteProposer   = 0
-                data.GameType           = history.GameType
-                data.IsInExitVote       = false
-                data.LeftTime           = data.Config.JuShu - round
-                data.LeftVoteTime       = 0
-                data.Ready              = true
-                data.Players            = history.Players
-                data.Turn               = 0
-
-                for k, v in pairs(data.Players) do
-                    v.Turn          = k - 1
-                    v.Sex           = k % 2 + 1
-                    v.IsConnected   = true
-                    v.Ready         = true
-                    v.IsLaoLai      = false
-                    v.Score         = 0
-
-                    if v.AcId == gamepref.player.acId then
-                        data.Turn = v.Turn
-                    end
-                end
-
-                closeAllUI()
-
-                local game = require("logic.mahjong.mahjongGame").new(data, playback)
-                game:startLoop()
-                clientApp.currentDesk = game
-
-                loading:close()
+            if v.AcId == gamepref.player.acId then
+                data.Turn = v.Turn
             end
-        end)
+        end
 
-        self:close()
+        closeAllUI()
+
+        local game = require("logic.mahjong.mahjongGame").new(data, playback)
+        game:startLoop()
+        clientApp.currentDesk = game
+
+--        self:close()
     end)
 end
 

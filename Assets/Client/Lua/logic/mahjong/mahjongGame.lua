@@ -79,7 +79,7 @@ function mahjongGame:ctor(data, playback)
         self.mode = gameMode.normal
         self:registerCommandHandlers()
 
-        gamepref.player.currentDesk = { cityType = self.cityType, deskId = self.deskId }
+        gamepref.player.currentDesk = { cityType = self.cityType, deskId = self.deskId, }
     else
         self.mode = gameMode.playback
         self:registerPlaybackHandlers(playback)
@@ -745,9 +745,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:exitGame()
     closeAllUI()
-
-    local lobby = require("ui.lobby").new()
-    lobby:show()
+    self:openLobbyUI()
 
     self:destroy()
 end
@@ -1102,6 +1100,7 @@ function mahjongGame:destroy()
     self.messageHandlers:stop()
     self.messageHandlers:clear()
     tweenManager.remove(self.messageHandlers)
+
     if self.mode == gameMode.normal then
         self:unregisterCommandHandlers()
     else
@@ -1161,8 +1160,65 @@ function mahjongGame:stopPlayback()
     end
 end
 
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
 function mahjongGame:isPlayback()
     return self.mode == gameMode.playback
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function mahjongGame:openLobbyUI()
+    local lobby = require("ui.lobby").new()
+    lobby:show()
+
+    if self.friendsterId == nil or self.friendsterId <= 0 then
+        return
+    end
+
+    showWaitingUI("请稍候...")
+    networkManager.queryFriendsterList(function(msg)
+        if msg == nil then
+            closeWaitingUI()
+            return
+        end
+
+        local fst = require("ui.friendster.friendster").new(msg.Clubs)
+        fst:show()
+
+        local data = fst.friendsters[self.friendsterId]
+        if data ~= nil then
+            showWaitingUI("请稍候...")
+
+            networkManager.queryFriendsterMembers(self.friendsterId, function(msg)
+                if msg == nil or msg.RetCode ~= retc.ok then
+                    closeWaitingUI()
+                    return
+                end
+
+                data:setMembers(msg.Players)
+
+                networkManager.queryFriendsterDesks(self.friendsterId, function(msg)
+                    closeWaitingUI()
+
+                    if msg == nil or msg.RetCode ~= retc.ok then
+                        return
+                    end
+
+                    data:setDesks(msg.Desks)
+
+                    local fstDetail = require("ui.friendster.friendsterDetail").new(data)
+                    fstDetail:show()
+
+                    fstDetail:refreshUI()
+                    fstDetail:refreshMemberList()
+                    fstDetail:refreshDeskList()
+                end)
+            end)
+        end
+    end)
 end
 
 return mahjongGame

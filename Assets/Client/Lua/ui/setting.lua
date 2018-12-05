@@ -169,9 +169,9 @@ end
 function setting:onBackClickedHandler()
     if self.game ~= nil then
         self.game:exitGame()
-        self:close()
     end
 
+    self:close()
     playButtonClickSound()
 end
 

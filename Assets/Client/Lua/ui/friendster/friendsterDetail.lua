@@ -88,6 +88,7 @@ function friendsterDetail:onInit()
     self.mBank:hide()
     self.mStatistics:hide()
 
+    signalManager.registerSignalHandler(signalType.refreshFriendsterDetailInfo, self.onReconnectedHandler, self)
     signalManager.registerSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)
     signalManager.registerSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
     signalManager.registerSignalHandler(signalType.deskDestroy, self.onDeskDestroyHandler, self)
@@ -144,6 +145,45 @@ function friendsterDetail:onReturnClickedHandler()
     playButtonClickSound()
 end
 
+function friendsterDetail:onReconnectedHandler()
+    local friendsterId = self.data.id
+    showWaitingUI("正在同步亲友圈数据，请稍候...")
+    networkManager.queryFriendsterMembers(friendsterId, function(msg)
+        if msg == nil then
+            closeWaitingUI()
+            showWaitingUI(NETWORK_IS_BUSY)
+            return
+        end
+
+        if msg.RetCode ~= retc.ok then
+            closeWaitingUI()
+            showWaitingUI(retcText[msg.RetCode])
+            return
+        end
+
+        self.data:setMembers(msg.Players)
+
+        networkManager.queryFriendsterDesks(friendsterId, function(msg)
+            closeWaitingUI()
+
+            if msg == nil then
+                showWaitingUI(NETWORK_IS_BUSY)
+                return
+            end
+
+            if msg.RetCode ~= retc.ok then
+                showWaitingUI(retcText[msg.RetCode])
+                return
+            end
+            self.data:setDesks(msg.Desks)
+            
+            self:refreshUI()
+            self:refreshMemberList()
+            self:refreshDeskList()
+        end)
+    end)
+end
+  
 function friendsterDetail:refreshUI()
     if self.data.managerAcId == gamepref.player.acId then
         self.mShare:show()
@@ -324,6 +364,7 @@ function friendsterDetail:onDestroy()
     signalManager.unregisterSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
     signalManager.unregisterSignalHandler(signalType.deskDestroy, self.onDeskDestroyHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    signalManager.unregisterSignalHandler(signalType.refreshFriendsterDetailInfo, self.onReconnectedHandler, self)
     
     self.mMemberList:reset()
     self.mDeskList:reset()

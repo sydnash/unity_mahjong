@@ -225,17 +225,6 @@ function mahjongOperation:onInit()
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
-    local oriScreenAspect = 16 / 9
-    local inhandCamera = GameObjectPicker.instance.camera
-    local inhandCameraH = inhandCamera.orthographicSize
-    local inhandCameraW = inhandCameraH * oriScreenAspect
-    local newH = inhandCameraW / inhandCamera.aspect
-
-    local inhandCameraBottom = inhandCamera.transform.position.y - inhandCameraH
-    inhandCamera.orthographicSize = newH
-    local newy = inhandCameraBottom + newH
-
-    inhandCamera.transform.position = Vector3.New(inhandCamera.transform.position.x, newy, inhandCamera.transform.position.z)
 end
 
 -------------------------------------------------------------------------------
@@ -838,9 +827,6 @@ function mahjongOperation:touchHandler(phase, pos)
                             self.curSelectedMahjong:setSelected(false)
                             self.curSelectedMahjong = self.selectedMahjong
                             self.curSelectedMahjong:setSelected(true)
-                        else
-                            self.curSelectedMahjong:setSelected(false)
-                            self.curSelectedMahjong = nil
                         end
                     end
                 else
@@ -874,6 +860,11 @@ function mahjongOperation:touchHandler(phase, pos)
 
                         self.curSelectedMahjong = nil
                     end
+                end
+            else
+                if self.curSelectedMahjong then
+                    self.curSelectedMahjong:setSelected(false)
+                    self.curSelectedMahjong = nil
                 end
             end
 
@@ -1492,6 +1483,11 @@ function mahjongOperation:relocateInhandMahjongs(acId)
 
         local dir = self.game:getSeatTypeByAcId(player.acId)
         local seat = self.seats[dir]
+        if dir == mahjongGame.seatType.mine then
+            if self.curSelectedMahjong then
+                self.curSelectedMahjong = nil
+            end
+        end
 
         local o = self:getMyInhandMahjongPos(player, 1)
         local r = seat[mahjongGame.cardType.shou][self.game.mode].rot
@@ -1831,6 +1827,13 @@ function mahjongOperation:onDestroy()
     end
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
+    if self.hnzAnimation ~= nil then
+        self.hnzAnimation:stop()
+        self.hnzAnimation:clear()
+        tweenManager.remove(self.hnzAnimation)
+        self.hnzAnimation = nil
+    end
+
     self:clear(true)
 
     for _, v in pairs(self.diceMats) do
@@ -2037,7 +2040,18 @@ function mahjongOperation:onHuanNZhangDo(msg)
         end
         --重新排序手牌
         self:relocateInhandMahjongs(msg.AcId)
+
+        for _, v in pairs(temp) do
+            local pos = v:getLocalPosition()
+            local target = pos:Clone()
+            pos.y = pos.y + mahjong.h * 0.3
+            v:setLocalPosition(pos)
+            local mv = tweenPosition.new(v, 1.3, pos, target, nil)
+            tweenManager.add(mv)
+            mv:play()
+        end
     end))
+    animation:add(tweenDelay.new(1.4))
 
     tweenManager.add(animation)
     animation:play()
@@ -2047,10 +2061,10 @@ end
 -- 回放换N张
 -------------------------------------------------------------------------------
 function mahjongOperation:onHuanNZhangDoPlayback(msg)
-    local animation = tweenSerial.new(true)
+    self.hnzAnimation = tweenSerial.new(true)
     local huanMahjongs = {}
 
-    animation:add(tweenFunction.new(function()
+    self.hnzAnimation:add(tweenFunction.new(function()
         for _, v in pairs(msg.Dos) do
             self.hnzCount = #v.D
 
@@ -2062,8 +2076,8 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
             end 
         end
     end))
-    animation:add(tweenDelay.new(1.5))
-    animation:add(tweenFunction.new(function()
+    self.hnzAnimation:add(tweenDelay.new(1.5))
+    self.hnzAnimation:add(tweenFunction.new(function()
         for _, v in pairs(msg.Dos) do
             local mahjongs = self.inhandMahjongs[v.AcId]
             for _, u in pairs(v.I) do
@@ -2087,8 +2101,8 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
         end
     end))
 
-    tweenManager.add(animation)
-    animation:play()
+    tweenManager.add(self.hnzAnimation)
+    self.hnzAnimation:play()
 end
 
 return mahjongOperation

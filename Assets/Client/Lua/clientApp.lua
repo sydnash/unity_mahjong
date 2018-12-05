@@ -49,10 +49,11 @@ local function networkDisconnectedCallback(idx)
             networkDisconnectedCallback(idx + 1)
             return
         end
+        closeWaitingUI()
 
         networkManager.startPingPong()
+        signalManager.signal(signalType.refreshFriendsterDetailInfo)
         if deskId <= 0 then
-            closeWaitingUI()
             return
         end
 

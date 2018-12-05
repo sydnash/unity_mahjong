@@ -18,8 +18,24 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
+function pageview:addChangedListener(handler, target)
+    self.component:AddListener(function(pageIndex)
+        handler(target, pageIndex)
+    end)
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
 function pageview:reset()
     self.component:Reset()
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function pageview:onDestroy()
+    self.component:RemoveAllListeners()
 end
 
 return pageview

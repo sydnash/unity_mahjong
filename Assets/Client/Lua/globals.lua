@@ -52,6 +52,7 @@ function showWaitingUI(text)
         waiting_ui = waiting.new(text)
     else
         waiting_ui:setText(text)
+        waiting_ui:setAsLastSibling()
     end
 
     waiting_ui:show()
@@ -270,6 +271,23 @@ function enterDesk(gameType, deskId, callback, loading)
     end)
 end
 
+local function fixInhandCameraParam()
+    local oriScreenAspect = 16 / 9
+    local inhandCamera = GameObjectPicker.instance.camera
+    local inhandCameraH = inhandCamera.orthographicSize
+    local inhandCameraW = inhandCameraH * oriScreenAspect
+    local newH = inhandCameraW / inhandCamera.aspect
+
+    local inhandCameraT = inhandCamera.transform
+    local inhandCameraP = inhandCameraT.position
+
+    local inhandCameraBottom = inhandCameraP.y - inhandCameraH
+    inhandCamera.orthographicSize = newH
+    local newy = inhandCameraBottom + newH
+
+    inhandCameraT.position = Vector3.New(inhandCameraP.x, newy, inhandCameraP.z)
+end
+
 -------------------------------------------------------------
 -- 登录服务器
 -------------------------------------------------------------
@@ -327,6 +345,7 @@ function loginServer(callback, func)
             loading:setProgress(progress)
 
             if completed then
+                fixInhandCameraParam()
                 if cityType == 0 and deskId == 0 then
                     local lobby = require("ui.lobby").new()
                     lobby:show()
