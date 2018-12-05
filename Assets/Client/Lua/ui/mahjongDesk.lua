@@ -200,11 +200,10 @@ function mahjongDesk:onInviteXLClickedHandler()
 end
 
 function mahjongDesk:getInvitationInfo()
-    local friendsterId = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d，", self.game.friendsterId)
-    return string.format("%s，人数：%d/%d", 
+    local friendsterId = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d", self.game.friendsterId)
+    return string.format("%s，%s", 
                          friendsterId,
-                         self.game:getPlayerCount(),
-                         self.game:getTotalPlayerCount())
+                         getMahjongConfigText(self.game.cityType, self.game.config, false))
 end
 
 function mahjongDesk:onReadyClickedHandler()

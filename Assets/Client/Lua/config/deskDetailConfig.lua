@@ -162,4 +162,42 @@ deskDetailShiftConfig = {
     }
 }
 
+function getMahjongConfigText(cityType, config, ignoreJushu)
+    local text = string.empty
+
+    local function concat(t)
+        if not string.isNilOrEmpty(text) then
+            text = text .. "，"
+        end
+
+        text = text .. t
+    end
+
+    local layout = deskDetailLayout[cityType][gameType.mahjong]
+    local shift = deskDetailShiftConfig[cityType][gameType.mahjong]
+
+    for _, v in pairs(layout) do
+        for _, u in pairs(v.items) do
+            if (not ignoreJushu) or u.key ~= "JuShu" then
+                local sc = shift[u.key]
+                if sc ~= nil then
+                    local scv = sc[config[u.key]]
+                
+                    if u.style == "radiobox" then
+                        if scv == u.value then
+                            concat(u.text)
+                        end
+                    else
+                        if scv == u.value.selected then
+                            concat(u.text)
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    return text
+end
+
 --endregion

@@ -201,7 +201,7 @@ end
 -- 同步其他玩家的数据
 -------------------------------------------------------------------------------
 function mahjongGame:syncPlayers(players)
-    self.mainAcId = players[1].acId
+    self.mainAcId = players[1].AcId
 
     for _, v in pairs(players) do
         local player = gamePlayer.new(v.AcId)
@@ -1172,9 +1172,10 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:openLobbyUI()
     local lobby = require("ui.lobby").new()
-    lobby:show()
+    lobby:hide()
 
     if self.friendsterId == nil or self.friendsterId <= 0 then
+        lobby:show()
         return
     end
 
@@ -1182,42 +1183,55 @@ function mahjongGame:openLobbyUI()
     networkManager.queryFriendsterList(function(msg)
         if msg == nil then
             closeWaitingUI()
+            lobby:show()
             return
         end
 
         local fst = require("ui.friendster.friendster").new(msg.Clubs)
-        fst:show()
+        fst:hide()
 
         local data = fst.friendsters[self.friendsterId]
-        if data ~= nil then
-            showWaitingUI("请稍候...")
+        if data == nil then
+            closeWaitingUI()
+            lobby:show()
+            fst:show()
+            return
+        end
 
-            networkManager.queryFriendsterMembers(self.friendsterId, function(msg)
+        showWaitingUI("请稍候...")
+
+        networkManager.queryFriendsterMembers(self.friendsterId, function(msg)
+            if msg == nil or msg.RetCode ~= retc.ok then
+                closeWaitingUI()
+                lobby:show()
+                fst:show()
+                return
+            end
+
+            data:setMembers(msg.Players)
+
+            networkManager.queryFriendsterDesks(self.friendsterId, function(msg)
+                closeWaitingUI()
+
                 if msg == nil or msg.RetCode ~= retc.ok then
-                    closeWaitingUI()
+                    lobby:show()
+                    fst:show()
                     return
                 end
 
-                data:setMembers(msg.Players)
+                data:setDesks(msg.Desks)
 
-                networkManager.queryFriendsterDesks(self.friendsterId, function(msg)
-                    closeWaitingUI()
+                local fstDetail = require("ui.friendster.friendsterDetail").new(data)
+                fstDetail:show()
 
-                    if msg == nil or msg.RetCode ~= retc.ok then
-                        return
-                    end
+                fstDetail:refreshUI()
+                fstDetail:refreshMemberList()
+                fstDetail:refreshDeskList()
 
-                    data:setDesks(msg.Desks)
-
-                    local fstDetail = require("ui.friendster.friendsterDetail").new(data)
-                    fstDetail:show()
-
-                    fstDetail:refreshUI()
-                    fstDetail:refreshMemberList()
-                    fstDetail:refreshDeskList()
-                end)
+                lobby:show()
+                fst:show()
             end)
-        end
+        end)
     end)
 end
 

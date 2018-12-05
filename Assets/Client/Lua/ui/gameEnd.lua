@@ -22,17 +22,23 @@ function gameEnd:onInit()
         self.mItemL, 
     }
 
-    local i = 1
+    local acc = 1
     for _, v in pairs(self.datas.players) do
-        local item = items[i]
+        local item = items[acc]
+        acc = acc + 1
+
+        item:show()
         item:setPlayerInfo(v)
-        i = i + 1
     end
-    for j = i,4 do
-        items[j]:hide()
+    for i = acc, 4 do
+        items[i]:hide()
     end
 
-    local info = string.format("第%d/%d局  房号:%d", self.datas.finishGameCount, self.datas.totalGameCount, self.datas.deskId)
+    local info = string.format("第%d/%d局  房号:%d （%s）", 
+                               self.datas.finishGameCount, 
+                               self.datas.totalGameCount, 
+                               self.datas.deskId,
+                               getMahjongConfigText(self.game.cityType, self.game.config, true))
     self.mInfo:setText(info)
 
     if self.game.mode == gameMode.playback  then
