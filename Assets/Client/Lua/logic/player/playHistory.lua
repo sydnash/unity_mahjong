@@ -49,7 +49,7 @@ end
 function playHistory:insertHistory(data)
     for _, v in pairs(data) do
         local cached = self:findHistoryById(v.Id)
-        if not cached then
+        if not cached and v.PlayTimes > 0 then
             table.insert(self.mDatas, v)
         end
     end
