@@ -1193,6 +1193,7 @@ function mahjongGame:openLobbyUI()
         local data = fst.friendsters[self.friendsterId]
         if data == nil then
             closeWaitingUI()
+            showMessageUI("你已经不在该亲友圈")
             lobby:show()
             fst:show()
             return
@@ -1230,6 +1231,7 @@ function mahjongGame:openLobbyUI()
 
                 lobby:show()
                 fst:show()
+                fst.detailUI = fstDetail
             end)
         end)
     end)
