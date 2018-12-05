@@ -119,7 +119,7 @@ public class BuildManager : EditorWindow
                         packageName = "mahjong_" + (mDevelopment ? "debug" : "release");
                         break;
                     default:
-                        packageName = timestamp + "_mahjong_" + (mDevelopment ? "debug" : "release") + ".exe";
+                        packageName = "mahjong_" + (mDevelopment ? "debug" : "release") + ".exe";
                         break;
                 }
 
