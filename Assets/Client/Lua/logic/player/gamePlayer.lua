@@ -44,6 +44,9 @@ function gamePlayer:loadHeaderTex()
 end
 
 function gamePlayer:setMails(data)
+    if not data then
+        return
+    end
     self.mails = {}
 
     for _, v in pairs(data) do
