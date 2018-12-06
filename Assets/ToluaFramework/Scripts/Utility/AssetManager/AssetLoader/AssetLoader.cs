@@ -51,7 +51,7 @@ public class AssetLoader
     /// <summary>
     /// 
     /// </summary>
-    private float mUnloadDelayTime = 2f;
+    private float mUnloadDelayTime = 0.5f;
 
     /// <summary>
     /// 
@@ -133,6 +133,7 @@ public class AssetLoader
 
             if (currentTime - bundle.timestamp >= mUnloadDelayTime)
             {
+                mDependentBundlePool.Unload(key);
                 Unload(bundle);
                 willDeleteKeys.Add(key);
             }
