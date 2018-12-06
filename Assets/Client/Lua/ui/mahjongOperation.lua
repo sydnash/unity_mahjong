@@ -1309,8 +1309,19 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
             --如果需要再把牌扣起来
             --
         else
-            hu = self.mo
-            self.mo = nil
+            if self.mo ~= nil then
+                hu = self.mo
+                self.mo = nil
+            else
+                for _, mj in pairs(self.inhandMahjongs[acId]) do
+                    if mj.id == beCard then
+                        hu = mj
+                        table.removeItem(self.inhandMahjongs[acId], mj)
+                        break
+                    end
+                end
+                self:relocateInhandMahjongs(acId)
+            end
         end
     else
         local beAcId = beAcId[1]
