@@ -1222,7 +1222,12 @@ function mahjongGame:openLobbyUI()
 
                 data:setDesks(msg.Desks)
 
-                local fstDetail = require("ui.friendster.friendsterDetail").new(data)
+                local fstDetail = require("ui.friendster.friendsterDetail").new(data, function()
+                    if fst.detailUI ~= nil then
+                        fst.detailUI:close()
+                        fst.detailUI = nil
+                    end
+                end)
                 fstDetail:show()
 
                 fstDetail:refreshUI()

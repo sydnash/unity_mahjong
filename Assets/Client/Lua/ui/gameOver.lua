@@ -25,6 +25,7 @@ function gameOver:onInit()
         i = i + 1
         local item = self.items[i]
         item:setPlayerInfo(v)
+        item:show()
     end
     for j = i + 1, 4 do
         self.items[j]:hide()
