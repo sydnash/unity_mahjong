@@ -436,6 +436,7 @@ function mahjongOperation:onGameSync()
         self:setCountdownVisible(true)
     end
 
+    self:rotatePlanes()
     if self.game.mode == gameMode.normal then
         touch.addListener(self.touchHandler, self)
     end
@@ -1878,6 +1879,8 @@ function mahjongOperation:reset()
         self.animationManager:clear()
         self.animationManager:play()
     end
+    eventManager.registerAnimationTrigger("table_plane_down", function()
+    end)
 
     self.diceRoot:hide()
     self.centerGlass:show()
