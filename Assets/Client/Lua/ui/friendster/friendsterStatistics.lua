@@ -135,7 +135,7 @@ function friendsterStatistics:set(data, historyContainer)
             end
 
             if g == nil then
-                local g = gamePlayer.new(p.AcId)
+                g = gamePlayer.new(p.AcId)
                 g.headerUrl = p.HeadUrl
                 g:loadHeaderTex()
                 g.nickname = p.Nickname
