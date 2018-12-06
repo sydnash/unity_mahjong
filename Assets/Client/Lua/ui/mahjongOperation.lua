@@ -1859,6 +1859,11 @@ function mahjongOperation:reset()
     end
 
     self:hideChuPaiHint()
+    if self.animationManager ~= nil then
+        self.animationManager:clear()
+        self.animationManager:play()
+    end
+
     self.diceRoot:hide()
     self.centerGlass:show()
     self.countdown:hide()
