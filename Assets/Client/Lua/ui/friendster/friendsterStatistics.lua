@@ -143,21 +143,16 @@ function friendsterStatistics:set(data, historyContainer)
                 g.playTimes = 1
                 g.winnerTimes = 0
                 g.winnerDetail = {}
-
-                if g.score == max then
-                    g.winnerTimes = 1
-                    table.insert(g.winnerDetail, { deskId = deskId, score = scores[k], endTime = endTime })
-                end
+                g.winnerTimes = 0
 
                 table.insert(r, g)
             else
                 g.score = g.score + scores[k]
                 g.playTimes = g.playTimes + 1
-
-                if g.score == max then
-                    g.winnerTimes = g.winnerTimes + 1
-                    table.insert(g.winnerDetail, { deskId = deskId, score = scores[k], endTime = endTime })
-                end
+            end
+            if scores[k] == max and max > 0 then
+                g.winnerTimes = g.winnerTimes + 1
+                table.insert(g.winnerDetail, { deskId = deskId, score = scores[k], endTime = endTime })
             end
         end
     end
