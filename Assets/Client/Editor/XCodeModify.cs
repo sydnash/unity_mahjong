@@ -111,7 +111,12 @@ public class XCodeModify
 		rootDict.SetString("NSLocationWhenInUseUsageDescription", "开启定位，防止作弊打牌");
 		rootDict.SetString("NSMicrophoneUsageDescription", "开启麦克风进行语音聊天");
 
-
+//		<key>CFBundleDevelopmentRegion</key>
+//		<string>zh_CN</string>
+//		<key>CFBundleDisplayName</key>
+//		<string>幺九麻将</string>
+		rootDict.SetString("CFBundleDevelopmentRegion", "zh_CN");
+		rootDict.SetString("CFBundleDisplayName", "幺九麻将");
 		//这个在addurltype里面已经被添加了
 		//AddKeyArray(rootDict, "LSApplicationQueriesSchemes", "weixin");
 
