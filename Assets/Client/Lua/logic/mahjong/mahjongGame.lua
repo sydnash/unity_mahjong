@@ -96,16 +96,16 @@ end
 -- 初始化UI并启动消息处理循环
 -------------------------------------------------------------------------------
 function mahjongGame:startLoop()
-    if self.deskUI == nil then
-        self.deskUI = require("ui.mahjongDesk").new(self)
-    end
-    self.deskUI:show()
-    
     if self.operationUI == nil then
         self.operationUI = require("ui.mahjongOperation").new(self)
     end
     self.operationUI:show()
 
+    if self.deskUI == nil then
+        self.deskUI = require("ui.mahjongDesk").new(self)
+    end
+    self.deskUI:show()
+    
     self.deskUI:reset()
     self.operationUI:reset()
 
@@ -1222,7 +1222,12 @@ function mahjongGame:openLobbyUI()
 
                 data:setDesks(msg.Desks)
 
-                local fstDetail = require("ui.friendster.friendsterDetail").new(data)
+                local fstDetail = require("ui.friendster.friendsterDetail").new(data, function()
+                    if fst.detailUI ~= nil then
+                        fst.detailUI:close()
+                        fst.detailUI = nil
+                    end
+                end)
                 fstDetail:show()
 
                 fstDetail:refreshUI()

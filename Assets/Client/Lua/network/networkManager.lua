@@ -361,6 +361,12 @@ local function loginC(text, callback)
                 gamepref.player.shareConfig.count           = msg.ShareConfig.Count
                 gamepref.player.shareConfig.reward          = msg.ShareConfig.Reward
 
+                --TODO: cityType需要使用服务器传来的数据
+                -- gamepref.city = { City = msg.preferGameType }
+                -- if msg.preferGameType > 0 then
+                --     gamepref.city.Region = cityRegion[msg.preferGameType]
+                -- end
+
                 gamepref.player:setMails(msg.Mails)
                 networkManager.startPingPong()
 
@@ -809,6 +815,11 @@ end
 function networkManager.huanNZhang(cards, callback)
     local data = { Cs = cards }
     send(protoType.cs.huanNZhangChoose, data, callback)
+end
+
+function networkManager.choseCity(cityType, callback)
+    local data = { GameType = cityType }
+    send(protoType.cs.cityType, callback)
 end
 
 return networkManager

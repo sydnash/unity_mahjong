@@ -21,11 +21,27 @@ function city:onInit()
     self.mChengDu.id = cityType.chengdu
     self.mJinTang.id = cityType.jintang
 
+    self.cityChoseUI = {self.mChengDu, self.mJinTang}
+
     self.mChengDu:addClickListener(self.onCityClickedHandler, self)
     self.mJinTang:addClickListener(self.onCityClickedHandler, self)
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
 
+    self:showChosedHint()
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+end
+
+function city:showChosedHint()
+    for _, ui in pairs(self.cityChoseUI) do
+        if ui.id == gamepref.city.City then
+            self:showChosedHintOnUI(ui)
+        end
+    end
+end
+
+function city:showChosedHintOnUI(ui)
+    self.mChosedHint:setParent(ui)
+    self.mChosedHint:setLocalPosition(Vector3.zero)
 end
 
 function city:onCloseClickedHandler()

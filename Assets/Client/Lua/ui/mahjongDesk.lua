@@ -471,7 +471,7 @@ function mahjongDesk:onChatMessageHandler(msg)
 
         header:showChatEmoji(content)
     elseif msg.Type == chatType.cmsg then
-        header:showChatText(text)
+        header:showChatText(msg.Data)
     elseif msg.Type == chatType.voice then
         local fileid = msg.Data
         local filename = LFS.CombinePath(gvoiceManager.path, Hash.GetHash(fileid) .. ".gcv")
