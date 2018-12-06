@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: df64d02e1b0b5014aa19c87854b7bf1b
-timeCreated: 1542165580
+timeCreated: 1544061304
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -13,6 +13,7 @@ TextureImporter:
     21300012: qy_dq_nc_02
     21300014: qy_dq_ya_01
     21300016: qy_dq_ya_02
+    21300018: qy_01_xz
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -115,6 +116,20 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_01_xz
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 448
+        width: 64
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5078125, y: 0.4920635}
+      border: {x: 19, y: 21, z: 18, w: 19}
       outline: []
       physicsShape: []
       tessellationDetail: -1

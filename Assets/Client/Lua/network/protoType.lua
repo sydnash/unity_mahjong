@@ -9,6 +9,7 @@ return {
     cs = {
         reconnect                   = "CmdType.fly.CS.Reconnect",
         loginHs                     = "CmdType.fly.CS.LoginHs",
+        choseCity                   = "CmdType.fly.SC.ChoseGameType",
         claimShareReward            = "CmdType.fly.CS.ClaimShareReward",
         createDesk                  = "CmdType.fly.CS.CreateDesk",
         checkDesk                   = "CmdType.fly.CS.CheckDesk",
