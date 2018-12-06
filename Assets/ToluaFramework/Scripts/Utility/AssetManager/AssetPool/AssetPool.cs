@@ -61,7 +61,7 @@ public class AssetPool
             if (queue.count > 0)
             {
                 asset = queue.Pop() as Object;
-                mDependentBundlePool.Reload(key);
+                //mDependentBundlePool.Reload(key);
             }
             else
             {
@@ -139,7 +139,7 @@ public class AssetPool
             queue.Push(asset);
             queue.activedCount--;
 
-            mDependentBundlePool.Unload(key);
+            //mDependentBundlePool.Unload(key);
 
             return true;
         }
