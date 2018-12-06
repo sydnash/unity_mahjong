@@ -109,12 +109,19 @@ function friendster:onInit()
         self.mDotF,
         self.mDotG,
     }
+
+    self.mGuideView:reset()
+    for _, v in pairs(self.guideDots) do
+        v:setSprite("dark")
+    end
     self.mDotA:setSprite("light")
     self.mGuideView:addChangedListener(self.onGuidePageChangedHandler, self)
 
     networkManager.registerCommandHandler(protoType.sc.notifyFriendster, function(msg) 
         self:onNotifyFriendster(msg)
     end, true)
+
+    
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     

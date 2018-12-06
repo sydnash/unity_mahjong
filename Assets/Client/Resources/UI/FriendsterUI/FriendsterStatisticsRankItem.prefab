@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 224244582586188340}
   - component: {fileID: 222284408654575946}
   - component: {fileID: 114156352823710110}
+  - component: {fileID: 114824946752167594}
   m_Layer: 5
   m_Name: Head
   m_TagString: Untagged
@@ -206,9 +207,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mWidgets:
   - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1177243662766976}
-    panelScript: 
+    widgetType: 1
+    gameObject: {fileID: 1240816537576308}
+    panelScript: ui.header
   - variableName: mNickname
     widgetType: 2
     gameObject: {fileID: 1592983673723716}
@@ -427,6 +428,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114824946752167594
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1240816537576308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1177243662766976}
+    panelScript: 
 --- !u!114 &114849017049946482
 MonoBehaviour:
   m_ObjectHideFlags: 1

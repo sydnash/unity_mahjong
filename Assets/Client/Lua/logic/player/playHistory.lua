@@ -11,10 +11,10 @@ function playHistory:setData(data)
         return
     end
     if self.mDatas == nil then
-        self.mDatas = data
-    else
-        self:insertHistory(data)
+        self.mDatas = {}
     end
+        
+    self:insertHistory(data)
     self:sort()
 end
 
@@ -49,7 +49,7 @@ end
 function playHistory:insertHistory(data)
     for _, v in pairs(data) do
         local cached = self:findHistoryById(v.Id)
-        if not cached then
+        if not cached and v.PlayTimes > 0 then
             table.insert(self.mDatas, v)
         end
     end
