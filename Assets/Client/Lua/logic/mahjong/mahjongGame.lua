@@ -96,16 +96,16 @@ end
 -- 初始化UI并启动消息处理循环
 -------------------------------------------------------------------------------
 function mahjongGame:startLoop()
-    if self.deskUI == nil then
-        self.deskUI = require("ui.mahjongDesk").new(self)
-    end
-    self.deskUI:show()
-    
     if self.operationUI == nil then
         self.operationUI = require("ui.mahjongOperation").new(self)
     end
     self.operationUI:show()
 
+    if self.deskUI == nil then
+        self.deskUI = require("ui.mahjongDesk").new(self)
+    end
+    self.deskUI:show()
+    
     self.deskUI:reset()
     self.operationUI:reset()
 

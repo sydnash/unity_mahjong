@@ -811,6 +811,7 @@ function mahjongOperation:touchHandler(phase, pos)
         end
     else
         if phase == touch.phaseType.began then
+            self.isClick = true
             local go = GameObjectPicker.instance:Pick(pos)
             if go ~= nil then
                 if self.mo ~= nil and self.mo.gameObject == go then
@@ -834,6 +835,9 @@ function mahjongOperation:touchHandler(phase, pos)
                 pos.z = mpos.z - cpos.z
                 local wpos = camera:ScreenToWorldPoint(pos)
                 local dpos = wpos - self.selectedLastPos
+                if dpos:Magnitude() > 0.000001 then
+                    self.isClick = false
+                end
             
                 mpos = Vector3.New(mpos.x + dpos.x, mpos.y + dpos.y, mpos.z)
                 self.selectedMahjong:setPosition(mpos)
@@ -846,23 +850,11 @@ function mahjongOperation:touchHandler(phase, pos)
                 pos.z = mpos.z - cpos.z
                 local wpos = camera:ScreenToWorldPoint(pos)
                 local dpos = wpos - self.selectedOrgPos
+                local isClick = self.isClick
             
                 if not self.canChuPai then
                     self.selectedMahjong:setPosition(self.selectedOrgPos)
-                    if self.curSelectedMahjong == nil then
-                        self.curSelectedMahjong = self.selectedMahjong
-                        self.curSelectedMahjong:setSelected(true)
-                    else
-                        if self.selectedMahjong.id ~= self.curSelectedMahjong.id then
-                            self.curSelectedMahjong:setSelected(false)
-                            self.curSelectedMahjong = self.selectedMahjong
-                            self.curSelectedMahjong:setSelected(true)
-                        end
-                    end
-                else
-                    if dpos.y < 0.04 and (self.curSelectedMahjong == nil or self.curSelectedMahjong.id ~= self.selectedMahjong.id) then
-                        self.selectedMahjong:setPosition(self.selectedOrgPos)
-
+                    if isClick then
                         if self.curSelectedMahjong == nil then
                             self.curSelectedMahjong = self.selectedMahjong
                             self.curSelectedMahjong:setSelected(true)
@@ -871,24 +863,40 @@ function mahjongOperation:touchHandler(phase, pos)
                                 self.curSelectedMahjong:setSelected(false)
                                 self.curSelectedMahjong = self.selectedMahjong
                                 self.curSelectedMahjong:setSelected(true)
-                            else
-                                self.curSelectedMahjong:setSelected(false)
-                                self.curSelectedMahjong = nil
                             end
                         end
                     else
-                        local id = self.selectedMahjong.id
-
-                        networkManager.chuPai({ id }, function(msg)
-                            self:relocateInhandMahjongs(self.game.mainAcId)
-                        end)
-
-                        self:virtureChu(self.selectedMahjong)
-
-                        local player = self.game:getPlayerByAcId(self.game.mainAcId)
-                        playMahjongSound(id, player.sex)
-
-                        self.curSelectedMahjong = nil
+                        if self.curSelectedMahjong then
+                            self.curSelectedMahjong:setSelected(false)
+                            self.curSelectedMahjong = nil
+                        end
+                    end
+                else
+                    if isClick then
+                        if self.curSelectedMahjong == nil then
+                            self.curSelectedMahjong = self.selectedMahjong
+                            self.curSelectedMahjong:setSelected(true)
+                        else
+                            if self.curSelectedMahjong.id ~= self.selectedMahjong.id then
+                                self.curSelectedMahjong:setSelected(false)
+                                self.curSelectedMahjong = self.selectedMahjong
+                                self.curSelectedMahjong:setSelected(true)
+                            else
+                                --出牌
+                                self:onChosedChuPai()
+                            end
+                        end
+                    else
+                        if dpos.y < 0.04  then
+                            self.selectedMahjong:setPosition(self.selectedOrgPos)
+                            if self.curSelectedMahjong then
+                                self.curSelectedMahjong:setSelected(false)
+                                self.curSelectedMahjong = nil
+                            end
+                        else
+                            --出牌
+                            self:onChosedChuPai()
+                        end
                     end
                 end
             else
@@ -901,6 +909,21 @@ function mahjongOperation:touchHandler(phase, pos)
             self.selectedMahjong = nil
         end
     end
+end
+
+function mahjongOperation:onChosedChuPai()
+    local id = self.selectedMahjong.id
+
+    networkManager.chuPai({ id }, function(msg)
+        self:relocateInhandMahjongs(self.game.mainAcId)
+    end)
+
+    self:virtureChu(self.selectedMahjong)
+
+    local player = self.game:getPlayerByAcId(self.game.mainAcId)
+    playMahjongSound(id, player.sex)
+
+    self.curSelectedMahjong = nil
 end
 
 -------------------------------------------------------------------------------
@@ -1835,6 +1858,7 @@ function mahjongOperation:reset()
         touch.removeListener()
     end
 
+    self:hideChuPaiHint()
     self.diceRoot:hide()
     self.centerGlass:show()
     self.countdown:hide()
