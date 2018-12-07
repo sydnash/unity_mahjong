@@ -54,6 +54,11 @@ local function networkDisconnectedCallback(idx)
         networkManager.startPingPong()
         signalManager.signal(signalType.refreshFriendsterDetailInfo)
         if deskId <= 0 then
+            if clientApp.currentDesk and not clientApp.currentDesk:isPlayback() then
+                showMessageUI("牌局已经结束，请点击确定并去战绩查看详情。", function()
+                    clientApp.currentDesk:exitGame()
+                end)
+            end
             return
         end
 
