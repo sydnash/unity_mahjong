@@ -16,11 +16,6 @@ public class AssetPool
     /// <summary>
     /// 
     /// </summary>
-    //private DependentBundlePool mDependentBundlePool = new DependentBundlePool();
-
-    /// <summary>
-    /// 
-    /// </summary>
     private bool mReference = false;
 
     /// <summary>
@@ -40,8 +35,6 @@ public class AssetPool
     public AssetPool(AssetLoader loader, bool reference)
     {
         mLoader = loader;
-        //mLoader.dependentBundlePool = mDependentBundlePool;
-
         mReference = reference;
     }
 
@@ -60,8 +53,8 @@ public class AssetPool
             ObjectQueue queue = mDic[key];
             if (queue.count > 0)
             {
-                mLoader.LoadDependentAB(assetPath, assetName);
                 asset = queue.Pop() as Object;
+                mLoader.ReloadDependencies(key);
             }
             else
             {
@@ -111,6 +104,8 @@ public class AssetPool
             {
                 asset.name = key;
                 queue.Push(asset);
+                //如果执行下面的unload，会出现某些prefab丢失材质的问题，所以暂时先屏蔽
+                //mDependentBundlePool.Unload(assetName);
             }
 
             return asset;
@@ -133,6 +128,7 @@ public class AssetPool
         {
             ObjectQueue queue = mDic[key];
             queue.Push(asset);
+            mLoader.UnloadDependencies(key);
 
             return true;
         }
@@ -155,14 +151,6 @@ public class AssetPool
     public bool reference
     {
         get { return mReference; }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public IEnumerator<string> assetNameEnumerator
-    {
-        get { return mDic.Keys.GetEnumerator(); }
     }
 
     #endregion

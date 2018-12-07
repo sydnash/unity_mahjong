@@ -43,7 +43,7 @@ public class DependentBundlePool
 
     #endregion
 
-    #region Public 
+    #region Public
 
     /// <summary>
     /// 
@@ -51,7 +51,7 @@ public class DependentBundlePool
     /// <param name="assetName"></param>
     /// <param name="dependentBundleName"></param>
     /// <param name="checkExists"></param>
-    public void Load(string assetName, string dependentBundleName, string key)
+    public void Load(string key, string dependentBundleName)
     {
         LoadBundle(dependentBundleName);
 
@@ -66,6 +66,23 @@ public class DependentBundlePool
         {
             HashSet<string> set = mAssetDict[key];
             set.Add(dependentBundleName);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="assetName"></param>
+    public void Reload(string key)
+    {
+        if (mAssetDict.ContainsKey(key))
+        {
+            HashSet<string> set = mAssetDict[key];
+
+            foreach (string bundleName in set)
+            {
+                LoadBundle(bundleName);
+            }
         }
     }
 
@@ -88,20 +105,18 @@ public class DependentBundlePool
 
                     if (dependentBundle.refCount == 0 && dependentBundle.bundle != null)
                     {
+                        Debug.Log("unload dependent bundle: " + bundleName);
                         dependentBundle.bundle.Unload(false);
                         mDependentBundleDict.Remove(bundleName);
                     }
                 }
             }
-
-            dependentBundleNames.Clear();
-            mAssetDict.Remove(key);
         }
     }
 
     #endregion
 
-    #region Private 
+    #region Private
 
     /// <summary>
     /// 
@@ -130,6 +145,8 @@ public class DependentBundlePool
                 dependentBundle.bundle = ab;
                 dependentBundle.refCount = 1;
             }
+
+            Debug.Log("load dependent bundle: " + bundleName);
         }
     }
 
