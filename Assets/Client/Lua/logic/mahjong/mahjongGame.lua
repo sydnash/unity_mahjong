@@ -541,10 +541,8 @@ function mahjongGame:endGame()
             return
         end
 
-        self.leftVoteSeconds    = msg.LeftTime
-        self.exitVoteProposer   = msg.Proposer
-
         if msg.Proposer ~= nil and msg.Proposer > 0 then
+            self:resetExitVoteInfo(msg)
             self.exitDeskUI = require("ui.exitDesk").new(self)
             self.exitDeskUI:show()
         else
@@ -880,14 +878,23 @@ function mahjongGame:onOtherConnectStatusChanged(msg)
     self.messageHandlers:add(func)
 end
 
+function mahjongGame:resetExitVoteInfo(msg)
+    self.leftVoteSeconds    = msg.LeftTime
+    self.exitVoteProposer   = msg.Proposer
+    for _, p in pairs(self.players) do
+        p.exitVoteState = exitDeskStatus.waiting
+        if p.acId == msg.Proposer then
+            p.exitVoteState = exitDeskStatus.proposer
+        end
+    end
+end
+
 -------------------------------------------------------------------------------
 -- 服务器通知发起退出投票
 -------------------------------------------------------------------------------
 function mahjongGame:onNotifyExitVoteHandler(msg)
 --    log("notify exit vote, msg = " .. table.tostring(msg))
-
-    self.leftVoteSeconds    = msg.LeftTime
-    self.exitVoteProposer   = msg.Proposer
+    self:resetExitVoteInfo(msg)
 
     self.exitDeskUI = require("ui.exitDesk").new(self)
     self.exitDeskUI:show()
@@ -911,9 +918,13 @@ end
 function mahjongGame:onExitVoteHandler(msg)
     local func = tweenFunction.new(function()
     --    log("exit vote, msg = " .. table.tostring(msg))
-        if self.exitDeskUI~= nil then
+        if self.exitDeskUI ~= nil then
             local player = self:getPlayerByAcId(msg.AcId)
-            player.exitVoteState = 1
+            if msg.Agree then
+                player.exitVoteState = exitDeskStatus.agree
+            else
+                player.exitVoteState = exitDeskStatus.reject
+            end
             self.exitDeskUI:setPlayerState(player)
         end
     end)
