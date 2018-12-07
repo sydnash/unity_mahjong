@@ -36,22 +36,17 @@ public class AssetLoader
     /// <summary>
     /// 
     /// </summary>
-    private DependentBundlePool mDependentBundlePool = null;
+    //private DependentBundlePool mDependentBundlePool = null;
 
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, Bundle> mBundles = new Dictionary<string, Bundle>();
+    private Dictionary<string, Bundle> mDependentBundles = new Dictionary<string, Bundle>();
 
     /// <summary>
     /// 
     /// </summary>
     private string mPath = string.Empty;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private float mUnloadDelayTime = 0.5f;
 
     /// <summary>
     /// 
@@ -73,6 +68,11 @@ public class AssetLoader
     /// </summary>
     private const string ASSETBUNDLE_MANIFEST = "AssetBundleManifest";
 
+    /// <summary>
+    /// 
+    /// </summary>
+    private const float UNLOAD_DELAY_TIME = 1f;
+
     #endregion
 
     #region Public
@@ -82,11 +82,9 @@ public class AssetLoader
     /// </summary>
     /// <param name="path"></param>
     /// <param name="unloadDelayTime"></param>
-    public AssetLoader(string path, float unloadDelayTime = 0.5f)
+    public AssetLoader(string path)
     {
         mPath = path.ToLower();
-        mUnloadDelayTime = Mathf.Max(0.1f, unloadDelayTime);
-
         string sub = LFS.CombinePath(SUB_PATH, mPath);
 
         mLocalizedPath = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, sub);
@@ -123,36 +121,54 @@ public class AssetLoader
     /// </summary>
     public void Update()
     {
-        List<string> willDeleteKeys = new List<string>();
+        List<string> removeKeys = new List<string>();
         float currentTime = Time.realtimeSinceStartup;
 
-        foreach (KeyValuePair<string, Bundle> p in mBundles)
+        foreach (KeyValuePair<string, Bundle> p in mDependentBundles)
         {
             string key = p.Key;
             Bundle bundle = p.Value;
 
-            if (currentTime - bundle.timestamp >= mUnloadDelayTime)
+            if (currentTime - bundle.timestamp > UNLOAD_DELAY_TIME)
             {
-                mDependentBundlePool.Unload(key);
-                Unload(bundle);
-                willDeleteKeys.Add(key);
+                removeKeys.Add(key);
+                Debug.Log("unload bundle: " + key);
+                bundle.bundle.Unload(false);
             }
         }
 
-        foreach (string key in willDeleteKeys)
+        foreach (string key in removeKeys)
         {
-            mBundles.Remove(key);
+            mDependentBundles.Remove(key);
         }
+
+        //foreach (KeyValuePair<string, Bundle> p in mBundles)
+        //{
+        //    string key = p.Key;
+        //    Bundle bundle = p.Value;
+
+        //    if (currentTime - bundle.timestamp >= mUnloadDelayTime)
+        //    {
+        //        mDependentBundlePool.Unload(key);
+        //        Unload(bundle);
+        //        willDeleteKeys.Add(key);
+        //    }
+        //}
+
+        //foreach (string key in willDeleteKeys)
+        //{
+        //    mBundles.Remove(key);
+        //}
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public DependentBundlePool dependentBundlePool
-    {
-        set { mDependentBundlePool = value; }
-        get { return mDependentBundlePool; }
-    }
+    //public DependentBundlePool dependentBundlePool
+    //{
+    //    set { mDependentBundlePool = value; }
+    //    get { return mDependentBundlePool; }
+    //}
 
     /// <summary>
     /// 
@@ -192,19 +208,34 @@ public class AssetLoader
     /// 加载依赖资源
     /// </summary>
     /// <param name="assetName"></param>
-    private void LoadDependentAB(string assetPath, string assetName)
+    public void LoadDependentAB(string assetPath, string assetName)
     {
         if (mDependentManifest == null)
             return;
-
-        string key = CreateAssetKey(assetPath, assetName);
 
         string target = LFS.CombinePath(mPath, assetPath, assetName);
         string[] dependentNames = mDependentManifest.GetAllDependencies(target);
 
         foreach (string dependentName in dependentNames)
         {
-            dependentBundlePool.Load(assetName, dependentName, key);
+            if (mDependentBundles.ContainsKey(dependentName))
+            {
+                mDependentBundles[dependentName].timestamp = Time.realtimeSinceStartup;
+            }
+            else
+            {
+                var ab = LoadAssetBundle(LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, SUB_PATH, dependentName), true);
+                if (ab == null)
+                {
+                    ab = LoadAssetBundle(LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, SUB_PATH, dependentName), false);
+                }
+
+                Bundle bundle = new Bundle();
+                bundle.bundle = ab;
+                bundle.timestamp = Time.realtimeSinceStartup;
+
+                mDependentBundles.Add(dependentName, bundle);
+            }
         }
     }
 
@@ -222,6 +253,7 @@ public class AssetLoader
         if (ab != null)
         {
             asset = ab.LoadAsset(assetName);
+            ab.Unload(false);
         }
 
         return asset;
@@ -235,43 +267,27 @@ public class AssetLoader
     /// <returns></returns>
     private AssetBundle LoadAssetBundle(string bundleName, bool checkExists = false)
     {
-        Bundle bundle = null;
-
         if (!checkExists || System.IO.File.Exists(bundleName))
         {
-            if (mBundles.ContainsKey(bundleName))
-            {
-                bundle = mBundles[bundleName];
-            }
-            else
-            {
-                bundle = new Bundle();
-                mBundles.Add(bundleName, bundle);
-            }
-
-            if (bundle.bundle == null)
-            {
-                bundle.bundle = AssetBundle.LoadFromFile(bundleName);
-            }
-
-            bundle.timestamp = Time.realtimeSinceStartup;
+            Debug.Log("load bundle: " + bundleName);
+            return AssetBundle.LoadFromFile(bundleName);
         }
 
-        return (bundle == null) ? null : bundle.bundle;
+        return null;
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="bundle"></param>
-    private void Unload(Bundle bundle)
-    {
-        if (bundle.bundle != null)
-        {
-            bundle.bundle.Unload(false);
-            bundle.bundle = null;
-        }
-    }
+    //private void Unload(Bundle bundle)
+    //{
+    //    if (bundle.bundle != null)
+    //    {
+    //        bundle.bundle.Unload(false);
+    //        bundle.bundle = null;
+    //    }
+    //}
 
     #endregion
 }

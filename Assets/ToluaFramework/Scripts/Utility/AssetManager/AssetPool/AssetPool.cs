@@ -16,7 +16,7 @@ public class AssetPool
     /// <summary>
     /// 
     /// </summary>
-    private DependentBundlePool mDependentBundlePool = new DependentBundlePool();
+    //private DependentBundlePool mDependentBundlePool = new DependentBundlePool();
 
     /// <summary>
     /// 
@@ -40,7 +40,7 @@ public class AssetPool
     public AssetPool(AssetLoader loader, bool reference)
     {
         mLoader = loader;
-        mLoader.dependentBundlePool = mDependentBundlePool;
+        //mLoader.dependentBundlePool = mDependentBundlePool;
 
         mReference = reference;
     }
@@ -60,8 +60,8 @@ public class AssetPool
             ObjectQueue queue = mDic[key];
             if (queue.count > 0)
             {
+                mLoader.LoadDependentAB(assetPath, assetName);
                 asset = queue.Pop() as Object;
-                //mDependentBundlePool.Reload(key);
             }
             else
             {
@@ -71,7 +71,6 @@ public class AssetPool
             if (asset != null)
             {
                 asset.name = key;
-                queue.activedCount++;
             }
         }
         else
@@ -83,7 +82,6 @@ public class AssetPool
             if (asset != null)
             {
                 asset.name = key;
-                queue.activedCount++;
             }
         }
 
@@ -113,8 +111,6 @@ public class AssetPool
             {
                 asset.name = key;
                 queue.Push(asset);
-                //如果执行下面的unload，会出现某些prefab丢失材质的问题，所以暂时先屏蔽
-                //mDependentBundlePool.Unload(assetName);
             }
 
             return asset;
@@ -137,9 +133,6 @@ public class AssetPool
         {
             ObjectQueue queue = mDic[key];
             queue.Push(asset);
-            queue.activedCount--;
-
-            //mDependentBundlePool.Unload(key);
 
             return true;
         }
@@ -170,21 +163,6 @@ public class AssetPool
     public IEnumerator<string> assetNameEnumerator
     {
         get { return mDic.Keys.GetEnumerator(); }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="assetName"></param>
-    /// <returns></returns>
-    public int GetAssetActivedCount(string assetName)
-    {
-        if (mDic.ContainsKey(assetName))
-        {
-            return mDic[assetName].activedCount;
-        }
-
-        return 0;
     }
 
     #endregion

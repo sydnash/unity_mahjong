@@ -24,10 +24,11 @@ function exitDesk:onInit()
         i = i + 1
         if self.game.exitVoteProposer == v.acId then
             self.mProposer:setText(v.nickname)
-            v.exitVoteState = -1
+            v.exitVoteState = exitDeskStatus.proposer
         end
 
         local item = items[i]
+        item:show()
         item:setPlayerInfo(v)
         self.items[v.turn] = item
     end

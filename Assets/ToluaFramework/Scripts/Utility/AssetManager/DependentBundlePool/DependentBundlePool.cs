@@ -73,23 +73,6 @@ public class DependentBundlePool
     /// 
     /// </summary>
     /// <param name="assetName"></param>
-    public void Reload(string key)
-    {
-        if (mAssetDict.ContainsKey(key))
-        {
-            HashSet<string> set = mAssetDict[key];
-
-            foreach (string bundleName in set)
-            {
-                LoadBundle(bundleName);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="assetName"></param>
     public void Unload(string key)
     {
         if (mAssetDict.ContainsKey(key))
@@ -110,6 +93,9 @@ public class DependentBundlePool
                     }
                 }
             }
+
+            dependentBundleNames.Clear();
+            mAssetDict.Remove(key);
         }
     }
 
