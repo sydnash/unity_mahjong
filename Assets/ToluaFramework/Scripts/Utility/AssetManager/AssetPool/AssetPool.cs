@@ -16,11 +16,6 @@ public class AssetPool
     /// <summary>
     /// 
     /// </summary>
-    private DependentBundlePool mDependentBundlePool = new DependentBundlePool();
-
-    /// <summary>
-    /// 
-    /// </summary>
     private bool mReference = false;
 
     /// <summary>
@@ -40,8 +35,6 @@ public class AssetPool
     public AssetPool(AssetLoader loader, bool reference)
     {
         mLoader = loader;
-        mLoader.dependentBundlePool = mDependentBundlePool;
-
         mReference = reference;
     }
 
@@ -61,7 +54,7 @@ public class AssetPool
             if (queue.count > 0)
             {
                 asset = queue.Pop() as Object;
-                //mDependentBundlePool.Reload(key);
+                mLoader.ReloadDependencies(key);
             }
             else
             {
@@ -71,7 +64,6 @@ public class AssetPool
             if (asset != null)
             {
                 asset.name = key;
-                queue.activedCount++;
             }
         }
         else
@@ -83,7 +75,6 @@ public class AssetPool
             if (asset != null)
             {
                 asset.name = key;
-                queue.activedCount++;
             }
         }
 
@@ -137,9 +128,7 @@ public class AssetPool
         {
             ObjectQueue queue = mDic[key];
             queue.Push(asset);
-            queue.activedCount--;
-
-            //mDependentBundlePool.Unload(key);
+            mLoader.UnloadDependencies(key);
 
             return true;
         }
@@ -162,29 +151,6 @@ public class AssetPool
     public bool reference
     {
         get { return mReference; }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public IEnumerator<string> assetNameEnumerator
-    {
-        get { return mDic.Keys.GetEnumerator(); }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="assetName"></param>
-    /// <returns></returns>
-    public int GetAssetActivedCount(string assetName)
-    {
-        if (mDic.ContainsKey(assetName))
-        {
-            return mDic[assetName].activedCount;
-        }
-
-        return 0;
     }
 
     #endregion

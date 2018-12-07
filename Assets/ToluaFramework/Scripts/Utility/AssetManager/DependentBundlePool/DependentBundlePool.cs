@@ -51,7 +51,7 @@ public class DependentBundlePool
     /// <param name="assetName"></param>
     /// <param name="dependentBundleName"></param>
     /// <param name="checkExists"></param>
-    public void Load(string assetName, string dependentBundleName, string key)
+    public void Load(string key, string dependentBundleName)
     {
         LoadBundle(dependentBundleName);
 
@@ -105,6 +105,7 @@ public class DependentBundlePool
 
                     if (dependentBundle.refCount == 0 && dependentBundle.bundle != null)
                     {
+                        Debug.Log("unload dependent bundle: " + bundleName);
                         dependentBundle.bundle.Unload(false);
                         mDependentBundleDict.Remove(bundleName);
                     }
@@ -144,6 +145,8 @@ public class DependentBundlePool
                 dependentBundle.bundle = ab;
                 dependentBundle.refCount = 1;
             }
+
+            Debug.Log("load dependent bundle: " + bundleName);
         }
     }
 

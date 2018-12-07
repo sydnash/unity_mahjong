@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+using LoadedBundlePool = System.Collections.Generic.Dictionary<string, UnityEngine.AssetBundle>;
+
 /// <summary>
 /// 资源加载器
 /// </summary>
@@ -36,22 +38,24 @@ public class AssetLoader
     /// <summary>
     /// 
     /// </summary>
-    private DependentBundlePool mDependentBundlePool = null;
+    private DependentBundlePool mDependentBundlePool = new DependentBundlePool();
 
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, Bundle> mBundles = new Dictionary<string, Bundle>();
+    private LoadedBundlePool mLoadedBundlePool = new LoadedBundlePool();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private float mLoadedTimestamp = 0;
 
     /// <summary>
     /// 
     /// </summary>
     private string mPath = string.Empty;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private float mUnloadDelayTime = 0.5f;
+    
 
     /// <summary>
     /// 
@@ -73,6 +77,11 @@ public class AssetLoader
     /// </summary>
     private const string ASSETBUNDLE_MANIFEST = "AssetBundleManifest";
 
+    /// <summary>
+    /// 
+    /// </summary>
+    private const float UNLOAD_DELAY_TIME = 0.5f;
+
     #endregion
 
     #region Public
@@ -82,11 +91,9 @@ public class AssetLoader
     /// </summary>
     /// <param name="path"></param>
     /// <param name="unloadDelayTime"></param>
-    public AssetLoader(string path, float unloadDelayTime = 0.5f)
+    public AssetLoader(string path)
     {
         mPath = path.ToLower();
-        mUnloadDelayTime = Mathf.Max(0.1f, unloadDelayTime);
-
         string sub = LFS.CombinePath(SUB_PATH, mPath);
 
         mLocalizedPath = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, sub);
@@ -121,37 +128,36 @@ public class AssetLoader
     /// <summary>
     /// 
     /// </summary>
-    public void Update()
+    /// <param name="key"></param>
+    public void ReloadDependencies(string key)
     {
-        List<string> willDeleteKeys = new List<string>();
-        float currentTime = Time.realtimeSinceStartup;
-
-        foreach (KeyValuePair<string, Bundle> p in mBundles)
-        {
-            string key = p.Key;
-            Bundle bundle = p.Value;
-
-            if (currentTime - bundle.timestamp >= mUnloadDelayTime)
-            {
-                mDependentBundlePool.Unload(key);
-                Unload(bundle);
-                willDeleteKeys.Add(key);
-            }
-        }
-
-        foreach (string key in willDeleteKeys)
-        {
-            mBundles.Remove(key);
-        }
+        mDependentBundlePool.Reload(key);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public DependentBundlePool dependentBundlePool
+    /// <param name="key"></param>
+    public void UnloadDependencies(string key)
     {
-        set { mDependentBundlePool = value; }
-        get { return mDependentBundlePool; }
+        mDependentBundlePool.Unload(key);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Update()
+    {
+        //在这里卸载bundle是因为：
+        //   Unity2017.2版本中同步加载asset之后马上卸载bundle会引发crash
+        if (Time.realtimeSinceStartup - mLoadedTimestamp > UNLOAD_DELAY_TIME)
+        {
+            foreach (KeyValuePair<string, AssetBundle> ab in mLoadedBundlePool)
+            {
+                ab.Value.Unload(false);
+            }
+            mLoadedBundlePool.Clear();
+        }
     }
 
     /// <summary>
@@ -204,7 +210,7 @@ public class AssetLoader
 
         foreach (string dependentName in dependentNames)
         {
-            dependentBundlePool.Load(assetName, dependentName, key);
+            mDependentBundlePool.Load(key, dependentName);
         }
     }
 
@@ -222,6 +228,8 @@ public class AssetLoader
         if (ab != null)
         {
             asset = ab.LoadAsset(assetName);
+            //ab.Unload(false);  Unity 2017.2中会引发crash，故屏蔽之
+            mLoadedTimestamp = Time.realtimeSinceStartup;
         }
 
         return asset;
@@ -235,42 +243,22 @@ public class AssetLoader
     /// <returns></returns>
     private AssetBundle LoadAssetBundle(string bundleName, bool checkExists = false)
     {
-        Bundle bundle = null;
+        AssetBundle bundle = null;
 
         if (!checkExists || System.IO.File.Exists(bundleName))
         {
-            if (mBundles.ContainsKey(bundleName))
+            if (mLoadedBundlePool.ContainsKey(bundleName))
             {
-                bundle = mBundles[bundleName];
+                bundle = mLoadedBundlePool[bundleName];
             }
             else
             {
-                bundle = new Bundle();
-                mBundles.Add(bundleName, bundle);
+                bundle = AssetBundle.LoadFromFile(bundleName);
+                mLoadedBundlePool.Add(bundleName, bundle);
             }
-
-            if (bundle.bundle == null)
-            {
-                bundle.bundle = AssetBundle.LoadFromFile(bundleName);
-            }
-
-            bundle.timestamp = Time.realtimeSinceStartup;
         }
 
-        return (bundle == null) ? null : bundle.bundle;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="bundle"></param>
-    private void Unload(Bundle bundle)
-    {
-        if (bundle.bundle != null)
-        {
-            bundle.bundle.Unload(false);
-            bundle.bundle = null;
-        }
+        return bundle;
     }
 
     #endregion
