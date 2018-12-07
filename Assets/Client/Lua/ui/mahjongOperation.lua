@@ -234,6 +234,8 @@ function mahjongOperation:onInit()
 
     self:loadMahjongs()
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+
+    self:computeMyPengStartPos()
 end
 
 -------------------------------------------------------------------------------
@@ -1519,6 +1521,26 @@ function mahjongOperation:decreaseInhandMahjongs(acId, datas)
     return decreaseMahjongs
 end
 
+-------------------------------------------------------------------------------
+-- 算自己的碰牌其实位置
+-------------------------------------------------------------------------------
+function mahjongOperation:computeMyPengStartPos()
+    local sceneCamera = UnityEngine.Camera.main
+    local inhandCamera = GameObjectPicker.instance.camera
+
+    local seat = self.seats[mahjongGame.seatType.mine]
+    local o = seat[mahjongGame.cardType.shou][self.game.mode].pos
+    o = Vector3.New(o.x - mahjong.w * 0.5, o.y, o.z)
+    local scPos = inhandCamera:WorldToScreenPoint(o)
+
+    local pengPos = seat[mahjongGame.cardType.peng].pos
+    local cameraPos = sceneCamera.transform.position
+    local direct = pengPos - cameraPos
+    local project = Vector3.Project(direct, sceneCamera.transform.forward)
+
+    local wpPos = sceneCamera:ScreenToWorldPoint(Vector3.New(scPos.x, scPos.y, project.magnitude))
+    seat[mahjongGame.cardType.peng].pos = Vector3.New(wpPos.x + mahjong.w * -0.5, pengPos.y, pengPos.z)
+end
 -------------------------------------------------------------------------------
 -- 调整手牌位置
 -------------------------------------------------------------------------------

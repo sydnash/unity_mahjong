@@ -1020,6 +1020,8 @@ end
 function mahjongGame:onDingQueHintHandler(msg)
 --    log("ding que hint, msg = " .. table.tostring(msg))
     local func = tweenFunction.new(function()
+        self.deskStatus = deskStatus.dingque
+
         self.operationUI:onDingQueHint(msg)
     end)
     self.messageHandlers:add(func)
@@ -1031,8 +1033,6 @@ end
 function mahjongGame:onDingQueDoHandler(msg)
 --    log("ding que do, msg = " .. table.tostring(msg))
     local func = tweenFunction.new(function()
-        self.deskStatus = deskStatus.dingque
-
         for _, v in pairs(msg.Dos) do
             local player = self:getPlayerByAcId(v.AcId)
             player.que = v.Q
