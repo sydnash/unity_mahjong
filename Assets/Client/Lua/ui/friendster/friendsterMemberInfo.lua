@@ -7,17 +7,56 @@ local friendsterMemberInfo = class("friendsterMemberInfo", base)
 
 _RES_(friendsterMemberInfo, "FriendsterUI", "FriendsterMemberInfoUI")
 
+function friendsterMemberInfo:ctor(friendsterId, managerId, data)
+    self.friendsterId = friendsterId
+    self.managerId = managerId
+    self.data = data
+
+    self.super.ctor(self)
+end
+
 function friendsterMemberInfo:onInit()
+    self.mIp:hide()
+    self.mExit:hide()
+    self.mDissolve:hide()
+    self.mDelete:hide()
+
+    self.mIcon:setTexture(self.data.headerTex)
+    self.mSex:setSprite("boy")
+    self.mNickname:setText(self.data.nickname)
+
+    if self.managerId == self.data.acId then
+        self.mQz:show()
+
+        if self.data.acId == gamepref.player.acId then
+            self.mDissolve:show()
+        else
+            self.mExit:show()
+        end
+    else
+        self.mQz:hide()
+
+        if self.managerId == gamepref.player.acId then
+            self.mDelete:show()
+        end
+    end
+
+    self.mId:setText(string.format("账号:%d", self.data.acId))
+
+    if not string.isNilOrEmpty(self.data.ip) then
+        self.mIp:show()
+        self.mIp:setText(string.format("IP:%s", self.data.ip))
+    end
+
+    self.mTotalCount:setText(string.format("总局数:%d", self.data.totalPlayTimes))
+
+    local winRate = (self.data.totalPlayTimes == 0) and 0 or math.floor(self.data.winPlayTimes / self.data.totalPlayTimes * 100)
+    self.mWinRate:setText(string.format("胜率:%d%%", winRate))
+
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mExit:addClickListener(self.onExitClickedHandler, self)
     self.mDissolve:addClickListener(self.onDissolveClickedHandler, self)
     self.mDelete:addClickListener(self.onDeleteClickedHandler, self)
-
-    self.mIp:hide()
-    self.mQz:hide()
-    self.mExit:hide()
-    self.mDissolve:hide()
-    self.mDelete:hide()
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -29,7 +68,6 @@ end
 
 function friendsterMemberInfo:onExitClickedHandler()
     networkManager.exitFriendster(self.friendsterId, function(msg)
---        log("exit friendster, msg = " .. table.tostring(msg))
         signalManager.signal(signalType.friendsterExitedSignal, self.friendsterId)
         self:close()
     end)
@@ -38,7 +76,6 @@ end
 
 function friendsterMemberInfo:onDissolveClickedHandler()
     networkManager.dissolveFriendster(self.friendsterId, function(msg)
---        log("dissolve friendster, msg = " .. table.tostring(msg))
         self:close()
     end)
     playButtonClickSound()
@@ -66,43 +103,6 @@ function friendsterMemberInfo:onDeleteClickedHandler()
     end)
 
     playButtonClickSound()
-end
-
-function friendsterMemberInfo:set(friendsterId, managerId, data)
-    self.friendsterId = friendsterId
-    self.data = data
-
-    self.mIcon:setTexture(data.headerTex)
-    self.mSex:setSprite("boy")
-    self.mNickname:setText(data.nickname)
-
-    if managerId == data.acId then
-        self.mQz:show()
-
-        if data.acId == gamepref.player.acId then
-            self.mDissolve:show()
-        else
-            self.mExit:show()
-        end
-    else
-        self.mQz:hide()
-
-        if managerId == gamepref.player.acId then
-            self.mDelete:show()
-        end
-    end
-
-    self.mId:setText(string.format("账号:%d", data.acId))
-
-    if not string.isNilOrEmpty(data.ip) then
-        self.mIp:show()
-        self.mIp:setText(string.format("IP:%s", data.ip))
-    end
-
-    self.mTotalCount:setText(string.format("总局数:%d", data.totalPlayTimes))
-
-    local winRate = (data.totalPlayTimes == 0) and 0 or math.floor(data.winPlayTimes / data.totalPlayTimes * 100)
-    self.mWinRate:setText(string.format("胜率:%d%%", winRate))
 end
 
 function friendsterMemberInfo:onCloseAllUIHandler()

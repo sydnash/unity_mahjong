@@ -352,7 +352,7 @@ function loginServer(callback, func)
                 else -- 如有在房间内则跳过大厅直接进入房间
                     enterDesk(cityType, deskId, function(ok)
                         callback(ok)
-                    end, loading)
+                    end)
                 end
             end
         end)

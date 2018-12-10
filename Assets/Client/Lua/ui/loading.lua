@@ -9,6 +9,7 @@ _RES_(loading, "LoadingUI", "LoadingUI")
 
 function loading:onInit()
     self:setProgress(0)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function loading:setProgress(value)
@@ -16,6 +17,15 @@ function loading:setProgress(value)
     
     local x = self.mProgress:getWidth() * value
     self.mDot:setAnchoredPosition(Vector3.New(x, 0, 0))
+end
+
+function loading:onCloseAllUIHandler()
+    self:close()
+end
+
+function loading:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    self.super.onDestroy(self)
 end
 
 return loading

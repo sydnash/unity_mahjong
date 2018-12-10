@@ -15,11 +15,10 @@ function friendsterDetailMemberItem:onInit()
 end
 
 function friendsterDetailMemberItem:onHeadClickedHandler()
-    playButtonClickSound()
-
-    local ui = require("ui.friendster.friendsterMemberInfo").new()
-    ui:set(self.friendsterId, self.managerId, self.data)
+    local ui = require("ui.friendster.friendsterMemberInfo").new(self.friendsterId, self.managerId, self.data)
     ui:show()
+
+    playButtonClickSound()
 end
 
 function friendsterDetailMemberItem:set(friendsterId, managerId, data)
@@ -27,7 +26,6 @@ function friendsterDetailMemberItem:set(friendsterId, managerId, data)
     self.managerId = managerId
     self.data = data
 
-    --self.mIcon:setTexture(data.headerTex)
     self.mIcon:setTexture(data.acId, data.headerTex)
     self.mNickname:setText(cutoutString(data.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText(string.format("账号:%d", data.acId))
@@ -36,6 +34,8 @@ function friendsterDetailMemberItem:set(friendsterId, managerId, data)
 
     if data.acId == managerId then
         self.mQZ:show()
+    else
+        self.mQZ:hide()
     end
 end
 

@@ -97,12 +97,12 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:startLoop()
     if self.operationUI == nil then
-        self.operationUI = require("ui.mahjongOperation").new(self)
+        self.operationUI = require("ui.mahjongDesk.mahjongOperation").new(self)
     end
     self.operationUI:show()
 
     if self.deskUI == nil then
-        self.deskUI = require("ui.mahjongDesk").new(self)
+        self.deskUI = require("ui.mahjongDesk.mahjongDesk").new(self)
     end
     self.deskUI:show()
     
@@ -820,7 +820,7 @@ function mahjongGame:onExitDeskHandler(msg)
                 datas.players[p.acId] = d
             end
 
-            local ui = require("ui.gameOver").new(self, datas)
+            local ui = require("ui.gameOver.gameOver").new(self, datas)
             ui:show()
 
             if self.gameEndUI ~= nil then
@@ -1006,7 +1006,7 @@ function mahjongGame:onGameEndHandler(msg)
         end)
         datas.scoreChanges = specialData.ScoreChanges
 
-        self.gameEndUI = require("ui.gameEnd").new(self, datas)
+        self.gameEndUI = require("ui.gameEnd.gameEnd").new(self, datas)
         self.gameEndUI:show()
 
         for _, v in pairs(self.players) do
