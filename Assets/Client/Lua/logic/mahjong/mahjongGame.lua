@@ -280,6 +280,11 @@ end
 -- 同步解散房间投票的数据
 -------------------------------------------------------------------------------
 function mahjongGame:syncExitVote(msg)
+    if self.exitDeskUI ~= nil then
+        self.exitDeskUI:close()
+        self.exitDeskUI = nil
+    end
+
     if msg.IsInExitVote then
         self.leftVoteSeconds    = msg.LeftVoteTime
         self.exitVoteProposer   = msg.ExitVoteProposer
@@ -289,10 +294,6 @@ function mahjongGame:syncExitVote(msg)
             player.exitVoteState = v.Status
         end
         
-        if self.exitDeskUI ~= nil then
-            self.exitDeskUI:close()
-        end
-
         self.exitDeskUI = require("ui.exitdesk").new(self)
         self.exitDeskUI:show()
     end
