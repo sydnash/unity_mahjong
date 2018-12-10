@@ -85,11 +85,24 @@ function lobby:onAccuseClickedHandler()
 end
 
 function lobby:onEnterDeskClickedHandler()
-    local ui = require("ui.enterDesk").new(function(deskId)
-        local cityType = gamepref.city.City
-        enterDesk(cityType, deskId)
-    end)
-    ui:show()
+    if gamepref.player.currentDesk ~= nil then
+        local cityType = gamepref.player.currentDesk.cityType
+        local deskId = gamepref.player.currentDesk.deskId
+
+        showMessageUI(string.format("您已经在[%d]桌子中，是否进入该桌子？", deskId), 
+                                    function()
+                                        enterDesk(cityType, deskId)
+                                    end,
+                                    function()
+        
+                                    end)
+    else
+        local ui = require("ui.enterDesk").new(function(deskId)
+            local cityType = gamepref.city.City
+            enterDesk(cityType, deskId)
+        end)
+        ui:show()
+    end
 
     playButtonClickSound()
 end
@@ -194,11 +207,9 @@ function lobby:onCityChangedHandler(city)
     self.mCityText:setSprite(cityTypeSID[city])
 end
 
-function lobby:onDeskDestroyHandler(deskId)
-    if gamepref.player.currentDesk ~= nil and gamepref.player.currentDesk.deskId == deskId then
-        self.mReturnDesk:hide()
-        self.mCreateDesk:show()
-    end
+function lobby:onDeskDestroyHandler(msg)
+    self.mReturnDesk:hide()
+    self.mCreateDesk:show()
 end
 
 function lobby:refreshMailRP()

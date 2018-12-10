@@ -61,7 +61,7 @@ function mahjongGame:ctor(data, playback)
         [protoType.sc.oplist]                   = { func = self.onOpListHandler,                nr = true },
         [protoType.sc.opDo]                     = { func = self.onOpDoHandler,                  nr = true },
         [protoType.sc.clear]                    = { func = self.onClearHandler,                 nr = true },
-        [protoType.sc.exitDesk]                 = { func = self.onExitDeskHandler,              nr = true },
+--        [protoType.sc.exitDesk]                 = { func = self.onExitDeskHandler,              nr = true },
         [protoType.sc.otherExitDesk]            = { func = self.onOtherExitHandler,             nr = true },
         [protoType.sc.notifyConnectStatus]      = { func = self.onOtherConnectStatusChanged,    nr = true },
         [protoType.sc.notifyExitVote]           = { func = self.onNotifyExitVoteHandler,        nr = true },
@@ -139,6 +139,8 @@ function mahjongGame:registerCommandHandlers()
     for k, v in pairs(self.commandHandlers) do
         networkManager.registerCommandHandler(k, function(msg) v.func(self, msg) end, v.nr)
     end
+
+    signalManager.registerSignalHandler(signalType.deskDestroy, self.onExitDeskHandler, self)
 end
 
 -------------------------------------------------------------------------------
@@ -148,6 +150,8 @@ function mahjongGame:unregisterCommandHandlers()
     for k, _ in pairs(self.commandHandlers) do
         networkManager.unregisterCommandHandler(k)
     end
+
+    signalManager.unregisterSignalHandler(signalType.deskDestroy, self.onExitDeskHandler, self)
 end
 
 -------------------------------------------------------------------------------

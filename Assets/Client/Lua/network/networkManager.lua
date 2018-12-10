@@ -69,10 +69,14 @@ function networkHandler.setup()
         networkManager.disconnect()
 
         showMessageUI("登录失效，请重新登录",
-                        function()--确定：回到登录界面
-                            local ui = require("ui.login").new()
-                            ui:show()
-                        end)
+                      function()--确定：回到登录界面
+                          local ui = require("ui.login").new()
+                          ui:show()
+                      end)
+    end, true)
+    networkManager.registerCommandHandler(protoType.sc.exitDesk, function(msg)
+        gamepref.player.currentDesk = nil
+        signalManager.signal(signalType.deskDestroy, msg)
     end)
 end
 

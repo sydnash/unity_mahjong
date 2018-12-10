@@ -172,7 +172,7 @@ end
 -------------------------------------------------------------
 -- 进入桌子
 -------------------------------------------------------------
-function enterDesk(gameType, deskId, callback, loading)
+function enterDesk(gameType, deskId, callback)
     showWaitingUI("正在进入房间，请稍候...")
 
     --开始预加载资源
@@ -255,10 +255,6 @@ function enterDesk(gameType, deskId, callback, loading)
 
                 if preload ~= nil then
                     preload:stop()
-                end
-
-                if loading ~= nil then
-                    loading:close()
                 end
                     
                 if callback ~= nil then
