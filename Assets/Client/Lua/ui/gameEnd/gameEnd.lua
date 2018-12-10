@@ -81,6 +81,7 @@ function gameEnd:onOkClickedHandler()
     local ui = require("ui.gameOver").new(self.game, self.datas)
     ui:show()
 
+    self.game.isGameOverUIShow = true
     self:close() 
     playButtonClickSound()
 end
