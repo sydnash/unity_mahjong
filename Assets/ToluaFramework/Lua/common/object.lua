@@ -57,12 +57,7 @@ function object:show()
         self.updateHandler = registerUpdateListener(self.update, self)
     end
 
-    if not self:getVisibled() then
-        self.gameObject:SetActive(true)
-        if self.onShown ~= nil and type(self.onShown) == "function" then
-            self:onShown()
-        end
-    end
+    self.gameObject:SetActive(true)
 end
 
 -------------------------------------------------------------------
@@ -72,12 +67,7 @@ function object:hide()
     unregisterUpdateListener(self.updateHandler)
     self.updateHandler = nil
 
-    if self:getVisibled() then
-        self.gameObject:SetActive(false)
-        if self.onHidden ~= nil and type(self.onHidden) == "function" then
-            self:onHidden()
-        end
-    end
+    self.gameObject:SetActive(false)
 end
 
 -------------------------------------------------------------------

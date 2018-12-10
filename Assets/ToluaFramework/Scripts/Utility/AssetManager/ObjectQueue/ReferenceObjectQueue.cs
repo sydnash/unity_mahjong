@@ -12,7 +12,7 @@ public class ReferenceObjectQueue : ObjectQueue
     /// <summary>
     /// 
     /// </summary>
-    private object mReferenceObject = null;
+    private Slot mReferenceSlot = null;
 
     #endregion
 
@@ -22,11 +22,11 @@ public class ReferenceObjectQueue : ObjectQueue
     /// 
     /// </summary>
     /// <param name="obj"></param>
-    public override void Push(object obj)
+    public override void Push(Object obj, float time)
     {
-        if (mReferenceObject == null)
+        if (mReferenceSlot == null)
         {
-            mReferenceObject = obj;
+            mReferenceSlot = new Slot(obj, time);
         }
     }
 
@@ -34,9 +34,9 @@ public class ReferenceObjectQueue : ObjectQueue
     /// 
     /// </summary>
     /// <returns></returns>
-    public override object Pop()
+    public override Slot Pop()
     {
-        return mReferenceObject;
+        return mReferenceSlot;
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class ReferenceObjectQueue : ObjectQueue
     /// </summary>
     public override int count
     {
-        get { return (mReferenceObject == null) ? 0 : 1; }
+        get { return (mReferenceSlot == null) ? 0 : 1; }
     }
 
     #endregion

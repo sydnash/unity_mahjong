@@ -1,23 +1,45 @@
-﻿using System;
+﻿using UnityEngine;
 
 public abstract class ObjectQueue
 {
     /// <summary>
     /// 
     /// </summary>
-    protected int mActivedCount = 0;
+    public class Slot
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public Object asset;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public float timestamp;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="t"></param>
+        public Slot(Object o, float t)
+        {
+            asset = o;
+            timestamp = t;
+        }
+    }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="obj"></param>
-    public abstract void Push(object obj);
+    public abstract void Push(Object obj, float time);
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    public abstract object Pop();
+    public abstract Slot Pop();
 
     /// <summary>
     /// 
@@ -25,14 +47,5 @@ public abstract class ObjectQueue
     public abstract int count
     {
         get;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public int activedCount
-    {
-        set { mActivedCount = value; }
-        get { return mActivedCount; }
     }
 }

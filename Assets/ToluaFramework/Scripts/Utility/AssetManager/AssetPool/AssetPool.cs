@@ -21,7 +21,16 @@ public class AssetPool
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, ObjectQueue> mDic = new Dictionary<string, ObjectQueue>();
+    private Dictionary<string, ObjectQueue> mQueueDic = new Dictionary<string, ObjectQueue>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private float mAliveTime = 2 * 60;
+    /// <summary>
+    /// 
+    /// </summary>
+    private float mTimestamp = Time.realtimeSinceStartup;
 
     #endregion
 
@@ -32,10 +41,11 @@ public class AssetPool
     /// </summary>
     /// <param name="root"></param>
     /// /// <param name="loader"></param>
-    public AssetPool(AssetLoader loader, bool reference)
+    public AssetPool(AssetLoader loader, bool reference, float aliveTime = 2 * 60)
     {
-        mLoader = loader;
+        mLoader    = loader;
         mReference = reference;
+        mAliveTime = aliveTime;
     }
 
     /// <summary>
@@ -48,13 +58,12 @@ public class AssetPool
         Object asset = null;
         string key = AssetLoader.CreateAssetKey(assetPath, assetName);
 
-        if (mDic.ContainsKey(key))
+        if (mQueueDic.ContainsKey(key))
         {
-            ObjectQueue queue = mDic[key];
+            ObjectQueue queue = mQueueDic[key];
             if (queue.count > 0)
             {
-                asset = queue.Pop() as Object;
-                mLoader.ReloadDependencies(key);
+                asset = queue.Pop().asset;
             }
             else
             {
@@ -69,7 +78,7 @@ public class AssetPool
         else
         {
             ObjectQueue queue = CreateObjectQueue();
-            mDic.Add(key, queue);
+            mQueueDic.Add(key, queue);
 
             asset = LoadAsset(assetPath, assetName);
             if (asset != null)
@@ -89,12 +98,12 @@ public class AssetPool
     public Object Preload(string assetPath, string assetName, int maxCount = 1)
     {
         string key = AssetLoader.CreateAssetKey(assetPath, assetName);
-        ObjectQueue queue = mDic.ContainsKey(key) ? mDic[key] : null;
+        ObjectQueue queue = mQueueDic.ContainsKey(key) ? mQueueDic[key] : null;
 
         if (queue == null)
         {
             queue = CreateObjectQueue();
-            mDic.Add(key, queue);
+            mQueueDic.Add(key, queue);
         }
 
         if (queue.count < maxCount)
@@ -103,9 +112,7 @@ public class AssetPool
             if (asset != null)
             {
                 asset.name = key;
-                queue.Push(asset);
-                //如果执行下面的unload，会出现某些prefab丢失材质的问题，所以暂时先屏蔽
-                //mDependentBundlePool.Unload(assetName);
+                queue.Push(asset, Time.realtimeSinceStartup);
             }
 
             return asset;
@@ -124,11 +131,10 @@ public class AssetPool
             return false;
 
         string key = asset.name;
-        if (mDic.ContainsKey(key))
+        if (mQueueDic.ContainsKey(key))
         {
-            ObjectQueue queue = mDic[key];
-            queue.Push(asset);
-            mLoader.UnloadDependencies(key);
+            ObjectQueue queue = mQueueDic[key];
+            queue.Push(asset, Time.realtimeSinceStartup);
 
             return true;
         }
@@ -142,6 +148,49 @@ public class AssetPool
     /// </summary>
     public void Update()
     {
+        float now = Time.realtimeSinceStartup;
+        if (now - mTimestamp >= 60)//一分钟执行一次
+        {
+            if (!mReference)
+            {
+                List<ObjectQueue.Slot> used = new List<ObjectQueue.Slot>();
+                List<ObjectQueue.Slot> unused = new List<ObjectQueue.Slot>();
+
+                foreach (KeyValuePair<string, ObjectQueue> kvp in mQueueDic)
+                {
+                    ObjectQueue q = kvp.Value;
+
+                    while (q.count > 0)
+                    {
+                        ObjectQueue.Slot s = q.Pop();
+                        if (now - s.timestamp >= mAliveTime)
+                        {
+                            unused.Add(s);
+                        }
+                        else
+                        {
+                            used.Add(s);
+                        }
+                    }
+
+                    foreach (ObjectQueue.Slot s in used)
+                    {
+                        q.Push(s.asset, s.timestamp);
+                    }
+                    used.Clear();
+                }
+
+                foreach (ObjectQueue.Slot s in unused)
+                {
+                    mLoader.UnloadDependencies(s.asset.name);
+                    GameObject.Destroy(s.asset);
+                }
+                unused.Clear();
+            }
+
+            mTimestamp = now;
+        }
+
         mLoader.Update();
     }
 
