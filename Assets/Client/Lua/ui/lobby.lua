@@ -89,7 +89,7 @@ function lobby:onEnterDeskClickedHandler()
         local cityType = gamepref.player.currentDesk.cityType
         local deskId = gamepref.player.currentDesk.deskId
 
-        showMessageUI(string.format("您已经在[%d]桌子中，是否进入该桌子？", deskId), 
+        showMessageUI(string.format("您已经在[%d]桌子中，是否进入桌子？", deskId), 
                                     function()
                                         enterDesk(cityType, deskId)
                                     end,
