@@ -48,6 +48,7 @@ function mahjongGame:ctor(data, playback)
     self.creatorAcId        = data.Creator
     self.deskStatus         = deskStatus.none
     self.canBack            = true
+    self.isGameOverUIShow   = false
 
     self.commandHandlers = {
         [protoType.sc.otherEnterDesk]           = { func = self.onOtherEnterHandler,            nr = true },
@@ -823,6 +824,7 @@ function mahjongGame:onExitDeskHandler(msg)
             local ui = require("ui.gameOver").new(self, datas)
             ui:show()
 
+            self.isGameOverUIShow = true
             if self.gameEndUI ~= nil then
                 self.gameEndUI:close()
                 self.gameEndUI = nil

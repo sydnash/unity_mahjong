@@ -71,6 +71,8 @@ mahjongOperation.seats = {
         },
     },
 }
+local topChuPosTwo = Vector3.New( 0.200, 0.156,  0.173)
+local mineChuPosTwo = Vector3.New(-0.200, 0.156, -0.100)
 
 local mopaiConfig = {
     position = Vector3.New(0.255, 0.175, -0.355),
@@ -1128,11 +1130,9 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:virtureChu(mj)
     mj:setShadowMode(mahjong.shadowMode.yang)
+
     local acId = self.game.mainAcId
     local dir = self.game:getSeatTypeByAcId(acId)
-    local seat = self.seats[dir]
-    local o = seat[mahjongGame.cardType.chu].pos
-    local r = seat[mahjongGame.cardType.chu].rot
     local chuMahjongs = self.chuMahjongs[acId]
 
     local k
@@ -1141,14 +1141,7 @@ function mahjongOperation:virtureChu(mj)
     else
         k = #chuMahjongs
     end
-    local cntInRow = 8
-    local maxRow = 3
-    local u = math.floor(k / cntInRow)
-    local c = k % cntInRow
-    local y = (u < maxRow) and o.y or o.y + mahjong.z
-    local d = (u % maxRow) * mahjong.h
-    local p = mj:getLocalPosition()
-    p:Set(o.x + mahjong.w * c, y, o.z - d)
+    local r, p = self:getMahjongChuPos(mj, dir, k + 1)
     mj:setPickabled(false)
     mj:setLocalPosition(p)
     mj:setLocalRotation(r)
@@ -1693,39 +1686,52 @@ function mahjongOperation:relocateInhandMahjongs(acId)
     end
 end
 
+function mahjongOperation:getMahjongChuPos(mj, dir, idx)
+    local seat = self.seats[dir]
+
+    local o = seat[mahjongGame.cardType.chu].pos
+    local r = seat[mahjongGame.cardType.chu].rot
+
+    local p = mj:getLocalPosition()
+    local cntInRow = 8
+    local maxRow = 3
+    idx = idx - 1
+    if self.game:getTotalPlayerCount() == 2 then
+        if dir == mahjongGame.seatType.mine then
+            o = mineChuPosTwo
+        elseif dir == mahjongGame.seatType.top then
+            o = topChuPosTwo
+        end
+        cntInRow = 13
+    end
+    local u = math.floor(idx / cntInRow)
+    local c = idx % cntInRow
+    local y = (u < maxRow) and o.y or o.y + mahjong.z
+    local d = (u % maxRow) * mahjong.h
+
+    if dir == mahjongGame.seatType.mine then
+        p:Set(o.x + mahjong.w * c, y, o.z - d)
+    elseif dir == mahjongGame.seatType.left then
+        p:Set(o.x - d, y, o.z - mahjong.w * c)
+    elseif dir == mahjongGame.seatType.right then
+        p:Set(o.x + d, y, o.z + mahjong.w * c)
+    else
+        p:Set(o.x - mahjong.w * c, y, o.z + d)
+    end
+
+    return r, p
+end
 -------------------------------------------------------------------------------
 -- 调整出牌位置
 -------------------------------------------------------------------------------
 function mahjongOperation:relocateChuMahjongs(player)
     local acId = player.acId
     local dir = self.game:getSeatTypeByAcId(acId)
-    local seat = self.seats[dir]
-
-    local o = seat[mahjongGame.cardType.chu].pos
-    local r = seat[mahjongGame.cardType.chu].rot
 
     local chuMahjongs = self.chuMahjongs[acId]
 
     for k, m in pairs(chuMahjongs) do
-        k = k - 1
-        local p = m:getLocalPosition()
-
-        local cntInRow = 8
-        local maxRow = 3
-        local u = math.floor(k / cntInRow)
-        local c = k % cntInRow
-        local y = (u < maxRow) and o.y or o.y + mahjong.z
-        local d = (u % maxRow) * mahjong.h
-
-        if dir == mahjongGame.seatType.mine then
-            p:Set(o.x + mahjong.w * c, y, o.z - d)
-        elseif dir == mahjongGame.seatType.left then
-            p:Set(o.x - d, y, o.z - mahjong.w * c)
-        elseif dir == mahjongGame.seatType.right then
-            p:Set(o.x + d, y, o.z + mahjong.w * c)
-        else
-            p:Set(o.x - mahjong.w * c, y, o.z + d)
-        end
+        local r, p = self:getMahjongChuPos(m, dir, k)
 
         m:setPickabled(false)
         m:setLocalPosition(p)
