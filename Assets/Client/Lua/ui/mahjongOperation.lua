@@ -23,7 +23,10 @@ mahjongOperation.seats = {
         [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 1, 0.156, -0.340), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.074, 0.156, -0.100), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 0, 0), },
-        [mahjongGame.cardType.huan] = { pos = Vector3.New( 0,     0.156, -0.180), rot = Quaternion.Euler(180, 0, 0), },
+        [mahjongGame.cardType.huan] = {
+            [gameMode.normal]   = { pos = Vector3.New( 0,     0.156, -0.180), rot = Quaternion.Euler(180, 0, 0), },
+            [gameMode.playback] = { pos = Vector3.New( 0,     0.156, -0.180), rot = Quaternion.Euler(0, 0, 0), },
+        },
     },
     [mahjongGame.seatType.right] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.309, 0.156,  0.275), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
@@ -34,7 +37,10 @@ mahjongOperation.seats = {
         [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.420, 0.156, -0.320 + mahjong.w * 2), rot = Quaternion.Euler(0, -90, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.125, 0.156, -0.046), rot = Quaternion.Euler(0, -90, 0), },
         [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156,  0.320), rot = Quaternion.Euler(0, -90, 0), },
-        [mahjongGame.cardType.huan] = { pos = Vector3.New( 0.200, 0.156,  0.004), rot = Quaternion.Euler(180, 90, 0), },
+        [mahjongGame.cardType.huan] = {
+            [gameMode.normal]   = { pos = Vector3.New( 0.200, 0.156,  0.004), rot = Quaternion.Euler(180, 90, 0), },
+            [gameMode.playback] = { pos = Vector3.New( 0.200, 0.156,  0.004), rot = Quaternion.Euler(0, -90, 0), },
+        },
     },
     [mahjongGame.seatType.top] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.235, 0.156,  0.330), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
@@ -45,7 +51,10 @@ mahjongOperation.seats = {
         [mahjongGame.cardType.peng] = { pos = Vector3.New( 0.360, 0.156,  0.420), rot = Quaternion.Euler(0, 180, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New( 0.069, 0.156,  0.173), rot = Quaternion.Euler(0, 180, 0), },
         [mahjongGame.cardType.hu  ] = { pos = Vector3.New(-0.290, 0.156,  0.320), rot = Quaternion.Euler(0, 180, 0), },
-        [mahjongGame.cardType.huan] = { pos = Vector3.New( 0,     0.156,  0.180), rot = Quaternion.Euler(180, 0, 0), },
+        [mahjongGame.cardType.huan] = {
+            [gameMode.normal]   = { pos = Vector3.New( 0,     0.156,  0.180), rot = Quaternion.Euler(180, 0, 0), },
+            [gameMode.playback] = { pos = Vector3.New( 0,     0.156,  0.180), rot = Quaternion.Euler(0, 180, 0), },
+        },
     },
     [mahjongGame.seatType.left] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.310, 0.156, -0.195), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
@@ -56,7 +65,10 @@ mahjongOperation.seats = {
         [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.420, 0.156,  0.320), rot = Quaternion.Euler(0, 90, 0), },
         [ mahjongGame.cardType.chu] = { pos = Vector3.New(-0.132, 0.156,  0.114), rot = Quaternion.Euler(0, 90, 0), },
         [mahjongGame.cardType.hu  ] = { pos = Vector3.New(-0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 90, 0), },
-        [mahjongGame.cardType.huan] = { pos = Vector3.New(-0.200, 0.156,  0.004), rot = Quaternion.Euler(180, 90, 0), },
+        [mahjongGame.cardType.huan] = {
+            [gameMode.normal]   = { pos = Vector3.New(-0.200, 0.156,  0.004), rot = Quaternion.Euler(180, 90, 0), },
+            [gameMode.playback] = { pos = Vector3.New(-0.200, 0.156,  0.004), rot = Quaternion.Euler(0, 90, 0), },
+        },
     },
 }
 
@@ -1391,10 +1403,61 @@ function mahjongOperation:getIdleStart()
     return (self.idleMahjongStart <= self.game:getLeftMahjongCount()) and self.idleMahjongStart or 1
 end
 
+function mahjongOperation:getMahjongFromIdleForPlayback(mid)
+    local index = self:getIdleStart()
+
+    if mid < 0 then
+        return self.idleMahjongs[index], self.idleMahjongs, index
+    end
+
+    --先在“城墙”里面查找
+    for k, v in pairs(self.idleMahjongs) do
+        if v.id == mid then
+            swap(self.idleMahjongs, k, self.idleMahjongs, index)
+            return v, self.idleMahjongs, index
+        end
+    end
+    --如果没有，就在其他玩家的手牌里查找（都是从“城墙”里面临时借出的）
+    for acid, h in pairs(self.inhandMahjongs) do
+        if acid ~= self.game.mainAcId then
+            for k, v in pairs(h) do
+                if v.id == mid then
+                    -- if #self.idleMahjongs > 0 then
+                    --     swap(h, k, self.idleMahjongs, index)
+                    --     return v, self.idleMahjongs, index
+                    -- else
+                        return v, h, k
+                    -- end
+                end
+            end
+        end
+    end
+    --从扣起来的换n张里面找
+    for acid, h in pairs(self.hnzMahjongs) do
+        if acid ~= self.game.mainAcId then
+            for k, v in pairs(h) do
+                if v.id == mid then
+                    if #self.idleMahjongs > 0 then
+                        swap(h, k, self.idleMahjongs, index)
+                        return v, self.idleMahjongs, index
+                    else
+                        return v, h, k
+                    end
+                end
+            end
+        end
+    end
+        
+    log("connot find pai [id = " .. tostring(mid) .. "] from idle.")
+    return nil, nil, nil
+end
 -------------------------------------------------------------------------------
 -- 从idle列表或者其他玩家手牌中获取一张由mid指定的牌，并将它放在idle列表第一位
 -------------------------------------------------------------------------------
 function mahjongOperation:getMahjongFromIdle(mid)
+    if self.game.mode == gameMode.playback then
+        return self:getMahjongFromIdleForPlayback(mid)
+    end
     local index = self:getIdleStart()
 
     if mid < 0 then
@@ -1489,6 +1552,14 @@ function mahjongOperation:insertMahjongToInhand(m)
     self:relocateInhandMahjongs(self.game.mainAcId)
 end
 
+function mahjongOperation:logInhandMahjong(acId)
+    -- local mahjongs = self.inhandMahjongs[acId]
+    -- log("logInhandMahjong=================== start" .. acId)
+    -- for _, v in pairs(mahjongs) do
+    --     log(tostring(v.id))
+    -- end
+    -- log("logInhandMahjong=================== end" .. acId)
+end
 -------------------------------------------------------------------------------
 -- 减少手牌
 -------------------------------------------------------------------------------
@@ -1509,10 +1580,12 @@ function mahjongOperation:decreaseInhandMahjongs(acId, datas)
         end
     else
         for _, id in pairs(datas) do
+            self:logInhandMahjong(acId)
             local m, mahjongQueue, idx = self:getMahjongFromIdle(id)
             swap(mahjongs, 1, mahjongQueue, idx)
             table.insert(decreaseMahjongs, m)
             table.remove(mahjongs, 1)
+            self:logInhandMahjong(acId)
         end
     end
 
@@ -1775,8 +1848,9 @@ function mahjongOperation:putMahjongsToHuan(acId, mahjongs)
     
     local t = self.game:getSeatTypeByAcId(acId)
     local s = self.seats[t]
-    local o = s[mahjongGame.cardType.huan].pos
-    local r = s[mahjongGame.cardType.huan].rot
+    local config = s[mahjongGame.cardType.huan][self.game.mode]
+    local o = config.pos
+    local r = config.rot
     
     local m = self.game:getSeatTypeByAcId(acId)
     local c = mahjong.w * (self.hnzCount - 1) / 2
