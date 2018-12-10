@@ -1,6 +1,7 @@
-﻿using System;
+﻿//using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class InstanceObjectQueue : ObjectQueue
 {
@@ -9,7 +10,7 @@ public class InstanceObjectQueue : ObjectQueue
     /// <summary>
     /// 
     /// </summary>
-    private Queue<object> mQueue = new Queue<object>();
+    private Queue<Slot> mQueue = new Queue<Slot>();
 
     #endregion
 
@@ -19,16 +20,16 @@ public class InstanceObjectQueue : ObjectQueue
     /// 
     /// </summary>
     /// <param name="obj"></param>
-    public override void Push(object obj)
+    public override void Push(Object obj, float time)
     {
-        mQueue.Enqueue(obj);
+        mQueue.Enqueue(new Slot(obj, time));
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    public override object Pop()
+    public override Slot Pop()
     {
         return (count == 0) ? null : mQueue.Dequeue();
     }

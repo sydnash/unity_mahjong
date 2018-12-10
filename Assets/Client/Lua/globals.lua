@@ -74,6 +74,7 @@ end
 function showMessageUI(text, confirmCallback, cancelCallback)
     local ui = messagebox.new(text, confirmCallback, cancelCallback)
     ui:show()
+    ui:setAsLastSibling()
 end
 
 -------------------------------------------------------------
