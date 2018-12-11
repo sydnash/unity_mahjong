@@ -316,6 +316,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/mask.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,6,6</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,6,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -328,6 +341,7 @@
             <filename>Images/fx_di01.png</filename>
             <filename>Images/hf_zi01.png</filename>
             <filename>Images/JS_di02.png</filename>
+            <filename>Images/mask.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

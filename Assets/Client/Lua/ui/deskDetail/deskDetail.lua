@@ -17,7 +17,7 @@ function deskDetail:ctor(cityType, gameType, friendsterId, config, join, deskId,
 
     self.config = {}
     for k, v in pairs(config) do
-        local c = deskDetailShiftConfig[cityType][gameType][k]
+        local c = deskShiftConfig[cityType][gameType][k]
         if c ~= nil then
             self.config[k] = c[v]
         end
@@ -27,7 +27,7 @@ function deskDetail:ctor(cityType, gameType, friendsterId, config, join, deskId,
 end
 
 function deskDetail:onInit()
-    local layout = deskDetailLayout[self.cityType][self.gameType]
+    local layout = deskConfigLayout[self.cityType][self.gameType]
     local config = self.config
 
     self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, false)

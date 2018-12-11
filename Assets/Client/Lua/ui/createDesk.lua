@@ -77,7 +77,7 @@ function createDesk:createDetail()
         self.detail = nil
     end
     
-    local layout = deskDetailLayout[self.cityType][self.gameType]
+    local layout = deskConfigLayout[self.cityType][self.gameType]
     local config = self.config[self.gameType]
 
     self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, true, function(renshu, jushu)
@@ -96,7 +96,7 @@ function createDesk:readConfig()
         local text = LFS.ReadText(path, LFS.UTF8_WITHOUT_BOM)
 
         if string.isNilOrEmpty(text) then
-            config = deskDetailConfig[self.cityType]
+            config = deskConfig[self.cityType]
         else
             config = loadstring(text)()
         end

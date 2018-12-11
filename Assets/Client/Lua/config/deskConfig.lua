@@ -90,15 +90,35 @@ local mahjongLayoutBase = {
     },
 }
 
-local chengduMahjongLayout = table.clone(mahjongLayoutBase)
-local jintangMahjongLayout = table.clone(mahjongLayoutBase)
+local chengduMahjongLayout      = table.clone(mahjongLayoutBase)
+local jintangMahjongLayout      = table.clone(mahjongLayoutBase)
+local xichongMahjongLayout      = table.clone(mahjongLayoutBase)
+local yingjingMahjongLayout     = table.clone(mahjongLayoutBase)
+local nanchongMahjongLayout     = table.clone(mahjongLayoutBase)
+local wenjiangMahjongLayout     = table.clone(mahjongLayoutBase)
+local zhongjiangMahjongLayout   = table.clone(mahjongLayoutBase)
 
-deskDetailLayout = {
+deskConfigLayout = {
     [cityType.chengdu] = {
         [gameType.mahjong] = chengduMahjongLayout,
     },
     [cityType.jintang] = {
         [gameType.mahjong] = jintangMahjongLayout,
+    },
+    [cityType.xichong] = {
+        [gameType.mahjong] = xichongMahjongLayout,
+    },
+    [cityType.yingjing] = {
+        [gameType.mahjong] = yingjingMahjongLayout,
+    },
+    [cityType.nanchong] = {
+        [gameType.mahjong] = nanchongMahjongLayout,
+    },
+    [cityType.wenjiang] = {
+        [gameType.mahjong] = wenjiangMahjongLayout,
+    },
+    [cityType.zhongjiang] = {
+        [gameType.mahjong] = zhongjiangMahjongLayout,
     },
 }
 
@@ -120,15 +140,35 @@ local mahjongConfigBase = {
     ["TianDiHu"]       = 2,
 }
 
-local chengduMahjongConfig = table.clone(mahjongConfigBase)
-local jintangMahjongConfig = table.clone(mahjongConfigBase)
+local chengduMahjongConfig      = table.clone(mahjongConfigBase)
+local jintangMahjongConfig      = table.clone(mahjongConfigBase)
+local xichongMahjongConfig      = table.clone(mahjongConfigBase)
+local yingjingMahjongConfig     = table.clone(mahjongConfigBase)
+local nanchongMahjongConfig     = table.clone(mahjongConfigBase)
+local wenjiangMahjongConfig     = table.clone(mahjongConfigBase)
+local zhongjiangMahjongConfig   = table.clone(mahjongConfigBase)
 
-deskDetailConfig = {
+deskConfig = {
     [cityType.chengdu] = {
         [gameType.mahjong] = chengduMahjongConfig,
     },
     [cityType.jintang] = {
         [gameType.mahjong] = jintangMahjongConfig,
+    },
+    [cityType.xichong] = {
+        [gameType.mahjong] = xichongMahjongConfig,
+    },
+    [cityType.yingjing] = {
+        [gameType.mahjong] = yingjingMahjongConfig,
+    },
+    [cityType.nanchong] = {
+        [gameType.mahjong] = nanchongMahjongConfig,
+    },
+    [cityType.wenjiang] = {
+        [gameType.mahjong] = wenjiangMahjongConfig,
+    },
+    [cityType.zhongjiang] = {
+        [gameType.mahjong] = zhongjiangMahjongConfig,
     },
 }
 
@@ -150,16 +190,36 @@ local mahjongShiftConfigBase = {
     ["TianDiHu"]       = { [true] = 1, [false] = 2 },
 }
 
-local chengduMahjongShiftConfig = table.clone(mahjongShiftConfigBase)
-local jintangMahjongShiftConfig = table.clone(mahjongShiftConfigBase)
+local chengduMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
+local jintangMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
+local xichongMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
+local yingjingMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)
+local nanchongMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)
+local wenjiangMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)
+local zhongjiangMahjongShiftConfig  = table.clone(mahjongShiftConfigBase)
 
-deskDetailShiftConfig = {
+deskShiftConfig = {
     [cityType.chengdu] = {
         [gameType.mahjong] = chengduMahjongShiftConfig,
     },
     [cityType.jintang] = {
         [gameType.mahjong] = jintangMahjongShiftConfig,
-    }
+    },
+    [cityType.xichong] = {
+        [gameType.mahjong] = xichongMahjongShiftConfig,
+    },
+    [cityType.yingjing] = {
+        [gameType.mahjong] = yingjingMahjongShiftConfig,
+    },
+    [cityType.nanchong] = {
+        [gameType.mahjong] = nanchongMahjongShiftConfig,
+    },
+    [cityType.wenjiang] = {
+        [gameType.mahjong] = wenjiangMahjongShiftConfig,
+    },
+    [cityType.zhongjiang] = {
+        [gameType.mahjong] = zhongjiangMahjongShiftConfig,
+    },
 }
 
 function getMahjongConfigText(cityType, config, ignoreJushu)
@@ -173,8 +233,8 @@ function getMahjongConfigText(cityType, config, ignoreJushu)
         text = text .. t
     end
 
-    local layout = deskDetailLayout[cityType][gameType.mahjong]
-    local shift = deskDetailShiftConfig[cityType][gameType.mahjong]
+    local layout = deskConfigLayout[cityType][gameType.mahjong]
+    local shift = deskShiftConfig[cityType][gameType.mahjong]
 
     for _, v in pairs(layout) do
         for _, u in pairs(v.items) do

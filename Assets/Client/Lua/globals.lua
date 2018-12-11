@@ -6,7 +6,7 @@ require("const.typeDef")
 require("const.textDef")
 require("const.statusDef")
 
-require("config.deskDetailConfig")
+require("config.deskConfig")
 
 deviceConfig    = require("config.deviceConfig")
 gameConfig      = require("config.gameConfig")

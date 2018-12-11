@@ -14,6 +14,8 @@ TextureImporter:
     21300014: qy_dq_ya_01
     21300016: qy_dq_ya_02
     21300018: qy_01_xz
+    21300020: qy_01_xz_1
+    21300022: qy_dq_dy_01
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -134,6 +136,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
+      name: qy_01_xz_1
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 5
+        width: 132
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: qy_dq_cd_01
       rect:
         serializedVersion: 2
@@ -185,6 +201,20 @@ TextureImporter:
         height: 60
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_dq_dy_01
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 61
+        width: 196
+        height: 59
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4915254}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

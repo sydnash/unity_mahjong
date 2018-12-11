@@ -9,6 +9,7 @@ TextureImporter:
     21300004: ZJS_zi01
     21300006: ZJS_di02
     21300008: fx_di01 (1)
+    21300010: mask
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -110,6 +111,20 @@ TextureImporter:
         height: 161
       alignment: 9
       pivot: {x: 0.53139883, y: 0.58436817}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: mask
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 499
+        width: 12
+        height: 12
+      alignment: 9
+      pivot: {x: 0.53125, y: 0.583333}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
