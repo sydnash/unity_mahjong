@@ -7,8 +7,6 @@ local chatConfig    = require("config.chatConfig")
 local base = require("ui.common.view")
 local desk = class("desk", base)
 
-_RES_(desk, "DeskUI", "DeskUI")
-
 function desk:onInit()
     if self.game.mode == gameMode.normal then
         self.mInvite:show()
