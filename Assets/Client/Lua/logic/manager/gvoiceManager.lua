@@ -130,7 +130,7 @@ function gvoiceManager.startPlay(filename, fileid, acId)
             gvoiceManager.onDownloadedHandler(true, filename)
             return
         end
-        GVoiceEngine.instance:Download(o.fileid, o.filename, timeout)
+        GVoiceEngine.instance:Download(fileid, filename, timeout)
     end
 end
 
