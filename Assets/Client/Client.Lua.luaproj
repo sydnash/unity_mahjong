@@ -56,6 +56,7 @@
     <Compile Include="Lua\const\textDef.lua" />
     <Compile Include="Lua\const\typeDef.lua" />
     <Compile Include="Lua\globals.lua" />
+    <Compile Include="Lua\logic\game.lua" />
     <Compile Include="Lua\logic\manager\gvoiceManager.lua" />
     <Compile Include="Lua\logic\friendster\friendster.lua" />
     <Compile Include="Lua\logic\friendster\friendsterDesk.lua" />
@@ -90,6 +91,7 @@
     <Compile Include="Lua\ui\header.lua" />
     <Compile Include="Lua\ui\location.lua" />
     <Compile Include="Lua\ui\desk.lua" />
+    <Compile Include="Lua\ui\deskHeader.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
     <Compile Include="Lua\ui\mail\mailItem.lua" />
     <Compile Include="Lua\ui\playback.lua" />

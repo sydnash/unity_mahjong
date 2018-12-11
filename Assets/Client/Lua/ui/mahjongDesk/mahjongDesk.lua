@@ -7,6 +7,8 @@ local header = require("ui.mahjongDesk.mahjongDeskHeader")
 local base = require("ui.desk")
 local mahjongDesk = class("mahjongDesk", base)
 
+_RES_(mahjongDesk, "MahjongDeskUI", "DeskUI")
+
 function mahjongDesk:ctor(game)
     self.super.game = game
     self.super.ctor(self)
