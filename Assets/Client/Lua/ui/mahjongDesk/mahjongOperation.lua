@@ -369,7 +369,7 @@ end
 function mahjongOperation:onGameSync()
     local reenter = self.game.data.Reenter
 
-    self.hnzCount = 0
+    self.hnzCount = reenter.HSZCnt
     self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
     self:relocateIdleMahjongs(true)    
 
@@ -430,10 +430,13 @@ function mahjongOperation:onGameSync()
         self:setDices()
         self:highlightPlaneByAcId(self.game.markerAcId)
         self:setCountdownVisible(false)
-        self.mHnz:show()
-
-        self.hnzCount = reenter.HSZCnt
-        self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
+        local datas = self.game.players[self.game.mainAcId][mahjongGame.cardType.huan]
+        if datas ~= nil and #datas == self.hnzCount then
+            self.mHnz:hide()
+        else
+            self.mHnz:show()
+            self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
+        end
     elseif self.game.deskStatus == deskStatus.dingque then
         self:setDices()
         self:highlightPlaneByAcId(self.game.markerAcId)
@@ -937,6 +940,7 @@ function mahjongOperation:onChosedChuPai()
 
     self:virtureChu(self.selectedMahjong)
 
+    soundManager.playGfx("mahjong", "chupai")
     local player = self.game:getPlayerByAcId(self.game.mainAcId)
     playMahjongSound(id, player.sex)
 
@@ -1195,10 +1199,10 @@ function mahjongOperation:onOpDoChu(acId, cards)
     end
 
     self.mo = nil
-    soundManager.playGfx("mahjong", "chupai")
 
     if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
         local player = self.game:getPlayerByAcId(acId)
+        soundManager.playGfx("mahjong", "chupai")
         playMahjongSound(cards[1], player.sex)
     end
 

@@ -178,6 +178,8 @@ end
 function networkManager.startPingPong()
     networkManager.hasPingPong = true
     networkManager.authored = true
+    networkManager.pingTick = 0
+    networkManager.pongTick = time.realtimeSinceStartup()
 end
 -------------------------------------------------------------------
 --update 管理

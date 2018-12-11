@@ -56,7 +56,11 @@ function scoreDetailItem:setData(data)
 
     self.mMultiply:setText(string.empty)
     if data.Fan ~= nil and data.Fan >= 0 and data.Op == opType.hu.id then
-        self.mMultiply:setText(tostring(math.abs(data.Score / 1)) .. "倍")
+        if data.Fan == 0 then
+            self.mMultiply:setText("素番")
+        else
+            self.mMultiply:setText(tostring(math.abs(data.Fan / 1)) .. "番")
+        end
     end
 
     local t = detailTypeName[data.Detail]

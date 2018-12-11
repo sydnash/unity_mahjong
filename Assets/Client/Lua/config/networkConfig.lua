@@ -24,7 +24,7 @@ local ret = {
     },
     httpTimeout     = 10,  --秒
     tcpTimeout      = 10,  --秒
-    ping            = 10,  --秒
+    ping            = 3,  --秒
     pong            = 15,  --秒
     encrypt         = true,--对网络数据进行加解密
     gvoiceTimeout   = 10,  --秒
