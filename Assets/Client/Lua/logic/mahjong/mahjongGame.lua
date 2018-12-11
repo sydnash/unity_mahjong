@@ -143,7 +143,8 @@ function mahjongGame:onGameStartHandler(msg)
 --    log("start game, msg = " .. table.tostring(msg))
     self.canBack = false
 
-    local func = tweenFunction.new(function()
+    -- local func = tweenFunction.new(function()
+    local func = (function()
         self.totalCardsCount = msg.TotalMJCnt
         self.leftCardsCount = self.totalCardsCount
         self.dices = { msg.Dice1, msg.Dice2 }
@@ -157,10 +158,12 @@ function mahjongGame:onGameStartHandler(msg)
         self.deskUI:onGameStart()
         self.operationUI:onGameStart()
     end)
-    self.messageHandlers:add(func)
+    -- self.messageHandlers:add(func)
+    self:pushMessage(func)
 
     if self.mode == gameMode.normal then
-        self.messageHandlers:add(tweenDelay.new(2.5))
+        -- self.messageHandlers:add(tweenDelay.new(2.5))
+        self:addDelay(2.5)
     end
 end
 
@@ -169,7 +172,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onFaPaiHandler(msg)
 --    log("fapai, msg = " .. table.tostring(msg))
-    local func = tweenFunction.new(function()
+    -- local func = tweenFunction.new(function()
+    local func = (function()
         self.deskStatus = deskStatus.fapai
 
         for _, v in pairs(msg.Seats) do
@@ -184,30 +188,35 @@ function mahjongGame:onFaPaiHandler(msg)
         self.deskUI:updateLeftMahjongCount(self.leftCardsCount)
         self.operationUI:OnFaPai()
     end)
-    self.messageHandlers:add(func)
+    -- self.messageHandlers:add(func)
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
 -- 提示换N张
 -------------------------------------------------------------------------------
 function mahjongGame:onHuanNZhangHintHandler(msg)
-    local func = tweenFunction.new(function()
+    -- local func = tweenFunction.new(function()
+    local func = (function()
         log("mahjongGame:onHuanNZhangHintHandler, msg = " .. table.tostring(msg))
         self.deskStatus = deskStatus.hsz
         self.operationUI:onHuanNZhangHint(msg)
     end)
-    self.messageHandlers:add(func)
+    -- self.messageHandlers:add(func)
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
 function mahjongGame:onHuanNZhangChooseHandler(msg)
-    local func = tweenFunction.new(function()
+    -- local func = tweenFunction.new(function()
+    local func = (function()
         log("mahjongGame:onHuanNZhangChooseHandler, msg = " .. table.tostring(msg))
         self.operationUI:onHnzChoose(msg)
     end)
-    self.messageHandlers:add(func)
+    -- self.messageHandlers:add(func)
+    self:pushMessage(func)
 end
   
 -------------------------------------------------------------------------------
@@ -215,20 +224,25 @@ end
 -------------------------------------------------------------------------------                
 function mahjongGame:onHuanNZhangDoHandler(msg)
     if self.mode == gameMode.normal then
-        local func = tweenFunction.new(function()
+        -- local func = tweenFunction.new(function()
+        local func = (function()
 --            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
             self.operationUI:onHuanNZhangDo(msg)
         end)
-        self.messageHandlers:add(func)
+        -- self.messageHandlers:add(func)
+        self:pushMessage(func)
     else
-        local func = tweenFunction.new(function()
+        -- local func = tweenFunction.new(function()
+        local func = (function()
 --            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
             self.operationUI:onHuanNZhangDoPlayback(msg)
         end)
-        self.messageHandlers:add(func)
+        -- self.messageHandlers:add(func)
+        self:pushMessage(func)
     end
     --延时，等待交互动画完成
-    self.messageHandlers:add(tweenDelay.new(2.5))
+    -- self.messageHandlers:add(tweenDelay.new(2.5))
+    self:addDelay(2.5)
 end
 
 -------------------------------------------------------------------------------
@@ -236,7 +250,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onMoPaiHandler(msg)
 --    log("mopai, msg = " .. table.tostring(msg))
-    local func = tweenFunction.new(function()
+    -- local func = tweenFunction.new(function()
+    local func = (function()
         local player = self:getPlayerByAcId(msg.AcId)
         local inhandMahjongs = player[mahjongGame.cardType.shou]
 
@@ -248,7 +263,8 @@ function mahjongGame:onMoPaiHandler(msg)
         self.deskUI:updateLeftMahjongCount(self.leftCardsCount)
         self.operationUI:onMoPai(msg.AcId, msg.Ids)
     end)
-    self.messageHandlers:add(func)
+    -- self.messageHandlers:add(func)
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
@@ -256,11 +272,13 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onOpListHandler(msg)
 --    log("oplist, msg = " .. table.tostring(msg))
-    local func = tweenFunction.new(function()
+    -- local func = tweenFunction.new(function()
+    local func = (function()
         self.deskStatus = deskStatus.playing
         self.operationUI:onOpList(msg)
     end)
-    self.messageHandlers:add(func)
+    -- self.messageHandlers:add(func)
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
@@ -268,7 +286,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoHandler(msg)
 --    log("opdo, msg = " .. table.tostring(msg))
-    local func = tweenFunction.new(function()
+    -- local func = tweenFunction.new(function()
+    local func = (function()
         for _, v in pairs(msg.Do) do
             local optype = v.Op
             local acId   = v.AcId
@@ -295,17 +314,20 @@ function mahjongGame:onOpDoHandler(msg)
             end
         end
     end)
-    self.messageHandlers:add(func)
+    -- self.messageHandlers:add(func)
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
 -- 取消所有操作
 -------------------------------------------------------------------------------
 function mahjongGame:onClearHandler(msg)
-    local func = tweenFunction.new(function()
+    -- local func = tweenFunction.new(function()
+    local func = (function()
         self.operationUI:onClear()
     end)
-    self.messageHandlers:add(func)
+    -- self.messageHandlers:add(func)
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
@@ -394,12 +416,14 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onDingQueHintHandler(msg)
 --    log("ding que hint, msg = " .. table.tostring(msg))
-    local func = tweenFunction.new(function()
+    -- local func = tweenFunction.new(function()
+    local func = (function()
         self.deskStatus = deskStatus.dingque
 
         self.operationUI:onDingQueHint(msg)
     end)
-    self.messageHandlers:add(func)
+    -- self.messageHandlers:add(func)
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
@@ -407,7 +431,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onDingQueDoHandler(msg)
 --    log("ding que do, msg = " .. table.tostring(msg))
-    local func = tweenFunction.new(function()
+    -- local func = tweenFunction.new(function()
+    local func = (function()
         for _, v in pairs(msg.Dos) do
             local player = self:getPlayerByAcId(v.AcId)
             player.que = v.Q
@@ -416,7 +441,8 @@ function mahjongGame:onDingQueDoHandler(msg)
         self.deskUI:onDingQueDo(msg)
         self.operationUI:onDingQueDo(msg)
     end)
-    self.messageHandlers:add(func)
+    -- self.messageHandlers:add(func)
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
