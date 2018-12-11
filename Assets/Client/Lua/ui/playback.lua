@@ -52,7 +52,7 @@ end
 
 function playback:onSlowClickedHandler()
     self.speed = math.max(0.2, self.speed - 0.2)
-    self.game.messageHandlers:setSpeed(self.speed)
+    self.game:setMessageSpeed(self.speed)
 
     local speedText = tostring(self.speed) .. "倍速"
     self.mSpeedL:setText(speedText)
@@ -63,7 +63,7 @@ end
 
 function playback:onQuickClickedHandler()
     self.speed = math.min(2, self.speed + 0.2)
-    self.game.messageHandlers:setSpeed(self.speed)
+    self.game:setMessageSpeed(self.speed)
 
     local speedText = tostring(self.speed) .. "倍速"
     self.mSpeedL:setText(speedText)
