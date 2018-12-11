@@ -4,20 +4,33 @@
 
 local mahjongClass = require("const.mahjongClass")
 
-local base = require("ui.common.panel")
+local base = require("ui.common.view")
 local mahjongDeskHeader = class("mahjongDeskHeader", base)
 
-local OnlineColor = Color.New(1, 1, 1, 1)
-local OfflineColor = Color.New(0.3, 0.3, 0.3, 1)
+local ONLINE_COLOR  = Color.New(1, 1, 1, 1)
+local OFFLINE_COLOR = Color.New(0.3, 0.3, 0.3, 1)
+
+local res = {
+    [seatType.mine]  = "DeskHeaderM",
+    [seatType.right] = "DeskHeaderR",
+    [seatType.top]   = "DeskHeaderT",
+    [seatType.left]  = "DeskHeaderL",
+}
+
+function mahjongDeskHeader:ctor(seatType)
+    _RES_(self, "MahjongDeskUI", res[seatType])
+    self.super.ctor(self)
+end
 
 function mahjongDeskHeader:onInit()
-    self.mU:show()
-    self.mP:hide()
+    self.mNobody:show()
+    self.mSomebody:hide()
     self.mFz:hide()
     self:reset()
 
     self:setOnline(true)
     self:show()
+
     self.mIconClick:addClickListener(self.onIconClickedHandler, self)
 end
 
@@ -25,13 +38,13 @@ function mahjongDeskHeader:setPlayerInfo(player)
     self.player = player
 
     if player == nil then
-        self.mU:show()
-        self.mP:hide()
+        self.mNobody:show()
+        self.mSomebody:hide()
         self.acId = nil
     else
         self.acId = player.acId
-        self.mU:hide()
-        self.mP:show()
+        self.mNobody:hide()
+        self.mSomebody:show()
 
         self.mIcon:setTexture(player.acId, player.headerTex)
 
@@ -91,10 +104,10 @@ end
 function mahjongDeskHeader:setOnline(online)
     if online then
         self.mOffline:hide()
-        self.mIcon:setColor(OnlineColor)
+        self.mIcon:setColor(ONLINE_COLOR)
     else
         self.mOffline:show()
-        self.mIcon:setColor(OfflineColor)
+        self.mIcon:setColor(OFFLINE_COLOR)
     end
 end
 

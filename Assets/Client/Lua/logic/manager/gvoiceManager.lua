@@ -57,6 +57,10 @@ function gvoiceManager.registerRecordFinishedHandler(callback)
     recordFinishedCallback = callback
 end
 
+function gvoiceManager.unregisterRecordFinishedHandler()
+    recordFinishedCallback = nil
+end
+
 function gvoiceManager.startRecord(filename)
     if gvoiceManager.status then
         isRecording = true
@@ -95,8 +99,16 @@ function gvoiceManager.registerPlayStartedHandler(callback)
     playStartedCallback = callback
 end
 
+function gvoiceManager.unregisterPlayStartedHandler()
+    playStartedCallback = nil
+end
+
 function gvoiceManager.registerPlayFinishedHandler(callback)
     playFinishedCallback = callback
+end
+
+function gvoiceManager.unregisterPlayFinishedHandler()
+    playFinishedCallback = nil
 end
 
 function gvoiceManager.play(filename, acId)

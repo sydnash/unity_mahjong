@@ -72,6 +72,13 @@ public class AssetPoolManager
         return pool;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="assetType"></param>
+    /// <param name="assetPath"></param>
+    /// <param name="assetName"></param>
+    /// <param name="maxCount"></param>
     public void Preload(int assetType, string assetPath, string assetName, int maxCount = 1)
     {
         AssetPool pool = mPools[assetType];
