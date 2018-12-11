@@ -11,10 +11,10 @@ local touch         = require("logic.touch")
 local base = require("ui.common.view")
 local mahjongOperation = class("mahjongOperation", base)
 
-_RES_(mahjongOperation, "DeskOperationUI", "DeskOperationUI")
+_RES_(mahjongOperation, "MahjongDeskUI", "DeskOperationUI")
 
 mahjongOperation.seats = {
-    [mahjongGame.seatType.mine] = { 
+    [seatType.mine] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.235, 0.156, -0.268), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
             [gameMode.normal]   = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
@@ -28,7 +28,7 @@ mahjongOperation.seats = {
             [gameMode.playback] = { pos = Vector3.New( 0,     0.156, -0.180), rot = Quaternion.Euler(0, 0, 0), },
         },
     },
-    [mahjongGame.seatType.right] = { 
+    [seatType.right] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.309, 0.156,  0.275), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
             [gameMode.normal]   = { pos = Vector3.New( 0.370, 0.168,  0.228), rot = Quaternion.Euler(-90, 0, -90), },
@@ -42,7 +42,7 @@ mahjongOperation.seats = {
             [gameMode.playback] = { pos = Vector3.New( 0.200, 0.156,  0.004), rot = Quaternion.Euler(0, -90, 0), },
         },
     },
-    [mahjongGame.seatType.top] = { 
+    [seatType.top] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.235, 0.156,  0.330), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
             [gameMode.normal]   = { pos = Vector3.New(-0.215, 0.168,  0.390), rot = Quaternion.Euler(-90, 0, 180), },
@@ -56,7 +56,7 @@ mahjongOperation.seats = {
             [gameMode.playback] = { pos = Vector3.New( 0,     0.156,  0.180), rot = Quaternion.Euler(0, 180, 0), },
         },
     },
-    [mahjongGame.seatType.left] = { 
+    [seatType.left] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New(-0.310, 0.156, -0.195), rot = Quaternion.Euler(180, 90, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
             [gameMode.normal]   = { pos = Vector3.New(-0.370, 0.168, -0.180), rot = Quaternion.Euler(-90, 0, 90), },
@@ -147,13 +147,13 @@ function mahjongOperation:onInit()
     self.planeRoot = find("planes")
     self:rotatePlanes()
     local planeNames = { 
-        [mahjongGame.seatType.mine]  = "plane02/plane02_0", 
-        [mahjongGame.seatType.right] = "plane03/plane03_0", 
-        [mahjongGame.seatType.top]   = "plane04/plane04_0", 
-        [mahjongGame.seatType.left]  = "plane01/plane01_0", 
+        [seatType.mine]  = "plane02/plane02_0", 
+        [seatType.right] = "plane03/plane03_0", 
+        [seatType.top]   = "plane04/plane04_0", 
+        [seatType.left]  = "plane01/plane01_0", 
     }
     self.planeMats = {}
-    for i=mahjongGame.seatType.mine, mahjongGame.seatType.left do
+    for i=seatType.mine, seatType.left do
         local go = findChild(self.planeRoot.transform, planeNames[i])
         local mesh = getComponentU(go.gameObject, typeof(UnityEngine.MeshRenderer))
         local mat = mesh.sharedMaterial
@@ -237,9 +237,9 @@ function mahjongOperation:onInit()
     self.redundancyMahjongs = {}
 
     self.chuPaiHintParent = {
-        [mahjongGame.seatType.top]      = self.mChuT,
-        [mahjongGame.seatType.left]     = self.mChuL,
-        [mahjongGame.seatType.right]    = self.mChuR,
+        [seatType.top]      = self.mChuT,
+        [seatType.left]     = self.mChuL,
+        [seatType.right]    = self.mChuR,
     }
     self.mChuPaiHint:hide()
 
@@ -518,11 +518,11 @@ function mahjongOperation:relocateIdleMahjongs(visible)
             local z = o.z
             local w = mahjong.w * u
 
-            if dir == mahjongGame.seatType.mine then
+            if dir == seatType.mine then
                 x = (o.x - d) - w
-            elseif dir == mahjongGame.seatType.left then
+            elseif dir == seatType.left then
                 z = (o.z + d) + w
-            elseif dir == mahjongGame.seatType.right then
+            elseif dir == seatType.right then
                 z = (o.z - d) - w
             else
                 x = (o.x + d) + w
@@ -1608,7 +1608,7 @@ function mahjongOperation:computeMyPengStartPos()
     local sceneCamera = UnityEngine.Camera.main
     local inhandCamera = GameObjectPicker.instance.camera
 
-    local seat = self.seats[mahjongGame.seatType.mine]
+    local seat = self.seats[seatType.mine]
     local o = seat[mahjongGame.cardType.shou][self.game.mode].pos
     o = Vector3.New(o.x - mahjong.w * 0.5, o.y, o.z)
     local scPos = inhandCamera:WorldToScreenPoint(o)
@@ -1630,7 +1630,7 @@ function mahjongOperation:getMyInhandMahjongPos(player, index)
     local seat = self.seats[dir]
     local o = seat[mahjongGame.cardType.shou][self.game.mode].pos
     o = Vector3.New(o.x, o.y, o.z)
-    if dir == mahjongGame.seatType.mine then
+    if dir == seatType.mine then
         if self.lastPengPos then
             local sceneCamera = UnityEngine.Camera.main
             local screenPos = sceneCamera:WorldToScreenPoint(self.lastPengPos)
@@ -1657,7 +1657,7 @@ function mahjongOperation:relocateInhandMahjongs(acId)
 
         local dir = self.game:getSeatTypeByAcId(player.acId)
         local seat = self.seats[dir]
-        if dir == mahjongGame.seatType.mine then
+        if dir == seatType.mine then
             if self.curSelectedMahjong then
                 self.curSelectedMahjong = nil
             end
@@ -1670,13 +1670,13 @@ function mahjongOperation:relocateInhandMahjongs(acId)
             k = k - 1
             local p = m:getLocalPosition()
 
-            if dir == mahjongGame.seatType.mine then
+            if dir == seatType.mine then
                 p:Set(o.x + (mahjong.w * k), o.y, o.z)
                 m:setPickabled(true)
-            elseif dir == mahjongGame.seatType.left then
+            elseif dir == seatType.left then
                 p:Set(o.x, o.y, o.z + (mahjong.w * k))
                 m:setPickabled(false)
-            elseif dir == mahjongGame.seatType.right then
+            elseif dir == seatType.right then
                 p:Set(o.x, o.y, o.z - (mahjong.w * k))
                 m:setPickabled(false)
             else
@@ -1711,9 +1711,9 @@ function mahjongOperation:getMahjongChuPos(mj, dir, idx)
     local maxRow = 3
     idx = idx - 1
     if self.game:getTotalPlayerCount() == 2 then
-        if dir == mahjongGame.seatType.mine then
+        if dir == seatType.mine then
             o = mineChuPosTwo
-        elseif dir == mahjongGame.seatType.top then
+        elseif dir == seatType.top then
             o = topChuPosTwo
         end
         cntInRow = 13
@@ -1723,11 +1723,11 @@ function mahjongOperation:getMahjongChuPos(mj, dir, idx)
     local y = (u < maxRow) and o.y or o.y + mahjong.z
     local d = (u % maxRow) * mahjong.h
 
-    if dir == mahjongGame.seatType.mine then
+    if dir == seatType.mine then
         p:Set(o.x + mahjong.w * c, y, o.z - d)
-    elseif dir == mahjongGame.seatType.left then
+    elseif dir == seatType.left then
         p:Set(o.x - d, y, o.z - mahjong.w * c)
-    elseif dir == mahjongGame.seatType.right then
+    elseif dir == seatType.right then
         p:Set(o.x + d, y, o.z + mahjong.w * c)
     else
         p:Set(o.x - mahjong.w * c, y, o.z + d)
@@ -1784,11 +1784,11 @@ function mahjongOperation:relocatePengMahjongs(player)
                 isUpon = true
             end 
 
-            if dir == mahjongGame.seatType.mine then
+            if dir == seatType.mine then
                 p:Set(o.x + mahjong.w * c + d, y, o.z)
-            elseif dir == mahjongGame.seatType.left then
+            elseif dir == seatType.left then
                 p:Set(o.x, y, o.z - mahjong.w * c - d)
-            elseif dir == mahjongGame.seatType.right then
+            elseif dir == seatType.right then
                 p:Set(o.x, y, o.z + mahjong.w * c + d)
             else
                 p:Set(o.x - mahjong.w * c - d, y, o.z)
@@ -1807,7 +1807,7 @@ function mahjongOperation:relocatePengMahjongs(player)
         end
     end
 
-    if dir == mahjongGame.seatType.mine then
+    if dir == seatType.mine then
         self.lastPengPos = lastPengPos
         self:relocateInhandMahjongs(self.game.mainAcId)
     end
@@ -1878,7 +1878,7 @@ function mahjongOperation:putMahjongsToHuan(acId, mahjongs)
     for k, v in pairs(mahjongs) do
         local p = v:getLocalPosition()
 
-        if m == mahjongGame.seatType.mine or m == mahjongGame.seatType.top then
+        if m == seatType.mine or m == seatType.top then
             p:Set((k - 1) * mahjong.w - c, o.y, o.z)
         else
             p:Set(o.x, o.y, (k - 1) * mahjong.w - c)

@@ -20,13 +20,13 @@ function friendsterDesk:onClickedHandler()
     if self.data ~= nil then
         playButtonClickSound()
 
-        local ui = require("ui.deskDetail").new(self.data.cityType, 
-                                                self.data.gameType,
-                                                self.data.friendsterId, 
-                                                self.data.config, 
-                                                true, 
-                                                self.data.deskId, 
-                                                self.data.managerAcId)
+        local ui = require("ui.deskDetail.deskDetail").new(self.data.cityType, 
+                                                           self.data.gameType,
+                                                           self.data.friendsterId, 
+                                                           self.data.config, 
+                                                           true, 
+                                                           self.data.deskId, 
+                                                           self.data.managerAcId)
         ui:show()
     end
 end

@@ -77,7 +77,7 @@
     <Compile Include="Lua\ui\authentication.lua" />
     <Compile Include="Lua\ui\chat.lua" />
     <Compile Include="Lua\ui\city.lua" />
-    <Compile Include="Lua\ui\deskDetail.lua" />
+    <Compile Include="Lua\ui\deskDetail\deskDetail.lua" />
     <Compile Include="Lua\ui\deskDetail\deskDetailPanel.lua" />
     <Compile Include="Lua\ui\errorMessage.lua" />
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
@@ -89,6 +89,7 @@
     <Compile Include="Lua\ui\gameOver\gameOver.lua" />
     <Compile Include="Lua\ui\header.lua" />
     <Compile Include="Lua\ui\location.lua" />
+    <Compile Include="Lua\ui\desk.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
     <Compile Include="Lua\ui\mail\mailItem.lua" />
     <Compile Include="Lua\ui\playback.lua" />

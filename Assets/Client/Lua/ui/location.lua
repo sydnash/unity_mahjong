@@ -35,10 +35,10 @@ function location:onInit()
         self.mPanel3:hide()
         self.mPanel2:hide()
 
-        self.headers[mahjongGame.seatType.mine]  = { icon = self.mPanel4_IconA, nickname = self.mPanel4_NicknameA, ip = self.mPanel4_IpA }
-        self.headers[mahjongGame.seatType.right] = { icon = self.mPanel4_IconB, nickname = self.mPanel4_NicknameB, ip = self.mPanel4_IpB }
-        self.headers[mahjongGame.seatType.top]   = { icon = self.mPanel4_IconC, nickname = self.mPanel4_NicknameC, ip = self.mPanel4_IpC }
-        self.headers[mahjongGame.seatType.left]  = { icon = self.mPanel4_IconD, nickname = self.mPanel4_NicknameD, ip = self.mPanel4_IpD }
+        self.headers[seatType.mine]  = { icon = self.mPanel4_IconA, nickname = self.mPanel4_NicknameA, ip = self.mPanel4_IpA }
+        self.headers[seatType.right] = { icon = self.mPanel4_IconB, nickname = self.mPanel4_NicknameB, ip = self.mPanel4_IpB }
+        self.headers[seatType.top]   = { icon = self.mPanel4_IconC, nickname = self.mPanel4_NicknameC, ip = self.mPanel4_IpC }
+        self.headers[seatType.left]  = { icon = self.mPanel4_IconD, nickname = self.mPanel4_NicknameD, ip = self.mPanel4_IpD }
         
         self.distances["01"] = { image = self.mPanel4_AB, text = self.mPanel4_AB_Text }
         self.distances["02"] = { image = self.mPanel4_AC, text = self.mPanel4_AC_Text }
@@ -51,9 +51,9 @@ function location:onInit()
         self.mPanel3:show()
         self.mPanel2:hide()
 
-        self.headers[mahjongGame.seatType.mine]  = { icon = self.mPanel3_IconA, nickname = self.mPanel3_NicknameA, ip = self.mPanel3_IpA }
-        self.headers[mahjongGame.seatType.right] = { icon = self.mPanel3_IconB, nickname = self.mPanel3_NicknameB, ip = self.mPanel3_IpB }
-        self.headers[mahjongGame.seatType.left]  = { icon = self.mPanel3_IconD, nickname = self.mPanel3_NicknameD, ip = self.mPanel3_IpD }
+        self.headers[seatType.mine]  = { icon = self.mPanel3_IconA, nickname = self.mPanel3_NicknameA, ip = self.mPanel3_IpA }
+        self.headers[seatType.right] = { icon = self.mPanel3_IconB, nickname = self.mPanel3_NicknameB, ip = self.mPanel3_IpB }
+        self.headers[seatType.left]  = { icon = self.mPanel3_IconD, nickname = self.mPanel3_NicknameD, ip = self.mPanel3_IpD }
                                                                                                                  
         self.distances["01"] = { image = self.mPanel3_AB, text = self.mPanel3_AB_Text }
         self.distances["03"] = { image = self.mPanel3_AD, text = self.mPanel3_AD_Text }
@@ -63,8 +63,8 @@ function location:onInit()
         self.mPanel3:hide()
         self.mPanel2:show()
 
-        self.headers[mahjongGame.seatType.mine] = { icon = self.mPanel2_IconA, nickname = self.mPanel2_NicknameA, ip = self.mPanel2_IpA }
-        self.headers[mahjongGame.seatType.top]  = { icon = self.mPanel2_IconC, nickname = self.mPanel2_NicknameC, ip = self.mPanel2_IpC }
+        self.headers[seatType.mine] = { icon = self.mPanel2_IconA, nickname = self.mPanel2_NicknameA, ip = self.mPanel2_IpA }
+        self.headers[seatType.top]  = { icon = self.mPanel2_IconC, nickname = self.mPanel2_NicknameC, ip = self.mPanel2_IpC }
                                                                                                                  
         self.distances["02"] = { image = self.mPanel2_AC, text = self.mPanel2_AC_Text }                       
                                
@@ -108,10 +108,10 @@ function location:refreshUI()
         players[s] = v
     end
 
-    for i=mahjongGame.seatType.mine, mahjongGame.seatType.left do
+    for i=seatType.mine, seatType.left do
         local a = players[i]
         if a ~= nil then
-            for j=i+1, mahjongGame.seatType.left do
+            for j=i+1, seatType.left do
                 local b = players[j]
                 if b ~= nil then
                     local k = string.format("%d%d", i, j)

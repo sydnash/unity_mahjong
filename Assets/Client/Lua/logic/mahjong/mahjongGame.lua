@@ -8,13 +8,6 @@ local locationManager   = require("logic.manager.locationManager")
 
 local mahjongGame = class("mahjongGame")
 
-mahjongGame.seatType = {
-    mine  = 0,
-    right = 1,
-    top   = 2,
-    left  = 3,
-}
-
 mahjongGame.cardType = {
     idle = 1,
     shou = 2,
@@ -552,7 +545,7 @@ function mahjongGame:endGame()
             self.exitDeskUI = require("ui.exitDesk").new(self)
             self.exitDeskUI:show()
         else
-            signalManager.signal(signalType.deskDestroy, self.deskId)
+--            signalManager.signal(signalType.deskDestroy)
             gamepref.player.currentDesk = nil
             self:exitGame()
         end
@@ -732,12 +725,12 @@ function mahjongGame:getSeatTypeByAcId(acId)
     end
 
     if playerCount == 3 then
-        if seat == mahjongGame.seatType.top then
-            seat = mahjongGame.seatType.left
+        if seat == seatType.top then
+            seat = seatType.left
         end
     elseif playerCount == 2 then
-        if seat == mahjongGame.seatType.right then
-            seat = mahjongGame.seatType.top
+        if seat == seatType.right then
+            seat = seatType.top
         end
     end
 
@@ -779,8 +772,8 @@ function mahjongGame:onExitDeskHandler(msg)
     local func = tweenFunction.new(function()
 --        log("exit desk, msg = " .. table.tostring(msg))
 
-        signalManager.signal(signalType.deskDestroy, self.deskId)
-        gamepref.player.currentDesk = nil
+--        signalManager.signal(signalType.deskDestroy, self.deskId)
+--        gamepref.player.currentDesk = nil
 
         if msg.Reason == exitReason.voteExit then
             --投票解散房间，关闭投票界面并显示大结算界面

@@ -24,38 +24,44 @@ end
 -- 断开连接后的回调
 ----------------------------------------------------------------
 local function networkDisconnectedCallback(idx)
-
     if idx ~= nil and idx > 5 then
         closeWaitingUI()
+
         if clientApp.currentDesk ~= nil then
             clientApp.currentDesk:destroy()
             clientApp.currentDesk = nil
         end
+        gamepref.player.currentDesk = nil
 
         closeAllUI()
         networkManager.disconnect()
 
         showMessageUI("与服务器失去连接，请重新登录。", 
-                        function()--确定：回到登录界面
-                            local ui = require("ui.login").new()
-                            ui:show()
-                        end)
+                      function()--确定：回到登录界面
+                          local ui = require("ui.login").new()
+                          ui:show()
+                      end)
         return
     end
+
     local idx = idx or 1
     showWaitingUI(string.format("正在尝试重连(%d/5)，请稍候...", idx))
+
     networkManager.reconnect(gamepref.host, gamepref.port, function(connected, curCoin, cityType, deskId)
         if not connected then
             networkDisconnectedCallback(idx + 1)
             return
         end
+
         closeWaitingUI()
 
         networkManager.startPingPong()
         signalManager.signal(signalType.refreshFriendsterDetailInfo)
+
         if deskId <= 0 then
+            gamepref.player.currentDesk = nil
             if clientApp.currentDesk and not clientApp.currentDesk:isPlayback() and not clientApp.currentDesk.isGameOverUIShow then
-                showMessageUI("牌局已经结束，请点击确定并去战绩查看详情。", function()
+                showMessageUI("牌局已经结束，请点击确定并去战绩查看详情", function()
                     clientApp.currentDesk:exitGame()
                 end)
             end
