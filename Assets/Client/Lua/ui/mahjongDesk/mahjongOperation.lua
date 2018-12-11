@@ -878,11 +878,13 @@ function mahjongOperation:touchHandler(phase, pos)
                         if self.curSelectedMahjong == nil then
                             self.curSelectedMahjong = self.selectedMahjong
                             self.curSelectedMahjong:setSelected(true)
+                            soundManager.playGfx("mahjong", "chose")
                         else
                             if self.selectedMahjong.id ~= self.curSelectedMahjong.id then
                                 self.curSelectedMahjong:setSelected(false)
                                 self.curSelectedMahjong = self.selectedMahjong
                                 self.curSelectedMahjong:setSelected(true)
+                                soundManager.playGfx("mahjong", "chose")
                             end
                         end
                     else
@@ -896,11 +898,13 @@ function mahjongOperation:touchHandler(phase, pos)
                         if self.curSelectedMahjong == nil then
                             self.curSelectedMahjong = self.selectedMahjong
                             self.curSelectedMahjong:setSelected(true)
+                            soundManager.playGfx("mahjong", "chose")
                         else
                             if self.curSelectedMahjong.id ~= self.selectedMahjong.id then
                                 self.curSelectedMahjong:setSelected(false)
                                 self.curSelectedMahjong = self.selectedMahjong
                                 self.curSelectedMahjong:setSelected(true)
+                                soundManager.playGfx("mahjong", "chose")
                             else
                                 --出牌
                                 self:onChosedChuPai()
