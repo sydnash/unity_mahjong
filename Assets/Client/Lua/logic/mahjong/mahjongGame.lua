@@ -4,9 +4,9 @@
 
 local gamePlayer        = require("logic.player.gamePlayer")
 local tweenManager      = require("manager.tweenManager")
-local locationManager   = require("logic.manager.locationManager")
 
-local mahjongGame = class("mahjongGame")
+local base = require("logic.game")
+local mahjongGame = class("mahjongGame", base)
 
 mahjongGame.cardType = {
     idle = 1,
@@ -21,161 +21,52 @@ mahjongGame.cardType = {
 -- 构造函数
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data, playback)
-    log("mahjongGame, data = " .. table.tostring(data))
-    log("mahjongGame, playback = " .. table.tostring(playback))
-
-    self.data = data
-    self.playback = playback
-
-    self.messageHandlers = tweenSerial.new(false)
-    tweenManager.add(self.messageHandlers)
-
-    self.totalMahjongCount  = 108
-    self.leftMahjongCount   = 0
-    self.deskId             = data.DeskId
-    self.cityType           = data.GameType
-    self.gameType           = data.Config.Game
-    self.friendsterId       = data.ClubId
-    self.config             = data.Config
-    self.status             = data.Status
-    self.creatorAcId        = data.Creator
-    self.deskStatus         = deskStatus.none
-    self.canBack            = true
-    self.isGameOverUIShow   = false
-
-    self.commandHandlers = {
-        [protoType.sc.otherEnterDesk]           = { func = self.onOtherEnterHandler,            nr = true },
-        [protoType.sc.ready]                    = { func = self.onReadyHandler,                 nr = true },
-        [protoType.sc.start]                    = { func = self.onGameStartHandler,             nr = true },
-        [protoType.sc.fapai]                    = { func = self.onFaPaiHandler,                 nr = true },
-        [protoType.sc.huanNZhangHint]           = { func = self.onHuanNZhangHintHandler,        nr = true },
-        [protoType.sc.huanNZhangChoose]         = { func = self.onHuanNZhangChooseHandler,      nr = true },
-        [protoType.sc.huanNZhangDo]             = { func = self.onHuanNZhangDoHandler,          nr = true },
-        [protoType.sc.mopai]                    = { func = self.onMoPaiHandler,                 nr = true },
-        [protoType.sc.oplist]                   = { func = self.onOpListHandler,                nr = true },
-        [protoType.sc.opDo]                     = { func = self.onOpDoHandler,                  nr = true },
-        [protoType.sc.clear]                    = { func = self.onClearHandler,                 nr = true },
---        [protoType.sc.exitDesk]                 = { func = self.onExitDeskHandler,              nr = true },
-        [protoType.sc.otherExitDesk]            = { func = self.onOtherExitHandler,             nr = true },
-        [protoType.sc.notifyConnectStatus]      = { func = self.onOtherConnectStatusChanged,    nr = true },
-        [protoType.sc.notifyExitVote]           = { func = self.onNotifyExitVoteHandler,        nr = true },
-        [protoType.sc.notifyExitVoteFailed]     = { func = self.onNotifyExitVoteFailedHandler,  nr = true },
-        [protoType.sc.exitVote]                 = { func = self.onExitVoteHandler,              nr = true },
-        [protoType.sc.gameEnd]                  = { func = self.onGameEndHandler,               nr = true },
-        [protoType.sc.dqHint]                   = { func = self.onDingQueHintHandler,           nr = true },
-        [protoType.sc.dqDo]                     = { func = self.onDingQueDoHandler,             nr = true },
-        [protoType.sc.quicklyStartChose]        = { func = self.onQuicklyStartChose,            nr = true },
-        [protoType.sc.quicklyStartNotify]       = { func = self.onQuicklyStartNotify,           nr = true },
-        [protoType.sc.quicklyStartEndNotify]    = { func = self.onQuicklyStartEndNotify,        nr = true },
-    }
-
-    if playback == nil then
-        self.mode = gameMode.normal
-        self:registerCommandHandlers()
-
-        gamepref.player.currentDesk = { cityType = self.cityType, deskId = self.deskId, }
-    else
-        self.mode = gameMode.playback
-        self:registerPlaybackHandlers(playback)
-    end
-
-    self:onEnter(data)
-end
-
-function mahjongGame:stopLoop()
-    self.messageHandlers:stop()
-    self.messageHandlers:clear()
-end
--------------------------------------------------------------------------------
--- 初始化UI并启动消息处理循环
--------------------------------------------------------------------------------
-function mahjongGame:startLoop()
-    if self.operationUI == nil then
-        self.operationUI = require("ui.mahjongDesk.mahjongOperation").new(self)
-    end
-    self.operationUI:show()
-
-    if self.deskUI == nil then
-        self.deskUI = require("ui.mahjongDesk.mahjongDesk").new(self)
-    end
-    self.deskUI:show()
-    
-    self.deskUI:reset()
-    self.operationUI:reset()
-
-    if self.mode == gameMode.playback then 
-        local ui = require("ui.playback").new(self)
-        ui:show()
-    end
-    
-    if self.mode == gameMode.normal then
-        if self.data.Reenter ~= nil then
-            self.deskUI:onGameSync()
-            self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
-            self.operationUI:onGameSync()
-        else
-            for _, player in pairs(self.players) do
-                self.deskUI:setReady(player.acId, player.ready)
-                self.deskUI:setScore(player.acId, player.score)
-            end
-        end
-
-        self:syncExitVote(self.data)
-    end
-
-    self.messageHandlers:play()
+    self.super.ctor(self, data, playback)
+    self.totalCardsCount = 108
 end
 
 -------------------------------------------------------------------------------
--- 注册服务器主动推送的消息的处理函数
+-- 
 -------------------------------------------------------------------------------
-function mahjongGame:registerCommandHandlers()
-    for k, v in pairs(self.commandHandlers) do
-        networkManager.registerCommandHandler(k, function(msg) v.func(self, msg) end, v.nr)
-    end
+function mahjongGame:initMessageHandlers()
+    self.super.initMessageHandlers(self)
 
-    signalManager.registerSignalHandler(signalType.deskDestroy, self.onExitDeskHandler, self)
+    self.commandHandlers[protoType.sc.start]                    = { func = self.onGameStartHandler,             nr = true }
+    self.commandHandlers[protoType.sc.fapai]                    = { func = self.onFaPaiHandler,                 nr = true }
+    self.commandHandlers[protoType.sc.huanNZhangHint]           = { func = self.onHuanNZhangHintHandler,        nr = true }
+    self.commandHandlers[protoType.sc.huanNZhangChoose]         = { func = self.onHuanNZhangChooseHandler,      nr = true }
+    self.commandHandlers[protoType.sc.huanNZhangDo]             = { func = self.onHuanNZhangDoHandler,          nr = true }
+    self.commandHandlers[protoType.sc.dqHint]                   = { func = self.onDingQueHintHandler,           nr = true }
+    self.commandHandlers[protoType.sc.dqDo]                     = { func = self.onDingQueDoHandler,             nr = true }
+    self.commandHandlers[protoType.sc.mopai]                    = { func = self.onMoPaiHandler,                 nr = true }
+    self.commandHandlers[protoType.sc.oplist]                   = { func = self.onOpListHandler,                nr = true }
+    self.commandHandlers[protoType.sc.opDo]                     = { func = self.onOpDoHandler,                  nr = true }
+    self.commandHandlers[protoType.sc.clear]                    = { func = self.onClearHandler,                 nr = true }
+    self.commandHandlers[protoType.sc.quicklyStartChose]        = { func = self.onQuicklyStartChose,            nr = true }
+    self.commandHandlers[protoType.sc.quicklyStartNotify]       = { func = self.onQuicklyStartNotify,           nr = true }
+    self.commandHandlers[protoType.sc.quicklyStartEndNotify]    = { func = self.onQuicklyStartEndNotify,        nr = true }
 end
 
 -------------------------------------------------------------------------------
--- 注销服务器主动推送的消息的处理函数
+-- 
 -------------------------------------------------------------------------------
-function mahjongGame:unregisterCommandHandlers()
-    for k, _ in pairs(self.commandHandlers) do
-        networkManager.unregisterCommandHandler(k)
-    end
-
-    signalManager.unregisterSignalHandler(signalType.deskDestroy, self.onExitDeskHandler, self)
+function mahjongGame:createOperationUI()
+    return require("ui.mahjongDesk.mahjongOperation").new(self)
 end
 
 -------------------------------------------------------------------------------
--- 注册回放数据的处理函数
+-- 
 -------------------------------------------------------------------------------
-function mahjongGame:registerPlaybackHandlers(playback)
-    for _, v in pairs(playback) do
-        local func = self.commandHandlers[v.Command].func
-        func(self, v.Payload)
-        self.messageHandlers:add(tweenDelay.new(1.5))
-    end
-end
-
--------------------------------------------------------------------------------
--- 注销回放数据的处理函数
--------------------------------------------------------------------------------
-function mahjongGame:unregisterPlaybackHandlers()
-    self.messageHandlers:clear()
-    tweenManager.remove(self.messageHandlers)
+function mahjongGame:createDeskUI()
+    return require("ui.mahjongDesk.mahjongDesk").new(self)
 end
 
 -------------------------------------------------------------------------------
 -- 进入房间
 -------------------------------------------------------------------------------
 function mahjongGame:onEnter(msg)
-    if not self:isPlayback() then
-        self.messageHandlers:clear()
-    end
-
     self.data = msg
+
     self.players = {}
     self.playerCount = 0
     self.leftGames = msg.LeftTime
@@ -187,43 +78,14 @@ function mahjongGame:onEnter(msg)
         self.curOpAcId          = msg.Reenter.CurOpAcId
         self.curOpType          = msg.Reenter.CurOpType
         self.dices              = { msg.Reenter.Dice1, msg.Reenter.Dice2 }
-        self.totalMahjongCount  = msg.Reenter.TotalMJCnt
-        self.leftMahjongCount   = msg.Reenter.LeftMJCnt
+        self.totalCardsCount    = msg.Reenter.TotalMJCnt
+        self.leftCardsCount     = msg.Reenter.LeftMJCnt
         self.deskStatus         = msg.Reenter.DeskStatus
         self.canBack            = (self.deskStatus == deskStatus.none)
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
-end
 
--------------------------------------------------------------------------------
--- 同步其他玩家的数据
--------------------------------------------------------------------------------
-function mahjongGame:syncPlayers(players)
-    self.mainAcId = players[1].AcId
-
-    for _, v in pairs(players) do
-        local player = gamePlayer.new(v.AcId)
-        self.players[v.AcId] = player
-
-        player.headerUrl = v.HeadUrl
-        player:loadHeaderTex()
-        player.nickname  = v.Nickname
-        player.ip        = v.Ip
-        player.sex       = Mathf.Clamp(v.Sex, sexType.boy, sexType.girl)
-        player.laolai    = v.IsLaoLai
-        player.connected = v.IsConnected
-        player.ready     = v.Ready
-        player.turn      = v.Turn
-        player.score     = v.Score
-        player.isCreator = self:isCreator(player.acId)
-        player.location  = { status = v.HasPosition, latitude = v.Latitude, longitude = v.Longitude }
-
-        if player.acId == gamepref.player.acId then
-            self.mainAcId = player.acId
-        end
-
-        self.playerCount = self.playerCount + 1
-    end
+    self.super.onEnter(self, msg)
 end
 
 -------------------------------------------------------------------------------
@@ -275,85 +137,6 @@ function mahjongGame:syncSeats(seats)
 end
 
 -------------------------------------------------------------------------------
--- 同步解散房间投票的数据
--------------------------------------------------------------------------------
-function mahjongGame:syncExitVote(msg)
-    if self.exitDeskUI ~= nil then
-        self.exitDeskUI:close()
-        self.exitDeskUI = nil
-    end
-
-    if msg.IsInExitVote then
-        self.leftVoteSeconds    = msg.LeftVoteTime
-        self.exitVoteProposer   = msg.ExitVoteProposer
-
-        for _, v in pairs(msg.ExitVoteParams) do
-            local player = self:getPlayerByAcId(v.AcId)
-            player.exitVoteState = v.Status
-        end
-        
-        self.exitDeskUI = require("ui.exitdesk").new(self)
-        self.exitDeskUI:show()
-    end
-end
-
--------------------------------------------------------------------------------
--- 准备状态
--------------------------------------------------------------------------------
-function mahjongGame:ready(ready)
-    networkManager.ready(ready, function(msg)
-        if msg == nil then
-            showMessageUI(NETWORK_IS_BUSY)
-        else
-            self:onReadyHandler(msg)
-        end
-    end)
-end
-
--------------------------------------------------------------------------------
--- 其他玩家加入
--------------------------------------------------------------------------------
-function mahjongGame:onOtherEnterHandler(msg)
-    local func = tweenFunction.new(function()
-        log("otherEnter, msg = " .. table.tostring(msg))
-        local player = gamePlayer.new(msg.AcId)
-
-        player.headerUrl    = msg.HeadUrl
-        player:loadHeaderTex()
-        player.nickname     = msg.Nickname
-        player.ip           = msg.Ip
-        player.sex          = msg.Sex
-        player.laolai       = msg.IsLaoLai
-        player.connected    = msg.IsConnected
-        player.ready        = msg.Ready
-        player.turn         = msg.Turn
-        player.score        = msg.Score
-        player.location     = { status = msg.HasPosition, latitude = msg.Latitude, longitude = msg.Longitude }
-
-        self.players[player.acId] = player
-        self.playerCount = self.playerCount + 1
-
-        self.deskUI:onPlayerEnter(player)
-    end)
-    self.messageHandlers:add(func)
-end
-
--------------------------------------------------------------------------------
--- 准备
--------------------------------------------------------------------------------
-function mahjongGame:onReadyHandler(msg)
-    local func = tweenFunction.new(function()
-        log("ready, msg = " .. table.tostring(msg))
-
-        local player = self:getPlayerByAcId(msg.AcId)
-        player.ready = msg.Ready
-
-        self.deskUI:setReady(player.acId, player.ready) 
-    end)
-    self.messageHandlers:add(func)
-end
-
--------------------------------------------------------------------------------
 -- 开始游戏
 -------------------------------------------------------------------------------
 function mahjongGame:onGameStartHandler(msg)
@@ -361,8 +144,8 @@ function mahjongGame:onGameStartHandler(msg)
     self.canBack = false
 
     local func = tweenFunction.new(function()
-        self.totalMahjongCount = msg.TotalMJCnt
-        self.leftMahjongCount = self.totalMahjongCount
+        self.totalCardsCount = msg.TotalMJCnt
+        self.leftCardsCount = self.totalCardsCount
         self.dices = { msg.Dice1, msg.Dice2 }
         self.markerAcId = msg.MarkerAcId
 
@@ -394,11 +177,11 @@ function mahjongGame:onFaPaiHandler(msg)
             player[mahjongGame.cardType.shou] = v.Cards
 
             for _, _ in pairs(v.Cards) do
-                self.leftMahjongCount = self.leftMahjongCount - 1
+                self.leftCardsCount = self.leftCardsCount - 1
             end
         end
 
-        self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
+        self.deskUI:updateLeftMahjongCount(self.leftCardsCount)
         self.operationUI:OnFaPai()
     end)
     self.messageHandlers:add(func)
@@ -447,6 +230,7 @@ function mahjongGame:onHuanNZhangDoHandler(msg)
     --延时，等待交互动画完成
     self.messageHandlers:add(tweenDelay.new(2.5))
 end
+
 -------------------------------------------------------------------------------
 -- 摸牌
 -------------------------------------------------------------------------------
@@ -458,10 +242,10 @@ function mahjongGame:onMoPaiHandler(msg)
 
         for _, v in pairs(msg.Ids) do
             table.insert(inhandMahjongs, v)
-            self.leftMahjongCount = self.leftMahjongCount - 1
+            self.leftCardsCount = self.leftCardsCount - 1
         end
 
-        self.deskUI:updateLeftMahjongCount(self.leftMahjongCount)
+        self.deskUI:updateLeftMahjongCount(self.leftCardsCount)
         self.operationUI:onMoPai(msg.AcId, msg.Ids)
     end)
     self.messageHandlers:add(func)
@@ -525,48 +309,12 @@ function mahjongGame:onClearHandler(msg)
 end
 
 -------------------------------------------------------------------------------
--- 结束一局
--------------------------------------------------------------------------------
-function mahjongGame:endGame()
-    networkManager.destroyDesk(function(msg)
---        log("end game, msg = " .. table.tostring(msg))
-        if msg == nil then
-            showMessageUI(NETWORK_IS_BUSY)
-            return
-        end
-
-        if msg.RetCode ~= retc.ok then
-            showMessageUI(retcText[msg.RetCode])
-            return
-        end
-
-        if msg.Proposer ~= nil and msg.Proposer > 0 then
-            self:resetExitVoteInfo(msg)
-            self.exitDeskUI = require("ui.exitDesk").new(self)
-            self.exitDeskUI:show()
-        else
---            signalManager.signal(signalType.deskDestroy)
-            gamepref.player.currentDesk = nil
-            self:exitGame()
-        end
-    end)
-end
-
--------------------------------------------------------------------------------
 -- CS 过
 -------------------------------------------------------------------------------
 function mahjongGame:guo()
     networkManager.guoPai(function(msg)
     end)
 end
-
--------------------------------------------------------------------------------
--- CS 报
--------------------------------------------------------------------------------
---function mahjongGame:bao()
---    networkManager.baoPai(function(msg)
---    end)
---end
 
 -------------------------------------------------------------------------------
 -- CS 吃
@@ -610,13 +358,6 @@ function mahjongGame:onOpDoChu(acId, cards)
 end
 
 -------------------------------------------------------------------------------
--- SC 吃
--------------------------------------------------------------------------------
-function mahjongGame:onOpDoChi(acId, cards, beAcId, beCard)
-
-end
-
--------------------------------------------------------------------------------
 -- SC 碰
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoPeng(acId, cards, beAcId, beCard)
@@ -646,372 +387,6 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoGuo(acId)
     self.operationUI:onOpDoGuo(acId)
-end
-
--------------------------------------------------------------------------------
--- 通过turn获取玩家
--------------------------------------------------------------------------------
-function mahjongGame:getPlayerByAcId(acId)
-    return self.players[acId]
-end
-
--------------------------------------------------------------------------------
--- 获取总局数
--------------------------------------------------------------------------------
-function mahjongGame:getTotalGameCount()
-    return self.config.JuShu
-end
-
--------------------------------------------------------------------------------
--- 获取剩余局数
--------------------------------------------------------------------------------
-function mahjongGame:getLeftGameCount()
-    return self.leftGames
-end
-
--------------------------------------------------------------------------------
--- 获取玩家总人数
--------------------------------------------------------------------------------
-function mahjongGame:getTotalPlayerCount()
-    return self.config.RenShu
-end
-
--------------------------------------------------------------------------------
--- 获取加入的玩家人数
--------------------------------------------------------------------------------
-function mahjongGame:getPlayerCount()
-    return self.playerCount
-end
-
--------------------------------------------------------------------------------
--- 获取麻将总数
--------------------------------------------------------------------------------
-function mahjongGame:getTotalMahjongCount()
-    return self.totalMahjongCount
-end
-
--------------------------------------------------------------------------------
--- 获取麻将剩余数
--------------------------------------------------------------------------------
-function mahjongGame:getLeftMahjongCount()
-    return self.leftMahjongCount
-end
-
--------------------------------------------------------------------------------
--- 获取庄家的Turn
--------------------------------------------------------------------------------
-function mahjongGame:getMarkerPlayer()
-    return self.players[self.markerAcId]
-end
-
--------------------------------------------------------------------------------
--- 获取庄家的Turn
--------------------------------------------------------------------------------
-function mahjongGame:isMarker(acId)
-    return self.markerAcId == acId
-end
-
--------------------------------------------------------------------------------
--- 根据acId获取位置
--------------------------------------------------------------------------------
-function mahjongGame:getSeatTypeByAcId(acId)
-    local mainTurn = self:getPlayerByAcId(self.mainAcId).turn
-    local turn = self:getPlayerByAcId(acId).turn
-    local seat = turn - mainTurn
-    local playerCount = self:getTotalPlayerCount()
-
-    if seat < 0 then
-        seat = playerCount + turn - mainTurn
-    end
-
-    if playerCount == 3 then
-        if seat == seatType.top then
-            seat = seatType.left
-        end
-    elseif playerCount == 2 then
-        if seat == seatType.right then
-            seat = seatType.top
-        end
-    end
-
-    return seat
-end
-
--------------------------------------------------------------------------------
--- 退出桌子
--------------------------------------------------------------------------------
-function mahjongGame:exitGame()
-    closeAllUI()
-    self:openLobbyUI()
-
-    self:destroy()
-end
-
-function mahjongGame:exitPlayback()
-    self:exitGame()
-end
-
--------------------------------------------------------------------------------
--- 退出房间的原因
--------------------------------------------------------------------------------
-local exitReason = {
-    playerExit      = 0,
-    creatorExit     = 1,
-    timeEnd         = 2,
-    deskDestroy     = 3,
-    enterTimeout    = 4,
-    voteExit        = 5, --投票退出
-    gameClosed      = 6,
-    cloesByManager  = 7, --房间被亲友圈管理员关闭
-}
-
--------------------------------------------------------------------------------
--- 服务器通知直接退出
--------------------------------------------------------------------------------
-function mahjongGame:onExitDeskHandler(msg)
-    local func = tweenFunction.new(function()
---        log("exit desk, msg = " .. table.tostring(msg))
-
---        signalManager.signal(signalType.deskDestroy, self.deskId)
---        gamepref.player.currentDesk = nil
-
-        if msg.Reason == exitReason.voteExit then
-            --投票解散房间，关闭投票界面并显示大结算界面
-            if self.exitDeskUI ~= nil then
-                self.exitDeskUI:close()
-            end
-
-            local datas = { deskId          = self.deskId,
-                            totalGameCount  = self:getTotalGameCount(),
-                            finishGameCount = self:getTotalGameCount() - self:getLeftGameCount(),
-                            players         = {},
-            }
-
-            local totalScores = { }
-
-            if string.isNilOrEmpty(msg.Special) then
-                for _, p in pairs(self.players) do
-                    totalScores[p.acId] = 0
-                end
-            else
-                local special = table.fromjson(msg.Special)
-                for _, v in pairs(special.TotalResuts) do
-                    totalScores[v.AcId] = v.Score
-                end
-            end
-
-            for _, p in pairs(self.players) do
-                local d = { acId            = p.acId, 
-                            headerTex       = self.players[p.acId].headerTex,
-                            nickname        = p.nickname, 
-                            totalScore      = totalScores[p.acId], 
-                            turn            = p.turn, 
-                            seat            = self:getSeatTypeByAcId(p.acId),
-                            isCreator       = self:isCreator(p.acId),
-                            isWinner        = false,
-                }
-
-                datas.players[p.acId] = d
-            end
-
-            local ui = require("ui.gameOver.gameOver").new(self, datas)
-            ui:show()
-
-            self.isGameOverUIShow = true
-            if self.gameEndUI ~= nil then
-                self.gameEndUI:close()
-                self.gameEndUI = nil
-            end
-
-            self.deskUI:reset()
-            self.operationUI:reset()
-        elseif msg.Reason == exitReason.cloesByManager then
-            --被亲友圈管理员关闭
-            showMessageUI("牌桌已被亲友圈管理员，如有疑问请咨询亲友圈管理员或代理",
-                          function()
-                            self:exitGame()
-                          end)
-        elseif msg.Reason == exitReason.playerExit then
-        elseif msg.Reason == exitReason.creatorExit or msg.Reason == exitReason.deskDestroy then
-            showMessageUI("桌子已经解散",
-                          function()
-                            self:exitGame()
-                          end)
-        elseif msg.Reason == exitReason.gameClosed then
-            showMessageUI("服务器正在进行维护",
-                          function()
-                            self:exitGame()
-                          end)
-        else
-            if self.gameEndUI ~= nil then
-                self.gameEndUI:endAll()
-            end
-        end
-    end)
-    self.messageHandlers:add(func)
-end
-
--------------------------------------------------------------------------------
--- 服务器通知其他玩家退出
--------------------------------------------------------------------------------
-function mahjongGame:onOtherExitHandler(msg)
-    local func = tweenFunction.new(function()
-    --    log("other exit, msg = " .. table.tostring(msg))
-        if self.leftGames > 0 then
-            local seatType = self:getSeatTypeByAcId(msg.AcId)
-            self.players[msg.AcId] = nil
-            self.playerCount = self.playerCount - 1
-            self.deskUI:onPlayerExit(seatType, msg)
-        end
-    end)
-    self.messageHandlers:add(func)
-end
-
-function mahjongGame:onOtherConnectStatusChanged(msg)
-    local func = tweenFunction.new(function()
-        local player = self:getPlayerByAcId(msg.AcId)
-        player.connected = msg.IsConnected
-        if self.deskUI then
-            self.deskUI:onPlayerConnectStatusChanged(player)
-        end
-    end)
-    self.messageHandlers:add(func)
-end
-
-function mahjongGame:resetExitVoteInfo(msg)
-    self.leftVoteSeconds    = msg.LeftTime
-    self.exitVoteProposer   = msg.Proposer
-    for _, p in pairs(self.players) do
-        p.exitVoteState = exitDeskStatus.waiting
-        if p.acId == msg.Proposer then
-            p.exitVoteState = exitDeskStatus.proposer
-        end
-    end
-end
-
--------------------------------------------------------------------------------
--- 服务器通知发起退出投票
--------------------------------------------------------------------------------
-function mahjongGame:onNotifyExitVoteHandler(msg)
---    log("notify exit vote, msg = " .. table.tostring(msg))
-    self:resetExitVoteInfo(msg)
-
-    self.exitDeskUI = require("ui.exitDesk").new(self)
-    self.exitDeskUI:show()
-end
-
--------------------------------------------------------------------------------
--- 服务器通知投票失败（有人拒绝）
--------------------------------------------------------------------------------
-function mahjongGame:onNotifyExitVoteFailedHandler(msg)
-    local func = tweenFunction.new(function()
-    --    log("notify exit vote failed, msg = " .. table.tostring(msg))
-        self.exitDeskUI:close()
-        self.exitDeskUI = nil
-    end)
-    self.messageHandlers:add(func)
-end
-
--------------------------------------------------------------------------------
--- 服务器通知有人投票
--------------------------------------------------------------------------------
-function mahjongGame:onExitVoteHandler(msg)
-    local func = tweenFunction.new(function()
-    --    log("exit vote, msg = " .. table.tostring(msg))
-        if self.exitDeskUI ~= nil then
-            local player = self:getPlayerByAcId(msg.AcId)
-            if msg.Agree then
-                player.exitVoteState = exitDeskStatus.agree
-            else
-                player.exitVoteState = exitDeskStatus.reject
-            end
-            self.exitDeskUI:setPlayerState(player)
-        end
-    end)
-    self.messageHandlers:add(func)
-end
-
--------------------------------------------------------------------------------
--- 服务器通知牌局结束
--------------------------------------------------------------------------------
-function mahjongGame:onGameEndHandler(msg)
-    self.messageHandlers:add(tweenDelay.new(2))
-    local func = tweenFunction.new(function()
---    log("game end, msg = " .. table.tostring(msg))
-        self.deskStatus = deskStatus.gameend
-        self.leftGames = msg.LeftTime
-
-        local datas = { deskId          = self.deskId,
-                        totalGameCount  = self:getTotalGameCount(),
-                        finishGameCount = self:getTotalGameCount() - self:getLeftGameCount(),
-                        players         = {},
-        }
-
-        local special = table.fromjson(msg.Special)
-
-        local totalScores = {}
-        local preData = table.fromjson(special.PreData)
-    
-        for _, v in pairs(preData.TotalResuts) do
-            totalScores[v.AcId] = v.Score
-            self.players[v.AcId].score = v.Score
-        end
-
-        local specialData = table.fromjson(special.SpecialData)
-
-        for _, v in pairs(specialData.PlayerInfos) do
-            local p = self:getPlayerByAcId(v.AcId)
-            local d = { acId            = v.AcId, 
-                        headerTex       = self.players[p.acId].headerTex,
-                        nickname        = p.nickname, 
-                        score           = v.Score,
-                        totalScore      = totalScores[v.AcId], 
-                        turn            = p.turn, 
-                        seat            = self:getSeatTypeByAcId(p.acId),
-                        inhand          = v.ShouPai,
-                        hu              = v.Hu,
-                        isCreator       = self:isCreator(v.AcId),
-                        isWinner        = false,
-                        que             = p.que,
-                        seatType        = self:getSeatTypeByAcId(v.AcId),
-            }
-
-            for k, u in pairs(d.inhand) do 
-                if u == d.hu then
-                    table.remove(d.inhand, k)
-                end
-            end
-
-            local peng = v.ChiChe
-            if peng ~= nil then
-                for _, u in pairs(peng) do
-                    if d[u.Op] == nil then
-                        d[u.Op] = {}
-                    end
-
-                    table.insert(d[u.Op], u.Cs)
-                end
-            end
-
-            --datas.players[p.acId] = d
-            table.insert(datas.players, d)
-        end
-        table.sort(datas.players, function(t1, t2)
-            return t1.seatType < t2.seatType
-        end)
-        datas.scoreChanges = specialData.ScoreChanges
-
-        self.gameEndUI = require("ui.gameEnd.gameEnd").new(self, datas)
-        self.gameEndUI:show()
-
-        for _, v in pairs(self.players) do
-            v.que = -1
-            self.deskUI:setScore(v.acId, v.score)
-        end
-        self.deskUI:reset()
-        self.operationUI:reset()
-    end)
-    self.messageHandlers:add(func)
 end
 
 -------------------------------------------------------------------------------
@@ -1077,180 +452,6 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:quicklyStartChose(agree, callback)
     networkManager.quicklyStartChose(agree, callback)
-end
-
--------------------------------------------------------------------------------
--- 同意解散房间
--------------------------------------------------------------------------------
-function mahjongGame:agreeExit()
-    networkManager.exitVote(true, function(msg)
-    end)
-end
-
--------------------------------------------------------------------------------
--- 拒绝解散房间
--------------------------------------------------------------------------------
-function mahjongGame:rejectExit()
-    networkManager.exitVote(false, function(msg)
-    end)
-end
-
--------------------------------------------------------------------------------
--- 是否是房主
--------------------------------------------------------------------------------
-function mahjongGame:isCreator(acId)
-    return self.creator == acId
-end
-
--------------------------------------------------------------------------------
--- 销毁游戏对象
--------------------------------------------------------------------------------
-function mahjongGame:destroy()
-    self.playerCount = 0
-
-    self.messageHandlers:stop()
-    self.messageHandlers:clear()
-    tweenManager.remove(self.messageHandlers)
-
-    if self.mode == gameMode.normal then
-        self:unregisterCommandHandlers()
-    else
-        self:unregisterPlaybackHandlers()
-    end
-
-    for _, v in pairs(self.players) do
-        if v.acId ~= self.mainAcId then
-            v:destroy()
-        end
-    end
-
-    self.deskUI = nil
-    self.operationUI = nil
-    self.exitDeskUI = nil
-
-    self.deskId = nil
-    clientApp.currentDesk = nil
-end
-
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
-function mahjongGame:isCreator(acId)
-    return acId == self.creatorAcId
-end
-
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
-function mahjongGame:isPlaying()
-    return self.data.Status == gameStatus.playing
-end
-
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
-function mahjongGame:canBackToLobby()
-    return self.canBack
-end
-
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
-function mahjongGame:startPlayback()
-    if self.mode == gameMode.playback then
-        self.messageHandlers:play()
-    end
-end
-
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
-function mahjongGame:stopPlayback()
-    if self.mode == gameMode.playback then
-        self.messageHandlers:stop()
-    end
-end
-
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
-function mahjongGame:isPlayback()
-    return self.mode == gameMode.playback
-end
-
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
-function mahjongGame:openLobbyUI()
-    local lobby = require("ui.lobby").new()
-    lobby:hide()
-
-    if self.friendsterId == nil or self.friendsterId <= 0 then
-        lobby:show()
-        return
-    end
-
-    showWaitingUI("请稍候...")
-    networkManager.queryFriendsterList(function(msg)
-        if msg == nil then
-            closeWaitingUI()
-            lobby:show()
-            return
-        end
-
-        local fst = require("ui.friendster.friendster").new(msg.Clubs)
-        fst:hide()
-
-        local data = fst.friendsters[self.friendsterId]
-        if data == nil then
-            closeWaitingUI()
-            showMessageUI("你已经不在该亲友圈")
-            lobby:show()
-            fst:show()
-            return
-        end
-
-        showWaitingUI("请稍候...")
-
-        networkManager.queryFriendsterMembers(self.friendsterId, function(msg)
-            if msg == nil or msg.RetCode ~= retc.ok then
-                closeWaitingUI()
-                lobby:show()
-                fst:show()
-                return
-            end
-
-            data:setMembers(msg.Players)
-
-            networkManager.queryFriendsterDesks(self.friendsterId, function(msg)
-                closeWaitingUI()
-
-                if msg == nil or msg.RetCode ~= retc.ok then
-                    lobby:show()
-                    fst:show()
-                    return
-                end
-
-                data:setDesks(msg.Desks)
-
-                local fstDetail = require("ui.friendster.friendsterDetail").new(data, function()
-                    if fst.detailUI ~= nil then
-                        fst.detailUI:close()
-                        fst.detailUI = nil
-                    end
-                end)
-                fstDetail:show()
-
-                fstDetail:refreshUI()
-                fstDetail:refreshMemberList()
-                fstDetail:refreshDeskList()
-
-                lobby:show()
-                fst:show()
-                fst.detailUI = fstDetail
-            end)
-        end)
-    end)
 end
 
 return mahjongGame

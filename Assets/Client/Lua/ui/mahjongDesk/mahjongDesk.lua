@@ -30,6 +30,11 @@ function mahjongDesk:onInit()
     self.super.onInit(self)
 end
 
+function mahjongDesk:onGameSync()
+    self:updateLeftMahjongCount()
+    self.super.onGameSync(self)
+end
+
 function mahjongDesk:getInvitationInfo()
     local friendsterId = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d", self.game.friendsterId)
     return string.format("%s，%s", 
@@ -66,7 +71,7 @@ end
 
 function mahjongDesk:updateLeftMahjongCount(cnt)
     if cnt == nil then 
-        cnt = self.game:getLeftMahjongCount()
+        cnt = self.game:getLeftCardsCount()
     end
 
     self.mLeftCount:setText(tostring(cnt))
@@ -78,6 +83,10 @@ function mahjongDesk:onDingQueDo(msg)
         local seat = self.game:getSeatTypeByAcId(player.acId)
         self.headers[seat]:showDingQue(v.Q)
     end
+end
+
+function mahjongDesk:onOpDoChu(acId, cards)
+    
 end
 
 function mahjongDesk:onDestroy()

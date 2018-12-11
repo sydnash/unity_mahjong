@@ -256,7 +256,7 @@ end
 -- 加载麻将模型
 -------------------------------------------------------------------------------
 function mahjongOperation:loadMahjongs()
-    for i=0, self.game:getTotalMahjongCount() - 1 do
+    for i=0, self.game:getTotalCardsCount() - 1 do
         local m = mahjong.new(i)
         m:hide()
         m:setParent(self.mahjongsRoot)
@@ -342,7 +342,7 @@ function mahjongOperation:onGameStart()
     self:relocateIdleMahjongs(false)
 
     eventManager.registerAnimationTrigger("table_plane_down", function()
-        for i=1, self.game.totalMahjongCount do
+        for i=1, self.game:getTotalCardsCount() do
             local m = self.idleMahjongs[i]
             m:show()
             m:setPickabled(false)
@@ -476,7 +476,7 @@ end
 -- 创建“城墙”
 -------------------------------------------------------------------------------
 function mahjongOperation:relocateIdleMahjongs(visible)
-    local mahjongCount = self.game:getTotalMahjongCount()
+    local mahjongCount = self.game:getTotalCardsCount()
     local markerTurn   = self.game:getMarkerPlayer().turn
     local playerStart  = (self.game.dices[1] + self.game.dices[2] + markerTurn) % 4 - 1
 
@@ -1397,7 +1397,7 @@ end
 -- 获取从idle列表拿牌的索引值
 -------------------------------------------------------------------------------
 function mahjongOperation:getIdleStart()
-    return (self.idleMahjongStart <= self.game:getLeftMahjongCount()) and self.idleMahjongStart or 1
+    return (self.idleMahjongStart <= self.game:getLeftCardsCount()) and self.idleMahjongStart or 1
 end
 
 function mahjongOperation:getMahjongFromIdleForPlayback(mid)

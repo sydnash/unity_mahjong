@@ -1154,6 +1154,10 @@ MonoBehaviour:
     widgetType: 0
     gameObject: {fileID: 1631272937680924}
     panelScript: 
+  - variableName: mGfxAnim
+    widgetType: 12
+    gameObject: {fileID: 1955659407042764}
+    panelScript: 
 --- !u!222 &222020468962241658
 CanvasRenderer:
   m_ObjectHideFlags: 1
