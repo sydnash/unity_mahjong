@@ -233,6 +233,7 @@ function mahjongOperation:onInit()
     self.pengMahjongs       = {}
     self.huMahjongs         = {}
     self.hnzMahjongs        = {}
+    self.hasHnzChoosed      = false
     self.redundancyMahjongs = {}
 
     self.chuPaiHintParent = {
@@ -432,6 +433,7 @@ function mahjongOperation:onGameSync()
         self:setCountdownVisible(false)
         local datas = self.game.players[self.game.mainAcId][mahjongGame.cardType.huan]
         if datas ~= nil and #datas == self.hnzCount then
+            self.hasHnzChoosed = true
             self.mHnz:hide()
         else
             self.mHnz:show()
@@ -774,6 +776,32 @@ function mahjongOperation:endChuPai()
     self.canChuPai = false
 end
 
+function mahjongOperation:onClickOnMahjong(mj)
+    if self.curSelectedMahjong == nil then
+        self.curSelectedMahjong = mj
+        self.curSelectedMahjong:setSelected(true)
+        soundManager.playGfx("mahjong", "chose")
+    else
+        if self.curSelectedMahjong.id ~= mj.id then
+            self.curSelectedMahjong:setSelected(false)
+            self.curSelectedMahjong = mj
+            self.curSelectedMahjong:setSelected(true)
+            soundManager.playGfx("mahjong", "chose")
+        else
+            --出牌
+            if self.canChuPai then
+                self:onChosedChuPai()
+            end
+        end
+    end
+end
+
+function mahjongOperation:clearChosedMahjong()
+    if self.curSelectedMahjong ~= nil then
+        self.curSelectedMahjong:setSelected(false)
+        self.curSelectedMahjong = nil
+    end
+end
 -------------------------------------------------------------------------------
 -- 处理鼠标/手指拖拽
 -------------------------------------------------------------------------------
@@ -789,13 +817,18 @@ function mahjongOperation:touchHandler(phase, pos)
         if phase == touch.phaseType.ended then
             local go = GameObjectPicker.instance:Pick(pos)
             if go ~= nil then
+                local inhandMahjongs = self.inhandMahjongs[self.game.mainAcId]
+                local selectedMahjong = self:getMahjongByGo(inhandMahjongs, go)
+                if self.hasHnzChoosed then
+                    self:onClickOnMahjong(selectedMahjong)
+                    return
+                end
+
                 if self.hnzMahjongs[self.game.mainAcId] == nil then
                     self.hnzMahjongs[self.game.mainAcId] = {}
                 end
 
-                local inhandMahjongs = self.inhandMahjongs[self.game.mainAcId]
                 local hnzQueue = self.hnzMahjongs[self.game.mainAcId]
-                local selectedMahjong = self:getMahjongByGo(inhandMahjongs, go)
 
                 if selectedMahjong.selected then
                     selectedMahjong:setSelected(false)
@@ -827,6 +860,10 @@ function mahjongOperation:touchHandler(phase, pos)
 
                 selectedMahjong:setSelected(true)
                 table.insert(hnzQueue, selectedMahjong)
+            else
+                if self.hasHnzChoosed then
+                    self:clearChosedMahjong()
+                end
             end
         end
     else
@@ -875,16 +912,7 @@ function mahjongOperation:touchHandler(phase, pos)
                 if not self.canChuPai then
                     self.selectedMahjong:setPosition(self.selectedOrgPos)
                     if isClick then
-                        if self.curSelectedMahjong == nil then
-                            self.curSelectedMahjong = self.selectedMahjong
-                            self.curSelectedMahjong:setSelected(true)
-                        else
-                            if self.selectedMahjong.id ~= self.curSelectedMahjong.id then
-                                self.curSelectedMahjong:setSelected(false)
-                                self.curSelectedMahjong = self.selectedMahjong
-                                self.curSelectedMahjong:setSelected(true)
-                            end
-                        end
+                        self:onClickOnMahjong(self.selectedMahjong)
                     else
                         if self.curSelectedMahjong then
                             self.curSelectedMahjong:setSelected(false)
@@ -893,26 +921,11 @@ function mahjongOperation:touchHandler(phase, pos)
                     end
                 else
                     if isClick then
-                        if self.curSelectedMahjong == nil then
-                            self.curSelectedMahjong = self.selectedMahjong
-                            self.curSelectedMahjong:setSelected(true)
-                        else
-                            if self.curSelectedMahjong.id ~= self.selectedMahjong.id then
-                                self.curSelectedMahjong:setSelected(false)
-                                self.curSelectedMahjong = self.selectedMahjong
-                                self.curSelectedMahjong:setSelected(true)
-                            else
-                                --出牌
-                                self:onChosedChuPai()
-                            end
-                        end
+                        self:onClickOnMahjong(self.selectedMahjong)
                     else
                         if dpos.y < 0.04  then
                             self.selectedMahjong:setPosition(self.selectedOrgPos)
-                            if self.curSelectedMahjong then
-                                self.curSelectedMahjong:setSelected(false)
-                                self.curSelectedMahjong = nil
-                            end
+                            self:clearChosedMahjong()
                         else
                             --出牌
                             self:onChosedChuPai()
@@ -920,10 +933,7 @@ function mahjongOperation:touchHandler(phase, pos)
                     end
                 end
             else
-                if self.curSelectedMahjong then
-                    self.curSelectedMahjong:setSelected(false)
-                    self.curSelectedMahjong = nil
-                end
+                self:clearChosedMahjong()
             end
 
             self.selectedMahjong = nil
@@ -1992,6 +2002,7 @@ function mahjongOperation:reset()
     self.centerGlass:show()
     self.countdown:hide()
 
+    self.hasHnzChoosed = false
     self:clear(false)
 
     self.mGang_MS:hide()
@@ -2116,6 +2127,7 @@ function mahjongOperation:onHnzChooseClickedHandler()
         return
     end
 
+    self.hasHnzChoosed = true
     local data = {}
     for _, v in pairs(self.hnzMahjongs[self.game.mainAcId]) do
         table.insert(data, v.id)
