@@ -940,6 +940,7 @@ function mahjongOperation:onChosedChuPai()
 
     self:virtureChu(self.selectedMahjong)
 
+    soundManager.playGfx("mahjong", "chupai")
     local player = self.game:getPlayerByAcId(self.game.mainAcId)
     playMahjongSound(id, player.sex)
 
@@ -1198,10 +1199,10 @@ function mahjongOperation:onOpDoChu(acId, cards)
     end
 
     self.mo = nil
-    soundManager.playGfx("mahjong", "chupai")
 
     if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
         local player = self.game:getPlayerByAcId(acId)
+        soundManager.playGfx("mahjong", "chupai")
         playMahjongSound(cards[1], player.sex)
     end
 
