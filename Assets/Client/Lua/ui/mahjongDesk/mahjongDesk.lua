@@ -524,6 +524,12 @@ end
 
 function mahjongDesk:onGVoicePlayFinishedHandler(filename, acId)
     log("gvoice stoped handler " .. tostring(acId))
+    if acId == nil then
+        for _, v in pairs(self.headers) do
+            v:hideChatVoice()
+        end
+        return
+    end
     for _, v in pairs(self.headers) do
         if v.acId == acId then
             v:hideChatVoice()

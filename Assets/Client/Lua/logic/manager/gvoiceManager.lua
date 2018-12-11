@@ -8,7 +8,6 @@ gvoiceManager.path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "gvoice")
 
 local playQueue = {}
 local recordFilename = string.empty
-local playDownloaded = false
 local recordFinishedCallback = nil
 local playStartedCallback = nil
 local playFinishedCallback = nil
@@ -43,12 +42,6 @@ function gvoiceManager.update()
     GVoiceEngine.instance:Update()
     
     if gvoiceManager.status then
-        if #playQueue > 0 and (not isPlaying) and (not isRecording) then
-            local o = playQueue[1]
-            table.remove(playQueue, 1)
-            GVoiceEngine.instance:Download(o.fileid, o.filename, timeout)
-        end
-
         gvoiceManager.checkHasNewFileNeedPlay()
     end
 end
@@ -101,12 +94,15 @@ end
 
 function gvoiceManager.play(filename, acId)
     if gvoiceManager.status then
+        gvoiceManager.stopPlay()
         local bytes = LFS.ReadBytes(filename)
         if not bytes or bytes.Length <= 0 then
+            LFS.RemoveFile(filename)
             return false
         end
         isPlaying = true
 
+        log("gvoicemanager= start play: " .. filename)
         soundManager.setBGMVolume(0)
         soundManager.setSFXVolume(0)
 
@@ -118,6 +114,9 @@ function gvoiceManager.play(filename, acId)
                 gvoiceManager.fileNameToAcId[filename] = acId
             end
             playStartedCallback(filename, acId)
+        else 
+            LFS.RemoveFile(filename)
+            gvoiceManager.fileNameToAcId[filename] = acId
         end
         return ret
     end
@@ -126,21 +125,20 @@ end
 
 function gvoiceManager.startPlay(filename, fileid, acId)
     if gvoiceManager.status then
-        playDownloaded = true
         gvoiceManager.fileNameToAcId[filename] = acId
         if fileid == nil then
             gvoiceManager.onDownloadedHandler(true, filename)
             return
         end
-        table.insert(playQueue, { filename = filename, fileid = fileid })
+        GVoiceEngine.instance:Download(o.fileid, o.filename, timeout)
     end
 end
 
 function gvoiceManager.stopPlay()
     if gvoiceManager.status then
         isPlaying = false
-        playDownloaded = false
-
+        log("gvoicemanager= stop all: ")
+        playFinishedCallback("", acId)
         GVoiceEngine.instance:StopPlay()
     end
 end
@@ -148,7 +146,6 @@ end
 function gvoiceManager.reset()
     playQueue = {}
     recordFilename = string.empty
-    playDownloaded = false
     recordFinishedCallback = nil
     playStartedCallback = nil
     playFinishedCallback = nil
@@ -165,17 +162,14 @@ end
 
 function gvoiceManager.onDownloadedHandler(ok, filename, fileid)
     if gvoiceManager.status then
-        if fileid then
-            table.insert(gvoiceManager.downloadFileQueue, {filename = filename})
-        else
-            table.insert(gvoiceManager.downloadFileQueue, 1, {filename = filename})
-        end
+        local acId = gvoiceManager.fileNameToAcId[filename]
+        table.insert(gvoiceManager.downloadFileQueue, {filename = filename, acId = acId})
         gvoiceManager.checkHasNewFileNeedPlay()
     end
 end
 
 function gvoiceManager.checkHasNewFileNeedPlay()
-    if gvoiceManager.isPlaying then
+    if isPlaying then
         return
     end
     if #gvoiceManager.downloadFileQueue == 0 then
@@ -183,12 +177,12 @@ function gvoiceManager.checkHasNewFileNeedPlay()
     end
     local msg = gvoiceManager.downloadFileQueue[1]
     table.remove(gvoiceManager.downloadFileQueue, 1)
-    gvoiceManager.play(msg.filename)
+    gvoiceManager.play(msg.filename, msg.acId)
 end
 
 function gvoiceManager.onPlayFinishedHandler(ok, filename)
     if gvoiceManager.status and playFinishedCallback ~= nil then
-        log("gvoice finishd handler " .. filename)
+        log("gvoicemanager= play finish: " .. filename)
         local acId = gvoiceManager.fileNameToAcId[filename]
         playFinishedCallback(filename, acId)
         gvoiceManager.fileNameToAcId[filename] = nil
