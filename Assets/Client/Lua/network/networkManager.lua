@@ -339,8 +339,9 @@ local function loginC(text, callback)
         local loginType = 1
         local data = { AcId = acid, Session = session, LoginType = loginType }
         send(protoType.cs.loginHs, data, function(msg)
-            if msg == nil then
+            if msg == nil or msg.RetCode ~= retc.ok then
                 callback(nil)
+                networkManager.disconnect()
             else
                 gamepref.session    = msg.Session
                 gamepref.acId       = msg.AcId

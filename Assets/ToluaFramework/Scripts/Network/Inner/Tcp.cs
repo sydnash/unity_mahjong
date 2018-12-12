@@ -57,7 +57,7 @@ public class Tcp
                 return (int)TcpError.Success;
             }
             return (int)TcpError.NormalError;
-        } catch {
+        } catch(Exception e) {
             return (int)TcpError.CatchException;
         }
     }
