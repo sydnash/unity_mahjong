@@ -227,7 +227,7 @@ function networkManager.update()
         end
         --检查心跳是否超时
         if now - networkManager.pongTick > pong then
-            log("pingpng time out . reconnect. ")
+            log("[test for reconnect] pingpng time out . reconnect. ")
             networkManager.disconnect()
 
             if networkManager.disconnectedCallback ~= nil then
@@ -275,7 +275,7 @@ function networkManager.reconnect(host, port, callback)
         --connected
         local data = { Session = gamepref.session, AcId = gamepref.acId, Level = 1, }
         send(protoType.cs.reconnect, data, function(msg)
-            log("reconnect, msg = " ..  table.tostring(msg))
+            log("[test for reconnect] reconnect, msg = " ..  table.tostring(msg))
             callback(msg.Ok, msg.CurCoin, msg.GameType, msg.DeskId)
         end)
     end, function()
