@@ -618,6 +618,16 @@ MonoBehaviour:
     sprite: {fileID: 21300006, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}
   - key: JinTang
     sprite: {fileID: 21300008, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}
+  - key: WenJiang
+    sprite: {fileID: 21300016, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}
+  - key: NanChong
+    sprite: {fileID: 21300010, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}
+  - key: XiChong
+    sprite: {fileID: 21300018, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}
+  - key: YingJing
+    sprite: {fileID: 21300020, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}
+  - key: ZhongJiang
+    sprite: {fileID: 21300024, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}
 --- !u!114 &114057145311106466
 MonoBehaviour:
   m_ObjectHideFlags: 1

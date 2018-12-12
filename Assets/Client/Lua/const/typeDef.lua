@@ -60,6 +60,9 @@ retc = {
     playerIsAlreadyInClub           = 1027,
 }
 
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
 fanXingType = {
     su                  = 0,
     qingYiSe            = 1,
@@ -72,6 +75,7 @@ fanXingType = {
     menQing             = 8,
     zhongZhang          = 9,
 }
+
 --------------------------------------------------------------
 --
 --------------------------------------------------------------
@@ -158,16 +162,54 @@ cityType = {
     jiangyou    = 18,   --江油
 }
 
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
 cityRegion = {
-    [cityType.chengdu] = "ChengDu",
-    [cityType.jintang] = "ChengDu",
+    [cityType.chengdu]      = "ChengDu",
+    [cityType.wenjiang]     = "ChengDu",
+    [cityType.pixian]       = "ChengDu",
+    [cityType.jintang]      = "ChengDu",
+    [cityType.huayang]      = "ChengDu",
+    [cityType.dayi]         = "ChengDu",
+    [cityType.qionglai]     = "ChengDu",
+    [cityType.suining]      = "SuiNing",
+    [cityType.renshou]      = "ChengDu",
+    [cityType.jianyang]     = "ChengDu",
+    [cityType.zhongjiang]   = "DeYang",
+    [cityType.guanghan]     = "DeYang",
+    [cityType.xichong]      = "NanChong",
+    [cityType.nanchong]     = "NanChong",
+    [cityType.maoxian]      = "ABa",
+    [cityType.anyue]        = "ZiYang",
+    [cityType.tianquan]     = "YaAn",
+    [cityType.yingjing]     = "YaAn",
+    [cityType.jiangyou]     = "MianYang",
 }
+
 --------------------------------------------------------------
 --
 --------------------------------------------------------------
 cityTypeSID = {
-    [cityType.chengdu] = "ChengDu",
-    [cityType.jintang] = "JinTang",
+    [cityType.chengdu]      = "ChengDu",
+    [cityType.wenjiang]     = "WenJiang",
+    [cityType.pixian]       = "PiXian",
+    [cityType.jintang]      = "JinTang",
+    [cityType.huayang]      = "HuaYang",
+    [cityType.dayi]         = "DaYi",
+    [cityType.qionglai]     = "QiongLai",
+    [cityType.suining]      = "SuiNing",
+    [cityType.renshou]      = "RenShou",
+    [cityType.jianyang]     = "JianYang",
+    [cityType.zhongjiang]   = "ZhongJiang",
+    [cityType.guanghan]     = "GuanHan",
+    [cityType.xichong]      = "XiChong",
+    [cityType.nanchong]     = "NanChong",
+    [cityType.maoxian]      = "MaoXian",
+    [cityType.anyue]        = "AnYue",
+    [cityType.tianquan]     = "TianQuan",
+    [cityType.yingjing]     = "YingJing",
+    [cityType.jiangyou]     = "JianYou",
 }
 
 --------------------------------------------------------------
@@ -204,10 +246,18 @@ friendsterNotifyType = {
     playerPlayEndClub   = 14,
     deskJuShuChanged    = 15,
 }
+
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
 friendsterDeskStatus = {
     wait            = 0,
     playing         = 1,
 }
+
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
 friendsterPlayerDeskStatus = {
     idle            = 0,
     indesk          = 1,

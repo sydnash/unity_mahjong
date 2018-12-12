@@ -16,6 +16,7 @@ TextureImporter:
     21300018: qy_dw_xc
     21300020: qy_dw_yj
     21300022: qy_dq_dy
+    21300024: qy_dw_zj
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -244,6 +245,20 @@ TextureImporter:
         height: 32
       alignment: 9
       pivot: {x: 0.4915254, y: 0.53125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: qy_dw_zj
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 71
+        width: 59
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
