@@ -97,6 +97,9 @@ function friendster:addMember(data)
 end
 
 function friendster:removeMember(acId)
+    if self.members == nil then
+        return
+    end
     self.members[acId] = nil
     self.curMemberCount = self.curMemberCount - 1
 end
