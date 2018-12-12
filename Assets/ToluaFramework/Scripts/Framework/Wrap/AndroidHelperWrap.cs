@@ -8,6 +8,7 @@ public class AndroidHelperWrap
 	{
 		L.BeginClass(typeof(AndroidHelper), typeof(System.Object));
 		L.RegFunction("RegisterLoginWXCallback", RegisterLoginWXCallback);
+		L.RegFunction("RegisterShareWXCallback", RegisterShareWXCallback);
 		L.RegFunction("RegisterInviteSGCallback", RegisterInviteSGCallback);
 		L.RegFunction("SetLogined", SetLogined);
 		L.RegFunction("ShowErrorMessage", ShowErrorMessage);
@@ -21,6 +22,7 @@ public class AndroidHelperWrap
 		L.RegFunction("GetParamsSG", GetParamsSG);
 		L.RegFunction("ClearSGInviteParam", ClearSGInviteParam);
 		L.RegFunction("OnLoginWxHandler", OnLoginWxHandler);
+		L.RegFunction("OnShareWxHandler", OnShareWxHandler);
 		L.RegFunction("OnInviteSgHandler", OnInviteSgHandler);
 		L.RegFunction("GetDeviceId", GetDeviceId);
 		L.RegFunction("OpenExplore", OpenExplore);
@@ -66,6 +68,23 @@ public class AndroidHelperWrap
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
 			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
 			obj.RegisterLoginWXCallback(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RegisterShareWXCallback(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
+			obj.RegisterShareWXCallback(arg0);
 			return 0;
 		}
 		catch (Exception e)
@@ -297,6 +316,23 @@ public class AndroidHelperWrap
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			obj.OnLoginWxHandler(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnShareWxHandler(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.OnShareWxHandler(arg0);
 			return 0;
 		}
 		catch (Exception e)

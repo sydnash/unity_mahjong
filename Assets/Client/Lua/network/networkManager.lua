@@ -358,7 +358,7 @@ local function loginC(text, callback)
                 gamepref.player.userType        = msg.UserType
                 gamepref.player.shareFKTimes    = msg.ShareCnt
                 gamepref.player.complainLevel   = msg.ComplainLevel
-
+  
                 msg.ShareConfig                 = json.decode(msg.ShareConfig)
                 gamepref.player.shareConfig     = {}
                 gamepref.player.shareConfig.jqReward        = msg.ShareConfig.JQReward

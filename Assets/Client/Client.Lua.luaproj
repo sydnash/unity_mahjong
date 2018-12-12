@@ -40,6 +40,7 @@
     <Folder Include="Lua\ui\friendster\" />
     <Folder Include="Lua\ui\mail\" />
     <Folder Include="Lua\ui\deskDetail\" />
+    <Folder Include="Lua\ui\setting\" />
     <Folder Include="Lua\ui\playHistory\" />
   </ItemGroup>
   <ItemGroup>
@@ -132,7 +133,10 @@
     <Compile Include="Lua\ui\playHistory\playHistoryDetail.lua" />
     <Compile Include="Lua\ui\playHistory\playHistoryDetailItem.lua" />
     <Compile Include="Lua\ui\playHistory\playHistoryItem.lua" />
-    <Compile Include="Lua\ui\setting.lua" />
+    <Compile Include="Lua\ui\setting\lobbySetting.lua" />
+    <Compile Include="Lua\ui\setting\mahjongSetting.lua" />
+    <Compile Include="Lua\ui\setting\playbackSetting.lua" />
+    <Compile Include="Lua\ui\setting\setting.lua" />
     <Compile Include="Lua\ui\share.lua" />
     <Compile Include="Lua\ui\waiting.lua" />
   </ItemGroup>
