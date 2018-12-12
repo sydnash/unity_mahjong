@@ -77,7 +77,7 @@ function networkHandler.setup()
     networkManager.registerCommandHandler(protoType.sc.exitDesk, function(msg)
         gamepref.player.currentDesk = nil
         signalManager.signal(signalType.deskDestroy, msg)
-    end)
+    end, true)
 end
 
 
