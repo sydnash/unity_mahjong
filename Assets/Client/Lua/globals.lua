@@ -289,13 +289,9 @@ end
 -- 登录服务器
 -------------------------------------------------------------
 function loginServer(callback, func)
-    showWaitingUI("正在登录中，请稍候...")
-
-    --登录服务器
     local loginImp = func
 
     loginImp(function(msg)
-        closeWaitingUI()
         platformHelper.setLogined(false)
 
         if msg == nil then
@@ -314,8 +310,6 @@ function loginServer(callback, func)
 
         platformHelper.setLogined(true)
         gvoiceManager.setup(tostring(gamepref.player.acId))
-
---        log("login, msg = " .. table.tostring(msg))
 
         local cityType = 0
         local deskId   = 0
@@ -336,6 +330,7 @@ function loginServer(callback, func)
         end
 
         local loading = require("ui.loading").new()
+        loading:setText("正在努力联系服务器，请稍候")
         loading:show()
 
         sceneManager.load("scene", "mahjongscene", function(completed, progress)
@@ -350,6 +345,7 @@ function loginServer(callback, func)
                     callback(true)
                     loading:close()
                 else -- 如有在房间内则跳过大厅直接进入房间
+                    loading:setText("正在进入房间，请稍候")
                     enterDesk(cityType, deskId, function(ok)
                         callback(ok)
                     end)

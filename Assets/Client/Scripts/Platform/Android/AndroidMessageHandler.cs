@@ -35,6 +35,15 @@ public class AndroidMessageHandler : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="json"></param>
+    public void OnShareWxHandler(string json)
+    {
+        AndroidHelper.instance.OnShareWxHandler(json);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="json"></param>
     public void OnInviteSgHandler(string json)
     {
         AndroidHelper.instance.OnInviteSgHandler(json);

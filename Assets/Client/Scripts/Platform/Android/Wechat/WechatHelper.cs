@@ -10,6 +10,11 @@ public class WechatHelper
     /// </summary>
     private static Action<string> mLoginCallback = null;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    private static Action<string> mShareCallback = null;
+
     #endregion
 
     #region Public
@@ -21,6 +26,31 @@ public class WechatHelper
     public static void RegisterLoginCallback(Action<string> callback)
     {
         mLoginCallback = callback;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void UnregisterLoginCallback()
+    {
+        mLoginCallback = null;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="callback"></param>
+    public static void RegisterShareCallback(Action<string> callback)
+    {
+        mShareCallback = callback;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static void UnregisterShareCallback()
+    {
+        mShareCallback = null;
     }
 
     /// <summary>
@@ -79,6 +109,19 @@ public class WechatHelper
         if (mLoginCallback != null)
         {
             mLoginCallback(json);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="json"></param>
+    public static void OnShareHandler(string json)
+    {
+        Logger.Log("WX.OnShareHandler, json = " + json);
+        if (mShareCallback != null)
+        {
+            mShareCallback(json);
         }
     }
 
