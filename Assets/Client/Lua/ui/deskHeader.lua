@@ -179,11 +179,6 @@ function deskHeader:reset()
     self:hideChatVoice()
 end
 
-function deskHeader:onDestroy()
-    self.mIcon:reset()
-    self.super.onDestroy(self)
-end
-
 return deskHeader
 
 --endregion

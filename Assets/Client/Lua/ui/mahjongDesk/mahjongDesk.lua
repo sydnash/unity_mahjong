@@ -27,6 +27,7 @@ function mahjongDesk:onInit()
     for k, v in pairs(parents) do
         self.headers[k] = header.new(k)
         self.headers[k]:setParent(v)
+        self.headers[k]:show()
     end
 
     self.super.onInit(self)
@@ -93,6 +94,12 @@ end
 
 function mahjongDesk:onDestroy()
     self:unregisterHandlers()
+
+    for _, v in pairs(self.headers) do
+        v:close()
+    end
+    self.headers = {}
+
     self.super.onDestroy(self)
 end
 

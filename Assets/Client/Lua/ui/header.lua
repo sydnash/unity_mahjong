@@ -6,7 +6,7 @@ local base = require("ui.common.panel")
 local header = class("header", base)
 
 function header:onInit()
-    self:reset()
+    --self:reset()
 end
 
 function header:setTexture(id, tex)

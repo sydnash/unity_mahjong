@@ -91,7 +91,6 @@ end
 function object:destroy()
     unregisterUpdateListener(self.updateHandler)
     self.updateHandler = nil
-    
 
     if self.onDestroy ~= nil and type(self.onDestroy) == "function" then
         self:onDestroy()
