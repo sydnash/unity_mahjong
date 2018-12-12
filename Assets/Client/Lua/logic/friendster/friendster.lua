@@ -17,6 +17,7 @@ local function createPlayer(data)
     player.lastOnlineTime   = data.LastOnlineTime
     player.totalPlayTimes   = data.TotalPlayTimes
     player.winPlayTimes     = data.WinPlayTimes
+    player.isProxy          = data.IsProxy
 
     return player
 end

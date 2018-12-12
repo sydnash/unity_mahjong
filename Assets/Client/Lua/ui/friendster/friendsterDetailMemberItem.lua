@@ -11,6 +11,7 @@ function friendsterDetailMemberItem:onInit()
     self.mHead:addClickListener(self.onHeadClickedHandler, self)
 
     self.mQZ:hide()
+    self.mDL:hide()
     self.mState:setSprite("offline")
 end
 
@@ -36,6 +37,12 @@ function friendsterDetailMemberItem:set(friendsterId, managerId, data)
         self.mQZ:show()
     else
         self.mQZ:hide()
+
+        if data.isProxy then
+            self.mDL:show()
+        else
+            self.mDL:hide()
+        end
     end
 end
 

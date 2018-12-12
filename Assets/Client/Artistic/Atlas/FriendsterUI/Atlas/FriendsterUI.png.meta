@@ -77,6 +77,7 @@ TextureImporter:
     21300140: QYQ_zi14_1
     21300142: zn_1
     21300144: zn_2
+    21300146: QYQ_qizi02_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -514,6 +515,20 @@ TextureImporter:
         height: 63
       alignment: 9
       pivot: {x: 0.5, y: 0.4920635}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: QYQ_qizi02_1
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 497
+        width: 61
+        height: 65
+      alignment: 9
+      pivot: {x: 0.47540984, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1068,8 +1083,8 @@ TextureImporter:
       name: QYQ_zi10
       rect:
         serializedVersion: 2
-        x: 65
-        y: 529
+        x: 1
+        y: 464
         width: 61
         height: 33
       alignment: 9
