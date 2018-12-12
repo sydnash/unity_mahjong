@@ -98,6 +98,7 @@ function tcp:update()
         if receiveSize > 0 then
             self.receiveCallback(self.receiveBuffer, receiveSize)
         elseif receiveSize < 0 then
+            log("receive xxxx: " .. receiveSize)
             self:disconnect()
             self:onDisconnected()
         end
