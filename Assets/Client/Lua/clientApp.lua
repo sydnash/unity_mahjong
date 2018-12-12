@@ -24,6 +24,7 @@ end
 -- 断开连接后的回调
 ----------------------------------------------------------------
 local function networkDisconnectedCallback(idx)
+    log("[test for reconnect] networkDisconnectedCallback : " .. tostring(idx))
     if idx ~= nil and idx > 5 then
         closeWaitingUI()
 
