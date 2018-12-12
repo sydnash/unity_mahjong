@@ -7,7 +7,8 @@ local joinFriendster = class("joinFriendster", base)
 
 _RES_(joinFriendster, "FriendsterUI", "JoinFriendsterUI")
 
-function joinFriendster:ctor()
+function joinFriendster:ctor(friendsterUI)
+    self.friendsterUI = friendsterUI
     self.super.ctor(self)
 end
 
@@ -60,6 +61,12 @@ end
 function joinFriendster:onJoinClickedHandler()
     local id = tonumber(self.mId:getText())
     local vc = self.mVerification:getText()
+
+    local lc = self.friendsterUI.friendsters[id]
+    if lc then
+        showMessageUI("您已经在该亲友圈")
+        return
+    end
 
     showWaitingUI("正在加入亲友圈，请稍候")
     networkManager.joinFriendster(id, vc, function(msg)
