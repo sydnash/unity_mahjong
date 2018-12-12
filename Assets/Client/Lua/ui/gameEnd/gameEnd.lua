@@ -78,7 +78,7 @@ function gameEnd:endAll()
 end
 
 function gameEnd:onOkClickedHandler()
-    local ui = require("ui.gameOver").new(self.game, self.datas)
+    local ui = require("ui.gameOver.gameOver").new(self.game, self.datas)
     ui:show()
 
     self.game.isGameOverUIShow = true
