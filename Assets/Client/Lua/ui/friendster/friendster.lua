@@ -210,7 +210,7 @@ function friendster:onCreateClickedHandler()
 end
 
 function friendster:onJoinClickedHandler()
-    local ui = require("ui.friendster.joinFriendster").new()
+    local ui = require("ui.friendster.joinFriendster").new(self)
     ui:show()
 
     playButtonClickSound()

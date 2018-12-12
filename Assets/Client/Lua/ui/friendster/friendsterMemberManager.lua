@@ -105,6 +105,10 @@ function friendsterMemberManager:onAddClickedHandler()
     end
 
     local acid = tonumber(text)
+    if acid == gamepref.player.acId then
+        showMessageUI("不能添加自己")
+        return
+    end
 
     showWaitingUI("正在将玩家添加到亲友圈，请稍候")
     networkManager.addAcIdToFriendster(self.friendsterId, acid, function(msg)
@@ -139,6 +143,10 @@ function friendsterMemberManager:onDeleteClickedHandler()
     end
 
     local acid = tonumber(text)
+    if acid == gamepref.player.acId then
+        showMessageUI("不能删除自己")
+        return
+    end
 
     showWaitingUI("正在将玩家从亲友圈中删除，请稍候")
     networkManager.deleteAcIdFromFriendster(self.friendsterId, acid, function(msg)
@@ -152,6 +160,10 @@ function friendsterMemberManager:onDeleteClickedHandler()
 --        log("delete player from friendster, msg = " .. table.tostring(msg))
 
         if msg.RetCode ~= retc.ok then
+            if msg.RetCode == retc.clubPlayerInDesk then
+                showMessageUI("该玩家正在本亲友圈玩牌，不能删除")
+                return
+            end
             showMessageUI(retcText[msg.RetCode])
             return
         end
