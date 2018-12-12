@@ -1,7 +1,4 @@
 --region *.lua
---Date
---此文件由[BabeLua]插件自动生成
-
 ---------------------------------------------------------------------------
 -- Unity Engine
 ---------------------------------------------------------------------------
@@ -26,7 +23,8 @@ require("utils.utils")
 object              = require("common.object")
 component           = require("common.component")
 time                = require("utils.time")
-json                = require("utils.json")
+-- json                = require("utils.json")
+json                = require("cjson")
 viewManager         = require("manager.viewManager")
 eventManager        = require("manager.eventManager")
 soundManager        = require("manager.soundManager")
