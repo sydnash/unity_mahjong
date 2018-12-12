@@ -241,8 +241,13 @@ function desk:onPositionClickedHandler()
 end
 
 function desk:onSettingClickedHandler()
-    local ui = require("ui.setting").new(self.game)
-    ui:show()
+    if self.game.mode == gameMode.playback then
+        local ui = require("ui.setting.playbackSetting").new(self.game)
+        ui:show()
+    else
+        local ui = self:createSettingUI()
+        ui:show()
+    end
 
     playButtonClickSound()
 end

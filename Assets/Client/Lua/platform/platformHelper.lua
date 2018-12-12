@@ -20,6 +20,7 @@ end
 -------------------------------------------------------------------
 function platformHelper.registerShareWXCallback(callback)
     if deviceConfig.isAndroid then
+        AndroidHelper.instance:RegisterShareWXCallback(callback)
     elseif deviceConfig.isApple then
         IOSHelper.instance:RegisterShareWXCallback(callback)
     end

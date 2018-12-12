@@ -113,14 +113,8 @@ function login:onSwitchCityClickedHandler()
 end
 
 function login:onWechatLoginClickedHandler()
-    self.mWechatLogin:setInteractabled(false)
-    self.mGuestLogin:setInteractabled(false)
-
     --登录服务器
     loginServer(function(ok)
-        self.mWechatLogin:setInteractabled(true)
-        self.mGuestLogin:setInteractabled(true)
-
         if ok then
             self:close()
         end
@@ -130,14 +124,8 @@ function login:onWechatLoginClickedHandler()
 end
 
 function login:onGuestLoginClickedHandler()
-    self.mWechatLogin:setInteractabled(false)
-    self.mGuestLogin:setInteractabled(false)
-
     --登录服务器
     loginServer(function(ok)
-        self.mWechatLogin:setInteractabled(true)
-        self.mGuestLogin:setInteractabled(true)
-
         if ok then
             self:close()
         end

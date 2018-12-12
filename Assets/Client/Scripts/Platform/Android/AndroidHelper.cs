@@ -49,6 +49,15 @@ public class AndroidHelper
     /// 
     /// </summary>
     /// <param name="callback"></param>
+    public void RegisterShareWXCallback(Action<string> callback)
+    {
+        WechatHelper.RegisterShareCallback(callback);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="callback"></param>
     public void RegisterInviteSGCallback(Action<string> callback)
     {
         UpdripsHelper.RegisterInviteCallback(callback);
@@ -169,6 +178,18 @@ public class AndroidHelper
         if (!string.IsNullOrEmpty(json))
         {
             WechatHelper.OnLoginHandler(json);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="json"></param>
+    public void OnShareWxHandler(string json)
+    {
+        if (!string.IsNullOrEmpty(json))
+        {
+            WechatHelper.OnShareHandler(json);
         }
     }
 

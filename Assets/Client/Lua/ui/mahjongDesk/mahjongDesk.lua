@@ -92,6 +92,10 @@ function mahjongDesk:onOpDoChu(acId, cards)
     
 end
 
+function mahjongDesk:createSettingUI()
+    return require("ui.setting.mahjongSetting").new(self.game)
+end
+
 function mahjongDesk:onDestroy()
     self:unregisterHandlers()
 
