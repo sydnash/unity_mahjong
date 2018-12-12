@@ -15,6 +15,7 @@ function tcp:ctor()
     self.receiveBuffer = cvt.NewEmptyByteArray(2 * 1024 * 1024)
     self.sendBuffer = cvt.NewEmptyByteArray(2 * 1024)
     self:disconnect()
+    self.lastConnectStamp = 0
 end
 
 function tcp:disconnect()
@@ -43,6 +44,7 @@ function tcp:connect(host, port, timeout, connectedCallback, connectTimeoutCallb
     self.connectTimeoutCallback     = connectTimeoutCallback
     self.disconnectedCallback       = disconnectCallback
     self.status                     = tcpStatus.connecting
+    self.lastConnectStamp           = -10000
     if not self.updateHandler then
         self.updateHandler = registerUpdateListener(tcp.update, self)
     end
@@ -77,12 +79,16 @@ function tcp:update()
     if self.status == tcpStatus.disconnected then
         return
     elseif self.status == tcpStatus.connecting then
+        local now = time.realtimeSinceStartup()
+        if now - self.lastConnectStamp < 5.0 then
+            return
+        end
+        self.lastConnectStamp = now
         if self:checkConnected() == 0 then
             self.status = tcpStatus.connected
             self:onConnected()
         end
         if self.status ~= tcpStatus.connected then
-            local now = time.realtimeSinceStartup()
             if now - self.startConnectTime > self.connectTimeout then
                 self:disconnect()
                 self:onConnectTimeout()
