@@ -22,7 +22,8 @@ function friendsterMemberInfo:onInit()
     self.mDelete:hide()
 
     self.mIcon:setTexture(self.data.headerTex)
-    self.mSex:setSprite("boy")
+    -- self.mSex:setSprite("boy")
+    self.mSex:hide()
     self.mNickname:setText(self.data.nickname)
 
     if self.managerId == self.data.acId then
