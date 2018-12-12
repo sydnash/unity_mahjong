@@ -330,39 +330,25 @@ function friendster:onNotifyFriendster(msg)
             end
         end
     elseif t == friendsterNotifyType.friendsterDestroy then
-        self.friendsters[d.ClubId] = nil
-
-        for k, v in pairs(self.my) do
-            if v.id == d.ClubId then
-                table.remove(self.my, k)
-                break
-            end
-        end
-
-        for k, v in pairs(self.joined) do
-            if v.id == d.ClubId then
-                table.remove(self.joined, k)
-                break
-            end
-        end
-
-        self:refreshList()
-
-        if self.detailUI ~= nil then
-            if self.detailUI.data.id == d.ClubId then
-                self.detailUI:close()
-                self.detailUI = nil
-            end
-        end
+        self:deleteFriendsterFromFriendsterList(d.ClubId)
     elseif t == friendsterNotifyType.removeMember then
         if lc ~= nil then
             lc:removeMember(d.AcId)
+            if d.AcId == gamepref.player.acId then
+                self:deleteFriendsterFromFriendsterList(d.ClubId)
+                return
+            end
             if self.detailUI ~= nil then
                 self.detailUI:refreshUI()
                 self.detailUI:refreshMemberList()
             end
         end
     elseif t == friendsterNotifyType.addMember then
+        if lc == nil then
+            if d.AcId == gamepref.player.acId then
+                lc = self:addFriendsterToFriendsterList(d.ClubInfo)
+            end
+        end
         if lc ~= nil then
             lc:addMember(d.PlayerInfo)
             if self.detailUI ~= nil then
@@ -399,6 +385,58 @@ function friendster:onNotifyFriendster(msg)
             end
         end
     end
+end
+
+function friendster:deleteFriendsterFromFriendsterList(firendsterId)
+    self.friendsters[firendsterId] = nil
+    for k, v in pairs(self.my) do
+        if v.id == firendsterId then
+            table.remove(self.my, k)
+            break
+        end
+    end
+
+    for k, v in pairs(self.joined) do
+        if v.id == firendsterId then
+            table.remove(self.joined, k)
+            break
+        end
+    end
+
+    self:refreshList()
+
+    if self.detailUI ~= nil then
+        if self.detailUI.data.id == firendsterId then
+            self.detailUI:close()
+            self.detailUI = nil
+        end
+    end
+end
+function friendster:addFriendsterToFriendsterList(clubinfo)
+    local lc = createFriendsterLC(clubinfo)
+    self.friendsters[clubinfo.ClubId] = lc
+
+    self.my = {}
+    self.joined = {}
+
+    for _, d in pairs(self.friendsters) do 
+        if d.managerAcId == gamepref.acId then
+            table.insert(self.my, d)
+        else
+            table.insert(self.joined, d)
+        end
+    end 
+
+    table.sort(self.my, function(a, b)
+        return a.id < b.id
+    end)
+
+    table.sort(self.joined, function(a, b)
+        return a.id < b.id
+    end)
+    self:refreshList()
+
+    return lc
 end
 
 function friendster:onGuidePageChangedHandler(pageIndex)
