@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/Chars/Atlas/Chars.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/Chars/Atlas/Chars.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -200,6 +200,7 @@
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">Images/qy_dq_cd.png</key>
+            <key type="filename">Images/qy_dq_dy.png</key>
             <key type="filename">Images/qy_dq_nc.png</key>
             <key type="filename">Images/qy_dq_ya.png</key>
             <struct type="IndividualSpriteSettings">
@@ -248,6 +249,7 @@
             <filename>Images/qy_dw_wj.png</filename>
             <filename>Images/qy_dw_xc.png</filename>
             <filename>Images/qy_dw_yj.png</filename>
+            <filename>Images/qy_dq_dy.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

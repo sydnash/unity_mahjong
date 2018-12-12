@@ -7,6 +7,11 @@ local errorMessage = class("errorMessage", base)
 
 _RES_(errorMessage, "ErrorCommitUI", "ErrorCommitUI")
 
+function errorMessage:ctor()
+    self.super.ctor(self)
+    self:setLevel(base.level.top)
+end
+
 function errorMessage:onInit()
     self.mQuit:addClickListener(self.onQuitClickedHandler, self)
 end

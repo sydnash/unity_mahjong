@@ -15,6 +15,7 @@ TextureImporter:
     21300016: qy_dw_wj
     21300018: qy_dw_xc
     21300020: qy_dw_yj
+    21300022: qy_dq_dy
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -94,6 +95,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
+      name: qy_dq_dy
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 174
+        width: 76
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4875}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: qy_dq_nc
       rect:
         serializedVersion: 2
@@ -125,8 +140,8 @@ TextureImporter:
       name: qy_dw_cd
       rect:
         serializedVersion: 2
-        x: 1
-        y: 112
+        x: 141
+        y: 147
         width: 60
         height: 32
       alignment: 9
@@ -139,7 +154,7 @@ TextureImporter:
       name: qy_dw_jt
       rect:
         serializedVersion: 2
-        x: 64
+        x: 142
         y: 181
         width: 60
         height: 33
@@ -153,7 +168,7 @@ TextureImporter:
       name: qy_dw_nc
       rect:
         serializedVersion: 2
-        x: 1
+        x: 79
         y: 181
         width: 61
         height: 33
@@ -167,8 +182,8 @@ TextureImporter:
       name: qy_dw_px
       rect:
         serializedVersion: 2
-        x: 1
-        y: 146
+        x: 63
+        y: 111
         width: 59
         height: 33
       alignment: 9
@@ -181,8 +196,8 @@ TextureImporter:
       name: qy_dw_tq
       rect:
         serializedVersion: 2
-        x: 126
-        y: 181
+        x: 79
+        y: 146
         width: 60
         height: 33
       alignment: 9
@@ -195,8 +210,8 @@ TextureImporter:
       name: qy_dw_wj
       rect:
         serializedVersion: 2
-        x: 62
-        y: 147
+        x: 141
+        y: 113
         width: 60
         height: 32
       alignment: 0
@@ -209,8 +224,8 @@ TextureImporter:
       name: qy_dw_xc
       rect:
         serializedVersion: 2
-        x: 188
-        y: 181
+        x: 1
+        y: 139
         width: 60
         height: 33
       alignment: 9
@@ -223,8 +238,8 @@ TextureImporter:
       name: qy_dw_yj
       rect:
         serializedVersion: 2
-        x: 124
-        y: 147
+        x: 1
+        y: 105
         width: 59
         height: 32
       alignment: 9

@@ -87,6 +87,7 @@
     <Compile Include="Lua\ui\friendster\winnerDetail.lua" />
     <Compile Include="Lua\ui\friendster\winnerDetailItem.lua" />
     <Compile Include="Lua\ui\gameEnd\gameEnd.lua" />
+    <Compile Include="Lua\ui\gameEnd\scoreDetail.lua" />
     <Compile Include="Lua\ui\gameOver\gameOver.lua" />
     <Compile Include="Lua\ui\header.lua" />
     <Compile Include="Lua\ui\location.lua" />

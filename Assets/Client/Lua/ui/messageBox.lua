@@ -13,6 +13,7 @@ function messageBox:ctor(text, confirmCallback, cancelCallback)
     self.cancelCallback = cancelCallback
 
     self.super.ctor(self)
+    self:setLevel(base.level.normal)
 end
 
 function messageBox:onInit()
