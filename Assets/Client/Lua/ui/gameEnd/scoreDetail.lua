@@ -8,12 +8,11 @@ local base = require("ui.common.view")
 ----------------------------------------------------------------------------
 local scoreDetailItem = class("scoreDetailItem", base)
 _RES_(scoreDetailItem, "GameEndUI", "ScoreDetailItem")
-local mahjongGame = require("logic.mahjong.mahjongGame")
 
 local seatTypeName = {
-    [mahjongGame.seatType.right]    = "下家",
-    [mahjongGame.seatType.top]      = "对家",
-    [mahjongGame.seatType.left]     = "上家",
+    [seatType.right]    = "下家",
+    [seatType.top]      = "对家",
+    [seatType.left]     = "上家",
 }
 local detailTypeName = {
     [opType.gang.detail.angang]                     = {"刮风", "被刮风"},
