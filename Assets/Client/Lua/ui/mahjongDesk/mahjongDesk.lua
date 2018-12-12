@@ -39,8 +39,8 @@ function mahjongDesk:onGameSync()
 end
 
 function mahjongDesk:getInvitationInfo()
-    local friendsterId = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d", self.game.friendsterId)
-    return string.format("%s，%s", 
+    local friendsterId = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d，", self.game.friendsterId)
+    return string.format("%s%s", 
                          friendsterId,
                          getMahjongConfigText(self.game.cityType, self.game.config, false))
 end

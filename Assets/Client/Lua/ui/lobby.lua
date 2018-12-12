@@ -40,6 +40,12 @@ function lobby:onInit()
         self.mCreateDesk:show()
     end
 
+    if gamepref.player.complainLevel == 0 then
+        self.mAccuse:hide()
+    else
+        self.mAccuse:show()
+    end
+
     self:refreshMailRP()
 
     signalManager.registerSignalHandler(signalType.cardsChanged, self.onCardsChangedHandler, self)

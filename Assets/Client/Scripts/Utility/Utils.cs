@@ -204,7 +204,6 @@ public class Utils
                     Mathf.Clamp01(color1.a * w1 + color2.a * w2 + color3.a * w3 + color4.a * w4)
                 );
                 newTexture.SetPixel(x, y, color);
-
             }
         }
         newTexture.Apply();

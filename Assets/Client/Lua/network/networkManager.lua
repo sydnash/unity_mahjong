@@ -357,6 +357,7 @@ local function loginC(text, callback)
                 gamepref.player.cards           = msg.Coin
                 gamepref.player.userType        = msg.UserType
                 gamepref.player.shareFKTimes    = msg.ShareCnt
+                gamepref.player.complainLevel   = msg.ComplainLevel
 
                 msg.ShareConfig                 = json.decode(msg.ShareConfig)
                 gamepref.player.shareConfig     = {}
