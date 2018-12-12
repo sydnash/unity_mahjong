@@ -8,9 +8,9 @@ local playerInfo = class("playerInfo", base)
 _RES_(playerInfo, "PlayerInfoUI", "PlayerInfoUI")
 
 function playerInfo:ctor(data, desk)
+    self.isDesk = desk
     self.data = data
     self.super.ctor(self)
-    self.isDesk = desk
 end
 
 function playerInfo:onInit()
