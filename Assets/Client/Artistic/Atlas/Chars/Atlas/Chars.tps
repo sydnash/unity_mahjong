@@ -235,6 +235,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/qy_dw_zj.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,9,31,17</rect>
+                <key>scale9Paddings</key>
+                <rect>15,9,31,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -250,6 +263,7 @@
             <filename>Images/qy_dw_xc.png</filename>
             <filename>Images/qy_dw_yj.png</filename>
             <filename>Images/qy_dq_dy.png</filename>
+            <filename>Images/qy_dw_zj.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

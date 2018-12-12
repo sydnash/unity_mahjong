@@ -46,6 +46,8 @@ function desk:onInit()
 
     self:registerHandlers()
     self:refreshUI()
+
+    self.updateTimestamp = time.realtimeSinceStartup()
     self.gvoiceRecordfileId = 1
 end
 
@@ -90,7 +92,12 @@ function desk:unregisterHandlers()
 end
 
 function desk:update()
-    self.mTime:setText(time.formatTime())
+    local now = time.realtimeSinceStartup()
+
+    if now - self.updateTimestamp >= 1.0 then
+        self.mTime:setText(time.formatTime())
+        self.updateTimestamp = time.realtimeSinceStartup()
+    end
 
     if self.game.mode == gameMode.normal then
         gvoiceManager.update()
