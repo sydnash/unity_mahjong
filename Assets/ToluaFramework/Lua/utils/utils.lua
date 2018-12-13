@@ -372,6 +372,9 @@ function _GDB_TRACKBACK_(errorMessage)
     end
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function printError(msg)
     msg = "ERR: " .. msg
     local trance = debug.traceback("", 2)
@@ -381,6 +384,7 @@ function printError(msg)
     end
     log(msg)
 end
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
@@ -404,7 +408,9 @@ function unregisterUpdateListener(handler)
     end
 end
 
---十六进制颜色转color  rgba "FFABCDFF"
+-------------------------------------------------------------------
+--十六进制颜色转Color  RGBA "FFABCDFF"
+-------------------------------------------------------------------
 function hexColorToColor(colorString)
     if not colorString then
         return nil
@@ -426,6 +432,13 @@ function hexColorToColor(colorString)
         return Color.New(red / 255, green / 255, blue / 255, alpha / 255)
     end
     return nil
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function convertTextureToSprite(tex)
+    return Utils.ConvertTextureToSprite(tex)
 end
 
 --endregion

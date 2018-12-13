@@ -36,7 +36,7 @@ function mahjong:ctor(id)
     self.selected = false
     self.cmode = colorMode.light
 
-    local mtype = mahjongType[id]
+    local mtype = getMahjongTypeById(id)
     local go = modelManager.load(mtype.folder, mtype.resource)
     self:init(go)
     self:show()

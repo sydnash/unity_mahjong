@@ -18,7 +18,7 @@ function gameEndGangPai:onInit()
 end
 
 function gameEndGangPai:setMahjongId(mahjongId)
-    local spriteName = mahjongType[mahjongId].name
+    local spriteName = getMahjongTypeById(mahjongId).name
     self.mA:setSprite(spriteName)
     self.mB:setSprite(spriteName)
     self.mC:setSprite(spriteName)

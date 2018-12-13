@@ -77,7 +77,7 @@ public class Audio
     /// </summary>
     public void Play(string audioPath, string audioName, PlayMode playMode = PlayMode.Once)
     {
-        mAudioClip = AssetPoolManager.instance.Alloc(0, audioPath, audioName) as AudioClip;
+        mAudioClip = AssetPoolManager.instance.Alloc("sound", audioPath, audioName) as AudioClip;
         if (mAudioClip != null)
         {
             mPlayMode = playMode;
@@ -105,7 +105,7 @@ public class Audio
 
         if (mAudioClip != null)
         {
-            AssetPoolManager.instance.Dealloc(0, mAudioClip);
+            AssetPoolManager.instance.Dealloc("sound", mAudioClip);
             mAudioClip = null;
         }
 
