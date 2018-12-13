@@ -41,7 +41,7 @@ function mahjong:ctor(id)
     self:init(go)
     self:show()
 
-    local c = self:findChild(go.name .. "_0")
+    local c = self:findChild(mtype.resource .. "_0")
     local r = getComponentU(c.gameObject, typeof(UnityEngine.MeshRenderer))
     self.mat = r.material
 
