@@ -63,7 +63,7 @@ mahjongOperation.seats = {
             [gameMode.playback] = { pos = Vector3.New(-0.370, 0.156, -0.180), rot = Quaternion.Euler(0, 90, 0), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.420, 0.156,  0.320), rot = Quaternion.Euler(0, 90, 0), },
-        [ mahjongGame.cardType.chu] = { pos = Vector3.New(-0.132, 0.156,  0.114), rot = Quaternion.Euler(0, 90, 0), },
+        [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.132, 0.156,  0.114), rot = Quaternion.Euler(0, 90, 0), },
         [mahjongGame.cardType.hu  ] = { pos = Vector3.New(-0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 90, 0), },
         [mahjongGame.cardType.huan] = {
             [gameMode.normal]   = { pos = Vector3.New(-0.200, 0.156,  0.004), rot = Quaternion.Euler(180, 90, 0), },
@@ -77,6 +77,11 @@ local mineChuPosTwo = Vector3.New(-0.200, 0.156, -0.100)
 local mopaiConfig = {
     position = Vector3.New(0.255, 0.175, -0.355),
     rotation = Quaternion.Euler(-100, 0, 0),
+}
+
+local mainCameraParams = {
+    position = Vector3.New(0, 0.9, -0.88),
+    rotation = Quaternion.Euler(40, 0, 0),
 }
 
 local COUNTDOWN_SECONDS_C = 20
@@ -126,6 +131,10 @@ end
 function mahjongOperation:onInit()
     self.turnCountdown = COUNTDOWN_SECONDS_C
     self.countdownTick = -1
+
+    local mainCamera = UnityEngine.Camera.main
+    mainCamera.transform.position = mainCameraParams.position
+    mainCamera.transform.rotation = mainCameraParams.rotation
 
     --麻将出口的板子节点
     local plane = find("mahjong/table_plane")
@@ -278,7 +287,7 @@ function mahjongOperation:showChuPaiHint(acId, id)
     self.mChuPaiHint:setParent(parent)
     self.mChuPaiHint:setLocalPosition(Vector3.zero)
 
-    local spriteName = mahjongType[id].name
+    local spriteName = getMahjongTypeById(id).name
     self.mChuPaiHintImg:setSprite(spriteName)
 end
 
@@ -1095,7 +1104,7 @@ function mahjongOperation:onGangClickedHandler()
         for i, c in pairs(self.mGang.c) do
             local cs = c.Cs
             buttons[i].cs = cs
-            sprites[i]:setSprite(mahjongType[cs[1]].name)
+            sprites[i]:setSprite(getMahjongTypeById(cs[1]).name)
 
             buttons[i]:show()
         end

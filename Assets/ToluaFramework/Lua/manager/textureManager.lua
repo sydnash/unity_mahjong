@@ -3,7 +3,7 @@
 --此文件由[BabeLua]插件自动生成
 
 local textureManager = {}
-local assetType = 3
+local assetType = "texture"
 
 -------------------------------------------------------------------
 --
@@ -22,12 +22,8 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function textureManager.unload(tex, destroy)
+function textureManager.unload(tex)
     local suc = AssetPoolManager.instance:Dealloc(assetType, tex)
-
---    if (not suc) and destroy then
---        GameObject.Destroy(tex)
---    end
 end
 
 return textureManager

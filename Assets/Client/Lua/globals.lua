@@ -109,7 +109,7 @@ function playMahjongSound(mahjongId, sex)
     if not string.isNilOrEmpty(prefix) then
         prefix = prefix .. "_"
     end
-    local resource = prefix .. mahjongType[mahjongId].audio
+    local resource = prefix .. getMahjongTypeById(mahjongId).audio
 
     return soundManager.playGfx(folder, resource)
 end
@@ -179,7 +179,9 @@ function enterDesk(gameType, deskId, callback)
     local preload = modelManager.preload()
 
     for _, v in pairs(mahjongType) do
-        preload:push(v.folder, v.resource, 4)
+        for i=1, 4 do
+            preload:push(v.folder, v.resource, 1)
+        end
     end
     preload:start()
 

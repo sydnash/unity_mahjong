@@ -24,7 +24,7 @@ public class PreloadManagerWrap
 			ToLua.CheckArgsCount(L, 6);
 			PreloadManager obj = (PreloadManager)ToLua.CheckObject<PreloadManager>(L, 1);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
-			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
+			string arg1 = ToLua.CheckString(L, 3);
 			string arg2 = ToLua.CheckString(L, 4);
 			string arg3 = ToLua.CheckString(L, 5);
 			int arg4 = (int)LuaDLL.luaL_checknumber(L, 6);

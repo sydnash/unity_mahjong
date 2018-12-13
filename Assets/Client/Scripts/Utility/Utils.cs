@@ -258,4 +258,15 @@ public class Utils
     {
         ErrorEmail.Commit(from, to, subject, body, attachment, password);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="tex"></param>
+    /// <returns></returns>
+    public static Sprite ConvertTextureToSprite(Texture2D tex)
+    {
+        Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
+        return sprite;
+    }
 }

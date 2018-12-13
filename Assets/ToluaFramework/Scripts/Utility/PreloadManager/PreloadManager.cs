@@ -14,7 +14,7 @@ public class PreloadManager : MonoBehaviour
         /// <summary>
         /// 
         /// </summary>
-        public int assetType;
+        public string assetType;
 
         /// <summary>
         /// 
@@ -36,7 +36,7 @@ public class PreloadManager : MonoBehaviour
         /// </summary>
         /// <param name="assetPath"></param>
         /// <param name="assetName"></param>
-        public PreloadData(int assetType, string assetPath, string assetName, int maxCount)
+        public PreloadData(string assetType, string assetPath, string assetName, int maxCount)
         {
             this.assetType = assetType;
             this.assetPath = assetPath;
@@ -90,7 +90,7 @@ public class PreloadManager : MonoBehaviour
     /// </summary>
     /// <param name="assetPath"></param>
     /// <param name="assetName"></param>
-    public void Push(int token, int assetType, string assetPath, string assetName, int maxCount)
+    public void Push(int token, string assetType, string assetPath, string assetName, int maxCount)
     {
         Queue<PreloadData> queue = mDict.ContainsKey(token) ? mDict[token] : null;
         if (queue == null)

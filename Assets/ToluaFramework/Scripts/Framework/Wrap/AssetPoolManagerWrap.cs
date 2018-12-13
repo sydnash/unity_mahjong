@@ -42,7 +42,7 @@ public class AssetPoolManagerWrap
 		{
 			ToLua.CheckArgsCount(L, 4);
 			AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
 			AssetPool o = obj.AddPool(arg0, arg1, arg2);
@@ -65,7 +65,7 @@ public class AssetPoolManagerWrap
 			if (count == 4)
 			{
 				AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
-				int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+				string arg0 = ToLua.CheckString(L, 2);
 				string arg1 = ToLua.CheckString(L, 3);
 				string arg2 = ToLua.CheckString(L, 4);
 				obj.Preload(arg0, arg1, arg2);
@@ -74,7 +74,7 @@ public class AssetPoolManagerWrap
 			else if (count == 5)
 			{
 				AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
-				int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+				string arg0 = ToLua.CheckString(L, 2);
 				string arg1 = ToLua.CheckString(L, 3);
 				string arg2 = ToLua.CheckString(L, 4);
 				int arg3 = (int)LuaDLL.luaL_checknumber(L, 5);
@@ -99,7 +99,7 @@ public class AssetPoolManagerWrap
 		{
 			ToLua.CheckArgsCount(L, 4);
 			AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			string arg2 = ToLua.CheckString(L, 4);
 			UnityEngine.Object o = obj.Alloc(arg0, arg1, arg2);
@@ -119,7 +119,7 @@ public class AssetPoolManagerWrap
 		{
 			ToLua.CheckArgsCount(L, 3);
 			AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			string arg0 = ToLua.CheckString(L, 2);
 			UnityEngine.Object arg1 = (UnityEngine.Object)ToLua.CheckObject<UnityEngine.Object>(L, 3);
 			bool o = obj.Dealloc(arg0, arg1);
 			LuaDLL.lua_pushboolean(L, o);

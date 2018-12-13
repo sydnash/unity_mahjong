@@ -11,7 +11,7 @@ public class AssetPoolManager
     /// <summary>
     /// 资源池列表
     /// </summary>
-    private Dictionary<int, AssetPool> mPools = new Dictionary<int, AssetPool>();
+    private Dictionary<string, AssetPool> mPools = new Dictionary<string, AssetPool>();
 
     /// <summary>
     /// 
@@ -59,7 +59,7 @@ public class AssetPoolManager
     /// <param name="assetPath"></param>
     /// <param name="isRefrence"></param>
     /// <returns></returns>
-    public AssetPool AddPool(int assetType, string assetPath, bool isRefrence)
+    public AssetPool AddPool(string assetType, string assetPath, bool isRefrence)
     {
         if (mPools.ContainsKey(assetType))
         {
@@ -79,7 +79,7 @@ public class AssetPoolManager
     /// <param name="assetPath"></param>
     /// <param name="assetName"></param>
     /// <param name="maxCount"></param>
-    public void Preload(int assetType, string assetPath, string assetName, int maxCount = 1)
+    public void Preload(string assetType, string assetPath, string assetName, int maxCount = 1)
     {
         AssetPool pool = mPools[assetType];
 #if UNITY_EDITOR
@@ -101,7 +101,7 @@ public class AssetPoolManager
     /// <param name="type">pool类型</param>
     /// <param name="assetName">资源名称</param>
     /// <returns></returns>
-    public Object Alloc(int assetType, string assetPath, string assetName)
+    public Object Alloc(string assetType, string assetPath, string assetName)
     {
         AssetPool pool = mPools[assetType];
 #if UNITY_EDITOR
@@ -123,7 +123,7 @@ public class AssetPoolManager
     /// </summary>
     /// <param name="type">pool类型</param>
     /// <param name="asset">资源对象</param>
-    public bool Dealloc(int assetType, Object asset)
+    public bool Dealloc(string assetType, Object asset)
     {
         AssetPool pool = mPools[assetType];
         bool success = pool.Dealloc(asset);
@@ -146,7 +146,7 @@ public class AssetPoolManager
     /// </summary>
     public void Update()
     {
-        foreach (KeyValuePair<int, AssetPool> kvp in mPools)
+        foreach (KeyValuePair<string, AssetPool> kvp in mPools)
         {
             kvp.Value.Update();
         }
