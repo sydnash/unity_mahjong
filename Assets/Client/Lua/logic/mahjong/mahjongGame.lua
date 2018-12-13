@@ -3,7 +3,6 @@
 --此文件由[BabeLua]插件自动生成
 
 local gamePlayer        = require("logic.player.gamePlayer")
-local tweenManager      = require("manager.tweenManager")
 
 local base = require("logic.game")
 local mahjongGame = class("mahjongGame", base)
@@ -65,14 +64,8 @@ end
 -- 进入房间
 -------------------------------------------------------------------------------
 function mahjongGame:onEnter(msg)
-    self.data = msg
-
-    self.players = {}
-    self.playerCount = 0
-    self.leftGames = msg.LeftTime
-    self.creator = msg.Creator
-    self:syncPlayers(msg.Players)
-
+    self.super.onEnter(self, msg)
+    
     if msg.Reenter ~= nil then
         self.markerAcId         = msg.Reenter.MarkerAcId
         self.curOpAcId          = msg.Reenter.CurOpAcId
@@ -84,8 +77,6 @@ function mahjongGame:onEnter(msg)
         self.canBack            = (self.deskStatus == deskStatus.none)
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
-
-    self.super.onEnter(self, msg)
 end
 
 -------------------------------------------------------------------------------

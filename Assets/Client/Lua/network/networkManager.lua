@@ -227,7 +227,7 @@ function networkManager.update()
         end
         --检查心跳是否超时
         if now - networkManager.pongTick > pong then
-            log("[test for reconnect] pingpng time out . reconnect. ")
+            log(string.format("[test for reconnect] pingpng time out . reconnect.now:%d pongtick:%d pong:%d pingtick:%d ping:%d", now, networkManager.pongTick, pong, networkManager.pingTick, ping))
             networkManager.disconnect()
 
             if networkManager.disconnectedCallback ~= nil then
