@@ -331,6 +331,10 @@ MonoBehaviour:
     widgetType: 3
     gameObject: {fileID: 1984994638576088}
     panelScript: 
+  - variableName: mBtn
+    widgetType: 5
+    gameObject: {fileID: 1385630687151216}
+    panelScript: 
 --- !u!114 &114737227001412524
 MonoBehaviour:
   m_ObjectHideFlags: 1

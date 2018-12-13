@@ -490,6 +490,18 @@ MonoBehaviour:
     widgetType: 5
     gameObject: {fileID: 1470593489870886}
     panelScript: 
+  - variableName: mBuDangIcon
+    widgetType: 3
+    gameObject: {fileID: 1334068040299926}
+    panelScript: 
+  - variableName: mDangIcon
+    widgetType: 3
+    gameObject: {fileID: 1015760569506468}
+    panelScript: 
+  - variableName: mHuaIcon
+    widgetType: 3
+    gameObject: {fileID: 1247537828238270}
+    panelScript: 
 --- !u!114 &114048736927523680
 MonoBehaviour:
   m_ObjectHideFlags: 1
