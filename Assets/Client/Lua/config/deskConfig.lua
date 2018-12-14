@@ -98,27 +98,91 @@ local nanchongMahjongLayout     = table.clone(mahjongLayoutBase)
 local wenjiangMahjongLayout     = table.clone(mahjongLayoutBase)
 local zhongjiangMahjongLayout   = table.clone(mahjongLayoutBase)
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+local doushisiLayoutBase = {
+    [1] = {
+        title = "人数", 
+        items = { 
+            [1] = { style = "radiobox", text = "4人", key = "RenShu", value = 1, },
+            [2] = { style = "radiobox", text = "3人", key = "RenShu", value = 2, },
+        },
+        group = { value = true, switchOff = false },
+    },
+    [2] = {
+        title = "局数", 
+        items = { 
+            [1] = { style = "radiobox", text = "4局",  key = "JuShu", value = 1, },
+            [2] = { style = "radiobox", text = "8局",  key = "JuShu", value = 2, },
+            [3] = { style = "radiobox", text = "12局", key = "JuShu", value = 3, },
+        }, 
+        group = { value = true, switchOff = false },
+    },
+    [3] = { 
+        title = "玩法", 
+        items = { 
+            [1] = { style = "radiobox", text = "硬打", key = "YingDa", value = 1, },
+            [2] = { style = "radiobox", text = "软打", key = "YingDa", value = 2, },
+        }, 
+        group = { value = true, switchOff = false },
+    },
+    [4] = { 
+        title = "财神", 
+        items = { 
+            [1] = { style = "radiobox", text = "8张", key = "CaiShen", value = 1, },
+            [2] = { style = "radiobox", text = "12张(25做财神)", key = "CaiShen", value = 2, },
+        }, 
+        group = { value = true, switchOff = false },
+    },
+    [5] = { 
+        title = "封顶", 
+        items = { 
+            [1] = { style = "radiobox", text = "3番", key = "FengDing", value = 1, },
+            [2] = { style = "radiobox", text = "4番", key = "FengDing", value = 2, },
+            [3] = { style = "radiobox", text = "3番", key = "FengDing", value = 3, },
+            [4] = { style = "radiobox", text = "4番", key = "FengDing", value = 4, },
+        }, 
+        group = { value = true, switchOff = false },
+    },
+}
+
+local chengduDoushisiLayout      = table.clone(doushisiLayoutBase)
+local jintangDoushisiLayout      = table.clone(doushisiLayoutBase)
+local xichongDoushisiLayout      = table.clone(doushisiLayoutBase)
+local yingjingDoushisiLayout     = table.clone(doushisiLayoutBase)
+local nanchongDoushisiLayout     = table.clone(doushisiLayoutBase)
+local wenjiangDoushisiLayout     = table.clone(doushisiLayoutBase)
+local zhongjiangDoushisiLayout   = table.clone(doushisiLayoutBase)
+
 deskConfigLayout = {
     [cityType.chengdu] = {
         [gameType.mahjong] = chengduMahjongLayout,
+        [gameType.doushisi] = chengduDoushisiLayout,
     },
     [cityType.jintang] = {
         [gameType.mahjong] = jintangMahjongLayout,
+        [gameType.doushisi] = jintangDoushisiLayout,
     },
     [cityType.xichong] = {
         [gameType.mahjong] = xichongMahjongLayout,
+        [gameType.doushisi] = xichongDoushisiLayout,
     },
     [cityType.yingjing] = {
         [gameType.mahjong] = yingjingMahjongLayout,
+        [gameType.doushisi] = yingjingDoushisiLayout,
     },
     [cityType.nanchong] = {
         [gameType.mahjong] = nanchongMahjongLayout,
+        [gameType.doushisi] = nanchongDoushisiLayout,
     },
     [cityType.wenjiang] = {
         [gameType.mahjong] = wenjiangMahjongLayout,
+        [gameType.doushisi] = wenjiangDoushisiLayout,
     },
     [cityType.zhongjiang] = {
         [gameType.mahjong] = zhongjiangMahjongLayout,
+        [gameType.doushisi] = zhongjiangDoushisiLayout,
     },
 }
 
@@ -148,27 +212,53 @@ local nanchongMahjongConfig     = table.clone(mahjongConfigBase)
 local wenjiangMahjongConfig     = table.clone(mahjongConfigBase)
 local zhongjiangMahjongConfig   = table.clone(mahjongConfigBase)
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+local doushisiConfigBase = {
+    ["RenShu"]         = 1,
+    ["JuShu"]          = 1,
+    ["YingDa"]         = 1,
+    ["CaiShen"]        = 1,
+    ["FengDing"]       = 1,
+}
+
+local chengduDoushisiConfig      = table.clone(doushisiConfigBase)
+local jintangDoushisiConfig      = table.clone(doushisiConfigBase)
+local xichongDoushisiConfig      = table.clone(doushisiConfigBase)
+local yingjingDoushisiConfig     = table.clone(doushisiConfigBase)
+local nanchongDoushisiConfig     = table.clone(doushisiConfigBase)
+local wenjiangDoushisiConfig     = table.clone(doushisiConfigBase)
+local zhongjiangDoushisiConfig   = table.clone(doushisiConfigBase)
+
 deskConfig = {
     [cityType.chengdu] = {
         [gameType.mahjong] = chengduMahjongConfig,
+        [gameType.doushisi] = chengduDoushisiConfig,
     },
     [cityType.jintang] = {
         [gameType.mahjong] = jintangMahjongConfig,
+        [gameType.doushisi] = jintangDoushisiConfig,
     },
     [cityType.xichong] = {
         [gameType.mahjong] = xichongMahjongConfig,
+        [gameType.doushisi] = xichongDoushisiConfig,
     },
     [cityType.yingjing] = {
         [gameType.mahjong] = yingjingMahjongConfig,
+        [gameType.doushisi] = yingjingDoushisiConfig,
     },
     [cityType.nanchong] = {
         [gameType.mahjong] = nanchongMahjongConfig,
+        [gameType.doushisi] = nanchongDoushisiConfig,
     },
     [cityType.wenjiang] = {
         [gameType.mahjong] = wenjiangMahjongConfig,
+        [gameType.doushisi] = wenjiangDoushisiConfig,
     },
     [cityType.zhongjiang] = {
         [gameType.mahjong] = zhongjiangMahjongConfig,
+        [gameType.doushisi] = zhongjiangDoushisiConfig,
     },
 }
 
@@ -198,27 +288,53 @@ local nanchongMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)
 local wenjiangMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)
 local zhongjiangMahjongShiftConfig  = table.clone(mahjongShiftConfigBase)
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+local doushisiShiftConfigBase = {
+    ["RenShu"]   = { [4] = 1, [3]  = 2, [2]  = 3 },
+    ["JuShu"]    = { [8] = 1, [12] = 2, [16] = 3 },
+    ["YingDa"]   = { [3] = 1, [2]  = 2 },
+    ["CaiShen"]  = { [3] = 1, [4]  = 2, [5]  = 3 },
+    ["FengDing"] = { [1] = 1, [2]  = 2, [3]  = 3, [4]  = 4 },
+}
+
+local chengduDoushisiShiftConfig     = table.clone(doushisiShiftConfigBase)
+local jintangDoushisiShiftConfig     = table.clone(doushisiShiftConfigBase)
+local xichongDoushisiShiftConfig     = table.clone(doushisiShiftConfigBase)
+local yingjingDoushisiShiftConfig    = table.clone(doushisiShiftConfigBase)
+local nanchongDoushisiShiftConfig    = table.clone(doushisiShiftConfigBase)
+local wenjiangDoushisiShiftConfig    = table.clone(doushisiShiftConfigBase)
+local zhongjiangDoushisiShiftConfig  = table.clone(doushisiShiftConfigBase)
+
 deskShiftConfig = {
     [cityType.chengdu] = {
         [gameType.mahjong] = chengduMahjongShiftConfig,
+        [gameType.doushisi] = chengduDoushisiShiftConfig,
     },
     [cityType.jintang] = {
         [gameType.mahjong] = jintangMahjongShiftConfig,
+        [gameType.doushisi] = jintangDoushisiShiftConfig,
     },
     [cityType.xichong] = {
         [gameType.mahjong] = xichongMahjongShiftConfig,
+        [gameType.doushisi] = xichongDoushisiShiftConfig,
     },
     [cityType.yingjing] = {
         [gameType.mahjong] = yingjingMahjongShiftConfig,
+        [gameType.doushisi] = yingjingDoushisiShiftConfig,
     },
     [cityType.nanchong] = {
         [gameType.mahjong] = nanchongMahjongShiftConfig,
+        [gameType.doushisi] = nanchongDoushisiShiftConfig,
     },
     [cityType.wenjiang] = {
         [gameType.mahjong] = wenjiangMahjongShiftConfig,
+        [gameType.doushisi] = wenjiangDoushisiShiftConfig,
     },
     [cityType.zhongjiang] = {
         [gameType.mahjong] = zhongjiangMahjongShiftConfig,
+        [gameType.doushisi] = zhongjiangDoushisiShiftConfig,
     },
 }
 

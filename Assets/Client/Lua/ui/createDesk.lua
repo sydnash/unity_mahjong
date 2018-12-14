@@ -21,6 +21,14 @@ function createDesk:ctor(cityType, friendsterId)
 end
 
 function createDesk:onInit()
+    self.mMahjong_S:show()
+    self.mMahjong_U:hide()
+    self.mChangpai_S:hide()
+    self.mChangpai_U:show()
+
+    self.mMahjongPanel:show()
+    self.mChangpaiPanel:hide()
+
     self.config = self:readConfig()
     self:createDetail()
 
@@ -31,6 +39,8 @@ function createDesk:onInit()
     local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
     self.mCost:setText(tostring(cost))
 
+    self.mMahjong_U:addClickListener(self.onMahjongClickedHandler, self)
+    self.mChangpai_U:addClickListener(self.onChangpaiClickedHandler, self)
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
 
@@ -39,6 +49,40 @@ end
 
 function createDesk:onCloseClickedHandler()
     self:close()
+    playButtonClickSound()
+end
+
+function createDesk:onMahjongClickedHandler()
+    self.gameType = gameType.mahjong
+
+    self.config = self:readConfig()
+    self:createDetail()
+
+    self.mMahjong_S:show()
+    self.mMahjong_U:hide()
+    self.mChangpai_S:hide()
+    self.mChangpai_U:show()
+
+    self.mMahjongPanel:show()
+    self.mChangpaiPanel:hide()
+
+    playButtonClickSound()
+end
+
+function createDesk:onChangpaiClickedHandler()
+    self.gameType = gameType.doushisi
+
+    self.config = self:readConfig()
+    self:createDetail()
+
+    self.mMahjong_S:hide()
+    self.mMahjong_U:show()
+    self.mChangpai_S:show()
+    self.mChangpai_U:hide()
+
+    self.mMahjongPanel:hide()
+    self.mChangpaiPanel:show()
+
     playButtonClickSound()
 end
 

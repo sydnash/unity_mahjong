@@ -23,6 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Lua\" />
+    <Folder Include="Lua\logic\changpai\" />
     <Folder Include="Lua\logic\mahjong\" />
     <Folder Include="Lua\logic\friendster\" />
     <Folder Include="Lua\logic\manager\" />
@@ -57,6 +58,8 @@
     <Compile Include="Lua\const\textDef.lua" />
     <Compile Include="Lua\const\typeDef.lua" />
     <Compile Include="Lua\globals.lua" />
+    <Compile Include="Lua\logic\changpai\changpai.lua" />
+    <Compile Include="Lua\logic\changpai\changpaiType.lua" />
     <Compile Include="Lua\logic\game.lua" />
     <Compile Include="Lua\logic\manager\gvoiceManager.lua" />
     <Compile Include="Lua\logic\friendster\friendster.lua" />
