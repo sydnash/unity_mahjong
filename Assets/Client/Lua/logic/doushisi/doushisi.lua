@@ -94,6 +94,25 @@ function doushisi:onDestroy()
     self.super.onDestroy(self)
 end
 
+function doushisi:setPickabled(pickabled)
+    if self.pickabled ~= pickabled then
+        self.pickabled = pickabled
+
+        local layer = pickabled and INHAND_MAHJONG_LAYER or DEFAULT_LAYER
+        self:setLayer(layer, true)
+    end
+end
+
+function doushisi:setSelected(selected)
+    if self.selected ~= selected then
+        self.selected = selected
+
+        local pos = self:getLocalPosition()
+        pos:Set(pos.x, pos.y + mahjong.h * (selected and 30 or 30), pos.z)
+        self:setLocalPosition(pos)
+    end
+end
+
 return doushisi
 
 --endregion
