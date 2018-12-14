@@ -68,17 +68,33 @@ function friendsterMemberInfo:onCloseClickedHandler()
 end
 
 function friendsterMemberInfo:onExitClickedHandler()
-    networkManager.exitFriendster(self.friendsterId, function(msg)
-        signalManager.signal(signalType.friendsterExitedSignal, self.friendsterId)
-        self:close()
-    end)
+    showMessageUI(string.format("是否确定要退出亲友圈[%d]？", self.friendsterId),
+                  function()
+                      showWaitingUI("正在退出亲友圈，请稍候")
+                      networkManager.exitFriendster(self.friendsterId, function(msg)
+                          closeWaitingUI()
+                          showMessageUI(string.format("已经成功退出亲友圈[%d]", self.friendsterId))
+                          signalManager.signal(signalType.friendsterExitedSignal, self.friendsterId)
+                          self:close()
+                      end)
+                  end,
+                  function()
+                  end)
     playButtonClickSound()
 end
 
 function friendsterMemberInfo:onDissolveClickedHandler()
-    networkManager.dissolveFriendster(self.friendsterId, function(msg)
-        self:close()
-    end)
+    showMessageUI("是否确定要解散亲友圈？",
+                  function()
+                      showWaitingUI("正在解散亲友圈，请稍候")
+                      networkManager.dissolveFriendster(self.friendsterId, function(msg)
+                          closeWaitingUI()
+                          showMessageUI(string.format("已经成功解散亲友圈[%d]", self.friendsterId))
+                          self:close()
+                      end)
+                  end,
+                  function()
+                  end)
     playButtonClickSound()
 end
 

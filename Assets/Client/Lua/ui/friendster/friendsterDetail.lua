@@ -347,14 +347,9 @@ function friendsterDetail:onMessageOptHandler(args)
     end
 end
 
-function friendsterDetail:onDeskDestroyHandler(deskId)
-    if gamepref.player.currentDesk ~= nil and gamepref.player.currentDesk.deskId == deskId then
-        self.mCreate:show()
-        self.mReturn:hide()
-    else
-        self.mCreate:hide()
-        self.mReturn:show()
-    end
+function friendsterDetail:onDeskDestroyHandler(msg)
+    self.mCreate:show()
+    self.mReturn:hide()
 end
 
 --function friendsterDetail:onDissolvedHandler(friendsterId)

@@ -298,10 +298,10 @@ function friendster:onNotifyFriendster(msg)
                 self.detailUI:refreshDeskList()
             end
 
-            if gamepref.player.currentDesk ~= nil and gamepref.player.currentDesk.deskId == d.DeskId then
-                signalManager.signal(signalType.deskDestroy, d.DeskId)
-                gamepref.player.currentDesk = nil
-            end
+--            if gamepref.player.currentDesk ~= nil and gamepref.player.currentDesk.deskId == d.DeskId then
+--                signalManager.signal(signalType.deskDestroy, d.DeskId)
+--                gamepref.player.currentDesk = nil
+--            end
         end
     elseif t == friendsterNotifyType.deskPlayerEnter then
         if lc ~= nil then

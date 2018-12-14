@@ -91,6 +91,8 @@ function city:onRegionClickedHandler(sender)
             v.d:hide()
         end
     end
+
+    playButtonClickSound()
 end
 
 function city:onCityClickedHandler(sender)

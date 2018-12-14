@@ -528,7 +528,7 @@ function game:onExitDeskHandler(msg)
             self.operationUI:reset()
         elseif msg.Reason == exitReason.cloesByManager then
             --被亲友圈管理员关闭
-            showMessageUI("牌桌已被亲友圈管理员，如有疑问请咨询亲友圈管理员或代理",
+            showMessageUI("牌局已被亲友圈群主关闭，如有疑问请联系群主",
                           function()
                             self:exitGame()
                           end)
@@ -842,32 +842,39 @@ end
 function game:clearMessageQueue()
     self.messageQueue = {}
 end
+
 function game:pauseMessageQueue()
-    self.pauseMeesageQueue = true
+    self.pauseMeesage = true
 end
+
 function game:resumeMessageQueue()
-    if not self.pauseMeesageQueue then
+    if self.messageQueueHandler == nil then
         return
     end
-    self.pauseMeesageQueue = false
+
+    self.pauseMeesage = false
     self.lastProcessTime = time.realtimeSinceStartup()
 end
+
 function game:startMessageQueue()
-    if not self.messageQueueHandler then
+    if self.messageQueueHandler == nil then
         self.messageQueueHandler = registerUpdateListener(game.update, self)
         self:resumeMessageQueue()
     end
 end
+
 function game:stopMessageQueue()
-    if self.messageQueueHandler then
+    if self.messageQueueHandler ~= nil then
         unregisterUpdateListener(self.messageQueueHandler)
         self.messageQueueHandler = nil
         self:clearMessageQueue()
     end
 end
+
 function game:isProcessPause()
-    return self.pauseMeesageQueue
+    return self.pauseMeesage
 end
+
 function game:speedUpMessageQueue(t)
     self.processSpeed = self.processSpeed + t
     if self.processSpeed < 0.2 then
@@ -876,29 +883,35 @@ function game:speedUpMessageQueue(t)
         self.processSpeed = 2.0
     end
 end
+
 function game:setMessageSpeed(speed)
     self.processSpeed = speed
 end
+
 function game:messageSpeed()
     return self.processSpeed
 end
+
 function game:pushMessage(func, delay, param)
     if delay == nil then
         delay = 0
     end
     table.insert(self.messageQueue, {func = func, delay = delay, param = param})
 end
+
 function game:addDelay(delay)
     self:pushMessage(function()
         return delay
     end)
 end
+
 function game:frontMessage()
     if self.messageQueue == 0 then
         return nil
     end
     return self.messageQueue[1]
 end
+
 function game:popFrontMessage()
     table.remove(self.messageQueue, 1)
 end
