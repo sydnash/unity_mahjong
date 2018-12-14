@@ -62,6 +62,7 @@ function game:initMessageHandlers()
         [protoType.sc.notifyExitVoteFailed]     = { func = self.onNotifyExitVoteFailedHandler,  nr = true },
         [protoType.sc.exitVote]                 = { func = self.onExitVoteHandler,              nr = true },
         [protoType.sc.gameEnd]                  = { func = self.onGameEndHandler,               nr = true },
+        [protoType.sc.deskStatusChange]         = { func = self.onDeskStatusChange,             nr = true },
     }
 end
 
@@ -179,6 +180,13 @@ function game:onEnter(msg)
         --self.messageHandlers:clear()
         self:clearMessageQueue()
     end
+    self.data = msg
+
+    self.players = {}
+    self.playerCount = 0
+    self.leftGames = msg.LeftTime
+    self.creator = msg.Creator
+    self:syncPlayers(msg.Players)
 end
 
 -------------------------------------------------------------------------------
@@ -295,6 +303,13 @@ function game:onReadyHandler(msg)
     self:pushMessage(func)
 end
 
+function game:onDeskStatusChange(msg)
+    local func = function()
+        self.deskStatus = msg.Status
+    end
+    self:pushMessage(func)
+end
+
 -------------------------------------------------------------------------------
 -- 结束一局
 -------------------------------------------------------------------------------
@@ -330,6 +345,13 @@ function game:getPlayerByAcId(acId)
     return self.players[acId]
 end
 
+function game:getPlayerByTurn(turn)
+    for _, v in pairs(self.players) do
+        if v.turn == turn then
+            return v
+        end
+    end
+end
 -------------------------------------------------------------------------------
 -- 获取总局数
 -------------------------------------------------------------------------------
@@ -901,7 +923,7 @@ function game:update()
         end
         local needDelete
         if not msg.isPlayed then
-            local delay = msg.func()
+            local delay = msg.func(msg.param)
             if delay == nil then
                 delay = msg.delay
             end

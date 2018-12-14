@@ -10,6 +10,7 @@ tpsheetFileNames:
 - Assets/Client/Artistic/Atlas/CreateDeskUI/Atlas/CreateDeskUI.tpsheet
 - Assets/Client/Artistic/Atlas/DeskOperationUI/Atlas/DeskOperationUI.tpsheet
 - Assets/Client/Artistic/Atlas/DeskUI/Atlas/DeskUI.tpsheet
+- Assets/Client/Artistic/Atlas/DssOperationUI/Atlas/DeskOperationUI.tpsheet
 - Assets/Client/Artistic/Atlas/Emoji/Atlas/Emoji.tpsheet
 - Assets/Client/Artistic/Atlas/EnterDeskUI/Atlas/EnterDeskUI.tpsheet
 - Assets/Client/Artistic/Atlas/ExitDeskUI/Atlas/ExxitDeskUI.tpsheet
@@ -39,6 +40,7 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/CreateDeskUI/Atlas/CreateDeskUI.png
 - Assets/Client/Artistic/Atlas/DeskOperationUI/Atlas/DeskOperationUI.png
 - Assets/Client/Artistic/Atlas/DeskUI/Atlas/DeskUI.png
+- Assets/Client/Artistic/Atlas/DssOperationUI/Atlas/DeskOperationUI.png
 - Assets/Client/Artistic/Atlas/Emoji/Atlas/Emoji.png
 - Assets/Client/Artistic/Atlas/EnterDeskUI/Atlas/EnterDeskUI.png
 - Assets/Client/Artistic/Atlas/ExitDeskUI/Atlas/ExxitDeskUI.png
@@ -59,6 +61,7 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

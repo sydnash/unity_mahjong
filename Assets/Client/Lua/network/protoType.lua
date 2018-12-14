@@ -49,6 +49,13 @@ return {
         getSharePlayHistory         = "CmdType.fly.CS.GetShareHistory",
         setClubDeskPayed            = "CmdType.fly.CS.ClubDeskPayed",
         modifyFriendsterDesc        = "CmdType.fly.CS_ModifyClubDesc",
+        dss = {
+            dang                    = "CmdType.fly.CS.DSSDang",
+            anPai                   = "CmdType.fly.CS.DSSAnPai",
+            opChose                 = "CmdType.fly.CS.DSSOpChoose",
+            bdChose                 = "CmdType.fly.CS.DSSBDChose",
+            piao                    = "CmdType.fly.CS.DSSPiao",
+        }
     },
     -- server to client
     sc = {
@@ -59,6 +66,7 @@ return {
         enterGSDesk                 = "CmdType.fly.SC.EnterGSDesk",
         ready                       = "CmdType.fly.SC.Ready",
         otherEnterDesk              = "CmdType.fly.SC.OtherEnterDesk",
+        deskStatusChange            = "CmdType.fly.SC.DeskStatus",
         start                       = "CmdType.fly.SC.MJStart",
         fapai                       = "CmdType.fly.SC.MJFaPai",
         huanNZhangHint              = "CmdType.fly.SC.MJHSZHint",
@@ -89,6 +97,23 @@ return {
         getPlayHistoryDetail        = "CmdType.fly.SC.GetDeskHistoryDetail",
         getClubPlayHistoryDetail    = "CmdType.fly.SC.ClubGetDeskHistoryDetail",
         getClubPlayHistory          = "CmdType.fly.SC_GetClubDeskHistory",
+        dss = {
+            start                   = "CmdType.fly.SC.DSSStart",
+            faPai                   = "CmdType.fly.SC.DSSFaPai",
+            dang                    = "CmdType.fly.SC.DSSDang",
+            dangNotify              = "CmdType.fly.SC.DSSDangNotify",
+            anPai                   = "CmdType.fly.SC.DSSAnPai",
+            anPaiNotify             = "CmdType.fly.SC.DSSAnPaiNotify",
+            moPai                   = "CmdType.fly.SC.DSSTouPai",
+            fanPai                  = "CmdType.fly.SC.DSSFanPai",
+            opList                  = "CmdType.fly.SC.DSSOpList",
+            opDo                    = "CmdType.fly.SC.DSSOpDo",
+            bdList                  = "CmdType.fly.SC.DSSBDList",
+            bdDo                    = "CmdType.fly.SC.DSSBDDo",
+            piao                    = "CmdType.fly.SC.DSSPiao",
+            piaoNotify              = "CmdType.fly.SC.DSSPiaoNotify",
+            anPaiShow               = "CmdType.fly.SC.AnPaiShow",
+        }
     },
 }
 

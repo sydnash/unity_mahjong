@@ -108,6 +108,28 @@ opType = {
            } 
     },
     guo  = { id = 6, },
+    dss = {
+        dang        = {id = 0},
+	    hua         = {id = 1},
+	    chu         = {id = 2},
+	    chi         = {id = 3},
+	    che         = {id = 4},
+	    hu          = {id = 5},
+	    gang        = {id = 6},
+	    pass        = {id = 7},
+	    fan         = {id = 8},
+	    mo          = {id = 9},
+	    an          = {id = 10},
+	    zhao        = {id = 11},
+	    shou        = {id = 12},
+	    bao         = {id = 13},
+	    baGang      = {id = 14},
+	    chiChengSan = {id = 15},
+	    caiShen     = {id = 16},
+	    baoJiao     = {id = 17},
+	    gen         = {id = 18},
+	    weiGui      = {id = 19},
+	},
 }
 
 --------------------------------------------------------------
