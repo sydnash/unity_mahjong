@@ -87,10 +87,10 @@ end
 function dssGame:initMessageHandlers()
     self.super.initMessageHandlers(self)
 
-    self.commandHandlers[protoType.sc.dss.start] = {func = self.onGameStartHandler, nr = true}
-    self.commandHandlers[protoType.sc.dss.faPai] = {func = self.onFaPaiHandler, nr = true}
+    self.commandHandlers[protoType.sc.dss.start] = {func = self:onMessageHandler("onGameStartHandler"), nr = true}
+    self.commandHandlers[protoType.sc.dss.faPai] = {func = self:onMessageHandler("onFaPaiHandler"), nr = true}
     self.commandHandlers[protoType.sc.dss.dang] = {func = self:onMessageHandler("onDangHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.dangNotify] = {func = self:onMessageHandler("onDangHandler"), nr = true}
+    self.commandHandlers[protoType.sc.dss.dangNotify] = {func = self:onMessageHandler("onDangNotifyHandler"), nr = true}
     self.commandHandlers[protoType.sc.dss.anPai] = {func = self:onMessageHandler("onAnPaiHandler"), nr = true}
     self.commandHandlers[protoType.sc.dss.anPaiNotify] = {func = self:onMessageHandler("onAnPaiNotifyHandler"), nr = true}
     self.commandHandlers[protoType.sc.dss.moPai] = {func = self:onMessageHandler("onMoPaiHandler"), nr = true}
@@ -106,10 +106,8 @@ function dssGame:initMessageHandlers()
 end
 
 function dssGame:onFaPaiHandler(msg)
-    local func = (function()
-        self:faPai(msg)
-    end)
-    self:pushMessage(func)
+    self:faPai(msg)
+    self.deskOpUI:onFaPai()
 end
 
 function dssGame:onMessageHandler(name)
@@ -121,6 +119,7 @@ end
 
 function dssGame:onDangHandler(msg)
     self.isMustDang = msg.IsMustDang
+    self.deskOpUI:onDangHandler()
 end
 
 function dssGame:onDangNotifyHandler(msg)
@@ -185,6 +184,7 @@ function dssGame:onFanPaiHnadler(msg)
 end
 
 function dssGame:onOpListHandler(msg)
+    self:deskOpUI:onOpList(msg)
 end
 
 function dssGame:onChiPengGangType(player, op, cards, beCard)
@@ -334,16 +334,18 @@ function dssGame:faPai(msg)
 end
 
 function dssGame:onGameStartHandler(msg)
-    local func = (function()
-        self:faPai(msg)
-        self.markerTurn = msg.Marker
-        self.diceCard   = msg.DiceCardId
-        self.diceTurn   = msg.DiceTurn
-        self.deskStatus = msg.CurDeskStatus
-        self.markerAcId = self:getPlayerByTurn(self.markerTurn).acId
-        self.diceAcId   = self:getPlayerByTurn(self.diceTurn).acId
-    end)
-    self:pushMessage(func)
+    self:faPai(msg)
+    self.markerTurn = msg.Marker
+    self.diceCard   = msg.DiceCardId
+    self.diceTurn   = msg.DiceTurn
+    self.deskStatus = msg.CurDeskStatus
+    self.markerAcId = self:getPlayerByTurn(self.markerTurn).acId
+    self.diceAcId   = self:getPlayerByTurn(self.diceTurn).acId
+
+    self.deskOpUI:onGameStart()
+end
+
+function dssGame:csDang(isDang)
 end
 
 return dssGame

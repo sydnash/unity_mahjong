@@ -818,6 +818,26 @@ function networkManager.setClubDeskPayed(clubId, historyId, callback)
     send(protoType.cs.setClubDeskPayed, data, callback)
 end
 
+function networkManager.csDang(isDang)
+    local data = { IsDang = isDang }
+    send(protoType.dss.dang, data)
+end
+
+function networkManager.csAnPai(data)
+    send(protoType.dss.anPai, data)
+end
+
+function networkManager.csOpChose(data)
+    send(protoType.dss.opChose, data)
+end
+
+function networkManager.csBdChose(data)
+    send(protoType.dss.bdChose, data)
+end
+
+function networkManager.csPiao(data)
+    send(protoType.dss.piao, data)
+end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------

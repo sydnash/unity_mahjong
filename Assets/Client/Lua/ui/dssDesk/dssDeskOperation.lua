@@ -71,6 +71,29 @@ function dssOperation:hideAllOpBtn()
     self.curShowOpBtns = {}
 end
 
+function dssOperation:onGameSync()
+end
+
+function dssOperation:onFaPai()
+end
+
+function dssOperation:onGameStart()
+end
+---------------------------------------------------------------
+--当
+---------------------------------------------------------------
+function dssOperation:onDangHandler()
+    self:hideAllOpBtn()
+    self:showOpBtn(self.mBuDang)
+    self:showOpBtn(self.mDang)
+end
+function dssOperation:onDangClickedHandler()
+    networkManager.csDang(true)
+end
+function dssOperation:onBuDangClickedHandler()
+    networkManager.csDang(false)
+end
+
 function dssOperation:onOpList(opList)
     if opList == nil then
         return
@@ -80,6 +103,9 @@ function dssOperation:onOpList(opList)
 
     for _, opInfo in pairs(opList.OpInfos) do
         local op = opInfo.Op
+        if opInfo.HasTy == nil then
+            opInfo.HasTy = {}
+        end
         if op == opType.dss.hua then
             self:onOpListHua(opInfo)
         elseif op == opType.dss.chu then
@@ -135,6 +161,16 @@ function dssOperation:onOpListHua(opInfo)
     self:showOpBtn(self.mHua, opInfo)
 end
 function dssOperation:onHuaClickedHandler()
+    local chianSelPanel = require ("ui.dssDesk.dssDeskOperation")
+    local panel = chianSelPanel.newAnSelPanel(self.mChi.opInfo, function()
+        self:onHuaChose(info)
+    end)
+    self.mHua.panel = panel
+    panel:setParent(self.mHua)
+end
+function dssOperation:onHuaChose(info)
+    local data = self:getOpChoseData(opType.dss.hua, info.Cards[1], info.HasTy[1], nil)
+    networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoHua()
 end
@@ -146,6 +182,16 @@ function dssOperation:onOpListChi(opInfo)
     self:showOpBtn(self.mChi, opInfo)
 end
 function dssOperation:onChiClickedHandler()
+    local chianSelPanel = require ("ui.dssDesk.dssDeskOperation")
+    local panel = chianSelPanel.newChiSelPanel(self.mChi.opInfo, function()
+        self:onChiChose(info)
+    end)
+    self.mChi.panel = panel
+    panel:setParent(self.mChi)
+end
+function dssOperation:onChiChose(info)
+    local data = self:getOpChoseData(opType.dss.chi, info.c, info.hasTy, nil)
+    networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoChi()
 end
@@ -157,6 +203,9 @@ function dssOperation:onOpListChe(opInfo)
     self:showOpBtn(self.mChe, opInfo)
 end
 function dssOperation:onCheClickedHandler()
+    local info = self.mChe.opInfo
+    local data = self:getOpChoseData(opType.dss.che, info.Cards[1], info.HasTy[1], nil)
+    networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoChe()
 end
@@ -168,6 +217,8 @@ function dssOperation:onOpListHu(opInfo)
     self:showOpBtn(self.mHu, opInfo)
 end
 function dssOperation:onHuClickedHandler()
+    local data = self:getOpChoseData(opType.dss.hu)
+    networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoHu()
 end
@@ -179,6 +230,20 @@ function dssOperation:onOpListAn(opInfo)
     self:showOpBtn(self.mAn, opInfo)
 end
 function dssOperation:onAnClickedHandler()
+    local chianSelPanel = require ("ui.dssDesk.dssDeskOperation")
+    local panel = chianSelPanel.newAnSelPanel(self.mChi.opInfo, function()
+        self:onAnChose(info)
+    end)
+    self.mAn.panel = panel
+    panel:setParent(self.mAn)
+end
+function dssOperation:onAnChose(info)
+    local sendData = { Chooses={} }
+    local item = {Card = info.c, Num = 3}
+    if info.hasTy then
+        item.Num = 4
+    end
+    networkManager.csAnPai(sendData)
 end
 function dssOperation:onOpDoAn()
 end
@@ -190,8 +255,28 @@ function dssOperation:onOpListBaGang(opInfo)
     self:showOpBtn(self.mAn, opInfo)
 end
 function dssOperation:onDengClickedHandler()
+    local chianSelPanel = require ("ui.dssDesk.dssDeskOperation")
+    local panel = chianSelPanel.newBaGangSelPanel(self.mDeng.opInfo, function()
+        self:onBaGangChose(info)
+    end)
+    self.mDeng.panel = panel
+    panel:setParent(self.mDeng)
+end
+function dssOperation:onBaGangChose(info)
+    local data = self:getOpChoseData(opType.dss.baGang, info.c, info.hasTy, nil)
+    networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoBaGang()
+end
+
+function dssOperation:getOpChoseData(op, card, hasTy, baos)
+    local data = {
+        Op = op,
+        ChoseCard = card,
+        HasTy = hasTy,
+        BaoTypes = baos,
+    }
+    return data
 end
 
 return dssOperation
