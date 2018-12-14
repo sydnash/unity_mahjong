@@ -67,19 +67,19 @@ function dssGame:syncSeats(seats)
     end
 end
 
--- -------------------------------------------------------------------------------
--- -- 
--- -------------------------------------------------------------------------------
--- function mahjongGame:createOperationUI()
---     return require("ui.mahjongDesk.mahjongOperation").new(self)
--- end
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function dssGame:createOperationUI()
+    return require("ui.dssDesk.dssDeskOperation").new(self)
+end
 
--- -------------------------------------------------------------------------------
--- -- 
--- -------------------------------------------------------------------------------
--- function mahjongGame:createDeskUI()
---     return require("ui.mahjongDesk.mahjongDesk").new(self)
--- end
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function dssGame:createDeskUI()
+    return require("ui.mahjongDesk.mahjongDesk").new(self)
+end
 
 -------------------------------------------------------------------------------
 -- 
@@ -111,10 +111,11 @@ function dssGame:onFaPaiHandler(msg)
 end
 
 function dssGame:onMessageHandler(name)
+    assert(self[name], string.format("on message handler: function<%s> must exist.", name))
     local func = function(msg)
-        return self[name](msg)
+        self:pushMessage(self[name], 0, msg)
     end
-    self:pushMessage(func, 0, msg)
+    return func
 end
 
 function dssGame:onDangHandler(msg)
@@ -184,7 +185,7 @@ function dssGame:onFanPaiHnadler(msg)
 end
 
 function dssGame:onOpListHandler(msg)
-    self:deskOpUI:onOpList(msg)
+    self.deskOpUI:onOpList(msg)
 end
 
 function dssGame:onChiPengGangType(player, op, cards, beCard)

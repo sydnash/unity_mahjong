@@ -29,7 +29,15 @@ local btnIconConfig = {
     }
 }
 
+local mainCameraParams = {
+    position = Vector3.New(1000, 0, -13.43),
+    rotation = Quaternion.Euler(0, 0, 0),
+}
 function dssOperation:onInit()
+    --初始化主相机
+    local mainCamera = UnityEngine.Camera.main
+    mainCamera.transform.position = mainCameraParams.position
+    mainCamera.transform.rotation = mainCameraParams.rotation
     --初始化按钮
     self.mBuDang:addClickListener(self.onBuDangClickedHandler, self)
     self.mDang:addClickListener(self.onDangClickedHandler, self)
@@ -69,6 +77,15 @@ function dssOperation:hideAllOpBtn()
         btn:hide()
     end
     self.curShowOpBtns = {}
+end
+
+function dssOperation:closeAllBtnPanel()
+    for _, btn in pairs(self.opBtns) do
+        if btn.panel then
+            btn.panel:close()
+            btn.pnel = nil
+        end
+    end
 end
 
 function dssOperation:onGameSync()
@@ -277,6 +294,11 @@ function dssOperation:getOpChoseData(op, card, hasTy, baos)
         BaoTypes = baos,
     }
     return data
+end
+
+function dssOperation:reset()
+    self:hideAllOpBtn()
+    self:closeAllBtnPanel()
 end
 
 return dssOperation

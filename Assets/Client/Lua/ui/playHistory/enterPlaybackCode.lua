@@ -185,7 +185,9 @@ function enterPlaybackCode:enter()
 
         closeAllUI()
 
-        local game = require("logic.mahjong.mahjongGame").new(data, playback)
+        local cityType           = data.GameType
+        local gameType           = data.Config.Game
+        clientApp.currentDesk = getLogicGame(cityType, gameType).new(data, playback)
         game:startLoop()
         clientApp.currentDesk = game
 

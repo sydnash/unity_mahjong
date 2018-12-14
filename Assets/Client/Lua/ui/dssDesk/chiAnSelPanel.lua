@@ -41,6 +41,7 @@ function chiSelPanel:ctor(opInfo, callback)
 end
 
 function chiSelPanel:onInit()
+    local items = {}
     for i, c in pairs(self.opInfo.Cards) do
         local info = {c = c}
         if #opInfo.HasTy <= i then
@@ -52,8 +53,10 @@ function chiSelPanel:onInit()
         local item = chiSelItem.new({self.opInfo.Card, c}, info, function(info)
             self:onChosed(info)
         end)
+        table.insert(items, item)
         item:setParent(self.mThis)
     end
+    self.items = items
 end
 
 function chiSelPanel:onChosed(info)
@@ -62,6 +65,12 @@ function chiSelPanel:onChosed(info)
     end
 end
 
+function anSelPanel:onDestroy()
+    for _, item in pairs(self.items) do
+        item:close()
+    end
+    self.super.onDestroy(self)
+end
 
 local anSelPanel = class("ANSelPanel", base)
 _RES_(chiSelPanel, "DssDeskUI", "ChiAnSelPanelUI")
@@ -73,6 +82,7 @@ function anSelPanel:ctor(opInfo, callback)
 end
 
 function anSelPanel:onInit()
+    local items = {}
     for i, c in pairs(self.opInfo.Cards) do
         local info = {c = c}
         if #opInfo.HasTy <= i then
@@ -88,14 +98,23 @@ function anSelPanel:onInit()
         local item = chiSelItem.new(cards, info, function(info)
             self:onChosed(info)
         end)
+        table.insert(items, item)
         item:setParent(self.mThis)
     end
+    self.items = items
 end
 
 function anSelPanel:onChosed(info)
     if self.callback then
         self.callback(info)
     end
+end
+
+function anSelPanel:onDestroy()
+    for _, item in pairs(self.items) do
+        item:close()
+    end
+    self.super.onDestroy(self)
 end
 
 
@@ -109,6 +128,7 @@ function baGangSelPanel:ctor(opInfo, callback)
 end
 
 function baGangSelPanel:onInit()
+    local items = {}
     for i, c in pairs(self.opInfo.Cards) do
         local info = {c = c}
         if #opInfo.HasTy <= i then
@@ -121,14 +141,23 @@ function baGangSelPanel:onInit()
         local item = chiSelItem.new(cards, info, function(info)
             self:onChosed(info)
         end)
+        table.insert(items, item)
         item:setParent(self.mThis)
     end
+    self.items = items
 end
 
 function baGangSelPanel:onChosed(info)
     if self.callback then
         self.callback(info)
     end
+end
+
+function baGangSelPanel:onDestroy()
+    for _, item in pairs(self.items) do
+        item:close()
+    end
+    self.super.onDestroy(self)
 end
 
 

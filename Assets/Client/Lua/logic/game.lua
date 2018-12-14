@@ -30,11 +30,11 @@ function game:ctor(data, playback)
     self.canBack            = true
     self.isGameOverUIShow   = false
 
-    self:initMessageHandlers()
     self.messageQueue       = {}
     self.pauseMeesageQueue  = false
     self.processSpeed       = 1.0
     self.lastProcessTime    = 0
+    self:initMessageHandlers()
 
     if playback == nil then
         self.mode = gameMode.normal
