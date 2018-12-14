@@ -287,7 +287,7 @@ function mahjongOperation:showChuPaiHint(acId, id)
     self.mChuPaiHint:setParent(parent)
     self.mChuPaiHint:setLocalPosition(Vector3.zero)
 
-    local spriteName = getMahjongTypeById(id).name
+    local spriteName = mahjongType.getMahjongTypeById(id).name
     self.mChuPaiHintImg:setSprite(spriteName)
 end
 
@@ -1104,7 +1104,7 @@ function mahjongOperation:onGangClickedHandler()
         for i, c in pairs(self.mGang.c) do
             local cs = c.Cs
             buttons[i].cs = cs
-            sprites[i]:setSprite(getMahjongTypeById(cs[1]).name)
+            sprites[i]:setSprite(mahjongType.getMahjongTypeById(cs[1]).name)
 
             buttons[i]:show()
         end

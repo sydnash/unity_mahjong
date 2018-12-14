@@ -27,7 +27,6 @@ function chiAnSelItem:onInit()
     for i, c in pairs(self.cards) do
         local id = doushisiType.getDoushisiTypeId(c)
         local icon = self.icons[i]
-        log("================: " .. tostring(icon) .. "  " .. tostring(i) .. "  " .. table.tostring(self.icons))
         self.icons[i]:show()
         self.icons[i]:setSprite(tostring(id))
     end

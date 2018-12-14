@@ -23,8 +23,6 @@ function joinFriendster:onInit()
     self.mVerification:setText(string.empty)
     self.mName:setText(string.empty)
 
-    self:refreshJoinState()
-
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
@@ -34,8 +32,19 @@ function joinFriendster:onCloseClickedHandler()
 end
 
 function joinFriendster:onQueryClickedHandler()
-    local id = tonumber(self.mId:getText())
+    local id = self.mId:getText()
+    if string.isNilOrEmpty(id) then
+        showMessageUI("请输入亲友圈编号")
+        return
+    end
+
     local vc = self.mVerification:getText()
+    if string.isNilOrEmpty(vc) then
+        showMessageUI("请输入亲友圈验证码")
+        return
+    end
+
+    id = tonumber(id)
 
     showWaitingUI("正在查询亲友圈信息，请稍候")
     networkManager.queryFriendsterInfo(id, vc, function(msg)
@@ -60,8 +69,19 @@ function joinFriendster:onQueryClickedHandler()
 end
 
 function joinFriendster:onJoinClickedHandler()
-    local id = tonumber(self.mId:getText())
+    local id = self.mId:getText()
+    if string.isNilOrEmpty(id) then
+        showMessageUI("请输入亲友圈编号")
+        return
+    end
+
     local vc = self.mVerification:getText()
+    if string.isNilOrEmpty(vc) then
+        showMessageUI("请输入亲友圈验证码")
+        return
+    end
+
+    id = tonumber(id)
 
     local lc = self.friendsterUI.friendsters[id]
     if lc then
@@ -85,27 +105,6 @@ function joinFriendster:onJoinClickedHandler()
     end)
 
     playButtonClickSound()
-end
-
-function joinFriendster:onIdChangedHandler()
-    self:refreshJoinState()
-end
-
-function joinFriendster:onVerificationChangedHandler()
-    self:refreshJoinState()
-end
-
-function joinFriendster:refreshJoinState()
-    local id = self.mId:getText()
-    local code = self.mVerification:getText()
-
-    if string.isNilOrEmpty(id) or string.isNilOrEmpty(code) then
-        self.mJoin:setInteractabled(false)
-        self.mJoinZ:setSprite("gray")
-    else
-        self.mJoin:setInteractabled(true)
-        self.mJoinZ:setSprite("light")
-    end
 end
 
 function joinFriendster:onCloseAllUIHandler()

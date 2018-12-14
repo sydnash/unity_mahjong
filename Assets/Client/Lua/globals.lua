@@ -109,7 +109,7 @@ function playMahjongSound(mahjongId, sex)
     if not string.isNilOrEmpty(prefix) then
         prefix = prefix .. "_"
     end
-    local resource = prefix .. getMahjongTypeById(mahjongId).audio
+    local resource = prefix .. mahjongType.getMahjongTypeById(mahjongId).audio
 
     return soundManager.playGfx(folder, resource)
 end
