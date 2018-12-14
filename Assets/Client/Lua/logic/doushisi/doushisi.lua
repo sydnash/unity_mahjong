@@ -47,15 +47,24 @@ function doushisi:ctor(id)
 end
 
 function doushisi:setId(id)
-    self.id = id
+    if self.id ~= id then
+        self.id = id
+        self.dirty = true
+    end
 end
 
 function doushisi:setStyle(style)
-    self.style = style
+    if self.style ~= style then
+        self.style = style
+        self.dirty = true
+    end
 end
 
 function doushisi:setType(ctype)
-    self.ctype = ctype
+    if self.ctype ~= ctype then
+        self.ctype = ctype
+        self.dirty = true
+    end
 end
 
 function doushisi:setColliderEnabled(enabled)
@@ -63,8 +72,15 @@ function doushisi:setColliderEnabled(enabled)
 end
 
 function doushisi:fix()
-    local typ = getDoushisiTypeById(self.id)
-    self:setSprite(typ.folder, typ.resource)
+    if self.dirty then
+        self.dirty = false
+
+        local typ = getDoushisiTypeById(self.id)
+        self:setSprite(typ.folder, typ.resource)
+
+        local bounds = self.render.bounds
+        self.collider.bounds = bounds
+    end
 end
 
 function doushisi:setSprite(folder, resource)
