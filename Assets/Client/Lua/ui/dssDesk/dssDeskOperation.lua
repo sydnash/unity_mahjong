@@ -5,6 +5,7 @@ local base = require("ui.common.view")
 local dssOperation = class("dssOperation", base)
 local doushisi = require("logic.doushisi.doushisi")
 local doushisiType = require("logic.doushisi.doushisiType")
+local touch         = require("logic.touch")
 
 _RES_(dssOperation, "DssDeskUI", "DssOperationUI")
 
@@ -32,13 +33,17 @@ local btnIconConfig = {
 }
 
 local mainCameraParams = {
-    position = Vector3.New(1000, 0, -1343),
+    position = Vector3.New(1000, 0, -13.43),
     rotation = Quaternion.Euler(0, 0, 0),
+}
+local inhandCameraParams = {
+    position = Vector3.New(1000, 0, -0.9),
+    size = 3.6
 }
 
 dssOperation.seats = {
     [seatType.mine] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( -249, -353, 0), rot = Quaternion.Euler(0, 0, 0), w = 72, h = 214, hgap = 50 },
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -3.53, 0), rot = Quaternion.Euler(0, 0, 0), w = 0.72, h = 2.14, hgap = 0.50 },
     },
     [seatType.right] = { 
     },
@@ -54,10 +59,17 @@ function dssOperation:onInit()
     mainCamera.transform.position = mainCameraParams.position
     mainCamera.transform.rotation = mainCameraParams.rotation
 
+    local camera = GameObjectPicker.instance.camera
+    camera.transform.position = inhandCameraParams.position
+    camera.orthographicSize = inhandCameraParams.size
+
     self.cardRoot = find("changpai/changpai_root")
     self.allCards = {}
     self.idleCards = {}
     self.style = doushisiStyle.traditional
+    self.canChuPai = false
+    self.dragCard = doushisi.new(0)
+    self.dragCard:setLocalScale(Vector3.New(1.2, 1.2, 1.2))
     
     --初始化按钮
     self.mBuDang:addClickListener(self.onBuDangClickedHandler, self)
@@ -91,6 +103,7 @@ function dssOperation:onInit()
         self.mDeng,
         self.mHu,
     }
+    touch.addListener(self.touchHandler, self)
 
     self:reset()
 end
@@ -114,12 +127,16 @@ end
 function dssOperation:onGameSync()
     self:reset()
     self:initInhandCards()
+    touch.addListener(self.touchHandler, self)
 end
 
 function dssOperation:onFaPai()
+    self:initInhandCards()
 end
 
 function dssOperation:onGameStart()
+    self:initInhandCards()
+    touch.addListener(self.touchHandler, self)
 end
 ---------------------------------------------------------------
 --当
@@ -324,7 +341,9 @@ end
 function dssOperation:reset()
     self:hideAllOpBtn()
     self:closeAllBtnPanel()
+    touch.removeListener()
 
+    self.dragCard:hide()
     self.idleCards = {}
     for _, card in pairs(self.allCards) do
         card:hide()
@@ -347,12 +366,19 @@ function dssOperation:getCardById(id)
     return card
 end
 
-function dssOperation:addCardTo(card, pos, seatType, cardType)
+function dssOperation:addCardTo(card, pos, seatType, cardType, rot)
     card:setStyle(self.style)
     card:setType(cardType)
     card:fix()
     --get rot by cardtype and seattype
-    local cfg = self.seats[seatType][cardType]
+    if cardType == doushisiGame.cardType.shou then
+        card:setPickabled(true)
+    else
+        card:setPickabled(false)
+    end
+    if rot then
+        card:setRotation(rot)
+    end
     card:setLocalPosition(pos)
     card:setParent(self.cardRoot)
     card:show()
@@ -407,6 +433,73 @@ function dssOperation:getInhandCardStartPos(st)
     else
         return self.seats[st][doushisiGame.cardType.shou].pos
     end
+end
+
+function dssOperation:onDestroy()
+    self:reset()
+    for _, card in pairs(self.allCards) do
+        card:close()
+    end
+    self.super.onDestroy(self)
+end
+
+function dssOperation:touchHandler(phase, pos)
+    if not self.canChuPai then
+        return
+    end
+    local camera = GameObjectPicker.instance.camera
+
+    if phase == touch.phaseType.began then
+        local go = GameObjectPicker.instance:Pick(pos)
+        if go ~= nil then
+            self.isClick = true
+            local preSelectedCard = self.curSelectdCard
+            self.curSelectdCard = go
+            if preSelectedCard and preSelectedCard ~= go then
+                preSelectedCard:setSelected(false)
+            end
+            local pos = self.curSelectdCard:getLocalPosition()
+            self.dragCard:setId(self.curSelectdCard.id)
+            self:addCardTo(self.dragCard, pos, seatType.mine, doushisiGame.cardType.perfect)
+        end
+    elseif phase == touch.phaseType.moved then
+        if self.curSelectdCard ~= nil then
+            local mpos = self.dragCard:getPosition()
+            local cpos = camera.transform.localPosition
+            pos.z = mpos.z - cpos.z
+            local wpos = camera:ScreenToWorldPoint(pos)
+            local dpos = wpos - self.selectedLastPos
+            if dpos:Magnitude() > 0.000001 then
+                self.isClick = false
+            end
+        
+            mpos = Vector3.New(mpos.x + dpos.x, mpos.y + dpos.y, mpos.z)
+            self.dragCard:setPosition(mpos)
+            self.selectedLastPos = wpos
+        end
+    else
+        self.dragCard:hide()
+        if self.curSelectdCard ~= nil then
+            if self.isClick then
+                if self.curSelectdCard.selected then
+                    if self.canChuPai then
+                        self:onChoseChuPai(self.curSelectdCard)
+                    else
+                        self.curSelectdCard:setSelected(false)
+                    end
+                else
+                    self.curSelectdCard:setSelected(true)
+                end
+            else
+            end
+        end
+    end
+end
+
+function dssOperation:onChoseChuPai(card)
+    local id = card.id
+    local sendData = self:getOpChoseData(opType.dss.chu, id, nil, nil)
+    networkManager.csOpChose(sendData)
 end
 
 ---------------------------------------------------------
