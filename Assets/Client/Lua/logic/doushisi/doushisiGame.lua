@@ -1,4 +1,3 @@
-
 local gamePlayer = require("logic.player.gamePlayer")
 
 local base = require("logic.game")
@@ -23,6 +22,7 @@ function doushisiGame:getTotalCardCountByGame(cityType)
     end
     return cnt
 end
+
 -------------------------------------------------------------------------------
 -- 构造函数
 -------------------------------------------------------------------------------
@@ -67,19 +67,19 @@ function doushisiGame:syncSeats(seats)
     end
 end
 
--- -------------------------------------------------------------------------------
--- -- 
--- -------------------------------------------------------------------------------
--- function mahjongGame:createOperationUI()
---     return require("ui.mahjongDesk.mahjongOperation").new(self)
--- end
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function doushisiGame:createOperationUI()
+    return require("ui.dssDesk.dssDeskOperation").new(self)
+end
 
--- -------------------------------------------------------------------------------
--- -- 
--- -------------------------------------------------------------------------------
--- function mahjongGame:createDeskUI()
---     return require("ui.mahjongDesk.mahjongDesk").new(self)
--- end
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function doushisiGame:createDeskUI()
+    return require("ui.mahjongDesk.mahjongDesk").new(self)
+end
 
 -------------------------------------------------------------------------------
 -- 
@@ -87,10 +87,10 @@ end
 function doushisiGame:initMessageHandlers()
     self.super.initMessageHandlers(self)
 
-    self.commandHandlers[protoType.sc.doushisi.start] = {func = self.onGameStartHandler, nr = true}
-    self.commandHandlers[protoType.sc.doushisi.faPai] = {func = self.onFaPaiHandler, nr = true}
+    self.commandHandlers[protoType.sc.doushisi.start] = {func = self:onMessageHandler("onGameStartHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.faPai] = {func = self:onMessageHandler("onFaPaiHandler"), nr = true}
     self.commandHandlers[protoType.sc.doushisi.dang] = {func = self:onMessageHandler("onDangHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.dangNotify] = {func = self:onMessageHandler("onDangHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.dangNotify] = {func = self:onMessageHandler("onDangNotifyHandler"), nr = true}
     self.commandHandlers[protoType.sc.doushisi.anPai] = {func = self:onMessageHandler("onAnPaiHandler"), nr = true}
     self.commandHandlers[protoType.sc.doushisi.anPaiNotify] = {func = self:onMessageHandler("onAnPaiNotifyHandler"), nr = true}
     self.commandHandlers[protoType.sc.doushisi.moPai] = {func = self:onMessageHandler("onMoPaiHandler"), nr = true}
@@ -106,21 +106,22 @@ function doushisiGame:initMessageHandlers()
 end
 
 function doushisiGame:onFaPaiHandler(msg)
-    local func = (function()
-        self:faPai(msg)
-    end)
-    self:pushMessage(func)
+    self:faPai(msg)
+    self.deskOpUI:onFaPai()
 end
 
 function doushisiGame:onMessageHandler(name)
+    assert(self[name], string.format("on message handler: function<%s> must exist.", name))
+
     local func = function(msg)
-        return self[name](msg)
+        self:pushMessage(self[name], 0, msg)
     end
-    self:pushMessage(func, 0, msg)
+    return func
 end
 
 function doushisiGame:onDangHandler(msg)
     self.isMustDang = msg.IsMustDang
+    self.deskOpUI:onDangHandler()
 end
 
 function doushisiGame:onDangNotifyHandler(msg)
@@ -130,9 +131,11 @@ function doushisiGame:onDangNotifyHandler(msg)
 end
 
 function doushisiGame:onPiaoHandler(msg)
+
 end
 
 function doushisiGame:onPiaoNotifyHandler(msg)
+
 end
 
 function doushisiGame:onAnPaiShowHandler(msg)
@@ -162,9 +165,11 @@ function doushisiGame:onAnPaiShowHandler(msg)
 end
 
 function doushisiGame:onAnPaiHandler(msg)
+
 end
 
 function doushisiGame:onAnPaiNotifyHandler(msg)
+
 end
 
 function doushisiGame:onMoPaiHandler(msg)
@@ -185,6 +190,7 @@ function doushisiGame:onFanPaiHnadler(msg)
 end
 
 function doushisiGame:onOpListHandler(msg)
+    self.deskOpUI:onOpList(msg)
 end
 
 function doushisiGame:onChiPengGangType(player, op, cards, beCard)
@@ -334,16 +340,19 @@ function doushisiGame:faPai(msg)
 end
 
 function doushisiGame:onGameStartHandler(msg)
-    local func = (function()
-        self:faPai(msg)
-        self.markerTurn = msg.Marker
-        self.diceCard   = msg.DiceCardId
-        self.diceTurn   = msg.DiceTurn
-        self.deskStatus = msg.CurDeskStatus
-        self.markerAcId = self:getPlayerByTurn(self.markerTurn).acId
-        self.diceAcId   = self:getPlayerByTurn(self.diceTurn).acId
-    end)
-    self:pushMessage(func)
+    self:faPai(msg)
+    self.markerTurn = msg.Marker
+    self.diceCard   = msg.DiceCardId
+    self.diceTurn   = msg.DiceTurn
+    self.deskStatus = msg.CurDeskStatus
+    self.markerAcId = self:getPlayerByTurn(self.markerTurn).acId
+    self.diceAcId   = self:getPlayerByTurn(self.diceTurn).acId
+
+    self.deskOpUI:onGameStart()
+end
+
+function doushisiGame:csDang(isDang)
+
 end
 
 return doushisiGame

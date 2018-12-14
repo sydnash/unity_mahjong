@@ -2,7 +2,7 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local doushisiType = {
+local c = {
     [0]  = { folder = "doushisi/cards", resource = "R1R1", color = doushisiColor.red,   value = 2,  },--地牌
     [1]  = { folder = "doushisi/cards", resource = "R1B2", color = doushisiColor.red,   value = 3,  },--丁丁
     [2]  = { folder = "doushisi/cards", resource = "R1B3", color = doushisiColor.red,   value = 4,  },--和牌
@@ -29,19 +29,24 @@ local doushisiType = {
     [23] = { folder = "doushisi/cards", resource = "BACK", color = doushisiColor.none,  value = 0,  },--背面
 }
 
-function getDoushisiTypeId(cid)
+local function getDoushisiTypeId(cid)
     return math.floor(cid / 4)
 end
 
-function getDoushisiTypeById(cid)
+local function getDoushisiTypeById(cid)
     cid = getDoushisiId(cid)
-    return doushisiType[cid]
+    return c[cid]
 end
 
-function getDoushisiBackType()
-    return doushisiType[23]
+local function getDoushisiBackType()
+    return c[23]
 end
 
-return doushisiType
+return {
+    c = c,
+    getDoushisiTypeId = getDoushisiTypeId,
+    getDoushisiTypeById = getDoushisiTypeById,
+    getDoushisiBackType = getDoushisiBackType,
+}
 
 --endregion

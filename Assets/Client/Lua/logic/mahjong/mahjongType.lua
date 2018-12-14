@@ -4,7 +4,7 @@
 
 local mahjongClass = require("const.mahjongClass")
 
-local mahjongType = {
+local c = {
     [0]  = { folder = "mahjong", resource = "mjpai01", audio = "1tiao",     name = "1tiao",     class = mahjongClass.tiao, },
     [1]  = { folder = "mahjong", resource = "mjpai02", audio = "2tiao",     name = "2tiao",     class = mahjongClass.tiao, },
     [2]  = { folder = "mahjong", resource = "mjpai03", audio = "3tiao",     name = "3tiao",     class = mahjongClass.tiao, },
@@ -37,11 +37,19 @@ local mahjongType = {
     [29] = { folder = "mahjong", resource = "mjpai34", audio = "bai",       name = "baiban",    class = mahjongClass.other, },
 }
 
-function getMahjongTypeById(mid)
-    mid = math.floor(mid / 4)
-    return mahjongType[mid]
+local function getMahjongTypeId(mid)
+    return math.floor(mid / 4)
 end
 
-return mahjongType
+local function getMahjongTypeById(mid)
+    mid = getMahjongTypeId(mid)
+    return c[mid]
+end
+
+return {
+    c = c,
+    getMahjongTypeId = getMahjongTypeId,
+    getMahjongTypeById = getMahjongTypeById,
+}
 
 --endregion

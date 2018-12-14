@@ -169,6 +169,14 @@ function downloadIcon(url, callback)
     end)
 end
 
+function getLogicGame(citytype, gametype)
+    if gametype == gameType.mahjong then
+        return require("logic.mahjong.mahjongGame")
+    elseif gametype == gameType.doushisi then
+        return require("logic.doushisi.doushisiGame")
+    end
+end
+
 -------------------------------------------------------------
 -- 进入桌子
 -------------------------------------------------------------
@@ -178,7 +186,7 @@ function enterDesk(gameType, deskId, callback)
     --开始预加载资源
     local preload = modelManager.preload()
 
-    for _, v in pairs(mahjongType) do
+    for _, v in pairs(mahjongType.c) do
         for i=1, 4 do
             preload:push(v.folder, v.resource, 1)
         end
@@ -253,7 +261,9 @@ function enterDesk(gameType, deskId, callback)
                 clientApp.currentDesk:onEnter(msg)
                 clientApp.currentDesk:startLoop()
             else
-                clientApp.currentDesk = require("logic.mahjong.mahjongGame").new(msg)
+                local cityType           = msg.GameType
+                local gameType           = msg.Config.Game
+                clientApp.currentDesk = getLogicGame(cityType, gameType).new(msg)
 
                 if preload ~= nil then
                     preload:stop()

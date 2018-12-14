@@ -129,7 +129,7 @@ function doushisi:reset()
 end
 
 function doushisi.typeId(id)
-    return getDoushisiTypeId(id)
+    return doushisiType.getDoushisiTypeId(id)
 end
 
 function doushisi:onDestroy()
