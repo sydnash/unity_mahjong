@@ -107,24 +107,10 @@ TextureImporter:
       name: CJ_dian
       rect:
         serializedVersion: 2
-        x: 993
-        y: 1013
+        x: 1
+        y: 24
         width: 10
         height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: yj_01
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 490
-        width: 758
-        height: 533
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -135,8 +121,8 @@ TextureImporter:
       name: yj_02
       rect:
         serializedVersion: 2
-        x: 761
-        y: 943
+        x: 94
+        y: 47
         width: 137
         height: 80
       alignment: 0
@@ -149,8 +135,8 @@ TextureImporter:
       name: yj_03
       rect:
         serializedVersion: 2
-        x: 1
-        y: 447
+        x: 94
+        y: 4
         width: 329
         height: 41
       alignment: 0
@@ -163,8 +149,8 @@ TextureImporter:
       name: yj_di
       rect:
         serializedVersion: 2
-        x: 900
-        y: 932
+        x: 1
+        y: 36
         width: 91
         height: 91
       alignment: 0
@@ -177,8 +163,8 @@ TextureImporter:
       name: yj_icon
       rect:
         serializedVersion: 2
-        x: 761
-        y: 851
+        x: 425
+        y: 37
         width: 59
         height: 48
       alignment: 0
@@ -191,8 +177,8 @@ TextureImporter:
       name: yj_zi01
       rect:
         serializedVersion: 2
-        x: 841
-        y: 892
+        x: 233
+        y: 47
         width: 77
         height: 38
       alignment: 0
@@ -205,8 +191,8 @@ TextureImporter:
       name: yj_zi02
       rect:
         serializedVersion: 2
-        x: 761
-        y: 901
+        x: 425
+        y: 87
         width: 78
         height: 40
       alignment: 9

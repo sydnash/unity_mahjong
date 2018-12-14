@@ -113,21 +113,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 412
-        width: 263
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: DL_dl_h
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 311
+        y: 156
         width: 263
         height: 99
       alignment: 0
@@ -140,8 +126,8 @@ TextureImporter:
       name: DL_mengban
       rect:
         serializedVersion: 2
-        x: 292
-        y: 464
+        x: 46
+        y: 1
         width: 17
         height: 17
       alignment: 0
@@ -154,8 +140,8 @@ TextureImporter:
       name: DL_qy01
       rect:
         serializedVersion: 2
-        x: 429
-        y: 464
+        x: 1
+        y: 6
         width: 43
         height: 47
       alignment: 0
@@ -168,8 +154,8 @@ TextureImporter:
       name: DL_qy02
       rect:
         serializedVersion: 2
-        x: 266
-        y: 483
+        x: 142
+        y: 25
         width: 97
         height: 28
       alignment: 0
@@ -182,24 +168,10 @@ TextureImporter:
       name: DL_qy03
       rect:
         serializedVersion: 2
-        x: 266
-        y: 449
+        x: 116
+        y: 21
         width: 24
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: DL_qy_xc
-      rect:
-        serializedVersion: 2
-        x: 365
-        y: 477
-        width: 62
-        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,8 +182,8 @@ TextureImporter:
       name: DL_yhxy01
       rect:
         serializedVersion: 2
-        x: 474
-        y: 478
+        x: 46
+        y: 20
         width: 33
         height: 33
       alignment: 0
@@ -224,8 +196,8 @@ TextureImporter:
       name: DL_yhxy02
       rect:
         serializedVersion: 2
-        x: 474
-        y: 444
+        x: 81
+        y: 21
         width: 33
         height: 32
       alignment: 0
@@ -239,21 +211,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 210
-        width: 263
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: DL_ykdl_h
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 109
+        y: 55
         width: 263
         height: 99
       alignment: 0

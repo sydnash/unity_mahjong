@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Resources/UI/SettingUI/Atlas/SettingUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/SettingUI/Atlas/SettingUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -99,7 +99,7 @@
             <key>width</key>
             <int>512</int>
             <key>height</key>
-            <int>512</int>
+            <int>256</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -110,7 +110,7 @@
             <key>sizeConstraints</key>
             <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
             <key>forceSquared</key>
-            <true/>
+            <false/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>
@@ -199,20 +199,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../../../../../tdqp/Assets/Client/Resources/UI/SettingUI/Atlas/Images/SZ_zi01_1.png</key>
-            <key type="filename">Images/SZ_zi01.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>34,10,68,20</rect>
-                <key>scale9Paddings</key>
-                <rect>34,10,68,20</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/SZ_01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -318,6 +304,20 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/SZ_zi01.png</key>
+            <key type="filename">Images/SZ_zi01_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>34,10,68,20</rect>
+                <key>scale9Paddings</key>
+                <rect>34,10,68,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/SZ_zi02.png</key>
             <key type="filename">Images/SZ_zi02_1.png</key>
             <struct type="IndividualSpriteSettings">
@@ -361,7 +361,7 @@
             <filename>Images/SZ_tcyx.png</filename>
             <filename>Images/SZ_zi02_1.png</filename>
             <filename>Images/hf_zi02.png</filename>
-            <filename>../../../../../../../tdqp/Assets/Client/Resources/UI/SettingUI/Atlas/Images/SZ_zi01_1.png</filename>
+            <filename>Images/SZ_zi01_1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

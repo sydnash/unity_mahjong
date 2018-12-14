@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/CreateDeskUI/Atlas/CreateDeskUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/CreateDeskUI/Atlas/CreateDeskUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -97,7 +97,7 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>1024</int>
+            <int>512</int>
             <key>height</key>
             <int>1024</int>
         </QSize>
@@ -110,7 +110,7 @@
             <key>sizeConstraints</key>
             <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
             <key>forceSquared</key>
-            <true/>
+            <false/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>

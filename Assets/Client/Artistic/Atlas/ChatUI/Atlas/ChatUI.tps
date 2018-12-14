@@ -97,7 +97,7 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>512</int>
+            <int>256</int>
             <key>height</key>
             <int>512</int>
         </QSize>
@@ -110,7 +110,7 @@
             <key>sizeConstraints</key>
             <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
             <key>forceSquared</key>
-            <true/>
+            <false/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>

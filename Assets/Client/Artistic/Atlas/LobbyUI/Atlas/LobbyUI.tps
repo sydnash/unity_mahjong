@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/LobbyUI/Atlas/LobbyUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/LobbyUI/Atlas/LobbyUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -99,7 +99,7 @@
             <key>width</key>
             <int>1024</int>
             <key>height</key>
-            <int>1024</int>
+            <int>512</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -110,7 +110,7 @@
             <key>sizeConstraints</key>
             <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
             <key>forceSquared</key>
-            <true/>
+            <false/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>
@@ -359,19 +359,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/ZY_hb.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>58,93,115,187</rect>
-                <key>scale9Paddings</key>
-                <rect>58,93,115,187</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/ZY_qhdy01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -408,19 +395,6 @@
                 <rect>16,9,31,17</rect>
                 <key>scale9Paddings</key>
                 <rect>16,9,31,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/ZY_rw.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>88,137,177,273</rect>
-                <key>scale9Paddings</key>
-                <rect>88,137,177,273</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -467,11 +441,9 @@
             <filename>Images/ZY_an08.png</filename>
             <filename>Images/ZY_an09.png</filename>
             <filename>Images/ZY_an10.png</filename>
-            <filename>Images/ZY_hb.png</filename>
             <filename>Images/ZY_qhdy_xc.png</filename>
             <filename>Images/ZY_qhdy01.png</filename>
             <filename>Images/ZY_qhdy02.png</filename>
-            <filename>Images/ZY_rw.png</filename>
             <filename>Images/ZY_tx.png</filename>
             <filename>Images/ZY_yj.png</filename>
             <filename>Images/ZY_1.png</filename>

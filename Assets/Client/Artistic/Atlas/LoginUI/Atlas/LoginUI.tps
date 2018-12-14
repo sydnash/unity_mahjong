@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/LoginUI/Atlas/LoginUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/LoginUI/Atlas/LoginUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -99,7 +99,7 @@
             <key>width</key>
             <int>512</int>
             <key>height</key>
-            <int>512</int>
+            <int>256</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -110,7 +110,7 @@
             <key>sizeConstraints</key>
             <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
             <key>forceSquared</key>
-            <true/>
+            <false/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>
@@ -200,9 +200,7 @@
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">Images/DL_dl.png</key>
-            <key type="filename">Images/DL_dl_h.png</key>
             <key type="filename">Images/DL_ykdl.png</key>
-            <key type="filename">Images/DL_ykdl_h.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -267,19 +265,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/DL_qy_xc.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,9,31,17</rect>
-                <key>scale9Paddings</key>
-                <rect>16,9,31,17</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/DL_yhxy01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -310,15 +295,12 @@
         <key>fileList</key>
         <array>
             <filename>Images/DL_dl.png</filename>
-            <filename>Images/DL_dl_h.png</filename>
             <filename>Images/DL_mengban.png</filename>
-            <filename>Images/DL_qy_xc.png</filename>
             <filename>Images/DL_qy02.png</filename>
             <filename>Images/DL_qy03.png</filename>
             <filename>Images/DL_yhxy01.png</filename>
             <filename>Images/DL_yhxy02.png</filename>
             <filename>Images/DL_ykdl.png</filename>
-            <filename>Images/DL_ykdl_h.png</filename>
             <filename>Images/DL_qy01.png</filename>
         </array>
         <key>ignoreFileList</key>
