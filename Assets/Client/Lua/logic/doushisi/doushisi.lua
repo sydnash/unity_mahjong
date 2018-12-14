@@ -7,7 +7,7 @@ local doushisiType = require("logic.doushisi.doushisiType")
 local base = require("common.object")
 local doushisi = class("doushisi", base)
 
-local cardType = {
+doushisi.cardType = {
     shou    = 1,
     chu     = 2,
     cpg     = 3,
@@ -46,63 +46,25 @@ function doushisi:ctor(id)
     self.value = typ.value
 end
 
+function doushisi:setId(id)
+    self.id = id
+end
+
 function doushisi:setStyle(style)
-    if self.style ~= style then
-        self.style = style
-
-        local typ = getDoushisiTypeById(self.id)
-        self:setSprite(typ.folder, typ.resource .. suffix)
-    end
+    self.style = style
 end
 
-function doushisi:changeToShou()
-    if self.ctype ~= cardType.shou then
-        self.ctype = cardType.shou
-        self.collider.enabled = true
-
-        local typ = getDoushisiTypeById(self.id)
-        self:setSprite(typ.folder, typ.resource .. suffix)
-    end
+function doushisi:setType(ctype)
+    self.ctype = ctype
 end
 
-function doushisi:changeToChu()
-    if self.ctype ~= cardType.shou then
-        self.ctype = cardType.chu
-        self.collider.enabled = false
-
-        local typ = getDoushisiTypeById(self.id)
-        self:setSprite(typ.folder, typ.resource .. suffix)
-    end
+function doushisi:setColliderEnabled(enabled)
+    self.collider.enabled = enabled
 end
 
-function doushisi:changeToCPG()
-    if self.ctype ~= cardType.shou then
-        self.ctype = cardType.cpg
-        self.collider.enabled = false
-
-        local typ = getDoushisiTypeById(self.id)
-        self:setSprite(typ.folder, typ.resource .. suffix)
-    end
-end
-
-function doushisi:changeToPerfct()
-    if self.ctype ~= cardType.shou then
-        self.ctype = cardType.perfect
-        self.collider.enabled = false
-
-        local typ = getDoushisiTypeById(self.id)
-        self:setSprite(typ.folder, typ.resource .. suffix)
-    end
-end
-
-function doushisi:changeToBack()
-    if self.ctype ~= cardType.shou then
-        self.ctype = cardType.back
-        self.collider.enabled = false
-
-        local typ = getDoushisiBackType()
-        self:setSprite(typ.folder, typ.resource .. suffix)
-    end
+function doushisi:fix()
+    local typ = getDoushisiTypeById(self.id)
+    self:setSprite(typ.folder, typ.resource)
 end
 
 function doushisi:setSprite(folder, resource)
@@ -125,7 +87,7 @@ function doushisi:reset()
     self.ctype = nil
 
     self:resetRender()
-    self.collider.enabled = false
+    self:setColliderEnabled(false)
 end
 
 function doushisi.typeId(id)
