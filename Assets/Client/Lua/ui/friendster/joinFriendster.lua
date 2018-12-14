@@ -21,6 +21,7 @@ function joinFriendster:onInit()
 
     self.mId:setText(string.empty)
     self.mVerification:setText(string.empty)
+    self.mName:setText(string.empty)
 
     self:refreshJoinState()
 

@@ -126,11 +126,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 388
-        y: 448
-        width: 64
-        height: 63
+        y: 452
+        width: 57
+        height: 59
       alignment: 9
-      pivot: {x: 0.5078125, y: 0.4920635}
+      pivot: {x: 0.50877196, y: 0.4915254}
       border: {x: 19, y: 21, z: 18, w: 19}
       outline: []
       physicsShape: []
@@ -140,7 +140,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 5
+        y: 126
         width: 132
         height: 54
       alignment: 0
@@ -178,20 +178,6 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: qy_dq_cd_03
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 122
-        width: 197
-        height: 58
-      alignment: 9
-      pivot: {x: 0.49492386, y: 0.4827586}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
       name: qy_dq_cd_04
       rect:
         serializedVersion: 2
@@ -209,8 +195,8 @@ TextureImporter:
       name: qy_dq_dy_01
       rect:
         serializedVersion: 2
-        x: 1
-        y: 61
+        x: 201
+        y: 124
         width: 196
         height: 59
       alignment: 9
@@ -257,20 +243,6 @@ TextureImporter:
         height: 59
       alignment: 9
       pivot: {x: 0.49242425, y: 0.5084746}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: qy_dq_ya_02
-      rect:
-        serializedVersion: 2
-        x: 201
-        y: 124
-        width: 198
-        height: 59
-      alignment: 9
-      pivot: {x: 0.49747476, y: 0.4915254}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
