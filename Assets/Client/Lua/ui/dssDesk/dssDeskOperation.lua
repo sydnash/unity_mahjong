@@ -30,7 +30,7 @@ local btnIconConfig = {
 }
 
 local mainCameraParams = {
-    position = Vector3.New(1000, 0, -13.43),
+    position = Vector3.New(1000, 0, -1343),
     rotation = Quaternion.Euler(0, 0, 0),
 }
 function dssOperation:onInit()
