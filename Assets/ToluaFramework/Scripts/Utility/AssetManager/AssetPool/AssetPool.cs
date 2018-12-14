@@ -238,7 +238,7 @@ public class AssetPool
         }
         else
         {
-            Logger.LogError(string.Format("load asset [{0}] failed", assetName));
+            Logger.LogError(string.Format("load asset [{0}] failed", LFS.CombinePath(assetPath, assetName)));
         }
 
         return asset;

@@ -3,13 +3,9 @@ local gamePlayer = require("logic.player.gamePlayer")
 local base = require("logic.game")
 local doushisiGame = class("doushisiGame", base)
 local doushisi = require("logic.doushisi.doushisi")
+local doushisiType = require("logic.doushisi.doushisiType")
 
-doushisiGame.cardType = {
-    shou    = 1,
-    peng    = 2,
-    chu     = 3,
-    hu      = 4,
-}
+doushisiGame.cardType = doushisiType.cardType
 
 local totalCardCountByCity = {
     [cityType.jintang] = 88,
@@ -57,9 +53,9 @@ function doushisiGame:syncSeats(seats)
         player.hu = v.HuInfo
         player.isMarker = self:isMarker(player.acId)
 
-        player[mahjongGame.cardType.shou] = v.CardsInHand
-        player[mahjongGame.cardType.chu]  = v.CardsInChuPai
-        player[mahjongGame.cardType.peng] = v.ChiCheInfos
+        player[doushisiType.cardType.shou] = v.CardsInHand
+        player[doushisiType.cardType.chu]  = v.CardsInChuPai
+        player[doushisiType.cardType.peng] = v.ChiCheInfos
 
         player.fuShu = v.FuShu
         player.piaoStatus = v.PiaoStatus
@@ -114,7 +110,9 @@ function doushisiGame:onMessageHandler(name)
     assert(self[name], string.format("on message handler: function<%s> must exist.", name))
 
     local func = function(msg)
-        self:pushMessage(self[name], 0, msg)
+        self:pushMessage(function(msg)
+            self[name](self, msg)
+        end, 0, msg)
     end
     return func
 end

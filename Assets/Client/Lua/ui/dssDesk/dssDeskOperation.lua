@@ -3,6 +3,8 @@ local touch         = require("logic.touch")
 
 local base = require("ui.common.view")
 local dssOperation = class("dssOperation", base)
+local doushisi = require("logic.doushisi.doushisi")
+local doushisiType = require("logic.doushisi.doushisiType")
 
 _RES_(dssOperation, "DssDeskUI", "DssOperationUI")
 
@@ -26,18 +28,37 @@ local btnIconConfig = {
     mBuDangIcon = {
         default = "buDang",
         [cityType.jintang] = "huaZhuang",
-    }
+    },
 }
 
 local mainCameraParams = {
-    position = Vector3.New(1000, 0, -13.43),
+    position = Vector3.New(1000, 0, -1343),
     rotation = Quaternion.Euler(0, 0, 0),
 }
+
+dssOperation.seats = {
+    [seatType.mine] = { 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -249, -353, 0), rot = Quaternion.Euler(0, 0, 0), w = 72, h = 214, hgap = 50 },
+    },
+    [seatType.right] = { 
+    },
+    [seatType.top] = { 
+    },
+    [seatType.left] = { 
+    },
+}
+
 function dssOperation:onInit()
     --初始化主相机
     local mainCamera = UnityEngine.Camera.main
     mainCamera.transform.position = mainCameraParams.position
     mainCamera.transform.rotation = mainCameraParams.rotation
+
+    self.cardRoot = find("changpai/changpai_root")
+    self.allCards = {}
+    self.idleCards = {}
+    self.style = doushisiStyle.traditional
+    
     --初始化按钮
     self.mBuDang:addClickListener(self.onBuDangClickedHandler, self)
     self.mDang:addClickListener(self.onDangClickedHandler, self)
@@ -70,6 +91,8 @@ function dssOperation:onInit()
         self.mDeng,
         self.mHu,
     }
+
+    self:reset()
 end
 
 function dssOperation:hideAllOpBtn()
@@ -89,6 +112,8 @@ function dssOperation:closeAllBtnPanel()
 end
 
 function dssOperation:onGameSync()
+    self:reset()
+    self:initInhandCards()
 end
 
 function dssOperation:onFaPai()
@@ -299,6 +324,199 @@ end
 function dssOperation:reset()
     self:hideAllOpBtn()
     self:closeAllBtnPanel()
+
+    self.idleCards = {}
+    for _, card in pairs(self.allCards) do
+        card:hide()
+        table.insert(self.idleCards, card)
+    end
+    self.inhandCards = { [seatType.mine] = {}, [seatType.left] = {}, [seatType.right] = {}, [seatType.top] = {} }
+end
+
+function dssOperation:getCardById(id)
+    if #self.idleCards > 0 then
+        local card = self.idleCards[#self.idleCards]
+        table.remove(self.idleCards, #self.idleCards)
+        card:setId(id)
+        card:hide()
+        return card
+    end
+    local card = doushisi.new(id)
+    table.insert(self.allCards, card)
+    card:hide()
+    return card
+end
+
+function dssOperation:addCardTo(card, pos, seatType, cardType)
+    card:setStyle(self.style)
+    card:setType(cardType)
+    card:fix()
+    --get rot by cardtype and seattype
+    local cfg = self.seats[seatType][cardType]
+    card:setLocalPosition(pos)
+    card:setParent(self.cardRoot)
+    card:show()
+end
+
+function dssOperation:initInhandCards()
+    for _, player in pairs(self.game.players) do
+        local seatType = self.game:getSeatTypeByAcId(player.acId)
+        local cards = self.inhandCards[seatType]
+        for _, id in pairs(player[doushisiGame.cardType.shou]) do
+            local card = self:getCardById(id)
+            table.insert(cards, card)
+        end
+        self:relocateInhandCards(player.acId)
+    end
+end
+
+function dssOperation:relocateInhandCards(acId)
+    if acId ~= self.game.mainAcId then
+        return
+    end
+    local seatType = self.game:getSeatTypeByAcId(acId)
+    local cards = self.inhandCards[seatType]
+    self.meSortedInhandCards = self:sortInhandCards(cards)
+
+    local startPos = self:getInhandCardStartPos(seatType)
+    for col, cards in pairs(self.meSortedInhandCards) do
+        for row, card in pairs(cards) do
+            local pos = card:getLocalPosition()
+            pos = self:getInhandCardPos(startPos, seatType, col, row, pos, #cards)
+            self:addCardTo(card, pos, seatType, doushisiGame.cardType.shou)
+            self:topNode(node)
+        end
+    end
+end
+
+function dssOperation:topNode(node)
+end
+
+function dssOperation:getInhandCardPos(startPos, seatType, col, row, pos, rowHeight)
+    local cfg = self.seats[seatType][doushisiGame.cardType.shou]
+    local diffx = cfg.w * (col - 1)
+    local diffy = cfg.hgap * (rowHeight - row)
+    pos.x = startPos.x + diffx
+    pos.y = startPos.y + diffy
+    return pos
+end
+
+function dssOperation:getInhandCardStartPos(seatType)
+    if acId ~= self.game.mainAcId then
+        return Vector3.zero
+    else
+        return self.seats[seatType][doushisiGame.cardType.shou].pos
+    end
+end
+
+---------------------------------------------------------
+--排序
+---------------------------------------------------------
+function dssOperation:getCardType(card)
+    return doushisiType.getDoushisiTypeId(card)
+end
+
+function dssOperation:getCardDescByType(idx)
+    return doushisiType.getDoushisiTypeByTypeId(idx)
+end
+
+function dssOperation:adjustValue(value)
+    if value <= 7 then 
+        return value 
+    end
+    return 14 - value
+end
+
+function dssOperation:sortInhandCards(oripais)
+    local cntvec = {}
+    for _, pai in ipairs(oripais) do
+        local typ = self:getCardType(pai.id)
+        if cntvec[typ] == nil then
+            local desc = self:getCardDescByType(typ)
+            cntvec[typ] = {dianshu = self:getCardDescByType(typ).value, typ = typ, cards = {}}
+        end
+        table.insert(cntvec[typ].cards, pai)
+    end
+
+    --class dian = {dian = 2, cnts = {cnt, cnt}}
+    local dianvec = {}
+    for i = 1, 23 do
+        local cnt = cntvec[i]
+        if cnt then
+            local dian = cnt.dianshu
+            local dian = self:adjustValue(dian)
+            if dianvec[dian] == nil then
+                dianvec[dian] = {dian = dian, cnts = {}}
+            end
+            table.insert(dianvec[dian].cnts, cnt)
+        end
+    end
+
+    local function getDianPaiCnt(dian)
+        local paicnt = 0
+        for _, cnt in pairs(dian.cnts) do
+            paicnt = paicnt + #cnt.cards
+        end
+        return paicnt
+    end
+    local function getDianPais(dian)
+        local ret = {}
+        for _, cnt in pairs(dian.cnts) do
+            for _, pai in pairs(cnt.cards) do
+                table.insert(ret, pai)
+            end
+        end
+        return ret
+    end
+
+    local ret = {}
+    for i = 0,7 do
+        local dian = dianvec[i]
+        if dian then
+            local paicnt = getDianPaiCnt(dian)
+            if paicnt <= 4 then
+                table.insert(ret, getDianPais(dian))
+            else
+                local tmp = {}
+                local preDianShu = -1
+                local leftcnt = paicnt
+                for _, cnt in pairs(dian.cnts) do
+                    local hasProcess = false
+                    if #tmp + #cnt.cards <= 4 then
+                        local needProcess = false
+                        if preDianShu == -1 or cnt.dianshu == preDianShu then
+                            needProcess = true
+                        end
+                        if not needProcess then
+                            if #tmp + leftcnt <= 4 then
+                                needProcess = true
+                            end
+                        end
+
+                        if needProcess then
+                            for _, pai in pairs(cnt.cards) do
+                                table.insert(tmp, pai)
+                            end
+                            hasProcess = true
+                        end
+                    end
+                    if not hasProcess then
+                        table.insert(ret, tmp)
+                        tmp = {}
+                        for _, pai in pairs(cnt.cards) do
+                            table.insert(tmp, pai)
+                        end
+                    end
+                    preDianShu = cnt.dianshu
+                    leftcnt = leftcnt - #cnt.cards
+                end
+                if #tmp > 0 then
+                    table.insert(ret, tmp)
+                end
+            end
+        end
+    end
+    return ret
 end
 
 return dssOperation

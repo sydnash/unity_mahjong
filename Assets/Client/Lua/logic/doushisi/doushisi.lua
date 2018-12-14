@@ -7,26 +7,18 @@ local doushisiType = require("logic.doushisi.doushisiType")
 local base = require("common.object")
 local doushisi = class("doushisi", base)
 
-doushisi.cardType = {
-    shou    = 1,
-    chu     = 2,
-    cpg     = 3,
-    perfect = 4,
-    back    = 5,
-}
-
 local resourceSuffix = {
     [doushisiStyle.traditional] = {
-        shou    = "m",
-        chu     = "s",
-        cpg     = "s",
-        perfect = "",
+        [doushisiType.cardType.shou]    = "m",
+        [doushisiType.cardType.chu]     = "s",
+        [doushisiType.cardType.peng]    = "s",
+        [doushisiType.cardType.perfect] = "",
     },
     [doushisiStyle.modern] = {
-        shou    = "l",
-        chu     = "_ns",
-        cpg     = "s",
-        perfect = "xl",
+        [doushisiType.cardType.shou]    = "l",
+        [doushisiType.cardType.chu]     = "_ns",
+        [doushisiType.cardType.peng]    = "s",
+        [doushisiType.cardType.perfect] = "xl",
     }
 }
 
@@ -40,10 +32,13 @@ function doushisi:ctor(id)
     self.render = getComponentU(go, typeof(UnityEngine.SpriteRenderer))
     self.collider = getComponentU(go, typeof(UnityEngine.BoxCollider))
 
-    local typ  = doushisiType[id]
+    local typ  = doushisiType.getDoushisiTypeById(id)
     self.name  = typ.name
     self.color = typ.color
     self.value = typ.value
+
+    self.style = doushisiStyle.traditional
+    self.ctype = doushisiType.cardType.shou
 end
 
 function doushisi:setId(id)
@@ -87,7 +82,7 @@ function doushisi:setSprite(folder, resource)
     self:resetRender()
 
     local suffix = resourceSuffix[self.style][self.ctype]
-    self.render.sprite = textureManager.load(folder, resource .. suffix)
+    self.render.sprite = convertTextureToSprite(textureManager.load(folder, resource .. suffix))
 end
 
 function doushisi:resetRender()

@@ -438,6 +438,9 @@ end
 --
 -------------------------------------------------------------------
 function convertTextureToSprite(tex)
+    if tex == nil then
+        log("1111111111111111111111111111111111111")
+    end
     return Utils.ConvertTextureToSprite(tex)
 end
 
