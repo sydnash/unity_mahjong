@@ -34,6 +34,7 @@ function doushisi:ctor(id)
 
     self.render = getComponentU(go, typeof(UnityEngine.SpriteRenderer))
     self.collider = getComponentU(go, typeof(UnityEngine.BoxCollider))
+    self.selected = false
 
     local typ  = doushisiType.getDoushisiTypeById(id)
     self.name  = typ.name
@@ -134,7 +135,7 @@ function doushisi:setSelected(selected)
         self.selected = selected
 
         local pos = self:getLocalPosition()
-        pos:Set(pos.x, pos.y + mahjong.h * (selected and 30 or 30), pos.z)
+        pos:Set(pos.x, pos.y + (selected and 0.3 or -0.3), pos.z)
         self:setLocalPosition(pos)
     end
 end
