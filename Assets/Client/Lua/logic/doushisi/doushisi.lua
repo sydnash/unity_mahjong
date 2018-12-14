@@ -39,6 +39,8 @@ function doushisi:ctor(id)
 
     self.style = doushisiStyle.traditional
     self.ctype = doushisiType.cardType.shou
+    self.dirty = true
+    self:fix()
 end
 
 function doushisi:setId(id)
@@ -70,11 +72,12 @@ function doushisi:fix()
     if self.dirty then
         self.dirty = false
 
-        local typ = getDoushisiTypeById(self.id)
+        local typ = doushisiType.getDoushisiTypeById(self.id)
         self:setSprite(typ.folder, typ.resource)
 
-        local bounds = self.render.bounds
-        self.collider.bounds = bounds
+        local size = self.render.bounds.size
+        self.collider.center = Vector2.New(size.x * 0.5, size.y * 0.5)
+        self.collider.size = size
     end
 end
 
