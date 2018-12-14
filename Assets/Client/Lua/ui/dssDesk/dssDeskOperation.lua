@@ -401,11 +401,11 @@ function dssOperation:getInhandCardPos(startPos, seatType, col, row, pos, rowHei
     return pos
 end
 
-function dssOperation:getInhandCardStartPos(seatType)
-    if acId ~= self.game.mainAcId then
+function dssOperation:getInhandCardStartPos(st)
+    if st ~= seatType.mine then
         return Vector3.zero
     else
-        return self.seats[seatType][doushisiGame.cardType.shou].pos
+        return self.seats[st][doushisiGame.cardType.shou].pos
     end
 end
 
