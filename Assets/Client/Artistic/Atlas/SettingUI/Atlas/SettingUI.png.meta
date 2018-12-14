@@ -113,8 +113,8 @@ TextureImporter:
       name: hf_zi02
       rect:
         serializedVersion: 2
-        x: 73
-        y: 389
+        x: 1
+        y: 19
         width: 137
         height: 39
       alignment: 0
@@ -127,8 +127,8 @@ TextureImporter:
       name: SZ_01
       rect:
         serializedVersion: 2
-        x: 208
-        y: 350
+        x: 209
+        y: 135
         width: 120
         height: 37
       alignment: 0
@@ -141,8 +141,8 @@ TextureImporter:
       name: SZ_02
       rect:
         serializedVersion: 2
-        x: 330
-        y: 351
+        x: 140
+        y: 17
         width: 117
         height: 35
       alignment: 0
@@ -156,7 +156,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 358
+        y: 102
         width: 70
         height: 70
       alignment: 0
@@ -170,7 +170,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 430
+        y: 174
         width: 369
         height: 37
       alignment: 9
@@ -184,7 +184,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 469
+        y: 213
         width: 373
         height: 42
       alignment: 0
@@ -197,8 +197,8 @@ TextureImporter:
       name: SZ_04
       rect:
         serializedVersion: 2
-        x: 483
-        y: 418
+        x: 1
+        y: 7
         width: 10
         height: 10
       alignment: 0
@@ -211,8 +211,8 @@ TextureImporter:
       name: SZ_05
       rect:
         serializedVersion: 2
-        x: 330
-        y: 316
+        x: 253
+        y: 57
         width: 117
         height: 33
       alignment: 0
@@ -225,8 +225,8 @@ TextureImporter:
       name: SZ_06
       rect:
         serializedVersion: 2
-        x: 208
-        y: 312
+        x: 140
+        y: 54
         width: 111
         height: 36
       alignment: 0
@@ -240,7 +240,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 376
-        y: 471
+        y: 215
         width: 135
         height: 40
       alignment: 9
@@ -254,7 +254,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 376
-        y: 430
+        y: 174
         width: 134
         height: 39
       alignment: 9
@@ -267,8 +267,8 @@ TextureImporter:
       name: SZ_zi01_1
       rect:
         serializedVersion: 2
-        x: 212
-        y: 389
+        x: 73
+        y: 133
         width: 134
         height: 39
       alignment: 9
@@ -281,8 +281,8 @@ TextureImporter:
       name: SZ_zi02
       rect:
         serializedVersion: 2
-        x: 73
-        y: 348
+        x: 136
+        y: 92
         width: 133
         height: 39
       alignment: 0
@@ -295,8 +295,8 @@ TextureImporter:
       name: SZ_zi02_1
       rect:
         serializedVersion: 2
-        x: 348
-        y: 388
+        x: 1
+        y: 60
         width: 133
         height: 40
       alignment: 9

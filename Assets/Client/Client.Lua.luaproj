@@ -23,7 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Lua\" />
-    <Folder Include="Lua\logic\changpai\" />
+    <Folder Include="Lua\logic\doushisi\" />
     <Folder Include="Lua\logic\mahjong\" />
     <Folder Include="Lua\logic\friendster\" />
     <Folder Include="Lua\logic\manager\" />
@@ -34,6 +34,7 @@
     <Folder Include="Lua\config\" />
     <Folder Include="Lua\platform\" />
     <Folder Include="Lua\ui\" />
+    <Folder Include="Lua\ui\dssDesk\" />
     <Folder Include="Lua\ui\gameEnd\" />
     <Folder Include="Lua\ui\mahjongDesk\" />
     <Folder Include="Lua\ui\gameOver\" />
@@ -58,8 +59,9 @@
     <Compile Include="Lua\const\textDef.lua" />
     <Compile Include="Lua\const\typeDef.lua" />
     <Compile Include="Lua\globals.lua" />
-    <Compile Include="Lua\logic\changpai\changpai.lua" />
-    <Compile Include="Lua\logic\changpai\changpaiType.lua" />
+    <Compile Include="Lua\logic\doushisi\doushisi.lua" />
+    <Compile Include="Lua\logic\doushisi\doushisiGame.lua" />
+    <Compile Include="Lua\logic\doushisi\doushisiType.lua" />
     <Compile Include="Lua\logic\game.lua" />
     <Compile Include="Lua\logic\manager\gvoiceManager.lua" />
     <Compile Include="Lua\logic\friendster\friendster.lua" />
@@ -84,6 +86,8 @@
     <Compile Include="Lua\ui\city.lua" />
     <Compile Include="Lua\ui\deskDetail\deskDetail.lua" />
     <Compile Include="Lua\ui\deskDetail\deskDetailPanel.lua" />
+    <Compile Include="Lua\ui\dssDesk\chiAnSelPanel.lua" />
+    <Compile Include="Lua\ui\dssDesk\dssDeskOperation.lua" />
     <Compile Include="Lua\ui\errorMessage.lua" />
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDesk.lua" />

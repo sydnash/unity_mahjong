@@ -4,22 +4,19 @@
 # To import these sprites into your Unity project, download "TexturePackerImporter":
 # http://www.codeandweb.com/texturepacker/unity
 #
-# $TexturePacker:SmartUpdate:56bbe308ae8e8004d750deb4726c157a:a3003d59c2743cfa3aab7b9b42ab6083:858b6c1f10ebf0bdaa9eeb80cf96080c$
+# $TexturePacker:SmartUpdate:3eb63ffc10321f0a3d8c061a9e02127f:3adfc394b92cb4d0eeb96757cdeaab63:858b6c1f10ebf0bdaa9eeb80cf96080c$
 #
 :format=40300
 :texture=LoginUI.png
-:size=512x512
+:size=512x256
 :pivotpoints=enabled
 :borders=disabled
 
-DL_dl;1;412;263;99; 0.5;0.5; 0;0;0;0
-DL_dl_h;1;311;263;99; 0.5;0.5; 0;0;0;0
-DL_mengban;292;464;17;17; 0.5;0.5; 0;0;0;0
-DL_qy01;429;464;43;47; 0.5;0.5; 0;0;0;0
-DL_qy02;266;483;97;28; 0.5;0.5; 0;0;0;0
-DL_qy03;266;449;24;32; 0.5;0.5; 0;0;0;0
-DL_qy_xc;365;477;62;34; 0.5;0.5; 0;0;0;0
-DL_yhxy01;474;478;33;33; 0.5;0.5; 0;0;0;0
-DL_yhxy02;474;444;33;32; 0.5;0.5; 0;0;0;0
-DL_ykdl;1;210;263;99; 0.5;0.5; 0;0;0;0
-DL_ykdl_h;1;109;263;99; 0.5;0.5; 0;0;0;0
+DL_dl;1;156;263;99; 0.5;0.5; 0;0;0;0
+DL_mengban;46;1;17;17; 0.5;0.5; 0;0;0;0
+DL_qy01;1;6;43;47; 0.5;0.5; 0;0;0;0
+DL_qy02;142;25;97;28; 0.5;0.5; 0;0;0;0
+DL_qy03;116;21;24;32; 0.5;0.5; 0;0;0;0
+DL_yhxy01;46;20;33;33; 0.5;0.5; 0;0;0;0
+DL_yhxy02;81;21;33;32; 0.5;0.5; 0;0;0;0
+DL_ykdl;1;55;263;99; 0.5;0.5; 0;0;0;0

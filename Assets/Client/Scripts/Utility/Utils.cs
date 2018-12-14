@@ -266,7 +266,12 @@ public class Utils
     /// <returns></returns>
     public static Sprite ConvertTextureToSprite(Texture2D tex)
     {
-        Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
-        return sprite;
+        if (tex != null)
+        {
+            Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
+            return sprite;
+        }
+
+        return null;
     }
 }

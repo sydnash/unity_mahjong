@@ -33,13 +33,17 @@ local btnIconConfig = {
 }
 
 local mainCameraParams = {
-    position = Vector3.New(1000, 0, -1343),
+    position = Vector3.New(1000, 0, -13.43),
     rotation = Quaternion.Euler(0, 0, 0),
+}
+local inhandCameraParams = {
+    position = Vector3.New(1000, 0, -0.9),
+    size = 3.6
 }
 
 dssOperation.seats = {
     [seatType.mine] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( -249, -353, 0), rot = Quaternion.Euler(0, 0, 0), w = 72, h = 214, hgap = 50 },
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -3.53, 0), rot = Quaternion.Euler(0, 0, 0), w = 0.72, h = 2.14, hgap = 0.50 },
     },
     [seatType.right] = { 
     },
@@ -55,13 +59,17 @@ function dssOperation:onInit()
     mainCamera.transform.position = mainCameraParams.position
     mainCamera.transform.rotation = mainCameraParams.rotation
 
+    local camera = GameObjectPicker.instance.camera
+    camera.transform.position = inhandCameraParams.position
+    camera.orthographicSize = inhandCameraParams.size
+
     self.cardRoot = find("changpai/changpai_root")
     self.allCards = {}
     self.idleCards = {}
     self.style = doushisiStyle.traditional
     self.canChuPai = false
     self.dragCard = doushisi.new(0)
-    self.dragCard:setScale(1.2)
+    self.dragCard:setLocalScale(Vector3.New(1.2, 1.2, 1.2))
     
     --初始化按钮
     self.mBuDang:addClickListener(self.onBuDangClickedHandler, self)
@@ -335,6 +343,7 @@ function dssOperation:reset()
     self:closeAllBtnPanel()
     touch.removeListener()
 
+    self.dragCard:hide()
     self.idleCards = {}
     for _, card in pairs(self.allCards) do
         card:hide()
@@ -363,9 +372,9 @@ function dssOperation:addCardTo(card, pos, seatType, cardType, rot)
     card:fix()
     --get rot by cardtype and seattype
     if cardType == doushisiGame.cardType.shou then
-        self:setPickabled(true)
+        card:setPickabled(true)
     else
-        self:setPickabled(false)
+        card:setPickabled(false)
     end
     if rot then
         card:setRotation(rot)
@@ -433,8 +442,6 @@ function dssOperation:onDestroy()
     end
     self.super.onDestroy(self)
 end
-
-function dssOperation:
 
 function dssOperation:touchHandler(phase, pos)
     if not self.canChuPai then
