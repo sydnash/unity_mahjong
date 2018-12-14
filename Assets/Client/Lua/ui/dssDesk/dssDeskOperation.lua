@@ -3,6 +3,7 @@ local touch         = require("logic.touch")
 
 local base = require("ui.common.view")
 local dssOperation = class("dssOperation", base)
+local doushisi = require("logic.doushisi.doushisi")
 
 _RES_(dssOperation, "DssDeskUI", "DssOperationUI")
 
@@ -38,6 +39,11 @@ function dssOperation:onInit()
     local mainCamera = UnityEngine.Camera.main
     mainCamera.transform.position = mainCameraParams.position
     mainCamera.transform.rotation = mainCameraParams.rotation
+
+    self.cardRoot = find("changpai/changpai_root")
+    self.allCards = {}
+    self.idleCards = {}
+    
     --初始化按钮
     self.mBuDang:addClickListener(self.onBuDangClickedHandler, self)
     self.mDang:addClickListener(self.onDangClickedHandler, self)
@@ -70,6 +76,8 @@ function dssOperation:onInit()
         self.mDeng,
         self.mHu,
     }
+
+    self:reset()
 end
 
 function dssOperation:hideAllOpBtn()
@@ -299,6 +307,21 @@ end
 function dssOperation:reset()
     self:hideAllOpBtn()
     self:closeAllBtnPanel()
+
+    self.idleCards = {}
+    for _, card in pairs(self.allCards) do
+        card:hide()
+        table.insert(self.idleCards, card)
+    end
+end
+
+function dssOperation:getCardById(id)
+    if #self.idleCards > 0 then
+        local card = self.idleCards[#self.idleCards]
+        table.remove(self.idleCards, #self.idleCards)
+        return card
+    end
+    local card = doushisi.new()
 end
 
 return dssOperation
