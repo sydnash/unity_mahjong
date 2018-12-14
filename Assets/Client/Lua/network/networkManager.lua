@@ -431,6 +431,8 @@ function networkManager.loginWx(callback)
             return
         end
 
+        showWaitingUI("正在登录，请稍候")
+
         local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
         local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
