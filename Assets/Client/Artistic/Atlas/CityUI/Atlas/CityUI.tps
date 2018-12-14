@@ -240,12 +240,10 @@
             </struct>
             <key type="filename">Images/qy_dq_cd_01.png</key>
             <key type="filename">Images/qy_dq_cd_02.png</key>
-            <key type="filename">Images/qy_dq_cd_03.png</key>
             <key type="filename">Images/qy_dq_cd_04.png</key>
             <key type="filename">Images/qy_dq_nc_01.png</key>
             <key type="filename">Images/qy_dq_nc_02.png</key>
             <key type="filename">Images/qy_dq_ya_01.png</key>
-            <key type="filename">Images/qy_dq_ya_02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -277,11 +275,9 @@
             <filename>Images/qy_dq_nc_01.png</filename>
             <filename>Images/qy_dq_nc_02.png</filename>
             <filename>Images/qy_dq_ya_01.png</filename>
-            <filename>Images/qy_dq_ya_02.png</filename>
             <filename>Images/qy_01.png</filename>
             <filename>Images/qy_dq_cd_01.png</filename>
             <filename>Images/qy_dq_cd_02.png</filename>
-            <filename>Images/qy_dq_cd_03.png</filename>
             <filename>Images/qy_dq_cd_04.png</filename>
             <filename>Images/qy_01_xz.png</filename>
             <filename>Images/qy_01_xz_1.png</filename>

@@ -81,6 +81,10 @@ function doushisi:fix()
     end
 end
 
+function doushisi:setSortingOrder(order)
+    self.render.sortingOrder = order
+end
+
 function doushisi:setSprite(folder, resource)
     self:resetRender()
 
