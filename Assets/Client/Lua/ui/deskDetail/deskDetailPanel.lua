@@ -21,9 +21,10 @@ local function createGroup(parent, name)
     local item1 = createItem(group.transform, "1")
     local item2 = createItem(group.transform, "2")
     local item3 = createItem(group.transform, "3")
+    local item4 = createItem(group.transform, "4")
 
     group.title = findText(group.transform, "Text")
-    group.items = { item1, item2, item3, }
+    group.items = { item1, item2, item3, item4, }
 
     return group
 end

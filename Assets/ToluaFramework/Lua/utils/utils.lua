@@ -151,10 +151,10 @@ end
 function findText(transform, name)
     assert(transform ~= nil, "can't find a child for nil")
 
-    local child = transform:Find(name)
-    if child ~= nil then
+    local target = string.isNilOrEmpty(name) and transform or transform:Find(name)
+    if target ~= nil then
         local text = require("ui.common.text")
-        return text.new(child.gameObject)
+        return text.new(target.gameObject)
     end
 
     return nil
@@ -166,10 +166,10 @@ end
 function findSprite(transform, name)
     assert(transform ~= nil, "can't find a child for nil")
 
-    local child = transform:Find(name)
-    if child ~= nil then
+    local target = string.isNilOrEmpty(name) and transform or transform:Find(name)
+    if target ~= nil then
         local sprite = require("ui.common.sprite")
-        return sprite.new(child.gameObject)
+        return sprite.new(target.gameObject)
     end
 
     return nil
@@ -181,10 +181,10 @@ end
 function findImage(transform, name)
     assert(transform ~= nil, "can't find a child for nil")
 
-    local child = transform:Find(name)
-    if child ~= nil then
+    local target = string.isNilOrEmpty(name) and transform or transform:Find(name)
+    if target ~= nil then
         local image = require("ui.common.image")
-        return image.new(child.gameObject)
+        return image.new(target.gameObject)
     end
 
     return nil
@@ -196,10 +196,10 @@ end
 function findButton(transform, name)
     assert(transform ~= nil, "can't find a child for nil")
 
-    local child = transform:Find(name)
-    if child ~= nil then
+    local target = string.isNilOrEmpty(name) and transform or transform:Find(name)
+    if target ~= nil then
         local button = require("ui.common.button")
-        return button.new(child.gameObject)
+        return button.new(target.gameObject)
     end
 
     return nil
@@ -211,10 +211,10 @@ end
 function findToggle(transform, name)
     assert(transform ~= nil, "can't find a child for nil")
 
-    local child = transform:Find(name)
-    if child ~= nil then
+    local target = string.isNilOrEmpty(name) and transform or transform:Find(name)
+    if target ~= nil then
         local toggle = require("ui.common.toggle")
-        return toggle.new(child.gameObject)
+        return toggle.new(target.gameObject)
     end
 
     return nil
@@ -226,10 +226,10 @@ end
 function findPointerToggle(transform, name)
     assert(transform ~= nil, "can't find a child for nil")
 
-    local child = transform:Find(name)
-    if child ~= nil then
+    local target = string.isNilOrEmpty(name) and transform or transform:Find(name)
+    if target ~= nil then
         local pointerToggle = require("ui.common.pointerToggle")
-        return pointerToggle.new(child.gameObject)
+        return pointerToggle.new(target.gameObject)
     end
 
     return nil
@@ -241,10 +241,10 @@ end
 function findToggleGroup(transform, name)
     assert(transform ~= nil, "can't find a child for nil")
 
-    local child = transform:Find(name)
-    if child ~= nil then
+    local target = string.isNilOrEmpty(name) and transform or transform:Find(name)
+    if target ~= nil then
         local toggleGroup = require("ui.common.toggleGroup")
-        return toggleGroup.new(child.gameObject)
+        return toggleGroup.new(target.gameObject)
     end
 
     return nil
