@@ -431,6 +431,8 @@ function networkManager.loginWx(callback)
             return
         end
 
+        showWaitingUI("正在登录，请稍候")
+
         local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
         local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
@@ -820,23 +822,23 @@ end
 
 function networkManager.csDang(isDang)
     local data = { IsDang = isDang }
-    send(protoType.dss.dang, data)
+    send(protoType.doushisi.dang, data)
 end
 
 function networkManager.csAnPai(data)
-    send(protoType.dss.anPai, data)
+    send(protoType.doushisi.anPai, data)
 end
 
 function networkManager.csOpChose(data)
-    send(protoType.dss.opChose, data)
+    send(protoType.doushisi.opChose, data)
 end
 
 function networkManager.csBdChose(data)
-    send(protoType.dss.bdChose, data)
+    send(protoType.doushisi.bdChose, data)
 end
 
 function networkManager.csPiao(data)
-    send(protoType.dss.piao, data)
+    send(protoType.doushisi.piao, data)
 end
 -------------------------------------------------------------------
 --

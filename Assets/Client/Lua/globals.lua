@@ -173,7 +173,7 @@ function getLogicGame(citytype, gametype)
     if gametype == gameType.mahjong then
         return require("logic.mahjong.mahjongGame")
     elseif gametype == gameType.doushisi then
-        return require("logic.dss.dssGame")
+        return require("logic.doushisi.doushisiGame")
     end
 end
 
@@ -186,7 +186,7 @@ function enterDesk(gameType, deskId, callback)
     --开始预加载资源
     local preload = modelManager.preload()
 
-    for _, v in pairs(mahjongType) do
+    for _, v in pairs(mahjongType.c) do
         for i=1, 4 do
             preload:push(v.folder, v.resource, 1)
         end

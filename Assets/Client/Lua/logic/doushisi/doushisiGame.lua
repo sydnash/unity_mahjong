@@ -1,11 +1,10 @@
-
-local gamePlayer        = require("logic.player.gamePlayer")
+local gamePlayer = require("logic.player.gamePlayer")
 
 local base = require("logic.game")
-local dssGame = class("dssGame", base)
-local cardClass = require("logic.dss.card")
+local doushisiGame = class("doushisiGame", base)
+local doushisi = require("logic.doushisi.doushisi")
 
-dssGame.cardType = {
+doushisiGame.cardType = {
     shou    = 1,
     peng    = 2,
     chu     = 3,
@@ -16,22 +15,23 @@ local totalCardCountByCity = {
     [cityType.jintang] = 88,
 }
 
-function dssGame:getTotalCardCountByGame(cityType)
+function doushisiGame:getTotalCardCountByGame(cityType)
     local cnt = totalCardCountByCity[cityType]
     if cnt == nil then
         cnt = 84
     end
     return cnt
 end
+
 -------------------------------------------------------------------------------
 -- 构造函数
 -------------------------------------------------------------------------------
-function dssGame:ctor(data, playback)
+function doushisiGame:ctor(data, playback)
     self.super.ctor(self, data, playback)
     self.totalCardsCount = self:getTotalCardCountByGame(self.cityType)
 end
 
-function dssGame:onEnter(msg)
+function doushisiGame:onEnter(msg)
     self.super.onEnter(self, msg)
     
     if msg.Reenter ~= nil then
@@ -49,7 +49,7 @@ end
 -------------------------------------------------------------------------------
 -- 同步各个位置的数据
 -------------------------------------------------------------------------------
-function dssGame:syncSeats(seats)
+function doushisiGame:syncSeats(seats)
     for _, v in pairs(seats) do
         local player = self:getPlayerByAcId(v.AcId)
         player.ready = false --如果游戏中，清除ready状态
@@ -70,76 +70,79 @@ end
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
-function dssGame:createOperationUI()
+function doushisiGame:createOperationUI()
     return require("ui.dssDesk.dssDeskOperation").new(self)
 end
 
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
-function dssGame:createDeskUI()
+function doushisiGame:createDeskUI()
     return require("ui.mahjongDesk.mahjongDesk").new(self)
 end
 
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
-function dssGame:initMessageHandlers()
+function doushisiGame:initMessageHandlers()
     self.super.initMessageHandlers(self)
 
-    self.commandHandlers[protoType.sc.dss.start] = {func = self:onMessageHandler("onGameStartHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.faPai] = {func = self:onMessageHandler("onFaPaiHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.dang] = {func = self:onMessageHandler("onDangHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.dangNotify] = {func = self:onMessageHandler("onDangNotifyHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.anPai] = {func = self:onMessageHandler("onAnPaiHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.anPaiNotify] = {func = self:onMessageHandler("onAnPaiNotifyHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.moPai] = {func = self:onMessageHandler("onMoPaiHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.fanPai] = {func = self:onMessageHandler("onFanPaiHnadler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.opList] = {func = self:onMessageHandler("onOpListHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.opDo] = {func = self:onMessageHandler("onOpDoHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.bdList] = {func = self:onMessageHandler("onBdListHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.bdDo] = {func = self:onMessageHandler("onBdDoHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.piao] = {func = self:onMessageHandler("onPiaoHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.piaoNotify] = {func = self:onMessageHandler("onPiaoNotifyHandler"), nr = true}
-    self.commandHandlers[protoType.sc.dss.anPaiShow] = {func = self:onMessageHandler("onAnPaiShowHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.start] = {func = self:onMessageHandler("onGameStartHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.faPai] = {func = self:onMessageHandler("onFaPaiHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.dang] = {func = self:onMessageHandler("onDangHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.dangNotify] = {func = self:onMessageHandler("onDangNotifyHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.anPai] = {func = self:onMessageHandler("onAnPaiHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.anPaiNotify] = {func = self:onMessageHandler("onAnPaiNotifyHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.moPai] = {func = self:onMessageHandler("onMoPaiHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.fanPai] = {func = self:onMessageHandler("onFanPaiHnadler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.opList] = {func = self:onMessageHandler("onOpListHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.opDo] = {func = self:onMessageHandler("onOpDoHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.bdList] = {func = self:onMessageHandler("onBdListHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.bdDo] = {func = self:onMessageHandler("onBdDoHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.piao] = {func = self:onMessageHandler("onPiaoHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.piaoNotify] = {func = self:onMessageHandler("onPiaoNotifyHandler"), nr = true}
+    self.commandHandlers[protoType.sc.doushisi.anPaiShow] = {func = self:onMessageHandler("onAnPaiShowHandler"), nr = true}
     self.commandHandlers[protoType.sc.clear] = { func = self:onMessageHandler("onOpClearHandler"), nr = true }
 end
 
-function dssGame:onFaPaiHandler(msg)
+function doushisiGame:onFaPaiHandler(msg)
     self:faPai(msg)
     self.deskOpUI:onFaPai()
 end
 
-function dssGame:onMessageHandler(name)
+function doushisiGame:onMessageHandler(name)
     assert(self[name], string.format("on message handler: function<%s> must exist.", name))
+
     local func = function(msg)
         self:pushMessage(self[name], 0, msg)
     end
     return func
 end
 
-function dssGame:onDangHandler(msg)
+function doushisiGame:onDangHandler(msg)
     self.isMustDang = msg.IsMustDang
     self.deskOpUI:onDangHandler()
 end
 
-function dssGame:onDangNotifyHandler(msg)
+function doushisiGame:onDangNotifyHandler(msg)
     self.deskStatus = msg.CurDeskStatus
     local player = self:getPlayerByAcId(v.AcId)
     player.isDang = msg.IsDang
 end
 
-function dssGame:onPiaoHandler(msg)
+function doushisiGame:onPiaoHandler(msg)
+
 end
 
-function dssGame:onPiaoNotifyHandler(msg)
+function doushisiGame:onPiaoNotifyHandler(msg)
+
 end
 
-function dssGame:onAnPaiShowHandler(msg)
+function doushisiGame:onAnPaiShowHandler(msg)
     local player = self:getPlayerByAcId(msg.AcId)
     local t = {}
     for _, c in pairs(msg.Cards) do
-        local cardType = cardClass.cardType(c) 
+        local cardType = doushisi.typeId(c) 
         local vec = t[cardType]
         if vec == nil then
             vec = {}
@@ -154,20 +157,22 @@ function dssGame:onAnPaiShowHandler(msg)
     local pengInfos = player[self.cardType.peng]
     local i = 1
     for _, info in pairs(pengInfos) do
-        if info.Op ~= opType.dss.caiShen then
+        if info.Op ~= opType.doushisi.caiShen then
             info.Cards = cards[i]
             i = i + 1
         end
     end
 end
 
-function dssGame:onAnPaiHandler(msg)
+function doushisiGame:onAnPaiHandler(msg)
+
 end
 
-function dssGame:onAnPaiNotifyHandler(msg)
+function doushisiGame:onAnPaiNotifyHandler(msg)
+
 end
 
-function dssGame:onMoPaiHandler(msg)
+function doushisiGame:onMoPaiHandler(msg)
     local player = self:getPlayerByAcId(msg.AcId)
     local inhandCards = player[self.cardType.shou]
     for _, card in pairs(msg.Ids) do
@@ -177,18 +182,18 @@ function dssGame:onMoPaiHandler(msg)
     player.fuShu = msg.FuShu
 end
 
-function dssGame:onFanPaiHnadler(msg)
+function doushisiGame:onFanPaiHnadler(msg)
     local player = self:getPlayerByAcId(msg.AcId)
     local chuCards = player[self.cardType.chu]
     table.insert(chuCards, msg.Id)
     self:subLeftCount(1)
 end
 
-function dssGame:onOpListHandler(msg)
+function doushisiGame:onOpListHandler(msg)
     self.deskOpUI:onOpList(msg)
 end
 
-function dssGame:onChiPengGangType(player, op, cards, beCard)
+function doushisiGame:onChiPengGangType(player, op, cards, beCard)
     if beCard then --从出牌中找并删除
         for _, p in pairs(self.players) do
             table.removeItem(p[self.cardType.chu], beCard)
@@ -202,7 +207,7 @@ function dssGame:onChiPengGangType(player, op, cards, beCard)
     table.insert(player[self.cardType.peng], info)
 end
 
-function dssGame:onOpDoBaGang(player, msg)
+function doushisiGame:onOpDoBaGang(player, msg)
     local card = msg.DelCards[1]
     table.removeItem(player[self.cardType.shou], card)
     local findInfo = nil
@@ -210,8 +215,8 @@ function dssGame:onOpDoBaGang(player, msg)
         if findInfo ~= nil then
             break
         end
-        if info.Op ~= opType.dss.caiShen and #info.Cards <= 3 then
-            if card < 0 or cardClass.typeId(info.Cards[1]) == cardClass.typeId(card) then
+        if info.Op ~= opType.doushisi.caiShen and #info.Cards <= 3 then
+            if card < 0 or doushisi.typeId(info.Cards[1]) == doushisi.typeId(card) then
                 table.insert(info.Cards, card)
                 findInfo = info
                 break
@@ -220,13 +225,13 @@ function dssGame:onOpDoBaGang(player, msg)
     end
 end
 
-function dssGame:onOpDoCaiShen(player, msg)
+function doushisiGame:onOpDoCaiShen(player, msg)
     local cards = msg.DelCards[1]
     table.removeItem(player[self.cardType.shou], c)
     local pengInfos = player[seat.cardType.peng]
     local caiShenInfo = nil
-    if #pengInfos == 0 or pengInfos[1].Op ~= opType.dss.caiShen then
-        caiShenInfo = {Op = opType.dss.caiShen, Cards = {}}
+    if #pengInfos == 0 or pengInfos[1].Op ~= opType.doushisi.caiShen then
+        caiShenInfo = {Op = opType.doushisi.caiShen, Cards = {}}
         table.insert(pengInfos, 1, caiShenInfo)
     else
         caiShenInfo = pengInfos[1]
@@ -234,93 +239,93 @@ function dssGame:onOpDoCaiShen(player, msg)
     table.insert(caiShenInfo.Cards, card)
 end
 
-function dssGame:onOpDoChi(player, msg)
+function doushisiGame:onOpDoChi(player, msg)
     local op = msg.Op
     local cards = msg.DelCards
     local beCard = msg.Card
     self:onChiPengGangType(player, op, cards, beCard)
 end
 
-function dssGame:onOpDoChe(player, msg)
+function doushisiGame:onOpDoChe(player, msg)
     local op = msg.Op
     local cards = msg.DelCards
     local beCard = msg.Card
     self:onChiPengGangType(player, op, cards, beCard)
 end
 
-function dssGame:onOpDoHua(player, msg)
+function doushisiGame:onOpDoHua(player, msg)
     local op = msg.Op
     local cards = msg.DelCards
     self:onChiPengGangType(player, op, cards, nil)
 end
 
-function dssGame:onOpDoAn(player, op, delCards)
+function doushisiGame:onOpDoAn(player, op, delCards)
     local cards = delCards
     self:onChiPengGangType(player, op, cards, nil)
 end
 
-function dssGame:onOpDoHu(player, msg)
+function doushisiGame:onOpDoHu(player, msg)
     player[self.cardType.hu] = msg.Card
 end
 
-function dssGame:onOpDoChu(player, msg)
+function doushisiGame:onOpDoChu(player, msg)
     local delCard = msg.DelCards[1]
     table.removeItem(player[self.cardType.shou], delCard)
     table.insert(player[self.cardType.chu], delCard)
 end
 
-function dssGame:onOpDoHandler(msg)
+function doushisiGame:onOpDoHandler(msg)
     local player = self:getPlayerByAcId(msg.AcId)
     player.zhaoCnt = msg.ZhaoCnt
     player.fuShu = msg.FuShu
     local op = msg.Op
     local cards = msg.DelCards
     local beCard = msg.Card
-    if op == opType.dss.hua then
+    if op == opType.doushisi.hua then
         self:onOpDoHua(player, msg)
-    elseif op == opType.dss.chu then
+    elseif op == opType.doushisi.chu then
         self:onOpDoChu(player, msg)
-    elseif op == opType.dss.chi then
+    elseif op == opType.doushisi.chi then
         self:onOpDoChi(player, msg)
-    elseif op == opType.dss.che then
+    elseif op == opType.doushisi.che then
         self:onOpDoChe(player, msg)
-    elseif op == opType.dss.hu then
+    elseif op == opType.doushisi.hu then
         self:onOpDoHu(player, msg)
-    elseif op == opType.dss.gang then
-    elseif op == opType.dss.pass then
-    elseif op == opType.dss.an then
+    elseif op == opType.doushisi.gang then
+    elseif op == opType.doushisi.pass then
+    elseif op == opType.doushisi.an then
         self:onOpDoAn(player, op, cards)
-    elseif op == opType.dss.zhao then
-    elseif op == opType.dss.shou then
-    elseif op == opType.dss.bao then
-    elseif op == opType.dss.baGang then
+    elseif op == opType.doushisi.zhao then
+    elseif op == opType.doushisi.shou then
+    elseif op == opType.doushisi.bao then
+    elseif op == opType.doushisi.baGang then
         self:onOpDoBaGang(player, msg)
-    elseif op == opType.dss.chiChengSan then
+    elseif op == opType.doushisi.chiChengSan then
         self:onChiPengGangType(player, op, cards, beCard)
-    elseif op == opType.dss.caiShen then
+    elseif op == opType.doushisi.caiShen then
         self:onOpDoCaiShen(player, msg)
-    elseif op == opType.dss.baoJiao then
-    elseif op == opType.dss.gen then
-    elseif op == opType.dss.weiGui then
+    elseif op == opType.doushisi.baoJiao then
+    elseif op == opType.doushisi.gen then
+    elseif op == opType.doushisi.weiGui then
     else
         log("on op do handler: receive not supported handler." .. tostring(op))
     end
 end
 
-function dssGame:onBdListHandler(msg)
+function doushisiGame:onBdListHandler(msg)
 end
 
-function dssGame:onBdDoHandler(msg)
+function doushisiGame:onBdDoHandler(msg)
 end
 
-function dssGame:onOpClearHandler()
+function doushisiGame:onOpClearHandler()
 end
 
-function dssGame:subLeftCount(cnt)
+function doushisiGame:subLeftCount(cnt)
     self.leftCardsCount = self.leftCardsCount - cnt
 end
 
-function dssGame:faPai(msg)
+function doushisiGame:faPai(msg)
     self.totalCardsCount = self:getTotalCardCountByGame(self.cityType)
     self.leftCardsCount = self.totalCardsCount
     for _, v in pairs(msg.Seats) do
@@ -334,7 +339,7 @@ function dssGame:faPai(msg)
     self.deskUI:updateLeftMahjongCount(self.leftCardsCount)
 end
 
-function dssGame:onGameStartHandler(msg)
+function doushisiGame:onGameStartHandler(msg)
     self:faPai(msg)
     self.markerTurn = msg.Marker
     self.diceCard   = msg.DiceCardId
@@ -346,7 +351,8 @@ function dssGame:onGameStartHandler(msg)
     self.deskOpUI:onGameStart()
 end
 
-function dssGame:csDang(isDang)
+function doushisiGame:csDang(isDang)
+
 end
 
-return dssGame
+return doushisiGame

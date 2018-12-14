@@ -49,7 +49,7 @@ return {
         getSharePlayHistory         = "CmdType.fly.CS.GetShareHistory",
         setClubDeskPayed            = "CmdType.fly.CS.ClubDeskPayed",
         modifyFriendsterDesc        = "CmdType.fly.CS_ModifyClubDesc",
-        dss = {
+        doushisi = {
             dang                    = "CmdType.fly.CS.DSSDang",
             anPai                   = "CmdType.fly.CS.DSSAnPai",
             opChose                 = "CmdType.fly.CS.DSSOpChoose",
@@ -97,7 +97,7 @@ return {
         getPlayHistoryDetail        = "CmdType.fly.SC.GetDeskHistoryDetail",
         getClubPlayHistoryDetail    = "CmdType.fly.SC.ClubGetDeskHistoryDetail",
         getClubPlayHistory          = "CmdType.fly.SC_GetClubDeskHistory",
-        dss = {
+        doushisi = {
             start                   = "CmdType.fly.SC.DSSStart",
             faPai                   = "CmdType.fly.SC.DSSFaPai",
             dang                    = "CmdType.fly.SC.DSSDang",

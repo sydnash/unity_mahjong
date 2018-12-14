@@ -1,4 +1,4 @@
-local mahjongGame   = require("logic.dss.dssGame")
+local doushisiGame  = require("logic.doushisi.doushisiGame")
 local touch         = require("logic.touch")
 
 local base = require("ui.common.view")
