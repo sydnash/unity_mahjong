@@ -93,6 +93,7 @@ function createDesk:onCreateClickedHandler()
 
     showWaitingUI("正在创建房间，请稍候...")
     
+    log("======================== : " .. table.tostring(choose))
     networkManager.createDesk(self.cityType, choose, friendsterId, function(msg)
         closeWaitingUI()
         if msg == nil then

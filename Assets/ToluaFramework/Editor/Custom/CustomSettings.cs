@@ -159,6 +159,7 @@ public static class CustomSettings
         _GT(typeof(Rect)),
         _GT(typeof(PlayerPrefs)),
         _GT(typeof(RuntimePlatform)),
+        _GT(typeof(SpriteRenderer)),
 
         //UGUI
         _GT(typeof(EventSystem)),

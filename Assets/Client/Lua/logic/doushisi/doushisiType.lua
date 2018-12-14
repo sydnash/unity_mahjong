@@ -30,12 +30,19 @@ local c = {
 }
 
 local function getDoushisiTypeId(cid)
+    if cid < 0 then
+        return 23
+    end
     return math.floor(cid / 4)
 end
 
 local function getDoushisiTypeById(cid)
-    cid = getDoushisiId(cid)
+    cid = getDoushisiTypeId(cid)
     return c[cid]
+end
+
+local function getDoushisiTypeByTypeId(t)
+    return c[t]
 end
 
 local function getDoushisiBackType()
@@ -47,6 +54,15 @@ return {
     getDoushisiTypeId = getDoushisiTypeId,
     getDoushisiTypeById = getDoushisiTypeById,
     getDoushisiBackType = getDoushisiBackType,
+    getDoushisiTypeByTypeId = getDoushisiTypeByTypeId,
+    cardType = {
+        shou    = 1,
+        peng    = 2,
+        chu     = 3,
+        hu      = 4,
+        perfect = 5,
+        back    = 6,
+    }
 }
 
 --endregion
