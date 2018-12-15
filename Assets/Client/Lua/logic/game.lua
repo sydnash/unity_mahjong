@@ -31,7 +31,7 @@ function game:ctor(data, playback)
     self.isGameOverUIShow   = false
 
     self.messageQueue       = {}
-    self.pauseMeesageQueue  = false
+    self.pauseMeesage       = false
     self.processSpeed       = 1.0
     self.lastProcessTime    = 0
     self:initMessageHandlers()
@@ -815,7 +815,7 @@ end
 function game:startPlayback()
     if self.mode == gameMode.playback then
         --self.messageHandlers:play()
-        self:pauseMeesageQueue()
+        self:resumeMessageQueue()
     end
 end
 
@@ -825,7 +825,7 @@ end
 function game:stopPlayback()
     if self.mode == gameMode.playback then
         --self.messageHandlers:stop()
-        self:resumeMessageQueue()
+        self:pauseMessageQueue()
     end
 end
 
@@ -919,7 +919,7 @@ end
 --update
 ------------------------------------------------------------------------------
 function game:update()
-    if self.pauseMeesageQueue then
+    if self.pauseMeesage then
         return
     end
     local now = time.realtimeSinceStartup()

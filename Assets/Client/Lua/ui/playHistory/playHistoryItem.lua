@@ -31,6 +31,8 @@ function playHistoryItem:onThisClickHandler()
         ui:setHistory(self.mHistoryId, self.historyContainer)
         ui:show()
     end)
+
+    playButtonClickSound()
 end
 
 function playHistoryItem:set(data, historyContainer)

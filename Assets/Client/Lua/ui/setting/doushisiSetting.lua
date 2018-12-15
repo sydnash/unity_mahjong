@@ -7,6 +7,9 @@ local doushisiSetting = class("doushisiSetting", base)
 
 _RES_(doushisiSetting, "SettingUI", "DoushisiSettingUI")
 
+local SpriteRenderer = UnityEngine.SpriteRenderer
+local GameObject = UnityEngine.GameObject
+
 function doushisiSetting:ctor(game)
     self.game = game
     self.super.ctor(self)
@@ -14,6 +17,7 @@ end
 
 function doushisiSetting:onInit()
     self.super.onInit(self)
+    self.tableRoot = find("changpai/table")
 
     self.mMandarin.key = language.mandarin
     self.mSichuan.key  = language.sichuan
@@ -92,14 +96,13 @@ end
 function doushisiSetting:onTableclothChangedHandler(sender, selected, clicked)
     if clicked then
         if selected then
-            local go = find("changpai/table")
-            if go ~= nil then
-                local render = getComponentU(go, typeof(UnityEngine.SpriteRenderer))
+            if self.tableRoot ~= nil then
+                local render = getComponentU(self.tableRoot, typeof(SpriteRenderer))
                 if render ~= nil then
                     local sprite = render.sprite
                     if sprite ~= nil then
                         textureManager.unload(sprite.texture)
-                        UnityEngine.GameObject.Destroy(sprite)
+                        GameObject.Destroy(sprite)
                     end
 
                     local tex = textureManager.load("doushisi/table", sender.key)

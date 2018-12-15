@@ -141,6 +141,7 @@
     <Compile Include="Lua\ui\playHistory\playHistoryDetailItem.lua" />
     <Compile Include="Lua\ui\playHistory\playHistoryItem.lua" />
     <Compile Include="Lua\ui\setting\lobbySetting.lua" />
+    <Compile Include="Lua\ui\setting\doushisiSetting.lua" />
     <Compile Include="Lua\ui\setting\mahjongSetting.lua" />
     <Compile Include="Lua\ui\setting\playbackSetting.lua" />
     <Compile Include="Lua\ui\setting\setting.lua" />

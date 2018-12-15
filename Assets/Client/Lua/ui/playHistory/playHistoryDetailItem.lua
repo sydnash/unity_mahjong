@@ -10,14 +10,14 @@ local playHistoryDetailItem = class("playHistoryDetailItem", base)
 _RES_(playHistoryDetailItem, "PlayHistoryUI", "PlayHistoryDetailItem")
 
 local scoreColor = {
-    win         = hexColorToColor("d27529ff"),
+    win         = hexColorToColor("d2752aff"),
     failed      = hexColorToColor("3380caff"),
     draw        = hexColorToColor("a66742ff"),
 }
 local resultText = {
-    [scoreColor.win] = "赢",
+    [scoreColor.win]    = "赢",
     [scoreColor.failed] = "输",
-    [scoreColor.draw] = "平",
+    [scoreColor.draw]   = "平",
 }
 
 function playHistoryDetailItem:onInit()
@@ -115,8 +115,7 @@ function playHistoryDetailItem:onPlayClickHandler()
         local cityType           = data.GameType
         local gameType           = data.Config.Game
         clientApp.currentDesk = getLogicGame(cityType, gameType).new(data, playback)
-        game:startLoop()
-        clientApp.currentDesk = game
+        clientApp.currentDesk:startLoop()
     end)
 end
 
@@ -135,13 +134,16 @@ function playHistoryDetailItem:set(data, round, historyId, historyContainer)
         local score = data[i].Score
         local ui = self.mScores[i]
         ui:show()
-        ui:setText(tostring(score))
+
         local c = nil
         if score > 0 then
+            ui:setText("+" .. tostring(score))
             c = scoreColor.win
         elseif score == 0 then
+            ui:setText(tostring(score))
             c = scoreColor.draw
         else
+            ui:setText(tostring(score))
             c = scoreColor.failed
         end
         if data[i].AcId == gamepref.player.acId then
