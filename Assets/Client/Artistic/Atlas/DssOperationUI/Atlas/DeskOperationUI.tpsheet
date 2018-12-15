@@ -2,9 +2,9 @@
 # Sprite sheet data for Unity.
 #
 # To import these sprites into your Unity project, download "TexturePackerImporter":
-# https://www.codeandweb.com/texturepacker/unity
+# http://www.codeandweb.com/texturepacker/unity
 #
-# $TexturePacker:SmartUpdate:c37578981f01ce8d520efb0d8e20bfdc:e3f770d83bb88a89da54f58695673640:e61ddc5aec48b541aff4f5a9e28770c6$
+# $TexturePacker:SmartUpdate:3b7239f3a510f7afb01b10451cf7e542:57acc7173b89f9885375cbfa5802b6e7:e61ddc5aec48b541aff4f5a9e28770c6$
 #
 :format=40300
 :texture=DeskOperationUI.png
@@ -53,6 +53,7 @@ cp_zi38;100;715;93;85; 0.5;0.5; 0;0;0;0; 6;93;42;93;0;61;0;0;20;0;85;50;85; 4;3;
 cp_zi39;1;715;97;87; 0.5;0.5; 0;0;0;0; 7;54;73;97;53;97;0;72;0;0;22;0;87;47;87; 5;0;5;6;0;3;4;1;2;3;0;1;3;0;4;5
 cp_zi41;264;501;81;77; 0.5;0.5; 0;0;0;0; 6;81;41;81;0;0;0;0;66;42;77;56;77; 4;2;0;1;2;3;4;2;4;0;0;4;5
 CSZ;401;389;72;92; 0.5;0.5; 0;0;0;0; 5;72;87;72;0;0;0;0;92;70;92; 3;0;3;4;0;1;2;0;2;3
+game_line_xuexian;239;825;33;3; 0.5;0.5; 0;0;0;0; 4;33;0;0;0;0;3;33;3; 2;1;2;3;0;1;3
 R1B2Z;1;83;72;92; 0.5;0.5; 0;0;0;0; 5;72;87;72;0;0;0;0;92;70;92; 3;0;3;4;0;1;2;0;2;3
 R1B3Z;75;122;72;92; 0.5;0.5; 0;0;0;0; 5;72;87;72;0;0;0;0;92;70;92; 3;0;3;4;0;1;2;0;2;3
 R1B5Z;75;28;72;92; 0.5;0.5; 0;0;0;0; 5;72;87;72;0;0;0;0;92;70;92; 3;0;3;4;0;1;2;0;2;3

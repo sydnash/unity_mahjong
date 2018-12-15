@@ -9,6 +9,8 @@ tweenDelay      = require("tween.tweenDelay")
 tweenFunction   = require("tween.tweenFunction")
 tweenSerial     = require("tween.tweenSerial")
 tweenParallel   = require("tween.tweenParallel")
+tweenColor      = require("tween.tweenColor")
+tweenForever    = require("tween.tweenForever")
 
 local tweenManager = {}
 local queue = nil

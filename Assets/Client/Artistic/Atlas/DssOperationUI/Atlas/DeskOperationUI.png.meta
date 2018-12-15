@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2d253b3c0d9f3f44bbfd4da49b1a1993
-timeCreated: 1544696106
+timeCreated: 1544863191
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -139,6 +139,7 @@ TextureImporter:
     21300264: R6R6Z
     21300266: TYZ
     21300268: ZM_kuang01
+    21300270: game_line_xuexian
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -801,6 +802,20 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: game_line_xuexian
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 825
+        width: 33
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 15, y: 0, z: 1, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1

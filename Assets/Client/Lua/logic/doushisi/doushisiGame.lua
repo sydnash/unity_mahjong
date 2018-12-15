@@ -131,7 +131,7 @@ end
 
 function doushisiGame:onDangNotifyHandler(msg)
     self.deskStatus = msg.CurDeskStatus
-    local player = self:getPlayerByAcId(v.AcId)
+    local player = self:getPlayerByAcId(msg.AcId)
     player.isDang = msg.IsDang
 end
 
@@ -172,6 +172,8 @@ function doushisiGame:onAnPaiShowHandler(msg)
 end
 
 function doushisiGame:onAnPaiHandler(msg)
+    self.operationUI:hideAllOpBtn()
+
     local data = {Cards = {}, HasTY = {}, Op = opType.doushisi.an.id, HasWarning = {}}
 
     if msg.HasTY == nil then
@@ -182,19 +184,25 @@ function doushisiGame:onAnPaiHandler(msg)
         table.insert(data.HasTY, msg.HasTY[i])
     end
     data.CanPass = msg.CanPass
+    if data.CanPass then
+        self.operationUI:onOpListPass()
+    end
 
-    return self:onOpListAn(data)
+    return self.operationUI:onOpListAn(data)
 end
 
 function doushisiGame:onAnPaiNotifyHandler(msg)
     local player = self:getPlayerByAcId(msg.AcId)
-    palyer.fuShu = msg.FuShu
+    player.fuShu = msg.FuShu
+    if not msg.Dos or #msg.Dos == 0 then
+        return
+    end
     for _, info in pairs(msg.Dos) do
         self:onChiPengGangType(player, opType.doushisi.an.id, info.DelCards, nil)
     end
     local t = 0
     for _, info in pairs(msg.Dos) do
-        local t1 = self.operationUI:onOpDoAn(player.acId, info.delCards)
+        local t1 = self.operationUI:onOpDoAn(player.acId, info.DelCards)
         t1 = t1 or 0
         t = t + t1
     end
@@ -325,6 +333,7 @@ end
 function doushisiGame:onOpDoHandler(msg)
     self.operationUI:hideAllOpBtn()
     self.operationUI:closeAllBtnPanel()
+    self.operationUI:removePromoteChuFan()
     local player = self:getPlayerByAcId(msg.AcId)
     player.zhaoCnt = msg.ZhaoCnt
     player.fuShu = msg.FuShu
@@ -394,7 +403,7 @@ function doushisiGame:faPai(msg)
 end
 
 function doushisiGame:onGameStartHandler(msg)
-    for _, player in pairs(self.msg.players) do
+    for _, player in pairs(self.players) do
         player[doushisiGame.cardType.shou] = {}
         player[doushisiGame.cardType.chu] = {}
         player[doushisiGame.cardType.peng] = {}
@@ -407,6 +416,7 @@ function doushisiGame:onGameStartHandler(msg)
     self.diceAcId   = self:getPlayerByTurn(self.diceTurn).acId
     self:faPai(msg)
     
+    self.deskUI:onGameStart()
     return self.operationUI:onGameStart()
 end
 

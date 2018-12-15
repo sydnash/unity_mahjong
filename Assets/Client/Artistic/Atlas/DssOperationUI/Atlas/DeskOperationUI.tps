@@ -4,7 +4,9 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.8.1</string>
+        <string>4.6.1</string>
+        <key>fileName</key>
+        <string>D:/mj/tdqp/Assets/Client/Artistic/Atlas/DssOperationUI/Atlas/DeskOperationUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -126,6 +128,22 @@
                 <key>alignToGrid</key>
                 <uint>1</uint>
             </struct>
+        </struct>
+        <key>andEngine</key>
+        <struct type="AndEngine">
+            <key>minFilter</key>
+            <enum type="AndEngine::MinFilter">Linear</enum>
+            <key>packageName</key>
+            <string>Texture</string>
+            <key>wrap</key>
+            <struct type="AndEngineWrap">
+                <key>s</key>
+                <enum type="AndEngineWrap::Wrap">Clamp</enum>
+                <key>t</key>
+                <enum type="AndEngineWrap::Wrap">Clamp</enum>
+            </struct>
+            <key>magFilter</key>
+            <enum type="AndEngine::MagFilter">MagLinear</enum>
         </struct>
         <key>dataFileNames</key>
         <map type="GFileNameMap">
@@ -391,6 +409,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/game_line_xuexian.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,1,17,1</rect>
+                <key>scale9Paddings</key>
+                <rect>8,1,17,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/shoushi.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -462,6 +493,7 @@
             <filename>Images/B5B5Z.png</filename>
             <filename>Images/B5B6Z.png</filename>
             <filename>Images/ZM_kuang01.png</filename>
+            <filename>Images/game_line_xuexian.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

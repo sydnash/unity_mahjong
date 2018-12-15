@@ -2,23 +2,29 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local tweenRotation = class("tweenRotation")
+local tweenColor = class("tweenColor")
 
-local Quaternion = UnityEngine.Quaternion
-
+function tweenColor.fadeIn(target, duration)
+    local from = Color.New(1,1,1,0)
+    local to = Color.New(1,1,1,1)
+    local tween = tweenColor.new(target, duration, from, to, nil)
+    return tween
+end
+function tweenColor.fadeOut(target, duration)
+    local from = Color.New(1,1,1,1)
+    local to = Color.New(1,1,1,0)
+    local tween = tweenColor.new(target, duration, from, to, nil)
+    return tween
+end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function tweenRotation:ctor(target, duration, from, to, callback)
+function tweenColor:ctor(target, duration, from, to, callback)
     self.speed      = 1
-
-    from = (from == nil) and target.transform.localRotation or from
-    to   = (to   == nil) and target.transform.localRotation or to
-
     self.target     = target
     self.duration   = math.max(0.01, duration)
-    self.from       = from--Quaternion.Euler(from.x, from.y, from.z)
-    self.to         = to  --Quaternion.Euler(to.x, to.y, to.z)
+    self.from       = from
+    self.to         = to
     self.callback   = callback
     self.playing    = false
     self.finished   = false
@@ -27,34 +33,27 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function tweenRotation:play()
+function tweenColor:play()
     self.playing   = true
     self.finished  = false
     self.timestamp = time.realtimeSinceStartup()
-    self.target:setLocalRotation(Quaternion.Euler(self.from.x, self.from.y, self.from.z))
+    self.target:setColor(self.from)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function tweenRotation:update()
+function tweenColor:update()
     if self.playing and not self.finished then
         local deltaTime = (time.realtimeSinceStartup() - self.timestamp) * self.speed
 
         if deltaTime >= self.duration then
-            self.target:setLocalRotation(Quaternion.Euler(self.to.x, self.to.y, self.to.z))
-            self.playing  = false
+            self.target:setColor(self.to)
+            self.playing = false
             self.finished = true
         else
             local t = deltaTime / self.duration
-            --Quaternion.Slerp(self.from, self.to, t)
-
-            -- 用四元数有点问题，暂时用下面的方式替代
-            local x = Mathf.Lerp(self.from.x, self.to.x, t)
-            local y = Mathf.Lerp(self.from.y, self.to.y, t)
-            local z = Mathf.Lerp(self.from.z, self.to.z, t)
-            
-            self.target:setLocalRotation(Quaternion.Euler(x, y, z))
+            self.target:setColor(Color.Lerp(self.from, self.to, t))
         end
     end
 
@@ -64,7 +63,7 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function tweenRotation:stop()
+function tweenColor:stop()
     self.playing  = false
     self.finished = true
 end
@@ -72,10 +71,11 @@ end
 -------------------------------------------------------------------
 -- speed is between 0.01 and 100
 -------------------------------------------------------------------
-function tweenRotation:setSpeed(speed)
+function tweenColor:setSpeed(speed)
     self.speed = math.min(100, math.max(0.01, speed))
 end
 
-return tweenRotation
+return tweenColor
 
 --endregion
+

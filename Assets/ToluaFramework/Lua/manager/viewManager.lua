@@ -14,6 +14,9 @@ function viewManager.setup()
     local root = find("UIRoot")
     GameObject.DontDestroyOnLoad(root.gameObject);
     viewManager.canvas = root:findChild("Canvas")
+
+    local camera = root:findChild("UICamera")
+    viewManager.camera = getComponentU(camera.gameObject, typeof(UnityEngine.Camera))
 end
 
 -------------------------------------------------------------------

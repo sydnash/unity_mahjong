@@ -43,7 +43,7 @@ local inhandCameraParams = {
 
 dssOperation.seats = {
     [seatType.mine] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -5.04, 0), rot = Quaternion.Euler(0, 0, 0), rowgap = 0.72, colgap = 0.50 },
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -5.04, 0), rot = Quaternion.Euler(0, 0, 0), rowgap = 0.72, colgap = 0.50, height = 2.14},
         [doushisiGame.cardType.chu] = { pos = Vector3.New(3.80, -1.32, 0), rot = Quaternion.Euler(0, 0, 225), 
                     colDir = {x = math.cos(135*math.pi/180), y = math.sin(135*math.pi/180)},
                     rowDir = {x = math.cos(45 * math.pi/180),y = math.sin(45 * math.pi/180)},
@@ -157,6 +157,25 @@ function dssOperation:onInit()
     self:reset()
 end
 
+function dssOperation:computeChuPaiHintPos()
+    local cfg = self.seats[seatType.mine][doushisiGame.cardType.shou]
+    local pos = cfg.pos:Clone()
+    local cardLen = cfg.height
+    
+    pos.y = pos.y + cardLen + cfg.colgap * 3
+    self.chuPaiLineY = pos.y
+
+    local mainCamera = UnityEngine.Camera.main
+    local scPos = mainCamera:WorldToScreenPoint(pos)
+
+    scPos.z = viewManager.camera.transform.position.z
+    local uiPos = viewManager.camera:ScreenToWorldPoint(scPos)
+
+    local hintPos = self.mChuHint:getPosition()
+    hintPos.y = uiPos.y
+    self.mChuHint:setPosition(hintPos)
+end
+
 function dssOperation:hideAllOpBtn()
     for _, btn in pairs(self.opBtns) do
         btn:hide()
@@ -197,6 +216,9 @@ function dssOperation:onGameSync()
                     end
                 end
                 data.CanPass = reenter.TouHint.CanPass
+                if data.CanPass then
+                    self:onOpListPass()
+                end
                 self:onOpListAn(data)
             elseif reenter.CurOpList ~= nil then
                 self:onOpList(reenter.CurOpList)
@@ -206,6 +228,9 @@ function dssOperation:onGameSync()
                 self:onOpList(reenter.CurOpList)
             end
         elseif deskPlayStatus == doushisiGame.deskPlayStatus.piao then
+        end
+        if reenter.CurDiPai >= 0 then
+            self:promoteChuFan(self.game.curOpAcId, reenter.CurDiPai)
         end
     end
 end
@@ -234,9 +259,11 @@ function dssOperation:onDangHandler(isMustDang)
     end
 end
 function dssOperation:onDangClickedHandler()
+    self:hideAllOpBtn()
     networkManager.csDang(true)
 end
 function dssOperation:onBuDangClickedHandler()
+    self:hideAllOpBtn()
     networkManager.csDang(false)
 end
 
@@ -245,6 +272,7 @@ function dssOperation:onOpList(opList)
         return
     end
     self:hideAllOpBtn()
+    self:closeAllBtnPanel()
     local leftTime = opList.LeftTime
 
     for _, opInfo in pairs(opList.OpInfos) do
@@ -267,7 +295,7 @@ function dssOperation:onOpList(opList)
             self:onOpListHu(opInfo)
         elseif op == opType.doushisi.gang.id then
         elseif op == opType.doushisi.pass.id then
-            self:showOpBtn(self.mPass)
+            self:onOpListPass()
         elseif op == opType.doushisi.an.id then
             self:onOpListAn(opInfo)
         elseif op == opType.doushisi.zhao.id then
@@ -289,6 +317,10 @@ function dssOperation:onOpList(opList)
     self:relocateOpBtn()
 end
 
+function dssOperation:onOpListPass()
+    self:showOpBtn(self.mPass)
+end
+
 function dssOperation:showOpBtn(btn, opInfo)
     btn:show()
     btn.opInfo = opInfo
@@ -303,17 +335,53 @@ function dssOperation:onPassClickedHandler()
     networkManager.csOpChose(sendData)
 end
 
+function dssOperation:showChuHint()
+    self.mChuHint:show()
+    self.mLine.action = tweenForever.new({
+            tweenColor.fadeOut(self.mLine, 0.5),
+            tweenColor.fadeIn(self.mLine, 0.5),
+        })
+
+    local from  = Vector3.New(0, 0, 45)
+    local to    = Vector3.New(0, 0, 1)
+    self.mFinger.action = tweenForever.new({
+        tweenRotation.new(self.mFinger, 0.5, from, to, nil),
+        tweenRotation.new(self.mFinger, 0.5, to, from, nil),
+    })
+    tweenManager.add(self.mLine.action)
+    tweenManager.add(self.mFinger.action)
+
+    self.mLine.action:play()
+    self.mFinger.action:play()
+end
+function dssOperation:hideChuHint()
+    tweenManager.remove(self.mLine.action)
+    tweenManager.remove(self.mFinger.action)
+    self.mChuHint:hide()
+end
+
+function dssOperation:enableChu()
+    self.canChuPai = true
+    self:showChuHint()
+end
+function dssOperation:disableChu()
+    self.canChuPai = false
+    self:hideChuHint()
+end
 -----------------------------------------------------------
 --chu
 -----------------------------------------------------------
 function dssOperation:onOpListChu(opInfo)
-    self.canChuPai = true
+    self:enableChu()
 end
 function dssOperation:onOpDoChu(acId, id)
-    self.canChuPai = false
+    self:disableChu()
 
     local card = self:findAndRemoveCard(acId, id)
     self:addCardToChu(acId, card)
+
+    self:removePromoteChuFan()
+    self:promoteChuFan(acId, id)
 end
 
 function dssOperation:opDoChiPengAnHua(acId, delIds, beId, op)
@@ -416,11 +484,14 @@ function dssOperation:onAnClickedHandler()
     end)
 end
 function dssOperation:onAnChose(info)
+    self:hideAllOpBtn()
+    self:closeAllBtnPanel()
     local sendData = { Chooses={} }
     local item = {Card = info.c, Num = 3}
     if info.hasTY then
         item.Num = 4
     end
+    table.insert(sendData.Chooses, item)
     networkManager.csAnPai(sendData)
 end
 function dssOperation:onOpDoAn(acId, delIds)
@@ -431,7 +502,7 @@ end
 --ba gang
 -----------------------------------------------------------
 function dssOperation:onOpListBaGang(opInfo)
-    self:showOpBtn(self.mAn, opInfo)
+    self:showOpBtn(self.mDeng, opInfo)
 end
 function dssOperation:onDengClickedHandler()
     self:onPanelBtnClick(self.mDeng, function(Class)
@@ -462,7 +533,7 @@ function dssOperation:onOpDoBaGang(acId, id)
         end
     end
 
-    self:relocateChiPengCards()
+    self:relocateChiPengCards(acId)
 end
 
 -----------------------------------------------------------
@@ -475,11 +546,11 @@ function dssOperation:onOpDoCaiShen(acId, id)
 
     local caiShenInfo
     local chipengCards = self.chipengCards[acId]
-    if chipengCards and #chipengCards > 0 then
+    if chipengCards and #chipengCards > 0 and chipengCards[1].op == opType.doushisi.caiShen.id then
         caiShenInfo = chipengCards[1]
     else
         caiShenInfo = {op = opType.doushisi.caiShen.id, cards = {}}
-        table.insert(chipengCards, caiShenInfo)
+        table.insert(chipengCards, 1, caiShenInfo)
     end
     table.insert(caiShenInfo.cards, card)
 
@@ -517,11 +588,13 @@ function dssOperation:reset()
     touch.removeListener()
     self:hideAllOpBtn()
     self:closeAllBtnPanel()
+    self:disableChu()
 
     self:resetPai()
 end
 
 function dssOperation:resetPai()
+    self:computeChuPaiHintPos()
     self.dragCard:hide()
     self.idleCards = {}
     for _, card in pairs(self.allCards) do
@@ -573,7 +646,22 @@ function dssOperation:pushbackActionCard(card)
     table.insert(self.idleActionCards, card)
 end
 
-function dssOperation:promtePai(acId, card)
+function dssOperation:promoteChuFan(acId, id)
+    local card = self:getActionCardById(id)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local cfg = self.seats[st].promote
+
+    self:addCardTo(card, cfg.pos, st, doushisiGame.cardType.perfect, cfg.rot)
+    self.promoteCard = card
+    self.promoteCard.acId = acId
+end
+
+function dssOperation:removePromoteChuFan()
+    if not self.promoteCard then
+        return
+    end
+    self:pushbackActionCard(self.promoteCard)
+    self.promoteCard = nil
 end
 
 function dssOperation:addCardTo(card, pos, seatType, cardType, rot)
@@ -604,6 +692,9 @@ function dssOperation:onFanPai(acId, id)
     local card = self:getCardById(id)
     table.insert(self.chuCards[acId], card)
     self:relocateChuCards(acId)
+
+    self:removePromoteChuFan()
+    self:promoteChuFan(acId, id)
     return 2
 end
 
@@ -938,15 +1029,28 @@ function dssOperation:touchHandler(phase, pos)
             if self.isClick then
                 if self.curSelectdCard.selected then
                     if self.canChuPai then
+                        eslf:setSelected(false)
                         self:onChoseChuPai(self.curSelectdCard)
+                        self.curSelectdCard = nil
                     else
                         self.curSelectdCard:setSelected(false)
+                        self.curSelectdCard = nil
                     end
                 else
                     self.curSelectdCard:setSelected(true)
                 end
             else
                 self.curSelectdCard:setSelected(false)
+                if self.canChuPai then
+                    local mpos = self.dragCard:getPosition()
+                    local cpos = camera.transform.localPosition
+                    pos.z = mpos.z - cpos.z
+                    local wpos = camera:ScreenToWorldPoint(pos)
+                    if wpos.y > self.chuPaiLineY then
+                        self:onChoseChuPai(self.curSelectdCard)
+                    end
+                end
+                self.curSelectdCard = nil
             end
         end
     end
