@@ -14,6 +14,11 @@ public class ReferenceObjectQueue : ObjectQueue
     /// </summary>
     private Slot mReferenceSlot = null;
 
+    /// <summary>
+    /// 引用计数
+    /// </summary>
+    private int mReferenceAcc = 0;
+
     #endregion
 
     #region Public
@@ -28,6 +33,12 @@ public class ReferenceObjectQueue : ObjectQueue
         {
             mReferenceSlot = new Slot(obj, time);
         }
+        else
+        {
+            mReferenceSlot.timestamp = time;
+        }
+
+        mReferenceAcc = Mathf.Max(0, mReferenceAcc - 1);
     }
 
     /// <summary>
@@ -36,15 +47,31 @@ public class ReferenceObjectQueue : ObjectQueue
     /// <returns></returns>
     public override Slot Pop()
     {
+        mReferenceAcc++;
         return mReferenceSlot;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public override int count
+    public override void DestroyUnused(float time, AssetLoader loader)
     {
-        get { return (mReferenceSlot == null) ? 0 : 1; }
+        if (mReferenceAcc > 0 || isEmpty)
+            return;
+
+        if (Time.realtimeSinceStartup - mReferenceSlot.timestamp >= time)
+        {
+            loader.UnloadDependencies(mReferenceSlot.asset.name);
+            mReferenceSlot = null;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public override bool isEmpty
+    {
+        get { return mReferenceSlot == null; }
     }
 
     #endregion

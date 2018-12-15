@@ -31,15 +31,51 @@ public class InstanceObjectQueue : ObjectQueue
     /// <returns></returns>
     public override Slot Pop()
     {
-        return (count == 0) ? null : mQueue.Dequeue();
+        return isEmpty ? null : mQueue.Dequeue();
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public override int count
+    public override void DestroyUnused(float time, AssetLoader loader)
     {
-        get { return mQueue.Count; }
+        if (isEmpty) return;
+
+        List<Slot> used = new List<Slot>();
+        List<Slot> unused = new List<Slot>();
+
+        while(!isEmpty)
+        {
+            Slot s = Pop();
+
+            if (Time.realtimeSinceStartup - s.timestamp >= time)
+            {
+                unused.Add(s);
+            }
+            else
+            {
+                used.Add(s);
+            }
+        }
+
+        foreach (Slot s in used)
+        {
+            mQueue.Enqueue(s);
+        }
+
+        foreach(Slot s in unused)
+        {
+            loader.UnloadDependencies(s.asset.name);
+            GameObject.Destroy(s.asset);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public override bool isEmpty
+    {
+        get { return mQueue.Count == 0; }
     }
 
     #endregion

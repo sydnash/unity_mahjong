@@ -44,7 +44,12 @@ public abstract class ObjectQueue
     /// <summary>
     /// 
     /// </summary>
-    public abstract int count
+    public abstract void DestroyUnused(float time, AssetLoader loader);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public abstract bool isEmpty
     {
         get;
     }

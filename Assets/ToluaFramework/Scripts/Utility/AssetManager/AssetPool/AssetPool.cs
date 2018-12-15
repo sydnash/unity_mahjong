@@ -61,7 +61,7 @@ public class AssetPool
         if (mQueueDic.ContainsKey(key))
         {
             ObjectQueue queue = mQueueDic[key];
-            if (queue.count > 0)
+            if (!queue.isEmpty)
             {
                 asset = queue.Pop().asset;
             }
@@ -95,7 +95,7 @@ public class AssetPool
     /// </summary>
     /// <param name="assetPath"></param>
     /// <param name="assetName"></param>
-    public Object Preload(string assetPath, string assetName, int maxCount = 1)
+    public Object Preload(string assetPath, string assetName)
     {
         string key = AssetLoader.CreateAssetKey(assetPath, assetName);
         ObjectQueue queue = mQueueDic.ContainsKey(key) ? mQueueDic[key] : null;
@@ -106,19 +106,14 @@ public class AssetPool
             mQueueDic.Add(key, queue);
         }
 
-        if (queue.count < maxCount)
+        Object asset = LoadAsset(assetPath, assetName);
+        if (asset != null)
         {
-            Object asset = LoadAsset(assetPath, assetName);
-            if (asset != null)
-            {
-                asset.name = key;
-                queue.Push(asset, Time.realtimeSinceStartup);
-            }
-
-            return asset;
+            asset.name = key;
+            queue.Push(asset, Time.realtimeSinceStartup);
         }
 
-        return null;
+        return asset;
     }
 
     /// <summary>
@@ -148,47 +143,15 @@ public class AssetPool
     /// </summary>
     public void Update()
     {
-        float now = Time.realtimeSinceStartup;
-        if (now - mTimestamp >= 60)//一分钟执行一次
+        if (Time.realtimeSinceStartup - mTimestamp >= 60)//一分钟执行一次
         {
-            if (!mReference)
+            foreach (KeyValuePair<string, ObjectQueue> kvp in mQueueDic)
             {
-                List<ObjectQueue.Slot> used = new List<ObjectQueue.Slot>();
-                List<ObjectQueue.Slot> unused = new List<ObjectQueue.Slot>();
-
-                foreach (KeyValuePair<string, ObjectQueue> kvp in mQueueDic)
-                {
-                    ObjectQueue q = kvp.Value;
-
-                    while (q.count > 0)
-                    {
-                        ObjectQueue.Slot s = q.Pop();
-                        if (now - s.timestamp >= mAliveTime)
-                        {
-                            unused.Add(s);
-                        }
-                        else
-                        {
-                            used.Add(s);
-                        }
-                    }
-
-                    foreach (ObjectQueue.Slot s in used)
-                    {
-                        q.Push(s.asset, s.timestamp);
-                    }
-                    used.Clear();
-                }
-
-                foreach (ObjectQueue.Slot s in unused)
-                {
-                    mLoader.UnloadDependencies(s.asset.name);
-                    GameObject.Destroy(s.asset);
-                }
-                unused.Clear();
+                ObjectQueue queue = kvp.Value;
+                queue.DestroyUnused(mAliveTime, mLoader);
             }
 
-            mTimestamp = now;
+            mTimestamp = Time.realtimeSinceStartup;
         }
 
         mLoader.Update();

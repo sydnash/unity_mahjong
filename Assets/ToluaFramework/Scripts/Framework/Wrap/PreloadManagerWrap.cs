@@ -21,14 +21,13 @@ public class PreloadManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 6);
+			ToLua.CheckArgsCount(L, 5);
 			PreloadManager obj = (PreloadManager)ToLua.CheckObject<PreloadManager>(L, 1);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			string arg2 = ToLua.CheckString(L, 4);
 			string arg3 = ToLua.CheckString(L, 5);
-			int arg4 = (int)LuaDLL.luaL_checknumber(L, 6);
-			obj.Push(arg0, arg1, arg2, arg3, arg4);
+			obj.Push(arg0, arg1, arg2, arg3);
 			return 0;
 		}
 		catch (Exception e)
