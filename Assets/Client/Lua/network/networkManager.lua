@@ -822,23 +822,23 @@ end
 
 function networkManager.csDang(isDang)
     local data = { IsDang = isDang }
-    send(protoType.doushisi.dang, data)
+    send(protoType.cs.doushisi.dang, data)
 end
 
 function networkManager.csAnPai(data)
-    send(protoType.doushisi.anPai, data)
+    send(protoType.cs.doushisi.anPai, data)
 end
 
 function networkManager.csOpChose(data)
-    send(protoType.doushisi.opChose, data)
+    send(protoType.cs.doushisi.opChose, data)
 end
 
 function networkManager.csBdChose(data)
-    send(protoType.doushisi.bdChose, data)
+    send(protoType.cs.doushisi.bdChose, data)
 end
 
 function networkManager.csPiao(data)
-    send(protoType.doushisi.piao, data)
+    send(protoType.cs.doushisi.piao, data)
 end
 -------------------------------------------------------------------
 --

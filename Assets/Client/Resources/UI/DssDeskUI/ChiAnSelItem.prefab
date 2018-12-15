@@ -315,19 +315,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mWidgets:
-  - variableName: D
+  - variableName: mD
     widgetType: 3
     gameObject: {fileID: 1772503851719238}
     panelScript: 
-  - variableName: C
+  - variableName: mC
     widgetType: 3
     gameObject: {fileID: 1999606641045342}
     panelScript: 
-  - variableName: B
+  - variableName: mB
     widgetType: 3
     gameObject: {fileID: 1565865875228368}
     panelScript: 
-  - variableName: A
+  - variableName: mA
     widgetType: 3
     gameObject: {fileID: 1984994638576088}
     panelScript: 

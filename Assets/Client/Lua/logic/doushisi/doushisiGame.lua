@@ -7,6 +7,14 @@ local doushisiType = require("logic.doushisi.doushisiType")
 
 doushisiGame.cardType = doushisiType.cardType
 
+doushisiGame.deskPlayStatus = {
+    tuiDang     = 1,
+	touPai      = 2,
+	playing     = 3,
+    ended       = 4,
+	piao        = 5,
+}
+
 local totalCardCountByCity = {
     [cityType.jintang] = 88,
 }
@@ -118,8 +126,7 @@ function doushisiGame:onMessageHandler(name)
 end
 
 function doushisiGame:onDangHandler(msg)
-    self.isMustDang = msg.IsMustDang
-    self.deskOpUI:onDangHandler()
+    self.deskOpUI:onDangHandler(msg.IsMustDang)
 end
 
 function doushisiGame:onDangNotifyHandler(msg)
@@ -155,7 +162,7 @@ function doushisiGame:onAnPaiShowHandler(msg)
     local pengInfos = player[self.cardType.peng]
     local i = 1
     for _, info in pairs(pengInfos) do
-        if info.Op ~= opType.doushisi.caiShen then
+        if info.Op ~= opType.doushisi.caiShen.id then
             info.Cards = cards[i]
             i = i + 1
         end
@@ -213,7 +220,7 @@ function doushisiGame:onOpDoBaGang(player, msg)
         if findInfo ~= nil then
             break
         end
-        if info.Op ~= opType.doushisi.caiShen and #info.Cards <= 3 then
+        if info.Op ~= opType.doushisi.caiShen.id and #info.Cards <= 3 then
             if card < 0 or doushisi.typeId(info.Cards[1]) == doushisi.typeId(card) then
                 table.insert(info.Cards, card)
                 findInfo = info
@@ -228,8 +235,8 @@ function doushisiGame:onOpDoCaiShen(player, msg)
     table.removeItem(player[self.cardType.shou], c)
     local pengInfos = player[seat.cardType.peng]
     local caiShenInfo = nil
-    if #pengInfos == 0 or pengInfos[1].Op ~= opType.doushisi.caiShen then
-        caiShenInfo = {Op = opType.doushisi.caiShen, Cards = {}}
+    if #pengInfos == 0 or pengInfos[1].Op ~= opType.doushisi.caiShen.id then
+        caiShenInfo = {Op = opType.doushisi.caiShen.id, Cards = {}}
         table.insert(pengInfos, 1, caiShenInfo)
     else
         caiShenInfo = pengInfos[1]
@@ -273,38 +280,40 @@ function doushisiGame:onOpDoChu(player, msg)
 end
 
 function doushisiGame:onOpDoHandler(msg)
+    log("players : " .. table.tostring(self.players))
+    log("op do msg: " ..table.tostring(msg))
     local player = self:getPlayerByAcId(msg.AcId)
     player.zhaoCnt = msg.ZhaoCnt
     player.fuShu = msg.FuShu
     local op = msg.Op
     local cards = msg.DelCards
     local beCard = msg.Card
-    if op == opType.doushisi.hua then
+    if op == opType.doushisi.hua.id then
         self:onOpDoHua(player, msg)
-    elseif op == opType.doushisi.chu then
+    elseif op == opType.doushisi.chu.id then
         self:onOpDoChu(player, msg)
-    elseif op == opType.doushisi.chi then
+    elseif op == opType.doushisi.chi.id then
         self:onOpDoChi(player, msg)
-    elseif op == opType.doushisi.che then
+    elseif op == opType.doushisi.che.id then
         self:onOpDoChe(player, msg)
-    elseif op == opType.doushisi.hu then
+    elseif op == opType.doushisi.hu.id then
         self:onOpDoHu(player, msg)
-    elseif op == opType.doushisi.gang then
-    elseif op == opType.doushisi.pass then
-    elseif op == opType.doushisi.an then
+    elseif op == opType.doushisi.gang.id then
+    elseif op == opType.doushisi.pass.id then
+    elseif op == opType.doushisi.an.id then
         self:onOpDoAn(player, op, cards)
-    elseif op == opType.doushisi.zhao then
-    elseif op == opType.doushisi.shou then
-    elseif op == opType.doushisi.bao then
-    elseif op == opType.doushisi.baGang then
+    elseif op == opType.doushisi.zhao.id then
+    elseif op == opType.doushisi.shou.id then
+    elseif op == opType.doushisi.bao.id then
+    elseif op == opType.doushisi.baGang.id then
         self:onOpDoBaGang(player, msg)
-    elseif op == opType.doushisi.chiChengSan then
+    elseif op == opType.doushisi.chiChengSan.id then
         self:onChiPengGangType(player, op, cards, beCard)
-    elseif op == opType.doushisi.caiShen then
+    elseif op == opType.doushisi.caiShen.id then
         self:onOpDoCaiShen(player, msg)
-    elseif op == opType.doushisi.baoJiao then
-    elseif op == opType.doushisi.gen then
-    elseif op == opType.doushisi.weiGui then
+    elseif op == opType.doushisi.baoJiao.id then
+    elseif op == opType.doushisi.gen.id then
+    elseif op == opType.doushisi.weiGui.id then
     else
         log("on op do handler: receive not supported handler." .. tostring(op))
     end

@@ -1,4 +1,4 @@
-local dssType = require("logic.dss.dssType")
+local doushisiType = require("logic.doushisi.doushisiType")
 
 local base = require("ui.common.view")
 
@@ -21,17 +21,18 @@ end
 function chiAnSelItem:onInit()
     self.icons = {self.mA, self.mB, self.mC, self.mD}
     self.mBtn:addClickListener(self.onBtnClickedHandler, self)
-    for _, v in pairs(self.cards) do
+    for _, v in pairs(self.icons) do
         v:hide()
     end
     for i, c in pairs(self.cards) do
-        local id = dssType.getChangpaiTypeById(c)
-        self.cards[i]:show()
-        self.cards[i]:setSprite(tostring(i))
+        local id = doushisiType.getDoushisiTypeId(c)
+        local icon = self.icons[i]
+        self.icons[i]:show()
+        self.icons[i]:setSprite(tostring(id))
     end
 end
 
-local chiSelPanel = class("chiAnSelPanel", base)
+local chiSelPanel = class("chiSelPanel", base)
 _RES_(chiSelPanel, "DssDeskUI", "ChiAnSelPanelUI")
 
 function chiSelPanel:ctor(opInfo, callback)
@@ -41,6 +42,7 @@ function chiSelPanel:ctor(opInfo, callback)
 end
 
 function chiSelPanel:onInit()
+    local opInfo = self.opInfo
     local items = {}
     for i, c in pairs(self.opInfo.Cards) do
         local info = {c = c}
@@ -50,7 +52,7 @@ function chiSelPanel:onInit()
         if #opInfo.HasWarning <= i then
             info.hasWarning = opInfo.HasWarning[i]
         end
-        local item = chiSelItem.new({self.opInfo.Card, c}, info, function(info)
+        local item = chiAnSelItem.new({self.opInfo.Card, c}, info, function(info)
             self:onChosed(info)
         end)
         table.insert(items, item)
@@ -65,7 +67,7 @@ function chiSelPanel:onChosed(info)
     end
 end
 
-function anSelPanel:onDestroy()
+function chiSelPanel:onDestroy()
     for _, item in pairs(self.items) do
         item:close()
     end
@@ -82,6 +84,7 @@ function anSelPanel:ctor(opInfo, callback)
 end
 
 function anSelPanel:onInit()
+    local opInfo = self.opInfo
     local items = {}
     for i, c in pairs(self.opInfo.Cards) do
         local info = {c = c}
@@ -95,7 +98,7 @@ function anSelPanel:onInit()
         if info.hasTy then
             table.insert(cards, c)
         end
-        local item = chiSelItem.new(cards, info, function(info)
+        local item = chiAnSelItem.new(cards, info, function(info)
             self:onChosed(info)
         end)
         table.insert(items, item)
@@ -128,6 +131,7 @@ function baGangSelPanel:ctor(opInfo, callback)
 end
 
 function baGangSelPanel:onInit()
+    local opInfo = self.opInfo
     local items = {}
     for i, c in pairs(self.opInfo.Cards) do
         local info = {c = c}
@@ -138,7 +142,7 @@ function baGangSelPanel:onInit()
             info.hasWarning = opInfo.HasWarning[i]
         end
         local cards = {c}
-        local item = chiSelItem.new(cards, info, function(info)
+        local item = chiAnSelItem.new(cards, info, function(info)
             self:onChosed(info)
         end)
         table.insert(items, item)

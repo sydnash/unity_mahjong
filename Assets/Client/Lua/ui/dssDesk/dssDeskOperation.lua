@@ -43,7 +43,7 @@ local inhandCameraParams = {
 
 dssOperation.seats = {
     [seatType.mine] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -3.53, 0), rot = Quaternion.Euler(0, 0, 0), w = 0.72, h = 2.14, hgap = 0.50 },
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -5.04, 0), rot = Quaternion.Euler(0, 0, 0), w = 0.72, h = 2.14, hgap = 0.50 },
     },
     [seatType.right] = { 
     },
@@ -70,6 +70,9 @@ function dssOperation:onInit()
     self.canChuPai = false
     self.dragCard = doushisi.new(0)
     self.dragCard:setLocalScale(Vector3.New(1.2, 1.2, 1.2))
+    self.dragCard:setPickabled(true)
+    self.dragCard:setColliderEnabled(false)
+    self.sortOrder = 0
     
     --初始化按钮
     self.mBuDang:addClickListener(self.onBuDangClickedHandler, self)
@@ -126,8 +129,37 @@ end
 
 function dssOperation:onGameSync()
     self:reset()
-    self:initInhandCards()
     touch.addListener(self.touchHandler, self)
+
+    self:initInhandCards()
+    local reenter = self.game.data.Reenter
+    if reenter then
+        local deskPlayStatus = self.game.deskStatus
+        if deskPlayStatus == doushisiGame.deskPlayStatus.tuiDang then
+            if self.game.curOpAcId == self.game.mainAcId then
+                self:onDangHandler(reenter.IsMustDang)
+            end
+        elseif deskPlayStatus == doushisiGame.deskPlayStatus.touPai then
+            if reenter.TouHint ~= nil then 
+                local data = {Cards = {}, HasTY = {}, Op = opType.doushisi.an}
+                if reenter.TouHint.Tous ~= nil then 
+                    for v,k in pairs(reenter.TouHint.Tous) do 
+                        table.insert(data.Cards, k.CardsId[1])
+                        table.insert(data.HasTY, k.HasTY)
+                    end
+                end
+                data.CanPass = reenter.TouHint.CanPass
+                self:onOpListAn(data)
+            elseif reenter.CurOpList ~= nil then
+                self:onOpList(reenter.CurOpList)
+            end
+        elseif deskPlayStatus == doushisiGame.deskPlayStatus.playing then
+            if reenter.CurOpList ~= nil then
+                self:onOpList(reenter.CurOpList)
+            end
+        elseif deskPlayStatus == doushisiGame.deskPlayStatus.piao then
+        end
+    end
 end
 
 function dssOperation:onFaPai()
@@ -141,10 +173,12 @@ end
 ---------------------------------------------------------------
 --当
 ---------------------------------------------------------------
-function dssOperation:onDangHandler()
+function dssOperation:onDangHandler(isMustDang)
     self:hideAllOpBtn()
-    self:showOpBtn(self.mBuDang)
     self:showOpBtn(self.mDang)
+    if not isMustDang then
+        self:showOpBtn(self.mBuDang)
+    end
 end
 function dssOperation:onDangClickedHandler()
     networkManager.csDang(true)
@@ -165,34 +199,35 @@ function dssOperation:onOpList(opList)
         if opInfo.HasTy == nil then
             opInfo.HasTy = {}
         end
-        if op == opType.dss.hua then
+        if op == opType.doushisi.hua.id then
             self:onOpListHua(opInfo)
-        elseif op == opType.dss.chu then
+        elseif op == opType.doushisi.chu.id then
             self:onOpListChu(opInfo)
-        elseif op == opType.dss.chi then
+        elseif op == opType.doushisi.chi.id then
             self:onOpListChi(opInfo)
-        elseif op == opType.dss.che then
+        elseif op == opType.doushisi.che.id then
             self:onOpListChe(opInfo)
-        elseif op == opType.dss.hu then
+        elseif op == opType.doushisi.hu.id then
             self:onOpListHu(opInfo)
-        elseif op == opType.dss.gang then
-        elseif op == opType.dss.pass then
-        elseif op == opType.dss.an then
+        elseif op == opType.doushisi.gang.id then
+        elseif op == opType.doushisi.pass.id then
+            self:showOpBtn(self.mPass)
+        elseif op == opType.doushisi.an.id then
             self:onOpListAn(opInfo)
-        elseif op == opType.dss.zhao then
-        elseif op == opType.dss.shou then
-        elseif op == opType.dss.bao then
-        elseif op == opType.dss.baGang then
+        elseif op == opType.doushisi.zhao.id then
+        elseif op == opType.doushisi.shou.id then
+        elseif op == opType.doushisi.bao.id then
+        elseif op == opType.doushisi.baGang.id then
             self:onOpListBaGang(opInfo)
-        elseif op == opType.dss.chiChengSan then
+        elseif op == opType.doushisi.chiChengSan.id then
             --self:onOpListChiChengSan(opInfo)
-        elseif op == opType.dss.caiShen then
+        elseif op == opType.doushisi.caiShen.id then
             self:onOpListCaiShen(opInfo)
-        elseif op == opType.dss.baoJiao then
-        elseif op == opType.dss.gen then
-        elseif op == opType.dss.weiGui then
+        elseif op == opType.doushisi.baoJiao.id then
+        elseif op == opType.doushisi.gen.id then
+        elseif op == opType.doushisi.weiGui.id then
         else
-            log("on op do handler: receive not supported handler." .. tostring(op))
+            log("on op list handler: receive not supported handler." .. tostring(op))
         end
     end
     self:relocateOpBtn()
@@ -207,10 +242,19 @@ end
 function dssOperation:relocateOpBtn()
 end
 
+function dssOperation:onPassClickedHandler()
+    local sendData = self:getOpChoseData(opType.doushisi.pass.id)
+    networkManager.csOpChose(sendData)
+end
+
 -----------------------------------------------------------
 --chu
 -----------------------------------------------------------
 function dssOperation:onOpListChu(opInfo)
+    self.canChuPai = true
+end
+function dssOperation:onOpDoChu()
+    self.canChuPai = false
 end
 
 -----------------------------------------------------------
@@ -220,7 +264,7 @@ function dssOperation:onOpListHua(opInfo)
     self:showOpBtn(self.mHua, opInfo)
 end
 function dssOperation:onHuaClickedHandler()
-    local chianSelPanel = require ("ui.dssDesk.dssDeskOperation")
+    local chianSelPanel = require ("ui.dssDesk.chiAnSelPanel")
     local panel = chianSelPanel.newAnSelPanel(self.mChi.opInfo, function()
         self:onHuaChose(info)
     end)
@@ -228,7 +272,7 @@ function dssOperation:onHuaClickedHandler()
     panel:setParent(self.mHua)
 end
 function dssOperation:onHuaChose(info)
-    local data = self:getOpChoseData(opType.dss.hua, info.Cards[1], info.HasTy[1], nil)
+    local data = self:getOpChoseData(opType.doushisi.hua.id, info.Cards[1], info.HasTy[1], nil)
     networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoHua()
@@ -241,7 +285,7 @@ function dssOperation:onOpListChi(opInfo)
     self:showOpBtn(self.mChi, opInfo)
 end
 function dssOperation:onChiClickedHandler()
-    local chianSelPanel = require ("ui.dssDesk.dssDeskOperation")
+    local chianSelPanel = require ("ui.dssDesk.chiAnSelPanel")
     local panel = chianSelPanel.newChiSelPanel(self.mChi.opInfo, function()
         self:onChiChose(info)
     end)
@@ -249,7 +293,7 @@ function dssOperation:onChiClickedHandler()
     panel:setParent(self.mChi)
 end
 function dssOperation:onChiChose(info)
-    local data = self:getOpChoseData(opType.dss.chi, info.c, info.hasTy, nil)
+    local data = self:getOpChoseData(opType.doushisi.chi.id, info.c, info.hasTy, nil)
     networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoChi()
@@ -263,7 +307,7 @@ function dssOperation:onOpListChe(opInfo)
 end
 function dssOperation:onCheClickedHandler()
     local info = self.mChe.opInfo
-    local data = self:getOpChoseData(opType.dss.che, info.Cards[1], info.HasTy[1], nil)
+    local data = self:getOpChoseData(opType.doushisi.che.id, info.Cards[1], info.HasTy[1], nil)
     networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoChe()
@@ -276,7 +320,7 @@ function dssOperation:onOpListHu(opInfo)
     self:showOpBtn(self.mHu, opInfo)
 end
 function dssOperation:onHuClickedHandler()
-    local data = self:getOpChoseData(opType.dss.hu)
+    local data = self:getOpChoseData(opType.doushisi.hu.id)
     networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoHu()
@@ -289,7 +333,7 @@ function dssOperation:onOpListAn(opInfo)
     self:showOpBtn(self.mAn, opInfo)
 end
 function dssOperation:onAnClickedHandler()
-    local chianSelPanel = require ("ui.dssDesk.dssDeskOperation")
+    local chianSelPanel = require ("ui.dssDesk.chiAnSelPanel")
     local panel = chianSelPanel.newAnSelPanel(self.mChi.opInfo, function()
         self:onAnChose(info)
     end)
@@ -314,7 +358,7 @@ function dssOperation:onOpListBaGang(opInfo)
     self:showOpBtn(self.mAn, opInfo)
 end
 function dssOperation:onDengClickedHandler()
-    local chianSelPanel = require ("ui.dssDesk.dssDeskOperation")
+    local chianSelPanel = require ("ui.dssDesk.chiAnSelPanel")
     local panel = chianSelPanel.newBaGangSelPanel(self.mDeng.opInfo, function()
         self:onBaGangChose(info)
     end)
@@ -322,7 +366,7 @@ function dssOperation:onDengClickedHandler()
     panel:setParent(self.mDeng)
 end
 function dssOperation:onBaGangChose(info)
-    local data = self:getOpChoseData(opType.dss.baGang, info.c, info.hasTy, nil)
+    local data = self:getOpChoseData(opType.doushisi.baGang.id, info.c, info.hasTy, nil)
     networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoBaGang()
@@ -371,17 +415,13 @@ function dssOperation:addCardTo(card, pos, seatType, cardType, rot)
     card:setType(cardType)
     card:fix()
     --get rot by cardtype and seattype
-    if cardType == doushisiGame.cardType.shou then
-        card:setPickabled(true)
-    else
-        card:setPickabled(false)
-    end
     if rot then
         card:setRotation(rot)
     end
     card:setLocalPosition(pos)
     card:setParent(self.cardRoot)
     card:show()
+    self:topCard(card)
 end
 
 function dssOperation:initInhandCards()
@@ -410,12 +450,14 @@ function dssOperation:relocateInhandCards(acId)
             local pos = card:getLocalPosition()
             pos = self:getInhandCardPos(startPos, seatType, col, row, pos, #cards)
             self:addCardTo(card, pos, seatType, doushisiGame.cardType.shou)
-            self:topNode(node)
+            card:setPickabled(true)
         end
     end
 end
 
-function dssOperation:topNode(node)
+function dssOperation:topCard(card)
+    card:setSortingOrder(self.sortOrder)
+    self.sortOrder = self.sortOrder + 1
 end
 
 function dssOperation:getInhandCardPos(startPos, seatType, col, row, pos, rowHeight)
@@ -443,6 +485,16 @@ function dssOperation:onDestroy()
     self.super.onDestroy(self)
 end
 
+function dssOperation:getCardByGo(go)
+    local cards = self.inhandCards[seatType.mine]
+    for _, c in pairs(cards) do
+        if c.gameObject == go then
+            return c
+        end
+    end
+    return nil
+end
+
 function dssOperation:touchHandler(phase, pos)
     if not self.canChuPai then
         return
@@ -452,15 +504,25 @@ function dssOperation:touchHandler(phase, pos)
     if phase == touch.phaseType.began then
         local go = GameObjectPicker.instance:Pick(pos)
         if go ~= nil then
-            self.isClick = true
+            local clickCard = self:getCardByGo(go)
+            if clickCard == nil then
+                return
+            end
             local preSelectedCard = self.curSelectdCard
-            self.curSelectdCard = go
-            if preSelectedCard and preSelectedCard ~= go then
+            self.curSelectdCard = clickCard
+
+            self.isClick = true
+            if preSelectedCard and preSelectedCard ~= clickCard then
                 preSelectedCard:setSelected(false)
             end
-            local pos = self.curSelectdCard:getLocalPosition()
+            local cardPos = self.curSelectdCard:getLocalPosition()
+            if self.curSelectdCard ~= nil then
+                local cpos = camera.transform.localPosition
+                pos.z = cardPos.z - cpos.z
+                self.selectedLastPos = camera:ScreenToWorldPoint(pos)
+            end
             self.dragCard:setId(self.curSelectdCard.id)
-            self:addCardTo(self.dragCard, pos, seatType.mine, doushisiGame.cardType.perfect)
+            self:addCardTo(self.dragCard, cardPos, seatType.mine, doushisiGame.cardType.perfect)
         end
     elseif phase == touch.phaseType.moved then
         if self.curSelectdCard ~= nil then
@@ -480,6 +542,7 @@ function dssOperation:touchHandler(phase, pos)
     else
         self.dragCard:hide()
         if self.curSelectdCard ~= nil then
+            log("is click:   is can chu pai : " .. tostring(self.isClick) .. " " .. tostring(self.canChuPai))
             if self.isClick then
                 if self.curSelectdCard.selected then
                     if self.canChuPai then
@@ -498,8 +561,9 @@ end
 
 function dssOperation:onChoseChuPai(card)
     local id = card.id
-    local sendData = self:getOpChoseData(opType.dss.chu, id, nil, nil)
+    local sendData = self:getOpChoseData(opType.doushisi.chu.id, id, nil, nil)
     networkManager.csOpChose(sendData)
+    self.canChuPai = false
 end
 
 ---------------------------------------------------------
