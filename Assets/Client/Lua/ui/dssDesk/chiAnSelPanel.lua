@@ -14,7 +14,7 @@ end
 
 function chiAnSelItem:onBtnClickedHandler()
     if self.cb then
-        self.cb(info)
+        self.cb(self.info)
     end
 end
 
@@ -46,8 +46,8 @@ function chiSelPanel:onInit()
     local items = {}
     for i, c in pairs(self.opInfo.Cards) do
         local info = {c = c}
-        if #opInfo.HasTy <= i then
-            info.hasTy = opInfo.HasTy[i]
+        if #opInfo.HasTY <= i then
+            info.hasTY = opInfo.HasTY[i]
         end
         if #opInfo.HasWarning <= i then
             info.hasWarning = opInfo.HasWarning[i]
@@ -57,6 +57,7 @@ function chiSelPanel:onInit()
         end)
         table.insert(items, item)
         item:setParent(self.mThis)
+        item:show()
     end
     self.items = items
 end
@@ -75,7 +76,7 @@ function chiSelPanel:onDestroy()
 end
 
 local anSelPanel = class("ANSelPanel", base)
-_RES_(chiSelPanel, "DssDeskUI", "ChiAnSelPanelUI")
+_RES_(anSelPanel, "DssDeskUI", "ChiAnSelPanelUI")
 
 function anSelPanel:ctor(opInfo, callback)
     self.opInfo = opInfo
@@ -88,14 +89,14 @@ function anSelPanel:onInit()
     local items = {}
     for i, c in pairs(self.opInfo.Cards) do
         local info = {c = c}
-        if #opInfo.HasTy <= i then
-            info.hasTy = opInfo.HasTy[i]
+        if #opInfo.HasTY <= i then
+            info.hasTY = opInfo.HasTY[i]
         end
         if #opInfo.HasWarning <= i then
             info.hasWarning = opInfo.HasWarning[i]
         end
         local cards = {c, c, c}
-        if info.hasTy then
+        if info.hasTY then
             table.insert(cards, c)
         end
         local item = chiAnSelItem.new(cards, info, function(info)
@@ -103,6 +104,7 @@ function anSelPanel:onInit()
         end)
         table.insert(items, item)
         item:setParent(self.mThis)
+        item:show()
     end
     self.items = items
 end
@@ -122,7 +124,7 @@ end
 
 
 local baGangSelPanel = class("baGangSelPanel", base)
-_RES_(chiSelPanel, "DssDeskUI", "ChiAnSelPanelUI")
+_RES_(baGangSelPanel, "DssDeskUI", "ChiAnSelPanelUI")
 
 function baGangSelPanel:ctor(opInfo, callback)
     self.opInfo = opInfo
@@ -135,8 +137,8 @@ function baGangSelPanel:onInit()
     local items = {}
     for i, c in pairs(self.opInfo.Cards) do
         local info = {c = c}
-        if #opInfo.HasTy <= i then
-            info.hasTy = opInfo.HasTy[i]
+        if #opInfo.HasTY <= i then
+            info.hasTY = opInfo.HasTY[i]
         end
         if #opInfo.HasWarning <= i then
             info.hasWarning = opInfo.HasWarning[i]
@@ -147,6 +149,7 @@ function baGangSelPanel:onInit()
         end)
         table.insert(items, item)
         item:setParent(self.mThis)
+        item:show()
     end
     self.items = items
 end
