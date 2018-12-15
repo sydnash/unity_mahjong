@@ -25,6 +25,10 @@ local resourceSuffix = {
 local DEFAULT_LAYER         = 0
 local INHAND_MAHJONG_LAYER  = 8
 
+local SpriteRenderer = UnityEngine.SpriteRenderer
+local BoxCollider = UnityEngine.BoxCollider
+local GameObject = UnityEngine.GameObject
+
 function doushisi:ctor(id)
     self.id = id
 
@@ -32,8 +36,8 @@ function doushisi:ctor(id)
     self:init(go)
     self:show()
 
-    self.render = getComponentU(go, typeof(UnityEngine.SpriteRenderer))
-    self.collider = getComponentU(go, typeof(UnityEngine.BoxCollider))
+    self.render = getComponentU(go, typeof(SpriteRenderer))
+    self.collider = getComponentU(go, typeof(BoxCollider))
     self.selected = false
 
     local typ  = doushisiType.getDoushisiTypeById(id)
@@ -97,8 +101,11 @@ function doushisi:setSprite(folder, resource)
 end
 
 function doushisi:resetRender()
-    if self.render.sprite ~= nil then
-        textureManager.unload(self.render.sprite)
+    local sprite = self.render.sprite
+    if sprite ~= nil then
+        local tex = sprite.texture
+        textureManager.unload(tex)
+        GameObject.Destroy(sprite)
         self.render.sprite = nil
     end
 end

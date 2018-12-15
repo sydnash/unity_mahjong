@@ -29,19 +29,13 @@ public class PreloadManager : MonoBehaviour
         /// <summary>
         /// 
         /// </summary>
-        public int maxCount;
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="assetPath"></param>
         /// <param name="assetName"></param>
-        public PreloadData(string assetType, string assetPath, string assetName, int maxCount)
+        public PreloadData(string assetType, string assetPath, string assetName)
         {
             this.assetType = assetType;
             this.assetPath = assetPath;
             this.assetName = assetName;
-            this.maxCount  = maxCount;
         }
     }
 
@@ -90,7 +84,7 @@ public class PreloadManager : MonoBehaviour
     /// </summary>
     /// <param name="assetPath"></param>
     /// <param name="assetName"></param>
-    public void Push(int token, string assetType, string assetPath, string assetName, int maxCount)
+    public void Push(int token, string assetType, string assetPath, string assetName)
     {
         Queue<PreloadData> queue = mDict.ContainsKey(token) ? mDict[token] : null;
         if (queue == null)
@@ -99,7 +93,7 @@ public class PreloadManager : MonoBehaviour
             mDict.Add(token, queue);
         }
 
-        PreloadData d = new PreloadData(assetType, assetPath, assetName, maxCount);
+        PreloadData d = new PreloadData(assetType, assetPath, assetName);
         queue.Enqueue(d);
     }
 
@@ -156,7 +150,7 @@ public class PreloadManager : MonoBehaviour
             for (int i = 0; i < loadCountPreFrame; i++)
             {
                 PreloadData d = queue.Dequeue();
-                AssetPoolManager.instance.Preload(d.assetType, d.assetPath, d.assetName, d.maxCount);
+                AssetPoolManager.instance.Preload(d.assetType, d.assetPath, d.assetName);
 #if UNITY_EDITOR
                 preloadCount++;
 #endif

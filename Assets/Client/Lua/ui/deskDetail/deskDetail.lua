@@ -7,11 +7,11 @@ local deskDetail = class("deskDetail", base)
 
 _RES_(deskDetail, "DeskDetailUI", "DeskDetailUI")
 
-function deskDetail:ctor(cityType, gameType, friendsterId, config, join, deskId, managerAcId)
+function deskDetail:ctor(cityType, gameType, friendsterId, config, canJoin, deskId, managerAcId)
     self.cityType = cityType
     self.gameType = gameType
     self.friendsterId = friendsterId
-    self.join = join
+    self.canJoin = canJoin
     self.deskId = deskId
     self.managerAcId = managerAcId
 
@@ -31,7 +31,7 @@ function deskDetail:onInit()
     local config = self.config
 
     self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, false)
-    if self.join then
+    if self.friendsterId ~= nil and self.friendsterId > 0 then
         self.mDetailRoot:hide()
         self.mDetailRoot2:show()
         self.detail:setParent(self.mDetailRoot2)
@@ -40,6 +40,14 @@ function deskDetail:onInit()
             self.mDissolve:show()
         else
             self.mDissolve:hide()
+        end
+
+        if self.deskId == gamepref.player.currentDesk.deskId then
+            self.mJoin:hide()
+            self.mReturn:show()
+        else
+            self.mJoin:hide()
+            self.mReturn:show()
         end
     else
         self.mDetailRoot:show()
@@ -51,6 +59,7 @@ function deskDetail:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mJoin:addClickListener(self.onJoinClickedHandler, self)
     self.mDissolve:addClickListener(self.onDissolveClickedHandler, self)
+    self.mReturn:addClickListener(self.onRerurnClickedHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
@@ -60,8 +69,20 @@ function deskDetail:onCloseClickedHandler()
 end
 
 function deskDetail:onJoinClickedHandler()
+    if self.canJoin then
+        enterDesk(self.cityType, self.deskId)
+        self:close()
+    else
+        showMessageUI("人数已满，无法加入该房间")
+    end
+
+    playButtonClickSound()
+end
+
+function deskDetail:onRerurnClickedHandler()
     enterDesk(self.cityType, self.deskId)
     self:close()
+
     playButtonClickSound()
 end
 

@@ -79,13 +79,13 @@ public class AssetPoolManager
     /// <param name="assetPath"></param>
     /// <param name="assetName"></param>
     /// <param name="maxCount"></param>
-    public void Preload(string assetType, string assetPath, string assetName, int maxCount = 1)
+    public void Preload(string assetType, string assetPath, string assetName)
     {
         AssetPool pool = mPools[assetType];
 #if UNITY_EDITOR
         Debug.AssertFormat(pool != null, "can't find pool of assetType:[{0}]", assetType);
 #endif
-        Object o = pool.Preload(assetPath, assetName, maxCount);
+        Object o = pool.Preload(assetPath, assetName);
 
         GameObject go = o as GameObject;
         if (go != null)

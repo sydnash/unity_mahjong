@@ -12,22 +12,24 @@ function gamePlayer:ctor(acid)
     self.headerTex   = nil
     self.playHistory = playHistory.new()
     self.friendsterPlayHistories = {}
+
+    self.headerTexDownloaded = false
 end
 
 function gamePlayer:loadHeaderTex()
-    self:destroy()
-
     --先显示默认头像
     self.headerTex = textureManager.load(string.empty, "JS_tx_a")
+    self.headerTexDownloaded = false
     --同时开始下载真实头像
     if not string.isNilOrEmpty(self.headerUrl) then 
         downloadIcon(self.headerUrl, function(tex)
-            if self.headerTex ~= nil then
+            if self.headerTexDownloaded and self.headerTex ~= nil then
                 textureManager.unload(self.headerTex, false)
                 self.headerTex = nil
             end
 
             self.headerTex = tex
+            self.headerTexDownloaded = true
 
             local signalId = signalType.headerDownloaded .. tostring(self.acId)
             signalManager.signal(signalId, self.headerTex)
@@ -85,7 +87,11 @@ end
 
 function gamePlayer:destroy()
     if self.headerTex ~= nil then
-        textureManager.unload(self.headerTex, false)
+        if self.headerTexDownloaded then
+            destroyTexture(self.headerTex)
+        else
+            textureManager.unload(self.headerTex)
+        end
         self.headerTex = nil
     end
 end

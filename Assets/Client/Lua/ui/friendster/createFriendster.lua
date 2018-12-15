@@ -7,6 +7,16 @@ local createFriendster = class("createFriendster", base)
 
 _RES_(createFriendster, "FriendsterUI", "CreateFriendsterUI")
 
+local cityOrder = {
+    cityType.chengdu,
+    cityType.wenjiang,
+    cityType.jintang,
+    cityType.xichong,
+    cityType.nanchong,
+    cityType.jiangyou,
+    cityType.yingjing,
+}
+
 function createFriendster:ctor(callback)
     self.callback = callback
     self.super.ctor(self)
@@ -17,37 +27,31 @@ function createFriendster:onInit()
     self.mExpand:addClickListener(self.onExpandClickedHandler, self)
     self.mUnexpand:addClickListener(self.onUnexpandClickedHandler, self)
     self.mCityListMask:addClickListener(self.onUnexpandClickedHandler, self)
-    self.mName:addChangedListener(self.onNameChangedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
-    self.mCityList_ChengDu:addChangedListener(self.onCityChangedHandler, self)
-    self.mCityList_JinTang:addChangedListener(self.onCityChangedHandler, self)
 
     self.mUnexpand:hide()
-    self.mCityList:hide()
+    self.mCityPanel:hide()
 
     self.mCity:setText(cityName[gamepref.city.City])
     self.mName:setCharacterLimit(gameConfig.friendsterNameMaxLength)
     self.mName:setText(string.empty)
     
-    self.mCityList_ChengDu:setSelected(false)
-    self.mCityList_JinTang:setSelected(false)
+    local citys = {}
+    for k, v in pairs(cityOrder) do
+        local toggle = findPointerToggle(self.mCityList.transform, "Viewport/Content/" .. tostring(k))
+        if toggle ~= nil then
+            toggle.id = v
+            toggle:setSelected(gamepref.city.City == v)
+            toggle:addChangedListener(self.onCityChangedHandler, self)
 
-    self.mCityList_ChengDu.id  = cityType.chengdu
-    self.mCityList_JinTang.id  = cityType.jintang
-
-    local citys = {
-        self.mCityList_ChengDu,
-        self.mCityList_JinTang,
-    }
-
-    for _, v in pairs(citys) do
-        v:setSelected(v.id == gamepref.city.City)
+            local label = findText(toggle.transform, "Label")
+            if label ~= nil then
+                label:setText(cityName[v])
+            end
+        end
     end
 
-    self.cityId = gamepref.city.City
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-
-    self:refreshCreateState()
 end
 
 function createFriendster:onCloseClickedHandler()
@@ -58,24 +62,33 @@ end
 function createFriendster:onExpandClickedHandler()
     self.mExpand:hide()
     self.mUnexpand:show()
-    self.mCityList:show()
+    self.mCityPanel:show()
     playButtonClickSound()
 end
 
 function createFriendster:onUnexpandClickedHandler()
     self.mExpand:show()
     self.mUnexpand:hide()
-    self.mCityList:hide()
+    self.mCityPanel:hide()
+    self.mCityList:reset()
+
     playButtonClickSound()
 end
 
-function createFriendster:onNameChangedHandler()
-    self:refreshCreateState()
-end
-
 function createFriendster:onCreateClickedHandler()
+    if self.cityId == nil or self.cityId <= 0 then
+        showMessageUI("请选择地区")
+        return
+    end
+
+    local name = self.mName:getText()
+    if string.isNilOrEmpty(name) then
+        showMessageUI("请输入亲友圈名字")
+        return
+    end 
+
     showWaitingUI("正在创建亲友圈")
-    networkManager.createFriendster(self.cityId, self.mName:getText(), function(msg)
+    networkManager.createFriendster(self.cityId, name, function(msg)
         closeWaitingUI()
 
         if msg == nil then
@@ -105,19 +118,7 @@ function createFriendster:onCityChangedHandler(sender, selected, clicked)
         self.cityId = sender.id
         self.mCity:setText(cityName[sender.id])
 
-        self:refreshCreateState()
         playButtonClickSound()
-    end
-end
-
-function createFriendster:refreshCreateState()
-    local name = self.mName:getText()
-    if self.cityId == nil or string.isNilOrEmpty(name) then
-        self.mCreate:setInteractabled(false)
-        self.mCreateZ:setSprite("gray")
-    else
-        self.mCreate:setInteractabled(true)
-        self.mCreateZ:setSprite("light")
     end
 end
 

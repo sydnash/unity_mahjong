@@ -24,7 +24,7 @@ function friendsterDesk:onClickedHandler()
                                                            self.data.gameType,
                                                            self.data.friendsterId, 
                                                            self.data.config, 
-                                                           true, 
+                                                           self.canJoin, 
                                                            self.data.deskId, 
                                                            self.data.managerAcId)
         ui:show()
@@ -33,6 +33,7 @@ end
 
 function friendsterDesk:set(data)
     self.data = data
+    
 
     if self.data ~= nil then
         self.mNum:setText(string.format("（第%d/%d局）", self.data.playedCount, self.data.totalCount))
@@ -57,6 +58,8 @@ function friendsterDesk:set(data)
                 end
             end
         end
+        
+        self.canJoin = (#self.data.players < self.data.seatCount)
     end
 end
 

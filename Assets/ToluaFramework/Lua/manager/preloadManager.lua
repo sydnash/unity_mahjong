@@ -19,8 +19,8 @@ end
 -----------------------------------------------------------------------------
 -- 压入加载参数
 -----------------------------------------------------------------------------
-function token:push(assetPath, assetName, maxCount)
-    self.preload:Push(self.id, self.assetType, assetPath, assetName, maxCount)
+function token:push(assetPath, assetName)
+    self.preload:Push(self.id, self.assetType, assetPath, assetName)
 end
 
 -----------------------------------------------------------------------------

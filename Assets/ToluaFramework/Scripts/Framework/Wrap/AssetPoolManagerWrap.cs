@@ -60,31 +60,13 @@ public class AssetPoolManagerWrap
 	{
 		try
 		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 4)
-			{
-				AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
-				string arg0 = ToLua.CheckString(L, 2);
-				string arg1 = ToLua.CheckString(L, 3);
-				string arg2 = ToLua.CheckString(L, 4);
-				obj.Preload(arg0, arg1, arg2);
-				return 0;
-			}
-			else if (count == 5)
-			{
-				AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
-				string arg0 = ToLua.CheckString(L, 2);
-				string arg1 = ToLua.CheckString(L, 3);
-				string arg2 = ToLua.CheckString(L, 4);
-				int arg3 = (int)LuaDLL.luaL_checknumber(L, 5);
-				obj.Preload(arg0, arg1, arg2, arg3);
-				return 0;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: AssetPoolManager.Preload");
-			}
+			ToLua.CheckArgsCount(L, 4);
+			AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			string arg2 = ToLua.CheckString(L, 4);
+			obj.Preload(arg0, arg1, arg2);
+			return 0;
 		}
 		catch (Exception e)
 		{

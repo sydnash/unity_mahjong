@@ -592,6 +592,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/QYQ_zi02.png</key>
             <key type="filename">Images/QYQ_zi15.png</key>
             <key type="filename">Images/QYQ_zi16.png</key>
             <struct type="IndividualSpriteSettings">
@@ -968,6 +969,7 @@
             <filename>Images/ZM_tx01.png</filename>
             <filename>Images/zz_zi01.png</filename>
             <filename>Images/QYQ_zi16.png</filename>
+            <filename>Images/QYQ_zi02.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

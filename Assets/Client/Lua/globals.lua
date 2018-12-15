@@ -188,7 +188,7 @@ function enterDesk(gameType, deskId, callback)
 
     for _, v in pairs(mahjongType.c) do
         for i=1, 4 do
-            preload:push(v.folder, v.resource, 1)
+            preload:push(v.folder, v.resource)
         end
     end
     preload:start()

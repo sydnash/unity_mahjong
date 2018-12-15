@@ -7,8 +7,9 @@ local PlayerPrefs = UnityEngine.PlayerPrefs
 
 local bgm_volume_key    = "AUDIO_BGM_VOLUME";
 local sfx_volume_key    = "AUDIO_SFX_VOLUME";
-local language_key      = "AUDIO_LANGUAGE"
-local header_key        = "HEADER_TYPE"
+local language_key      = "LANGUAGE"
+local tablecloth_key    = "TABLECLOTH"
+local tablelayout_key   = "TABLELAYOUT"
 
 -------------------------------------------------------------
 --
@@ -59,19 +60,37 @@ end
 -------------------------------------------------------------
 --
 -------------------------------------------------------------
-local function setHeaderType(ht)
-    PlayerPrefs.SetInt(header_key, ht)
+local function setTablecloth(tbc)
+    PlayerPrefs.SetString(tablecloth_key, tbc)
 end
 
 -------------------------------------------------------------
 --
 -------------------------------------------------------------
-local function getHeaderType(ht)
-    if not PlayerPrefs.HasKey(header_key) then
-        return headerType.wc
+local function getTablecloth()
+    if not PlayerPrefs.HasKey(tablecloth_key) then
+        return tablecloth.dft
     end
 
-    return PlayerPrefs.GetInt(header_key)
+    return PlayerPrefs.GetString(tablecloth_key)
+end
+
+-------------------------------------------------------------
+--
+-------------------------------------------------------------
+local function setTablelayout(tbl)
+    PlayerPrefs.SetString(tablelayout_key, tbL)
+end
+
+-------------------------------------------------------------
+--
+-------------------------------------------------------------
+local function getTablelayout()
+    if not PlayerPrefs.HasKey(tablelayout_key) then
+        return tablelayout.dft
+    end
+
+    return PlayerPrefs.GetString(tablelayout_key)
 end
 
 -------------------------------------------------------------
@@ -95,8 +114,6 @@ return {
     getSFXVolume = getSFXVolume,
     setLanguage = setLanguage,
     getLanguage = getLanguage,
-    setHeaderType = setHeaderType,
-    getHeaderType = getHeaderType,
 
     save = save
 }

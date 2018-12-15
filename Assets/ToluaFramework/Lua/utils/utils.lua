@@ -409,7 +409,7 @@ function unregisterUpdateListener(handler)
 end
 
 -------------------------------------------------------------------
---十六进制颜色转Color  RGBA "FFABCDFF"
+--十六进制颜色转Color  "RRGGBBAA"
 -------------------------------------------------------------------
 function hexColorToColor(colorString)
     if not colorString then
@@ -419,9 +419,9 @@ function hexColorToColor(colorString)
         return tonumber("0x" .. v)
     end
 
-    local b = string.sub(colorString, 2, 2) 
+    local r = string.sub(colorString, 1, 2) 
     local g = string.sub(colorString, 3, 4) 
-    local r = string.sub(colorString, 5, 6)
+    local b = string.sub(colorString, 5, 6)
     local a = string.sub(colorString, 7, 8)
 
     local red = toTen(r)
