@@ -96,8 +96,11 @@ function doushisi:setSprite(folder, resource)
 end
 
 function doushisi:resetRender()
-    if self.render.sprite ~= nil then
-        textureManager.unload(self.render.sprite)
+    local sprite = self.render.sprite
+    if sprite ~= nil then
+        local tex = sprite.texture
+        textureManager.unload(tex)
+        UnityEngine.GameObject.Destroy(sprite)
         self.render.sprite = nil
     end
 end
