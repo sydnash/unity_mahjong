@@ -24,6 +24,7 @@ end
 -------------------------------------------------------------------
 function pointerToggle:setSelected(selected)
     self.component.isOn = selected
+    self.component.graphic.gameObject:SetActive(selected)
 end
 
 -------------------------------------------------------------------
@@ -38,6 +39,7 @@ end
 ----------------------------------------------------------------
 function pointerToggle:addChangedListener(handler, target)
     self.component.onValueChanged:AddListener(function()
+        self.component.graphic.gameObject:SetActive(self.component.isOn)
         handler(target, self, self.component.isOn, self.component.clicked) 
     end)
 end

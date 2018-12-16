@@ -158,7 +158,6 @@ GameObject:
   - component: {fileID: 224241181339690010}
   - component: {fileID: 222974235410885596}
   - component: {fileID: 114328073951059232}
-  - component: {fileID: 114016393533006612}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -357,22 +356,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u8EAB\u4EFD\u8BC1"
---- !u!114 &114016393533006612
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1650276510024364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mItems:
-  - key: enable
-    sprite: {fileID: 21300000, guid: 3ce4acd35088ed64aa577af90e394189, type: 3}
-  - key: disable
-    sprite: {fileID: 21300002, guid: 3ce4acd35088ed64aa577af90e394189, type: 3}
 --- !u!114 &114027295827140012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -486,7 +469,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -542,7 +525,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5206\u4EAB"
+  m_Text: "\u5B9E\u540D\u8BA4\u8BC1"
 --- !u!114 &114328073951059232
 MonoBehaviour:
   m_ObjectHideFlags: 1

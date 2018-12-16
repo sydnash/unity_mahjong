@@ -10,12 +10,8 @@ _RES_(authentication, "AuthenticationUI", "AuthenticationUI")
 function authentication:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mCommit:addClickListener(self.onCommitClickedHandler, self)
-    self.mName:addChangedListener(self.onNameChangedHandler, self)
-    self.mSFZ:addChangedListener(self.onSfzChangedHandler, self)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-
-    self:refreshUI()
 end
 
 function authentication:onCloseClickedHandler()
@@ -23,32 +19,23 @@ function authentication:onCloseClickedHandler()
     playButtonClickSound()
 end
 
-function authentication:onNameChangedHandler(name)
-    self:refreshUI()
-end
-
-function authentication:onSfzChangedHandler(sfz)
-    self:refreshUI()
-end
-
 function authentication:onCommitClickedHandler()
+    playButtonClickSound()
+
+    local name = self.mName:getText()
+    if string.isNilOrEmpty(name) then
+        showMessageUI("请输入真实姓名")
+        return
+    end
+
+    local sfz = self.mSFZ:getText()
+    if string.isNilOrEmpty(sfz) then
+        showMessageUI("请输入真实身份证号")
+        return
+    end
+
     showMessageUI("实名认证提交成功！")
     self:close()
-
-    playButtonClickSound()
-end
-
-function authentication:refreshUI()
-    local name = self.mName:getText()
-    local sfz = self.mSFZ:getText()
-
-    if string.isNilOrEmpty(name) or string.isNilOrEmpty(sfz) then
-        self.mCommit:setInteractabled(false)
-        self.mCommitText:setSprite("disable")
-    else
-        self.mCommit:setInteractabled(true)
-        self.mCommitText:setSprite("enable")
-    end
 end
 
 function authentication:onCloseAllUIHandler()

@@ -10,31 +10,29 @@ _RES_(city, "CityUI", "CityUI")
 function city:onInit()
     self.regionId = gamepref.city.Region
 
-    self.mRegion_ChengDu_U.id   = "ChengDu"
-    self.mRegion_YaAn_U.id      = "YaAn"
-    self.mRegion_DeYang_U.id    = "DeYang"
-    self.mRegion_NanChong_U.id  = "NanChong"
+    self.mRegionChengDu.id   = "ChengDu"
+    self.mRegionYaAn.id      = "YaAn"
+    self.mRegionDeYang.id    = "DeYang"
+    self.mRegionNanChong.id  = "NanChong"
 
     self.regions = { 
-        ["ChengDu"]     = { s = self.mRegion_ChengDu,   u = self.mRegion_ChengDu_U,     d = self.mCity_ChengDu, },
-        ["YaAn"]        = { s = self.mRegion_YaAn,      u = self.mRegion_YaAn_U,        d = self.mCity_YaAn, },
-        ["DeYang"]      = { s = self.mRegion_DeYang,    u = self.mRegion_DeYang_U,      d = self.mCity_DeYang, },
-        ["NanChong"]    = { s = self.mRegion_NanChong,  u = self.mRegion_NanChong_U,    d = self.mCity_NanChong, },
+        ["ChengDu"]     = { r = self.mRegionChengDu,   p = self.mChengDuPanel, },
+        ["YaAn"]        = { r = self.mRegionYaAn,      p = self.mYaAnPanel, },
+        ["DeYang"]      = { r = self.mRegionDeYang,    p = self.mDeYangPanel, },
+        ["NanChong"]    = { r = self.mRegionNanChong,  p = self.mNanChongPanel, },
     }
 
     for k, v in pairs(self.regions) do
         if k == gamepref.city.Region then
-            v.s:show()
-            v.u:hide()
-            v.d:reset()
-            v.d:show()
+            v.r:setSelected(true)
+            v.p:reset()
+            v.p:show()
         else
-            v.s:hide()
-            v.u:show()
-            v.d:hide()
+            v.r:setSelected(false)
+            v.p:hide()
         end
 
-        v.u:addClickListener(self.onRegionClickedHandler, self)
+        v.r:addChangedListener(self.onRegionChangedHandler, self)
     end
 
     self.mChengDu.id    = cityType.chengdu
@@ -76,23 +74,23 @@ function city:onCloseClickedHandler()
     playButtonClickSound()
 end
 
-function city:onRegionClickedHandler(sender)
-    self.regionId = sender.id
+function city:onRegionChangedHandler(sender, selected, clicked)
+    if clicked and selected then
+        self.regionId = sender.id
 
-    for k, v in pairs(self.regions) do
-        if k == self.regionId then
-            v.s:show()
-            v.u:hide()
-            v.d:reset()
-            v.d:show()
-        else
-            v.s:hide()
-            v.u:show()
-            v.d:hide()
+        for k, v in pairs(self.regions) do
+            if k == self.regionId then
+                v.r:setSelected(true)
+                v.p:reset()
+                v.p:show()
+            else
+                v.r:setSelected(false)
+                v.p:hide()
+            end
         end
-    end
 
-    playButtonClickSound()
+        playButtonClickSound()
+    end
 end
 
 function city:onCityClickedHandler(sender)

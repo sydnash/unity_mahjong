@@ -2,6 +2,7 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local enableConfig = require("config.enableConfig")
 local costConfig = require("config.costConfig")
 
 local base = require("ui.common.view")
@@ -21,10 +22,26 @@ function createDesk:ctor(cityType, friendsterId)
 end
 
 function createDesk:onInit()
-    self.mMahjong_S:show()
-    self.mMahjong_U:hide()
-    self.mChangpai_S:hide()
-    self.mChangpai_U:show()
+    local c = enableConfig[self.cityType]
+
+    if c.mahjong.enable then
+        self.mMahjong:show()
+        self.mMahjong:setSelected(true)
+    else
+        self.mMahjong:hide()
+    end
+
+    if c.changpai.enable then
+        self.mChangpai:show()
+
+        if c.mahjong.enable then
+            self.mChangpai:setSelected(false)
+        else
+            self.mChangpai_S:setSelected(true)
+        end
+    else
+        self.mChangpai:hide()
+    end
 
     self.mMahjongPanel:show()
     self.mChangpaiPanel:hide()
@@ -39,8 +56,8 @@ function createDesk:onInit()
     local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
     self.mCost:setText(tostring(cost))
 
-    self.mMahjong_U:addClickListener(self.onMahjongClickedHandler, self)
-    self.mChangpai_U:addClickListener(self.onChangpaiClickedHandler, self)
+    self.mMahjong:addChangedListener(self.onMahjongChangedHandler, self)
+    self.mChangpai:addChangedListener(self.onChangpaiChangedHandler, self)
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
 
@@ -52,38 +69,32 @@ function createDesk:onCloseClickedHandler()
     playButtonClickSound()
 end
 
-function createDesk:onMahjongClickedHandler()
-    self.gameType = gameType.mahjong
+function createDesk:onMahjongChangedHandler(sender, selected, clicked)
+    if clicked then
+        self.gameType = gameType.mahjong
 
-    self.config = self:readConfig()
-    self:createDetail()
+        self.config = self:readConfig()
+        self:createDetail()
 
-    self.mMahjong_S:show()
-    self.mMahjong_U:hide()
-    self.mChangpai_S:hide()
-    self.mChangpai_U:show()
+        self.mMahjongPanel:show()
+        self.mChangpaiPanel:hide()
 
-    self.mMahjongPanel:show()
-    self.mChangpaiPanel:hide()
-
-    playButtonClickSound()
+        playButtonClickSound()
+    end
 end
 
-function createDesk:onChangpaiClickedHandler()
-    self.gameType = gameType.doushisi
+function createDesk:onChangpaiChangedHandler(sender, selected, clicked)
+    if clicked then
+        self.gameType = gameType.doushisi
 
-    self.config = self:readConfig()
-    self:createDetail()
+        self.config = self:readConfig()
+        self:createDetail()
 
-    self.mMahjong_S:hide()
-    self.mMahjong_U:show()
-    self.mChangpai_S:show()
-    self.mChangpai_U:hide()
+        self.mMahjongPanel:hide()
+        self.mChangpaiPanel:show()
 
-    self.mMahjongPanel:hide()
-    self.mChangpaiPanel:show()
-
-    playButtonClickSound()
+        playButtonClickSound()
+    end
 end
 
 function createDesk:onCreateClickedHandler()
@@ -93,7 +104,6 @@ function createDesk:onCreateClickedHandler()
 
     showWaitingUI("正在创建房间，请稍候...")
     
-    log("======================== : " .. table.tostring(choose))
     networkManager.createDesk(self.cityType, choose, friendsterId, function(msg)
         closeWaitingUI()
         if msg == nil then

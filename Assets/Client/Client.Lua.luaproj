@@ -51,6 +51,7 @@
     <Compile Include="Lua\config\costConfig.lua" />
     <Compile Include="Lua\config\deskConfig.lua" />
     <Compile Include="Lua\config\deviceConfig.lua" />
+    <Compile Include="Lua\config\enableConfig.lua" />
     <Compile Include="Lua\config\gameConfig.lua" />
     <Compile Include="Lua\config\networkConfig.lua" />
     <Compile Include="Lua\config\soundConfig.lua" />
