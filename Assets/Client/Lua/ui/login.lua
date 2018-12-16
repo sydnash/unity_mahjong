@@ -115,6 +115,7 @@ end
 function login:onWechatLoginClickedHandler()
     --登录服务器
     loginServer(function(ok)
+        closeWaitingUI()
         if ok then
             self:close()
         end
@@ -126,6 +127,7 @@ end
 function login:onGuestLoginClickedHandler()
     --登录服务器
     loginServer(function(ok)
+        closeWaitingUI()
         if ok then
             self:close()
         end

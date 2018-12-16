@@ -321,6 +321,7 @@ local function loginC(text, callback)
     local o = table.fromjson(text)
 
     if o.retcode ~= retc.ok then
+        closeWaitingUI()
         callback(nil)
         return
     end
@@ -336,6 +337,8 @@ local function loginC(text, callback)
     gamepref.port    = port
 
     networkManager.author(host, port, function(connected)
+        closeWaitingUI()
+
         local loginType = 1
         local data = { AcId = acid, Session = session, LoginType = loginType }
         send(protoType.cs.loginHs, data, function(msg)
@@ -399,12 +402,15 @@ end
 -- 游客登录
 -------------------------------------------------------------------
 function networkManager.loginGuest(callback)
+    showWaitingUI("正在登录，请稍候")
+
     local form = table.toUrlArgs({ mac = getDeviceId() })
     local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
     local loginURL = networkConfig.server.guestURL
     http.getText(loginURL .. "?" .. form, timeout, function(text)
         if string.isNilOrEmpty(text) then
+            closeWaitingUI()
             callback(nil)
             return
         end
@@ -438,6 +444,7 @@ function networkManager.loginWx(callback)
 
         http.getText(accessUrl, timeout, function(text)
             if string.isNilOrEmpty(text) then
+                closeWaitingUI()
                 callback(nil)
                 return
             end
@@ -447,6 +454,7 @@ function networkManager.loginWx(callback)
             local loginURL = networkConfig.server.wechatURL
             http.getText(loginURL .. "?" .. form, timeout, function(text)
                 if string.isNilOrEmpty(text) then
+                    closeWaitingUI()
                     callback(nil)
                 else
                     loginC(text, callback)
