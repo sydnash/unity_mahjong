@@ -16,8 +16,6 @@ function joinFriendster:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mQuery:addClickListener(self.onQueryClickedHandler, self)
     self.mJoin:addClickListener(self.onJoinClickedHandler, self)
-    self.mId:addChangedListener(self.onIdChangedHandler, self)
-    self.mVerification:addChangedListener(self.onVerificationChangedHandler, self)
 
     self.mId:setText(string.empty)
     self.mVerification:setText(string.empty)

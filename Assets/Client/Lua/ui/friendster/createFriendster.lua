@@ -41,7 +41,12 @@ function createFriendster:onInit()
         local toggle = findPointerToggle(self.mCityList.transform, "Viewport/Content/" .. tostring(k))
         if toggle ~= nil then
             toggle.id = v
-            toggle:setSelected(gamepref.city.City == v)
+            if gamepref.city.City == v then
+                self.cityId = v
+                toggle:setSelected(true)
+            else
+                toggle:setSelected(false)
+            end
             toggle:addChangedListener(self.onCityChangedHandler, self)
 
             local label = findText(toggle.transform, "Label")
