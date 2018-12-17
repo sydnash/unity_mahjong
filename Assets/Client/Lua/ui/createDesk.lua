@@ -127,19 +127,18 @@ function createDesk:onCreateClickedHandler()
 end
 
 function createDesk:createDetail()
-    if self.detail ~= nil then
-        self.detail:close()
-        self.detail = nil
+    if self.detail == nil then
+        self.detail = require("ui.deskDetail.deskDetailPanel").new(true, function(renshu, jushu)
+            local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
+            self.mCost:setText(tostring(cost))
+        end)
+        self.detail:setParent(self.mDetailRoot)
     end
     
     local layout = deskConfigLayout[self.cityType][self.gameType]
     local config = self.config[self.gameType]
 
-    self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, true, function(renshu, jushu)
-        local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
-        self.mCost:setText(tostring(cost))
-    end)
-    self.detail:setParent(self.mDetailRoot)
+    self.detail:set(layout, config)
     self.detail:show()
 end
 
@@ -155,10 +154,15 @@ function createDesk:readConfig()
         else
             config = loadstring(text)()
         end
-
-        detailConfigs[self.cityType] = config
     end
 
+    local gc = config[self.gameType]
+    if gc == nil then
+        gc = deskConfig[self.cityType][self.gameType]
+        config[self.gameType] = gc
+    end
+
+    detailConfigs[self.cityType] = config
     return config
 end
 

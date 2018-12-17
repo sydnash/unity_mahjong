@@ -261,8 +261,8 @@ function enterDesk(gameType, deskId, callback)
                 clientApp.currentDesk:onEnter(msg)
                 clientApp.currentDesk:startLoop()
             else
-                local cityType           = msg.GameType
-                local gameType           = msg.Config.Game
+                local cityType = msg.GameType
+                local gameType = msg.Config.Game
                 clientApp.currentDesk = getLogicGame(cityType, gameType).new(msg)
 
                 if preload ~= nil then

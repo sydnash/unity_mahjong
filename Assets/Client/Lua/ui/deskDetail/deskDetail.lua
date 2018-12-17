@@ -30,7 +30,9 @@ function deskDetail:onInit()
     local layout = deskConfigLayout[self.cityType][self.gameType]
     local config = self.config
 
-    self.detail = require("ui.deskDetail.deskDetailPanel").new(layout, config, false)
+    self.detail = require("ui.deskDetail.deskDetailPanel").new(false)
+    self.detail:set(layout, config)
+
     if self.friendsterId ~= nil and self.friendsterId > 0 then
         self.mDetailRoot:hide()
         self.mDetailRoot2:show()
@@ -42,9 +44,10 @@ function deskDetail:onInit()
             self.mDissolve:hide()
         end
 
-        if self.deskId == gamepref.player.currentDesk.deskId then
-            self.mJoin:hide()
-            self.mReturn:show()
+        local currentDesk = gamepref.player.currentDesk
+        if currentDesk == nil or self.deskId ~= currentDesk.deskId then
+            self.mJoin:show()
+            self.mReturn:hide()
         else
             self.mJoin:hide()
             self.mReturn:show()

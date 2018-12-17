@@ -112,8 +112,8 @@ function playHistoryDetailItem:onPlayClickHandler()
 
         closeAllUI()
 
-        local cityType           = data.GameType
-        local gameType           = data.Config.Game
+        local cityType = data.GameType
+        local gameType = data.Config.Game
         clientApp.currentDesk = getLogicGame(cityType, gameType).new(data, playback)
         clientApp.currentDesk:startLoop()
     end)

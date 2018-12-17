@@ -38,9 +38,7 @@ end
 
 local MAX_GROUP_COUNT = 15
 
-function detailPanel:ctor(layout, config, interactable, callback)
-    self.layout = layout
-    self.config = config
+function detailPanel:ctor(interactable, callback)
     self.interactable = interactable
     self.callback = callback
 
@@ -58,6 +56,20 @@ function detailPanel:onInit()
         end
 
         group:hide()
+    end
+
+    self.mLayout:setSpacing(self.interactable and -10 or -40)
+end
+
+function detailPanel:set(layout, config)
+    self.layout = layout
+    self.config = config
+
+    for _, g in pairs(self.groups) do
+        for _, v in pairs(g.items) do
+            v:hide()
+        end
+        g:hide()
     end
 
     for k, L in pairs(self.layout) do
@@ -106,8 +118,6 @@ function detailPanel:onInit()
         group:allowSwitchOff(L.group.switchOff)
         group:show()
     end
-
-    self.mLayout:setSpacing(self.interactable and -10 or -40)
 end
 
 function detailPanel:onItemChangedHandler(sender, selected, clicked)
