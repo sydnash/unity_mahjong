@@ -92,6 +92,9 @@ end
 function doushisi:setSortingOrder(order)
     self.render.sortingOrder = order
 end
+function doushisi:getSortingOrder()
+    return self.render.sortingOrder
+end
 
 function doushisi:setSprite(folder, resource)
     self:resetRender()

@@ -51,7 +51,6 @@ function tweenSerial:update()
             table.remove(self.queue, 1)
         end
     end
-
     return (count == 0)
 end
 

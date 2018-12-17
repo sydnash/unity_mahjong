@@ -41,59 +41,73 @@ local inhandCameraParams = {
     size = 3.6
 }
 
+local actionCardGap = 0.50
+dssOperation.shakepaitime = 0.3
+dssOperation.actionCardHeight = 2.14
+dssOperation.actionCardWidth = 0.72
+
 dssOperation.seats = {
     [seatType.mine] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -5.04, 0), rot = Quaternion.Euler(0, 0, 0), rowgap = 0.72, colgap = 0.50, height = 2.14},
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -5.04, 0), rot = Quaternion.Euler(0, 0, 0), 
+                    rowgap = 0.69, colgap = 0.50, height = 2.14, width = 0.69},
         [doushisiGame.cardType.chu] = { pos = Vector3.New(3.80, -1.32, 0), rot = Quaternion.Euler(0, 0, 225), 
                     colDir = {x = math.cos(135*math.pi/180), y = math.sin(135*math.pi/180)},
                     rowDir = {x = math.cos(45 * math.pi/180),y = math.sin(45 * math.pi/180)},
-                    rowgap = 0.50, colgap = 0.34,
+                    rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
+                    rotEuler = Vector3.New(0, 0, 225),
                 },
         [doushisiGame.cardType.peng] = { pos = Vector3.New(-0.76, -1.53, 0), rot = Quaternion.Euler(0, 0, 90), 
                     colDir = {x = 1, y = 0},
                     rowDir = {x = 0, y = 1},
-                    rowgap = 0.50,  colgap = 0.34,
+                    rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
+                    rotEuler = Vector3.New(0, 0, 90),
                 },
-        promote = {pos = Vector3.New(-0.36, -0.55, 0), rot = Quaternion.Euler(0, 0, 0), },
+        promote = {pos = Vector3.New(-0.36, -0.55, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
     },
     [seatType.right] = { 
         [doushisiGame.cardType.chu] = { pos = Vector3.New(3.22, 2.04, 0), rot = Quaternion.Euler(0, 0, -35), 
                     colDir = {x = math.cos(-125*math.pi/180), y = math.sin(-125*math.pi/180)},
                     rowDir = {x = math.cos(-35 * math.pi/180), y = math.sin(-35 * math.pi/180)},
-                    rowgap = 0.50, colgap = 0.34,
+                    rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
+                    rotEuler = Vector3.New(0, 0, -35),
                 },
         [doushisiGame.cardType.peng] = { pos = Vector3.New(4.90, 1.32, 0), rot = Quaternion.Euler(0, 0, 0), 
                     colDir = {x = 0, y = -1},
                     rowDir = {x = -1,y = 0},
-                    rowgap = 0.50,  colgap = 0.34,
+                    rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
+                    rotEuler = Vector3.New(0, 0, 0),
                 },
-        promote = {pos = Vector3.New(3.58, -0.39, 0), rot = Quaternion.Euler(0, 0, 0), },
+        promote = {pos = Vector3.New(3.58, -0.39, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
     },
     [seatType.top] = { 
         [doushisiGame.cardType.chu] = { pos = Vector3.New( -4.49, -1.84, 0), rot = Quaternion.Euler(0, 0, 35),
                     colDir = {x = math.cos(-55*math.pi/180), y = math.sin(-55*math.pi/180)},
                     rowDir = {x = math.cos(125 * math.pi/180), y = math.sin(125 * math.pi/180)},
-                    rowgap = 0.50, colgap = 0.34,
+                    rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
+                    rotEuler = Vector3.New(0, 0, 35),
                 },
         [doushisiGame.cardType.peng] = { pos = Vector3.New(3.80, -1.32, 0), rot = Quaternion.Euler(0, 0, 90), 
                     colDir = {x = 1, y = 0},
                     rowDir = {x = 0, y = -1},
-                    rowgap = 0.50,  colgap = 0.34,
+                    rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
+                    rotEuler = Vector3.New(0, 0, 90),
                 },
-        promote = {pos = Vector3.New(1.10, 1.09, 0), rot = Quaternion.Euler(0, 0, 90), },
+        promote = {pos = Vector3.New(1.10, 1.09, 0), rot = Quaternion.Euler(0, 0, 90), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 90)},
     },
     [seatType.left] = { 
         [doushisiGame.cardType.chu] = { pos = Vector3.New( -4.58, -2.67, 0), rot = Quaternion.Euler(0, 0, 135),
                     colDir = {x = math.cos(45*math.pi/180), y = math.sin(45*math.pi/180)},
                     rowDir = {x = math.cos(135 * math.pi/180), y = math.sin(135 * math.pi/180)},
-                    rowgap = 0.50, colgap = 0.34,
+                    rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
+                    rotEuler = Vector3.New(0, 0, 135),
                 },
         [doushisiGame.cardType.peng] = { pos = Vector3.New(-4.90, 1.32, 0), rot = Quaternion.Euler(0, 0, 0), 
                     colDir = {x = 0, y = -1},
                     rowDir = {x = 1,y = 0},
-                    rowgap = 0.50,  colgap = 0.34,
+                    rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
+                    rotEuler = Vector3.New(0, 0, 0),
                 },
-        promote = {pos = Vector3.New(-3.97, -0.39, 0), rot = Quaternion.Euler(0, 0, 0), },
+        promote = {pos = Vector3.New(-3.97, -0.39, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
     },
 }
 
@@ -112,6 +126,8 @@ function dssOperation:onInit()
     self.idleCards = {}
     self.allActionCards = {}
     self.idleActionCards = {}
+    self.flyNodes = {}
+    self.idleFlyNodes = {}
     self.style = doushisiStyle.traditional
     self.canChuPai = false
     self.dragCard = doushisi.new(0)
@@ -154,6 +170,10 @@ function dssOperation:onInit()
     }
     touch.addListener(self.touchHandler, self)
 
+    self.animationManager = tweenParallel.new(false)
+    tweenManager.add(self.animationManager)
+    self.animationManager:play()
+
     self:reset()
 end
 
@@ -187,7 +207,7 @@ function dssOperation:closeAllBtnPanel()
     for _, btn in pairs(self.opBtns) do
         if btn.panel then
             btn.panel:close()
-            btn.pnel = nil
+            btn.panel = nil
         end
     end
 end
@@ -196,9 +216,9 @@ function dssOperation:onGameSync()
     self:reset()
     touch.addListener(self.touchHandler, self)
 
-    self:initInhandCards()
     self:initChuCards()
     self:initChiPengCards()
+    self:initInhandCards()
     local reenter = self.game.data.Reenter
     if reenter then
         local deskPlayStatus = self.game.deskStatus
@@ -230,7 +250,7 @@ function dssOperation:onGameSync()
         elseif deskPlayStatus == doushisiGame.deskPlayStatus.piao then
         end
         if reenter.CurDiPai >= 0 then
-            self:promoteChuFan(self.game.curOpAcId, reenter.CurDiPai)
+            self:promoteChu(self.game.curOpAcId, reenter.CurDiPai, true)
         end
     end
 end
@@ -380,8 +400,11 @@ function dssOperation:onOpDoChu(acId, id)
     local card = self:findAndRemoveCard(acId, id)
     self:addCardToChu(acId, card)
 
-    self:removePromoteChuFan()
-    self:promoteChuFan(acId, id)
+    self:movePromoteCardToChu()
+
+    self:promoteChu(acId, id)
+    
+    return 0
 end
 
 function dssOperation:opDoChiPengAnHua(acId, delIds, beId, op)
@@ -399,6 +422,8 @@ function dssOperation:opDoChiPengAnHua(acId, delIds, beId, op)
     end
     table.insert(self.chipengCards[acId], info)
     self:relocateChiPengCards(acId)
+
+    return info
 end
 -----------------------------------------------------------
 --hua
@@ -418,7 +443,8 @@ function dssOperation:onHuaChose(info)
     networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoHua(acId, delIds)
-    self:opDoChiPengAnHua(acId, delIds, nil, opType.doushisi.hua.id)
+    local info =self:opDoChiPengAnHua(acId, delIds, nil, opType.doushisi.hua.id)
+    return self:chiPengAction(acId, info.cards)
 end
 
 -----------------------------------------------------------
@@ -439,7 +465,8 @@ function dssOperation:onChiChose(info)
     networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoChi(acId, delIds, beId)
-    self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.chi.id)
+    local info = self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.chi.id)
+    return self:chiPengAction(acId, info.cards)
 end
 
 -----------------------------------------------------------
@@ -454,7 +481,8 @@ function dssOperation:onCheClickedHandler()
     networkManager.csOpChose(data)
 end
 function dssOperation:onOpDoChe(acId, delIds, beId)
-    self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.che.id)
+    local info = self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.che.id)
+    return self:chiPengAction(acId, info.cards)
 end
 
 -----------------------------------------------------------
@@ -464,10 +492,12 @@ function dssOperation:onOpListHu(opInfo)
     self:showOpBtn(self.mHu, opInfo)
 end
 function dssOperation:onHuClickedHandler()
-    local data = self:getOpChoseData(opType.doushisi.hu.id)
+    local info = self.mHu.opInfo
+    local data = self:getOpChoseData(opType.doushisi.hu.id, info.Cards[1])
     networkManager.csOpChose(data)
 end
-function dssOperation:onOpDoHu()
+function dssOperation:onOpDoHu(acId, id)
+    self:promoteChu(acId, id)
 end
 
 -----------------------------------------------------------
@@ -495,7 +525,8 @@ function dssOperation:onAnChose(info)
     networkManager.csAnPai(sendData)
 end
 function dssOperation:onOpDoAn(acId, delIds)
-    self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.an.id)
+    local info = self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.an.id)
+    return self:chiPengAction(acId, info.cards)
 end
 
 -----------------------------------------------------------
@@ -534,6 +565,8 @@ function dssOperation:onOpDoBaGang(acId, id)
     end
 
     self:relocateChiPengCards(acId)
+
+    return self:chiPengAction(acId, {card})
 end
 
 -----------------------------------------------------------
@@ -555,6 +588,8 @@ function dssOperation:onOpDoCaiShen(acId, id)
     table.insert(caiShenInfo.cards, card)
 
     self:relocateChiPengCards(acId)
+
+    return self:chiPengAction(acId, {card})
 end
 
 function dssOperation:onPanelBtnClick(btn, createFunc)
@@ -590,6 +625,10 @@ function dssOperation:reset()
     self:closeAllBtnPanel()
     self:disableChu()
 
+    if self.animationManager ~= nil then
+        self.animationManager:clear()
+        self.animationManager:play()
+    end
     self:resetPai()
 end
 
@@ -605,8 +644,11 @@ function dssOperation:resetPai()
     end
     self.idleActionCards = {}
     for _, card in pairs(self.allActionCards) do
-        card:hide()
-        table.insert(self.idleActionCards, card)
+        self:pushbackActionCard(card)
+    end
+    self.idleFlyNodes = {}
+    for _, node in pairs(self.flyNodes) do
+        self:pushFlyNode(node)
     end
     self.inhandCards = {}
     self.chuCards = {}
@@ -634,6 +676,7 @@ function dssOperation:getActionCardById(id)
         table.remove(self.idleActionCards, #self.idleActionCards)
     else
         card = doushisi.new(id)
+        card:setColliderEnabled(false)
         table.insert(self.allActionCards, card)
     end
     card:hide()
@@ -643,49 +686,92 @@ end
 
 function dssOperation:pushbackActionCard(card)
     card:hide()
+    card:setPickabled(false)
+    card:setParent(self.cardRoot)
     table.insert(self.idleActionCards, card)
 end
 
-function dssOperation:promoteChuFan(acId, id)
-    local card = self:getActionCardById(id)
+function dssOperation:promoteChu(acId, id, im)
+    local card = self:findCard(acId, id)
+    card:hide()
+    local node = self:createFlyNode({id})
     local st = self.game:getSeatTypeByAcId(acId)
     local cfg = self.seats[st].promote
 
-    self:addCardTo(card, cfg.pos, st, doushisiGame.cardType.perfect, cfg.rot)
-    self.promoteCard = card
-    self.promoteCard.acId = acId
-end
+    local pos = Vector3.New(cfg.pos.x, cfg.pos.y, cfg.pos.z)
+    node:setLocalPosition(pos)
+    node:setLocalRotation(cfg.rot)
+    node:show()
 
-function dssOperation:removePromoteChuFan()
-    if not self.promoteCard then
-        return
+    if not im then
+        local shakeAction = self:getShakeAction(node)
+        self.animationManager:add(shakeAction)
+        shakeAction:play()
     end
-    self:pushbackActionCard(self.promoteCard)
-    self.promoteCard = nil
+
+    self.promoteNode = node
+    self.promoteNode.acId = acId
+    self.promoteNode.id = id
 end
 
-function dssOperation:addCardTo(card, pos, seatType, cardType, rot)
+function dssOperation:addCardTo(card, pos, seatType, cardType, rot, scale, parent)
     pos.z = 0
-    card:setParent(self.cardRoot)
+    if parent then
+        card:setParent(parent)
+    else
+        card:setParent(self.cardRoot)
+    end
     card:setSelected(false)
     card:setStyle(self.style)
     card:setType(cardType)
     card:fix()
     card:setLocalPosition(pos)
     if rot then
-        card:setRotation(rot)
+        card:setLocalRotation(rot)
+    end
+    if scale then
+        card:setLocalScale(scale)
     end
     card:show()
     self:topCard(card)
 end
 
 function dssOperation:onMoPai(acId, ids)
-    for _, id in pairs(ids) do
-        local card = self:getCardById(id)
-        table.insert(self.inhandCards[acId], card)
+    local time = 0
+    for idx, id in pairs(ids) do
+        if time > 0 then
+            self:callFunctionAfterTime(time * idx - 1, function()
+                self:moOnePai(acId, id)
+            end)
+        else
+            time = self:moOnePai(acId, id)
+        end
     end
+    return time * #ids
+end
+
+local poses = {
+    [seatType.top]          = { pos = Vector3.New(0, 5.17, 0)},
+    [seatType.right]        = { pos = Vector3.New(9, 0.2, 0)},
+    [seatType.left]         = { pos = Vector3.New(-9, 0.2, 0)},
+}
+function dssOperation:moOnePai(acId, id)
+    local card = self:getCardById(id)
+    table.insert(self.inhandCards[acId], card)
     self:relocateInhandCards(acId)
-    return 2
+    
+    local st = self.game:getSeatTypeByAcId(acId)
+    local pos, order
+    if acId == self.game.mainAcId then
+        local cfg = self.seats[st][doushisiGame.cardType.shou]
+        pos = card:getLocalPosition()
+        pos = Vector3.New(pos.x + cfg.width * 0.5, pos.y + cfg.height * 0.5, pos.z)
+        order = card:getSortingOrder()
+    else
+        pos = poses[st].pos
+        order = 0
+    end
+    return self:moPaiAction(acId, id, pos, order)
 end
 
 function dssOperation:onFanPai(acId, id)
@@ -693,9 +779,10 @@ function dssOperation:onFanPai(acId, id)
     table.insert(self.chuCards[acId], card)
     self:relocateChuCards(acId)
 
-    self:removePromoteChuFan()
-    self:promoteChuFan(acId, id)
-    return 2
+    local time = self:movePromoteCardToChu()
+
+    time = self:fanPaiAction(time, acId, id)
+    return time
 end
 
 function dssOperation:onAnPaiShow(acId, idInfo)
@@ -724,6 +811,12 @@ function dssOperation:onAnPaiShow(acId, idInfo)
     end
 
     self:relocateChiPengCards(acId)
+
+    if self.promoteNode and self.promoteNode.cards then
+        for _, card in pairs(self.promoteNode.cards) do
+            self:topCard(card)
+        end
+    end
     return 0
 end
 
@@ -870,8 +963,8 @@ function dssOperation:relocateInhandCards(acId)
     for col, cards in pairs(self.meSortedInhandCards) do
         for row, card in pairs(cards) do
             local pos = card:getLocalPosition()
-            pos = self:getInhandCardPos(startPos, seatType, col, row, pos, #cards)
-            self:addCardTo(card, pos, seatType, doushisiGame.cardType.shou)
+            local pos, rot = self:getInhandCardPos(startPos, seatType, col, row, pos, #cards)
+            self:addCardTo(card, pos, seatType, doushisiGame.cardType.shou, rot)
             pos.z = z
             card:setLocalPosition(pos)
             z = z - 0.00001
@@ -886,7 +979,7 @@ function dssOperation:getInhandCardPos(startPos, seatType, col, row, pos, rowHei
     local diffy = cfg.colgap * (rowHeight - row)
     pos.x = startPos.x + diffx
     pos.y = startPos.y + diffy
-    return pos
+    return pos, cfg.rot
 end
 
 ----------------------------------------------------------------------------------
@@ -895,24 +988,25 @@ end
 function dssOperation:findCardFromInhand(acId, id, remove)
     local card = nil
     local inhandCards = self.inhandCards[acId]
-    if acId ~= self.game.mainAcId then
-        if #inhandCards > 0 then
-            local card = inhandCards[1]
-            card:setId(id)
-            if remove then
-                table.remove(inhandCards, 1)
+    if acId == self.game.mainAcId then
+        for idx, card in pairs(inhandCards) do
+            if id == card.id then
+                if remove then
+                    table.remove(inhandCards, idx)
+                    self:relocateInhandCards(acId)
+                end
+                return card
             end
-            return card
         end
-    end
-    for idx, card in pairs(inhandCards) do
-        if id == card.id then
-            if remove then
-                table.remove(inhandCards, idx)
-                self:relocateInhandCards(acId)
-            end
-            return card
-        end
+    else
+        -- if #inhandCards > 0 then
+        --     local card = inhandCards[1]
+        --     card:setId(id)
+        --     if remove then
+        --         table.remove(inhandCards, 1)
+        --     end
+        --     return card
+        -- end
     end
     return nil
 end
@@ -965,6 +1059,12 @@ function dssOperation:onDestroy()
     for _, card in pairs(self.allCards) do
         card:close()
     end
+    for _, card in pairs(self.allActionCards) do
+        card:close()
+    end
+    for _, node in pairs(self.flyNodes) do
+        GameObject.Destroy(node.gameObject)
+    end
     self.super.onDestroy(self)
 end
 
@@ -1006,6 +1106,11 @@ function dssOperation:touchHandler(phase, pos)
             end
             self.dragCard:setId(self.curSelectdCard.id)
             self:addCardTo(self.dragCard, cardPos, seatType.mine, doushisiGame.cardType.perfect)
+        else
+            if self.curSelectdCard then
+                self.curSelectdCard:setSelected(false)
+                self.curSelectdCard = nil
+            end
         end
     elseif phase == touch.phaseType.moved then
         if self.curSelectdCard ~= nil then
@@ -1029,7 +1134,7 @@ function dssOperation:touchHandler(phase, pos)
             if self.isClick then
                 if self.curSelectdCard.selected then
                     if self.canChuPai then
-                        eslf:setSelected(false)
+                        self.curSelectdCard:setSelected(false)
                         self:onChoseChuPai(self.curSelectdCard)
                         self.curSelectdCard = nil
                     else
@@ -1094,7 +1199,7 @@ function dssOperation:sortInhandCards(oripais)
 
     --class dian = {dian = 2, cnts = {cnt, cnt}}
     local dianvec = {}
-    for i = 1, 23 do
+    for i = 0, 23 do
         local cnt = cntvec[i]
         if cnt then
             local dian = cnt.dianshu
@@ -1171,6 +1276,332 @@ function dssOperation:sortInhandCards(oripais)
         end
     end
     return ret
+end
+
+----------------------------------------------------------------------------------------
+--动画
+----------------------------------------------------------------------------------------
+---------------吃 碰 按 滑------------------------
+function dssOperation:chiPengAction(acId, cards)
+    local ids = {}
+    for _, card in pairs(cards) do
+        card:hide()
+        table.insert(ids, card.id)
+    end
+    local node = self:createFlyNode(ids)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local cfg = self.seats[st].promote
+
+    --promote pos
+    local x1, y1 = cfg.pos.x, cfg.pos.y
+
+    -- local top = y1 + (SHOUPAI_HEIGHT + SHOUPAI_GAP * (#pais - 1)) * 0.5
+    -- if top > safeArea.top then
+    --     local diff = top - safeArea.top
+    --     y1 = y1 - diff
+    -- end
+
+    local cfg = self.seats[st][doushisiGame.cardType.peng]
+    local x, y = 0, 0
+    for _, card in pairs(cards) do
+        local pos = card:getLocalPosition()
+        x = x + pos.x
+        y = y + pos.y
+    end
+    x = x / #cards
+    y = y / #cards
+    if st == seatType.top or st == seatType.mine then
+        x = x + -cfg.cardHeight * 0.5
+        y = y + cfg.cardWidth * 0.5
+    else
+        x = x + cfg.cardWidth * 0.5
+        y = y + cfg.cardHeight * 0.5
+    end
+
+    local delayTime = 0.15
+
+    local shakeAction, shakeTime = self:getShakeAction(node)
+    local delayAction = self:getDelayAction(delayTime)
+    local flyAction, flyTime = self:getFlyAction(node, x1, y1, x, y, cfg.rotEuler.z, 0.6)
+    node:setLocalPosition(Vector3.New(x1, y1, 0))
+    node:show()
+
+    if node.cards and #node.cards == 1 then
+        for _, card in pairs(node.cards) do
+            card:setSortingOrder(cards[#cards]:getSortingOrder())
+        end
+    end
+
+    local seqAction = self:getSequenceAction({shakeAction, delayAction, flyAction, tweenFunction.new(function()
+        self:pushFlyNode(node)
+        self:relocateChiPengCards(acId)
+    end)})
+    self.animationManager:add(seqAction)
+    seqAction:play()
+
+    local added = 0.03 * ((#seqAction.queue + 1) * 2 + 1)
+    return shakeTime + delayTime + flyTime + added
+end
+
+---------------------摸牌
+function dssOperation:moPaiAction(acId, id, handPos, order)
+    if id >= 0 then
+        local card = self:findCard(acId, id)
+        card:hide()
+    end
+    local node = self:createFlyNode({id})
+    self:setNodeAtCenter(node)
+
+    local centerScaleAction, t1 = self:getCenterScaleAction(node)
+    local delayTime = 0.1
+    local centerDelayAction = self:getDelayAction(delayTime)
+
+    local startPos = node:getLocalPosition()
+    --promote pos
+    local st = self.game:getSeatTypeByAcId(acId)
+    local cfg = self.seats[st].promote
+    local x2, y2 = cfg.pos.x, cfg.pos.y
+
+    local r = 0
+    local flyAction, flyTime = self:getFlyAction(node, startPos.x, startPos.y, x2, y2, cfg.rotEuler.z)
+    local delayTime2 = 0.2
+    local delayAction2 = self:getDelayAction(delayTime2)
+    local flyAction2, flyTime2 = self:getFlyAction(node, x2, y2, handPos.x, handPos.y)
+
+    local sq = self:getSequenceAction({centerScaleAction, centerDelayAction, flyAction, delayAction2, flyAction2, tweenFunction.new(function()
+        self:pushFlyNode(node)
+        self:relocateInhandCards(acId)
+    end)})
+    if order > 0 then
+        if node.cards then
+            for _, c in pairs(node.cards) do
+                c:setSortingOrder(order)
+            end
+        end
+    end
+    if acId == self.game.mainAcId then
+        if node.cards then
+            for _, c in pairs(node.cards) do
+                c:setPickabled(true)
+            end
+        end
+    end
+
+    self.animationManager:add(sq)
+    sq:play()
+
+    local added = 0.03 * ((5 + 1) * 2 + 1)
+    return t1 + delayTime + flyTime + delayTime2 + flyTime2 + added
+end
+
+function dssOperation:fanPaiAction(time, acId, id)
+    local x1, y1 = self:getCenterFanPaiPos()
+    --promote pos
+    local st = self.game:getSeatTypeByAcId(acId)
+    local cfg = self.seats[st].promote
+    local x2, y2 = cfg.pos.x, cfg.pos.y
+
+    local _, t1 = self:getCenterScaleAction(nil)
+    local delayTime = 0.1
+    local flyTime = self:computeFlyTime(x1, y1, x2, y2)
+
+    local fanFunc = function()
+        local node = self:createFlyNode({id})
+        self:setNodeAtCenter(node)
+        local centerScaleAction, t1 = self:getCenterScaleAction(node)
+        local centerDelayAction = self:getDelayAction(delayTime)
+        local nodePos = node:getLocalPosition()
+        local r = 0
+        local flyAction, flyTime = self:getFlyAction(node, nodePos.x, nodePos.y, x2, y2, r)
+        local seqAction = self:getSequenceAction({centerScaleAction, centerDelayAction, flyAction})
+        self.animationManager:add(seqAction)
+        seqAction:play()
+
+        node.acId = acId
+        node.chufan = 2
+        node.id = id
+        self.promoteNode = node
+    end
+    
+    if time > 0 then
+        self:callFunctionAfterTime(time, function()
+            fanFunc()
+        end)
+    else
+        fanFunc()
+    end
+    local added = 0.03 * ((3 + 1) * 2 + 1)
+    return time + flyTime + t1 + delayTime + added
+end
+function dssOperation:pushBackPromoteNode()
+    if self.promoteNode then
+        self:pushFlyNode(self.promoteNode)
+        self.promoteNode = nil
+    end
+end
+function dssOperation:movePromoteCardToChu()
+    if self.promoteNode == nil then
+        return 0
+    end
+    local node = self.promoteNode
+    self.promoteNode = nil
+
+    local acId = node.acId
+    local id = node.id
+    local pai = self:findCard(acId, id)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local cfg = self.seats[st][doushisiGame.cardType.chu]
+    local x2, y2 = cfg.pos.x, cfg.pos.y
+
+    --end pos
+    local pos = pai.transform:TransformPoint(Vector3.New(cfg.cardWidth * 0.5, cfg.cardHeight * 0.5, 0))
+    local pos = self.cardRoot.transform:InverseTransformPoint(pos)
+    local x2 = pos.x
+    local y2 = pos.y
+    --start pos
+    local startPos = node:getLocalPosition()
+    local flyAction, flyTime = self:getFlyAction(node, startPos.x, startPos.y, x2, y2, cfg.rotEuler.z, 0.6)
+    local func = function()
+        self:pushFlyNode(node)
+        self:relocateChuCards(acId)
+    end
+    local cb = tweenFunction.new(func)
+
+    local seqAction = self:getSequenceAction({flyAction, cb})
+    self.animationManager:add(seqAction)
+    seqAction:play()
+
+    return flyTime
+end
+
+----------------------------------------------------------------------------------------
+--base
+----------------------------------------------------------------------------------------
+function dssOperation:callFunctionAfterTime(time, func)
+    local delay = self:getDelayAction(time)
+    local func = tweenFunction.new(func)
+    local se = self:getSequenceAction({delay, func})
+    self.animationManager:add(se)
+    se:play()
+end
+function dssOperation:getCenterFanPaiPos()
+    local x, y = 0, 0
+    return x, y + 0.1
+end
+function dssOperation:setNodeAtCenter(node)
+    local cx, cy = self:getCenterFanPaiPos()
+    node:show()
+    node:setLocalPosition(Vector3.New(cx, cy, 0))
+    node:setLocalRotation(Quaternion.Euler(0, 0, 90))
+    node:setLocalScale(Vector3.New(0.1, 0.1, 0.1))
+end
+function dssOperation:getCenterScaleAction(node)
+    local time = 0.15
+    local action 
+    if node then
+        action = tweenScale.new(node, time, node:getLocalScale(), Vector3.one)
+    end
+    return action, time
+end
+function dssOperation:getSequenceAction(actions)
+    local t = tweenSerial.new(true)
+    for _, a in pairs(actions) do
+        t:add(a)
+    end
+    return t
+end
+function dssOperation:getDelayAction(delayTime)
+    return tweenDelay.new(delayTime)
+end
+function dssOperation:getShakeAction(node)
+    local smax = 1.2
+    local sNormal = 1
+    local t = self.shakepaitime
+    local aMax = tweenScale.new(node, t / 2, Vector3.one, Vector3.New(1.2, 1.2, 1.2))
+    local aNormal = tweenScale.new(node, t / 2, Vector3.New(1.2, 1.2, 1.2), Vector3.one)
+    local action = tweenSerial.new(true)
+    action:add(aMax)
+    action:add(aNormal)
+    return action, t
+end
+function dssOperation:popFlyNode()
+    local node = self.idleFlyNodes[1]
+    if not node then
+        node = GameObject("flynode")
+        local base = require("common.object")
+        node = base.new(node)
+        node:setParent(self.cardRoot)
+        table.insert(self.flyNodes, node)
+        table.insert(self.idleFlyNodes, node)
+    end
+    table.remove(self.idleFlyNodes, 1)
+    node.cards = nil
+    return node
+end
+function dssOperation:pushFlyNode(node)
+    node:hide()
+    if node.cards then
+        for _, card in pairs(node.cards) do
+            self:pushbackActionCard(card)
+        end
+    end
+    node.cards = nil
+    node:setLocalRotation(Quaternion.Euler(0, 0, 0))
+    node:setLocalScale(Vector3.one)
+    table.insert(self.idleFlyNodes, node)
+end
+function dssOperation:createFlyNode(ids)
+    local cards = {}
+    local poses = {}
+    local cnt = #ids
+    local dis = (cnt - 1) * actionCardGap
+    local sy = dis / cnt
+
+    local node = self:popFlyNode()
+    for _, id in pairs(ids) do
+        local card = self:getActionCardById(id)
+        self:addCardTo(card, Vector3.New(0 - self.actionCardWidth * 0.5, sy - self.actionCardHeight * 0.5, 0), nil, doushisiGame.cardType.perfect, Vector3.zero, Vector3.one, node)
+        table.insert(cards, card)
+        sy = sy - actionCardGap
+    end
+    node.cards = cards
+    return node
+end
+function dssOperation:computeFlyTime(x1, y1, x2, y2) 
+    local d1 = math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2)
+    local dis = math.sqrt(d1)
+    local speed = 10.00 --pixels per second
+    local time = dis / speed
+    if time < 0.25 then
+        time = 0.25
+    end
+    return time
+end
+function dssOperation:getFlyAction(node, x1, y1, x2, y2, r2, s2)
+    local flyTime = self:computeFlyTime(x1, y1, x2, y2)
+
+    local mvaction = tweenPosition.new(node, flyTime, Vector3.New(x1, y1, 0), Vector3.New(x2, y2, 0))
+    local actions = {}
+    if r2 then
+        local rotation = node.transform.localEulerAngles
+        local raction = tweenRotation.new(node, flyTime, rotation, Vector3.New(0, 0, r2))
+        table.insert(actions, raction)
+    end
+    if s2 then
+        local scale = node:getLocalScale()
+        local saction = tweenScale.new(node, flyTime, scale, Vector3.New(s2, s2, scale.z))
+        table.insert(actions, saction)
+    end 
+    if #actions > 0 then
+        table.insert(actions, 1, mvaction)
+        local tp = tweenParallel.new(true)
+        for _, ac in pairs(actions) do
+            tp:add(ac)
+        end
+        return tp, flyTime
+    else
+        return mvaction, flyTime
+    end
 end
 
 return dssOperation
