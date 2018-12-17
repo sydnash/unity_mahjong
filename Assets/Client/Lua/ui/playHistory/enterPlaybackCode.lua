@@ -185,11 +185,10 @@ function enterPlaybackCode:enter()
 
         closeAllUI()
 
-        local cityType           = data.GameType
-        local gameType           = data.Config.Game
+        local cityType = data.GameType
+        local gameType = data.Config.Game
         clientApp.currentDesk = getLogicGame(cityType, gameType).new(data, playback)
-        game:startLoop()
-        clientApp.currentDesk = game
+        clientApp.currentDesk:startLoop()
 
 --        self:close()
     end)
