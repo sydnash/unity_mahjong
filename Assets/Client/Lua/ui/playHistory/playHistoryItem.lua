@@ -71,13 +71,12 @@ function playHistoryItem:set(data, historyContainer)
 
         local g = gamePlayer.new(d.AcId)
         g.headerUrl = d.HeadUrl
-        g:loadHeaderTex()
         g.nickname = d.Nickname
 
         local p = self.players[i]
         p.root:show()
-        p.icon:setTexture(g.acId, g.headerTex)
-        p.nickname:setText(g.nickname)        
+        p.icon:setTexture(g.headerUrl)
+        p.nickname:setText(cutoutString(g.nickname, gameConfig.nicknameMaxLength))        
         p.winner:hide()
 
         if s >= 0 then
@@ -98,7 +97,7 @@ end
 
 function playHistoryItem:onDestroy()
     for _, v in pairs(self.players) do
-        v.icon:setTexture(nil)
+        v.icon:reset()
     end
 
     self.super.onDestroy(self)

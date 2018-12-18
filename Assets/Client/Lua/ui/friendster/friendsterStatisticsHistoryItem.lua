@@ -95,12 +95,11 @@ function friendsterStatisticsHistoryItem:set(data, historyContainer)
 
         local g = gamePlayer.new(d.AcId)
         g.headerUrl = d.HeadUrl
-        g:loadHeaderTex()
         g.nickname = d.Nickname
 
         local p = self.players[i]
         p.root:show()
-        p.icon:setTexture(g.acId, g.headerTex)
+        p.icon:setTexture(g.headerUrl)
         p.nickname:setText(g.nickname)
         p.winner:hide()
 

@@ -89,7 +89,6 @@ GameObject:
   - component: {fileID: 224301532875306350}
   - component: {fileID: 222913116270369154}
   - component: {fileID: 114647514758885252}
-  - component: {fileID: 114981948708817076}
   m_Layer: 5
   m_Name: C
   m_TagString: Untagged
@@ -259,6 +258,7 @@ GameObject:
   - component: {fileID: 224579939519815648}
   - component: {fileID: 222489261434085598}
   - component: {fileID: 114553111860089400}
+  - component: {fileID: 114518106929398838}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -276,6 +276,7 @@ GameObject:
   - component: {fileID: 224693376862626858}
   - component: {fileID: 222213451119944632}
   - component: {fileID: 114404334954374556}
+  - component: {fileID: 114662219935856464}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -293,6 +294,7 @@ GameObject:
   - component: {fileID: 224531735332285196}
   - component: {fileID: 222696172625221114}
   - component: {fileID: 114467916541838588}
+  - component: {fileID: 114521554666159158}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -344,6 +346,7 @@ GameObject:
   - component: {fileID: 224359720118976464}
   - component: {fileID: 222687984051722936}
   - component: {fileID: 114257331593498700}
+  - component: {fileID: 114585565025903774}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -413,7 +416,6 @@ GameObject:
   - component: {fileID: 224196572408504784}
   - component: {fileID: 222530482819307166}
   - component: {fileID: 114627251846208012}
-  - component: {fileID: 114765197292858868}
   m_Layer: 5
   m_Name: A
   m_TagString: Untagged
@@ -465,7 +467,6 @@ GameObject:
   - component: {fileID: 224288403159388898}
   - component: {fileID: 222909226213851806}
   - component: {fileID: 114576943045865288}
-  - component: {fileID: 114912348133876512}
   m_Layer: 5
   m_Name: D
   m_TagString: Untagged
@@ -585,6 +586,7 @@ GameObject:
   - component: {fileID: 224314324597828100}
   - component: {fileID: 222271429692160736}
   - component: {fileID: 114088708932714322}
+  - component: {fileID: 114099786442132760}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -602,7 +604,6 @@ GameObject:
   - component: {fileID: 224583998899213012}
   - component: {fileID: 222918529757319694}
   - component: {fileID: 114468638447045252}
-  - component: {fileID: 114461099470765062}
   m_Layer: 5
   m_Name: D
   m_TagString: Untagged
@@ -620,6 +621,7 @@ GameObject:
   - component: {fileID: 224560469940310544}
   - component: {fileID: 222332791117713834}
   - component: {fileID: 114947051106311174}
+  - component: {fileID: 114879551641759464}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -689,6 +691,7 @@ GameObject:
   - component: {fileID: 224365704390767552}
   - component: {fileID: 222183169428806062}
   - component: {fileID: 114026189369697536}
+  - component: {fileID: 114348248954765956}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -706,6 +709,7 @@ GameObject:
   - component: {fileID: 224767369786394972}
   - component: {fileID: 222788684729791936}
   - component: {fileID: 114354275156314710}
+  - component: {fileID: 114355542463748382}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -774,6 +778,7 @@ GameObject:
   - component: {fileID: 224223302113798238}
   - component: {fileID: 222430851373099968}
   - component: {fileID: 114155465542313188}
+  - component: {fileID: 114599295942757836}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -910,7 +915,6 @@ GameObject:
   - component: {fileID: 224752560227529368}
   - component: {fileID: 222346614737590596}
   - component: {fileID: 114406690447453188}
-  - component: {fileID: 114858381173943956}
   m_Layer: 5
   m_Name: A
   m_TagString: Untagged
@@ -1082,7 +1086,6 @@ GameObject:
   - component: {fileID: 224925437233374166}
   - component: {fileID: 222284935813452398}
   - component: {fileID: 114155421062840782}
-  - component: {fileID: 114106935710514986}
   m_Layer: 5
   m_Name: B
   m_TagString: Untagged
@@ -1117,7 +1120,6 @@ GameObject:
   - component: {fileID: 224371050578787878}
   - component: {fileID: 222175590002785004}
   - component: {fileID: 114200915319824116}
-  - component: {fileID: 114258754033889108}
   m_Layer: 5
   m_Name: B
   m_TagString: Untagged
@@ -1152,7 +1154,6 @@ GameObject:
   - component: {fileID: 224139951272391420}
   - component: {fileID: 222416261066909706}
   - component: {fileID: 114086992451205882}
-  - component: {fileID: 114679337664022396}
   m_Layer: 5
   m_Name: A
   m_TagString: Untagged
@@ -1205,7 +1206,6 @@ GameObject:
   - component: {fileID: 224892150487100336}
   - component: {fileID: 222258021616175866}
   - component: {fileID: 114786174617450006}
-  - component: {fileID: 114394420432923080}
   m_Layer: 5
   m_Name: C
   m_TagString: Untagged
@@ -1622,6 +1622,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114099786442132760
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421267772157644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1421267772157644}
+    panelScript: 
 --- !u!114 &114103977989301416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1655,30 +1671,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u73A9\u5BB6\u6635\u79F0\u516D\u5B57"
---- !u!114 &114106935710514986
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1878763263882178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mWidgets:
-  - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1421267772157644}
-    panelScript: 
-  - variableName: mNickname
-    widgetType: 2
-    gameObject: {fileID: 1375201557626416}
-    panelScript: 
-  - variableName: mState
-    widgetType: 2
-    gameObject: {fileID: 0}
-    panelScript: 
 --- !u!114 &114121676310781600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1975,30 +1967,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &114258754033889108
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1930390123051608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mWidgets:
-  - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1357322273375066}
-    panelScript: 
-  - variableName: mNickname
-    widgetType: 2
-    gameObject: {fileID: 1977667050850168}
-    panelScript: 
-  - variableName: mState
-    widgetType: 2
-    gameObject: {fileID: 0}
-    panelScript: 
 --- !u!114 &114268763453618676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2165,6 +2133,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _horizontal: 0
   _veritical: 1
+--- !u!114 &114348248954765956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1539521838517020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1539521838517020}
+    panelScript: 
 --- !u!114 &114350964190579292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2224,6 +2208,22 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114355542463748382
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1558014095640934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1558014095640934}
+    panelScript: 
 --- !u!114 &114390864941661494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2257,30 +2257,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 255.255.255.255
---- !u!114 &114394420432923080
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1942287544375606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mWidgets:
-  - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1305546269009592}
-    panelScript: 
-  - variableName: mNickname
-    widgetType: 2
-    gameObject: {fileID: 1700769702367064}
-    panelScript: 
-  - variableName: mState
-    widgetType: 2
-    gameObject: {fileID: 0}
-    panelScript: 
 --- !u!114 &114394806368391288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2568,30 +2544,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114461099470765062
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1433995976418858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mWidgets:
-  - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1539521838517020}
-    panelScript: 
-  - variableName: mNickname
-    widgetType: 2
-    gameObject: {fileID: 1510012755299490}
-    panelScript: 
-  - variableName: mState
-    widgetType: 2
-    gameObject: {fileID: 0}
-    panelScript: 
 --- !u!114 &114467916541838588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2792,6 +2744,22 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 255.255.255.255
+--- !u!114 &114518106929398838
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1275142968094210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1275142968094210}
+    panelScript: 
 --- !u!114 &114521479360478270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2825,6 +2793,22 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u73A9\u5BB6\u6635\u79F0\u516D\u5B57"
+--- !u!114 &114521554666159158
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1322431360991218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1322431360991218}
+    panelScript: 
 --- !u!114 &114553111860089400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2965,6 +2949,38 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114585565025903774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1357322273375066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1357322273375066}
+    panelScript: 
+--- !u!114 &114599295942757836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1613265561903954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1613265561903954}
+    panelScript: 
 --- !u!114 &114601926400827752
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3085,6 +3101,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114662219935856464
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1305546269009592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1305546269009592}
+    panelScript: 
 --- !u!114 &114676942122975802
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3112,30 +3144,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114679337664022396
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1937068825135744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mWidgets:
-  - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1558014095640934}
-    panelScript: 
-  - variableName: mNickname
-    widgetType: 2
-    gameObject: {fileID: 1032940903178862}
-    panelScript: 
-  - variableName: mState
-    widgetType: 2
-    gameObject: {fileID: 0}
-    panelScript: 
 --- !u!114 &114691357992680812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3223,30 +3231,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114765197292858868
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1371296945960832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mWidgets:
-  - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1441707527859572}
-    panelScript: 
-  - variableName: mNickname
-    widgetType: 2
-    gameObject: {fileID: 1820474542208344}
-    panelScript: 
-  - variableName: mState
-    widgetType: 2
-    gameObject: {fileID: 0}
-    panelScript: 
 --- !u!114 &114766879118184810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3545,33 +3529,33 @@ MonoBehaviour:
     gameObject: {fileID: 1415771353585608}
     panelScript: 
   - variableName: mPanel4_IconA
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1441707527859572}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mPanel4_NicknameA
     widgetType: 2
     gameObject: {fileID: 1820474542208344}
     panelScript: 
   - variableName: mPanel4_IconB
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1421267772157644}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mPanel4_NicknameB
     widgetType: 2
     gameObject: {fileID: 1375201557626416}
     panelScript: 
   - variableName: mPanel4_IconC
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1275142968094210}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mPanel4_NicknameC
     widgetType: 2
     gameObject: {fileID: 1255765727861300}
     panelScript: 
   - variableName: mPanel4_IconD
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1539521838517020}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mPanel4_NicknameD
     widgetType: 2
     gameObject: {fileID: 1510012755299490}
@@ -3625,25 +3609,25 @@ MonoBehaviour:
     gameObject: {fileID: 1623541472002224}
     panelScript: 
   - variableName: mPanel3_IconA
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1558014095640934}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mPanel3_NicknameA
     widgetType: 2
     gameObject: {fileID: 1032940903178862}
     panelScript: 
   - variableName: mPanel3_IconB
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1357322273375066}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mPanel3_NicknameB
     widgetType: 2
     gameObject: {fileID: 1977667050850168}
     panelScript: 
   - variableName: mPanel3_IconD
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1322431360991218}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mPanel3_NicknameD
     widgetType: 2
     gameObject: {fileID: 1939558843877930}
@@ -3705,9 +3689,9 @@ MonoBehaviour:
     gameObject: {fileID: 1226374239068512}
     panelScript: 
   - variableName: mPanel2_IconA
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1613265561903954}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mPanel2_NicknameA
     widgetType: 2
     gameObject: {fileID: 1997496175969062}
@@ -3717,9 +3701,9 @@ MonoBehaviour:
     gameObject: {fileID: 1363377532381104}
     panelScript: 
   - variableName: mPanel2_IconC
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1305546269009592}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mPanel2_NicknameC
     widgetType: 2
     gameObject: {fileID: 1700769702367064}
@@ -3735,30 +3719,6 @@ MonoBehaviour:
   - variableName: mPanel2_AC_Text
     widgetType: 2
     gameObject: {fileID: 1336704610150754}
-    panelScript: 
---- !u!114 &114858381173943956
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1745602107576012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mWidgets:
-  - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1613265561903954}
-    panelScript: 
-  - variableName: mNickname
-    widgetType: 2
-    gameObject: {fileID: 1997496175969062}
-    panelScript: 
-  - variableName: mState
-    widgetType: 2
-    gameObject: {fileID: 0}
     panelScript: 
 --- !u!114 &114867668032158644
 MonoBehaviour:
@@ -3826,6 +3786,22 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u5B9A\u4F4D"
+--- !u!114 &114879551641759464
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1441707527859572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1441707527859572}
+    panelScript: 
 --- !u!114 &114897317202662100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3927,30 +3903,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114912348133876512
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1375475871249164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mWidgets:
-  - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1322431360991218}
-    panelScript: 
-  - variableName: mNickname
-    widgetType: 2
-    gameObject: {fileID: 1939558843877930}
-    panelScript: 
-  - variableName: mState
-    widgetType: 2
-    gameObject: {fileID: 0}
-    panelScript: 
 --- !u!114 &114947051106311174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3977,30 +3929,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &114981948708817076
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1147727003022930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mWidgets:
-  - variableName: mIcon
-    widgetType: 4
-    gameObject: {fileID: 1275142968094210}
-    panelScript: 
-  - variableName: mNickname
-    widgetType: 2
-    gameObject: {fileID: 1255765727861300}
-    panelScript: 
-  - variableName: mState
-    widgetType: 2
-    gameObject: {fileID: 0}
-    panelScript: 
 --- !u!114 &114993075013477504
 MonoBehaviour:
   m_ObjectHideFlags: 1

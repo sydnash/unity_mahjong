@@ -403,6 +403,7 @@ GameObject:
   - component: {fileID: 224219642504168036}
   - component: {fileID: 222771086360047482}
   - component: {fileID: 114013874756771008}
+  - component: {fileID: 114132585856896372}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -567,6 +568,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!114 &114132585856896372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1857372282564078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae78a8c9e11ea346b05fd501fab5915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mWidgets:
+  - variableName: mIcon
+    widgetType: 4
+    gameObject: {fileID: 1857372282564078}
+    panelScript: 
 --- !u!114 &114138691454355052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -921,9 +938,9 @@ MonoBehaviour:
     gameObject: {fileID: 1114681666167524}
     panelScript: 
   - variableName: mIcon
-    widgetType: 4
+    widgetType: 1
     gameObject: {fileID: 1857372282564078}
-    panelScript: 
+    panelScript: ui.header
   - variableName: mSex
     widgetType: 3
     gameObject: {fileID: 1154350591611006}

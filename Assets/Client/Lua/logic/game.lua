@@ -200,7 +200,6 @@ function game:syncPlayers(players)
         self.players[v.AcId] = player
 
         player.headerUrl = v.HeadUrl
-        player:loadHeaderTex()
         player.nickname  = v.Nickname
         player.ip        = v.Ip
         player.sex       = Mathf.Clamp(v.Sex, sexType.boy, sexType.girl)
@@ -266,7 +265,6 @@ function game:onOtherEnterHandler(msg)
         local player = gamePlayer.new(msg.AcId)
 
         player.headerUrl    = msg.HeadUrl
-        player:loadHeaderTex()
         player.nickname     = msg.Nickname
         player.ip           = msg.Ip
         player.sex          = msg.Sex
@@ -503,7 +501,7 @@ function game:onExitDeskHandler(msg)
 
             for _, p in pairs(self.players) do
                 local d = { acId            = p.acId, 
-                            headerTex       = self.players[p.acId].headerTex,
+                            headerUrl       = self.players[p.acId].headerUrl,
                             nickname        = p.nickname, 
                             totalScore      = totalScores[p.acId], 
                             turn            = p.turn, 
@@ -680,7 +678,7 @@ function game:onGameEndHandler(msg)
         for _, v in pairs(specialData.PlayerInfos) do
             local p = self:getPlayerByAcId(v.AcId)
             local d = { acId            = v.AcId, 
-                        headerTex       = self.players[p.acId].headerTex,
+                        headerUrl       = self.players[p.acId].headerUrl,
                         nickname        = p.nickname, 
                         score           = v.Score,
                         totalScore      = totalScores[v.AcId], 

@@ -27,7 +27,7 @@ function friendsterDetailMemberItem:set(friendsterId, managerId, data)
     self.managerId = managerId
     self.data = data
 
-    self.mIcon:setTexture(data.acId, data.headerTex)
+    self.mIcon:setTexture(data.headerUrl)
     self.mNickname:setText(cutoutString(data.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText(string.format("账号:%d", data.acId))
 
@@ -38,11 +38,11 @@ function friendsterDetailMemberItem:set(friendsterId, managerId, data)
     else
         self.mQZ:hide()
 
-        if data.isProxy then
-            self.mDL:show()
-        else
-            self.mDL:hide()
-        end
+--        if data.isProxy then
+--            self.mDL:show()
+--        else
+--            self.mDL:hide()
+--        end
     end
 end
 
@@ -52,11 +52,6 @@ function friendsterDetailMemberItem:setOnline(online)
     else
         self.mState:setSprite("offline")
     end
-end
-
-function friendsterDetailMemberItem:onDestroy()
-    self.mIcon:reset()
-    self.super.onDestroy(self)
 end
 
 return friendsterDetailMemberItem

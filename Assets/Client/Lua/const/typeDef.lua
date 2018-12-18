@@ -171,7 +171,6 @@ signalType = {
     deskDestroy                         = 5,
     friendsterMessageOp                 = 6,
     mail                                = 7,
-    headerDownloaded                    = "header|",
     city                                = 9,
     closeAllUI                          = 10,
     refreshFriendsterDetailInfo         = 11,

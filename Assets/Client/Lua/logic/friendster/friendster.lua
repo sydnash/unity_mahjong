@@ -6,13 +6,13 @@ local gamePlayer = require("logic.player.gamePlayer")
 local friendsterDesk = require("logic.friendster.friendsterDesk")
 
 local friendster = class("friendster")
+local iconDownloadId = 1
 
 local function createPlayer(data)
     local player = gamePlayer.new(data.AcId)
 
     player.nickname         = data.Nickname
-    player.headerUrl        = data.HeadUrl
-    player:loadHeaderTex()    
+    player.headerUrl        = data.HeadUrl  
     player.online           = data.IsOnline
     player.lastOnlineTime   = data.LastOnlineTime
     player.totalPlayTimes   = data.TotalPlayTimes
@@ -31,7 +31,6 @@ function friendster:ctor(id)
     self.id                 = id
     self.name               = string.empty
     self.headerUrl          = string.empty
-    self.headerTex          = nil
     self.cityType           = cityType.chengdu
     self.gameType           = gameType.mahjong
     self.cards              = 0
@@ -41,13 +40,15 @@ function friendster:ctor(id)
     self.applyCode          = 0
     self.managerAcId        = 0
     self.managerNickname    = string.empty
+
+    iconDownloadId = iconDownloadId + 1
+    self.headerTexDownloaded = false
 end
 
 function friendster:setData(data)
     local lc = self
     lc.name             = data.ClubName
     lc.headerUrl        = data.HeadUrl
-    lc:loadHeaderTex()
     lc.cityType         = data.GameType
     lc.cards            = data.CurCardNum
     lc.maxMemberCount   = data.MaxMemberCnt
@@ -56,26 +57,6 @@ function friendster:setData(data)
     lc.managerAcId      = data.AcId
     lc.managerNickname  = data.NickName
     lc.applyList        = data.ApplyList or {}
-end
-
-function friendster:loadHeaderTex()
-    self:destroy()
-
-    --先显示默认头像
-    self.headerTex = textureManager.load(string.empty, "JS_tx_a")
-    --同时开始下载真实头像
-    if not string.isNilOrEmpty(self.headerUrl) then 
-        downloadIcon(self.headerUrl, function(tex)
-            if self.headerTex ~= nil then
-                textureManager.unload(self.headerTex, false)
-            end
-
-            self.headerTex = tex
-            
-            local signalId = signalType.headerDownloaded .. tostring(self.id)
-            signalManager.signal(signalId, self.headerTex)
-        end)
-    end
 end
 
 function friendster:setMembers(data)
@@ -190,16 +171,7 @@ function friendster:removePlayerFromDesk(acId, deskId)
 end
 
 function friendster:destroy()
-    if self.headerTex ~= nil then
-        textureManager.unload(self.headerTex, true)
-        self.headerTex = nil
-    end
-
-    if self.members ~= nil then
-        for _, m in pairs(self.members) do
-            m:destroy()
-        end
-    end
+    
 end
 
 return friendster

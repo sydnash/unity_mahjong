@@ -14,7 +14,7 @@ function exitDeskItem:onInit()
 end
 
 function exitDeskItem:setPlayerInfo(player)
-    self.mIcon:setTexture(player.acId, player.headerTex)
+    self.mIcon:setTexture(player.headerUrl)
     self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
     self:setState(player.exitVoteState)
 end
@@ -38,11 +38,6 @@ end
 function exitDeskItem:reset()
     self.mState:setText("等待选择")
     self.mState:setColor(WAITING_COLOR)
-end
-
-function exitDeskItem:onDestroy()
-    self.mIcon:setTexture(nil)
-    self.super.onDestroy(self)
 end
 
 return exitDeskItem

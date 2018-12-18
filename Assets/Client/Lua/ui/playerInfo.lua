@@ -14,7 +14,7 @@ function playerInfo:ctor(data, desk)
 end
 
 function playerInfo:onInit()
-    self.mIcon:setTexture(self.data.headerTex)
+    self.mIcon:setTexture(self.data.headerUrl)
 
     if self.data.sex == nil then
         self.mSex:hide()

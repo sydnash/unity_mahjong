@@ -7,10 +7,10 @@ local friendsterDesk = class("friendsterDesk", base)
 
 function friendsterDesk:onInit()
     self.slots = { 
-        { root = self.mPlayerA, head = self.mPlayerA_Head, icon = self.mPlayerA_Icon, add = self.mPlayerA_Add, },
-        { root = self.mPlayerB, head = self.mPlayerB_Head, icon = self.mPlayerB_Icon, add = self.mPlayerB_Add, },
-        { root = self.mPlayerC, head = self.mPlayerC_Head, icon = self.mPlayerC_Icon, add = self.mPlayerC_Add, },
-        { root = self.mPlayerD, head = self.mPlayerD_Head, icon = self.mPlayerD_Icon, add = self.mPlayerD_Add, },
+        { root = self.mPlayerA, icon = self.mPlayerA_Icon, add = self.mPlayerA_Add, },
+        { root = self.mPlayerB, icon = self.mPlayerB_Icon, add = self.mPlayerB_Add, },
+        { root = self.mPlayerC, icon = self.mPlayerC_Icon, add = self.mPlayerC_Add, },
+        { root = self.mPlayerD, icon = self.mPlayerD_Icon, add = self.mPlayerD_Add, },
     }
 
     self.mClick:addClickListener(self.onClickedHandler, self)
@@ -33,7 +33,6 @@ end
 
 function friendsterDesk:set(data)
     self.data = data
-    
 
     if self.data ~= nil then
         self.mNum:setText(string.format("（第%d/%d局）", self.data.playedCount, self.data.totalCount))
@@ -47,14 +46,14 @@ function friendsterDesk:set(data)
                 local p = self.data.players[k]
 
                 if p == nil then
-                    v.head:hide()
+                    v.icon:hide()
                     v.add:show()
 
                     v.add:addClickListener(self.onAddClickedHandler, self)
                 else
-                    v.head:show()
+                    v.icon:show()
                     v.add:hide()
-                    v.icon:setTexture(p.headerTex)
+                    v.icon:setTexture(p.headerUrl)
                 end
             end
         end
@@ -73,14 +72,6 @@ end
 function friendsterDesk:onAddClickedHandler()
     playButtonClickSound()
     enterDesk(self.data.cityType, self.data.deskId)
-end
-
-function friendsterDesk:onDestroy()
-    for _, v in pairs(self.slots) do 
-        v.icon:setTexture(nil)
-    end
-
-    self.super.onDestroy(self)
 end
 
 return friendsterDesk

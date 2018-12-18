@@ -21,7 +21,7 @@ end
 function friendsterStatisticsRankItem:set(data)
     self.data = data
 
-    self.mIcon:setTexture(data.acId, data.headerTex)
+    self.mIcon:setTexture(data.headerUrl)
     self.mNickname:setText(cutoutString(data.nickname, gameConfig.nicknameMaxLength))
     self.mId:setText(tostring(data.acId))
     self.mWinner:setText(string.format("%d次", data.winnerTimes))
@@ -32,13 +32,6 @@ function friendsterStatisticsRankItem:set(data)
     end
     self.mScore:setText(string.format("%d分", data.score))
     self.mTimes:setText(string.format("%d次", data.playTimes))
-end
-
-function friendsterStatisticsRankItem:onDestroy()
-    self.mSearch:show()
-    self.mIcon:reset()
-
-    self.super.onDestroy(self)
 end
 
 return friendsterStatisticsRankItem

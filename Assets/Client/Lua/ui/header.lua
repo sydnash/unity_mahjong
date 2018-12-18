@@ -2,24 +2,21 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local headerManager = require("logic.manager.headerManager")
+
 local base = require("ui.common.panel")
 local header = class("header", base)
 
 function header:onInit()
-    --self:reset()
+    
 end
 
-function header:setTexture(id, tex)
-    self:reset()
-
-    self.signalId = signalType.headerDownloaded .. tostring(id)
-    signalManager.registerSignalHandler(self.signalId, self.onHeaderDownloadedHandler, self)
-
+function header:setTexture(url)
+    local token, tex = headerManager.request(url)
     self.mIcon:setTexture(tex)
-end
 
-function header:getTexture()
-    return self.mIcon:getTexture()
+    self.signalId = token
+    signalManager.registerSignalHandler(self.signalId, self.onHeaderDownloadedHandler, self)
 end
 
 function header:setColor(color)
@@ -31,11 +28,16 @@ function header:onHeaderDownloadedHandler(tex)
 end
 
 function header:reset()
-    if not string.isNilOrEmpty(self.signalId) then
-        signalManager.unregisterSignalHandler(self.signalId, self.onHeaderDownloadedHandler, self)
+    local tex = self.mIcon:getTexture()
+    if tex ~= nil then
+        self.mIcon:setTexture(nil)
+        headerManager.drop(self.signalId, tex)
     end
 
-    self.mIcon:setTexture(nil)
+    if not string.isNilOrEmpty(self.signalId) then
+        signalManager.unregisterSignalHandler(self.signalId, self.onHeaderDownloadedHandler, self)
+        self.signalId = nil
+    end
 end
 
 function header:onDestroy()

@@ -64,7 +64,7 @@ end
 function friendsterItem:set(data)
     self.data = data
 
-    self.mIcon:setTexture(data.id, data.headerTex)
+    self.mIcon:setTexture(data.headerUrl)
     self.mName:setText(cutoutString(data.name, gameConfig.friendsterNameMaxLength))
     self.mCity:setText(string.format("区域:%s", cityName[data.cityType]))
     self.mId:setText(string.format("编号:%d", data.id))
