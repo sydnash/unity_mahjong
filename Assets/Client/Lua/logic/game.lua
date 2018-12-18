@@ -856,7 +856,7 @@ end
 
 function game:startMessageQueue()
     if self.messageQueueHandler == nil then
-        self.messageQueueHandler = registerUpdateListener(game.update, self)
+        self.messageQueueHandler = registerUpdateListener(self.update, self)
         self:resumeMessageQueue()
     end
 end
@@ -952,7 +952,7 @@ function game:update()
         end
         if needDelete then
             self:popFrontMessage()
-            loop = true
+            loop = false
         end
     end
 end

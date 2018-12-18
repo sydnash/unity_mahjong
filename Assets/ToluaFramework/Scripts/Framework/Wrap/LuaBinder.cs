@@ -83,6 +83,7 @@ public static class LuaBinder
 		UnityEngine_PlayerPrefsWrap.Register(L);
 		UnityEngine_RuntimePlatformWrap.Register(L);
 		UnityEngine_SpriteRendererWrap.Register(L);
+		UnityEngine_SpriteWrap.Register(L);
 		UnityEngine_RectTransformWrap.Register(L);
 		UnityEngine_LocationServiceWrap.Register(L);
 		UnityEngine_LocationServiceStatusWrap.Register(L);

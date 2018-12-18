@@ -118,6 +118,15 @@ function doushisiGame:onMessageHandler(name)
     assert(self[name], string.format("on message handler: function<%s> must exist.", name))
 
     local func = function(self, msg)
+        if name == "onMoPaiHandler" then
+            msg.isTou = true
+        elseif name == "onOpDoHandler" then
+            msg.isOpDo = true
+        elseif name == "onOpListHandler" then
+            msg.isOpList = true
+        elseif name == "onFanPaiHnadler" then
+            msg.isFan = true
+        end
         self:pushMessage(function(msg)
             return self[name](self, msg)
         end, 0, msg)
@@ -265,7 +274,7 @@ function doushisiGame:onOpDoBaGang(player, msg)
             end
         end
     end
-    self.operationUI:onOpDoBaGang(player.acId, card)
+    return self.operationUI:onOpDoBaGang(player.acId, card)
 end
 
 function doushisiGame:onOpDoCaiShen(player, msg)
@@ -282,7 +291,7 @@ function doushisiGame:onOpDoCaiShen(player, msg)
     end
     table.insert(caiShenInfo.Cards, card)
 
-    self.operationUI:onOpDoCaiShen(player.acId, card)
+    return self.operationUI:onOpDoCaiShen(player.acId, card)
 end
 
 function doushisiGame:onOpDoChi(player, msg)
@@ -291,7 +300,7 @@ function doushisiGame:onOpDoChi(player, msg)
     local beCard = msg.Card
     self:onChiPengGangType(player, op, cards, beCard)
 
-    self.operationUI:onOpDoChi(player.acId, cards, beCard)
+    return self.operationUI:onOpDoChi(player.acId, cards, beCard)
 end
 
 function doushisiGame:onOpDoChe(player, msg)
@@ -300,7 +309,7 @@ function doushisiGame:onOpDoChe(player, msg)
     local beCard = msg.Card
     self:onChiPengGangType(player, op, cards, beCard)
 
-    self.operationUI:onOpDoChe(player.acId, cards, beCard)
+    return self.operationUI:onOpDoChe(player.acId, cards, beCard)
 end
 
 function doushisiGame:onOpDoHua(player, msg)
@@ -308,18 +317,20 @@ function doushisiGame:onOpDoHua(player, msg)
     local cards = msg.DelCards
     self:onChiPengGangType(player, op, cards, nil)
 
-    self.operationUI:onOpDoHua(player.acId, cards)
+    return self.operationUI:onOpDoHua(player.acId, cards)
 end
 
 function doushisiGame:onOpDoAn(player, op, delCards)
     local cards = delCards
     self:onChiPengGangType(player, op, cards, nil)
 
-    self.operationUI:onOpDoAn(player.acId, cards)
+    return self.operationUI:onOpDoAn(player.acId, cards)
 end
 
 function doushisiGame:onOpDoHu(player, msg)
     player[self.cardType.hu] = msg.Card
+
+    return self.operationUI:onOpDoHu(player.acId, msg.Card)
 end
 
 function doushisiGame:onOpDoChu(player, msg)
@@ -327,42 +338,44 @@ function doushisiGame:onOpDoChu(player, msg)
     table.removeItem(player[self.cardType.shou], delCard)
     table.insert(player[self.cardType.chu], delCard)
 
-    self.operationUI:onOpDoChu(msg.AcId, msg.DelCards[1])
+    return self.operationUI:onOpDoChu(msg.AcId, msg.DelCards[1])
 end
 
 function doushisiGame:onOpDoHandler(msg)
     self.operationUI:hideAllOpBtn()
     self.operationUI:closeAllBtnPanel()
-    self.operationUI:removePromoteChuFan()
+    self.operationUI:pushBackPromoteNode()
     local player = self:getPlayerByAcId(msg.AcId)
     player.zhaoCnt = msg.ZhaoCnt
     player.fuShu = msg.FuShu
     local op = msg.Op
     local cards = msg.DelCards
     local beCard = msg.Card
+
+    local time = 0
     if op == opType.doushisi.hua.id then
-        self:onOpDoHua(player, msg)
+        time = self:onOpDoHua(player, msg)
     elseif op == opType.doushisi.chu.id then
-        self:onOpDoChu(player, msg)
+        time = self:onOpDoChu(player, msg)
     elseif op == opType.doushisi.chi.id then
-        self:onOpDoChi(player, msg)
+        time = self:onOpDoChi(player, msg)
     elseif op == opType.doushisi.che.id then
-        self:onOpDoChe(player, msg)
+        time = self:onOpDoChe(player, msg)
     elseif op == opType.doushisi.hu.id then
-        self:onOpDoHu(player, msg)
+        time = self:onOpDoHu(player, msg)
     elseif op == opType.doushisi.gang.id then
     elseif op == opType.doushisi.pass.id then
     elseif op == opType.doushisi.an.id then
-        self:onOpDoAn(player, op, cards)
+        time = self:onOpDoAn(player, op, cards)
     elseif op == opType.doushisi.zhao.id then
     elseif op == opType.doushisi.shou.id then
     elseif op == opType.doushisi.bao.id then
     elseif op == opType.doushisi.baGang.id then
-        self:onOpDoBaGang(player, msg)
+        time = self:onOpDoBaGang(player, msg)
     elseif op == opType.doushisi.chiChengSan.id then
-        self:onChiPengGangType(player, op, cards, beCard)
+        time = self:onOpDoChi(player, msg, true)
     elseif op == opType.doushisi.caiShen.id then
-        self:onOpDoCaiShen(player, msg)
+        time = self:onOpDoCaiShen(player, msg)
     elseif op == opType.doushisi.baoJiao.id then
     elseif op == opType.doushisi.gen.id then
     elseif op == opType.doushisi.weiGui.id then
@@ -370,7 +383,7 @@ function doushisiGame:onOpDoHandler(msg)
         log("on op do handler: receive not supported handler." .. tostring(op))
     end
 
-    return 2
+    return time
 end
 
 function doushisiGame:onBdListHandler(msg)
@@ -423,5 +436,76 @@ end
 function doushisiGame:csDang(isDang)
 
 end
+-------------------------------------------------------------------------------
+--update
+------------------------------------------------------------------------------
+function doushisiGame:secondMsg()
+    local size = #self.messageQueue
+    if size > 1 then 
+        return self.messageQueue[2]
+    end
+    return nil
+end
+
+function doushisiGame:update()
+    if self.pauseMeesage then
+        return
+    end
+    local now = time.realtimeSinceStartup()
+    local dt = now - self.lastProcessTime
+    self.lastProcessTime = now
+    dt = dt * self.processSpeed
+
+    local loop = true
+    while loop do
+        loop = false
+        local msg = self:frontMessage()
+        if not msg then
+            break
+        end
+        local needDelete
+        if not msg.isPlayed then
+            local delay = msg.func(msg.param)
+            if delay == nil then
+                delay = msg.delay
+            end
+            msg.isPlayed = true
+            msg.deleteTime = now + delay
+            msg.waittime = now
+            if delay <= 0 then
+                --needDelete = true --为了分散操作到每帧，即使不需要延迟，也留到下一帧再处理
+            end
+        else
+            msg.waittime = msg.waittime + dt
+            if not msg.isAdjustTime then
+                local nm = self:secondMsg()
+                if nm and msg.param and nm.param then
+                    if msg.param.isFan or (msg.param.isOpDo and msg.param.Op == opType.doushisi.chu.id) then
+                        if nm.param.isTou or nm.param.isFan then
+                            msg.deleteTime = msg.deleteTime + 0.4
+                        elseif nm.param.isOpList then
+                            msg.deleteTime = msg.waittime + 0.09
+                        elseif nm.param.isOpDo then
+                            msg.deleteTime = msg.deleteTime + 0.09
+                        end
+                    elseif msg.param.isTou then
+                        if nm.param.isOpDo then
+                            msg.deleteTime = msg.deleteTime + 0.1
+                        end
+                    end
+                    msg.isAdjustTime = true
+                end
+            end
+            if msg.waittime >= msg.deleteTime then
+                needDelete = true
+            end
+        end
+        if needDelete then
+            self:popFrontMessage()
+            loop = false
+        end
+    end
+end
+
 
 return doushisiGame

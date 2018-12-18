@@ -58,7 +58,7 @@ function tweenParallel:update()
         end
     end
 
-    return (self.queue == 0)
+    return (#self.queue == 0)
 end
 
 -------------------------------------------------------------------
