@@ -82,8 +82,12 @@ local mopaiConfig = {
 local mainCameraParams = {
     position = Vector3.New(0, 0.9, -0.88),
     rotation = Quaternion.Euler(40, 0, 0),
+    fov      = 30,
 }
-
+local inhandCameraParams = {
+    position = Vector3.New(0, 0.315, -1),
+    size = 0.165,
+}
 local COUNTDOWN_SECONDS_C = 20
 
 -------------------------------------------------------------------------------
@@ -135,6 +139,12 @@ function mahjongOperation:onInit()
     local mainCamera = UnityEngine.Camera.main
     mainCamera.transform.position = mainCameraParams.position
     mainCamera.transform.rotation = mainCameraParams.rotation
+    -- fixMainCameraByFov(mainCameraParams.fov, mainCamera)
+
+    local camera = GameObjectPicker.instance.camera
+    camera.transform.position = inhandCameraParams.position
+    camera.orthographicSize = inhandCameraParams.size
+    fixInhandCameraParam(inhandCameraParams.size, camera)
 
     --麻将出口的板子节点
     local plane = find("mahjong/table_plane")

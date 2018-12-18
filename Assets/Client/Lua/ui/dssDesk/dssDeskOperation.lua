@@ -20,7 +20,7 @@ end
 local btnIconConfig = {
     mHuaIcon = {
         default = "hua",
-        [cityType.jintang] = an,
+        [cityType.jintang] = "an",
     },
     mDangIcon = {
         default = "dang",
@@ -35,6 +35,7 @@ local btnIconConfig = {
 local mainCameraParams = {
     position = Vector3.New(1000, 0, -13.43),
     rotation = Quaternion.Euler(0, 0, 0),
+    hWidth   = 12.80,
 }
 local inhandCameraParams = {
     position = Vector3.New(1000, 0, -0.9),
@@ -46,15 +47,15 @@ dssOperation.shakepaitime = 0.3
 dssOperation.actionCardHeight = 2.14
 dssOperation.actionCardWidth = 0.72
 
-dssOperation.seats = {
+local seats = {
     [seatType.mine] = { 
         [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -5.04, 0), rot = Quaternion.Euler(0, 0, 0), 
                     rowgap = 0.69, colgap = 0.50, height = 2.14, width = 0.69},
-        [doushisiGame.cardType.chu] = { pos = Vector3.New(3.80, -1.32, 0), rot = Quaternion.Euler(0, 0, 225), 
+        [doushisiGame.cardType.chu] = { pos = Vector3.New(3.80, -1.32, 0), rot = Quaternion.Euler(0, 0, -135), 
                     colDir = {x = math.cos(135*math.pi/180), y = math.sin(135*math.pi/180)},
                     rowDir = {x = math.cos(45 * math.pi/180),y = math.sin(45 * math.pi/180)},
                     rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
-                    rotEuler = Vector3.New(0, 0, 225),
+                    rotEuler = Vector3.New(0, 0, -135),
                 },
         [doushisiGame.cardType.peng] = { pos = Vector3.New(-0.76, -1.53, 0), rot = Quaternion.Euler(0, 0, 90), 
                     colDir = {x = 1, y = 0},
@@ -111,15 +112,92 @@ dssOperation.seats = {
     },
 }
 
+local alignType = {
+    min     = 1,
+    max     = 2,
+    center  = 3,
+    percent = 4,
+}
+local originSafeArea = {
+    bottom      = -3.6,
+    top         = 3.6,
+    right       = 6.4,
+    left        = -6.4,
+    cx          = 0,
+    cy          = 0,
+}
+
+function dssOperation:fix(min, max, nmin, nmax, p, align)
+    local r = p
+    if align == alignType.min then
+        r = (p - min) + nmin
+    elseif align == alignType.max then
+        r = nmax - (max - p)
+    elseif align == alignType.center then
+        r = (p - (min + max) * 0.5) + (nmin + nmax) * 0.5
+    elseif align == alignType.percent then
+        r = ((p - min) / (max - min) * (nmax - nmin)) + nmin
+    end
+    return r
+end
+
+function dssOperation:fixPos(pos, xalign, yalign)
+    local x = self:fix(originSafeArea.left, originSafeArea.right, self.safeArea.left, self.safeArea.right, pos.x, xalign)
+    local y = self:fix(originSafeArea.bottom, originSafeArea.top, self.safeArea.bottom, self.safeArea.top, pos.y, yalign)
+    local ret = Vector3.New(x, y, pos.z)
+    return ret
+end
+
+function dssOperation:alignPos()
+    self.seats = seats
+    self.seats[seatType.mine][doushisiGame.cardType.shou].pos = self:fixPos(seats[seatType.mine][doushisiGame.cardType.shou].pos, alignType.min, alignType.min)
+    self.seats[seatType.mine][doushisiGame.cardType.chu].pos = self:fixPos(seats[seatType.mine][doushisiGame.cardType.chu].pos, alignType.min, alignType.min)
+    self.seats[seatType.mine][doushisiGame.cardType.peng].pos = self:fixPos(seats[seatType.mine][doushisiGame.cardType.peng].pos, alignType.max, alignType.min)
+    self.seats[seatType.mine].promote.pos = self:fixPos(seats[seatType.mine].promote.pos, alignType.center, alignType.min)
+
+    self.seats[seatType.right][doushisiGame.cardType.chu].pos = self:fixPos(seats[seatType.right][doushisiGame.cardType.chu].pos, alignType.min, alignType.percent)
+    self.seats[seatType.right][doushisiGame.cardType.peng].pos = self:fixPos(seats[seatType.right][doushisiGame.cardType.peng].pos, alignType.min, alignType.percent)
+    self.seats[seatType.right].promote.pos = self:fixPos(seats[seatType.right].promote.pos, alignType.min, alignType.percent)
+
+    self.seats[seatType.left][doushisiGame.cardType.chu].pos = self:fixPos(seats[seatType.left][doushisiGame.cardType.chu].pos, alignType.max, alignType.percent)
+    self.seats[seatType.left][doushisiGame.cardType.peng].pos = self:fixPos(seats[seatType.left][doushisiGame.cardType.peng].pos, alignType.max, alignType.percent)
+    self.seats[seatType.left].promote.pos = self:fixPos(seats[seatType.left].promote.pos, alignType.max, alignType.percent)
+    
+    self.seats[seatType.top][doushisiGame.cardType.chu].pos = self:fixPos(seats[seatType.top][doushisiGame.cardType.chu].pos, alignType.min, alignType.max)
+    self.seats[seatType.top][doushisiGame.cardType.peng].pos = self:fixPos(seats[seatType.top][doushisiGame.cardType.peng].pos, alignType.min, alignType.max)
+    self.seats[seatType.top].promote.pos = self:fixPos(seats[seatType.top].promote.pos, alignType.center, alignType.max)
+end
+
 function dssOperation:onInit()
     --初始化主相机
     local mainCamera = UnityEngine.Camera.main
     mainCamera.transform.position = mainCameraParams.position
     mainCamera.transform.rotation = mainCameraParams.rotation
+    fixMainCameraParam(mainCameraParams.hWidth, mainCamera)
+    local bl = Vector3.New(0, 0, math.abs(mainCamera.transform.position.z))
+    local tr = Vector3.New(1, 1, math.abs(mainCamera.transform.position.z))
+
+    local wbl = mainCamera:ViewportToWorldPoint(bl)
+    local wtr = mainCamera:ViewportToWorldPoint(tr)
+
+    local safeArea = {}
+    safeArea.bottom     = wbl.y
+    safeArea.right      = wtr.x - 1000
+    safeArea.left       = wbl.x - 1000
+    safeArea.top        = wtr.y
+    safeArea.cx         = 0
+    safeArea.cy         = 0
+    self.safeArea       = safeArea
+
+    self:alignPos()
 
     local camera = GameObjectPicker.instance.camera
     camera.transform.position = inhandCameraParams.position
     camera.orthographicSize = inhandCameraParams.size
+    fixInhandCameraParam(inhandCameraParams.size, camera)
+
+    local inhandCameraT = camera.transform
+    inhandCameraT.position = Vector3.New(inhandCameraT.position.x, self.safeArea.bottom + camera.orthographicSize, inhandCameraT.position.z)
 
     self.cardRoot = find("changpai/changpai_root")
     self.allCards = {}
@@ -391,6 +469,12 @@ end
 -----------------------------------------------------------
 --chu
 -----------------------------------------------------------
+function dssOperation:virtureChu(card)
+    local acId = self.game.mainAcId
+    card:hide()
+    self:promoteChu(acId, card.id)
+end
+
 function dssOperation:onOpListChu(opInfo)
     self:enableChu()
 end
@@ -400,11 +484,18 @@ function dssOperation:onOpDoChu(acId, id)
     local card = self:findAndRemoveCard(acId, id)
     self:addCardToChu(acId, card)
 
-    self:movePromoteCardToChu()
+    --self:movePromoteCardToChu()
+    if self.promoteNode and self.promoteNode.acId ~= acId then
+        self:pushBackPromoteNode()
+    end
+    local isIm = false
+    if self.promoteNode and self.promoteNode.id == id then
+        card:hide()
+        return 1.2
+    end
 
-    self:promoteChu(acId, id)
-    
-    return 0
+    self:promoteChu(acId, id, isIm)
+    return 1.2
 end
 
 function dssOperation:opDoChiPengAnHua(acId, delIds, beId, op)
@@ -712,6 +803,8 @@ function dssOperation:promoteChu(acId, id, im)
     self.promoteNode = node
     self.promoteNode.acId = acId
     self.promoteNode.id = id
+
+    return self.shakepaitime
 end
 
 function dssOperation:addCardTo(card, pos, seatType, cardType, rot, scale, parent)
@@ -782,7 +875,7 @@ function dssOperation:onFanPai(acId, id)
     local time = self:movePromoteCardToChu()
 
     time = self:fanPaiAction(time, acId, id)
-    return time
+    return math.max(time, 1.2)
 end
 
 function dssOperation:onAnPaiShow(acId, idInfo)
@@ -1130,7 +1223,6 @@ function dssOperation:touchHandler(phase, pos)
     else
         self.dragCard:hide()
         if self.curSelectdCard ~= nil then
-            log("is click:   is can chu pai : " .. tostring(self.isClick) .. " " .. tostring(self.canChuPai))
             if self.isClick then
                 if self.curSelectdCard.selected then
                     if self.canChuPai then
@@ -1166,6 +1258,8 @@ function dssOperation:onChoseChuPai(card)
     local sendData = self:getOpChoseData(opType.doushisi.chu.id, id, nil, nil)
     networkManager.csOpChose(sendData)
     self.canChuPai = false
+
+    self:virtureChu(card)
 end
 
 ---------------------------------------------------------
@@ -1496,7 +1590,7 @@ function dssOperation:setNodeAtCenter(node)
     node:setLocalScale(Vector3.New(0.1, 0.1, 0.1))
 end
 function dssOperation:getCenterScaleAction(node)
-    local time = 0.15
+    local time = 0.05
     local action 
     if node then
         action = tweenScale.new(node, time, node:getLocalScale(), Vector3.one)
@@ -1570,7 +1664,7 @@ end
 function dssOperation:computeFlyTime(x1, y1, x2, y2) 
     local d1 = math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2)
     local dis = math.sqrt(d1)
-    local speed = 10.00 --pixels per second
+    local speed = 13.00 --pixels per second
     local time = dis / speed
     if time < 0.25 then
         time = 0.25
