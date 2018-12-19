@@ -12,10 +12,7 @@ return {
             }
         },
         ["changpai"] = {
-            enable = true,
-            detail = {
-                [gameType.doushisi] = true,
-            }
+            enable = false,
         },
         ["poke"] = {
             enable = false,
@@ -84,8 +81,8 @@ return {
             enable = false,
         }
     },
-    --江油
-    [cityType.jiangyou] = {
+    --中江
+    [cityType.zhongjiang] = {
         ["mahjong"] = {
             enable = true,
             detail = {

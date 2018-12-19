@@ -615,13 +615,14 @@ end
 -- 服务器通知投票失败（有人拒绝）
 -------------------------------------------------------------------------------
 function game:onNotifyExitVoteFailedHandler(msg)
-    -- local func = tweenFunction.new(function()
     local func = (function()
-    --    log("notify exit vote failed, msg = " .. table.tostring(msg))
+        log("notify exit vote failed, msg = " .. table.tostring(msg))
+        local player = self.players[msg.Rejecter]
+        showMessageUI(string.format("玩家 %s 拒绝了您的解散申请", cutoutString(player.nickname,gameConfig.nicknameMaxLength)))
         self.exitDeskUI:close()
         self.exitDeskUI = nil
     end)
-    --self.messageHandlers:add(func)
+    
     self:pushMessage(func)
 end
 
