@@ -36,6 +36,7 @@
     <Folder Include="Lua\ui\" />
     <Folder Include="Lua\ui\dssDesk\" />
     <Folder Include="Lua\ui\gameEnd\" />
+    <Folder Include="Lua\ui\gameEnd\mahjong\" />
     <Folder Include="Lua\ui\mahjongDesk\" />
     <Folder Include="Lua\ui\gameOver\" />
     <Folder Include="Lua\ui\exitDesk\" />
@@ -121,7 +122,7 @@
     <Compile Include="Lua\ui\friendster\friendsterDetailMemberItem.lua" />
     <Compile Include="Lua\ui\friendster\friendsterItem.lua" />
     <Compile Include="Lua\ui\friendster\friendster.lua" />
-    <Compile Include="Lua\ui\gameEnd\gameEndItem.lua" />
+    <Compile Include="Lua\ui\gameEnd\mahjong\gameEndItem.lua" />
     <Compile Include="Lua\ui\gameEnd\gameEndScore.lua" />
     <Compile Include="Lua\ui\gameOver\gameOverItem.lua" />
     <Compile Include="Lua\ui\mahjongDesk\mahjongDesk.lua" />
@@ -130,9 +131,9 @@
     <Compile Include="Lua\ui\mahjongDesk\mahjongOperation.lua" />
     <Compile Include="Lua\ui\enterDesk.lua" />
     <Compile Include="Lua\ui\exitDesk.lua" />
-    <Compile Include="Lua\ui\gameEnd\gameEndGangPai.lua" />
-    <Compile Include="Lua\ui\gameEnd\gameEndPai.lua" />
-    <Compile Include="Lua\ui\gameEnd\gameEndPengPai.lua" />
+    <Compile Include="Lua\ui\gameEnd\mahjong\gameEndGangPai.lua" />
+    <Compile Include="Lua\ui\gameEnd\mahjong\gameEndPai.lua" />
+    <Compile Include="Lua\ui\gameEnd\mahjong\gameEndPengPai.lua" />
     <Compile Include="Lua\ui\loading.lua" />
     <Compile Include="Lua\ui\lobby.lua" />
     <Compile Include="Lua\ui\login.lua" />

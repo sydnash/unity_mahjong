@@ -7,7 +7,7 @@ local mahjongType = require("logic.mahjong.mahjongType")
 local base = require("ui.common.view")
 local gameEndPengPai = class("gameEndPengPai", base)
 
-_RES_(gameEndPengPai, "GameEndUI", "GameEndUI_PengPai")
+_RES_(gameEndPengPai, "GameEndUI/Mahjong", "GameEndUI_PengPai")
 gameEndPengPai.width = 139
 
 function gameEndPengPai:onInit()

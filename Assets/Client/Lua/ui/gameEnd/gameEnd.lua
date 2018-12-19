@@ -36,7 +36,7 @@ function gameEnd:onInit()
 
     self.items = {}
     for _, v in pairs(self.datas.players) do
-        local item = require ("ui.gameEnd.gameEndItem").new()
+        local item = self:createItem()
         item:setPlayerInfo(v, function()
             self:onRecordClickedHandler()
         end)
@@ -165,6 +165,16 @@ end
 function gameEnd:onCloseClickedHandler()
     self.game:exitPlayback()
     playButtonClickSound()
+end
+
+function gameEnd:createItem()
+    if self.game.gameType == gameType.mahjong then
+        return require ("ui.gameEnd.mahjong.gameEndItem").new()
+    elseif self.game.gameType == gameType.mahjong then
+        return require ("ui.gameEnd.doushisi.gameEndItem").new()
+    end
+
+    log("unknown game type")
 end
 
 function gameEnd:onCloseAllUIHandler()

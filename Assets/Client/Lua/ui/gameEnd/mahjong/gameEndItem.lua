@@ -5,7 +5,7 @@
 local base = require("ui.common.view")
 local gameEndItem = class("gameEndItem", base)
 
-_RES_(gameEndItem, "GameEndUI", "MahjongGameEndItem")
+_RES_(gameEndItem, "GameEndUI/Mahjong", "GameEndItem")
 
 function gameEndItem:onInit()
     self.pai = {}
@@ -59,7 +59,7 @@ function gameEndItem:setPlayerInfo(player, cb)
     local peng = player[opType.peng.id]
     if peng ~= nil then
         for _, u in pairs(peng) do
-            local p = require("ui.gameEnd.gameEndPengPai").new()
+            local p = require("ui.gameEnd.mahjong.gameEndPengPai").new()
             p:setParent(self.mPai)
             p:show()
             p:setMahjongId(u[1])
@@ -73,7 +73,7 @@ function gameEndItem:setPlayerInfo(player, cb)
     local gang = player[opType.gang.id]
     if gang ~= nil then
         for _, u in pairs(gang) do
-            local p = require("ui.gameEnd.gameEndGangPai").new()
+            local p = require("ui.gameEnd.mahjong.gameEndGangPai").new()
             p:setParent(self.mPai)
             p:show()
             p:setMahjongId(u[1])
@@ -90,7 +90,7 @@ function gameEndItem:setPlayerInfo(player, cb)
     end)
 
     for _, u in pairs(player.inhand) do
-        local p = require("ui.gameEnd.gameEndPai").new()
+        local p = require("ui.gameEnd.mahjong.gameEndPai").new()
         p:setParent(self.mPai)
         p:show()
         p:setMahjongId(u)
@@ -105,7 +105,7 @@ function gameEndItem:setPlayerInfo(player, cb)
         self.mResult:setSprite("hu")
         self.mResult:show()
 
-        local p = require("ui.gameEnd.gameEndPai").new()
+        local p = require("ui.gameEnd.mahjong.gameEndPai").new()
         p:setParent(self.mPai)
         p:show()
         p:setMahjongId(hu)
