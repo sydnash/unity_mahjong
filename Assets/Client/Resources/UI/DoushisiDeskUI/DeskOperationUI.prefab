@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 224989174625465354}
   - component: {fileID: 114045245330544388}
   m_Layer: 5
-  m_Name: DssOperationUI
+  m_Name: DeskOperationUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -805,6 +805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: huaZhuang
     sprite: {fileID: 21300210, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
@@ -1092,6 +1093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: zuoZhuang
     sprite: {fileID: 21300206, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
@@ -1320,6 +1322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: hua
     sprite: {fileID: 21300180, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}

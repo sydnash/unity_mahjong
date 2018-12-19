@@ -33,6 +33,21 @@ function mahjongDesk:onInit()
     self.super.onInit(self)
 end
 
+--function mahjongDesk:onGameStart()
+--    for _, v in pairs(self.game.players) do 
+--        local st = self.game:getSeatTypeByAcId(v.acId)
+--        local hd = self.headers[st]
+
+--        if v.isMarker then
+--            hd:showMarker()
+--        else
+--            hd:showMarker()
+--        end
+--    end
+
+--    self.super.onGameStart(self)
+--end
+
 function mahjongDesk:onGameSync()
     self:updateLeftMahjongCount()
     self.super.onGameSync(self)
@@ -69,7 +84,7 @@ function mahjongDesk:onPlayerHu(acId, t)
         p:playGfx("hu")
     end
 
-    p:setHu(true)
+    p:showHu()
 end
 
 function mahjongDesk:updateLeftMahjongCount(cnt)

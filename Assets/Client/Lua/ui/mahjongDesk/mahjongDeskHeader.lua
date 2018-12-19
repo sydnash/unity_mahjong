@@ -23,12 +23,32 @@ function mahjongDeskHeader:setPlayerInfo(player)
     self.super.setPlayerInfo(self, player)
 
     if player ~= nil then
+        if player.isMarker then
+            self:showMarker()
+        else
+            self:hideMarker()
+        end
+
+        if not isNilOrNull(player.hu) and player.hu[1].HuCard >= 0 then
+            self:showHu()
+        else
+            self:hideHu()
+        end
+
         if player.que ~= nil and player.que >= 0 then
             self:showDingQue(player.que)
         else
             self:hideDingQue()
         end
     end
+end
+
+function mahjongDeskHeader:showMarker()
+    self.mZhuang:show()
+end
+
+function mahjongDeskHeader:hideMarker()
+    self.mZhuang:hide()
 end
 
 function mahjongDeskHeader:showDingQue(mjtype)
@@ -38,6 +58,14 @@ end
 
 function mahjongDeskHeader:hideDingQue()
     self.mQue:hide()
+end
+
+function mahjongDeskHeader:showHu()
+    self.mHu:show()
+end
+
+function mahjongDeskHeader:hideHu()
+    self.mHu:hide()
 end
 
 function mahjongDeskHeader:reset()

@@ -323,8 +323,8 @@ function desk:onGameStart()
         local st = self.game:getSeatTypeByAcId(v.acId)
         local hd = self.headers[st]
 
+        hd:setPlayerInfo(v)
         hd:setReady(false)
-        hd:setMarker(v.isMarker)
     end
 
     self:updateCurrentGameIndex()

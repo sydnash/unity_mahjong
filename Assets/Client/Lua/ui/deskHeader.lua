@@ -37,22 +37,10 @@ function deskHeader:setPlayerInfo(player)
         self:setScore(player.score)
         self:setReady(player.ready)
 
-        if not isNilOrNull(player.hu) and player.hu[1].HuCard >= 0 then
-            self:setHu(true)
-        else
-            self:setHu(false)
-        end
-
         if player.isCreator then
             self.mFz:show()
         else
             self.mFz:hide()
-        end
-
-        if player.isMarker then
-            self.mZhuang:show()
-        else
-            self.mZhuang:hide()
         end
 
         self:setOnline(player.connected)
@@ -73,14 +61,6 @@ function deskHeader:setScore(score)
     self.mScore:setText(string.format("分数:%d", score or 0))
 end
 
-function deskHeader:setMarker(marker)
-    if marker then
-        self.mZhuang:show()
-    else
-        self.mZhuang:hide()
-    end
-end
-
 function deskHeader:setOnline(online)
     if online then
         self.mOffline:hide()
@@ -98,14 +78,6 @@ function deskHeader:setReady(ready)
         else
             self.mReady:hide()
         end
-    end
-end
-
-function deskHeader:setHu(hu)
-    if hu then
-        self.mHu:show()
-    else
-        self.mHu:hide()
     end
 end
 
@@ -171,7 +143,6 @@ end
 
 function deskHeader:reset()
     self:setReady(false)
-    self.mHu:hide()
     self.mGfx:hide()
     self.mZhuang:hide()
     self:hideChatEmoji()

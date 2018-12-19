@@ -75,14 +75,14 @@ end
 -- 
 -------------------------------------------------------------------------------
 function doushisiGame:createOperationUI()
-    return require("ui.dssDesk.dssDeskOperation").new(self)
+    return require("ui.doushisiDesk.doushisiOperation").new(self)
 end
 
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
 function doushisiGame:createDeskUI()
-    return require("ui.mahjongDesk.mahjongDesk").new(self)
+    return require("ui.doushisiDesk.doushisiDesk").new(self)
 end
 
 -------------------------------------------------------------------------------

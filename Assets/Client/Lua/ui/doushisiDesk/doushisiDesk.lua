@@ -68,8 +68,6 @@ function doushisiDesk:onPlayerHu(acId, t)
     else
         p:playGfx("hu")
     end
-
-    p:setHu(true)
 end
 
 function doushisiDesk:updateLeftMahjongCount(cnt)
@@ -77,7 +75,7 @@ function doushisiDesk:updateLeftMahjongCount(cnt)
         cnt = self.game:getLeftCardsCount()
     end
 
-    self.mLeftCount:setText(tostring(cnt))
+    --
 end
 
 function doushisiDesk:onDingQueDo(msg)
