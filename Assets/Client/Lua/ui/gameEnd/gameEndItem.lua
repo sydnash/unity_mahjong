@@ -2,19 +2,40 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local base = require("ui.common.panel")
+local base = require("ui.common.view")
 local gameEndItem = class("gameEndItem", base)
+
+_RES_(gameEndItem, "GameEndUI", "MahjongGameEndItem")
 
 function gameEndItem:onInit()
     self.pai = {}
     self:reset()
+    self.mRecord:addClickListener(self.onRecordClickedHandler, self)
 end
 
-function gameEndItem:setPlayerInfo(player)
+function gameEndItem:onRecordClickedHandler()
+    if self.recordCallback then
+        self.recordCallback()
+    end
+end
+
+function gameEndItem:setPlayerInfo(player, cb)
+    self.recordCallback = cb
     self.mHeader:setTexture(player.headerUrl)
     self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
     self.mId:setText(string.format("帐号:%d", player.acId))
     self.mScore:setScore(player.score)
+
+    local pos = self.mScore:getLocalPosition()
+    if player.acId == gamepref.player.acId then
+        self.mRecord:show()
+        pos.y = 20
+        self.mScore:setLocalPosition(pos)
+    else
+        self.mRecord:hide()
+        pos.y = 0
+        self.mScore:setLocalPosition(pos)
+    end
 
     if player.que ~= nil and player.que >= 0 then
         self.mQue:setSprite(getMahjongClassName(player.que))

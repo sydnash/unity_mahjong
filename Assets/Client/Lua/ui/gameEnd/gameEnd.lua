@@ -15,23 +15,33 @@ function gameEnd:ctor(game, datas)
 end
 
 function gameEnd:onInit()
-    local items = { 
-        self.mItemM, 
-        self.mItemR, 
-        self.mItemT, 
-        self.mItemL, 
-    }
+    -- local items = { 
+    --     self.mItemM, 
+    --     self.mItemR, 
+    --     self.mItemT, 
+    --     self.mItemL, 
+    -- }
 
-    local acc = 1
+    -- local acc = 1
+    -- for _, v in pairs(self.datas.players) do
+    --     local item = items[acc]
+    --     acc = acc + 1
+
+    --     item:show()
+    --     item:setPlayerInfo(v)
+    -- end
+    -- for i = acc, 4 do
+    --     items[i]:hide()
+    -- end
+
+    self.items = {}
     for _, v in pairs(self.datas.players) do
-        local item = items[acc]
-        acc = acc + 1
-
+        local item = require ("ui.gameEnd.gameEndItem").new()
+        item:setPlayerInfo(v, function()
+            self:onRecordClickedHandler()
+        end)
         item:show()
-        item:setPlayerInfo(v)
-    end
-    for i = acc, 4 do
-        items[i]:hide()
+        item:setParent(self.mList)
     end
 
     local info = string.format("第%d/%d局  房号:%d  %s", 
@@ -61,7 +71,7 @@ function gameEnd:onInit()
     self.mNext:addClickListener(self.onNextClickedHandler, self)
     self.mShare:addClickListener(self.onShareClickedHandler, self)
     self.mSharePanel:addClickListener(self.onSharePanelClickedHandler, self)
-    self.mRecord:addClickListener(self.onRecordClickedHandler, self)
+    -- self.mRecord:addClickListener(self.onRecordClickedHandler, self)
     self.mShareWX:addClickListener(self.onShareWXClickedHandler, self)
     self.mShareQYQ:addClickListener(self.onShareQYQClickedHandler, self)
     self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)
@@ -163,6 +173,9 @@ end
 
 function gameEnd:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    for _, item in pairs(self.items) do
+        item:close()
+    end
     self.super.onDestroy(self)
 end
 
