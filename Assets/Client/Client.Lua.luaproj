@@ -71,6 +71,7 @@
     <Compile Include="Lua\logic\mahjong\mahjong.lua" />
     <Compile Include="Lua\logic\mahjong\mahjongGame.lua" />
     <Compile Include="Lua\logic\mahjong\mahjongType.lua" />
+    <Compile Include="Lua\logic\manager\headerManager.lua" />
     <Compile Include="Lua\logic\manager\locationManager.lua" />
     <Compile Include="Lua\logic\manager\patchManager.lua" />
     <Compile Include="Lua\logic\player\playHistory.lua" />

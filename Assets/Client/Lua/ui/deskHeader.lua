@@ -32,7 +32,7 @@ function deskHeader:setPlayerInfo(player)
         self.mNobody:hide()
         self.mSomebody:show()
 
-        self.mIcon:setTexture(player.acId, player.headerTex)
+        self.mIcon:setTexture(player.headerUrl)
 
         self:setScore(player.score)
         self:setReady(player.ready)

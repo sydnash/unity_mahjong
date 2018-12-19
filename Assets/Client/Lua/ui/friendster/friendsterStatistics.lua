@@ -137,7 +137,6 @@ function friendsterStatistics:set(data, historyContainer)
             if g == nil then
                 g = gamePlayer.new(p.AcId)
                 g.headerUrl = p.HeadUrl
-                g:loadHeaderTex()
                 g.nickname = p.Nickname
                 g.score = scores[k]
                 g.playTimes = 1

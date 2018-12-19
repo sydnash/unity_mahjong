@@ -139,36 +139,8 @@ function playMahjongOpSound(optype, sex)
 end
 
 -------------------------------------------------------------
--- 下载玩家头像
+-- 
 -------------------------------------------------------------
-function downloadIcon(url, callback)
-    if string.isNilOrEmpty(url) then
-        return
-    end
-
-    local hash = Hash.GetHash(url)
-    local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "wxicons", hash .. ".jpg")
-
-    --先本地查找，没找到再从网上下载
-    http.getTexture2D("file:///" .. path, function(tex, bytes)
-        if tex ~= nil then
-            if callback ~= nil then
-                callback(tex)
-            end
-        else
-            http.getTexture2D(url, function(tex, bytes)
-                if tex ~= nil then
-                    LFS.WriteBytes(path, bytes)
-
-                    if callback ~= nil then
-                        callback(tex)
-                    end
-                end
-            end)
-        end
-    end)
-end
-
 function getLogicGame(citytype, gametype)
     if gametype == gameType.mahjong then
         return require("logic.mahjong.mahjongGame")

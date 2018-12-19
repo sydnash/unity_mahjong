@@ -9,42 +9,17 @@ function gamePlayer:ctor(acid)
     self.acId        = acid
     self.nickname    = string.empty
     self.headerUrl   = string.empty
-    self.headerTex   = nil
     self.playHistory = playHistory.new()
     self.friendsterPlayHistories = {}
-
-    self.headerTexDownloaded = false
-end
-
-function gamePlayer:loadHeaderTex()
-    --先显示默认头像
-    self.headerTex = textureManager.load(string.empty, "JS_tx_a")
-    self.headerTexDownloaded = false
-    --同时开始下载真实头像
-    if not string.isNilOrEmpty(self.headerUrl) then 
-        downloadIcon(self.headerUrl, function(tex)
-            if self.headerTexDownloaded and self.headerTex ~= nil then
-                textureManager.unload(self.headerTex, false)
-                self.headerTex = nil
-            end
-
-            self.headerTex = tex
-            self.headerTexDownloaded = true
-
-            local signalId = signalType.headerDownloaded .. tostring(self.acId)
-            signalManager.signal(signalId, self.headerTex)
-        end)
-    end
 end
 
 function gamePlayer:setMails(data)
-    if not data then
-        return
-    end
-    self.mails = {}
+    if data ~= nil then
+        self.mails = {}
 
-    for _, v in pairs(data) do
-        self:addMail(v)
+        for _, v in pairs(data) do
+            self:addMail(v)
+        end
     end
 end
 
@@ -85,24 +60,18 @@ function gamePlayer:getMail(mailId)
     return nil
 end
 
-function gamePlayer:destroy()
-    if self.headerTex ~= nil then
-        if self.headerTexDownloaded then
-            destroyTexture(self.headerTex)
-        else
-            textureManager.unload(self.headerTex)
-        end
-        self.headerTex = nil
+function gamePlayer:getFriendsterPlayHistory(friendsterId)
+    local history = self.friendsterPlayHistories[friendsterId]
+    if history == nil then
+        history = playHistory.new(friendsterId)
+        self.friendsterPlayHistories[friendsterId] = history
     end
+
+    return history
 end
 
-function gamePlayer:getFriendsterPlayHistory(friendsterId)
-    local t = self.friendsterPlayHistories[friendsterId]
-    if not t then
-        t = playHistory.new(friendsterId)
-        self.friendsterPlayHistories[friendsterId] = t
-    end
-    return t
+function gamePlayer:destroy()
+    
 end
 
 return gamePlayer

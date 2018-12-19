@@ -113,7 +113,7 @@ function gameOver:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     
     for _, v in pairs(self.items) do
-        v.mIcon:setTexture(nil)
+        v.mIcon:reset()
     end
 
     self.super.onDestroy(self)

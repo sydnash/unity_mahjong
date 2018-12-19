@@ -21,7 +21,7 @@ function friendsterMemberInfo:onInit()
     self.mDissolve:hide()
     self.mDelete:hide()
 
-    self.mIcon:setTexture(self.data.headerTex)
+    self.mIcon:setTexture(self.data.headerUrl)
     -- self.mSex:setSprite("boy")
     self.mSex:hide()
     self.mNickname:setText(self.data.nickname)

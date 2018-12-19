@@ -8,7 +8,8 @@ local lobby = class("lobby", base)
 _RES_(lobby, "LobbyUI", "LobbyUI")
 
 function lobby:onInit()
-    self.mIcon:setTexture(gamepref.player.acId, gamepref.player.headerTex)
+    log("lobby.onInit, headerUrl = " .. gamepref.player.headerUrl)
+    self.mIcon:setTexture(gamepref.player.headerUrl)
     self.mNickname:setText(cutoutString(gamepref.player.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText("帐号:" .. gamepref.player.acId)
     self.mCards:setText(tostring(gamepref.player.cards))
@@ -246,7 +247,6 @@ function lobby:onDestroy()
     signalManager.unregisterSignalHandler(signalType.deskDestroy, self.onDeskDestroyHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
-    self.mIcon:reset()
     self.super.onDestroy(self)
 end
 

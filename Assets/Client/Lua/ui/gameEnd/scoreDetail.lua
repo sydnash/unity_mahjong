@@ -112,50 +112,59 @@ function scoreDetail:ctor(scoreChanges)
 end
 
 function scoreDetail:onInit()
-    --sort and filter changes
-    self.finalChanges = {}
-    table.bubbleSort(self.scoreChanges, function(t1, t2)
-        return t1.Idx < t2.Idx
-    end)
+    if self.scoreChanges == nil or #self.scoreChanges == 0 then
+        self.mEmpty:show()
+        self.mList:hide()
+    else
+        self.mEmpty:hide()
+        self.mList:show()
 
-    for _, info in pairs(self.scoreChanges) do
-        local win = {}
-        local failed = {}
-        local hasSelf = false
-        local selfResult = 0
-        for _, c in pairs(info.C) do
-            if c.AcId == gamepref.player.acId then
-                hasSelf = true
-                selfResult = c
+        --sort and filter changes
+        self.finalChanges = {}
+        table.bubbleSort(self.scoreChanges, function(t1, t2)
+            return t1.Idx < t2.Idx
+        end)
+
+        for _, info in pairs(self.scoreChanges) do
+            local win = {}
+            local failed = {}
+            local hasSelf = false
+            local selfResult = 0
+            for _, c in pairs(info.C) do
+                if c.AcId == gamepref.player.acId then
+                    hasSelf = true
+                    selfResult = c
+                end
+                if c.Change > 0 then
+                    table.insert(win, c.AcId)
+                else
+                    table.insert(failed, c.AcId)
+                end
             end
-            if c.Change > 0 then
-                table.insert(win, c.AcId)
-            else
-                table.insert(failed, c.AcId)
+            if hasSelf then
+                local t = {}
+                t.Op            = info.Op
+                t.Detail        = info.De
+                t.IsHaiDi       = info.IsHaiDi
+                t.FanXing       = info.FanXing
+                t.Gen           = info.Gen
+
+                t.Fan           = selfResult.Fan
+                t.Score         = selfResult.Change
+                if selfResult.Change > 0 then
+                    t.BeAcIds = failed
+                else
+                    t.BeAcIds = win
+                end
+                table.insert(self.finalChanges, t)
             end
         end
-        if hasSelf then
-            local t = {}
-            t.Op            = info.Op
-            t.Detail        = info.De
-            t.IsHaiDi       = info.IsHaiDi
-            t.FanXing       = info.FanXing
-            t.Gen           = info.Gen
 
-            t.Fan           = selfResult.Fan
-            t.Score         = selfResult.Change
-            if selfResult.Change > 0 then
-                t.BeAcIds = failed
-            else
-                t.BeAcIds = win
-            end
-            table.insert(self.finalChanges, t)
-        end
+        self:refreshUI()
     end
 
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self:refreshUI()
 end
 
 function scoreDetail:onCloseClickedHandler()

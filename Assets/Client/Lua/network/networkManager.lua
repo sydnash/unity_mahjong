@@ -352,7 +352,6 @@ local function loginC(text, callback)
                 gamepref.player     = require("logic.player.gamePlayer").new(msg.AcId)
                         
                 gamepref.player.headerUrl       = msg.HeadUrl
-                gamepref.player:loadHeaderTex()
                 gamepref.player.nickname        = msg.Nickname
                 gamepref.player.ip              = msg.Ip
                 gamepref.player.sex             = Mathf.Clamp(msg.Sex, sexType.boy, sexType.girl)

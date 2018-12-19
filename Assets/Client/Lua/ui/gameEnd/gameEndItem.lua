@@ -11,7 +11,7 @@ function gameEndItem:onInit()
 end
 
 function gameEndItem:setPlayerInfo(player)
-    self.mHeader:setTexture(player.acId, player.headerTex)
+    self.mHeader:setTexture(player.headerUrl)
     self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
     self.mId:setText(string.format("帐号:%d", player.acId))
     self.mScore:setScore(player.score)
@@ -103,8 +103,6 @@ function gameEndItem:reset()
 end
 
 function gameEndItem:onDestroy()
-    self.mHeader:reset()
-
     for _, v in pairs(self.pai) do
         v:close()
     end

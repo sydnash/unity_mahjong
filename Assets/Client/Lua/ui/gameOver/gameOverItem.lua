@@ -10,7 +10,7 @@ function gameOverItem:onInit()
 end
 
 function gameOverItem:setPlayerInfo(player)
-    self.mIcon:setTexture(player.headerTex)
+    self.mIcon:setTexture(player.headerUrl)
     self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
     self.mId:setText(string.format("帐号:%d", player.acId))
     self.mScore:setScore(player.totalScore)
@@ -27,11 +27,6 @@ end
 function gameOverItem:reset()
     self.mFz:hide()
     self.mWinner:hide()
-end
-
-function gameOverItem:onDestroy()
-    self.mIcon:setTexture(nil)
-    self.super.onDestroy(self)
 end
 
 return gameOverItem

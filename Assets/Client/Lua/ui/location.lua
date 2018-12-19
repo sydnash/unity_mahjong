@@ -101,7 +101,7 @@ function location:refreshUI()
         local header = self.headers[s]
 
         header.icon:show()
-        header.icon:setTexture(v.headerTex)
+        header.icon:setTexture(v.headerUrl)
         header.nickname:setText(v.nickname)
         header.ip:setText(v.ip)
 
