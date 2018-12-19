@@ -66,7 +66,7 @@ local seats = {
         promote = {pos = Vector3.New(-0.36, -0.55, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
     },
     [seatType.right] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( 5.49, -0.30, 0), rot = Quaternion.Euler(0, 0, 0), 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( 6.15, -0.30, 0), rot = Quaternion.Euler(0, 0, 0), 
                     colDir = {x = 0, y = -1},
                     rowDir = {x = -1,y = 0},
                     rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
@@ -106,7 +106,7 @@ local seats = {
         promote = {pos = Vector3.New(1.10, 1.09, 0), rot = Quaternion.Euler(0, 0, 90), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 90)},
     },
     [seatType.left] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( -5.49, -0.30, 0), rot = Quaternion.Euler(0, 0, 0), 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -6.15, -0.30, 0), rot = Quaternion.Euler(0, 0, 0), 
                     colDir = {x = 0, y = -1},
                     rowDir = {x = 1,y = 0},
                     rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
