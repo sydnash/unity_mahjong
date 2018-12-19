@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 224165364276361180}
   - component: {fileID: 114175937848636494}
   m_Layer: 5
-  m_Name: MahjongGameEndItem
+  m_Name: GameEndItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

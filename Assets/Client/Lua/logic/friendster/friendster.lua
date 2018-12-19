@@ -6,7 +6,6 @@ local gamePlayer = require("logic.player.gamePlayer")
 local friendsterDesk = require("logic.friendster.friendsterDesk")
 
 local friendster = class("friendster")
-local iconDownloadId = 1
 
 local function createPlayer(data)
     local player = gamePlayer.new(data.AcId)
@@ -40,9 +39,6 @@ function friendster:ctor(id)
     self.applyCode          = 0
     self.managerAcId        = 0
     self.managerNickname    = string.empty
-
-    iconDownloadId = iconDownloadId + 1
-    self.headerTexDownloaded = false
 end
 
 function friendster:setData(data)
@@ -56,7 +52,7 @@ function friendster:setData(data)
     lc.applyCode        = data.ApplyCode
     lc.managerAcId      = data.AcId
     lc.managerNickname  = data.NickName
-    lc.applyList        = isNilOrNull(data.ApplyList) and {} or data.ApplyList
+    lc.applyList        = data.ApplyList or {}
 end
 
 function friendster:setMembers(data)

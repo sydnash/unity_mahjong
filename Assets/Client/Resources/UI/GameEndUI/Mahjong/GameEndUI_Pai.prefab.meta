@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9b56bc73a16579649ad07c34ff9f4c4b
-timeCreated: 1536371154
+guid: 2813593c05a0a224eb2b9b2d9733f648
+timeCreated: 1536369907
 licenseType: Pro
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: ui/gameendui/gameendui_pengpai
+  assetBundleName: ui/gameendui/mahjong/gameendui_pai
   assetBundleVariant: 
