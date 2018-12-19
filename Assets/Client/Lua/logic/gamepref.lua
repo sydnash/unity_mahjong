@@ -114,6 +114,10 @@ return {
     getSFXVolume = getSFXVolume,
     setLanguage = setLanguage,
     getLanguage = getLanguage,
+    setTablecloth = setTablecloth,
+    getTablecloth = getTablecloth,
+    setTablelayout = setTablelayout,
+    getTablelayout = getTablelayout,
 
     save = save
 }
