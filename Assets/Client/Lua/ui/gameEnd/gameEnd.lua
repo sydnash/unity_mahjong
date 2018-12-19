@@ -93,6 +93,7 @@ function gameEnd:onOkClickedHandler()
     ui:show()
 
     self.game.isGameOverUIShow = true
+    self.game.gameEndUI = nil
     self:close() 
     playButtonClickSound()
 end
@@ -100,6 +101,7 @@ end
 function gameEnd:onNextClickedHandler()
     self:close()
     self.game:ready(true)
+    self.game.gameEndUI = nil
     playButtonClickSound()
 end
 

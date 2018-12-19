@@ -48,7 +48,7 @@ doushisiOperation.actionCardWidth = 0.72
 
 local seats = {
     [seatType.mine] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -5.04, 0), rot = Quaternion.Euler(0, 0, 0), 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -3.93, 0), rot = Quaternion.Euler(0, 0, 0), 
                     rowgap = 0.69, colgap = 0.50, height = 2.14, width = 0.69, scale = 1,
                 },
         [doushisiGame.cardType.chu] = { pos = Vector3.New(3.80, -1.32, 0), rot = Quaternion.Euler(0, 0, -135), 
@@ -66,10 +66,10 @@ local seats = {
         promote = {pos = Vector3.New(-0.36, -0.55, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
     },
     [seatType.right] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( 5.88, -0.30, 0), rot = Quaternion.Euler(0, 0, 0), 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( 5.49, -0.30, 0), rot = Quaternion.Euler(0, 0, 0), 
                     colDir = {x = 0, y = -1},
                     rowDir = {x = -1,y = 0},
-                    rowgap = 0.47, colgap = 0.30, height = 0.48, width = 0.78, scale = 0.6,
+                    rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
                 },
         [doushisiGame.cardType.chu] = { pos = Vector3.New(3.22, 2.04, 0), rot = Quaternion.Euler(0, 0, -35), 
                     colDir = {x = math.cos(-125*math.pi/180), y = math.sin(-125*math.pi/180)},
@@ -86,10 +86,10 @@ local seats = {
         promote = {pos = Vector3.New(3.58, -0.39, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
     },
     [seatType.top] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( 3.10, 2.87, 0), rot = Quaternion.Euler(0, 0, 90), 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( 3.10, 2.63, 0), rot = Quaternion.Euler(0, 0, 90), 
                     colDir = {x = 1, y = 0},
                     rowDir = {x = 0, y = -1},
-                    rowgap = 0.47, colgap = 0.30, height = 0.48, width = 0.78, scale = 0.6,
+                    rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
                 },
         [doushisiGame.cardType.chu] = { pos = Vector3.New( -4.49, 1.52, 0), rot = Quaternion.Euler(0, 0, 35),
                     colDir = {x = math.cos(-55*math.pi/180), y = math.sin(-55*math.pi/180)},
@@ -106,10 +106,10 @@ local seats = {
         promote = {pos = Vector3.New(1.10, 1.09, 0), rot = Quaternion.Euler(0, 0, 90), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 90)},
     },
     [seatType.left] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( -6.38, -0.30, 0), rot = Quaternion.Euler(0, 0, 0), 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -5.49, -0.30, 0), rot = Quaternion.Euler(0, 0, 0), 
                     colDir = {x = 0, y = -1},
                     rowDir = {x = 1,y = 0},
-                    rowgap = 0.47, colgap = 0.30, height = 0.48, width = 0.78, scale = 0.6,
+                    rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
                 },
         [doushisiGame.cardType.chu] = { pos = Vector3.New( -4.58, -2.67, 0), rot = Quaternion.Euler(0, 0, 135),
                     colDir = {x = math.cos(45*math.pi/180), y = math.sin(45*math.pi/180)},
@@ -282,7 +282,7 @@ end
 function doushisiOperation:computeChuPaiHintPos()
     local cfg = self.seats[seatType.mine][doushisiGame.cardType.shou]
     local pos = cfg.pos:Clone()
-    local cardLen = cfg.height
+    local cardLen = cfg.height * 0.5
     
     pos.y = pos.y + cardLen + cfg.colgap * 3
     self.chuPaiLineY = pos.y
@@ -885,7 +885,7 @@ function doushisiOperation:moOnePai(acId, id)
     if acId == self.game.mainAcId or self.game:isPlayback() then
         local cfg = self.seats[st][doushisiGame.cardType.shou]
         pos = card:getLocalPosition()
-        pos = Vector3.New(pos.x + cfg.width * 0.5, pos.y + cfg.height * 0.5, pos.z)
+        pos = Vector3.New(pos.x, pos.y, pos.z)
         order = card:getSortingOrder()
         scale = cfg.scale
     else
@@ -1444,13 +1444,6 @@ function doushisiOperation:chiPengAction(acId, cards)
     end
     x = x / #cards
     y = y / #cards
-    if st == seatType.top or st == seatType.mine then
-        x = x + -cfg.cardHeight * 0.5
-        y = y + cfg.cardWidth * 0.5
-    else
-        x = x + cfg.cardWidth * 0.5
-        y = y + cfg.cardHeight * 0.5
-    end
 
     local delayTime = 0.15
 
@@ -1595,8 +1588,7 @@ function doushisiOperation:movePromoteCardToChu()
     local x2, y2 = cfg.pos.x, cfg.pos.y
 
     --end pos
-    local pos = pai.transform:TransformPoint(Vector3.New(cfg.cardWidth * 0.5, cfg.cardHeight * 0.5, 0))
-    local pos = self.cardRoot.transform:InverseTransformPoint(pos)
+    local pos = pai:getLocalPosition()
     local x2 = pos.x
     local y2 = pos.y
     --start pos
@@ -1706,7 +1698,7 @@ function doushisiOperation:createFlyNode(ids)
     local node = self:popFlyNode()
     for _, id in pairs(ids) do
         local card = self:getActionCardById(id)
-        self:addCardTo(card, Vector3.New(0 - self.actionCardWidth * 0.5, sy - self.actionCardHeight * 0.5, 0), nil, doushisiGame.cardType.perfect, Vector3.zero, Vector3.one, node)
+        self:addCardTo(card, Vector3.New(0, sy, 0), nil, doushisiGame.cardType.perfect, Vector3.zero, Vector3.one, node)
         table.insert(cards, card)
         sy = sy - actionCardGap
     end
