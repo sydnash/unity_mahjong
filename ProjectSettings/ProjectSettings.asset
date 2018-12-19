@@ -707,7 +707,7 @@ PlayerSettings:
   webGLUseWasm: 0
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
-    1: DEBUG_WITH_EXTRA_FILES;SIMULATE_RUNTIME_ENVIRONMENT
+    1: DEBUG_WITH_EXTRA_FILES
     7: 
   platformArchitecture: {}
   scriptingBackend: {}
