@@ -9,6 +9,57 @@ local doushisiDesk = class("doushisiDesk", base)
 
 _RES_(doushisiDesk, "DoushisiDeskUI", "DeskUI")
 
+local gfxConfig = {
+    [opType.doushisi.an] = {
+        default = "an",
+    },
+    [opType.doushisi.baGang] = {
+        default = "gang",
+    },
+    [opType.doushisi.bao] = {
+        default = "bao",
+    },
+    [opType.doushisi.baoJiao] = {
+        default = "baojiao",
+    },
+    [opType.doushisi.caiShen] = {
+        default = "caishen",
+    },
+    [opType.doushisi.che] = {
+        default = "che",
+    },
+    [opType.doushisi.chi] = {
+        default = "chi",
+    },
+    [opType.doushisi.chiChengSan] = {
+        default = "chichengsan",
+    },
+    [opType.doushisi.dang] = {
+        default = "dang",
+    },
+    [opType.doushisi.gang] = {
+        default = "gang",
+    },
+    [opType.doushisi.gen] = {
+        default = "gen",
+    },
+    [opType.doushisi.hu] = {
+        default = "hu",
+    },
+    [opType.doushisi.hua] = {
+        default = "hua",
+    },
+    [opType.doushisi.shou] = {
+        default = "shou",
+    },
+    [opType.doushisi.weiGui] = {
+        default = "weigui",
+    },
+    [opType.doushisi.zhao] = {
+        default = "zhao",
+    },
+}
+
 function doushisiDesk:ctor(game)
     self.super.game = game
     self.super.ctor(self)
@@ -33,57 +84,21 @@ function doushisiDesk:onInit()
     self.super.onInit(self)
 end
 
-function doushisiDesk:onGameSync()
-    self:updateLeftMahjongCount()
-    self.super.onGameSync(self)
-end
-
 function doushisiDesk:getInvitationInfo()
     local friendsterId = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d，", self.game.friendsterId)
     return string.format("%s%s", 
                          friendsterId,
-                         getMahjongConfigText(self.game.cityType, self.game.config, false))
+                         "empty")
 end
 
-function doushisiDesk:onPlayerPeng(acId)
-    local s = self.game:getSeatTypeByAcId(acId)
-    local p = self.headers[s]
-    p:playGfx("peng")
-end
+function doushisiDesk:onPlayerGfx(acId, opid)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local hd = self.headers[st]
 
-function doushisiDesk:onPlayerGang(acId)
-    local s = self.game:getSeatTypeByAcId(acId)
-    local p = self.headers[s]
-    p:playGfx("gang")
-end
+    local opc = gfxConfig[opid]
+    local gfx = opc[self.game.cityType] or opc.default
 
-function doushisiDesk:onPlayerHu(acId, t)
-    local s = self.game:getSeatTypeByAcId(acId)
-    local p = self.headers[s]
-
-    local detail = opType.hu.detail
-
-    if t == detail.zimo then
-        p:playGfx("zimo")
-    else
-        p:playGfx("hu")
-    end
-end
-
-function doushisiDesk:updateLeftMahjongCount(cnt)
-    if cnt == nil then 
-        cnt = self.game:getLeftCardsCount()
-    end
-
-    --
-end
-
-function doushisiDesk:onDingQueDo(msg)
-    for _, v in pairs(msg.Dos) do
-        local player = self.game:getPlayerByAcId(v.AcId)
-        local seat = self.game:getSeatTypeByAcId(player.acId)
-        self.headers[seat]:showDingQue(v.Q)
-    end
+    hd:playGfx(gfx)
 end
 
 function doushisiDesk:onOpDoChu(acId, cards)

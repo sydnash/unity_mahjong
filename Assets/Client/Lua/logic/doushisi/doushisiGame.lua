@@ -414,7 +414,6 @@ function doushisiGame:faPai(msg)
             end
         end
     end
-    self.deskUI:updateLeftMahjongCount(self.leftCardsCount)
 end
 
 function doushisiGame:onGameStartHandler(msg)

@@ -27,7 +27,13 @@ function doushisiDeskHeader:setPlayerInfo(player)
     end
 end
 
+function doushisiDeskHeader:setCount(count)
+    self.mCount:setText(string.format("张数:%d", count))
+end
 
+function doushisiDeskHeader:setFuShu(fushu)
+    self.mFuShu:setText(string.format("福数:%d", fushu))
+end
 
 function doushisiDeskHeader:reset()
     self.super.reset(self)
