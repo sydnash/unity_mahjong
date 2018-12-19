@@ -31,12 +31,12 @@ end
 -- 构造函数
 -------------------------------------------------------------------------------
 function doushisiGame:ctor(data, playback)
-    self.super.ctor(self, data, playback)
+    doushisiGame.super.ctor(self, data, playback)
     self.totalCardsCount = self:getTotalCardCountByGame(self.cityType)
 end
 
 function doushisiGame:onEnter(msg)
-    self.super.onEnter(self, msg)
+    doushisiGame.super.onEnter(self, msg)
     
     if msg.Reenter ~= nil then
         self.markerTurn         = msg.Reenter.MarkerTurn
@@ -89,7 +89,7 @@ end
 -- 
 -------------------------------------------------------------------------------
 function doushisiGame:initMessageHandlers()
-    self.super.initMessageHandlers(self)
+    doushisiGame.super.initMessageHandlers(self)
 
     self.commandHandlers[protoType.sc.doushisi.start] = {func = self:onMessageHandler("onGameStartHandler"), nr = true}
     self.commandHandlers[protoType.sc.doushisi.faPai] = {func = self:onMessageHandler("onFaPaiHandler"), nr = true}
@@ -508,7 +508,7 @@ function doushisiGame:update()
     end
 end
 
-local huType = {
+doushisiGame.huType = {
     heju        = 0,
     pinghu      = 1,
     dianpao     = 2,
@@ -517,8 +517,9 @@ local huType = {
     dibao       = 5,
     weigui      = 6,
 }
+
 function doushisiGame:onGameEndListener(specialData, datas, totalScores)
-    datas.huAcId = specialData.huAcId
+    datas.huAcId = specialData.HuAcId
     datas.beHuAcId = specialData.BeHuAcId
     datas.huType = specialData.HuType
     for _, v in pairs(specialData.PlayerInfos) do
@@ -543,23 +544,23 @@ function doushisiGame:onGameEndListener(specialData, datas, totalScores)
             isDang          = p.isDang,
             isPiao          = p.isPiao,
             isBao           = p.isBao,
-            isMarker        = self:isMarker(v.AcId),
+            isMarker        = p.isMarker,
             tyReplace       = v.TYReplace,
         }
         if datas.huAcId == d.acId then
-            if datas.huType == huType.zimo then
+            if datas.huType == self.huType.zimo then
                 d.huType = "ziMo"
-            elseif datas.huType == huType.tianhu then
+            elseif datas.huType == self.huType.tianhu then
                 d.huType = "tianHu"
-            elseif datas.huType == huType.dibao then
+            elseif datas.huType == self.huType.dibao then
                 d.huType = "diBao"
-            elseif datas.huType == huType.weigui then
+            elseif datas.huType == self.huType.weigui then
                 d.huType = "weiGui"
             else
                 d.huType = "hu"
             end
         elseif datas.beHuAcId == d.acId then
-            if datas.huType == huType.dianpao then
+            if datas.huType == self.huType.dianpao then
                 d.huType = "dianPao"
             end
         end

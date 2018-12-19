@@ -13,40 +13,65 @@ function gameEndItem:onInit()
     self:reset()
 end
 
+
+local color = {
+    meId            = hexColorToColor("e2d488ff"),
+    otherId         = hexColorToColor("88c3e2ff"),
+    meFanFu         = hexColorToColor("f4e592ff"),
+    otherFanFu      = hexColorToColor("92d1f2ff"),
+}
+
 function gameEndItem:setPlayerInfo(player)
     self.mHeader:setTexture(player.headerUrl)
     self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
     self.mId:setText(string.format("帐号:%d", player.acId))
     self.mScore:setScore(player.score)
+    self.mFanFu:setText(player.fuShu .. "福 " .. player.fanShu .. "番")
 
-    if player.acId == gamepref.player.acId then
-        self.mBGL:setSprite("me")
-        self.mBGR:setSprite("me")
-    else
-        self.mBGL:setSprite("other")
-        self.mBGR:setSprite("other")
-    end
 
     if player.huType then
         self.mResult:show()
         self.mResult:setSprite(player.huType)
     end
 
+    local icons = {}
+    table.insert(icons, self.mBGL)
+    table.insert(icons, self.mBGR)
     if player.isCreator then
         self.mFz:show()
     end
 
     if player.isMarker then
         self.mZhuang:show()
+        table.insert(icons, self.mZhuang)
     end
     if player.isDang then
         self.mDang:show()
+        table.insert(icons, self.mDang)
     end
     if player.isPiao then
         self.mPiao:show()
+        table.insert(icons, self.mPiao)
     end
     if player.isBao then
         self.mBao:show()
+        table.insert(icons, self.mBao)
+    end
+
+    if player.acId == gamepref.player.acId then
+        for _, v in pairs(icons) do
+            v:setSprite("me")
+        end
+        self.mNickname:setColor(color.meId)
+        self.mId:setColor(color.meId)
+        self.mFanFu:setColor(color.meFanFu)
+    else
+        for _, v in pairs(icons) do
+            v:setSprite("other")
+        end
+        self.mNickname:setColor(color.otherId)
+        self.mId:setColor(color.otherId)
+        self.mFanFu:setColor(color.otherFanFu)
     end
 
     self:initPai(player)
@@ -129,7 +154,7 @@ end
 
 function gameEndItem:addInhandCards(ids)
     local pai = self:createPai(ids)
-    pai:setLocalPosition(Vector3.New(self.nextPos, 19, 0))
+    pai:setLocalPosition(Vector3.New(self.nextPos, 5, 0))
     self.nextPos = self.nextPos + gap
 end
 
