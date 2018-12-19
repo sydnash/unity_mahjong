@@ -427,6 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: +0
     sprite: {fileID: 21300070, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -568,6 +569,14 @@ MonoBehaviour:
     widgetType: 0
     gameObject: {fileID: 1882620050168570}
     panelScript: 
+  - variableName: mBGL
+    widgetType: 3
+    gameObject: {fileID: 1753402830548992}
+    panelScript: 
+  - variableName: mBGR
+    widgetType: 3
+    gameObject: {fileID: 1751599989416714}
+    panelScript: 
 --- !u!114 &114246397609263676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -612,6 +621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: +0
     sprite: {fileID: 21300070, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -749,6 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: +0
     sprite: {fileID: 21300070, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -1044,6 +1055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: +0
     sprite: {fileID: 21300070, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -1129,6 +1141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: +
     sprite: {fileID: 21300090, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -1177,6 +1190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 0
   mItems:
   - key: me
     sprite: {fileID: 21300180, guid: c2733a40300346a41899f37fcd8306b2, type: 3}
@@ -1247,6 +1261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: tiao
     sprite: {fileID: 21300128, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -1265,6 +1280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems: []
 --- !u!114 &114980453664857468
 MonoBehaviour:
@@ -1304,6 +1320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 0
   mItems:
   - key: me
     sprite: {fileID: 21300002, guid: c2733a40300346a41899f37fcd8306b2, type: 3}

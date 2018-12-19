@@ -41,6 +41,12 @@ namespace UnityEngine.UI
         /// 
         /// </summary>
         [SerializeField]
+        private bool mAutoSize = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [SerializeField]
         private List<SpriteItem> mItems = new List<SpriteItem>();
 
         #endregion
@@ -59,7 +65,10 @@ namespace UnityEngine.UI
                     if (item.key == value)
                     {
                         mImage.sprite = item.sprite;
-                        mImage.SetNativeSize();
+                        if (mAutoSize)
+                        {
+                            mImage.SetNativeSize();
+                        }
                         break;
                     }
                 }

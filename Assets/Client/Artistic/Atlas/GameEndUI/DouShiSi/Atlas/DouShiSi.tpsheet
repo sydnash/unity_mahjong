@@ -1,0 +1,28 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:622886d69acc4d0a0dcee12fa3f2b1c4:58d0549c4bca0a1aa472c31f8bbf6968:aed8c68503b795f0cfb33710e4b29818$
+#
+:format=40300
+:texture=DouShiSi.png
+:size=256x256
+:pivotpoints=enabled
+:borders=disabled
+
+cp_tr01;181;155;37;36; 0.5;0.5; 0;0;0;0
+cp_tr02;181;117;37;36; 0.5;0.5; 0;0;0;0
+cp_tr03;1;24;37;36; 0.5;0.5; 0;0;0;0
+cp_tr04;40;24;37;36; 0.5;0.5; 0;0;0;0
+cp_zj01;79;24;37;36; 0.5;0.5; 0;0;0;0
+cp_zj02;91;79;37;36; 0.5;0.5; 0;0;0;0
+cp_zj03;130;109;37;36; 0.5;0.5; 0;0;0;0
+cp_zj04;118;41;37;36; 0.5;0.5; 0;0;0;0
+XJS_zi1;1;202;88;53; 0.5;0.5; 0;0;0;0
+XJS_zi2;91;202;88;53; 0.5;0.5; 0;0;0;0
+XJS_zi3;1;147;88;53; 0.5;0.5; 0;0;0;0
+XJS_zi4;91;147;88;53; 0.5;0.5; 0;0;0;0
+XJS_zi5;1;62;88;53; 0.5;0.5; 0;0;0;0
+XJS_zi6;181;193;55;62; 0.5;0.5; 0;0;0;0

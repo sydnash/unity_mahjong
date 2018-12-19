@@ -417,6 +417,56 @@ function mahjongGame:onDingQueHintHandler(msg)
     self:pushMessage(func)
 end
 
+function mahjongGame:onGameEndListener(specialData, datas, totalScores)
+    for _, v in pairs(specialData.PlayerInfos) do
+        local p = self:getPlayerByAcId(v.AcId)
+        local d = { acId            = v.AcId, 
+                    headerUrl       = self.players[p.acId].headerUrl,
+                    nickname        = p.nickname, 
+                    score           = v.Score,
+                    totalScore      = totalScores[v.AcId], 
+                    turn            = p.turn, 
+                    seat            = self:getSeatTypeByAcId(p.acId),
+                    inhand          = v.ShouPai,
+                    hu              = v.Hu,
+                    isCreator       = self:isCreator(v.AcId),
+                    isWinner        = false,
+                    isMarker        = self:isMarker(v.AcId),
+                    que             = p.que,
+                    seatType        = self:getSeatTypeByAcId(v.AcId),
+        }
+
+        for k, u in pairs(d.inhand) do 
+            if u == d.hu then
+                table.remove(d.inhand, k)
+            end
+        end
+
+        local peng = v.ChiChe
+        if not isNilOrNull(peng) then
+            for _, u in pairs(peng) do
+                if d[u.Op] == nil then
+                    d[u.Op] = {}
+                end
+
+                table.insert(d[u.Op], u.Cs)
+            end
+        end
+
+        --datas.players[p.acId] = d
+        table.insert(datas.players, d)
+    end
+    table.sort(datas.players, function(t1, t2)
+        return t1.seatType < t2.seatType
+    end)
+    datas.scoreChanges = specialData.ScoreChanges
+    for _, v in pairs(self.players) do
+        v.que = -1
+        self.deskUI:setScore(v.acId, v.score)
+    end
+    return datas
+end
+
 -------------------------------------------------------------------------------
 -- 服务器通知定缺具体信息
 -------------------------------------------------------------------------------
