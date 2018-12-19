@@ -23,7 +23,7 @@ function deskDetail:ctor(cityType, gameType, friendsterId, config, canJoin, desk
         end
     end
 
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function deskDetail:onInit()
@@ -124,7 +124,7 @@ function deskDetail:onDestroy()
         self.detail = nil
     end
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return deskDetail

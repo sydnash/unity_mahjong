@@ -109,7 +109,7 @@ function doushisi:setSprite(folder, resource)
     self:resetRender()
 
     local suffix = resourceSuffix[self.style][self.ctype]
-    self.render.sprite = convertTextureToSprite(textureManager.load(folder, resource .. suffix))
+    self.render.sprite = convertTextureToSprite(textureManager.load(folder, resource .. suffix), Vector2.zero)
 end
 
 function doushisi:resetRender()

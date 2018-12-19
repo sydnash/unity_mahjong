@@ -108,7 +108,7 @@ _RES_(scoreDetail, "GameEndUI", "ScoreDetailUI")
 
 function scoreDetail:ctor(scoreChanges)
     self.scoreChanges = scoreChanges
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function scoreDetail:onInit()
@@ -191,7 +191,7 @@ end
 
 function scoreDetail:onDestory()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return scoreDetail

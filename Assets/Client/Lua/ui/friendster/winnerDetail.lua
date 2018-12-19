@@ -9,7 +9,7 @@ _RES_(winnerDetail, "FriendsterUI", "WinnerDetailUI")
 
 function winnerDetail:ctor(data)
     self.data = data
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function winnerDetail:onInit()

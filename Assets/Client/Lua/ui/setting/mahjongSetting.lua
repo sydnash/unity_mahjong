@@ -9,11 +9,11 @@ _RES_(mahjongSetting, "SettingUI", "MahjongSettingUI")
 
 function mahjongSetting:ctor(game)
     self.game = game
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function mahjongSetting:onInit()
-    self.super.onInit(self)
+    base.onInit(self)
     local lan = gamepref.getLanguage()
 
     if lan == language.sichuan then
@@ -84,7 +84,7 @@ end
 
 function mahjongSetting:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return mahjongSetting

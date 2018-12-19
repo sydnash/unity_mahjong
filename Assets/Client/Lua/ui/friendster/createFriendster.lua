@@ -19,7 +19,7 @@ local cityOrder = {
 
 function createFriendster:ctor(callback)
     self.callback = callback
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function createFriendster:onInit()
@@ -133,7 +133,7 @@ end
 
 function createFriendster:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return createFriendster

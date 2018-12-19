@@ -9,7 +9,7 @@ function chiAnSelItem:ctor(cards, info, cb)
     self.cards = cards
     self.info = info
     self.cb = cb
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function chiAnSelItem:onBtnClickedHandler()
@@ -38,7 +38,7 @@ _RES_(chiSelPanel, "DoushisiDeskUI", "ChiAnSelPanelUI")
 function chiSelPanel:ctor(opInfo, callback)
     self.opInfo = opInfo
     self.callback = callback
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function chiSelPanel:onInit()
@@ -72,7 +72,7 @@ function chiSelPanel:onDestroy()
     for _, item in pairs(self.items) do
         item:close()
     end
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 local anSelPanel = class("ANSelPanel", base)
@@ -81,7 +81,7 @@ _RES_(anSelPanel, "DoushisiDeskUI", "ChiAnSelPanelUI")
 function anSelPanel:ctor(opInfo, callback)
     self.opInfo = opInfo
     self.callback = callback
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function anSelPanel:onInit()
@@ -119,7 +119,7 @@ function anSelPanel:onDestroy()
     for _, item in pairs(self.items) do
         item:close()
     end
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 
@@ -129,7 +129,7 @@ _RES_(baGangSelPanel, "DoushisiDeskUI", "ChiAnSelPanelUI")
 function baGangSelPanel:ctor(opInfo, callback)
     self.opInfo = opInfo
     self.callback = callback
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function baGangSelPanel:onInit()
@@ -164,7 +164,7 @@ function baGangSelPanel:onDestroy()
     for _, item in pairs(self.items) do
         item:close()
     end
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 

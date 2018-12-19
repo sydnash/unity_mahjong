@@ -144,7 +144,7 @@ function gameEndItem:onDestroy()
     end
     self.pai = nil
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return gameEndItem

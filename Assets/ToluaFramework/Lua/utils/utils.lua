@@ -439,8 +439,8 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function convertTextureToSprite(tex)
-    return Utils.ConvertTextureToSprite(tex)
+function convertTextureToSprite(tex, pivot)
+    return Utils.ConvertTextureToSprite(tex, pivot)
 end
 
 ----------------------------------------------------------------

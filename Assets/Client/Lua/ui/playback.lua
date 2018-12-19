@@ -11,7 +11,7 @@ function playback:ctor(game)
     self.game  = game
     self.speed = 1
 
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function playback:onInit()
@@ -79,7 +79,7 @@ end
 function playback:onDestroy()
     self.speed = 1
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end 
 
 return playback

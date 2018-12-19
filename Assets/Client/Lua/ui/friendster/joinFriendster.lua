@@ -9,7 +9,7 @@ _RES_(joinFriendster, "FriendsterUI", "JoinFriendsterUI")
 
 function joinFriendster:ctor(friendsterUI)
     self.friendsterUI = friendsterUI
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function joinFriendster:onInit()
@@ -111,7 +111,7 @@ end
 
 function joinFriendster:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return joinFriendster

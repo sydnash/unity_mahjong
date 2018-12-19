@@ -312,9 +312,10 @@ public class UtilsWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
+			ToLua.CheckArgsCount(L, 2);
 			UnityEngine.Texture2D arg0 = (UnityEngine.Texture2D)ToLua.CheckObject(L, 1, typeof(UnityEngine.Texture2D));
-			UnityEngine.Sprite o = Utils.ConvertTextureToSprite(arg0);
+			UnityEngine.Vector2 arg1 = ToLua.ToVector2(L, 2);
+			UnityEngine.Sprite o = Utils.ConvertTextureToSprite(arg0, arg1);
 			ToLua.PushSealed(L, o);
 			return 1;
 		}

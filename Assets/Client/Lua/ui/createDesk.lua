@@ -18,7 +18,7 @@ function createDesk:ctor(cityType, friendsterId)
     self.gameType = gameType.mahjong
     self.friendsterId = friendsterId
 
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function createDesk:onInit()
@@ -188,7 +188,7 @@ function createDesk:onDestroy()
         self.detail = nil
     end
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return createDesk

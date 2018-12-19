@@ -12,11 +12,11 @@ local GameObject = UnityEngine.GameObject
 
 function doushisiSetting:ctor(game)
     self.game = game
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function doushisiSetting:onInit()
-    self.super.onInit(self)
+    base.onInit(self)
     self.tableRoot = find("changpai/table")
 
     self.mMandarin.key = language.mandarin
@@ -97,7 +97,7 @@ function doushisiSetting:onTableclothChangedHandler(sender, selected, clicked)
     if clicked then
         if selected then
             if self.tableRoot ~= nil then
-                local render = getComponentU(self.tableRoot, typeof(SpriteRenderer))
+                local render = getComponentU(self.tableRoot.gameObject, typeof(SpriteRenderer))
                 if render ~= nil then
                     local sprite = render.sprite
                     if sprite ~= nil then
@@ -106,7 +106,7 @@ function doushisiSetting:onTableclothChangedHandler(sender, selected, clicked)
                     end
 
                     local tex = textureManager.load("doushisi/table", sender.key)
-                    render.sprite = convertTextureToSprite(tex)
+                    render.sprite = convertTextureToSprite(tex, Vector2.New(0.5, 0.5))
                 end
             end
 
@@ -147,7 +147,7 @@ end
 
 function doushisiSetting:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return doushisiSetting

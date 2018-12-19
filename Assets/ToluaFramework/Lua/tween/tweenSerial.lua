@@ -4,13 +4,21 @@
 
 local tweenSerial = class("tweenSerial")
 
+function tweenSerial.getByVec(autoDestroy, doNextImmediately, vec)
+    local ret = tweenSerial.new(autoDestroy, doNextImmediately)
+    for _, t in pairs(vec) do
+        ret:add(t)
+    end
+    return ret
+end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function tweenSerial:ctor(autoDestroy)
+function tweenSerial:ctor(autoDestroy, doNextImmediately)
     self.queue = {}
     self.playing = false
     self.autoDestroy = autoDestroy
+    self.doNextImmediately = doNextImmediately
 end
 
 -------------------------------------------------------------------
@@ -38,17 +46,24 @@ end
 function tweenSerial:update()
     local count = #self.queue
 
-    if self.playing and count > 0 then
-        local tween = self.queue[1]
+    local loop = true
+    while loop do
+        loop = false
+        if self.playing and count > 0 then
+            local tween = self.queue[1]
 
-        if not tween.playing then
-            tween:play()
-        end
+            if not tween.playing then
+                tween:play()
+            end
 
-        local finished = tween:update()
+            local finished = tween:update()
 
-        if finished then
-            table.remove(self.queue, 1)
+            if finished then
+                table.remove(self.queue, 1)
+                if self.doNextImmediately then
+                    loop = true
+                end
+            end
         end
     end
     return (count == 0)

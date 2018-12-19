@@ -16,11 +16,11 @@ local res = {
 
 function mahjongDeskHeader:ctor(seatType)
     _RES_(self, "MahjongDeskUI", res[seatType])
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function mahjongDeskHeader:setPlayerInfo(player)
-    self.super.setPlayerInfo(self, player)
+    base.setPlayerInfo(self, player)
 
     if player ~= nil then
         if player.isMarker then
@@ -70,7 +70,7 @@ end
 
 function mahjongDeskHeader:reset()
     self:hideDingQue()
-    self.super.reset(self)
+    base.reset(self)
 end
 
 return mahjongDeskHeader

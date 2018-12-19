@@ -13,7 +13,7 @@ _RES_(doushisiOperation, "DoushisiDeskUI", "DeskOperationUI")
 -------------------------------------------------------------------------------
 function doushisiOperation:ctor(game)
     self.game = game
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 local btnIconConfig = {
@@ -466,6 +466,7 @@ function doushisiOperation:showChuHint()
 
     local from  = Vector3.New(0, 0, 45)
     local to    = Vector3.New(0, 0, 1)
+    self.mFinger:setLocalRotation(from)
     self.mFinger.action = tweenForever.new({
         tweenRotation.new(self.mFinger, 0.5, from, to, nil),
         tweenRotation.new(self.mFinger, 0.5, to, from, nil),
@@ -1197,7 +1198,7 @@ function doushisiOperation:onDestroy()
     for _, node in pairs(self.flyNodes) do
         GameObject.Destroy(node.gameObject)
     end
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 function doushisiOperation:getCardByGo(go)

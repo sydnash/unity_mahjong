@@ -100,7 +100,7 @@ function playHistoryItem:onDestroy()
         v.icon:reset()
     end
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return playHistoryItem

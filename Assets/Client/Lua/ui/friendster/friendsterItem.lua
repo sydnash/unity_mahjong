@@ -9,7 +9,7 @@ _RES_(friendsterItem, "FriendsterUI", "FriendsterItem")
 
 function friendsterItem:ctor(callback)
     self.callback = callback
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function friendsterItem:onInit()

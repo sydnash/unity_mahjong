@@ -9,7 +9,7 @@ _RES_(friendsterMemberManager, "FriendsterUI", "FriendsterMemberManagerUI")
 
 function friendsterMemberManager:ctor(friendsterId)
     self.friendsterId = friendsterId
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function friendsterMemberManager:onInit()
@@ -181,7 +181,7 @@ end
 
 function friendsterMemberManager:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return friendsterMemberManager

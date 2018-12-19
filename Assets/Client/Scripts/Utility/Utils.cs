@@ -264,11 +264,11 @@ public class Utils
     /// </summary>
     /// <param name="tex"></param>
     /// <returns></returns>
-    public static Sprite ConvertTextureToSprite(Texture2D tex)
+    public static Sprite ConvertTextureToSprite(Texture2D tex, Vector2 pivot)
     {
         if (tex != null)
         {
-            Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
+            Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), pivot);
             return sprite;
         }
 

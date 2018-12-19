@@ -158,7 +158,7 @@ end
 
 function login:onDestroy()
     signalManager.unregisterSignalHandler(signalType.city, self.onCityChangedHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return login

@@ -156,7 +156,7 @@ function playHistoryDetailItem:set(data, round, historyId, historyContainer)
 end
 
 function playHistoryDetailItem:onDestroy()
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return playHistoryDetailItem

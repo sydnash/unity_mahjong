@@ -8,7 +8,7 @@ local errorMessage = class("errorMessage", base)
 _RES_(errorMessage, "ErrorCommitUI", "ErrorCommitUI")
 
 function errorMessage:ctor()
-    self.super.ctor(self)
+    base.ctor(self)
     self:setLevel(base.level.top)
 end
 

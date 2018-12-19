@@ -9,11 +9,11 @@ _RES_(playbackSetting, "SettingUI", "PlaybackSettingUI")
 
 function playbackSetting:ctor(game)
     self.game = game
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function playbackSetting:onInit()
-    self.super.onInit(self)
+    base.onInit(self)
     self.mOver:addClickListener(self.onOverClickedHandler, self)
 end
 
@@ -24,7 +24,7 @@ end
 
 function playbackSetting:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return playbackSetting

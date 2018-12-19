@@ -11,7 +11,7 @@ function gameEnd:ctor(game, datas)
     self.game  = game
     self.datas = datas
 
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function gameEnd:onInit()
@@ -187,7 +187,7 @@ function gameEnd:onDestroy()
     for _, item in pairs(self.items) do
         item:close()
     end
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return gameEnd

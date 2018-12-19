@@ -9,7 +9,7 @@ _RES_(waiting, "WaitingUI", "WaitingUI")
 
 function waiting:ctor(text)
     self.text = string.isNilOrEmpty(text) and "请稍候..." or text
-    self.super.ctor(self)
+    base.ctor(self)
     self:setLevel(base.level.top)
 end
 
@@ -30,7 +30,7 @@ function waiting:onDestroy()
     self.rotation:stop()
     tweenManager.remove(self.rotation)
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return waiting

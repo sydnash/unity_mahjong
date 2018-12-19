@@ -35,7 +35,7 @@ function loading:onDestroy()
     self:setProgress(0)
     self:setText(string.empty)
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return loading

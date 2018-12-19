@@ -10,7 +10,7 @@ _RES_(gameOver, "GameOverUI", "GameOverUI")
 function gameOver:ctor(game, datas)
     self.game  = game
     self.datas = datas
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function gameOver:onInit()
@@ -116,7 +116,7 @@ function gameOver:onDestroy()
         v.mIcon:reset()
     end
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return gameOver
