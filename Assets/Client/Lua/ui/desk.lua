@@ -120,7 +120,6 @@ function desk:refreshUI()
     self.mDeskID:setText(string.format("%s%s:%d", cityName[self.game.cityType], gameName[self.game.gameType], self.game.deskId))
     self:updateCurrentGameIndex()
     self.mTime:setText(time.formatTime())
-    self:updateLeftMahjongCount()
 
     for _, v in pairs(self.game.players) do
         local s = self.game:getSeatTypeByAcId(v.acId)

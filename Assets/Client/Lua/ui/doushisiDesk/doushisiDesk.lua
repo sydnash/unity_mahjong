@@ -2,7 +2,7 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local header = require("ui.mahjongDesk.mahjongDeskHeader")
+local header = require("ui.doushisiDesk.doushisiDeskHeader")
 
 local base = require("ui.desk")
 local doushisiDesk = class("doushisiDesk", base)
@@ -81,7 +81,7 @@ function doushisiDesk:onInit()
         self.headers[k]:show()
     end
 
-    self.super.onInit(self)
+    base.onInit(self)
 end
 
 function doushisiDesk:getInvitationInfo()

@@ -39,6 +39,6 @@ function doushisiDeskHeader:reset()
     self.super.reset(self)
 end
 
-return mahjongDeskHeader
+return doushisiDeskHeader
 
 --endregion

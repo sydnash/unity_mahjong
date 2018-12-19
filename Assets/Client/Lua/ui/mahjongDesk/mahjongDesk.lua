@@ -30,6 +30,7 @@ function mahjongDesk:onInit()
         self.headers[k]:show()
     end
 
+    self:updateLeftMahjongCount()
     self.super.onInit(self)
 end
 
