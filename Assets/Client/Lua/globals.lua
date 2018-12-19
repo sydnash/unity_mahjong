@@ -252,11 +252,11 @@ function enterDesk(gameType, deskId, callback)
     end)
 end
 
-local function fixInhandCameraParam()
+function fixInhandCameraParam(originSize, inhandCamera)
     local oriScreenAspect = 16 / 9
-    local inhandCamera = GameObjectPicker.instance.camera
-    local inhandCameraH = inhandCamera.orthographicSize
+    local inhandCameraH = originSize
     local inhandCameraW = inhandCameraH * oriScreenAspect
+
     local newH = inhandCameraW / inhandCamera.aspect
 
     local inhandCameraT = inhandCamera.transform
@@ -267,6 +267,24 @@ local function fixInhandCameraParam()
     local newy = inhandCameraBottom + newH
 
     inhandCameraT.position = Vector3.New(inhandCameraP.x, newy, inhandCameraP.z)
+end
+
+function fixMainCameraParam(fov, mainCamera)
+    local oriW = 12.80
+    local aspect = mainCamera.aspect
+    local nheight = oriW / aspect
+    local dis = math.abs(mainCamera.transform.position.z)
+
+    local newHFov = math.atan(nheight * 0.5 / dis) * 2 / math.pi * 180
+
+    mainCamera.fieldOfView = newHFov
+end
+
+function fixMainCameraByFov(fov, mainCamera)
+    local oriAspect = 16 / 9
+    local wFov = fov * oriAspect
+    local newHFov = wFov / mainCamera.aspect
+    mainCamera.fieldOfView = newHFov
 end
 
 -------------------------------------------------------------
@@ -321,7 +339,6 @@ function loginServer(callback, func)
             loading:setProgress(progress)
 
             if completed then
-                fixInhandCameraParam()
                 if cityType == 0 and deskId == 0 then
                     local lobby = require("ui.lobby").new()
                     lobby:show()

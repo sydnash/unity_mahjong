@@ -344,7 +344,6 @@ end
 function doushisiGame:onOpDoHandler(msg)
     self.operationUI:hideAllOpBtn()
     self.operationUI:closeAllBtnPanel()
-    self.operationUI:pushBackPromoteNode()
     local player = self:getPlayerByAcId(msg.AcId)
     player.zhaoCnt = msg.ZhaoCnt
     player.fuShu = msg.FuShu
@@ -352,6 +351,9 @@ function doushisiGame:onOpDoHandler(msg)
     local cards = msg.DelCards
     local beCard = msg.Card
 
+    if op ~= opType.doushisi.chu.id then
+        self.operationUI:pushBackPromoteNode()
+    end
     local time = 0
     if op == opType.doushisi.hua.id then
         time = self:onOpDoHua(player, msg)
@@ -482,9 +484,9 @@ function doushisiGame:update()
                 if nm and msg.param and nm.param then
                     if msg.param.isFan or (msg.param.isOpDo and msg.param.Op == opType.doushisi.chu.id) then
                         if nm.param.isTou or nm.param.isFan then
-                            msg.deleteTime = msg.deleteTime + 0.4
+                            msg.deleteTime = msg.deleteTime + 0.3
                         elseif nm.param.isOpList then
-                            msg.deleteTime = msg.waittime + 0.09
+                            msg.deleteTime = msg.waittime + 0.2
                         elseif nm.param.isOpDo then
                             msg.deleteTime = msg.deleteTime + 0.09
                         end

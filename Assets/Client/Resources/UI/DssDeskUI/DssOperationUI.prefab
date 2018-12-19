@@ -560,7 +560,7 @@ MonoBehaviour:
     gameObject: {fileID: 1979836391753984}
     panelScript: 
   - variableName: mFinger
-    widgetType: 4
+    widgetType: 3
     gameObject: {fileID: 1711243165353444}
     panelScript: 
 --- !u!114 &114048736927523680
@@ -1324,7 +1324,7 @@ MonoBehaviour:
   - key: hua
     sprite: {fileID: 21300180, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
   - key: an
-    sprite: {fileID: 21300180, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+    sprite: {fileID: 21300192, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
 --- !u!114 &114918967375486806
 MonoBehaviour:
   m_ObjectHideFlags: 1
