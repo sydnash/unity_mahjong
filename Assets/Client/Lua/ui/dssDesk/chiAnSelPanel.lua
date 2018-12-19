@@ -3,7 +3,7 @@ local doushisiType = require("logic.doushisi.doushisiType")
 local base = require("ui.common.view")
 
 local chiAnSelItem = class("chiAnSelItem", base)
-_RES_(chiAnSelItem, "DssDeskUI", "ChiAnSelItem")
+_RES_(chiAnSelItem, "DoushisiDeskUI", "ChiAnSelItem")
 
 function chiAnSelItem:ctor(cards, info, cb)
     self.cards = cards
@@ -33,7 +33,7 @@ function chiAnSelItem:onInit()
 end
 
 local chiSelPanel = class("chiSelPanel", base)
-_RES_(chiSelPanel, "DssDeskUI", "ChiAnSelPanelUI")
+_RES_(chiSelPanel, "DoushisiDeskUI", "ChiAnSelPanelUI")
 
 function chiSelPanel:ctor(opInfo, callback)
     self.opInfo = opInfo
@@ -76,7 +76,7 @@ function chiSelPanel:onDestroy()
 end
 
 local anSelPanel = class("ANSelPanel", base)
-_RES_(anSelPanel, "DssDeskUI", "ChiAnSelPanelUI")
+_RES_(anSelPanel, "DoushisiDeskUI", "ChiAnSelPanelUI")
 
 function anSelPanel:ctor(opInfo, callback)
     self.opInfo = opInfo
@@ -124,7 +124,7 @@ end
 
 
 local baGangSelPanel = class("baGangSelPanel", base)
-_RES_(baGangSelPanel, "DssDeskUI", "ChiAnSelPanelUI")
+_RES_(baGangSelPanel, "DoushisiDeskUI", "ChiAnSelPanelUI")
 
 function baGangSelPanel:ctor(opInfo, callback)
     self.opInfo = opInfo

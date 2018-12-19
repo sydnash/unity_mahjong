@@ -30,6 +30,8 @@ function joinFriendster:onCloseClickedHandler()
 end
 
 function joinFriendster:onQueryClickedHandler()
+    playButtonClickSound()
+
     local id = self.mId:getText()
     if string.isNilOrEmpty(id) then
         showMessageUI("请输入亲友圈编号")
@@ -62,11 +64,11 @@ function joinFriendster:onQueryClickedHandler()
         
         self.mName:setText(msg.ClubName)
     end)
-
-    playButtonClickSound()
 end
 
 function joinFriendster:onJoinClickedHandler()
+    playButtonClickSound()
+
     local id = self.mId:getText()
     if string.isNilOrEmpty(id) then
         showMessageUI("请输入亲友圈编号")
@@ -101,8 +103,6 @@ function joinFriendster:onJoinClickedHandler()
         showMessageUI("加入亲友圈申请发送成功，等待群主审核")
         self:close()
     end)
-
-    playButtonClickSound()
 end
 
 function joinFriendster:onCloseAllUIHandler()

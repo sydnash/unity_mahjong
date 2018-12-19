@@ -81,6 +81,8 @@ function createFriendster:onUnexpandClickedHandler()
 end
 
 function createFriendster:onCreateClickedHandler()
+    playButtonClickSound()
+
     if self.cityId == nil or self.cityId <= 0 then
         showMessageUI("请选择地区")
         return
@@ -114,8 +116,6 @@ function createFriendster:onCreateClickedHandler()
 
         self:close()
     end)
-
-    playButtonClickSound()
 end
 
 function createFriendster:onCityChangedHandler(sender, selected, clicked)

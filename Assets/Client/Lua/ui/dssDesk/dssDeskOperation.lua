@@ -1,13 +1,12 @@
+local doushisi      = require("logic.doushisi.doushisi")
+local doushisiType  = require("logic.doushisi.doushisiType")
 local doushisiGame  = require("logic.doushisi.doushisiGame")
 local touch         = require("logic.touch")
 
 local base = require("ui.common.view")
 local dssOperation = class("dssOperation", base)
-local doushisi = require("logic.doushisi.doushisi")
-local doushisiType = require("logic.doushisi.doushisiType")
-local touch         = require("logic.touch")
 
-_RES_(dssOperation, "DssDeskUI", "DssOperationUI")
+_RES_(dssOperation, "DoushisiDeskUI", "DeskOperationUI")
 
 -------------------------------------------------------------------------------
 -- 构造函数

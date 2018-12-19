@@ -240,9 +240,7 @@
                 <false/>
             </struct>
             <key type="filename">Images/GY_an_02.png</key>
-            <key type="filename">Images/GY_an_02_h.png</key>
             <key type="filename">Images/GY_an_03.png</key>
-            <key type="filename">Images/GY_an_03_h.png</key>
             <key type="filename">Images/GY_an_h.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -611,6 +609,8 @@
             <key type="filename">Images/ZM_2.png</key>
             <key type="filename">Images/ZM_3.png</key>
             <key type="filename">Images/ZM_4.png</key>
+            <key type="filename">Images/game_font_bao.png</key>
+            <key type="filename">Images/game_font_dang.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -624,6 +624,7 @@
                 <false/>
             </struct>
             <key type="filename">Images/ZM_6.png</key>
+            <key type="filename">Images/ZM_6_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -838,6 +839,46 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/game_font_piao.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,21,21</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,21,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/head_dang.png</key>
+            <key type="filename">Images/head_xiao.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,15,27,29</rect>
+                <key>scale9Paddings</key>
+                <rect>14,15,27,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/head_zhuang.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,13,25,27</rect>
+                <key>scale9Paddings</key>
+                <rect>12,13,25,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/mask.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -901,8 +942,6 @@
             <filename>Images/GY_an_02.png</filename>
             <filename>Images/GY_an_03.png</filename>
             <filename>Images/GY_an_h.png</filename>
-            <filename>Images/GY_an_03_h.png</filename>
-            <filename>Images/GY_an_02_h.png</filename>
             <filename>Images/JS_tx_a.png</filename>
             <filename>Images/GY_sd.png</filename>
             <filename>Images/fs1_0.png</filename>
@@ -970,6 +1009,13 @@
             <filename>Images/zz_zi01.png</filename>
             <filename>Images/QYQ_zi16.png</filename>
             <filename>Images/QYQ_zi02.png</filename>
+            <filename>Images/game_font_bao.png</filename>
+            <filename>Images/game_font_dang.png</filename>
+            <filename>Images/game_font_piao.png</filename>
+            <filename>Images/head_dang.png</filename>
+            <filename>Images/head_xiao.png</filename>
+            <filename>Images/head_zhuang.png</filename>
+            <filename>Images/ZM_6_1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
