@@ -394,7 +394,7 @@ function mahjongOperation:onGameSync()
     self:relocateIdleMahjongs(true)    
 
     for _, v in pairs(self.game.players) do 
-        if v.hu ~= nil then
+        if not isNilOrNull(v.hu) then
             local mid = v.hu[1].HuCard
 
             if mid >= 0 then

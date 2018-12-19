@@ -37,7 +37,7 @@ function deskHeader:setPlayerInfo(player)
         self:setScore(player.score)
         self:setReady(player.ready)
 
-        if player.hu ~= nil and player.hu[1].HuCard >= 0 then
+        if not isNilOrNull(player.hu) and player.hu[1].HuCard >= 0 then
             self:setHu(true)
         else
             self:setHu(false)

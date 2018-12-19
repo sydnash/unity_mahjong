@@ -42,7 +42,7 @@ function gameEndItem:setPlayerInfo(player, cb)
         self.mQue:show()
     end
 
-    if player.hu ~= nil and player.hu >= 0 then
+    if not isNilOrNull(player.hu) and player.hu >= 0 then
         self.mResult:show()
     end
 
@@ -101,7 +101,7 @@ function gameEndItem:setPlayerInfo(player, cb)
     end
 
     local hu = player.hu
-    if hu ~= nil and hu >= 0 then
+    if not isNilOrNull(hu) and hu >= 0 then
         self.mResult:setSprite("hu")
         self.mResult:show()
 
