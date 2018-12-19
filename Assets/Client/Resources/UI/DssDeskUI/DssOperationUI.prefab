@@ -560,7 +560,7 @@ MonoBehaviour:
     gameObject: {fileID: 1979836391753984}
     panelScript: 
   - variableName: mFinger
-    widgetType: 4
+    widgetType: 3
     gameObject: {fileID: 1711243165353444}
     panelScript: 
 --- !u!114 &114048736927523680

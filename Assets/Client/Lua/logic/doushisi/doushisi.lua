@@ -83,9 +83,18 @@ function doushisi:fix()
         local typ = doushisiType.getDoushisiTypeById(self.id)
         self:setSprite(typ.folder, typ.resource)
 
+        local scale = self:getLocalScale()
+        local rot = self:getLocalRotation()
+
+        self:setLocalScale(Vector3.one)
+        self:setLocalRotation(Vector3.zero)
+
         local size = self.render.bounds.size
         self.collider.center = Vector2.New(size.x * 0.5, size.y * 0.5)
         self.collider.size = size
+
+        self:setLocalScale(scale)
+        self:setLocalRotation(rot)
     end
 end
 
@@ -128,7 +137,6 @@ end
 
 function doushisi:onDestroy()
     self:reset()
-    self.super.onDestroy(self)
 end
 
 function doushisi:setPickabled(pickabled)
