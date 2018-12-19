@@ -7,6 +7,13 @@ local gameEndItem = class("gameEndItem", base)
 
 _RES_(gameEndItem, "GameEndUI/Mahjong", "GameEndItem")
 
+local color = {
+    meId            = hexColorToColor("e2d488ff"),
+    otherId         = hexColorToColor("88c3e2ff"),
+    meFanFu         = hexColorToColor("f4e592ff"),
+    otherFanFu      = hexColorToColor("92d1f2ff"),
+}
+
 function gameEndItem:onInit()
     self.pai = {}
     self:reset()
@@ -33,12 +40,16 @@ function gameEndItem:setPlayerInfo(player, cb)
         self.mScore:setLocalPosition(pos)
         self.mBGL:setSprite("me")
         self.mBGR:setSprite("me")
+        self.mNickname:setColor(color.meId)
+        self.mId:setColor(color.meId)
     else
         self.mRecord:hide()
         pos.y = 0
         self.mScore:setLocalPosition(pos)
         self.mBGL:setSprite("other")
         self.mBGR:setSprite("other")
+        self.mNickname:setColor(color.otherId)
+        self.mId:setColor(color.otherId)
     end
 
     if player.que ~= nil and player.que >= 0 then

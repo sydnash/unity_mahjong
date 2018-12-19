@@ -42,6 +42,7 @@ function gameEnd:onInit()
         end)
         item:show()
         item:setParent(self.mList)
+        table.insert(self.items, item)
     end
 
     local info = string.format("第%d/%d局  房号:%d  %s", 

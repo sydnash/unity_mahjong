@@ -145,6 +145,9 @@ function getLogicGame(citytype, gametype)
     if gametype == gameType.mahjong then
         return require("logic.mahjong.mahjongGame")
     elseif gametype == gameType.doushisi then
+        if citytype == cityType.jintang then
+            return require ("logic.doushisi.doushisiGame_jintang")
+        end
         return require("logic.doushisi.doushisiGame")
     end
 end
