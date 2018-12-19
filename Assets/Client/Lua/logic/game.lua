@@ -656,13 +656,6 @@ function game:onGameEndHandler(msg)
 --    log("game end, msg = " .. table.tostring(msg))
         self.deskStatus = deskStatus.gameend
         self.leftGames = msg.LeftTime
-
-        local datas = { deskId          = self.deskId,
-                        totalGameCount  = self:getTotalGameCount(),
-                        finishGameCount = self:getTotalGameCount() - self:getLeftGameCount(),
-                        players         = {},
-        }
-
         local special = table.fromjson(msg.Special)
 
         local totalScores = {}
@@ -673,57 +666,17 @@ function game:onGameEndHandler(msg)
             self.players[v.AcId].score = v.Score
         end
 
+        local datas = { deskId          = self.deskId,
+                        totalGameCount  = self:getTotalGameCount(),
+                        finishGameCount = self:getTotalGameCount() - self:getLeftGameCount(),
+                        players         = {},
+        }
         local specialData = table.fromjson(special.SpecialData)
 
-        for _, v in pairs(specialData.PlayerInfos) do
-            local p = self:getPlayerByAcId(v.AcId)
-            local d = { acId            = v.AcId, 
-                        headerUrl       = self.players[p.acId].headerUrl,
-                        nickname        = p.nickname, 
-                        score           = v.Score,
-                        totalScore      = totalScores[v.AcId], 
-                        turn            = p.turn, 
-                        seat            = self:getSeatTypeByAcId(p.acId),
-                        inhand          = v.ShouPai,
-                        hu              = v.Hu,
-                        isCreator       = self:isCreator(v.AcId),
-                        isWinner        = false,
-                        que             = p.que,
-                        seatType        = self:getSeatTypeByAcId(v.AcId),
-            }
-
-            for k, u in pairs(d.inhand) do 
-                if u == d.hu then
-                    table.remove(d.inhand, k)
-                end
-            end
-
-            local peng = v.ChiChe
-            if not isNilOrNull(peng) then
-                for _, u in pairs(peng) do
-                    if d[u.Op] == nil then
-                        d[u.Op] = {}
-                    end
-
-                    table.insert(d[u.Op], u.Cs)
-                end
-            end
-
-            --datas.players[p.acId] = d
-            table.insert(datas.players, d)
-        end
-        table.sort(datas.players, function(t1, t2)
-            return t1.seatType < t2.seatType
-        end)
-        datas.scoreChanges = specialData.ScoreChanges
+        self:onGameEndListener(specialData, datas, totalScores)
 
         self.gameEndUI = require("ui.gameEnd.gameEnd").new(self, datas)
         self.gameEndUI:show()
-
-        for _, v in pairs(self.players) do
-            v.que = -1
-            self.deskUI:setScore(v.acId, v.score)
-        end
         self.deskUI:reset()
         self.operationUI:reset()
     end)

@@ -203,7 +203,7 @@ end
 function doushisiGame:onAnPaiNotifyHandler(msg)
     local player = self:getPlayerByAcId(msg.AcId)
     player.fuShu = msg.FuShu
-    if not msg.Dos or #msg.Dos == 0 then
+    if isNilOrNull(msg.Dos) or #msg.Dos == 0 then
         return
     end
     for _, info in pairs(msg.Dos) do
@@ -404,7 +404,7 @@ end
 function doushisiGame:faPai(msg)
     self.totalCardsCount = self:getTotalCardCountByGame(self.cityType)
     self.leftCardsCount = self.totalCardsCount
-    if msg.Seats then
+    if not isNilOrNull(msg.Seats) then
         for _, v in pairs(msg.Seats) do
             local player = self:getPlayerByAcId(v.AcId)
             player[doushisiGame.cardType.shou] = v.Cards
@@ -509,5 +509,66 @@ function doushisiGame:update()
     end
 end
 
+local huType = {
+    heju        = 0,
+    pinghu      = 1,
+    dianpao     = 2,
+    zimo        = 3,
+    tianhu      = 4,
+    dibao       = 5,
+    weigui      = 6,
+}
+function doushisiGame:onGameEndListener(specialData, datas, totalScores)
+    datas.huAcId = specialData.huAcId
+    datas.beHuAcId = specialData.BeHuAcId
+    datas.huType = specialData.HuType
+    for _, v in pairs(specialData.PlayerInfos) do
+        local acId = v.AcId
+        local p = self.players[acId]
+        local d = {
+            acId            = v.AcId, 
+            headerUrl       = self.players[p.acId].headerUrl,
+            nickname        = p.nickname, 
+            score           = v.Score,
+            fanShu          = v.Fan,
+            fuShu           = v.Fu,
+            totalScore      = totalScores[v.AcId], 
+            turn            = p.turn, 
+            seat            = self:getSeatTypeByAcId(p.acId),
+            inhand          = v.ShouPai,
+            hu              = v.Hu,
+            chiChe          = v.ChiChe,
+            isCreator       = self:isCreator(v.AcId),
+            isWinner        = false,
+            seatType        = self:getSeatTypeByAcId(v.AcId),
+            isDang          = p.isDang,
+            isPiao          = p.isPiao,
+            isBao           = p.isBao,
+            isMarker        = self:isMarker(v.AcId),
+            tyReplace       = v.TYReplace,
+        }
+        if datas.huAcId == d.acId then
+            if datas.huType == huType.zimo then
+                d.huType = "ziMo"
+            elseif datas.huType == huType.tianhu then
+                d.huType = "tianHu"
+            elseif datas.huType == huType.dibao then
+                d.huType = "diBao"
+            elseif datas.huType == huType.weigui then
+                d.huType = "weiGui"
+            else
+                d.huType = "hu"
+            end
+        elseif datas.beHuAcId == d.acId then
+            if datas.huType == huType.dianpao then
+                d.huType = "dianPao"
+            end
+        end
+        table.insert(datas.players, d)
+    end
+    table.sort(datas.players, function(t1, t2)
+        return t1.seatType < t2.seatType
+    end)
+end
 
 return doushisiGame

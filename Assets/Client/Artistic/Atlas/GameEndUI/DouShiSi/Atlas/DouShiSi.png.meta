@@ -14,6 +14,14 @@ TextureImporter:
     21300014: XJS_zi4
     21300016: XJS_zi5
     21300018: XJS_zi6
+    21300020: cp_tr01
+    21300022: cp_tr02
+    21300024: cp_tr03
+    21300026: cp_zj01
+    21300028: cp_zj02
+    21300030: cp_zj03
+    21300032: cp_tr04
+    21300034: cp_zj04
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -79,13 +87,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: XJS_4
+      name: cp_tr01
       rect:
         serializedVersion: 2
         x: 181
-        y: 161
-        width: 32
-        height: 30
+        y: 155
+        width: 37
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -93,27 +101,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: XJS_5
-      rect:
-        serializedVersion: 2
-        x: 215
-        y: 160
-        width: 30
-        height: 31
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: XJS_6
+      name: cp_tr02
       rect:
         serializedVersion: 2
         x: 181
-        y: 128
-        width: 29
-        height: 31
+        y: 117
+        width: 37
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,13 +115,83 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: XJS_8
+      name: cp_tr03
       rect:
         serializedVersion: 2
-        x: 212
-        y: 127
-        width: 29
-        height: 31
+        x: 1
+        y: 24
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: cp_tr04
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 24
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: cp_zj01
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 24
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: cp_zj02
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 79
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: cp_zj03
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 109
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: cp_zj04
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 41
+        width: 37
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,7 +259,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 72
+        y: 62
         width: 88
         height: 53
       alignment: 0

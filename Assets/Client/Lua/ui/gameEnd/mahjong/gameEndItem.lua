@@ -31,10 +31,14 @@ function gameEndItem:setPlayerInfo(player, cb)
         self.mRecord:show()
         pos.y = 20
         self.mScore:setLocalPosition(pos)
+        self.mBGL:setSprite("me")
+        self.mBGR:setSprite("me")
     else
         self.mRecord:hide()
         pos.y = 0
         self.mScore:setLocalPosition(pos)
+        self.mBGL:setSprite("other")
+        self.mBGR:setSprite("other")
     end
 
     if player.que ~= nil and player.que >= 0 then

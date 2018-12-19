@@ -400,10 +400,10 @@ function dssOperation:onOpList(opList)
 
     for _, opInfo in pairs(opList.OpInfos) do
         local op = opInfo.Op
-        if opInfo.HasTY == nil then
+        if isNilOrNull(opInfo.HasTY) then
             opInfo.HasTY = {}
         end
-        if opInfo.HasWarning == nil then
+        if isNilOrNull(opInfo.HasWarning) then
             opInfo.HasWarning = {}
         end
         if op == opType.doushisi.hua.id then

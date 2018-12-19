@@ -199,46 +199,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Images/XJS_4.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,8,16,15</rect>
-                <key>scale9Paddings</key>
-                <rect>8,8,16,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/XJS_5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,8,15,15</rect>
-                <key>scale9Paddings</key>
-                <rect>8,8,15,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/XJS_6.png</key>
-            <key type="filename">Images/XJS_8.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>7,8,15,15</rect>
-                <key>scale9Paddings</key>
-                <rect>7,8,15,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/XJS_zi1.png</key>
             <key type="filename">Images/XJS_zi2.png</key>
             <key type="filename">Images/XJS_zi3.png</key>
@@ -269,19 +229,43 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/cp_tr01.png</key>
+            <key type="filename">Images/cp_tr02.png</key>
+            <key type="filename">Images/cp_tr03.png</key>
+            <key type="filename">Images/cp_tr04.png</key>
+            <key type="filename">Images/cp_zj01.png</key>
+            <key type="filename">Images/cp_zj02.png</key>
+            <key type="filename">Images/cp_zj03.png</key>
+            <key type="filename">Images/cp_zj04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,9,19,18</rect>
+                <key>scale9Paddings</key>
+                <rect>9,9,19,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>Images/XJS_4.png</filename>
-            <filename>Images/XJS_5.png</filename>
-            <filename>Images/XJS_6.png</filename>
-            <filename>Images/XJS_8.png</filename>
             <filename>Images/XJS_zi1.png</filename>
             <filename>Images/XJS_zi2.png</filename>
             <filename>Images/XJS_zi3.png</filename>
             <filename>Images/XJS_zi4.png</filename>
             <filename>Images/XJS_zi5.png</filename>
             <filename>Images/XJS_zi6.png</filename>
+            <filename>Images/cp_tr02.png</filename>
+            <filename>Images/cp_tr03.png</filename>
+            <filename>Images/cp_zj01.png</filename>
+            <filename>Images/cp_zj02.png</filename>
+            <filename>Images/cp_zj03.png</filename>
+            <filename>Images/cp_tr01.png</filename>
+            <filename>Images/cp_tr04.png</filename>
+            <filename>Images/cp_zj04.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
