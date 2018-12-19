@@ -17,17 +17,7 @@ local filter = {
 
 local function createFriendsterLC(friendster)
     local lc = friendster_Lc.new(friendster.ClubId)
-
-    lc.name             = friendster.ClubName
-    lc.headerUrl        = friendster.HeadUrl
-    lc.cityType         = friendster.GameType
-    lc.cards            = friendster.CurCardNum
-    lc.maxMemberCount   = friendster.MaxMemberCnt
-    lc.curMemberCount   = friendster.CurMemberCnt
-    lc.applyCode        = friendster.ApplyCode
-    lc.managerAcId      = friendster.AcId
-    lc.managerNickname  = friendster.NickName
-    lc.applyList        = friendster.ApplyList or {}
+    lc:setData(friendster)
 
     return lc
 end

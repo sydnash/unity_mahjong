@@ -699,7 +699,7 @@ function game:onGameEndHandler(msg)
             end
 
             local peng = v.ChiChe
-            if peng ~= nil then
+            if not isNilOrNull(peng) then
                 for _, u in pairs(peng) do
                     if d[u.Op] == nil then
                         d[u.Op] = {}

@@ -95,7 +95,7 @@ function mahjongGame:syncSeats(seats)
         player[mahjongGame.cardType.peng] = v.ChiCheInfos
         player[mahjongGame.cardType.huan] = {}
 
-        if player.hu ~= nil then
+        if not isNilOrNull(player.hu) then
             local shou = player[mahjongGame.cardType.shou]
             local huInfo = player.hu[1]
             local detail = opType.hu.detail

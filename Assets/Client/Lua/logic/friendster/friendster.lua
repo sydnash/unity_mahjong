@@ -56,7 +56,7 @@ function friendster:setData(data)
     lc.applyCode        = data.ApplyCode
     lc.managerAcId      = data.AcId
     lc.managerNickname  = data.NickName
-    lc.applyList        = data.ApplyList or {}
+    lc.applyList        = isNilOrNull(data.ApplyList) and {} or data.ApplyList
 end
 
 function friendster:setMembers(data)
