@@ -45,11 +45,12 @@ function doushisiGame:onEnter(msg)
         self.curOpAcId          = self:getPlayerByTurn(self.curOpTurn).acId
         self.curOpType          = msg.Reenter.CurOpType
         self.deskStatus         = msg.Reenter.DeskStatus
+        self.canBack            = (self.deskStatus < 0)
         self.dangTurn           = msg.Reenter.DangTurn
         if self.dangTurn >= 0 then
             self.dangAcId = self:getPlayerByTurn(self.dangTurn).acId
         end
-        self.canBack            = (self.deskStatus == deskStatus.none)
+
         self:syncSeats(msg.Reenter.SyncSeatInfos)
         self:computeXiaoJia()
     end
@@ -149,6 +150,8 @@ end
 
 function doushisiGame:onFaPaiHandler(msg)
     self:faPai(msg)
+
+    self.deskUI:onFaPai()
     return self.operationUI:onFaPai()
 end
 
@@ -192,7 +195,7 @@ function doushisiGame:onPiaoHandler(msg)
 end
 
 function doushisiGame:onPiaoNotifyHandler(msg)
-
+    
 end
 
 function doushisiGame:onAnPaiShowHandler(msg)
@@ -272,6 +275,7 @@ function doushisiGame:onMoPaiHandler(msg)
     player.fuShu = msg.FuShu
     player.zhangShu = #inhandCards
 
+    self.deskUI:onMoPai(player.acId)
     self.deskUI:updateInhandCardCount(player.acId)
 
     return self.operationUI:onMoPai(player.acId, msg.Ids)
@@ -283,6 +287,7 @@ function doushisiGame:onFanPaiHnadler(msg)
     table.insert(chuCards, msg.Id)
     self:subLeftCount(1)
 
+    self.deskUI:onFanPai(player.acId)
     return self.operationUI:onFanPai(player.acId, msg.Id)
 end
 
@@ -630,6 +635,11 @@ function doushisiGame:onGameEndListener(specialData, datas, totalScores)
     table.sort(datas.players, function(t1, t2)
         return t1.seatType < t2.seatType
     end)
+end
+
+function doushisiGame:onDeskStatusChanged()
+    base.onDeskStatusChanged(self)
+    self.deskUI:onDeskStatusChanged()
 end
 
 function doushisiGame:clearPlayerGameStatus()

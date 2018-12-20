@@ -211,7 +211,7 @@ public class AndroidHelper
     /// <returns></returns>
     public string GetDeviceId()
     {
-        return "";
+        return javaObject.Call<string>("GetDeviceId");
     }
 
     /// <summary>
@@ -220,7 +220,7 @@ public class AndroidHelper
     /// <param name="url"></param>
     public void OpenExplore(string url)
     {
-        
+        javaObject.Call("OpenExplorer", url);
     }
 
     /// <summary>
@@ -229,7 +229,7 @@ public class AndroidHelper
     /// <param name="text"></param>
     public void SetToClipboard(string text)
     {
-        
+        javaObject.Call("SetToClipboard", text);
     }
 
     /// <summary>
@@ -238,7 +238,7 @@ public class AndroidHelper
     /// <returns></returns>
     public string GetFromClipboard()
     {
-        return "";
+        return javaObject.Call<string>("GetFromClipboard");
     }
 
     /// <summary>
@@ -253,52 +253,6 @@ public class AndroidHelper
     {
         return LocationHelper.GetDistance(javaObject, la1, lo1, la2, lo2);
     }
-
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    //public void StartLocation()
-    //{
-    //    LocationHelper.StartLocation(javaObject);
-    //}
-
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    //public void StopLocation()
-    //{
-    //    LocationHelper.StopLocation(javaObject);
-    //}
-
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    ///// <param name="javaObject"></param>
-    ///// <returns></returns>
-    //public bool GetLocationStatus()
-    //{
-    //    return LocationHelper.GetStatus(javaObject);
-    //}
-
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    ///// <param name="javaObject"></param>
-    ///// <returns></returns>
-    //public float GetLocationLatitude()
-    //{
-    //    return LocationHelper.GetLatitude(javaObject);
-    //}
-
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    ///// <param name="javaObject"></param>
-    ///// <returns></returns>
-    //public float GetLocationLongitude()
-    //{
-    //    return LocationHelper.GetLongitude(javaObject);
-    //}
 
     #endregion
 

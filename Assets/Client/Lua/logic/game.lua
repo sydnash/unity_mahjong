@@ -26,7 +26,7 @@ function game:ctor(data, playback)
     self.config             = data.Config
     self.status             = data.Status
     self.creatorAcId        = data.Creator
-    self.deskStatus         = deskStatus.none
+    self.deskStatus         = -1
     self.canBack            = true
     self.isGameOverUIShow   = false
 
@@ -62,7 +62,7 @@ function game:initMessageHandlers()
         [protoType.sc.notifyExitVoteFailed]     = { func = self.onNotifyExitVoteFailedHandler,  nr = true },
         [protoType.sc.exitVote]                 = { func = self.onExitVoteHandler,              nr = true },
         [protoType.sc.gameEnd]                  = { func = self.onGameEndHandler,               nr = true },
-        [protoType.sc.deskStatusChange]         = { func = self.onDeskStatusChange,             nr = true },
+        [protoType.sc.deskStatusChange]         = { func = self.onDeskStatusChangedHandler,             nr = true },
     }
 end
 
@@ -301,11 +301,16 @@ function game:onReadyHandler(msg)
     self:pushMessage(func)
 end
 
-function game:onDeskStatusChange(msg)
+function game:onDeskStatusChangedHandler(msg)
     local func = function()
         self.deskStatus = msg.Status
+        self:onDeskStatusChanged()
     end
     self:pushMessage(func)
+end
+
+function game:onDeskStatusChanged()
+
 end
 
 -------------------------------------------------------------------------------
@@ -652,10 +657,9 @@ end
 -------------------------------------------------------------------------------
 function game:onGameEndHandler(msg)
     self:addDelay(2)
-    -- local func = tweenFunction.new(function()
+
     local func = (function()
 --    log("game end, msg = " .. table.tostring(msg))
-        self.deskStatus = deskStatus.gameend
         self.leftGames = msg.LeftTime
         local special = table.fromjson(msg.Special)
 

@@ -32,7 +32,9 @@
     <Folder Include="Lua\logic\" />
     <Folder Include="Lua\const\" />
     <Folder Include="Lua\config\" />
+    <Folder Include="Lua\scene\" />
     <Folder Include="Lua\platform\" />
+    <Folder Include="Lua\scene\common\" />
     <Folder Include="Lua\ui\" />
     <Folder Include="Lua\ui\doushisiDesk\" />
     <Folder Include="Lua\ui\gameEnd\" />
@@ -82,6 +84,7 @@
     <Compile Include="Lua\network\networkManager.lua" />
     <Compile Include="Lua\network\protoType.lua" />
     <Compile Include="Lua\platform\platformHelper.lua" />
+    <Compile Include="Lua\scene\common\spriteRD.lua" />
     <Compile Include="Lua\ui\activity.lua" />
     <Compile Include="Lua\ui\agreement.lua" />
     <Compile Include="Lua\ui\authentication.lua" />
@@ -151,6 +154,8 @@
     <Compile Include="Lua\ui\setting\playbackSetting.lua" />
     <Compile Include="Lua\ui\setting\setting.lua" />
     <Compile Include="Lua\ui\share.lua" />
+    <Compile Include="Lua\ui\shop.lua" />
+    <Compile Include="Lua\ui\transfer.lua" />
     <Compile Include="Lua\ui\waiting.lua" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />

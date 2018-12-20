@@ -187,6 +187,7 @@ TextureImporter:
     21300360: zi_32
     21300362: zi_45
     21300364: zz
+    21300366: ZM_8
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -576,8 +577,8 @@ TextureImporter:
       name: cp_zi07
       rect:
         serializedVersion: 2
-        x: 297
-        y: 27
+        x: 371
+        y: 214
         width: 72
         height: 87
       alignment: 9
@@ -870,8 +871,8 @@ TextureImporter:
       name: CSZ
       rect:
         serializedVersion: 2
-        x: 371
-        y: 397
+        x: 1
+        y: 211
         width: 72
         height: 92
       alignment: 0
@@ -1192,6 +1193,34 @@ TextureImporter:
       name: R1B2Z
       rect:
         serializedVersion: 2
+        x: 1
+        y: 315
+        width: 72
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: R1B3Z
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 397
+        width: 72
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: R1B5Z
+      rect:
+        serializedVersion: 2
         x: 297
         y: 304
         width: 72
@@ -1203,7 +1232,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: R1B3Z
+      name: R1B6Z
       rect:
         serializedVersion: 2
         x: 223
@@ -1217,7 +1246,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: R1B5Z
+      name: R1R1Z
       rect:
         serializedVersion: 2
         x: 445
@@ -1231,7 +1260,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: R1B6Z
+      name: R1R4Z
       rect:
         serializedVersion: 2
         x: 371
@@ -1245,7 +1274,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: R1R1Z
+      name: R4B5Z
       rect:
         serializedVersion: 2
         x: 297
@@ -1259,7 +1288,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: R1R4Z
+      name: R4B6Z
       rect:
         serializedVersion: 2
         x: 223
@@ -1273,7 +1302,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: R4B5Z
+      name: R4R4Z
       rect:
         serializedVersion: 2
         x: 223
@@ -1287,39 +1316,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: R4B6Z
+      name: R6R6Z
       rect:
         serializedVersion: 2
         x: 519
         y: 252
-        width: 72
-        height: 92
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: R4R4Z
-      rect:
-        serializedVersion: 2
-        x: 445
-        y: 221
-        width: 72
-        height: 92
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: R6R6Z
-      rect:
-        serializedVersion: 2
-        x: 371
-        y: 209
         width: 72
         height: 92
       alignment: 0
@@ -1346,8 +1347,8 @@ TextureImporter:
       name: TYZ
       rect:
         serializedVersion: 2
-        x: 297
-        y: 116
+        x: 445
+        y: 221
         width: 72
         height: 92
       alignment: 0
@@ -1436,6 +1437,20 @@ TextureImporter:
         height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 135
+        width: 65
+        height: 68
+      alignment: 9
+      pivot: {x: 0.4923077, y: 0.5367647}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

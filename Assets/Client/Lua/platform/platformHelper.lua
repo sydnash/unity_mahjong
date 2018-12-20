@@ -176,45 +176,6 @@ end
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
---function platformHelper.startLocation()
---    if deviceConfig.isAndroid then
---        AndroidHelper.instance:StartLocation()
---    elseif deviceConfig.isApple then
-
---    end
---end
-
--------------------------------------------------------------------
--- 
--------------------------------------------------------------------
---function platformHelper.stopLocation()
---    if deviceConfig.isAndroid then
---        AndroidHelper.instance:StopLocation()
---    elseif deviceConfig.isApple then
-
---    end
---end
-
--------------------------------------------------------------------
--- 
--------------------------------------------------------------------
---function platformHelper.getLocation()
---    if deviceConfig.isAndroid then
---        local status = AndroidHelper.instance:GetLocationStatus()
---        local latitude = AndroidHelper.instance:GetLocationLatitude()
---        local longitude = AndroidHelper.instance:GetLocationLongitude()
-
---        return { status = status, latitude = latitude, longitude = longitude }
---    elseif deviceConfig.isApple then
-
---    end
-
---    return { status = false, latitude = 0, longitude = 0 }
---end
-
--------------------------------------------------------------------
--- 
--------------------------------------------------------------------
 function platformHelper.getDistance(latitude1, longitude1, latitude2, longitude2)
     if deviceConfig.isAndroid then
         return AndroidHelper.instance:GetDistance(latitude1, longitude1, latitude2, longitude2)
@@ -223,6 +184,54 @@ function platformHelper.getDistance(latitude1, longitude1, latitude2, longitude2
     end
 
     return 0
+end
+
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function platformHelper.getDeviceId()
+    if deviceConfig.isAndroid then
+        return AndroidHelper.instance:GetDeviceId()
+    elseif deviceConfig.isApple then
+        return IOSHelper.instance:GetDeviceId()
+    end
+
+    return string.empty
+end
+
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function platformHelper.openExplorer()
+    if deviceConfig.isAndroid then
+        AndroidHelper.instance:OpenExplore()
+    elseif deviceConfig.isApple then
+        IOSHelper.instance:OpenExplore()
+    end
+end
+
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function platformHelper.setToClipboard(text)
+    if deviceConfig.isAndroid then
+        AndroidHelper.instance:SetToClipboard(text)
+    elseif deviceConfig.isApple then
+        IOSHelper.instance:SetToClipboard(text)
+    end
+end
+
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function platformHelper.getFromClipboard()
+    if deviceConfig.isAndroid then
+        return AndroidHelper.instance:GetFromClipboard()
+    elseif deviceConfig.isApple then
+        return IOSHelper.instance:GetFromClipboard()
+    end
+
+    return string.empty
 end
 
 return platformHelper

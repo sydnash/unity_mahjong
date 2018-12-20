@@ -71,8 +71,10 @@ function lobby:onSwitchCityClickedHandler()
 end
 
 function lobby:onAddRoomCardClickedHandler()
+    local ui = require("ui.shop").new()
+    ui:show()
+
     playButtonClickSound()
-    showMessageUI("功能暂未开放，敬请期待")
 end
 
 function lobby:onHelpClickedHandler()
@@ -150,8 +152,10 @@ function lobby:onEnterQYQClickedHandler()
 end
 
 function lobby:onShopClickedHandler()
+    local ui = require("ui.shop").new()
+    ui:show()
+
     playButtonClickSound()
-    showMessageUI("功能暂未开放，敬请期待")
 end
 
 function lobby:onHistoryClickedHandler()
