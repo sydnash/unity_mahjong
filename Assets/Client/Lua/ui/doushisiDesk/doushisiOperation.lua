@@ -1589,8 +1589,8 @@ function doushisiOperation:moPaiAction(time, acId, id, handPos, order, scale)
     local cfg = self.seats[st].promote
     local x2, y2 = cfg.pos.x, cfg.pos.y
 
-    local r = 0
-    local flyAction, flyTime = self:getFlyAction(node, startPos.x, startPos.y, x2, y2, cfg.rotEuler.z)
+    local r = cfg.rotEuler.z
+    local flyAction, flyTime = self:getFlyAction(node, startPos.x, startPos.y, x2, y2, r)
     local delayTime2 = 0.1
     local delayAction2 = self:getDelayAction(delayTime2)
     local flyAction2, flyTime2 = self:getFlyAction(node, x2, y2, handPos.x, handPos.y, nil, scale, nil, 1)
@@ -1652,7 +1652,7 @@ function doushisiOperation:fanPaiAction(time, acId, id)
         --local centerScaleAction, t1 = self:getCenterScaleAction(node)
         --local centerDelayAction = self:getDelayAction(delayTime)
         local nodePos = node:getLocalPosition()
-        local r = 0
+        local r = cfg.rotEuler.z
         local flyAction, flyTime = self:getFlyAction(node, nodePos.x, nodePos.y, x2, y2, r)
         -- local seqAction = self:getSequenceAction({centerScaleAction, centerDelayAction, flyAction})
         local seqAction = self:getSequenceAction({flyAction})
