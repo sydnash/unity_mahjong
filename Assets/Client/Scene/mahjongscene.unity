@@ -516,25 +516,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mItems:
-  - key: 10
-    sprite: {fileID: 21300296, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: 9
-    sprite: {fileID: 21300298, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: 8
-    sprite: {fileID: 21300300, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: 7
-    sprite: {fileID: 21300302, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: 6
-    sprite: {fileID: 21300304, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: 5
-    sprite: {fileID: 21300306, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: 4
-    sprite: {fileID: 21300308, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: 3
-    sprite: {fileID: 21300310, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: 2
-    sprite: {fileID: 21300312, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
   - key: 1
+    sprite: {fileID: 21300296, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  - key: 2
+    sprite: {fileID: 21300298, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  - key: 3
+    sprite: {fileID: 21300300, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  - key: 4
+    sprite: {fileID: 21300302, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  - key: 5
+    sprite: {fileID: 21300304, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  - key: 6
+    sprite: {fileID: 21300306, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  - key: 7
+    sprite: {fileID: 21300308, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  - key: 8
+    sprite: {fileID: 21300310, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  - key: 9
+    sprite: {fileID: 21300312, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  - key: 10
     sprite: {fileID: 21300314, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
 --- !u!1001 &474635241
 Prefab:

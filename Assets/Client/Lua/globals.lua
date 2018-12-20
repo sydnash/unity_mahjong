@@ -503,4 +503,19 @@ function destroyTexture(tex)
     end
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function findSpriteRD(transform, name)
+    assert(transform ~= nil, "can't find a child for nil")
+
+    local target = string.isNilOrEmpty(name) and transform or transform:Find(name)
+    if target ~= nil then
+        local spriteRD = require("scene.common.spriteRD")
+        return spriteRD.new(target.gameObject)
+    end
+
+    return nil
+end
+
 --endregion

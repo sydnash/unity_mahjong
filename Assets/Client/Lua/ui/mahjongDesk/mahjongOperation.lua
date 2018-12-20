@@ -199,10 +199,8 @@ function mahjongOperation:onInit()
     --倒计时
     self.centerGlass = find("mahjong/planes/glass")
     self.countdown = find("mahjong/countdown")
-    local a = self.countdown:findChild("a")
-    local b = self.countdown:findChild("b")
-    self.countdown.a = getComponentU(a.gameObject, typeof(SpriteRD))
-    self.countdown.b = getComponentU(b.gameObject, typeof(SpriteRD))
+    self.countdown.a = findSpriteRD(self.countdown.transform, "a")
+    self.countdown.b = findSpriteRD(self.countdown.transform, "b")
     self.centerGlass:show()
     self.countdown:hide()
     --出牌指示器
@@ -321,9 +319,9 @@ function mahjongOperation:update()
             self.turnCountdown = math.max(0, self.turnCountdown - delta)
 
             local a = math.floor(self.turnCountdown / 10)
-            self.countdown.a.spriteName = tostring(a)
+            self.countdown.a:setSprite(tostring(a))
             local b = math.floor(self.turnCountdown % 10)
-            self.countdown.b.spriteName = tostring(b)
+            self.countdown.b:setSprite(tostring(b))
 
             self.countdownTick = now
         end

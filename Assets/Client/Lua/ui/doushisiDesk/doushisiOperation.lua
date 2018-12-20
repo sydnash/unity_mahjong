@@ -36,6 +36,7 @@ local mainCameraParams = {
     rotation = Quaternion.Euler(0, 0, 0),
     hWidth   = 12.80,
 }
+
 local inhandCameraParams = {
     position = Vector3.New(1000, 0, -0.9),
     size = 3.6
@@ -133,6 +134,7 @@ local alignType = {
     center  = 3,
     percent = 4,
 }
+
 local originSafeArea = {
     bottom      = -3.6,
     top         = 3.6,
@@ -141,6 +143,8 @@ local originSafeArea = {
     cx          = 0,
     cy          = 0,
 }
+
+local LEFT_CARDS_NUM_POS_Y = 0.34
 
 function doushisiOperation:fix(min, max, nmin, nmax, p, align)
     local r = p
@@ -237,12 +241,10 @@ function doushisiOperation:onInit()
     self.sortOrder = 0
     --剩余的牌
     self.leftCards = find("doushisi/leftcards")
-    local m = findChild(self.leftCards.transform, "model/M")
-    self.leftCardsModel = getComponentU(m.gameObject, typeof(SpriteRD))
-    local l = findChild(self.leftCards.transform, "num/L")
-    local h = findChild(self.leftCards.transform, "num/H")
-    self.leftCardsNumL = getComponentU(l.gameObject, typeof(SpriteRD))
-    self.leftCardsNumH = getComponentU(h.gameObject, typeof(SpriteRD))
+    self.leftCardsModel = findSpriteRD(self.leftCards.transform, "model/M")
+    self.leftCardsNum = findChild(self.leftCards.transform, "num")
+    self.leftCardsNumL = findSpriteRD(self.leftCardsNum.transform, "L")
+    self.leftCardsNumH = findSpriteRD(self.leftCardsNum.transform, "H")
     self.leftCards:hide()
     
     --初始化按钮
@@ -380,8 +382,11 @@ function doushisiOperation:onGameStart()
     self:initInhandCards()
     self:initChuCards()
     self:initChiPengCards()
+    self:showLeftCards()
+    self:updateLeftCardsCount()
     touch.addListener(self.touchHandler, self)
 end
+
 ---------------------------------------------------------------
 --当
 ---------------------------------------------------------------
@@ -392,10 +397,12 @@ function doushisiOperation:onDangHandler(isMustDang)
         self:showOpBtn(self.mBuDang)
     end
 end
+
 function doushisiOperation:onDangClickedHandler()
     self:hideAllOpBtn()
     networkManager.csDang(true)
 end
+
 function doushisiOperation:onBuDangClickedHandler()
     self:hideAllOpBtn()
     networkManager.csDang(false)
@@ -489,6 +496,7 @@ function doushisiOperation:showChuHint()
     self.mLine.action:play()
     self.mFinger.action:play()
 end
+
 function doushisiOperation:hideChuHint()
     tweenManager.remove(self.mLine.action)
     tweenManager.remove(self.mFinger.action)
@@ -499,10 +507,12 @@ function doushisiOperation:enableChu()
     self.canChuPai = true
     self:showChuHint()
 end
+
 function doushisiOperation:disableChu()
     self.canChuPai = false
     self:hideChuHint()
 end
+
 -----------------------------------------------------------
 --chu
 -----------------------------------------------------------
@@ -515,6 +525,7 @@ end
 function doushisiOperation:onOpListChu(opInfo)
     self:enableChu()
 end
+
 function doushisiOperation:onOpDoChu(acId, id)
     self:disableChu()
 
@@ -553,12 +564,14 @@ function doushisiOperation:opDoChiPengAnHua(acId, delIds, beId, op)
 
     return info
 end
+
 -----------------------------------------------------------
 --hua
 -----------------------------------------------------------
 function doushisiOperation:onOpListHua(opInfo)
     self:showOpBtn(self.mHua, opInfo)
 end
+
 function doushisiOperation:onHuaClickedHandler()
     self:onPanelBtnClick(self.mHua, function(Class)
         return Class.newAnSelPanel(self.mHua.opInfo, function(info)
@@ -566,10 +579,12 @@ function doushisiOperation:onHuaClickedHandler()
         end)
     end)
 end
+
 function doushisiOperation:onHuaChose(info)
     local data = self:getOpChoseData(opType.doushisi.hua.id, info.c, info.hasTY, nil)
     networkManager.csOpChose(data)
 end
+
 function doushisiOperation:onOpDoHua(acId, delIds)
     local info =self:opDoChiPengAnHua(acId, delIds, nil, opType.doushisi.hua.id)
     return self:chiPengAction(acId, info.cards)
@@ -581,6 +596,7 @@ end
 function doushisiOperation:onOpListChi(opInfo)
     self:showOpBtn(self.mChi, opInfo)
 end
+
 function doushisiOperation:onChiClickedHandler()
     self:onPanelBtnClick(self.mChi, function(Class)
         return Class.newChiSelPanel(self.mChi.opInfo, function(info)
@@ -588,10 +604,12 @@ function doushisiOperation:onChiClickedHandler()
         end)
     end)
 end
+
 function doushisiOperation:onChiChose(info)
     local data = self:getOpChoseData(opType.doushisi.chi.id, info.c, info.hasTY, nil)
     networkManager.csOpChose(data)
 end
+
 function doushisiOperation:onOpDoChi(acId, delIds, beId)
     local info = self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.chi.id)
     return self:chiPengAction(acId, info.cards)
@@ -603,11 +621,13 @@ end
 function doushisiOperation:onOpListChe(opInfo)
     self:showOpBtn(self.mChe, opInfo)
 end
+
 function doushisiOperation:onCheClickedHandler()
     local info = self.mChe.opInfo
     local data = self:getOpChoseData(opType.doushisi.che.id, info.Cards[1], info.HasTY[1], nil)
     networkManager.csOpChose(data)
 end
+
 function doushisiOperation:onOpDoChe(acId, delIds, beId)
     local info = self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.che.id)
     return self:chiPengAction(acId, info.cards)
@@ -619,11 +639,13 @@ end
 function doushisiOperation:onOpListHu(opInfo)
     self:showOpBtn(self.mHu, opInfo)
 end
+
 function doushisiOperation:onHuClickedHandler()
     local info = self.mHu.opInfo
     local data = self:getOpChoseData(opType.doushisi.hu.id, info.Cards[1])
     networkManager.csOpChose(data)
 end
+
 function doushisiOperation:onOpDoHu(acId, id)
     self:promoteChu(acId, id)
 end
@@ -634,6 +656,7 @@ end
 function doushisiOperation:onOpListAn(opInfo)
     self:showOpBtn(self.mAn, opInfo)
 end
+
 function doushisiOperation:onAnClickedHandler()
     self:onPanelBtnClick(self.mAn, function(Class)
         return Class.newAnSelPanel(self.mAn.opInfo, function(info)
@@ -641,6 +664,7 @@ function doushisiOperation:onAnClickedHandler()
         end)
     end)
 end
+
 function doushisiOperation:onAnChose(info)
     self:hideAllOpBtn()
     self:closeAllBtnPanel()
@@ -652,6 +676,7 @@ function doushisiOperation:onAnChose(info)
     table.insert(sendData.Chooses, item)
     networkManager.csAnPai(sendData)
 end
+
 function doushisiOperation:onOpDoAn(acId, delIds)
     local info = self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.an.id)
     return self:chiPengAction(acId, info.cards)
@@ -663,6 +688,7 @@ end
 function doushisiOperation:onOpListBaGang(opInfo)
     self:showOpBtn(self.mDeng, opInfo)
 end
+
 function doushisiOperation:onDengClickedHandler()
     self:onPanelBtnClick(self.mDeng, function(Class)
         return Class.newBaGangSelPanel(self.mDeng.opInfo, function(info)
@@ -670,10 +696,12 @@ function doushisiOperation:onDengClickedHandler()
         end)
     end)
 end
+
 function doushisiOperation:onBaGangChose(info)
     local data = self:getOpChoseData(opType.doushisi.baGang.id, info.c, info.hasTY, nil)
     networkManager.csOpChose(data)
 end
+
 function doushisiOperation:onOpDoBaGang(acId, id)
     local card = self:findAndRemoveCard(acId, id)
 
@@ -702,6 +730,7 @@ end
 -----------------------------------------------------------
 function doushisiOperation:onOpListCaiShen(info)
 end
+
 function doushisiOperation:onOpDoCaiShen(acId, id)
     local card = self:findAndRemoveCard(acId, id)
 
@@ -887,6 +916,7 @@ local poses = {
     [seatType.right]        = { pos = Vector3.New(9, 0.2, 0)},
     [seatType.left]         = { pos = Vector3.New(-9, 0.2, 0)},
 }
+
 function doushisiOperation:moOnePai(acId, id)
     local card = self:getCardById(id)
     table.insert(self.inhandCards[acId], card)
@@ -1182,9 +1212,11 @@ function doushisiOperation:findCard(acId, id, remove)
     end
     return pai
 end
+
 function doushisiOperation:findAndRemoveCard(acId, id)
     return self:findCard(acId, id, true)
 end
+
 ----------------------------------------------------------------------------------
 --touch
 ----------------------------------------------------------------------------------
@@ -1203,6 +1235,10 @@ end
 
 function doushisiOperation:showLeftCards()
     self.leftCards:show()
+    self.leftCardsModel:show()
+    self.leftCardsNum:show()
+    self.leftCardsNumL:show()
+    self.leftCardsNumH:show()
 end
 
 function doushisiOperation:hideLeftCards()
@@ -1213,16 +1249,33 @@ function doushisiOperation:updateLeftCardsCount(cnt)
     if cnt == nil then
         cnt = self.game:getLeftCardsCount()
     end
-    log("left cards = " .. tostring(cnt))
 
-    local total = self.game:getTotalCardsCount()
-    local M = tostring(math.floor((cnt / total) * 10))
-    self.leftCardsModel.spriteName = M
+    if cnt <= 0 then
+        self.leftCardsModel:hide()
+        self.leftCardsNum:hide()
+    else
+        self.leftCardsModel:show()
+        self.leftCardsNum:show()
 
-    local L = tostring(cnt % 10)
-    local H = tostring(math.floor(cnt / 10))
-    self.leftCardsNumL.spriteName = L
-    self.leftCardsNumH.spriteName = H
+        local total = self.game:getTotalCardsCount()
+        local M = math.max(1, math.floor(10 - 10 * cnt / total))
+        self.leftCardsModel:setSprite(tostring(M))
+
+        local L = cnt % 10
+        self.leftCardsNumL:setSprite(tostring(L))
+
+        local H = math.floor(cnt / 10)
+        if H == 0 then
+            self.leftCardsNumH:hide()
+            self.leftCardsNumL:setLocalPosition(Vector3.zero)
+        else
+            self.leftCardsNumH:setSprite(tostring(H))
+            self.leftCardsNumL:setLocalPosition(Vector3.New(0.11, 0, 0))
+        end
+
+        local y = LEFT_CARDS_NUM_POS_Y - 0.02 * (M - 1)
+        self.leftCardsNum:setLocalPosition(Vector3.New(0, y, 0))
+    end
 end
 
 function doushisiOperation:onDestroy()
@@ -1624,12 +1677,14 @@ function doushisiOperation:fanPaiAction(time, acId, id)
     local added = 0.03 * ((1 + 1) * 2 + 1)
     return time + flyTime + added
 end
+
 function doushisiOperation:pushBackPromoteNode()
     if self.promoteNode then
         self:pushFlyNode(self.promoteNode)
         self.promoteNode = nil
     end
 end
+
 function doushisiOperation:movePromoteCardToChu()
     if self.promoteNode == nil then
         return 0
@@ -1674,10 +1729,12 @@ function doushisiOperation:callFunctionAfterTime(time, func)
     self.animationManager:add(se)
     se:play()
 end
+
 function doushisiOperation:getCenterFanPaiPos()
     local x, y = 0, 0
     return x, y + 0.1
 end
+
 function doushisiOperation:setNodeAtCenter(node)
     local cx, cy = self:getCenterFanPaiPos()
     node:show()
@@ -1693,6 +1750,7 @@ function doushisiOperation:getCenterScaleAction(node)
     end
     return action, time
 end
+
 function doushisiOperation:getSequenceAction(actions)
     local t = tweenSerial.new(true)
     for _, a in pairs(actions) do
@@ -1700,9 +1758,11 @@ function doushisiOperation:getSequenceAction(actions)
     end
     return t
 end
+
 function doushisiOperation:getDelayAction(delayTime)
     return tweenDelay.new(delayTime)
 end
+
 function doushisiOperation:getShakeAction(node)
     local smax = 1.2
     local sNormal = 1
@@ -1714,6 +1774,7 @@ function doushisiOperation:getShakeAction(node)
     action:add(aNormal)
     return action, t
 end
+
 function doushisiOperation:popFlyNode()
     local node = self.idleFlyNodes[1]
     if not node then
@@ -1728,6 +1789,7 @@ function doushisiOperation:popFlyNode()
     node.cards = nil
     return node
 end
+
 function doushisiOperation:pushFlyNode(node)
     node:hide()
     if node.cards then
@@ -1745,6 +1807,7 @@ function doushisiOperation:pushFlyNode(node)
     end
     table.insert(self.idleFlyNodes, node)
 end
+
 function doushisiOperation:createFlyNode(ids)
     local cards = {}
     local poses = {}
@@ -1762,6 +1825,7 @@ function doushisiOperation:createFlyNode(ids)
     node.cards = cards
     return node
 end
+
 function doushisiOperation:computeFlyTime(x1, y1, x2, y2) 
     local d1 = math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2)
     local dis = math.sqrt(d1)
@@ -1772,6 +1836,7 @@ function doushisiOperation:computeFlyTime(x1, y1, x2, y2)
     end
     return time
 end
+
 function doushisiOperation:getFlyAction(node, x1, y1, x2, y2, r2, s2, r1, s1)
     local flyTime = self:computeFlyTime(x1, y1, x2, y2)
 
@@ -1831,6 +1896,7 @@ function doushisiOperation:relocateOtherInhandCards(acId)
         self:addCardTo(card, pos, st, doushisiGame.cardType.peng, rot, nil, nil)
     end
 end
+
 function doushisiOperation:computeOtherInhandPos(st, sx, sy, idx, pos)
     local cfg = self.seats[st][doushisiGame.cardType.shou]
     local row = 0
