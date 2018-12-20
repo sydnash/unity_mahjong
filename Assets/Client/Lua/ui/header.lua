@@ -42,7 +42,7 @@ end
 
 function header:onDestroy()
     self:reset()
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return header

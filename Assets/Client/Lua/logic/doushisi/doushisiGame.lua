@@ -31,12 +31,12 @@ end
 -- 构造函数
 -------------------------------------------------------------------------------
 function doushisiGame:ctor(data, playback)
-    doushisiGame.super.ctor(self, data, playback)
+    base.ctor(self, data, playback)
     self.totalCardsCount = self:getTotalCardCountByGame(self.cityType)
 end
 
 function doushisiGame:onEnter(msg)
-    doushisiGame.super.onEnter(self, msg)
+    base.onEnter(self, msg)
     
     if msg.Reenter ~= nil then
         self.markerTurn         = msg.Reenter.MarkerTurn
@@ -89,7 +89,7 @@ end
 -- 
 -------------------------------------------------------------------------------
 function doushisiGame:initMessageHandlers()
-    doushisiGame.super.initMessageHandlers(self)
+    base.initMessageHandlers(self)
 
     self.commandHandlers[protoType.sc.doushisi.start] = {func = self:onMessageHandler("onGameStartHandler"), nr = true}
     self.commandHandlers[protoType.sc.doushisi.faPai] = {func = self:onMessageHandler("onFaPaiHandler"), nr = true}
@@ -483,7 +483,7 @@ function doushisiGame:update()
                 if nm and msg.param and nm.param then
                     if msg.param.isFan or (msg.param.isOpDo and msg.param.Op == opType.doushisi.chu.id) then
                         if nm.param.isTou or nm.param.isFan then
-                            msg.deleteTime = msg.deleteTime + 0.3
+                            msg.deleteTime = msg.deleteTime + 0.1
                         elseif nm.param.isOpList then
                             msg.deleteTime = msg.waittime + 0.2
                         elseif nm.param.isOpDo then

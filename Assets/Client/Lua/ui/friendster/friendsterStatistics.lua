@@ -259,7 +259,7 @@ function friendsterStatistics:onDestroy()
     self.mHistoryList:reset()
     self.mRankList:reset()
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return friendsterStatistics

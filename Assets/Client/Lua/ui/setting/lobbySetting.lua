@@ -9,11 +9,11 @@ _RES_(lobbySetting, "SettingUI", "LobbySettingUI")
 
 function lobbySetting:ctor(game)
     self.game = game
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function lobbySetting:onInit()
-    self.super.onInit(self)
+    base.onInit(self)
     self.mExit:addClickListener(self.onExitClickedHandler, self)
 end
 
@@ -29,7 +29,7 @@ end
 
 function lobbySetting:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return lobbySetting

@@ -24,6 +24,7 @@ local resourceSuffix = {
 
 local DEFAULT_LAYER         = 0
 local INHAND_MAHJONG_LAYER  = 8
+local pivot = Vector2.New(0.5, 0.5)
 
 local SpriteRenderer = UnityEngine.SpriteRenderer
 local BoxCollider = UnityEngine.BoxCollider
@@ -90,7 +91,7 @@ function doushisi:fix()
         self:setLocalRotation(Vector3.zero)
 
         local size = self.render.bounds.size
-        self.collider.center = Vector2.New(size.x * 0.5, size.y * 0.5)
+        self.collider.center = Vector2.zero
         self.collider.size = size
 
         self:setLocalScale(scale)
@@ -109,7 +110,7 @@ function doushisi:setSprite(folder, resource)
     self:resetRender()
 
     local suffix = resourceSuffix[self.style][self.ctype]
-    self.render.sprite = convertTextureToSprite(textureManager.load(folder, resource .. suffix))
+    self.render.sprite = convertTextureToSprite(textureManager.load(folder, resource .. suffix), pivot)
 end
 
 function doushisi:resetRender()

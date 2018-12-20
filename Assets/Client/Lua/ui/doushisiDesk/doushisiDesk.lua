@@ -61,8 +61,8 @@ local gfxConfig = {
 }
 
 function doushisiDesk:ctor(game)
-    self.super.game = game
-    self.super.ctor(self)
+    base.game = game
+    base.ctor(self)
 end
 
 function doushisiDesk:onInit()
@@ -117,7 +117,7 @@ function doushisiDesk:onDestroy()
     end
     self.headers = {}
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return doushisiDesk

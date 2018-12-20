@@ -12,7 +12,7 @@ function friendsterMemberInfo:ctor(friendsterId, managerId, data)
     self.managerId = managerId
     self.data = data
 
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function friendsterMemberInfo:onInit()
@@ -128,7 +128,7 @@ end
 
 function friendsterMemberInfo:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end 
 
 return friendsterMemberInfo

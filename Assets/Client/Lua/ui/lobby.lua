@@ -247,7 +247,7 @@ function lobby:onDestroy()
     signalManager.unregisterSignalHandler(signalType.deskDestroy, self.onDeskDestroyHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return lobby

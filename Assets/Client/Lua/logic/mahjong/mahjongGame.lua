@@ -20,7 +20,7 @@ mahjongGame.cardType = {
 -- 构造函数
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data, playback)
-    self.super.ctor(self, data, playback)
+    base.ctor(self, data, playback)
     self.totalCardsCount = 108
 end
 
@@ -28,7 +28,7 @@ end
 -- 
 -------------------------------------------------------------------------------
 function mahjongGame:initMessageHandlers()
-    self.super.initMessageHandlers(self)
+    base.initMessageHandlers(self)
 
     self.commandHandlers[protoType.sc.start]                    = { func = self.onGameStartHandler,             nr = true }
     self.commandHandlers[protoType.sc.fapai]                    = { func = self.onFaPaiHandler,                 nr = true }
@@ -64,7 +64,7 @@ end
 -- 进入房间
 -------------------------------------------------------------------------------
 function mahjongGame:onEnter(msg)
-    self.super.onEnter(self, msg)
+    base.onEnter(self, msg)
     
     if msg.Reenter ~= nil then
         self.markerAcId         = msg.Reenter.MarkerAcId

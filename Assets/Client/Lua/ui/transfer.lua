@@ -8,7 +8,7 @@ local transfer = class("transfer", base)
 _RES_(transfer, "PlayerInfoUI", "TransferUI")
 
 function transfer:ctor()
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function transfer:onInit()
@@ -136,7 +136,7 @@ end
 
 function transfer:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return transfer

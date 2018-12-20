@@ -54,7 +54,7 @@ end
 function friendsterMessage:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     self.mList:reset()
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return friendsterMessage

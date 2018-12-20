@@ -42,7 +42,7 @@ function detailPanel:ctor(interactable, callback)
     self.interactable = interactable
     self.callback = callback
 
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function detailPanel:onInit()
@@ -166,7 +166,7 @@ end
 
 function detailPanel:onDestroy()
     self.mScrollRect:reset()
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return detailPanel

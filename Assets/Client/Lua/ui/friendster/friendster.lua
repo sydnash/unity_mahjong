@@ -50,7 +50,7 @@ function friendster:ctor(data)
         return a.id < b.id
     end)
 
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function friendster:onInit()
@@ -459,7 +459,7 @@ function friendster:onDestroy()
         self.detailUI = nil
     end
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return friendster

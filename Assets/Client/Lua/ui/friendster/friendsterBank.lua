@@ -9,7 +9,7 @@ _RES_(friendsterBank, "FriendsterUI", "FriendsterBankUI")
 
 function friendsterBank:ctor(data)
     self.data = data
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function friendsterBank:onInit()
@@ -170,7 +170,7 @@ end
 
 function friendsterBank:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return friendsterBank

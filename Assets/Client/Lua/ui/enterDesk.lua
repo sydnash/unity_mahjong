@@ -8,7 +8,7 @@ local enterDesk = class("enterDesk", base)
 _RES_(enterDesk, "EnterDeskUI", "EnterDeskUI")
 
 function enterDesk:ctor(callback)
-    self.super.ctor(self)
+    base.ctor(self)
     self.callback = callback
 end
 
@@ -150,7 +150,7 @@ end
 
 function enterDesk:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return enterDesk

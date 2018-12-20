@@ -10,7 +10,7 @@ _RES_(playerInfo, "PlayerInfoUI", "PlayerInfoUI")
 function playerInfo:ctor(data, desk)
     self.isDesk = desk
     self.data = data
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function playerInfo:onInit()
@@ -63,7 +63,7 @@ end
 
 function playerInfo:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return playerInfo

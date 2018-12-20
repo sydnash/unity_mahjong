@@ -9,7 +9,7 @@ _RES_(mailItem, "MailUI", "MailItem")
 
 function mailItem:ctor(callback)
     self.callback = callback
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function mailItem:onInit()

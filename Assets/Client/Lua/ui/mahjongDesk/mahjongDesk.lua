@@ -10,8 +10,8 @@ local mahjongDesk = class("mahjongDesk", base)
 _RES_(mahjongDesk, "MahjongDeskUI", "DeskUI")
 
 function mahjongDesk:ctor(game)
-    self.super.game = game
-    self.super.ctor(self)
+    base.game = game
+    base.ctor(self)
 end
 
 function mahjongDesk:onInit()
@@ -31,7 +31,7 @@ function mahjongDesk:onInit()
     end
 
     self:updateLeftMahjongCount()
-    self.super.onInit(self)
+    base.onInit(self)
 end
 
 --function mahjongDesk:onGameStart()
@@ -46,12 +46,12 @@ end
 --        end
 --    end
 
---    self.super.onGameStart(self)
+--    base.onGameStart(self)
 --end
 
 function mahjongDesk:onGameSync()
     self:updateLeftMahjongCount()
-    self.super.onGameSync(self)
+    base.onGameSync(self)
 end
 
 function mahjongDesk:getInvitationInfo()
@@ -120,7 +120,7 @@ function mahjongDesk:onDestroy()
     end
     self.headers = {}
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return mahjongDesk

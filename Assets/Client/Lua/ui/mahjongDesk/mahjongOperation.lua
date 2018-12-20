@@ -126,7 +126,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:ctor(game)
     self.game = game
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 -------------------------------------------------------------------------------
@@ -2073,7 +2073,7 @@ function mahjongOperation:onDestroy()
     self.countdown:show()
     self.chupaiPtr:show()
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 -------------------------------------------------------------------------------

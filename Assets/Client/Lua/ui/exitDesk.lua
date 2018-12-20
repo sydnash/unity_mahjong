@@ -9,7 +9,7 @@ _RES_(exitDesk, "ExitDeskUI", "ExitDeskUI")
 
 function exitDesk:ctor(game)
     self.game = game
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function exitDesk:onInit()
@@ -110,7 +110,7 @@ end
 
 function exitDesk:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return exitDesk

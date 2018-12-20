@@ -21,7 +21,7 @@ end
 
 function location:ctor(game)
     self.game = game
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function location:onInit()
@@ -144,7 +144,7 @@ end
 
 function location:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return location

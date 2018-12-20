@@ -8,7 +8,7 @@ local enterPlaybackCode = class("enterPlaybackCode", base)
 _RES_(enterPlaybackCode, "PlayHistoryUI", "EnterPlaybackCodeUI")
 
 function enterPlaybackCode:ctor(callback)
-    self.super.ctor(self)
+    base.ctor(self)
     self.callback = callback
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
@@ -208,7 +208,7 @@ end
 
 function enterPlaybackCode:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return enterPlaybackCode

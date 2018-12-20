@@ -60,7 +60,7 @@ end
 function friendsterDetail:ctor(data, callback)
     self.data = data
     self.callback = callback
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function friendsterDetail:onInit()
@@ -380,7 +380,7 @@ function friendsterDetail:onDestroy()
         self.messageUI = nil
     end
 
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return friendsterDetail

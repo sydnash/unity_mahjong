@@ -11,7 +11,7 @@ function gameEnd:ctor(game, datas)
     self.game  = game
     self.datas = datas
 
-    self.super.ctor(self)
+    base.ctor(self)
 end
 
 function gameEnd:onInit()
@@ -93,6 +93,7 @@ function gameEnd:onOkClickedHandler()
     ui:show()
 
     self.game.isGameOverUIShow = true
+    self.game.gameEndUI = nil
     self:close() 
     playButtonClickSound()
 end
@@ -100,6 +101,7 @@ end
 function gameEnd:onNextClickedHandler()
     self:close()
     self.game:ready(true)
+    self.game.gameEndUI = nil
     playButtonClickSound()
 end
 
@@ -187,7 +189,7 @@ function gameEnd:onDestroy()
     for _, item in pairs(self.items) do
         item:close()
     end
-    self.super.onDestroy(self)
+    base.onDestroy(self)
 end
 
 return gameEnd
