@@ -77,7 +77,7 @@ function transfer:onTransferClickedHandler()
         return
     end
     if vc > gamepref.player.cards then
-        showMessageUI("金币不足")
+        showMessageUI("房卡不足")
         return
     end
 
@@ -93,7 +93,7 @@ function transfer:onTransferClickedHandler()
         log("join friendster, msg = " .. table.tostring(msg))
         if msg.RetCode ~= retc.ok then
             if msg.RetCode == retc.coinNotEnough then
-                showMessageUI("金币不足")
+                showMessageUI("房卡不足")
             elseif msg.RetCode == retc.transferToSelf then
                 showMessageUI("不能给自己转账")
             else

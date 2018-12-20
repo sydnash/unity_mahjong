@@ -444,7 +444,7 @@ function mahjongOperation:onGameSync()
         end
     end
     
-    if self.game.deskStatus == deskStatus.hsz then
+    if self.game.deskStatus == mahjongGame.status.hsz then
         self:setDices()
         self:highlightPlaneByAcId(self.game.markerAcId)
         self:setCountdownVisible(false)
@@ -456,7 +456,7 @@ function mahjongOperation:onGameSync()
             self.mHnz:show()
             self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
         end
-    elseif self.game.deskStatus == deskStatus.dingque then
+    elseif self.game.deskStatus == mahjongGame.status.dingque then
         self:setDices()
         self:highlightPlaneByAcId(self.game.markerAcId)
         self:setCountdownVisible(false)
@@ -466,7 +466,7 @@ function mahjongOperation:onGameSync()
         if player.que < 0 then
             self.mQue:show()
         end
-    elseif self.game.deskStatus == deskStatus.playing then
+    elseif self.game.deskStatus == mahjongGame.status.playing then
         self:onOpList(reenter.CurOpList)
         self:highlightPlaneByAcId(reenter.CurOpAcId)
         self.turnCountdown = COUNTDOWN_SECONDS_C
@@ -824,13 +824,13 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:touchHandler(phase, pos)
     local ds = self.game.deskStatus
-    if self.game.mode == gameMode.playback or ds == deskStatus.none or ds == deskStatus.dingque then
+    if self.game.mode == gameMode.playback or ds < 0 or ds == mahjongGame.status.dingque then
         return
     end
 
     local camera = GameObjectPicker.instance.camera
 
-    if ds == deskStatus.hsz then
+    if ds == mahjongGame.status.hsz then
         if phase == touch.phaseType.ended then
             local go = GameObjectPicker.instance:Pick(pos)
             if go ~= nil then

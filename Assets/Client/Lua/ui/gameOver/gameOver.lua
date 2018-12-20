@@ -111,11 +111,6 @@ end
 
 function gameOver:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-    
-    for _, v in pairs(self.items) do
-        v.mIcon:reset()
-    end
-
     base.onDestroy(self)
 end
 

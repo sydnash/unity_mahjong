@@ -7,6 +7,17 @@ local gamePlayer        = require("logic.player.gamePlayer")
 local base = require("logic.game")
 local mahjongGame = class("mahjongGame", base)
 
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
+mahjongGame.status = {
+    fapai   =  1, --发牌
+    hsz     =  2, --换N张
+    dingque =  3, --定缺
+    playing =  4, --进行中
+    gameend =  5, --结束
+}
+
 mahjongGame.cardType = {
     idle = 1,
     shou = 2,
@@ -74,7 +85,7 @@ function mahjongGame:onEnter(msg)
         self.totalCardsCount    = msg.Reenter.TotalMJCnt
         self.leftCardsCount     = msg.Reenter.LeftMJCnt
         self.deskStatus         = msg.Reenter.DeskStatus
-        self.canBack            = (self.deskStatus == deskStatus.none)
+        self.canBack            = (self.deskStatus < 0)
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
 end
@@ -165,7 +176,7 @@ function mahjongGame:onFaPaiHandler(msg)
 --    log("fapai, msg = " .. table.tostring(msg))
     -- local func = tweenFunction.new(function()
     local func = (function()
-        self.deskStatus = deskStatus.fapai
+        self.deskStatus = mahjongGame.status.fapai
 
         for _, v in pairs(msg.Seats) do
             local player = self:getPlayerByAcId(v.AcId)
@@ -190,7 +201,7 @@ function mahjongGame:onHuanNZhangHintHandler(msg)
     -- local func = tweenFunction.new(function()
     local func = (function()
         log("mahjongGame:onHuanNZhangHintHandler, msg = " .. table.tostring(msg))
-        self.deskStatus = deskStatus.hsz
+        self.deskStatus = mahjongGame.status.hsz
         self.operationUI:onHuanNZhangHint(msg)
     end)
     -- self.messageHandlers:add(func)
@@ -265,7 +276,7 @@ function mahjongGame:onOpListHandler(msg)
 --    log("oplist, msg = " .. table.tostring(msg))
     -- local func = tweenFunction.new(function()
     local func = (function()
-        self.deskStatus = deskStatus.playing
+        self.deskStatus = mahjongGame.status.playing
         self.operationUI:onOpList(msg)
     end)
     -- self.messageHandlers:add(func)
@@ -409,7 +420,7 @@ function mahjongGame:onDingQueHintHandler(msg)
 --    log("ding que hint, msg = " .. table.tostring(msg))
     -- local func = tweenFunction.new(function()
     local func = (function()
-        self.deskStatus = deskStatus.dingque
+        self.deskStatus = mahjongGame.status.dingque
 
         self.operationUI:onDingQueHint(msg)
     end)

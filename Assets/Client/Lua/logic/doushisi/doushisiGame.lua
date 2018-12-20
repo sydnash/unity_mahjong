@@ -45,7 +45,7 @@ function doushisiGame:onEnter(msg)
         self.curOpAcId          = self:getPlayerByTurn(self.curOpTurn).acId
         self.curOpType          = msg.Reenter.CurOpType
         self.deskStatus         = msg.Reenter.DeskStatus
-        self.canBack            = (self.deskStatus == deskStatus.none)
+        self.canBack            = (self.deskStatus < 0)
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
 end
@@ -122,6 +122,8 @@ end
 
 function doushisiGame:onFaPaiHandler(msg)
     self:faPai(msg)
+
+    self.deskUI:onFaPai()
     return self.operationUI:onFaPai()
 end
 
@@ -153,6 +155,8 @@ function doushisiGame:onDangNotifyHandler(msg)
     self.deskStatus = msg.CurDeskStatus
     local player = self:getPlayerByAcId(msg.AcId)
     player.isDang = msg.IsDang
+
+    self.deskUI:onDangNotify(player.acId, player.isDang)
 end
 
 function doushisiGame:onPiaoHandler(msg)
@@ -160,7 +164,7 @@ function doushisiGame:onPiaoHandler(msg)
 end
 
 function doushisiGame:onPiaoNotifyHandler(msg)
-
+    
 end
 
 function doushisiGame:onAnPaiShowHandler(msg)
@@ -238,6 +242,7 @@ function doushisiGame:onMoPaiHandler(msg)
     self:subLeftCount(#msg.Ids)
     player.fuShu = msg.FuShu
 
+    self.deskUI:onMoPai(player.acId)
     return self.operationUI:onMoPai(player.acId, msg.Ids)
 end
 
@@ -247,6 +252,7 @@ function doushisiGame:onFanPaiHnadler(msg)
     table.insert(chuCards, msg.Id)
     self:subLeftCount(1)
 
+    self.deskUI:onFanPai(player.acId)
     return self.operationUI:onFanPai(player.acId, msg.Id)
 end
 
@@ -580,6 +586,11 @@ function doushisiGame:onGameEndListener(specialData, datas, totalScores)
     table.sort(datas.players, function(t1, t2)
         return t1.seatType < t2.seatType
     end)
+end
+
+function doushisiGame:onDeskStatusChanged()
+    base.onDeskStatusChanged(self)
+    self.deskUI:onDeskStatusChanged()
 end
 
 return doushisiGame
