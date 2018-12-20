@@ -986,6 +986,10 @@ function game:openLobbyUI()
     end)
 end
 
+function game:convertConfigToString(ignoreJuShu)
+    return convertConfigToString(self.cityType, self.gameType, self.config, ignoreJuShu)
+end
+
 return game
 
 --endregion

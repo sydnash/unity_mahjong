@@ -49,7 +49,7 @@ function gameEnd:onInit()
                                self.datas.finishGameCount, 
                                self.datas.totalGameCount, 
                                self.datas.deskId,
-                               getMahjongConfigText(self.game.cityType, self.game.config, true))
+                               self.game:convertConfigToString(true))
     self.mInfo:setText(info)
 
     if self.game.mode == gameMode.playback  then
