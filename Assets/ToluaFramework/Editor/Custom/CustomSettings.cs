@@ -161,6 +161,7 @@ public static class CustomSettings
         _GT(typeof(RuntimePlatform)),
         _GT(typeof(SpriteRenderer)),
         _GT(typeof(UnityEngine.Sprite)),
+        _GT(typeof(UnityEngine.RectTransformUtility)),
 
         //UGUI
         _GT(typeof(EventSystem)),

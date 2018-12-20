@@ -70,17 +70,17 @@ end
 -- 初始化UI并启动消息处理循环
 -------------------------------------------------------------------------------
 function game:startLoop()
-    if self.operationUI == nil then
-        self.operationUI = self:createOperationUI()
-    end
-    self.operationUI:reset()
-    self.operationUI:show()
-
     if self.deskUI == nil then
         self.deskUI = self:createDeskUI()
     end
     self.deskUI:reset()
     self.deskUI:show()
+
+    if self.operationUI == nil then
+        self.operationUI = self:createOperationUI()
+    end
+    self.operationUI:reset()
+    self.operationUI:show()
 
     if self.mode == gameMode.playback then 
         local ui = require("ui.playback").new(self)

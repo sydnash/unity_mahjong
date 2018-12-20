@@ -8,6 +8,24 @@ local doushisiOperation = class("doushisiOperation", base)
 
 _RES_(doushisiOperation, "DoushisiDeskUI", "DeskOperationUI")
 
+local opTypeOrder = {
+    [opType.doushisi.hu.id]         = 1,
+    [opType.doushisi.chi.id]        = 2,
+    [opType.doushisi.che.id]        = 3,
+    [opType.doushisi.an.id]         = 4,
+    [opType.doushisi.hua.id]        = 5,
+    [opType.doushisi.baGang.id]     = 6,
+    [opType.doushisi.gang.id]       = 7,
+    [opType.doushisi.gen.id]        = 8,
+    [opType.doushisi.bao.id]        = 9,
+    [opType.doushisi.shou.id]       = 10,
+    [opType.doushisi.zhao.id]       = 11,
+    [opType.doushisi.baoJiao.id]    = 12,
+    [opType.doushisi.caiShen.id]    = 13,
+    [opType.doushisi.pass.id]       = 14,
+    [opType.doushisi.chu.id]        = 15,
+}
+
 -------------------------------------------------------------------------------
 -- 构造函数
 -------------------------------------------------------------------------------
@@ -49,82 +67,82 @@ doushisiOperation.actionCardWidth = 0.72
 
 local seats = {
     [seatType.mine] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.49, -3.93, 0), rot = Quaternion.Euler(0, 0, 0), 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.00, -3.93, 0), rot = Quaternion.Euler(0, 0, 0), 
                     rowgap = 0.69, colgap = 0.50, height = 2.14, width = 0.69, scale = 1,
                 },
-        [doushisiGame.cardType.chu] = { pos = Vector3.New(3.80, -1.32, 0), rot = Quaternion.Euler(0, 0, -135), 
+        [doushisiGame.cardType.chu] = { pos = Vector3.New(4.92, -2.87, 0), rot = Quaternion.Euler(0, 0, -135), 
                     colDir = {x = math.cos(135*math.pi/180), y = math.sin(135*math.pi/180)},
                     rowDir = {x = math.cos(45 * math.pi/180),y = math.sin(45 * math.pi/180)},
                     rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
                     rotEuler = Vector3.New(0, 0, -135),
                 },
-        [doushisiGame.cardType.peng] = { pos = Vector3.New(-0.76, -1.53, 0), rot = Quaternion.Euler(0, 0, 90), 
+        [doushisiGame.cardType.peng] = { pos = Vector3.New(-1.375, -1.068, 0), rot = Quaternion.Euler(0, 0, 90), 
                     colDir = {x = 1, y = 0},
                     rowDir = {x = 0, y = 1},
                     rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
                     rotEuler = Vector3.New(0, 0, 90),
                 },
-        promote = {pos = Vector3.New(-0.36, -0.55, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
+        promote = {pos = Vector3.New(-0.00, 0.80, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
     },
     [seatType.right] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( 6.15, -0.30, 0), rot = Quaternion.Euler(0, 0, 0), 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( 6.15, 0.08, 0), rot = Quaternion.Euler(0, 0, 0), 
                     colDir = {x = 0, y = -1},
                     rowDir = {x = -1,y = 0},
                     rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
                 },
-        [doushisiGame.cardType.chu] = { pos = Vector3.New(3.22, 2.04, 0), rot = Quaternion.Euler(0, 0, -35), 
+        [doushisiGame.cardType.chu] = { pos = Vector3.New(3.62, 2.60, 0), rot = Quaternion.Euler(0, 0, -35), 
                     colDir = {x = math.cos(-125*math.pi/180), y = math.sin(-125*math.pi/180)},
                     rowDir = {x = math.cos(-35 * math.pi/180), y = math.sin(-35 * math.pi/180)},
                     rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
                     rotEuler = Vector3.New(0, 0, -35),
                 },
-        [doushisiGame.cardType.peng] = { pos = Vector3.New(4.90, 1.32, 0), rot = Quaternion.Euler(0, 0, 0), 
+        [doushisiGame.cardType.peng] = { pos = Vector3.New(4.90, 2.39, 0), rot = Quaternion.Euler(0, 0, 0), 
                     colDir = {x = 0, y = -1},
                     rowDir = {x = -1,y = 0},
                     rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
                     rotEuler = Vector3.New(0, 0, 0),
                 },
-        promote = {pos = Vector3.New(3.58, -0.39, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
+        promote = {pos = Vector3.New(3.68, 0.639, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
     },
     [seatType.top] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( 3.10, 2.63, 0), rot = Quaternion.Euler(0, 0, 90), 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( 1.81, 3.33, 0), rot = Quaternion.Euler(0, 0, 90), 
                     colDir = {x = 1, y = 0},
                     rowDir = {x = 0, y = -1},
                     rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
                 },
-        [doushisiGame.cardType.chu] = { pos = Vector3.New( -4.49, 1.52, 0), rot = Quaternion.Euler(0, 0, 35),
+        [doushisiGame.cardType.chu] = { pos = Vector3.New( -3.38, 2.60, 0), rot = Quaternion.Euler(0, 0, 35),
                     colDir = {x = math.cos(-55*math.pi/180), y = math.sin(-55*math.pi/180)},
                     rowDir = {x = math.cos(125 * math.pi/180), y = math.sin(125 * math.pi/180)},
                     rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
                     rotEuler = Vector3.New(0, 0, 35),
                 },
-        [doushisiGame.cardType.peng] = { pos = Vector3.New(-0.76, 1.52, 0), rot = Quaternion.Euler(0, 0, 90), 
+        [doushisiGame.cardType.peng] = { pos = Vector3.New(-2.06, 2.44, 0), rot = Quaternion.Euler(0, 0, 90), 
                     colDir = {x = 1, y = 0},
                     rowDir = {x = 0, y = -1},
                     rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
                     rotEuler = Vector3.New(0, 0, 90),
                 },
-        promote = {pos = Vector3.New(1.10, 1.09, 0), rot = Quaternion.Euler(0, 0, 90), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 90)},
+        promote = {pos = Vector3.New(0.00, 1.36, 0), rot = Quaternion.Euler(0, 0, 90), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 90)},
     },
     [seatType.left] = { 
-        [doushisiGame.cardType.shou] = { pos = Vector3.New( -6.15, -0.30, 0), rot = Quaternion.Euler(0, 0, 0), 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -6.15, 0.08, 0), rot = Quaternion.Euler(0, 0, 0), 
                     colDir = {x = 0, y = -1},
                     rowDir = {x = 1,y = 0},
                     rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
                 },
-        [doushisiGame.cardType.chu] = { pos = Vector3.New( -4.58, -2.67, 0), rot = Quaternion.Euler(0, 0, 135),
+        [doushisiGame.cardType.chu] = { pos = Vector3.New( -5.58, -2.60, 0), rot = Quaternion.Euler(0, 0, 135),
                     colDir = {x = math.cos(45*math.pi/180), y = math.sin(45*math.pi/180)},
                     rowDir = {x = math.cos(135 * math.pi/180), y = math.sin(135 * math.pi/180)},
                     rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
                     rotEuler = Vector3.New(0, 0, 135),
                 },
-        [doushisiGame.cardType.peng] = { pos = Vector3.New(-4.90, 1.32, 0), rot = Quaternion.Euler(0, 0, 0), 
+        [doushisiGame.cardType.peng] = { pos = Vector3.New(-4.91, 2.41, 0), rot = Quaternion.Euler(0, 0, 0), 
                     colDir = {x = 0, y = -1},
                     rowDir = {x = 1,y = 0},
                     rowgap = 0.47, colgap = 0.30, cardWidth = 0.48, cardHeight = 0.78,
                     rotEuler = Vector3.New(0, 0, 0),
                 },
-        promote = {pos = Vector3.New(-3.97, -0.39, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
+        promote = {pos = Vector3.New(-3.71, 0.68, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.14, rotEuler = Vector3.New(0, 0, 0)},
     },
 }
 
@@ -290,6 +308,17 @@ function doushisiOperation:onInit()
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
+function doushisiOperation:worldToUIPos(pos, node)
+    local mainCamera = UnityEngine.Camera.main
+    local scPos = mainCamera:WorldToScreenPoint(pos)
+    scPos.z = math.abs(viewManager.camera.transform.position.z)
+    local uiPos = viewManager.camera:ScreenToWorldPoint(scPos)
+
+    local parent = node:getParent()
+    local _, uiPos = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(parent.rectTransform, scPos, viewManager.camera, nil)
+    return uiPos
+end
+
 function doushisiOperation:computeChuPaiHintPos()
     local cfg = self.seats[seatType.mine][doushisiGame.cardType.shou]
     local pos = cfg.pos:Clone()
@@ -298,15 +327,37 @@ function doushisiOperation:computeChuPaiHintPos()
     pos.y = pos.y + cardLen + cfg.colgap * 3
     self.chuPaiLineY = pos.y
 
-    local mainCamera = UnityEngine.Camera.main
-    local scPos = mainCamera:WorldToScreenPoint(pos)
+    local uiPos = self:worldToUIPos(pos, self.mChuHint)
 
-    scPos.z = viewManager.camera.transform.position.z
-    local uiPos = viewManager.camera:ScreenToWorldPoint(scPos)
-
-    local hintPos = self.mChuHint:getPosition()
+    local hintPos = self.mChuHint:getAnchoredPosition()
     hintPos.y = uiPos.y
-    self.mChuHint:setPosition(hintPos)
+    self.mChuHint:setAnchoredPosition(hintPos)
+end
+
+local btn_half = 116 * 0.5
+function doushisiOperation:computeOpBtnStartPos()
+    local cfg = self.seats[seatType.mine].promote
+    local basePos = self.cardRoot:getPosition()
+
+    local x         = basePos.x + cfg.pos.x
+    local y         = basePos.y + cfg.pos.y - self.actionCardHeight * 0.5
+    local left      = x - self.actionCardWidth * 0.5
+    local right     = x + self.actionCardWidth * 0.5
+
+    local leftPos   = Vector3.New(left, y, 0)
+    local rightPos  = Vector3.New(right, y, 0)
+
+    leftPos         = self:worldToUIPos(leftPos, self.mHua)
+    rightPos        = self:worldToUIPos(rightPos, self.mHua)
+
+    local gap = rightPos.x - leftPos.x
+    
+    self.btnGap         = gap + btn_half * 2.0
+    self.leftPos, self.rightPos = leftPos, rightPos
+    self.leftPos.x      = self.leftPos.x - btn_half
+    self.leftPos.y      = self.leftPos.y + btn_half
+    self.rightPos.x     = self.rightPos.x + btn_half
+    self.rightPos.y     = self.rightPos.y + btn_half
 end
 
 function doushisiOperation:hideAllOpBtn()
@@ -349,10 +400,10 @@ function doushisiOperation:onGameSync()
                     end
                 end
                 data.CanPass = reenter.TouHint.CanPass
+                self:onOpListAn(data)
                 if data.CanPass then
                     self:onOpListPass()
                 end
-                self:onOpListAn(data)
             elseif reenter.CurOpList ~= nil then
                 self:onOpList(reenter.CurOpList)
             end
@@ -408,6 +459,17 @@ function doushisiOperation:onBuDangClickedHandler()
     networkManager.csDang(false)
 end
 
+function doushisiOperation:sortOpList(data)
+	local compare = function(t1, t2)
+		local d1 = opTypeOrder[t1.Op]
+		local d2 = opTypeOrder[t2.Op]
+		if d1 == nil then d1 = 100 end
+		if d2 == nil then d2 = 100 end
+		return d1 <= d2
+	end
+	table.bubbleSort(data.OpInfos, compare)
+end
+
 function doushisiOperation:onOpList(opList)
     if opList == nil then
         return
@@ -416,6 +478,7 @@ function doushisiOperation:onOpList(opList)
     self:closeAllBtnPanel()
     local leftTime = opList.LeftTime
 
+    self:sortOpList(opList)
     for _, opInfo in pairs(opList.OpInfos) do
         local op = opInfo.Op
         if isNilOrNull(opInfo.HasTY) then
@@ -466,6 +529,32 @@ function doushisiOperation:showOpBtn(btn, opInfo)
     btn:show()
     btn.opInfo = opInfo
     table.insert(self.curShowOpBtns, btn)
+
+    local total = #self.curShowOpBtns
+
+    local opdist = self.btnGap
+
+    local leftCnt = math.floor(#self.curShowOpBtns / 2)
+    local right = leftCnt + 1
+    
+    local y = self.leftPos.y
+
+    local leftStart     = self.leftPos.x
+    local rightStart    = self.rightPos.x
+
+	for i = leftCnt, 1, -1 do
+		local diff = (leftCnt - i) * opdist
+		local x = leftStart - diff
+        --self.curShowOpBtns[i]:setPosition(Vector3.New(x, y, 0))
+        self.curShowOpBtns[i]:setAnchoredPosition(Vector2.New(x, y, 0))
+	end
+
+	for i = right, #self.curShowOpBtns, 1 do
+		local diff = (i - right) * opdist
+		local x = rightStart + diff
+		--self.curShowOpBtns[i]:setPosition(Vector3.New(x, y, 0))
+        self.curShowOpBtns[i]:setAnchoredPosition(Vector2.New(x ,y , 0))
+	end
 end
 
 function doushisiOperation:relocateOpBtn()
@@ -761,7 +850,8 @@ function doushisiOperation:onPanelBtnClick(btn, createFunc)
     btn.panel = panel
     panel:show()
     panel:setParent(btn)
-    panel:setLocalPosition(Vector3.New(0, 0, 0))
+    --panel:setLocalPosition(Vector3.New(0, 0, 0))
+    panel:setAnchoredPosition(Vector3.New(0, 0, 0))
 end
 
 function doushisiOperation:getOpChoseData(op, card, hasTY, baos)
@@ -792,6 +882,7 @@ end
 
 function doushisiOperation:resetPai()
     self:computeChuPaiHintPos()
+    self:computeOpBtnStartPos()
     self.dragCard:hide()
     self.idleCards = {}
     self.promoteNode = nil
@@ -1623,7 +1714,9 @@ function doushisiOperation:moPaiAction(time, acId, id, handPos, order, scale)
     end
 
     if time > 0 then
+        node:hide()
         self:callFunctionAfterTime(time, function()
+            node:show()
             playSq()
         end)
     else

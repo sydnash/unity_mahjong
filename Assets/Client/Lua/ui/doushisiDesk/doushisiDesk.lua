@@ -217,7 +217,9 @@ local withoutCPZTContrl = {
 
 function doushisiDesk:playGfx(acId, name)
     local header = self:getHeaderByAcId(acId)
-    log("=======================" .. name)
+    if not withoutCPZTContrl[name] and not gamepref.getChiPengZiTi() then
+        return
+    end
     header:playGfx(name)
 end
 
