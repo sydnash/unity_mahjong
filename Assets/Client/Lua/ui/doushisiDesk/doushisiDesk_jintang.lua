@@ -11,7 +11,19 @@ function doushisiDesk_jintang:setDang(acId, dang)
     end
 end
 
+function doushisiDesk_jintang:onOpDoDang(acId, isDang)
+    if isDang then
+        self:playGfx(acId, "zuozhuang")
+    else
+        self:playGfx(acId, "huazhuang")
+    end
+end
+
 function doushisiDesk_jintang:setZhuang(acId, zhuang)
+end
+
+function doushisiDesk_jintang:onOpDoHua(acId)
+    self:playGfx(acId, "an")
 end
 
 return doushisiDesk_jintang

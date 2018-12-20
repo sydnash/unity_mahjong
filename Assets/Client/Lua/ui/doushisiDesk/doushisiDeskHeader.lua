@@ -110,18 +110,27 @@ local tweenConfig = {
 }
 function doushisiDeskHeader:getOpTween(node, baseS)
     local tweens = {}
-    node:setLocalScale(baseS * tweenConfig[1].s)
+    node:setLocalScale(tweenConfig[1].s * baseS)
     node:show()
     for i = 2, #tweenConfig do
         local t1 = tweenConfig[i - 1].f
         local t2 = tweenConfig[i].f
-        local ac = tweenScale.new(node, t2 - t1, baseS * tweenConfig[i - 1].s, baseS * tweenConfig[i].s)
+        local ac = tweenScale.new(node, t2 - t1, tweenConfig[i - 1].s * baseS, tweenConfig[i].s * baseS)
         table.insert(tweens, ac)
     end
     table.insert(tweens, tweenFunction.new(function()
         node:hide()
     end))
     return tweenSerial.getByVec(true, doNextImmediately, tweens)
+end
+
+function doushisiDeskHeader:playGfx(name)
+    self.mGfx:setSprite(name)
+    self.mGfx:show()
+    local tw = self:getOpTween(self.mGfx, 1)
+    tweenManager.add(tw)
+    tw:play()
+    return 1
 end
 
 return doushisiDeskHeader

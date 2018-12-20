@@ -46,7 +46,9 @@ function doushisiGame:onEnter(msg)
         self.curOpType          = msg.Reenter.CurOpType
         self.deskStatus         = msg.Reenter.DeskStatus
         self.dangTurn           = msg.Reenter.DangTurn
-        self.dangAcId           = self:getPlayerByTurn(self.dangTurn).acId
+        if self.dangTurn >= 0 then
+            self.dangAcId = self:getPlayerByTurn(self.dangTurn).acId
+        end
         self.canBack            = (self.deskStatus == deskStatus.none)
         self:syncSeats(msg.Reenter.SyncSeatInfos)
         self:computeXiaoJia()
@@ -75,9 +77,7 @@ function doushisiGame:syncSeats(seats)
         player.fuShu = v.FuShu
         player.piaoStatus = v.PiaoStatus
         player.zhaoCnt = v.ZhaoCnt
-<<<<<<< HEAD
         player.zhangShu = #v.CardsInHand
-=======
 
         local cnt = #v.CardsInHand + #v.CardsInChuPai
         for _, v in pairs(v.ChiCheInfos) do
@@ -86,7 +86,6 @@ function doushisiGame:syncSeats(seats)
             end
         end
         self:subLeftCount(cnt)
->>>>>>> f3a1e2cb294cfb883c3199b9e99777702bdb9e76
     end
 end
 
@@ -182,7 +181,10 @@ function doushisiGame:onDangNotifyHandler(msg)
     local player = self:getPlayerByAcId(msg.AcId)
     player.isDang = msg.IsDang
 
-    self.deskUI:onDangNotifyHandler(player.acId, msg.IsDang)
+    self.dangAcId = msg.AcId
+    self.dangTurn = self.players[self.dangAcId].turn
+
+    return self.deskUI:onDangNotifyHandler(player.acId, msg.IsDang)
 end
 
 function doushisiGame:onPiaoHandler(msg)
@@ -256,6 +258,7 @@ function doushisiGame:onAnPaiNotifyHandler(msg)
         t1 = t1 or 0
         t = t + t1
     end
+    self.deskUI:onOpDoAn(player.acId)
     return t
 end
 
@@ -322,6 +325,7 @@ function doushisiGame:onOpDoBaGang(player, msg)
     end
     player.zhangShu = #player[self.cardType.shou]
     self.deskUI:updateInhandCardCount(player.acId)
+    self.deskUI:onOpDoBaGang(player.acId)
     return self.operationUI:onOpDoBaGang(player.acId, card)
 end
 
@@ -350,6 +354,7 @@ function doushisiGame:onOpDoChi(player, msg)
     local beCard = msg.Card
     self:onChiPengGangType(player, op, cards, beCard)
 
+    self.deskUI:onOpDoChi(player.acId)
     return self.operationUI:onOpDoChi(player.acId, cards, beCard)
 end
 
@@ -359,6 +364,7 @@ function doushisiGame:onOpDoChe(player, msg)
     local beCard = msg.Card
     self:onChiPengGangType(player, op, cards, beCard)
 
+    self.deskUI:onOpDoChe(player.acId)
     return self.operationUI:onOpDoChe(player.acId, cards, beCard)
 end
 
@@ -367,6 +373,7 @@ function doushisiGame:onOpDoHua(player, msg)
     local cards = msg.DelCards
     self:onChiPengGangType(player, op, cards, nil)
 
+    self.deskUI:onOpDoHua(player.acId)
     return self.operationUI:onOpDoHua(player.acId, cards)
 end
 
@@ -374,12 +381,14 @@ function doushisiGame:onOpDoAn(player, op, delCards)
     local cards = delCards
     self:onChiPengGangType(player, op, cards, nil)
 
+    self.deskUI:onOpDoAn(player.acId)
     return self.operationUI:onOpDoAn(player.acId, cards)
 end
 
 function doushisiGame:onOpDoHu(player, msg)
     player[self.cardType.hu] = msg.Card
 
+    self.deskUI:onOpDoHu(player.acId)
     return self.operationUI:onOpDoHu(player.acId, msg.Card)
 end
 

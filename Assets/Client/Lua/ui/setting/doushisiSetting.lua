@@ -65,6 +65,10 @@ function doushisiSetting:onInit()
         v:addChangedListener(self.onTablelayoutChangedHandler, self)
     end
 
+    local cpzt = gamepref.getChiPengZiTi()
+    self.mCPZT:setSelected(cpzt)
+    self.mCPZT:addChangedListener(self.onChiPengZiTiChangedHandler, self)
+
     if self.game:isCreator(gamepref.player.acId) or self.game:isPlaying() then
         self.mDissolveText:setSprite("js")
     else
@@ -81,6 +85,10 @@ function doushisiSetting:onInit()
 
     self.mDissolve:addClickListener(self.onDissolveClickedHandler, self)
     self.mBack:addClickListener(self.onBackClickedHandler, self)
+end
+
+function doushisiSetting:onChiPengZiTiChangedHandler()
+    gamepref.setChiPengZiTi(self.mCPZT:getSelected())
 end
 
 function doushisiSetting:onLanguageChangedHandler(sender, selected, clicked)

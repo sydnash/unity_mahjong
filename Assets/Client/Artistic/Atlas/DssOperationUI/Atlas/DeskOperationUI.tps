@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/DssOperationUI/Atlas/DeskOperationUI.tps</string>
+        <string>D:/mj/tdqp/Assets/Client/Artistic/Atlas/DssOperationUI/Atlas/DeskOperationUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -330,6 +330,49 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/anpai.png</key>
+            <key type="filename">Images/game_font_bao.png</key>
+            <key type="filename">Images/game_font_chi.png</key>
+            <key type="filename">Images/game_font_dang.png</key>
+            <key type="filename">Images/game_font_deng.png</key>
+            <key type="filename">Images/game_font_gou.png</key>
+            <key type="filename">Images/game_font_hu.png</key>
+            <key type="filename">Images/game_font_hua.png</key>
+            <key type="filename">Images/game_font_jiao.png</key>
+            <key type="filename">Images/game_font_la.png</key>
+            <key type="filename">Images/game_font_peng.png</key>
+            <key type="filename">Images/game_font_piao.png</key>
+            <key type="filename">Images/game_font_shou.png</key>
+            <key type="filename">Images/game_font_shui.png</key>
+            <key type="filename">Images/game_font_tou.png</key>
+            <key type="filename">Images/game_font_zhaochi.png</key>
+            <key type="filename">Images/game_font_zhui.png</key>
+            <key type="filename">Images/zi_31.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,22,43,43</rect>
+                <key>scale9Paddings</key>
+                <rect>22,22,43,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/chichengsan.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>71,27,141,53</rect>
+                <key>scale9Paddings</key>
+                <rect>71,27,141,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/cp_an01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -479,6 +522,48 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/game_font_budang.png</key>
+            <key type="filename">Images/game_font_bupiaog.png</key>
+            <key type="filename">Images/hz.png</key>
+            <key type="filename">Images/zz.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>27,21,55,43</rect>
+                <key>scale9Paddings</key>
+                <rect>27,21,55,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/game_font_dian.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,7,9</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,7,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/game_font_dingpiaozhong.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>24,10,47,21</rect>
+                <key>scale9Paddings</key>
+                <rect>24,10,47,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/game_line_xuexian.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -502,6 +587,58 @@
                 <rect>12,15,25,30</rect>
                 <key>scale9Paddings</key>
                 <rect>12,15,25,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/zi_21.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>39,23,79,45</rect>
+                <key>scale9Paddings</key>
+                <rect>39,23,79,45</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/zi_27.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,24,44,48</rect>
+                <key>scale9Paddings</key>
+                <rect>22,24,44,48</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/zi_32.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>21,22,41,44</rect>
+                <key>scale9Paddings</key>
+                <rect>21,22,41,44</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/zi_45.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,24,43,47</rect>
+                <key>scale9Paddings</key>
+                <rect>22,24,43,47</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -586,6 +723,35 @@
             <filename>Images/ZM_zjp1_08.png</filename>
             <filename>Images/ZM_zjp1_09.png</filename>
             <filename>Images/ZM_zjp1_10.png</filename>
+            <filename>Images/chichengsan.png</filename>
+            <filename>Images/game_font_bao.png</filename>
+            <filename>Images/game_font_budang.png</filename>
+            <filename>Images/game_font_bupiaog.png</filename>
+            <filename>Images/game_font_chi.png</filename>
+            <filename>Images/game_font_dang.png</filename>
+            <filename>Images/game_font_deng.png</filename>
+            <filename>Images/game_font_dian.png</filename>
+            <filename>Images/game_font_dingpiaozhong.png</filename>
+            <filename>Images/game_font_gou.png</filename>
+            <filename>Images/game_font_hu.png</filename>
+            <filename>Images/game_font_hua.png</filename>
+            <filename>Images/game_font_jiao.png</filename>
+            <filename>Images/game_font_la.png</filename>
+            <filename>Images/game_font_peng.png</filename>
+            <filename>Images/game_font_piao.png</filename>
+            <filename>Images/game_font_shou.png</filename>
+            <filename>Images/game_font_shui.png</filename>
+            <filename>Images/game_font_tou.png</filename>
+            <filename>Images/game_font_zhaochi.png</filename>
+            <filename>Images/game_font_zhui.png</filename>
+            <filename>Images/hz.png</filename>
+            <filename>Images/zi_21.png</filename>
+            <filename>Images/zi_27.png</filename>
+            <filename>Images/zi_31.png</filename>
+            <filename>Images/zi_32.png</filename>
+            <filename>Images/zi_45.png</filename>
+            <filename>Images/zz.png</filename>
+            <filename>Images/anpai.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
