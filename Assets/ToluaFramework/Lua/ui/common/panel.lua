@@ -38,6 +38,7 @@ end
 -------------------------------------------------------------------
 local function bind(target, variableName, gameObject, widgetType, panelScript)
     local widget = nil
+    assert(gameObject ~= nil, string.format("gameobject:%s must not nil.",variableName))
 
     if widgetType == LuaPanel.WidgetType.GameObject then 
         widget = object.new(gameObject)

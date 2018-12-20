@@ -485,7 +485,7 @@ function doushisiOperation:showChuHint()
 
     local from  = Vector3.New(0, 0, 45)
     local to    = Vector3.New(0, 0, 1)
-    self.mFinger:setLocalRotation(from)
+    self.mFinger:setLocalRotation(Quaternion.Euler(from.x, from.y, from.z))
     self.mFinger.action = tweenForever.new({
         tweenRotation.new(self.mFinger, 0.5, from, to, nil),
         tweenRotation.new(self.mFinger, 0.5, to, from, nil),
@@ -950,7 +950,7 @@ function doushisiOperation:onFanPai(acId, id)
 
     card:hide()
     time = self:fanPaiAction(time, acId, id)
-    return math.max(time, 1.2)
+    return math.max(time, 1.0)
 end
 
 function doushisiOperation:onAnPaiShow(acId, idInfo)
@@ -1545,7 +1545,7 @@ function doushisiOperation:chiPengAction(acId, cards)
     x = x / #cards
     y = y / #cards
 
-    local delayTime = 0.15
+    local delayTime = 0.10
 
     local shakeAction, shakeTime = self:getShakeAction(node)
     local delayAction = self:getDelayAction(delayTime)
@@ -1579,9 +1579,9 @@ function doushisiOperation:moPaiAction(time, acId, id, handPos, order, scale)
     local node = self:createFlyNode({id})
     self:setNodeAtCenter(node)
 
-    local centerScaleAction, t1 = self:getCenterScaleAction(node)
-    local delayTime = 0.1
-    local centerDelayAction = self:getDelayAction(delayTime)
+    -- local centerScaleAction, t1 = self:getCenterScaleAction(node)
+    -- local delayTime = 0.1
+    -- local centerDelayAction = self:getDelayAction(delayTime)
 
     local startPos = node:getLocalPosition()
     --promote pos
@@ -1589,13 +1589,14 @@ function doushisiOperation:moPaiAction(time, acId, id, handPos, order, scale)
     local cfg = self.seats[st].promote
     local x2, y2 = cfg.pos.x, cfg.pos.y
 
-    local r = 0
-    local flyAction, flyTime = self:getFlyAction(node, startPos.x, startPos.y, x2, y2, cfg.rotEuler.z)
-    local delayTime2 = 0.2
+    local r = cfg.rotEuler.z
+    local flyAction, flyTime = self:getFlyAction(node, startPos.x, startPos.y, x2, y2, r)
+    local delayTime2 = 0.1
     local delayAction2 = self:getDelayAction(delayTime2)
     local flyAction2, flyTime2 = self:getFlyAction(node, x2, y2, handPos.x, handPos.y, nil, scale, nil, 1)
 
-    local sq = self:getSequenceAction({centerScaleAction, centerDelayAction, flyAction, delayAction2, flyAction2, tweenFunction.new(function()
+    --local sq = self:getSequenceAction({centerScaleAction, centerDelayAction, flyAction, delayAction2, flyAction2, tweenFunction.new(function()
+    local sq = self:getSequenceAction({flyAction, delayAction2, flyAction2, tweenFunction.new(function()
         self:pushFlyNode(node)
         self:relocateInhandCards(acId)
     end)})
@@ -1629,8 +1630,9 @@ function doushisiOperation:moPaiAction(time, acId, id, handPos, order, scale)
         playSq()
     end
 
-    local added = 0.03 * ((5 + 1) * 2 + 1)
-    return t1 + delayTime + flyTime + delayTime2 + flyTime2 + added + time
+    local added = 0.03 * ((3 + 1) * 2 + 1)
+    --return t1 + delayTime + flyTime + delayTime2 + flyTime2 + added + time
+    return flyTime + delayTime2 + flyTime2 + added + time
 end
 
 function doushisiOperation:fanPaiAction(time, acId, id)
@@ -1640,19 +1642,20 @@ function doushisiOperation:fanPaiAction(time, acId, id)
     local cfg = self.seats[st].promote
     local x2, y2 = cfg.pos.x, cfg.pos.y
 
-    local _, t1 = self:getCenterScaleAction(nil)
-    local delayTime = 0.1
+    -- local _, t1 = self:getCenterScaleAction(nil)
+    -- local delayTime = 0.05
     local flyTime = self:computeFlyTime(x1, y1, x2, y2)
 
     local fanFunc = function()
         local node = self:createFlyNode({id})
         self:setNodeAtCenter(node)
-        local centerScaleAction, t1 = self:getCenterScaleAction(node)
-        local centerDelayAction = self:getDelayAction(delayTime)
+        --local centerScaleAction, t1 = self:getCenterScaleAction(node)
+        --local centerDelayAction = self:getDelayAction(delayTime)
         local nodePos = node:getLocalPosition()
-        local r = 0
+        local r = cfg.rotEuler.z
         local flyAction, flyTime = self:getFlyAction(node, nodePos.x, nodePos.y, x2, y2, r)
-        local seqAction = self:getSequenceAction({centerScaleAction, centerDelayAction, flyAction})
+        -- local seqAction = self:getSequenceAction({centerScaleAction, centerDelayAction, flyAction})
+        local seqAction = self:getSequenceAction({flyAction})
         self.animationManager:add(seqAction)
         seqAction:play()
 
@@ -1671,8 +1674,8 @@ function doushisiOperation:fanPaiAction(time, acId, id)
     else
         fanFunc()
     end
-    local added = 0.03 * ((3 + 1) * 2 + 1)
-    return time + flyTime + t1 + delayTime + added
+    local added = 0.03 * ((1 + 1) * 2 + 1)
+    return time + flyTime + added
 end
 
 function doushisiOperation:pushBackPromoteNode()
@@ -1737,7 +1740,7 @@ function doushisiOperation:setNodeAtCenter(node)
     node:show()
     node:setLocalPosition(Vector3.New(cx, cy, 0))
     node:setLocalRotation(Quaternion.Euler(0, 0, 90))
-    node:setLocalScale(Vector3.New(0.1, 0.1, 0.1))
+    --node:setLocalScale(Vector3.New(0.1, 0.1, 0.1))
 end
 function doushisiOperation:getCenterScaleAction(node)
     local time = 0.05

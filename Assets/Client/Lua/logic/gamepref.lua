@@ -10,6 +10,7 @@ local sfx_volume_key    = "AUDIO_SFX_VOLUME";
 local language_key      = "LANGUAGE"
 local tablecloth_key    = "TABLECLOTH"
 local tablelayout_key   = "TABLELAYOUT"
+local chipengziti_key   = "CHIPENGZITI"
 
 -------------------------------------------------------------
 --
@@ -79,7 +80,7 @@ end
 --
 -------------------------------------------------------------
 local function setTablelayout(tbl)
-    PlayerPrefs.SetString(tablelayout_key, tbL)
+    PlayerPrefs.SetString(tablelayout_key, tbl)
 end
 
 -------------------------------------------------------------
@@ -91,6 +92,18 @@ local function getTablelayout()
     end
 
     return PlayerPrefs.GetString(tablelayout_key)
+end
+
+local function getChiPengZiTi()
+    if not PlayerPrefs.HasKey(chipengziti_key) then
+        return true
+    end
+
+    return PlayerPrefs.GetInt(chipengziti_key) > 0
+end
+local function setChiPengZiTi(has)
+    local save = has and 1 or 0
+    PlayerPrefs.SetInt(chipengziti_key, save)
 end
 
 -------------------------------------------------------------
@@ -118,6 +131,8 @@ return {
     getTablecloth = getTablecloth,
     setTablelayout = setTablelayout,
     getTablelayout = getTablelayout,
+    getChiPengZiTi = getChiPengZiTi,
+    setChiPengZiTi = setChiPengZiTi,
 
     save = save
 }

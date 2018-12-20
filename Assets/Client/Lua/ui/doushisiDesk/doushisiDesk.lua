@@ -4,6 +4,7 @@
 
 local doushisiGame = require("logic.doushisi.doushisiGame")
 local header = require("ui.doushisiDesk.doushisiDeskHeader")
+local doushisiGame = require("logic.doushisi.doushisiGame")
 
 local base = require("ui.desk")
 local doushisiDesk = class("doushisiDesk", base)
@@ -96,25 +97,6 @@ function doushisiDesk:onInit()
     base.onInit(self)
 end
 
-function doushisiDesk:onGameStart()
-    base.onGameStart(self)
-
-    if self.deskStatus == doushisiGame.deskPlayStatus.piao then
-        --定漂中
-    elseif self.deskStatus == doushisiGame.deskPlayStatus.tuiDang or self.deskStatus == doushisiGame.deskPlayStatus.playing or self.deskStatus == doushisiGame.deskPlayStatus.touPai then
-        local markerPlayer = self.game:getMarkerPlayer()
-        local markerSeatType = self.game:getSeatTypeByAcId(markerPlayer.acId)
-        self:showClock(markerSeatType)
-    end
-end
-
-function doushisiDesk:onGameSync()
-    base.onGameSync(self)
-
-    local st = self.game:getSeatTypeByAcId(self.game.curOpAcId)
-    self:showClock(st)
-end
-
 function doushisiDesk:onFaPai()
     if self.deskStatus == doushisiGame.deskPlayStatus.piao then
         --定漂中
@@ -122,18 +104,6 @@ function doushisiDesk:onFaPai()
         local markerPlayer = self.game:getMarkerPlayer()
         local markerSeatType = self.game:getSeatTypeByAcId(markerPlayer.acId)
         self:showClock(markerSeatType)
-    end
-end
-
-function doushisiDesk:onDangNotify(acId, isDang)
-    if isDang then
-        local markerPlayer = self.game:getMarkerPlayer()
-        local markerSeatType = self.game:getSeatTypeByAcId(markerPlayer.acId)
-        self:showClock(markerSeatType)
-    else
-        local player = self.game:getPlayerByAcId(acId)
-        local nextPlayerSeatType = (player.seatType + 1) % 4
-        self:showClock(nextPlayerSeatType)
     end
 end
 
@@ -168,7 +138,55 @@ function doushisiDesk:onPlayerGfx(acId, opid)
 end
 
 function doushisiDesk:onOpDoChu(acId, cards)
-    
+end
+
+function doushisiDesk:setDang(acId, dang)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    if dang then
+        header:showDang()
+    else
+        header:hideDang()
+    end
+end
+
+function doushisiDesk:setPiao(acId, piao)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    if piao then
+        header:showPiao()
+    else
+        header:hidePiao()
+    end
+end
+
+function doushisiDesk:setZhuang(acId, zhuang)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    if zhuang then
+        header:showZhuang()
+    else
+        header:hideZhuang()
+    end
+end
+
+function doushisiDesk:setXiao(acId, xiao)
+    local header = self:getHeaderByAcId(acId)
+    if xiao then
+        header:showXiao()
+    else
+        header:hideXiao()
+    end
+end
+
+function doushisiDesk:setBao(acId, bao)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    if bao then
+        header:showBao()
+    else
+        header:hideBao()
+    end
 end
 
 function doushisiDesk:createSettingUI()
@@ -218,6 +236,120 @@ function doushisiDesk:onDestroy()
     self.headers = {}
 
     base.onDestroy(self)
+end
+
+function doushisiDesk:onGameStart()
+    base.onGameStart(self)
+    self:syncHeadInfo()
+
+    if self.deskStatus == doushisiGame.deskPlayStatus.piao then
+        --定漂中
+    elseif self.deskStatus == doushisiGame.deskPlayStatus.tuiDang or self.deskStatus == doushisiGame.deskPlayStatus.playing or self.deskStatus == doushisiGame.deskPlayStatus.touPai then
+        local markerPlayer = self.game:getMarkerPlayer()
+        local markerSeatType = self.game:getSeatTypeByAcId(markerPlayer.acId)
+        self:showClock(markerSeatType)
+    end
+end
+
+function doushisiDesk:onGameSync()
+    base.onGameSync(self)
+
+    local reenter = self.game.data.Reenter
+    self:syncHeadInfo()
+
+    local st = self.game:getSeatTypeByAcId(self.game.curOpAcId)
+    self:showClock(st)
+end
+
+function doushisiDesk:syncHeadInfo()
+    for _, p in pairs(self.game.players) do
+        self:setDang(p.acId, p.isDang)
+        self:setBao(p.acId, p.isBao)
+        self:setPiao(p.acId, p.isPiao)
+        self:setZhuang(p.acId, p.isMarker)
+        self:setXiao(p.acId, p.isXiao)
+        local st = self.game:getSeatTypeByAcId(p.acId)
+        local header = self.headers[st]
+        header:setFuShu(p.fuShu)
+        header:setCount(p.zhangShu)
+    end
+end
+
+function doushisiDesk:updateInhandCardCount(acId)
+    local p = self.game:getPlayerByAcId(acId)
+    local st = self.game:getSeatTypeByAcId(p.acId)
+    local header = self.headers[st]
+    header:setCount(p.zhangShu)
+end
+
+function doushisiDesk:onDangNotifyHandler(acId, dang)
+    self:onOpDoDang(acId, dang)
+    self:setDang(acId, dang)
+
+    if dang then
+        local markerPlayer = self.game:getMarkerPlayer()
+        local markerSeatType = self.game:getSeatTypeByAcId(markerPlayer.acId)
+        self:showClock(markerSeatType)
+    else
+        local player = self.game:getPlayerByAcId(acId)
+        local nextPlayerSeatType = (player.seatType + 1) % 4
+        self:showClock(nextPlayerSeatType)
+    end
+
+    return 0.7
+end
+
+function doushisiDesk:getHeaderByAcId(acId)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    return header
+end
+
+local withoutCPZTContrl = {
+    hu          = true,
+    zuozhuang   = true,
+    dang        = true,
+    budang      = true,
+    huazhuang   = true,
+    weigui      = true,
+}
+
+function doushisiDesk:playGfx(acId, name)
+    local header = self:getHeaderByAcId(acId)
+    log("=======================" .. name)
+    header:playGfx(name)
+end
+
+function doushisiDesk:onOpDoHu(acId)
+    self:playGfx(acId, "hu")
+end
+function doushisiDesk:onOpDoDang(acId, isDang)
+    if isDang then
+        self:playGfx(acId, "dang")
+    else
+        self:playGfx(acId, "budang")
+    end
+end
+function doushisiDesk:onOpDoChe(acId)
+    self:playGfx(acId, "che")
+end
+function doushisiDesk:onOpDoChi(acId)
+    self:playGfx(acId, "chi")
+end
+function doushisiDesk:onOpDoAn(acId)
+    self:playGfx(acId, "an")
+end
+function doushisiDesk:onOpDoHua(acId)
+    self:playGfx(acId, "hua")
+end
+function doushisiDesk:onOpDoBaGang(acId)
+    self:playGfx(acId, "deng")
+end
+function doushisiDesk:onOpDoBao(acId)
+    self:playGfx(acId, "bao")
+end
+function doushisiDesk:onOpDoWeiGui(acId)
+    self:playGfx(acId, "weigui")
 end
 
 return doushisiDesk

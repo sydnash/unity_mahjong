@@ -49,6 +49,7 @@ function doushisiGame_jintang:onGameEndListener(specialData, datas, totalScores)
         end
         table.insert(datas.players, d)
     end
+    self:clearPlayerGameStatus()
     table.sort(datas.players, function(t1, t2)
         return t1.seatType < t2.seatType
     end)
