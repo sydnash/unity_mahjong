@@ -466,7 +466,7 @@ function doushisiOperation:showChuHint()
 
     local from  = Vector3.New(0, 0, 45)
     local to    = Vector3.New(0, 0, 1)
-    self.mFinger:setLocalRotation(from)
+    self.mFinger:setLocalRotation(Quaternion.Euler(from.x, from.y, from.z))
     self.mFinger.action = tweenForever.new({
         tweenRotation.new(self.mFinger, 0.5, from, to, nil),
         tweenRotation.new(self.mFinger, 0.5, to, from, nil),

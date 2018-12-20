@@ -36,8 +36,8 @@ function doushisiGame:ctor(data, playback)
 end
 
 function doushisiGame:onEnter(msg)
+    self:clearPlayerGameStatus()
     base.onEnter(self, msg)
-    
     if msg.Reenter ~= nil then
         self.markerTurn         = msg.Reenter.MarkerTurn
         self.markerAcId         = self:getPlayerByTurn(self.markerTurn).acId
@@ -45,8 +45,11 @@ function doushisiGame:onEnter(msg)
         self.curOpAcId          = self:getPlayerByTurn(self.curOpTurn).acId
         self.curOpType          = msg.Reenter.CurOpType
         self.deskStatus         = msg.Reenter.DeskStatus
+        self.dangTurn           = msg.Reenter.DangTurn
+        self.dangAcId           = self:getPlayerByTurn(self.dangTurn).acId
         self.canBack            = (self.deskStatus == deskStatus.none)
         self:syncSeats(msg.Reenter.SyncSeatInfos)
+        self:computeXiaoJia()
     end
 end
 
@@ -60,6 +63,7 @@ function doushisiGame:syncSeats(seats)
         player.que = v.QueType
         player.hu = v.HuInfo
         player.isMarker = self:isMarker(player.acId)
+        player.isDang = self:isDang(player.acId)
 
         player[doushisiType.cardType.shou] = v.CardsInHand
         player[doushisiType.cardType.chu]  = v.CardsInChuPai
@@ -68,7 +72,25 @@ function doushisiGame:syncSeats(seats)
         player.fuShu = v.FuShu
         player.piaoStatus = v.PiaoStatus
         player.zhaoCnt = v.ZhaoCnt
+        player.zhangShu = #v.CardsInHand
     end
+end
+
+function doushisiGame:isDang(acId)
+    return acId == self.dangAcId
+end
+
+function doushisiGame:computeXiaoJia()
+    if self:getTotalPlayerCount() < 4 then
+        return
+    end
+    local markerTurn = self.players[self.markerAcId].turn
+    local xiaoJiaTurn = markerTurn - 1
+    if xiaoJiaTurn < 0 then
+        xiaoJiaTurn = xiaoJiaTurn + 4
+    end
+    local p = self:getPlayerByTurn(xiaoJiaTurn)
+    p.isXiao = true
 end
 
 -------------------------------------------------------------------------------
@@ -82,6 +104,9 @@ end
 -- 
 -------------------------------------------------------------------------------
 function doushisiGame:createDeskUI()
+    if self.cityType == cityType.jintang then
+        return require("ui.doushisiDesk.doushisiDesk_jintang").new(self)
+    end
     return require("ui.doushisiDesk.doushisiDesk").new(self)
 end
 
@@ -142,6 +167,8 @@ function doushisiGame:onDangNotifyHandler(msg)
     self.deskStatus = msg.CurDeskStatus
     local player = self:getPlayerByAcId(msg.AcId)
     player.isDang = msg.IsDang
+
+    self.deskUI:onDangNotifyHandler(player.acId, msg.IsDang)
 end
 
 function doushisiGame:onPiaoHandler(msg)
@@ -226,6 +253,9 @@ function doushisiGame:onMoPaiHandler(msg)
     end
     self:subLeftCount(#msg.Ids)
     player.fuShu = msg.FuShu
+    player.zhangShu = #inhandCards
+
+    self.deskUI:updateInhandCardCount(player.acId)
 
     return self.operationUI:onMoPai(player.acId, msg.Ids)
 end
@@ -255,6 +285,8 @@ function doushisiGame:onChiPengGangType(player, op, cards, beCard)
         table.removeItem(player[self.cardType.shou], c)
         table.insert(info.Cards, c)
     end
+    player.zhangShu = #player[self.cardType.shou]
+    self.deskUI:updateInhandCardCount(player.acId)
     table.insert(player[self.cardType.peng], info)
 end
 
@@ -274,6 +306,8 @@ function doushisiGame:onOpDoBaGang(player, msg)
             end
         end
     end
+    player.zhangShu = #player[self.cardType.shou]
+    self.deskUI:updateInhandCardCount(player.acId)
     return self.operationUI:onOpDoBaGang(player.acId, card)
 end
 
@@ -291,6 +325,8 @@ function doushisiGame:onOpDoCaiShen(player, msg)
     end
     table.insert(caiShenInfo.Cards, card)
 
+    player.zhangShu = #player[self.cardType.shou]
+    self.deskUI:updateInhandCardCount(player.acId)
     return self.operationUI:onOpDoCaiShen(player.acId, card)
 end
 
@@ -338,6 +374,8 @@ function doushisiGame:onOpDoChu(player, msg)
     table.removeItem(player[self.cardType.shou], delCard)
     table.insert(player[self.cardType.chu], delCard)
 
+    player.zhangShu = #player[self.cardType.shou]
+    self.deskUI:updateInhandCardCount(player.acId)
     return self.operationUI:onOpDoChu(msg.AcId, msg.DelCards[1])
 end
 
@@ -412,6 +450,8 @@ function doushisiGame:faPai(msg)
             for _, _ in pairs(v.Cards) do
                 self.leftCardsCount = self.leftCardsCount - 1
             end
+            player.zhangShu = #player[self.cardType.shou]
+            self.deskUI:updateInhandCardCount(player.acId)
         end
     end
 end
@@ -434,9 +474,6 @@ function doushisiGame:onGameStartHandler(msg)
     return self.operationUI:onGameStart()
 end
 
-function doushisiGame:csDang(isDang)
-
-end
 -------------------------------------------------------------------------------
 --update
 ------------------------------------------------------------------------------
@@ -566,9 +603,25 @@ function doushisiGame:onGameEndListener(specialData, datas, totalScores)
         end
         table.insert(datas.players, d)
     end
+    self:clearPlayerGameStatus()
     table.sort(datas.players, function(t1, t2)
         return t1.seatType < t2.seatType
     end)
+end
+
+function doushisiGame:clearPlayerGameStatus()
+    if not self.players then
+        return
+    end
+    for _, p in pairs(self.players) do
+        p.isDang = false
+        p.isPiao = false
+        p.isBao = false
+        p.isZhuang = false
+        p.isXiao = false
+        p.fushu = 0
+        p.zhangShu = 0
+    end
 end
 
 return doushisiGame

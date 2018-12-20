@@ -2,10 +2,10 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local mahjongClass = require("const.mahjongClass")
 
 local base = require("ui.deskHeader")
 local doushisiDeskHeader = class("doushisiDeskHeader", base)
+local doushisiGame = require("logic.doushisi.doushisiGame")
 
 local res = {
     [seatType.mine]  = "DeskHeaderM",
@@ -23,20 +23,82 @@ function doushisiDeskHeader:setPlayerInfo(player)
     base.setPlayerInfo(self, player)
 
     if player ~= nil then
-        
+        self:setCount(player.zhangShu)
+        self:setFuShu(player.fuShu)
+    else
+        self:setCount(0)
+        self:setFuShu(0)
+        self:hideDang()
+        self:hide()
     end
 end
 
 function doushisiDeskHeader:setCount(count)
+    count = count or 0
     self.mCount:setText(string.format("张数:%d", count))
 end
 
 function doushisiDeskHeader:setFuShu(fushu)
+    fushu = fushu or 0
     self.mFuShu:setText(string.format("福数:%d", fushu))
 end
 
 function doushisiDeskHeader:reset()
     base.reset(self)
+    self:hideDang()
+    self:hideDaDang()
+    self:hideZhuang()
+    self:hidePiao()
+    self:hideBao()
+    self:hideXiao()
+end
+
+--dang
+function doushisiDeskHeader:showDang()
+    self.mFlagDang:show()
+end
+function doushisiDeskHeader:hideDang()
+    self.mFlagDang:hide()
+end
+
+--piao
+function doushisiDeskHeader:showPiao()
+    self.mFlagPiao:show()
+end
+function doushisiDeskHeader:hidePiao()
+    self.mFlagPiao:hide()
+end
+
+--bao
+function doushisiDeskHeader:showBao()
+    self.mFlagBao:show()
+end
+function doushisiDeskHeader:hideBao()
+    self.mFlagBao:hide()
+end
+
+--zhuang
+function doushisiDeskHeader:showZhuang()
+    self.mZhuang:show()
+end
+function doushisiDeskHeader:hideZhuang()
+    self.mZhuang:hide()
+end
+
+--da dang
+function doushisiDeskHeader:showDaDang()
+    self.mDang:show()
+end
+function doushisiDeskHeader:hideDaDang()
+    self.mDang:hide()
+end
+
+--xiao
+function doushisiDeskHeader:showXiao()
+    self.mXiao:show()
+end
+function doushisiDeskHeader:hideXiao()
+    self.mXiao:hide()
 end
 
 local tweenConfig = {

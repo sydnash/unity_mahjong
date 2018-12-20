@@ -3,6 +3,7 @@
 --此文件由[BabeLua]插件自动生成
 
 local header = require("ui.doushisiDesk.doushisiDeskHeader")
+local doushisiGame = require("logic.doushisi.doushisiGame")
 
 local base = require("ui.desk")
 local doushisiDesk = class("doushisiDesk", base)
@@ -102,7 +103,46 @@ function doushisiDesk:onPlayerGfx(acId, opid)
 end
 
 function doushisiDesk:onOpDoChu(acId, cards)
-    
+end
+
+function doushisiDesk:setDang(acId, dang)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    if dang then
+        header:showDang()
+    else
+        header:hideDang()
+    end
+end
+
+function doushisiDesk:setPiao(acId, piao)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    if piao then
+        header:showPiao()
+    else
+        header:hidePiao()
+    end
+end
+
+function doushisiDesk:setZhuang(acId, zhuang)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    if zhuang then
+        header:showZhuang()
+    else
+        header:hideZhuang()
+    end
+end
+
+function doushisiDesk:setBao(acId, bao)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    if bao then
+        header:showBao()
+    else
+        header:hideBao()
+    end
 end
 
 function doushisiDesk:createSettingUI()
@@ -118,6 +158,44 @@ function doushisiDesk:onDestroy()
     self.headers = {}
 
     base.onDestroy(self)
+end
+
+function doushisiDesk:onGameStart()
+    base.onGameStart(self)
+    self:syncHeadInfo()
+end
+
+function doushisiDesk:onGameSync()
+    base.onGameSync(self)
+    local reenter = self.game.data.Reenter
+    self:syncHeadInfo()
+end
+
+function doushisiDesk:syncHeadInfo()
+    for _, p in pairs(self.game.players) do
+        self:setDang(p.acId, p.isDang)
+        self:setBao(p.acId, p.isBao)
+        self:setPiao(p.acId, p.isPiao)
+        self:setZhuang(p.acId, p.isMarker)
+        local st = self.game:getSeatTypeByAcId(p.acId)
+        local header = self.headers[st]
+        header:setFuShu(p.fuShu)
+        header:setCount(p.zhangShu)
+    end
+end
+
+function doushisiDesk:updateInhandCardCount(acId)
+    local p = self.game:getPlayerByAcId(acId)
+    local st = self.game:getSeatTypeByAcId(p.acId)
+    local header = self.headers[st]
+    header:setCount(p.zhangShu)
+end
+
+function doushisiDesk:onDangNotifyHandler(acId, dang)
+    if not dang then
+        return
+    end
+    self:setDang(acId, dang)
 end
 
 return doushisiDesk
