@@ -34,31 +34,9 @@ function mahjongDesk:onInit()
     base.onInit(self)
 end
 
---function mahjongDesk:onGameStart()
---    for _, v in pairs(self.game.players) do 
---        local st = self.game:getSeatTypeByAcId(v.acId)
---        local hd = self.headers[st]
-
---        if v.isMarker then
---            hd:showMarker()
---        else
---            hd:showMarker()
---        end
---    end
-
---    base.onGameStart(self)
---end
-
 function mahjongDesk:onGameSync()
     self:updateLeftMahjongCount()
     base.onGameSync(self)
-end
-
-function mahjongDesk:getInvitationInfo()
-    local friendsterId = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d，", self.game.friendsterId)
-    return string.format("%s%s", 
-                         friendsterId,
-                         getMahjongConfigText(self.game.cityType, self.game.config, false))
 end
 
 function mahjongDesk:onPlayerPeng(acId)

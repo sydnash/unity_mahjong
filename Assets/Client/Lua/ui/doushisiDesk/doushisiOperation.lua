@@ -221,7 +221,7 @@ function doushisiOperation:onInit()
     local inhandCameraT = camera.transform
     inhandCameraT.position = Vector3.New(inhandCameraT.position.x, self.safeArea.bottom + camera.orthographicSize, inhandCameraT.position.z)
 
-    self.cardRoot = find("changpai/changpai_root")
+    self.cardRoot = find("doushisi/changpai_root")
     self.allCards = {}
     self.idleCards = {}
     self.allActionCards = {}
@@ -235,6 +235,15 @@ function doushisiOperation:onInit()
     self.dragCard:setPickabled(true)
     self.dragCard:setColliderEnabled(false)
     self.sortOrder = 0
+    --剩余的牌
+    self.leftCards = find("doushisi/leftcards")
+    local m = findChild(self.leftCards.transform, "model/M")
+    self.leftCardsModel = getComponentU(m.gameObject, typeof(SpriteRD))
+    local l = findChild(self.leftCards.transform, "num/L")
+    local h = findChild(self.leftCards.transform, "num/H")
+    self.leftCardsNumL = getComponentU(l.gameObject, typeof(SpriteRD))
+    self.leftCardsNumH = getComponentU(h.gameObject, typeof(SpriteRD))
+    self.leftCards:hide()
     
     --初始化按钮
     self.mBuDang:addClickListener(self.onBuDangClickedHandler, self)
@@ -355,6 +364,9 @@ function doushisiOperation:onGameSync()
             self:promoteChu(self.game.curOpAcId, reenter.CurDiPai, true)
         end
     end
+
+    self:showLeftCards()
+    self:updateLeftCardsCount()
 end
 
 function doushisiOperation:onFaPai()
@@ -737,6 +749,7 @@ end
 
 function doushisiOperation:reset()
     touch.removeListener()
+    self:hideLeftCards()
     self:hideAllOpBtn()
     self:closeAllBtnPanel()
     self:disableChu()
@@ -1068,6 +1081,8 @@ function doushisiOperation:initInhandCards()
         self.inhandCards[player.acId] = {}
         self:initOnePlayerInhandCards(player.acId, player[doushisiGame.cardType.shou])
     end
+
+    self:updateLeftCardsCount()
 end
 
 function doushisiOperation:initOnePlayerInhandCards(acId, ids)
@@ -1186,28 +1201,60 @@ function doushisiOperation:topCard(card)
     self.sortOrder = self.sortOrder + 1
 end
 
+function doushisiOperation:showLeftCards()
+    self.leftCards:show()
+end
+
+function doushisiOperation:hideLeftCards()
+    self.leftCards:hide()
+end
+
+function doushisiOperation:updateLeftCardsCount(cnt)
+    if cnt == nil then
+        cnt = self.game:getLeftCardsCount()
+    end
+    log("left cards = " .. tostring(cnt))
+
+    local total = self.game:getTotalCardsCount()
+    local M = tostring(math.floor((cnt / total) * 10))
+    self.leftCardsModel.spriteName = M
+
+    local L = tostring(cnt % 10)
+    local H = tostring(math.floor(cnt / 10))
+    self.leftCardsNumL.spriteName = L
+    self.leftCardsNumH.spriteName = H
+end
+
 function doushisiOperation:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    
     self:reset()
+    self:showLeftCards()
+
     for _, card in pairs(self.allCards) do
         card:destroy()
     end
+
     for _, card in pairs(self.allActionCards) do
         card:destroy()
     end
+
     for _, node in pairs(self.flyNodes) do
         GameObject.Destroy(node.gameObject)
     end
+
     base.onDestroy(self)
 end
 
 function doushisiOperation:getCardByGo(go)
     local cards = self.inhandCards[self.game.mainAcId]
+
     for _, c in pairs(cards) do
         if c.gameObject == go then
             return c
         end
     end
+
     return nil
 end
 
@@ -1514,14 +1561,19 @@ function doushisiOperation:moPaiAction(time, acId, id, handPos, order, scale)
         end
     end
 
-    if time > 0 then
-        self:callFunctionAfterTime(time, function()
-            self.animationManager:add(sq)
-            sq:play()
-        end)
-    else
+    local function playSq()
         self.animationManager:add(sq)
         sq:play()
+
+        self:updateLeftCardsCount()
+    end
+
+    if time > 0 then
+        self:callFunctionAfterTime(time, function()
+            playSq()
+        end)
+    else
+        playSq()
     end
 
     local added = 0.03 * ((5 + 1) * 2 + 1)
@@ -1555,6 +1607,8 @@ function doushisiOperation:fanPaiAction(time, acId, id)
         node.chufan = 2
         node.id = id
         self.promoteNode = node
+
+        self:updateLeftCardsCount()
     end
     
     if time > 0 then

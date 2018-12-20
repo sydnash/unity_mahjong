@@ -16,7 +16,7 @@ doushisiGame.deskPlayStatus = {
 }
 
 local totalCardCountByCity = {
-    [cityType.jintang] = 88,
+    [cityType.jintang] = 92,
 }
 
 function doushisiGame:getTotalCardCountByGame(cityType)
@@ -57,6 +57,9 @@ end
 -- 同步各个位置的数据
 -------------------------------------------------------------------------------
 function doushisiGame:syncSeats(seats)
+    self.totalCardsCount = self:getTotalCardCountByGame(self.cityType)
+    self.leftCardsCount = self.totalCardsCount
+
     for _, v in pairs(seats) do
         local player = self:getPlayerByAcId(v.AcId)
         player.ready = false --如果游戏中，清除ready状态
@@ -72,7 +75,18 @@ function doushisiGame:syncSeats(seats)
         player.fuShu = v.FuShu
         player.piaoStatus = v.PiaoStatus
         player.zhaoCnt = v.ZhaoCnt
+<<<<<<< HEAD
         player.zhangShu = #v.CardsInHand
+=======
+
+        local cnt = #v.CardsInHand + #v.CardsInChuPai
+        for _, v in pairs(v.ChiCheInfos) do
+            for _, u in pairs(v.Cards) do
+                cnt = cnt + 1
+            end
+        end
+        self:subLeftCount(cnt)
+>>>>>>> f3a1e2cb294cfb883c3199b9e99777702bdb9e76
     end
 end
 

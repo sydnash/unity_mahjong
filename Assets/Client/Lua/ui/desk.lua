@@ -104,6 +104,13 @@ function desk:update()
     end
 end
 
+function desk:getInvitationInfo()
+    local friendsterText = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d，", self.game.friendsterId)
+    local configText = self.game:convertConfigToString(false)
+    
+    return string.format("%s%s", friendsterText, configText)
+end
+
 function desk:onCloseAllUIHandler()
     self:close()
 end
@@ -194,11 +201,6 @@ function desk:onInviteXLClickedHandler()
     end
 
     self.mInvitePanel:hide()
-end
-
-function desk:getInvitationInfo()
-    local friendsterId = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d", self.game.friendsterId)
-    return tostring(friendsterId)
 end
 
 function desk:onReadyClickedHandler()

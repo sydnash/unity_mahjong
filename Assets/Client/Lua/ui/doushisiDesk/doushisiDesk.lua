@@ -85,13 +85,6 @@ function doushisiDesk:onInit()
     base.onInit(self)
 end
 
-function doushisiDesk:getInvitationInfo()
-    local friendsterId = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d，", self.game.friendsterId)
-    return string.format("%s%s", 
-                         friendsterId,
-                         "empty")
-end
-
 function doushisiDesk:onPlayerGfx(acId, opid)
     local st = self.game:getSeatTypeByAcId(acId)
     local hd = self.headers[st]

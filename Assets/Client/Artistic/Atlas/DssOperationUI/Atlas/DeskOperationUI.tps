@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/mj/tdqp/Assets/Client/Artistic/Atlas/DssOperationUI/Atlas/DeskOperationUI.tps</string>
+        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/DssOperationUI/Atlas/DeskOperationUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -97,7 +97,7 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>512</int>
+            <int>1024</int>
             <key>height</key>
             <int>1024</int>
         </QSize>
@@ -257,6 +257,76 @@
                 <rect>31,44,63,87</rect>
                 <key>scale9Paddings</key>
                 <rect>31,44,63,87</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZM_p0.png</key>
+            <key type="filename">Images/ZM_p1.png</key>
+            <key type="filename">Images/ZM_p2.png</key>
+            <key type="filename">Images/ZM_p3.png</key>
+            <key type="filename">Images/ZM_p4.png</key>
+            <key type="filename">Images/ZM_p5.png</key>
+            <key type="filename">Images/ZM_p6.png</key>
+            <key type="filename">Images/ZM_p7.png</key>
+            <key type="filename">Images/ZM_p8.png</key>
+            <key type="filename">Images/ZM_p9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,9,11,17</rect>
+                <key>scale9Paddings</key>
+                <rect>6,9,11,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZM_zjd_03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>39,13,78,26</rect>
+                <key>scale9Paddings</key>
+                <rect>39,13,78,26</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZM_zjp.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>31,8,63,15</rect>
+                <key>scale9Paddings</key>
+                <rect>31,8,63,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZM_zjp1_01.png</key>
+            <key type="filename">Images/ZM_zjp1_02.png</key>
+            <key type="filename">Images/ZM_zjp1_03.png</key>
+            <key type="filename">Images/ZM_zjp1_04.png</key>
+            <key type="filename">Images/ZM_zjp1_05.png</key>
+            <key type="filename">Images/ZM_zjp1_06.png</key>
+            <key type="filename">Images/ZM_zjp1_07.png</key>
+            <key type="filename">Images/ZM_zjp1_08.png</key>
+            <key type="filename">Images/ZM_zjp1_09.png</key>
+            <key type="filename">Images/ZM_zjp1_10.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,14,65,27</rect>
+                <key>scale9Paddings</key>
+                <rect>32,14,65,27</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -494,6 +564,28 @@
             <filename>Images/B5B6Z.png</filename>
             <filename>Images/ZM_kuang01.png</filename>
             <filename>Images/game_line_xuexian.png</filename>
+            <filename>Images/ZM_p0.png</filename>
+            <filename>Images/ZM_p1.png</filename>
+            <filename>Images/ZM_p2.png</filename>
+            <filename>Images/ZM_p3.png</filename>
+            <filename>Images/ZM_p4.png</filename>
+            <filename>Images/ZM_p5.png</filename>
+            <filename>Images/ZM_p6.png</filename>
+            <filename>Images/ZM_p7.png</filename>
+            <filename>Images/ZM_p8.png</filename>
+            <filename>Images/ZM_p9.png</filename>
+            <filename>Images/ZM_zjd_03.png</filename>
+            <filename>Images/ZM_zjp.png</filename>
+            <filename>Images/ZM_zjp1_01.png</filename>
+            <filename>Images/ZM_zjp1_02.png</filename>
+            <filename>Images/ZM_zjp1_03.png</filename>
+            <filename>Images/ZM_zjp1_04.png</filename>
+            <filename>Images/ZM_zjp1_05.png</filename>
+            <filename>Images/ZM_zjp1_06.png</filename>
+            <filename>Images/ZM_zjp1_07.png</filename>
+            <filename>Images/ZM_zjp1_08.png</filename>
+            <filename>Images/ZM_zjp1_09.png</filename>
+            <filename>Images/ZM_zjp1_10.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -202,7 +202,7 @@ function friendsterDetail:refreshUI()
         self.mBank:show()
         self.mStatistics:show()
 
-        if not isNilOrNull(self.data.applyList) and #self.data.applyList > 0 then
+        if #self.data.applyList > 0 then
             self.mMailRP:show()
         end
     end

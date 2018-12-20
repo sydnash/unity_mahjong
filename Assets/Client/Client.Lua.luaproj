@@ -34,7 +34,7 @@
     <Folder Include="Lua\config\" />
     <Folder Include="Lua\platform\" />
     <Folder Include="Lua\ui\" />
-    <Folder Include="Lua\ui\dssDesk\" />
+    <Folder Include="Lua\ui\doushisiDesk\" />
     <Folder Include="Lua\ui\gameEnd\" />
     <Folder Include="Lua\ui\gameEnd\mahjong\" />
     <Folder Include="Lua\ui\mahjongDesk\" />
@@ -89,8 +89,8 @@
     <Compile Include="Lua\ui\city.lua" />
     <Compile Include="Lua\ui\deskDetail\deskDetail.lua" />
     <Compile Include="Lua\ui\deskDetail\deskDetailPanel.lua" />
-    <Compile Include="Lua\ui\dssDesk\chiAnSelPanel.lua" />
-    <Compile Include="Lua\ui\dssDesk\dssDeskOperation.lua" />
+    <Compile Include="Lua\ui\doushisiDesk\chiAnSelPanel.lua" />
+    <Compile Include="Lua\ui\doushisiDesk\doushisiOperation.lua" />
     <Compile Include="Lua\ui\errorMessage.lua" />
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDesk.lua" />
@@ -104,6 +104,8 @@
     <Compile Include="Lua\ui\location.lua" />
     <Compile Include="Lua\ui\desk.lua" />
     <Compile Include="Lua\ui\deskHeader.lua" />
+    <Compile Include="Lua\ui\doushisiDesk\doushisiDesk.lua" />
+    <Compile Include="Lua\ui\doushisiDesk\doushisiDeskHeader.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
     <Compile Include="Lua\ui\mail\mailItem.lua" />
     <Compile Include="Lua\ui\playback.lua" />

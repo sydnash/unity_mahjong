@@ -105,8 +105,8 @@ local doushisiLayoutBase = {
     [1] = {
         title = "人数", 
         items = { 
-            [1] = { style = "radiobox", text = "4人", key = "RenShu", value = 1, },
-            [2] = { style = "radiobox", text = "3人", key = "RenShu", value = 2, },
+            [1] = { style = "radiobox", text = "3人", key = "RenShu", value = 1, },
+            [2] = { style = "radiobox", text = "4人", key = "RenShu", value = 2, },
         },
         group = { value = true, switchOff = false },
     },
@@ -338,7 +338,7 @@ deskShiftConfig = {
     },
 }
 
-function getMahjongConfigText(cityType, config, ignoreJushu)
+function convertConfigToString(cityType, gameType, config, ignoreJushu)
     local text = string.empty
 
     local function concat(t)
@@ -349,8 +349,8 @@ function getMahjongConfigText(cityType, config, ignoreJushu)
         text = text .. t
     end
 
-    local layout = deskConfigLayout[cityType][gameType.mahjong]
-    local shift = deskShiftConfig[cityType][gameType.mahjong]
+    local layout = deskConfigLayout[cityType][gameType]
+    local shift = deskShiftConfig[cityType][gameType]
 
     for _, v in pairs(layout) do
         for _, u in pairs(v.items) do

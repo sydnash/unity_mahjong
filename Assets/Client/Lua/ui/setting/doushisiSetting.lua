@@ -17,7 +17,7 @@ end
 
 function doushisiSetting:onInit()
     base.onInit(self)
-    self.tableRoot = find("changpai/table")
+    self.tableRoot = find("doushisi/table")
 
     self.mMandarin.key = language.mandarin
     self.mSichuan.key  = language.sichuan
