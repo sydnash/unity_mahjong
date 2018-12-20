@@ -25,7 +25,7 @@ function friendsterMessage:set(friendsterId, data)
 end
 
 function friendsterMessage:refreshList()
-    local count = (self.data ~= nil) and #self.data or 0
+    local count = isNilOrNull(self.data )and 0 or #self.data
 
     if count <= 0 then
         self.mEmpty:show()
