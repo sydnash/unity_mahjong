@@ -202,11 +202,11 @@ end
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
-function platformHelper.openExplorer()
+function platformHelper.openExplorer(url)
     if deviceConfig.isAndroid then
-        AndroidHelper.instance:OpenExplore()
+        AndroidHelper.instance:OpenExplore(url)
     elseif deviceConfig.isApple then
-        IOSHelper.instance:OpenExplore()
+        IOSHelper.instance:OpenExplore(url)
     end
 end
 

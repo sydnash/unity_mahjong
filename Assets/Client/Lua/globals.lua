@@ -10,6 +10,7 @@ require("config.deskConfig")
 
 deviceConfig    = require("config.deviceConfig")
 gameConfig      = require("config.gameConfig")
+enableConfig    = require("config.enableConfig")
 networkConfig   = require("config.networkConfig")
 gamepref        = require("logic.gamepref")
 platformHelper  = require("platform.platformHelper")
@@ -152,10 +153,29 @@ function getLogicGame(citytype, gametype)
     end
 end
 
+local function checkGame(cityType, gameType)
+    local cityConfig = enableConfig[cityType]
+    if cityConfig == nil then
+        return false, string.format("暂不支持%s地区", cityName[cityType])
+    end
+
+    for _, v in pairs(cityConfig) do
+        if v.detail ~= nil then
+            for k, u in pairs(v.detail) do
+                if k == gameType and u then
+                    return true, string.empty
+                end
+            end
+        end
+    end
+
+    return false, string.format("%s地区暂不支持%s", cityName[cityType], gameName[gameType])
+end
+
 -------------------------------------------------------------
 -- 进入桌子
 -------------------------------------------------------------
-function enterDesk(gameType, deskId, callback)
+function enterDesk(cityType, deskId, callback)
     showWaitingUI("正在进入房间，请稍候...")
 
     --开始预加载资源
@@ -172,7 +192,7 @@ function enterDesk(gameType, deskId, callback)
         callback = function(ok) end
     end
 
-    networkManager.checkDesk(gameType, deskId, function(msg)
+    networkManager.checkDesk(cityType, deskId, function(msg)
         if msg == nil then
             closeWaitingUI()
             showMessageUI(NETWORK_IS_BUSY, function()
@@ -180,6 +200,8 @@ function enterDesk(gameType, deskId, callback)
             end)
             return
         end
+
+--        log("check desk, msg = " .. table.tostring(msg))
 
         if msg.RetCode ~= retc.ok then
             closeWaitingUI()
@@ -189,9 +211,25 @@ function enterDesk(gameType, deskId, callback)
             return
         end
 
+        msg.Config = table.fromjson(msg.Config)
+
+        local ok, errText = checkGame(msg.GameType, msg.Config.Game)
+        if not ok then
+            closeWaitingUI()
+            showMessageUI(string.format("%s, 可点击确定下载<color=red>天地长牌</color>进入游戏", errText), 
+                          function()
+                              callback(false)
+                              platformHelper.openExplorer("www.cdbshy.com")
+                          end,
+                          function()
+                              callback(false)
+                          end)
+            return
+        end
+
         local location = locationManager.getData()
         
-        networkManager.enterDesk(gameType, deskId, location, function(msg)
+        networkManager.enterDesk(cityType, deskId, location, function(msg)
             closeWaitingUI()
 
             if msg == nil then
@@ -207,6 +245,8 @@ function enterDesk(gameType, deskId, callback)
                 end)
                 return
             end
+
+--            log("enter desk, msg = " .. table.tostring(msg))
 
             msg.Config  = table.fromjson(msg.Config)
             msg.Reenter = table.fromjson(msg.Reenter)
