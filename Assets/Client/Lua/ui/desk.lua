@@ -420,6 +420,10 @@ function desk:onChatMessageHandler(msg)
         local player = self.game:getPlayerByAcId(msg.AcId)
         playChatTextSound(k, player.sex)
     elseif msg.Type == chatType.emoji then
+        local info = chatConfig.emoji[msg.Data]
+        if not info then
+            return
+        end
         local content = chatConfig.emoji[msg.Data].content
         local audio = chatConfig.emoji[msg.Data].audio
 

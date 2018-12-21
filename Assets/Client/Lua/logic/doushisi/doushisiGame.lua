@@ -238,12 +238,12 @@ function doushisiGame:onAnPaiHandler(msg)
         table.insert(data.Cards, msg.Cards[i])
         table.insert(data.HasTY, msg.HasTY[i])
     end
+    self.operationUI:onOpListAn(data)
     data.CanPass = msg.CanPass
     if data.CanPass then
         self.operationUI:onOpListPass()
     end
-
-    return self.operationUI:onOpListAn(data)
+    return 0.1
 end
 
 function doushisiGame:onAnPaiNotifyHandler(msg)
