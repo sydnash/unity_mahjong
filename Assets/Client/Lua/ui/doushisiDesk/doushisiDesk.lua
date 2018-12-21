@@ -67,7 +67,7 @@ local COUNTDOWN_SECONDS_C = 20
 local clockPosition = {
     [seatType.mine]  = Vector3.New(0, 125, 0), 
     [seatType.right] = Vector3.New(-250, -125, 0), 
-    [seatType.top]   = Vector3.New(0, -125, 0), 
+    [seatType.top]   = Vector3.New(120, -125, 0), 
     [seatType.left]  = Vector3.New(259, -125, 0),
 }
 

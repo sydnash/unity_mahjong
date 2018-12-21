@@ -37,7 +37,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224630594985176490}
-  - component: {fileID: 114754865722832590}
   m_Layer: 5
   m_Name: OpList
   m_TagString: Untagged
@@ -1099,28 +1098,6 @@ MonoBehaviour:
     sprite: {fileID: 21300206, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
   - key: dang
     sprite: {fileID: 21300164, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
---- !u!114 &114754865722832590
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1062544056600246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 20
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
 --- !u!114 &114757794842804104
 MonoBehaviour:
   m_ObjectHideFlags: 1
