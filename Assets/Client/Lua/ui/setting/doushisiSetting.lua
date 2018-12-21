@@ -55,6 +55,7 @@ function doushisiSetting:onInit()
         self.mLayoutDFT,
         self.mLayoutXD,
     }
+    self.mLayoutXD:hide()
 
     local tbl = gamepref.getTablelayout()
     for _, v in pairs(tablelayouts) do

@@ -49,19 +49,20 @@ function createDesk:onInit()
     self.config = self:readConfig()
     self:createDetail()
 
-    local gameConfig = self.config[self.gameType]
-    local renshu = gameConfig.RenShu
-    local jushu  = gameConfig.JuShu
-
-    local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
-    self.mCost:setText(tostring(cost))
-
     self.mMahjong:addChangedListener(self.onMahjongChangedHandler, self)
     self.mChangpai:addChangedListener(self.onChangpaiChangedHandler, self)
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+end
+
+function createDesk:updateCost()
+    local gameConfig = self.config[self.gameType]
+    local renshu = gameConfig.RenShu
+    local jushu  = gameConfig.JuShu
+    local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
+    self.mCost:setText(tostring(cost))
 end
 
 function createDesk:onCloseClickedHandler()
@@ -138,6 +139,7 @@ function createDesk:createDetail()
     local layout = deskConfigLayout[self.cityType][self.gameType]
     local config = self.config[self.gameType]
 
+    self:updateCost()
     self.detail:set(layout, config)
     self.detail:show()
 end
