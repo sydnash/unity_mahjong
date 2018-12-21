@@ -11,11 +11,19 @@ local chat = class("chat", base)
 _RES_(chat, "ChatUI", "ChatUI")
 
 function chat:onInit()
-    self.mEmojiTab:setSelected(true)
+    self.mEmojiTab:setSelected(false)
     self.mTextTab:setSelected(false)
-
-    self.mEmojiPage:show()
+    self.mEmojiPage:hide()
     self.mTextPage:hide()
+
+    local lastChose = gamepref:getLastChatChose()
+    if lastChose == chatType.emoji then
+        self.mEmojiPage:show()
+        self.mEmojiTab:setSelected(true)
+    else
+        self.mTextPage:show()
+        self.mTextTab:setSelected(true)
+    end
 
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mMask:addClickListener(self.onCloseClickedHandler, self)
@@ -95,6 +103,7 @@ function chat:onEmojiTabChangedHandler(selected)
         self.mEmojiPage:show()
         self.mTextPage:hide()
 
+        gamepref.setLastChatChose(chatType.emoji)
         playButtonClickSound()
     end
 end
@@ -104,6 +113,7 @@ function chat:onTextTabChangedHandler(selected)
         self.mEmojiPage:hide()
         self.mTextPage:show()
 
+        gamepref.setLastChatChose(chatType.text)
         playButtonClickSound()
     end
 end

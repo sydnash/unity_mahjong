@@ -42,7 +42,7 @@ function playHistoryDetail:setHistory(historyId, historyContainer)
     local players = history.Players
     for i = 1, #players do
         self.mNicknames[i]:show()
-        self.mNicknames[i]:setText(players[i].Nickname)
+        self.mNicknames[i]:setText(cutoutString(players[i].Nickname, gameConfig.nicknameMaxLength))
         if players[i].AcId == gamepref.player.acId then
             self.mResult:show()
         end

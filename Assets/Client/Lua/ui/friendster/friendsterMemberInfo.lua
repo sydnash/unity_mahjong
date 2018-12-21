@@ -99,24 +99,27 @@ function friendsterMemberInfo:onDissolveClickedHandler()
 end
 
 function friendsterMemberInfo:onDeleteClickedHandler()
-    showWaitingUI("正在将玩家从亲友圈中删除，请稍候")
-    networkManager.deleteAcIdFromFriendster(self.friendsterId, self.data.acId, function(msg)
-        closeWaitingUI()
+    showMessageUI(string.format("是否要将玩家（%d）从亲友圈中移除？"), function
+        showWaitingUI("正在将玩家从亲友圈中删除，请稍候")
+        networkManager.deleteAcIdFromFriendster(self.friendsterId, self.data.acId, function(msg)
+            closeWaitingUI()
 
-        if msg == nil then
-            showMessageUI(NETWORK_IS_BUSY)
-            return
-        end
+            if msg == nil then
+                showMessageUI(NETWORK_IS_BUSY)
+                return
+            end
 
---        log("delete player from friendster, msg = " .. table.tostring(msg))
+    --        log("delete player from friendster, msg = " .. table.tostring(msg))
 
-        if msg.RetCode ~= retc.ok then
-            showMessageUI(retcText[msg.RetCode])
-            return
-        end
+            if msg.RetCode ~= retc.ok then
+                showMessageUI(retcText[msg.RetCode])
+                return
+            end
 
-        showMessageUI("玩家已经从亲友圈中删除")
-        self:close()
+            showMessageUI("玩家已经从亲友圈中删除")
+            self:close()
+        end)
+    end, function()
     end)
 
     playButtonClickSound()

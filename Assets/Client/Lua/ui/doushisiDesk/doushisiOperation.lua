@@ -2,6 +2,8 @@ local doushisi      = require("logic.doushisi.doushisi")
 local doushisiType  = require("logic.doushisi.doushisiType")
 local doushisiGame  = require("logic.doushisi.doushisiGame")
 local touch         = require("logic.touch")
+local SpriteRenderer = UnityEngine.SpriteRenderer
+local GameObject = UnityEngine.GameObject
 
 local base = require("ui.common.view")
 local doushisiOperation = class("doushisiOperation", base)
@@ -243,6 +245,10 @@ function doushisiOperation:onInit()
     local inhandCameraT = camera.transform
     inhandCameraT.position = Vector3.New(inhandCameraT.position.x, self.safeArea.bottom + camera.orthographicSize, inhandCameraT.position.z)
 
+    self.tableRoot = find("doushisi/table")
+    local tbc = gamepref.getTablecloth()
+    self:changeBG(tbc)
+
     self.cardRoot = find("doushisi/changpai_root")
     self.allCards = {}
     self.idleCards = {}
@@ -306,6 +312,22 @@ function doushisiOperation:onInit()
     self:reset()
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+end
+
+function doushisiOperation:changeBG(key)
+    if self.tableRoot ~= nil then
+        local render = getComponentU(self.tableRoot.gameObject, typeof(SpriteRenderer))
+        if render ~= nil then
+            local sprite = render.sprite
+            if sprite ~= nil then
+                textureManager.unload(sprite.texture)
+                GameObject.Destroy(sprite)
+            end
+
+            local tex = textureManager.load("doushisi/table", key)
+            render.sprite = convertTextureToSprite(tex, Vector2.New(0.5, 0.5))
+        end
+    end
 end
 
 function doushisiOperation:worldToUIPos(pos, node)

@@ -219,7 +219,7 @@ function enterDesk(cityType, deskId, callback)
             showMessageUI(string.format("%s, 可点击确定下载<color=red>天地长牌</color>进入游戏", errText), 
                           function()
                               callback(false)
-                              platformHelper.openExplorer("www.cdbshy.com")
+                              platformHelper.openExplorer("http://www.cdbshy.com")
                           end,
                           function()
                               callback(false)

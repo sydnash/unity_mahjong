@@ -11,6 +11,7 @@ local language_key      = "LANGUAGE"
 local tablecloth_key    = "TABLECLOTH"
 local tablelayout_key   = "TABLELAYOUT"
 local chipengziti_key   = "CHIPENGZITI"
+local lastchatchose_key = "LASTCHATCHOSE"
 
 -------------------------------------------------------------
 --
@@ -106,6 +107,16 @@ local function setChiPengZiTi(has)
     PlayerPrefs.SetInt(chipengziti_key, save)
 end
 
+local function setLastChatChose(chose)
+    PlayerPrefs.SetInt(lastchatchose_key, chose)
+end
+local function getLastChatChose()
+    if not PlayerPrefs.HasKey(lastchatchose_key) then
+        return chatType.emoji
+    end
+    return PlayerPrefs.GetInt(lastchatchose_key)
+end
+
 -------------------------------------------------------------
 --
 -------------------------------------------------------------
@@ -133,6 +144,8 @@ return {
     getTablelayout = getTablelayout,
     getChiPengZiTi = getChiPengZiTi,
     setChiPengZiTi = setChiPengZiTi,
+    getLastChatChose = getLastChatChose,
+    setLastChatChose = setLastChatChose,
 
     save = save
 }
