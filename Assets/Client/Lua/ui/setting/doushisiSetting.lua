@@ -7,8 +7,6 @@ local doushisiSetting = class("doushisiSetting", base)
 
 _RES_(doushisiSetting, "SettingUI", "DoushisiSettingUI")
 
-local SpriteRenderer = UnityEngine.SpriteRenderer
-local GameObject = UnityEngine.GameObject
 
 function doushisiSetting:ctor(game)
     self.game = game
@@ -17,7 +15,6 @@ end
 
 function doushisiSetting:onInit()
     base.onInit(self)
-    self.tableRoot = find("doushisi/table")
 
     self.mMandarin.key = language.mandarin
     self.mSichuan.key  = language.sichuan
@@ -104,21 +101,8 @@ end
 function doushisiSetting:onTableclothChangedHandler(sender, selected, clicked)
     if clicked then
         if selected then
-            if self.tableRoot ~= nil then
-                local render = getComponentU(self.tableRoot.gameObject, typeof(SpriteRenderer))
-                if render ~= nil then
-                    local sprite = render.sprite
-                    if sprite ~= nil then
-                        textureManager.unload(sprite.texture)
-                        GameObject.Destroy(sprite)
-                    end
-
-                    local tex = textureManager.load("doushisi/table", sender.key)
-                    render.sprite = convertTextureToSprite(tex, Vector2.New(0.5, 0.5))
-                end
-            end
-
-            gamepref.setTablecloth(sender.key)
+           self.game.operationUI:changeBG(sender.key)
+           gamepref.setTablecloth(sender.key)
         end
 
         playButtonClickSound()
