@@ -17,7 +17,7 @@ local resourceSuffix = {
     [doushisiStyle.modern] = {
         [doushisiType.cardType.shou]    = "l",
         [doushisiType.cardType.chu]     = "_ns",
-        [doushisiType.cardType.peng]    = "s",
+        [doushisiType.cardType.peng]    = "_ns",
         [doushisiType.cardType.perfect] = "xl",
     }
 }
