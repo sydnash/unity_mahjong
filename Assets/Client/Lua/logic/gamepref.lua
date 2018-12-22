@@ -81,7 +81,7 @@ end
 --
 -------------------------------------------------------------
 local function setTablelayout(tbl)
-    PlayerPrefs.SetString(tablelayout_key, tbl)
+    PlayerPrefs.SetInt(tablelayout_key, tbl)
 end
 
 -------------------------------------------------------------
@@ -89,10 +89,10 @@ end
 -------------------------------------------------------------
 local function getTablelayout()
     if not PlayerPrefs.HasKey(tablelayout_key) then
-        return tablelayout.dft
+        return doushisiStyle.traditional
     end
 
-    return PlayerPrefs.GetString(tablelayout_key)
+    return PlayerPrefs.GetInt(tablelayout_key)
 end
 
 local function getChiPengZiTi()

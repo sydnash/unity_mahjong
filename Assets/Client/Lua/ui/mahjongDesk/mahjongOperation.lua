@@ -444,7 +444,7 @@ function mahjongOperation:onGameSync()
         end
     end
     
-    if self.game.deskStatus == mahjongGame.status.hsz then
+    if self.game.deskPlayStatus == mahjongGame.status.hsz then
         self:setDices()
         self:highlightPlaneByAcId(self.game.markerAcId)
         self:setCountdownVisible(false)
@@ -456,7 +456,7 @@ function mahjongOperation:onGameSync()
             self.mHnz:show()
             self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
         end
-    elseif self.game.deskStatus == mahjongGame.status.dingque then
+    elseif self.game.deskPlayStatus == mahjongGame.status.dingque then
         self:setDices()
         self:highlightPlaneByAcId(self.game.markerAcId)
         self:setCountdownVisible(false)
@@ -466,7 +466,7 @@ function mahjongOperation:onGameSync()
         if player.que < 0 then
             self.mQue:show()
         end
-    elseif self.game.deskStatus == mahjongGame.status.playing then
+    elseif self.game.deskPlayStatus == mahjongGame.status.playing then
         self:onOpList(reenter.CurOpList)
         self:highlightPlaneByAcId(reenter.CurOpAcId)
         self.turnCountdown = COUNTDOWN_SECONDS_C

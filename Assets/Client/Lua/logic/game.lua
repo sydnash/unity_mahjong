@@ -26,7 +26,7 @@ function game:ctor(data, playback)
     self.config             = data.Config
     self.status             = data.Status
     self.creatorAcId        = data.Creator
-    self.deskStatus         = -1
+    self.deskPlayStatus     = -1
     self.canBack            = true
     self.isGameOverUIShow   = false
 
@@ -105,6 +105,10 @@ function game:startLoop()
     self:startMessageQueue()
 end
 
+function game:onGameStart()
+    self.deskStatus = deskStatus.playing
+end
+
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
@@ -181,6 +185,7 @@ function game:onEnter(msg)
         self:clearMessageQueue()
     end
     self.data = msg
+    self.deskStatus = self.data.Status
 
     self.players = {}
     self.playerCount = 0
@@ -303,7 +308,7 @@ end
 
 function game:onDeskStatusChangedHandler(msg)
     local func = function()
-        self.deskStatus = msg.Status
+        self.deskPlayStatus = msg.Status
         self:onDeskStatusChanged()
     end
     self:pushMessage(func)
@@ -656,10 +661,11 @@ end
 -- 服务器通知牌局结束
 -------------------------------------------------------------------------------
 function game:onGameEndHandler(msg)
-    self:addDelay(2)
-
+    self:addDelay(1)
+ 
     local func = (function()
 --    log("game end, msg = " .. table.tostring(msg))
+        self.deskStatus = deskStatus.waiting
         self.leftGames = msg.LeftTime
         local special = table.fromjson(msg.Special)
 
@@ -755,7 +761,7 @@ end
 -- 
 -------------------------------------------------------------------------------
 function game:isPlaying()
-    return self.data.Status == gameStatus.playing
+    return self.deskStatus == deskStatus.playing
 end
 
 -------------------------------------------------------------------------------

@@ -62,10 +62,20 @@ local inhandCameraParams = {
     size = 3.6
 }
 
-local actionCardGap = 0.50
 doushisiOperation.shakepaitime = 0.3
-doushisiOperation.actionCardHeight = 2.14
-doushisiOperation.actionCardWidth = 0.72
+
+local actionCardHeight = 2.14
+local actionCardWidth = 0.72
+local actionCardGap = 0.50
+
+local xdStyleActionCardHeight   = 2.97
+local xdStyleActionCardWidth    = 1.03
+local xdStyleActionCardGap      = 0.50
+
+local actionConfig = {
+    [doushisiStyle.traditional] = {w = actionCardWidth, h = actionCardHeight, g = actionCardGap},
+    [doushisiStyle.modern]      = {w = xdStyleActionCardWidth, h = xdStyleActionCardHeight, g = xdStyleActionCardGap},
+}
 
 local seats = {
     [seatType.mine] = { 
@@ -148,6 +158,92 @@ local seats = {
     },
 }
 
+local xdStyleseats = {
+    [seatType.mine] = { 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -2.00, -3.59, 0), rot = Quaternion.Euler(0, 0, 0), 
+                    rowgap = 0.92, colgap = 0.65, height = 1.48, width = 0.96, scale = 1,
+                },
+        [doushisiGame.cardType.chu] = { pos = Vector3.New(5.552, -1.842, 0), rot = Quaternion.Euler(0, 0, 0), 
+                    colDir = {x = -1, y = 0},
+                    rowDir = {x = 0, y = -1},
+                    rowgap = 0.32, colgap = 0.45, cardWidth = 0.48, cardHeight = 0.37,
+                    rotEuler = Vector3.New(0, 0, 0),
+                },
+        [doushisiGame.cardType.peng] = { pos = Vector3.New(-6.079, -2.121, 0), rot = Quaternion.Euler(0, 0, 0), 
+                    colDir = {x = 1, y = 0},
+                    rowDir = {x = 0, y = 1},
+                    rowgap = 0.32, colgap = 0.45, cardWidth = 0.48, cardHeight = 0.37,
+                    rotEuler = Vector3.New(0, 0, 0),
+                },
+        promote = {pos = Vector3.New(-0.00, 0.80, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.97, rotEuler = Vector3.New(0, 0, 0)},
+    },
+    [seatType.right] = { 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( 6.15, 0.08, 0), rot = Quaternion.Euler(0, 0, 0), 
+                    colDir = {x = 0, y = -1},
+                    rowDir = {x = -1,y = 0},
+                    rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
+                },
+        [doushisiGame.cardType.chu] = { pos = Vector3.New(5.552, 0.291, 0), rot = Quaternion.Euler(0, 0, 0), 
+                    colDir = {x = -1, y = 0},
+                    rowDir = {x = 0, y = -1},
+                    rowgap = 0.32, colgap = 0.45, cardWidth = 0.48, cardHeight = 0.37,
+                    rotEuler = Vector3.New(0, 0, 0),
+                },
+        [doushisiGame.cardType.peng] = { pos = Vector3.New(5.148, 0.741, 0), rot = Quaternion.Euler(0, 0, 0), 
+                    colDir = {x = -1, y = 0},
+                    rowDir = {x = 0,y = 1},
+                    rowgap = 0.32, colgap = 0.45, cardWidth = 0.48, cardHeight = 0.37,
+                    rotEuler = Vector3.New(0, 0, 0),
+                },
+        promote = {pos = Vector3.New(3.68, 0.639, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.97, rotEuler = Vector3.New(0, 0, 0)},
+    },
+    [seatType.top] = { 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( 1.81, 3.33, 0), rot = Quaternion.Euler(0, 0, 90), 
+                    colDir = {x = 1, y = 0},
+                    rowDir = {x = 0, y = -1},
+                    rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
+                },
+        [doushisiGame.cardType.chu] = { pos = Vector3.New( 0.624, 2.292, 0), rot = Quaternion.Euler(0, 0, 0),
+                    colDir = {x = 1, y = 0},
+                    rowDir = {x = 0, y = -1},
+                    rowgap = 0.32, colgap = 0.45, cardWidth = 0.48, cardHeight = 0.37,
+                    rotEuler = Vector3.New(0, 0, 0),
+                },
+        [doushisiGame.cardType.peng] = { pos = Vector3.New(-0.372, 1.895, 0), rot = Quaternion.Euler(0, 0, 0), 
+                    colDir = {x = -1, y = 0},
+                    rowDir = {x = 0,y = 1},
+                    rowgap = 0.32, colgap = 0.45, cardWidth = 0.48, cardHeight = 0.37,
+                    rotEuler = Vector3.New(0, 0, 0),
+                },
+        promote = {pos = Vector3.New(0.00, 1.36, 0), rot = Quaternion.Euler(0, 0, 90), cardHeight = 2.97, rotEuler = Vector3.New(0, 0, 90)},
+    },
+    [seatType.left] = { 
+        [doushisiGame.cardType.shou] = { pos = Vector3.New( -6.15, 0.08, 0), rot = Quaternion.Euler(0, 0, 0), 
+                    colDir = {x = 0, y = -1},
+                    rowDir = {x = 1,y = 0},
+                    rowgap = 0.47, colgap = 0.30, width = 0.48, height = 0.78, scale = 0.6,
+                },
+        [doushisiGame.cardType.chu] = { pos = Vector3.New( -6.066, -0.052, 0), rot = Quaternion.Euler(0, 0, 0),
+                    colDir = {x = 1, y = 0},
+                    rowDir = {x = 0, y = -1},
+                    rowgap = 0.32, colgap = 0.45, cardWidth = 0.48, cardHeight = 0.37,
+                    rotEuler = Vector3.New(0, 0, 0),
+                },
+        [doushisiGame.cardType.peng] = { pos = Vector3.New(-5.172, 0.594, 0), rot = Quaternion.Euler(0, 0, 0), 
+                    colDir = {x = 1, y = 0},
+                    rowDir = {x = 0,y = 1},
+                    rowgap = 0.32, colgap = 0.45, cardWidth = 0.48, cardHeight = 0.37,
+                    rotEuler = Vector3.New(0, 0, 0),
+                },
+        promote = {pos = Vector3.New(-3.71, 0.68, 0), rot = Quaternion.Euler(0, 0, 0), cardHeight = 2.97, rotEuler = Vector3.New(0, 0, 0)},
+    },
+}
+
+local seatConfig = {
+    [doushisiStyle.traditional] = seats,
+    [doushisiStyle.modern]      = xdStyleseats,
+}
+
 local alignType = {
     min     = 1,
     max     = 2,
@@ -188,30 +284,42 @@ function doushisiOperation:fixPos(pos, xalign, yalign)
 end
 
 function doushisiOperation:alignPos()
-    self.seats = seats
-    if seats.computed then
+    if seatConfig.computed then
         return
     end
-    seats.computed = true
-    self.seats[seatType.mine][doushisiGame.cardType.shou].pos = self:fixPos(seats[seatType.mine][doushisiGame.cardType.shou].pos, alignType.min, alignType.min)
-    self.seats[seatType.mine][doushisiGame.cardType.chu].pos = self:fixPos(seats[seatType.mine][doushisiGame.cardType.chu].pos, alignType.min, alignType.min)
-    self.seats[seatType.mine][doushisiGame.cardType.peng].pos = self:fixPos(seats[seatType.mine][doushisiGame.cardType.peng].pos, alignType.max, alignType.min)
-    self.seats[seatType.mine].promote.pos = self:fixPos(seats[seatType.mine].promote.pos, alignType.center, alignType.min)
+    for _, s in pairs(seatConfig) do
+        s[seatType.mine][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.mine][doushisiGame.cardType.shou].pos, alignType.min, alignType.min)
+        s[seatType.mine][doushisiGame.cardType.chu].pos = self:fixPos(s[seatType.mine][doushisiGame.cardType.chu].pos, alignType.min, alignType.min)
+        s[seatType.mine][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.mine][doushisiGame.cardType.peng].pos, alignType.max, alignType.min)
+        s[seatType.mine].promote.pos = self:fixPos(s[seatType.mine].promote.pos, alignType.center, alignType.min)
 
-    self.seats[seatType.right][doushisiGame.cardType.shou].pos = self:fixPos(seats[seatType.right][doushisiGame.cardType.shou].pos, alignType.min, alignType.min)
-    self.seats[seatType.right][doushisiGame.cardType.chu].pos = self:fixPos(seats[seatType.right][doushisiGame.cardType.chu].pos, alignType.min, alignType.percent)
-    self.seats[seatType.right][doushisiGame.cardType.peng].pos = self:fixPos(seats[seatType.right][doushisiGame.cardType.peng].pos, alignType.min, alignType.percent)
-    self.seats[seatType.right].promote.pos = self:fixPos(seats[seatType.right].promote.pos, alignType.min, alignType.percent)
+        s[seatType.right][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.right][doushisiGame.cardType.shou].pos, alignType.min, alignType.min)
+        s[seatType.right][doushisiGame.cardType.chu].pos = self:fixPos(s[seatType.right][doushisiGame.cardType.chu].pos, alignType.min, alignType.percent)
+        s[seatType.right][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.right][doushisiGame.cardType.peng].pos, alignType.min, alignType.percent)
+        s[seatType.right].promote.pos = self:fixPos(s[seatType.right].promote.pos, alignType.min, alignType.percent)
 
-    self.seats[seatType.left][doushisiGame.cardType.shou].pos = self:fixPos(seats[seatType.left][doushisiGame.cardType.shou].pos, alignType.max, alignType.min)
-    self.seats[seatType.left][doushisiGame.cardType.chu].pos = self:fixPos(seats[seatType.left][doushisiGame.cardType.chu].pos, alignType.max, alignType.percent)
-    self.seats[seatType.left][doushisiGame.cardType.peng].pos = self:fixPos(seats[seatType.left][doushisiGame.cardType.peng].pos, alignType.max, alignType.percent)
-    self.seats[seatType.left].promote.pos = self:fixPos(seats[seatType.left].promote.pos, alignType.max, alignType.percent)
-    
-    self.seats[seatType.top][doushisiGame.cardType.shou].pos = self:fixPos(seats[seatType.top][doushisiGame.cardType.shou].pos, alignType.max, alignType.max)
-    self.seats[seatType.top][doushisiGame.cardType.chu].pos = self:fixPos(seats[seatType.top][doushisiGame.cardType.chu].pos, alignType.min, alignType.max)
-    self.seats[seatType.top][doushisiGame.cardType.peng].pos = self:fixPos(seats[seatType.top][doushisiGame.cardType.peng].pos, alignType.min, alignType.max)
-    self.seats[seatType.top].promote.pos = self:fixPos(seats[seatType.top].promote.pos, alignType.center, alignType.max)
+        s[seatType.left][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.left][doushisiGame.cardType.shou].pos, alignType.max, alignType.min)
+        s[seatType.left][doushisiGame.cardType.chu].pos = self:fixPos(s[seatType.left][doushisiGame.cardType.chu].pos, alignType.max, alignType.percent)
+        s[seatType.left][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.left][doushisiGame.cardType.peng].pos, alignType.max, alignType.percent)
+        s[seatType.left].promote.pos = self:fixPos(s[seatType.left].promote.pos, alignType.max, alignType.percent)
+        
+        s[seatType.top][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.top][doushisiGame.cardType.shou].pos, alignType.max, alignType.max)
+        s[seatType.top][doushisiGame.cardType.chu].pos = self:fixPos(s[seatType.top][doushisiGame.cardType.chu].pos, alignType.min, alignType.max)
+        s[seatType.top][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.top][doushisiGame.cardType.peng].pos, alignType.min, alignType.max)
+        s[seatType.top].promote.pos = self:fixPos(s[seatType.top].promote.pos, alignType.center, alignType.max)
+    end
+    seatConfig.computed = true
+end
+
+function doushisiOperation:setDoushisiStyle(style)
+    if self.game:isPlayback() then
+        style = doushisiStyle.modern
+    end
+    self.style = style
+    self.seats = seatConfig[style]
+    self.actionCardGap = actionConfig[style].g
+    self.actionCardWidth = actionConfig[style].w
+    self.actionCardHeight = actionConfig[style].h
 end
 
 function doushisiOperation:onInit()
@@ -256,7 +364,7 @@ function doushisiOperation:onInit()
     self.idleActionCards = {}
     self.flyNodes = {}
     self.idleFlyNodes = {}
-    self.style = doushisiStyle.traditional
+    self:setDoushisiStyle(gamepref.getTablelayout())
     self.canChuPai = false
     self.dragCard = doushisi.new(0)
     self.dragCard:setLocalScale(Vector3.New(1.2, 1.2, 1.2))
@@ -407,7 +515,7 @@ function doushisiOperation:onGameSync()
     self:initInhandCards()
     local reenter = self.game.data.Reenter
     if reenter then
-        local deskPlayStatus = self.game.deskStatus
+        local deskPlayStatus = self.game.deskPlayStatus
         if deskPlayStatus == doushisiGame.deskPlayStatus.tuiDang then
             if self.game.curOpAcId == self.game.mainAcId then
                 self:onDangHandler(reenter.IsMustDang)
@@ -758,7 +866,7 @@ function doushisiOperation:onHuClickedHandler()
 end
 
 function doushisiOperation:onOpDoHu(acId, id)
-    self:promoteChu(acId, id)
+    return self:promoteChu(acId, id)
 end
 
 -----------------------------------------------------------
@@ -1121,6 +1229,10 @@ function doushisiOperation:initChiPengCards()
 end
 
 function doushisiOperation:relocateChiPengCards(acId)
+    if self.style == doushisiStyle.modern then
+        self:relocateChiPengCards_forModern(acId)
+        return
+    end
     local seatType = self.game:getSeatTypeByAcId(acId)
     local infos = self.chipengCards[acId]
 
@@ -1145,6 +1257,30 @@ function doushisiOperation:relocateChiPengCards(acId)
             card:setPickabled(false)
         end
         totalCntSincePreGroup = totalCntSincePreGroup + #info.cards
+    end
+end
+
+function doushisiOperation:relocateChiPengCards_forModern(acId)
+    local seatType = self.game:getSeatTypeByAcId(acId)
+    local infos = self.chipengCards[acId]
+    local cfg = self.seats[seatType][doushisiGame.cardType.peng]
+    local rot = cfg.rot
+    local startPos = cfg.pos
+
+    local col = 0
+    for _, info in pairs(infos) do
+        for i = 1, #info.cards, 4 do
+            local max = math.min(i + 4, #info.cards)
+            for j = i, max do
+                local row = max - j
+                local card = info.cards[j]
+                local pos = card:getLocalPosition()
+                local pos = self:getChiPengCardPos(startPos, seatType, row, col, pos)
+                self:addCardTo(card, pos, seatType, doushisiGame.cardType.peng, rot)
+                card:setPickabled(false)
+            end
+            col = col + 1
+        end
     end
 end
 
@@ -1201,11 +1337,18 @@ function doushisiOperation:getChuCardStartPos(st)
     return self.seats[st][doushisiGame.cardType.chu].pos
 end
 
-function doushisiOperation:getChuCardPos(startPos, seatType, idx, pos)
+function doushisiOperation:getRowColForChu(idx)
     local colMax = 7
+    if self.style == doushisiStyle.modern then
+        colMax = 6
+    end
     local row = math.floor((idx - 1) / colMax)
-    local col = (idx - 1) % 7
+    local col = (idx - 1) % colMax
+    return row, col
+end
 
+function doushisiOperation:getChuCardPos(startPos, seatType, idx, pos)
+    local row, col = self:getRowColForChu(idx)
     local cfg = self.seats[seatType][doushisiGame.cardType.chu]
     local rsx = startPos.x + row * cfg.rowDir.x * cfg.rowgap
     local rsy = startPos.y + row * cfg.rowDir.y * cfg.rowgap
@@ -1666,9 +1809,11 @@ function doushisiOperation:chiPengAction(acId, cards)
     node:setLocalPosition(Vector3.New(x1, y1, 0))
     node:show()
 
-    if node.cards and #node.cards == 1 then
-        for _, card in pairs(node.cards) do
-            card:setSortingOrder(cards[#cards]:getSortingOrder())
+    if self.style == doushisiStyle.traditional then
+        if node.cards and #node.cards == 1 then
+            for _, card in pairs(node.cards) do
+                card:setSortingOrder(cards[#cards]:getSortingOrder())
+            end
         end
     end
 
@@ -1948,6 +2093,9 @@ function doushisiOperation:computeFlyTime(x1, y1, x2, y2)
     local time = dis / speed
     if time < 0.25 then
         time = 0.25
+    end
+    if time > 0.35 then
+        time = 0.35
     end
     return time
 end

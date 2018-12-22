@@ -44,8 +44,8 @@ function doushisiGame:onEnter(msg)
         self.curOpTurn          = msg.Reenter.CurOpTurn
         self.curOpAcId          = self:getPlayerByTurn(self.curOpTurn).acId
         self.curOpType          = msg.Reenter.CurOpType
-        self.deskStatus         = msg.Reenter.DeskStatus
-        self.canBack            = (self.deskStatus < 0)
+        self.deskPlayStatus     = msg.Reenter.DeskStatus
+        self.canBack            = (self.deskPlayStatus < 0)
         self.dangTurn           = msg.Reenter.DangTurn
         if self.dangTurn >= 0 then
             self.dangAcId = self:getPlayerByTurn(self.dangTurn).acId
@@ -180,7 +180,7 @@ function doushisiGame:onDangHandler(msg)
 end
 
 function doushisiGame:onDangNotifyHandler(msg)
-    self.deskStatus = msg.CurDeskStatus
+    self.deskPlayStatus = msg.CurDeskStatus
     local player = self:getPlayerByAcId(msg.AcId)
     player.isDang = msg.IsDang
 
@@ -238,12 +238,12 @@ function doushisiGame:onAnPaiHandler(msg)
         table.insert(data.Cards, msg.Cards[i])
         table.insert(data.HasTY, msg.HasTY[i])
     end
+    self.operationUI:onOpListAn(data)
     data.CanPass = msg.CanPass
     if data.CanPass then
         self.operationUI:onOpListPass()
     end
-
-    return self.operationUI:onOpListAn(data)
+    return 0.1
 end
 
 function doushisiGame:onAnPaiNotifyHandler(msg)
@@ -485,17 +485,18 @@ function doushisiGame:faPai(msg)
 end
 
 function doushisiGame:onGameStartHandler(msg)
+    self:onGameStart(msg)
     for _, player in pairs(self.players) do
         player[doushisiGame.cardType.shou] = {}
         player[doushisiGame.cardType.chu] = {}
         player[doushisiGame.cardType.peng] = {}
     end
-    self.markerTurn = msg.Marker
-    self.diceCard   = msg.DiceCardId
-    self.diceTurn   = msg.DiceTurn
-    self.deskStatus = msg.CurDeskStatus
-    self.markerAcId = self:getPlayerByTurn(self.markerTurn).acId
-    self.diceAcId   = self:getPlayerByTurn(self.diceTurn).acId
+    self.markerTurn     = msg.Marker
+    self.diceCard       = msg.DiceCardId
+    self.diceTurn       = msg.DiceTurn
+    self.deskPlayStatus = msg.CurDeskStatus
+    self.markerAcId     = self:getPlayerByTurn(self.markerTurn).acId
+    self.diceAcId       = self:getPlayerByTurn(self.diceTurn).acId
     self:faPai(msg)
     
     self.deskUI:onGameStart()
