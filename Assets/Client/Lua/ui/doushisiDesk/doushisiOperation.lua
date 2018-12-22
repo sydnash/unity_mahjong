@@ -867,7 +867,7 @@ function doushisiOperation:onHuClickedHandler()
 end
 
 function doushisiOperation:onOpDoHu(acId, id)
-    self:promoteChu(acId, id)
+    return self:promoteChu(acId, id)
 end
 
 -----------------------------------------------------------
@@ -1810,9 +1810,11 @@ function doushisiOperation:chiPengAction(acId, cards)
     node:setLocalPosition(Vector3.New(x1, y1, 0))
     node:show()
 
-    if node.cards and #node.cards == 1 then
-        for _, card in pairs(node.cards) do
-            card:setSortingOrder(cards[#cards]:getSortingOrder())
+    if self.style == doushisiStyle.traditional then
+        if node.cards and #node.cards == 1 then
+            for _, card in pairs(node.cards) do
+                card:setSortingOrder(cards[#cards]:getSortingOrder())
+            end
         end
     end
 
@@ -2092,6 +2094,9 @@ function doushisiOperation:computeFlyTime(x1, y1, x2, y2)
     local time = dis / speed
     if time < 0.25 then
         time = 0.25
+    end
+    if time > 0.35 then
+        time = 0.35
     end
     return time
 end

@@ -661,7 +661,7 @@ end
 -- 服务器通知牌局结束
 -------------------------------------------------------------------------------
 function game:onGameEndHandler(msg)
-    self:addDelay(2)
+    self:addDelay(1)
  
     local func = (function()
 --    log("game end, msg = " .. table.tostring(msg))
