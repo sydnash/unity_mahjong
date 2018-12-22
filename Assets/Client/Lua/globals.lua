@@ -246,7 +246,7 @@ function enterDesk(cityType, deskId, callback)
                 return
             end
 
---            log("enter desk, msg = " .. table.tostring(msg))
+            log("enter desk, msg = " .. table.tostring(msg))
 
             msg.Config  = table.fromjson(msg.Config)
             msg.Reenter = table.fromjson(msg.Reenter)

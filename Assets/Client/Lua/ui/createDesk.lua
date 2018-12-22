@@ -140,7 +140,7 @@ function createDesk:createDetail()
     local config = self.config[self.gameType]
 
     self:updateCost()
-    self.detail:set(layout, config)
+    self.detail:set(self.cityType, self.gameType, layout, config)
     self.detail:show()
 end
 
