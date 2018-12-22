@@ -48,14 +48,13 @@ function doushisiSetting:onInit()
         v:addChangedListener(self.onTableclothChangedHandler, self)
     end
 
-    self.mLayoutDFT.key = tablelayout.dft
-    self.mLayoutXD.key = tablelayout.xd
+    self.mLayoutDFT.key = doushisiStyle.traditional
+    self.mLayoutXD.key = doushisiStyle.modern
 
     local tablelayouts = { 
         self.mLayoutDFT,
         self.mLayoutXD,
     }
-    self.mLayoutXD:hide()
 
     local tbl = gamepref.getTablelayout()
     for _, v in pairs(tablelayouts) do
@@ -114,6 +113,16 @@ function doushisiSetting:onTablelayoutChangedHandler(sender, selected, clicked)
     if clicked then
         if selected then
             gamepref.setTablelayout(sender.key)
+        end
+        if self.game:isPlaying() then
+            showMessageUI("修改布局风格需要重连游戏，是否修改？", function()
+                self.game.operationUI:setDoushisiStyle(sender.key)
+                enterDesk(clientApp.currentDesk.cityType, clientApp.currentDesk.deskId)
+                self:close()
+            end, function()
+            end)
+        else
+            self.game.operationUI:setDoushisiStyle(sender.key)
         end
 
         playButtonClickSound()

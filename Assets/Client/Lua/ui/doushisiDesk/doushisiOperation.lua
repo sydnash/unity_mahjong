@@ -516,7 +516,7 @@ function doushisiOperation:onGameSync()
     self:initInhandCards()
     local reenter = self.game.data.Reenter
     if reenter then
-        local deskPlayStatus = self.game.deskStatus
+        local deskPlayStatus = self.game.deskPlayStatus
         if deskPlayStatus == doushisiGame.deskPlayStatus.tuiDang then
             if self.game.curOpAcId == self.game.mainAcId then
                 self:onDangHandler(reenter.IsMustDang)
@@ -1265,6 +1265,7 @@ function doushisiOperation:relocateChiPengCards_forModern(acId)
     local seatType = self.game:getSeatTypeByAcId(acId)
     local infos = self.chipengCards[acId]
     local cfg = self.seats[seatType][doushisiGame.cardType.peng]
+    local rot = cfg.rot
     local startPos = cfg.pos
 
     local col = 0

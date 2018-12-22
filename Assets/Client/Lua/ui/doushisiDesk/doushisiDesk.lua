@@ -98,9 +98,9 @@ function doushisiDesk:onInit()
 end
 
 function doushisiDesk:onFaPai()
-    if self.deskStatus == doushisiGame.deskPlayStatus.piao then
+    if self.game.deskPlayStatus == doushisiGame.deskPlayStatus.piao then
         --定漂中
-    elseif self.deskStatus == doushisiGame.deskPlayStatus.tuiDang or self.deskStatus == doushisiGame.deskPlayStatus.playing then
+    elseif self.game.deskPlayStatus == doushisiGame.deskPlayStatus.tuiDang or self.game.deskPlayStatus == doushisiGame.deskPlayStatus.playing or self.game.deskPlayStatus == doushisiGame.deskPlayStatus.touPai then
         local markerPlayer = self.game:getMarkerPlayer()
         local markerSeatType = self.game:getSeatTypeByAcId(markerPlayer.acId)
         self:showClock(markerSeatType)
@@ -118,9 +118,7 @@ function doushisiDesk:onFanPai(acId)
 end
 
 function doushisiDesk:onDeskStatusChanged()
-    log("doushisiDesk:onDeskStatusChanged  status = " .. tostring(self.game.deskStatus))
-    if self.game.deskStatus == doushisiGame.deskPlayStatus.playing then
-        log("doushisiDesk:onDeskStatusChanged  2222")
+    if self.game.deskPlayStatus == doushisiGame.deskPlayStatus.playing then
         local markerPlayer = self.game:getMarkerPlayer()
         local markerSeatType = self.game:getSeatTypeByAcId(markerPlayer.acId)
         self:showClock(markerSeatType)
@@ -242,9 +240,9 @@ function doushisiDesk:onGameStart()
     base.onGameStart(self)
     self:syncHeadInfo()
 
-    if self.deskStatus == doushisiGame.deskPlayStatus.piao then
+    if self.game.deskPlayStatus == doushisiGame.deskPlayStatus.piao then
         --定漂中
-    elseif self.deskStatus == doushisiGame.deskPlayStatus.tuiDang or self.deskStatus == doushisiGame.deskPlayStatus.playing or self.deskStatus == doushisiGame.deskPlayStatus.touPai then
+    elseif self.game.deskPlayStatus == doushisiGame.deskPlayStatus.tuiDang or self.game.deskPlayStatus == doushisiGame.deskPlayStatus.playing or self.game.deskPlayStatus == doushisiGame.deskPlayStatus.touPai then
         local markerPlayer = self.game:getMarkerPlayer()
         local markerSeatType = self.game:getSeatTypeByAcId(markerPlayer.acId)
         self:showClock(markerSeatType)

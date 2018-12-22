@@ -133,7 +133,7 @@ function desk:refreshUI()
         local p = self.headers[s]
         p:setPlayerInfo(v)
 
-        if self.game.mode == gameMode.playback or self.game.status == gameStatus.playing then
+        if self.game.mode == gameMode.playback or self.game:isPlaying() then
             p:setReady(false)
         end
     end
