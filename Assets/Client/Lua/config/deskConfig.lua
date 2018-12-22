@@ -138,8 +138,8 @@ local doushisiLayoutBase = {
     [5] = { 
         title = "封顶", 
         items = { 
-            [1] = { style = "radiobox", text = "3番", key = "FengDing", value = 1, },
-            [2] = { style = "radiobox", text = "4番", key = "FengDing", value = 2, },
+            [1] = { style = "radiobox", text = "3番(80)", key = "FengDing", value = 1, },
+            [2] = { style = "radiobox", text = "4番(120)", key = "FengDing", value = 2, },
             [3] = { style = "radiobox", text = "3番", key = "FengDing", value = 3, },
             [4] = { style = "radiobox", text = "4番", key = "FengDing", value = 4, },
         }, 
@@ -216,15 +216,16 @@ local zhongjiangMahjongConfig   = table.clone(mahjongConfigBase)
 --
 ----------------------------------------------------------------
 local doushisiConfigBase = {
-    ["RenShu"]         = 1,
-    ["JuShu"]          = 1,
-    ["YingDa"]         = 1,
-    ["CaiShen"]        = 1,
-    ["FengDing"]       = 1,
+    ["RenShu"]      = 1,
+    ["JuShu"]       = 1,
+    ["FengDing"]    = 1,
 }
 
 local chengduDoushisiConfig      = table.clone(doushisiConfigBase)
 local jintangDoushisiConfig      = table.clone(doushisiConfigBase)
+jintangDoushisiConfig["YingDa"]  = 1
+jintangDoushisiConfig["CaiShen"] = 1
+jintangDoushisiConfig["DianShu"] = 1
 local xichongDoushisiConfig      = table.clone(doushisiConfigBase)
 local yingjingDoushisiConfig     = table.clone(doushisiConfigBase)
 local nanchongDoushisiConfig     = table.clone(doushisiConfigBase)
@@ -292,15 +293,16 @@ local zhongjiangMahjongShiftConfig  = table.clone(mahjongShiftConfigBase)
 --
 ----------------------------------------------------------------
 local doushisiShiftConfigBase = {
-    ["RenShu"]   = { [4] = 1, [3]  = 2, [2]  = 3 },
-    ["JuShu"]    = { [8] = 1, [12] = 2, [16] = 3 },
-    ["YingDa"]   = { [3] = 1, [2]  = 2 },
-    ["CaiShen"]  = { [3] = 1, [4]  = 2, [5]  = 3 },
-    ["FengDing"] = { [1] = 1, [2]  = 2, [3]  = 3, [4]  = 4 },
+    ["RenShu"]   = { [3] = 1, [4]  = 2 },
+    ["JuShu"]    = { [4] = 1, [8] = 2, [12] = 3 },
+    ["FengDing"] = { [1] = 1, [2] = 2, [3]  = 3, [4]  = 4 },
 }
 
 local chengduDoushisiShiftConfig     = table.clone(doushisiShiftConfigBase)
 local jintangDoushisiShiftConfig     = table.clone(doushisiShiftConfigBase)
+jintangDoushisiShiftConfig["YingDa"]   = { [true] = 1, [false]  = 2 }
+jintangDoushisiShiftConfig["CaiShen"]  = { [8] = 1, [12] = 2 }
+jintangDoushisiShiftConfig["DianShu"]  = { [80] = 1, [100] = 2, [120] = 3, [150] = 4 }
 local xichongDoushisiShiftConfig     = table.clone(doushisiShiftConfigBase)
 local yingjingDoushisiShiftConfig    = table.clone(doushisiShiftConfigBase)
 local nanchongDoushisiShiftConfig    = table.clone(doushisiShiftConfigBase)
@@ -338,7 +340,7 @@ deskShiftConfig = {
     },
 }
 
-function convertConfigToString(cityType, gameType, config, ignoreJushu)
+function convertConfigToString(city, game, config, ignoreJushu)
     local text = string.empty
 
     local function concat(t)
@@ -349,8 +351,8 @@ function convertConfigToString(cityType, gameType, config, ignoreJushu)
         text = text .. t
     end
 
-    local layout = deskConfigLayout[cityType][gameType]
-    local shift = deskShiftConfig[cityType][gameType]
+    local layout = deskConfigLayout[city][game]
+    local shift = deskShiftConfig[city][game]
 
     for _, v in pairs(layout) do
         for _, u in pairs(v.items) do
@@ -371,6 +373,11 @@ function convertConfigToString(cityType, gameType, config, ignoreJushu)
                 end
             end
         end
+    end
+
+    if city == cityType.jintang and game == gameType.doushisi then 
+        local text = string.format("%d点", config.DianShu)
+        concat(text)
     end
 
     return text

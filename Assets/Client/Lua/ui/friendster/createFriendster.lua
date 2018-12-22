@@ -25,37 +25,13 @@ end
 function createFriendster:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mExpand:addClickListener(self.onExpandClickedHandler, self)
-    self.mUnexpand:addClickListener(self.onUnexpandClickedHandler, self)
-    self.mCityListMask:addClickListener(self.onUnexpandClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
-
-    self.mUnexpand:hide()
-    self.mCityPanel:hide()
 
     self.mCity:setText(cityName[gamepref.city.City])
     self.mName:setCharacterLimit(gameConfig.friendsterNameMaxLength)
     self.mName:setText(string.empty)
-    
-    local citys = {}
-    for k, v in pairs(cityOrder) do
-        local toggle = findPointerToggle(self.mCityList.transform, "Viewport/Content/" .. tostring(k))
-        if toggle ~= nil then
-            toggle.id = v
-            if gamepref.city.City == v then
-                self.cityId = v
-                toggle:setSelected(true)
-            else
-                toggle:setSelected(false)
-            end
-            toggle:addChangedListener(self.onCityChangedHandler, self)
 
-            local label = findText(toggle.transform, "Label")
-            if label ~= nil then
-                label:setText(cityName[v])
-            end
-        end
-    end
-
+    signalManager.registerSignalHandler(signalType.city, self.onCityChangedHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
@@ -65,19 +41,15 @@ function createFriendster:onCloseClickedHandler()
 end
 
 function createFriendster:onExpandClickedHandler()
-    self.mExpand:hide()
-    self.mUnexpand:show()
-    self.mCityPanel:show()
+    local ui = require("ui.city").new()
+    ui:show()
+
     playButtonClickSound()
 end
 
-function createFriendster:onUnexpandClickedHandler()
-    self.mExpand:show()
-    self.mUnexpand:hide()
-    self.mCityPanel:hide()
-    self.mCityList:reset()
-
-    playButtonClickSound()
+function createFriendster:onCityChangedHandler(cityType)
+    self.cityId = cityType
+    self.mCity:setText(cityName[self.cityId])
 end
 
 function createFriendster:onCreateClickedHandler()
@@ -118,20 +90,12 @@ function createFriendster:onCreateClickedHandler()
     end)
 end
 
-function createFriendster:onCityChangedHandler(sender, selected, clicked)
-    if clicked and selected then
-        self.cityId = sender.id
-        self.mCity:setText(cityName[sender.id])
-
-        playButtonClickSound()
-    end
-end
-
 function createFriendster:onCloseAllUIHandler()
     self:close()
 end
 
 function createFriendster:onDestroy()
+    signalManager.unregisterSignalHandler(signalType.city, self.onCityChangedHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     base.onDestroy(self)
 end

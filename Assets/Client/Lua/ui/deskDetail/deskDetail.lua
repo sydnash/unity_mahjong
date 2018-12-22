@@ -16,12 +16,15 @@ function deskDetail:ctor(cityType, gameType, friendsterId, config, canJoin, desk
     self.managerAcId = managerAcId
 
     self.config = {}
+    log("deskDetail.ctor, config = " .. table.tostring(config))
     for k, v in pairs(config) do
         local c = deskShiftConfig[cityType][gameType][k]
         if c ~= nil then
             self.config[k] = c[v]
         end
     end
+
+    self:processLayout()
 
     base.ctor(self)
 end
@@ -31,7 +34,7 @@ function deskDetail:onInit()
     local config = self.config
 
     self.detail = require("ui.deskDetail.deskDetailPanel").new(false)
-    self.detail:set(layout, config)
+    self.detail:set(self.cityType, self.gameType, layout, config)
 
     if self.friendsterId ~= nil and self.friendsterId > 0 then
         self.mDetailRoot:hide()
@@ -110,6 +113,27 @@ function deskDetail:onDissolveClickedHandler()
 
     self:close()
     playButtonClickSound()
+end
+
+function deskDetail:processLayout()
+    log("deskDetail:processLayout, config = " .. table.tostring(self.config))
+    if self.cityType == cityType.jintang then
+        if self.gameType == gameType.doushisi then
+            if self.config.CaiShen == 1 then
+                if self.config.DianShu == 1 then
+                    self.config.FengDing = 1
+                elseif self.config.DianShu == 3 then
+                    self.config.FengDing = 2
+                end
+            else
+                if self.config.DianShu == 2 then
+                    self.config.FengDing = 1
+                elseif self.config.DianShu == 4 then
+                    self.config.FengDing = 2
+                end
+            end
+        end
+    end
 end
 
 function deskDetail:onCloseAllUIHandler()

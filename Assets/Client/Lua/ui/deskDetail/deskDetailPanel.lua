@@ -61,7 +61,9 @@ function detailPanel:onInit()
     self.mLayout:setSpacing(self.interactable and -10 or -40)
 end
 
-function detailPanel:set(layout, config)
+function detailPanel:set(cityType, gameType, layout, config)
+    self.cityType = cityType
+    self.gameType = gameType
     self.layout = layout
     self.config = config
 
@@ -71,6 +73,9 @@ function detailPanel:set(layout, config)
         end
         g:hide()
     end
+
+    self:processLayout()
+    self:processConfig()
 
     for k, L in pairs(self.layout) do
         local group = self.groups[k]
@@ -135,6 +140,8 @@ function detailPanel:onGroupItemChangedHandler(sender, selected, clicked)
 
         if selected then
             self.config[sender.key] = sender.value
+            self:processLayout()
+            self:processConfig()
         end
     end
 
@@ -162,6 +169,44 @@ function detailPanel:onSwitchOffGroupItemChangedHandler(sender, selected, clicke
     end
 
     setTextColor(sender.label, selected)
+end
+
+function detailPanel:processLayout()
+    if self.cityType == cityType.jintang then
+        if self.gameType == gameType.doushisi then
+            if self.config.CaiShen == 1 then
+                self.groups[5].items[1].label:setText("3番(80)")
+                self.groups[5].items[2].label:setText("4番(120)")
+            else
+                self.groups[5].items[1].label:setText("3番(100)")
+                self.groups[5].items[2].label:setText("4番(140)")
+            end
+        end
+    end
+end
+
+function detailPanel:processConfig()
+    if self.cityType == cityType.jintang then
+        if self.gameType == gameType.doushisi then
+            if self.config.CaiShen == 1 then
+                if self.config.FengDing == 1 then
+                    self.config.DianShu = 1
+                elseif self.config.FengDing == 2 then
+                    self.config.DianShu = 3
+                else
+                    self.config.DianShu = 5
+                end
+            else
+                if self.config.FengDing == 1 then
+                    self.config.DianShu = 2
+                elseif self.config.FengDing == 2 then
+                    self.config.DianShu = 4
+                else
+                    self.config.DianShu = 5
+                end
+            end
+        end
+    end
 end
 
 function detailPanel:onDestroy()
