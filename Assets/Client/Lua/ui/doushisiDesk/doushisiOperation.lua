@@ -364,8 +364,7 @@ function doushisiOperation:onInit()
     self.idleActionCards = {}
     self.flyNodes = {}
     self.idleFlyNodes = {}
-    self:setDoushisiStyle(doushisiStyle.traditional)
-    self:setDoushisiStyle(doushisiStyle.modern)
+    self:setDoushisiStyle(gamepref.getTablelayout())
     self.canChuPai = false
     self.dragCard = doushisi.new(0)
     self.dragCard:setLocalScale(Vector3.New(1.2, 1.2, 1.2))
