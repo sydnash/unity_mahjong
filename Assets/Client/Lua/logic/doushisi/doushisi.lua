@@ -84,18 +84,26 @@ function doushisi:fix()
         local typ = doushisiType.getDoushisiTypeById(self.id)
         self:setSprite(typ.folder, typ.resource)
 
-        local scale = self:getLocalScale()
-        local rot = self:getLocalRotation()
+        -- local scale = self:getLocalScale()
+        -- local rot = self:getLocalRotation()
 
-        self:setLocalScale(Vector3.one)
-        self:setLocalRotation(Vector3.zero)
+        -- self:setLocalScale(Vector3.one)
+        -- self:setLocalRotation(Vector3.zero)
 
-        local size = self.render.bounds.size
-        self.collider.center = Vector2.zero
-        self.collider.size = size
+        -- local size = self.render.bounds.size
+        -- self.collider.center = Vector2.zero
+        -- self.collider.size = size
 
-        self:setLocalScale(scale)
-        self:setLocalRotation(rot)
+        -- self:setLocalScale(scale)
+        -- self:setLocalRotation(rot)
+
+        if self.render.sprite ~= nil then
+            local rect = self.render.sprite.rect
+            local pixelsPerUnit = self.render.sprite.pixelsPerUnit
+            local size = Vector2.New(rect.width / pixelsPerUnit, rect.height / pixelsPerUnit)
+            self.collider.center = Vector2.zero
+            self.collider.size = size
+        end
     end
 end
 
