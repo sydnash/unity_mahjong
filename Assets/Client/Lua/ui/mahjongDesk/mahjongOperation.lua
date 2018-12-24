@@ -786,10 +786,10 @@ function mahjongOperation:beginChuPai()
         mahjongs[#mahjongs]:setLocalPosition(moPaiPos)
     end
 
-    local player = self.game:getPlayerByAcId(self.game.mainAcId)
-    local helper = require ("logic.mahjong.helper").new(player.que, self.game)
-    local ret = helper:checkChuPaiHint()
-    log("===========================================: " .. table.tostring(ret))
+    if self.game.chuHintComputeHelper then
+        local ret = self.game.chuHintComputeHelper:checkChuPaiHint()
+        log("===========================================: " .. table.tostring(ret))
+    end
 end
 
 -------------------------------------------------------------------------------

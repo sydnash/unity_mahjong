@@ -95,6 +95,7 @@ end
 -- 同步各个位置的数据
 -------------------------------------------------------------------------------
 function mahjongGame:syncSeats(seats)
+    self.knownMahjong = {}
     for _, v in pairs(seats) do
         local player = self:getPlayerByAcId(v.AcId)
         player.ready = false --如果游戏中，清除ready状态
@@ -106,6 +107,17 @@ function mahjongGame:syncSeats(seats)
         player[mahjongGame.cardType.chu]  = v.CardsInChuPai
         player[mahjongGame.cardType.peng] = v.ChiCheInfos
         player[mahjongGame.cardType.huan] = {}
+        for _, c in pairs(v.CardsInChuPai) do
+            self.knownMahjong[c] = 1
+        end
+        for _, c in pairs(v.CardsInHand) do
+            self.knownMahjong[c] = 1
+        end
+        for _, info in pairs(v.ChiCheInfos) do
+            for _, c in pairs(info.Cs) do
+                self.knownMahjong[c] = 1
+            end
+        end
 
         if not isNilOrNull(player.hu) then
             local shou = player[mahjongGame.cardType.shou]
@@ -136,6 +148,19 @@ function mahjongGame:syncSeats(seats)
                 end
             end 
         end
+
+        self:createChuHintComputeHlper()
+    end
+end
+
+function mahjongGame:onDeskStatusChanged()
+    self:createChuHintComputeHlper()
+end
+
+function mahjongGame:createChuHintComputeHlper()
+    if self.deskPlayStatus == mahjongGame.status.playing then
+        local player = self:getPlayerByAcId(self.mainAcId)
+        self.chuHintComputeHelper = require("logic.mahjong.helper").new(player.que, self)
     end
 end
 
@@ -145,6 +170,8 @@ end
 function mahjongGame:onGameStartHandler(msg)
 --    log("start game, msg = " .. table.tostring(msg))
     self.canBack = false
+    self.knownMahjong = {}
+    self.chuHintComputeHelper = nil
 
     -- local func = tweenFunction.new(function()
     local func = (function()
@@ -155,6 +182,9 @@ function mahjongGame:onGameStartHandler(msg)
         self.markerAcId = msg.MarkerAcId
 
         for _, v in pairs(self.players) do
+            v[mahjongGame.cardType.shou] = {}
+            v[mahjongGame.cardType.chu] = {}
+            v[mahjongGame.cardType.peng] = {}
             v.que = -1
             v.isMarker = self:isMarker(v.acId)
         end
@@ -184,7 +214,8 @@ function mahjongGame:onFaPaiHandler(msg)
             local player = self:getPlayerByAcId(v.AcId)
             player[mahjongGame.cardType.shou] = v.Cards
 
-            for _, _ in pairs(v.Cards) do
+            for _, c in pairs(v.Cards) do
+                self.knownMahjong[c] = 1
                 self.leftCardsCount = self.leftCardsCount - 1
             end
         end
@@ -260,6 +291,7 @@ function mahjongGame:onMoPaiHandler(msg)
         local inhandMahjongs = player[mahjongGame.cardType.shou]
 
         for _, v in pairs(msg.Ids) do
+            self.knownMahjong[v] = 1
             table.insert(inhandMahjongs, v)
             self.leftCardsCount = self.leftCardsCount - 1
         end
@@ -382,6 +414,7 @@ function mahjongGame:onOpDoChu(acId, cards)
     local player = self:getPlayerByAcId(acId)
     local infos = player[mahjongGame.cardType.chu]
     table.insert(infos, cards[1])
+    self.knownMahjong[cards[1]] = 1
     self.deskUI:onOpDoChu(acId, cards)
     self.operationUI:onOpDoChu(acId, cards)
 end
@@ -395,8 +428,11 @@ function mahjongGame:onOpDoPeng(acId, cards, beAcId, beCard)
     local infos = player[mahjongGame.cardType.peng]
     table.insert(infos, {
         Op = opType.peng.id,
-        Cs = {beAcId, cards[1], cards[2]}
+        Cs = {beCard, cards[1], cards[2]}
     })
+    self.knownMahjong[beCard] = 1
+    self.knownMahjong[cards[1]] = 1
+    self.knownMahjong[cards[2]] = 1
     self.deskUI:onPlayerPeng(acId)
     self.operationUI:onOpDoPeng(acId, cards, beAcId, beCard)
 end
@@ -411,13 +447,21 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
     if t == detail.minggang then
         table.insert(infos, {
             Op = opType.gang.id,
-            Cs = {beAcId, cards[1], cards[2], cards[3]}
+            Cs = {beCard, cards[1], cards[2], cards[3]}
         })
+        self.knownMahjong[beCard] = 1
+        self.knownMahjong[cards[1]] = 1
+        self.knownMahjong[cards[2]] = 1
+        self.knownMahjong[cards[3]] = 1
     elseif t == detail.angang then
         table.insert(infos, {
             Op = opType.gang.id,
             Cs = {cards[1], cards[2], cards[3], cards[4]}
         })
+        self.knownMahjong[cards[1]] = 1
+        self.knownMahjong[cards[2]] = 1
+        self.knownMahjong[cards[3]] = 1
+        self.knownMahjong[cards[4]] = 1
     elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
         local pinfo
         for _, info in pairs(infos) do
@@ -428,6 +472,7 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
         end
         pinfo.Op = opType.gang.id
         table.insert(pinfo.Cs, cards[1])
+        self.knownMahjong[cards[1]] = 1
     end
     self.deskUI:onPlayerGang(acId)
     self.operationUI:onOpDoGang(acId, cards, beAcId, beCard, t)
@@ -437,6 +482,7 @@ end
 -- SC 胡
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard, t)
+    self.knownMahjong[beCard] = 1
     self.deskUI:onPlayerHu(acId, t)
     self.operationUI:onOpDoHu(acId, cards, beAcId, beCard, t)
 end

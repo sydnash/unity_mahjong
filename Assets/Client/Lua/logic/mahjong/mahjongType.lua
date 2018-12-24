@@ -38,7 +38,7 @@ local c = {
 }
 
 local function getMahjongTypeId(mid)
-    return math.floor(mid / 4)
+    return math.floor(mid * 0.25)
 end
 
 local function getMahjongTypeById(mid)
