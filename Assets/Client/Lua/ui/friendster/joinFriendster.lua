@@ -98,6 +98,10 @@ function joinFriendster:onJoinClickedHandler()
             return
         end
 
+        if msg.RetCode ~= retc.ok then
+            showMessageUI(retcText[msg.RetCode])
+            return
+        end
 --        log("join friendster, msg = " .. table.tostring(msg))
 
         showMessageUI("加入亲友圈申请发送成功，等待群主审核")
