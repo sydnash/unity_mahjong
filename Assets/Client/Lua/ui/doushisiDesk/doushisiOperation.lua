@@ -313,11 +313,13 @@ end
 
 function doushisiOperation:setDoushisiStyle(style)
     if self.game:isPlayback() then
-        style = doushisiStyle.modern
+        style = doushisiStyle.traditional
+    end
+    if actionConfig[style] == nil then
+        style = doushisiStyle.traditional
     end
     self.style = style
     self.seats = seatConfig[style]
---    log(style)
     self.actionCardGap = actionConfig[style].g
     self.actionCardWidth = actionConfig[style].w
     self.actionCardHeight = actionConfig[style].h
