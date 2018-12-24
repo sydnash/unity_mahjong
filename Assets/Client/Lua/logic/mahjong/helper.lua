@@ -1,40 +1,342 @@
 local helper        = class("helper")
 local mahjongType   = require ("logic.mahjong.mahjongType")
+local mahjongGame   = require ("logic.mahjong.mahjongGame")
 
-function helper:setQue(que)
+function helper:ctor(que, game)
+    self.acId = gamepref.player.acId
     self.que = que
+    self.game = game
 end
 
 ------------
 -- 每种牌的个数的数组（2个1条， 就是{[0] = 2}
--- 返回：空table表示没有叫 如果有叫  { {jiao = id, fan = 5, component = {{1,2,3}, {4,5,6} } }, {jiao = id, fan = 2}  }
+-- 返回：空table表示没有叫 如果有叫  { {jiao = id, fan = 5, c = { { Cs = {1,2,3}, Op = 1}, { Cs = {4,5,6}, Op = 1} } }, {jiao = id, fan = 2}  }
 ------------
-function helper:checkJiao(cntVec)
+function helper:checkJiao(cntVec, totalCntVec)
     for id, v in pairs(cntVec) do
         if v > 0 then
-            desc = mahjongType.getMahjongTypeByTypeId(id)
-            if desc.class == cntVec then
+            local desc = mahjongType.getMahjongTypeByTypeId(id)
+            if desc.class == self.que then
                 return {}
             end
         end
     end
     --测试每一个牌是否可以胡
+    local ret = {}
+    for i = 0, 26 do
+        local ok, c = self:isHu(cntVec, i)
+        if ok then
+            local fxs, gen = self:computeFanXing(c)
+            local fan = self:getFanShu(fxs, gen)
+            table.insert(ret, {
+                jiaoTid = i,
+                fan     = fan,
+                c       = c,
+                left    = 4 - totalCntVec[i]
+            })
+        end
+    end
+    return ret
 end
 
-function helper:isHu(cntVec, mahjong)
-    local id  
+function helper:isHu(cntVec, tid)
+    local desc = mahjongType.getMahjongTypeByTypeId(tid)
+    if desc.class == self.que then
+        return false, nil
+    end
+    self:addTypeCnt(cntVec, tid, 1)
+
+    local ok, ret = self:check7Dui(cntVec)
+    if ok then
+        return ok, ret
+    end
+
+    for idx, cnt in pairs(cntVec) do
+        if cnt >= 2 then
+            local vec = table.clone(cntVec)
+            self:addTypeCnt(vec, idx, -2)
+            local ret = {}
+            table.insert(ret, { Cs = {idx * 4, idx * 4}, Op = opType.dui.id } )
+            local ok, c = self:checkForAllNine(vec)
+            if ok then
+                self:addTypeCnt(cntVec, tid, -1)
+                return true, self:appVec(ret, c)
+            end
+        end
+    end
+    self:addTypeCnt(cntVec, tid, -1)
+    return false, nil
 end
 
-function helper:checkChuPaiHint(cntVec)
+function helper:appVec(t1, t2)
+    for _, v in pairs(t2) do
+        table.insert(t1, v)
+    end
+    return t1
 end
 
-function helper:computeFanXing()
+function helper:check7Dui(cntVec)
+    local total = 0
+    for idx, cnt in pairs(cntVec) do
+        if cnt ~= 2 and cnt ~= 4 and cnt ~= 0 then
+            return false, nil
+        end
+        total = total + cnt
+    end
+    if cnt ~= 14 then
+        return false, nil
+    end
+    local ret = {}
+    for idx, cnt in pairs(cntVec) do
+        for i = 1, 4, 2 do
+            table.insert(ret, { Cs = {idx * 4, idx * 4}, Op = opType.dui.id })
+        end
+    end
+    return true, ret
 end
 
-function helper:getFanShu()
+function helper:checkForAllNine(cntVec)
+    local ret = {}
+    for i = 0, 26, 9 do
+        local ok, c = self:checkForNine(cntVec, i)
+        if not ok then
+            return false, nil
+        end
+        ret = self:appVec(ret, c)
+    end
+    return true, ret
 end
 
-function helper:cardsToCntVec()
+function helper:checkForNine(cntVec, sidx)
+    local ret = {}
+    local computeId = function(t)
+        return t * 4
+    end
+
+    for i = 1, 9 do
+        local idx = sidx + i - 1
+        if cntVec[idx] >= 3 then
+            table.insert(ret,  { Cs = {computeId(idx), computeId(idx), computeId(idx)}, Op = opType.peng.id } )
+            self:addTypeCnt(cntVec, idx, -3)
+        end
+        if cntVec[idx] > 0 then
+            if i > 7 then
+                return false, nil
+            end
+            local cnt = math.min(cntVec[idx], cntVec[idx + 1])
+            cnt = math.min(cnt, cntVec[idx + 2])
+            if cnt < cntVec[idx] then
+                return false, nil
+            end
+            self:addTypeCnt(cntVec, idx, -cnt)
+            self:addTypeCnt(cntVec, idx + 1, -cnt)
+            self:addTypeCnt(cntVec, idx + 2, -cnt)
+            while cnt > 0 do
+                table.insert(ret,  { Cs = {computeId(idx), computeId(idx + 1), computeId(idx + 2)}, Op = opType.chi.id } )
+                cnt = cnt - 1
+            end
+        end
+    end
+    return true, ret
+end
+
+function helper:initVec(cnt)
+    local ret = {}
+    for i = 0, cnt do
+        ret[i] = 0
+    end
+    return ret
+end
+--return {id = 1, hu = {} }
+function helper:checkChuPaiHint()
+    local opui = self.game.operationUI
+    local inhandMjs = opui.inhandMahjongs[self.acId]
+    local handCntVec = self:initVec(27)
+    local totalCntVec = self:initVec(27)
+    for _, mj in pairs(inhandMjs) do
+        local id = mahjongType.getMahjongTypeId(mj.id)
+        self:addTypeCnt(handCntVec, id, 1)
+        self:addTypeCnt(totalCntVec, id, 1)
+    end
+    for _, seat in pairs(opui.pengMahjongs) do
+        for _, vec in pairs(seat) do
+            for _, mj in pairs(vec) do
+                local id = mahjongType.getMahjongTypeId(mj.id)
+                self:addTypeCnt(totalCntVec, id, 1)
+            end
+        end
+    end
+    for _, vec in pairs(opui.chuMahjongs) do
+        for _, mj in pairs(vec) do
+            local id = mahjongType.getMahjongTypeId(mj.id)
+            self:addTypeCnt(totalCntVec, id, 1)
+        end
+    end
+
+    local cntVec = handCntVec
+    local ret = {}
+    for id, cnt in pairs(cntVec) do
+        if cnt > 0 then
+            self:addTypeCnt(cntVec, id, -1)
+
+            local c = self:checkJiao(cntVec, totalCntVec)
+            if #c > 0 then
+                table.insert(ret, { tid = id, hu = c} )
+            end
+
+            self:addTypeCnt(cntVec, id, 1)
+        end
+    end
+    return ret
+end
+
+function helper:computeFanXing(huC)
+    local player = self.game:getPlayerByAcId(self.acId)
+
+    local ret = {}
+    local function addFx(fx)
+        table.insert(ret, fx)
+    end
+    if huC == 7 then
+        addFx(fanXingType.qiDui)
+    end
+    if huC == 1 then
+        addFx(fanXingType.jinGouDiao)
+    end
+    local inhandCnt = 0
+    local hsCnt = {[0] = 0,[1] =  0, [2] =  0}
+    for _, c in pairs(huC) do
+        inhandCnt = inhandCnt + #c.Cs
+        local desc = mahjongType.getMahjongTypeById(c.Cs[1])
+        local class = desc.class
+        hsCnt[class] = hsCnt[class] + 1 
+    end 
+    local t = 0
+    for _, c in pairs(hsCnt) do
+        if c > 0 then
+            t = t + 1
+        end
+    end
+    if t == 1 then
+        addFx(fanXingType.qingYiSe)
+    end
+
+    local chiCnt = 0
+    local duiCnt = 0
+    local hasMenQing = true
+    local zhongZhang = true
+    local yaoJiu = true
+    local jiangDui = true
+
+    local vec = {}
+    local function checkC(c)
+        if c.Op == opType.chi.id then
+            chiCnt = chiCnt + 1
+            for _, c in pairs(c.Cs) do
+                local desc = mahjongType.getMahjongTypeById(c)
+                if desc.value == 9 or desc.value == 1 then
+                    zhongZhang = false
+                elseif desc.value > 3 and desc.value < 7 then
+                    yaoJiu = false
+                end
+                self:addTypeCnt(vec, mahjongType.getMahjongTypeId(c), 1)
+            end
+        else
+            if c.Op == opType.dui.id then
+                duiCnt = duiCnt + 1
+            end
+            local desc = mahjongType.getMahjongTypeById(c.Cs[1])
+            if desc.value == 9 or desc.value == 1 then
+                zhongZhang = false
+            else
+                yaoJiu = false
+            end
+            if desc.value ~= 2 and desc.value ~= 5 and desc.value ~= 8 then
+                jiangDui = false
+            end
+            self:addTypeCnt(vec, mahjongType.getMahjongTypeId(c.Cs[1]), #c.Cs)
+        end
+    end
+
+    local chiChe = player[mahjongGame.cardType.peng]
+    for _, c in pairs(huC) do
+        checkC(c)
+    end
+    for _, c in pairs(chiChe) do
+        checkC(c)
+        if c.D ~= opType.gang.detail.angang then
+            hasMenQing = false
+        end
+    end
+
+    if hasMenQing then
+        addFx(fanXingType.menQing)
+    end
+    if yaoJiu then
+        addFx(fanXingType.yaoJiu)
+    end
+    if zhongZhang then
+        addFx(fanXingType.zhongZhang)
+    end
+    if duiCnt == 1 and chiCnt == 0 then
+        if jiangDui then
+            addFx(fanXingType.jiangDui)
+        else
+            addFx(fanXingType.daDuiZi)
+        end
+    end
+    if #ret == 0 then
+        addFx(fanXingType.su)
+    end
+
+    local gen = 0
+    for _, cnt in pairs(vec) do
+        if cnt == 4 then
+            gen = gen + 1
+        end
+    end
+    return ret, gen
+end
+
+function helper:getFanShu(fxs, gen)
+    local fan = 0
+    fan = fan + gen
+    for _, fx in pairs(fxs) do
+        fan = fan + self:getFanShuByFx(fx)
+    end
+    return fan
+end
+
+function helper:getFanShuByFx(fx)
+    local fan = 0
+    if fx == fanXingType.su then
+        fan = 0
+    elseif fx == fanXingType.qingYiSe then
+        fan = 2
+    elseif fx == fanXingType.daDuiZi then
+        fan = 1
+    elseif fx == fanXingType.qiDui then
+        fan = 2
+    elseif fx == fanXingType.yaoJiu then
+        fan = 3
+    elseif fx == fanXingType.jiangDui then
+        fan = 3
+    elseif fx == fanXingType.jinGouDiao then
+        fan = 1
+    elseif fx == fanXingType.menQing then
+        fan = 1
+    elseif fx == fanXingType.zhongZhang then
+        fan = 1
+    end
+    return fan
+end
+
+function helper:addTypeCnt(vec, tid, cnt)
+    if vec[tid] == nil then
+        vec[tid] = cnt
+    else
+        vec[tid] = cnt + vec[tid]
+    end
 end
 
 return helper

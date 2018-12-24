@@ -744,6 +744,7 @@ function mahjongOperation:onMoPai(acId, cards)
             self.curSelectedMahjong:setSelected(false)
         end
     end
+
 end
 
 -------------------------------------------------------------------------------
@@ -784,6 +785,11 @@ function mahjongOperation:beginChuPai()
         moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
         mahjongs[#mahjongs]:setLocalPosition(moPaiPos)
     end
+
+    local player = self.game:getPlayerByAcId(self.game.mainAcId)
+    local helper = require ("logic.mahjong.helper").new(player.que, self.game)
+    local ret = helper:checkChuPaiHint()
+    log("===========================================: " .. table.tostring(ret))
 end
 
 -------------------------------------------------------------------------------
@@ -823,7 +829,7 @@ end
 -- 处理鼠标/手指拖拽
 -------------------------------------------------------------------------------
 function mahjongOperation:touchHandler(phase, pos)
-    local ds = self.game.deskStatus
+    local ds = self.game.deskPlayStatus
     if self.game.mode == gameMode.playback or ds < 0 or ds == mahjongGame.status.dingque then
         return
     end

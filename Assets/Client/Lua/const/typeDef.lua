@@ -118,6 +118,7 @@ opType = {
            } 
     },
     guo  = { id = 6, },
+    dui  = {id = 8,},
     doushisi = {
         dang        = {id = 0},
 	    hua         = {id = 1},

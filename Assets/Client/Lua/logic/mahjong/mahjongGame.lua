@@ -6,6 +6,7 @@ local gamePlayer        = require("logic.player.gamePlayer")
 
 local base = require("logic.game")
 local mahjongGame = class("mahjongGame", base)
+local mahjongType   = require ("logic.mahjong.mahjongType")
 
 --------------------------------------------------------------
 --
@@ -378,6 +379,9 @@ end
 -- SC 出牌
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoChu(acId, cards)
+    local player = self:getPlayerByAcId(acId)
+    local infos = player[mahjongGame.cardType.chu]
+    table.insert(infos, cards[1])
     self.deskUI:onOpDoChu(acId, cards)
     self.operationUI:onOpDoChu(acId, cards)
 end
@@ -387,6 +391,12 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoPeng(acId, cards, beAcId, beCard)
 --    log("mahjongGame:onOpDoPeng, acId = " .. tostring(acId))
+    local player = self:getPlayerByAcId(acId)
+    local infos = player[mahjongGame.cardType.peng]
+    table.insert(infos, {
+        Op = opType.peng.id,
+        Cs = {beAcId, cards[1], cards[2]}
+    })
     self.deskUI:onPlayerPeng(acId)
     self.operationUI:onOpDoPeng(acId, cards, beAcId, beCard)
 end
@@ -395,6 +405,30 @@ end
 -- SC 杠
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
+    local player = self:getPlayerByAcId(acId)
+    local infos = player[mahjongGame.cardType.peng]
+    local detail = opType.gang.detail
+    if t == detail.minggang then
+        table.insert(infos, {
+            Op = opType.gang.id,
+            Cs = {beAcId, cards[1], cards[2], cards[3]}
+        })
+    elseif t == detail.angang then
+        table.insert(infos, {
+            Op = opType.gang.id,
+            Cs = {cards[1], cards[2], cards[3], cards[4]}
+        })
+    elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
+        local pinfo
+        for _, info in pairs(infos) do
+            if info.Op == opType.peng and mahjongType.getMahjongTypeId(info.Cs[1]) == mahjongType.getMahjongTypeId(cards[1]) then
+                pinfo = info
+                break
+            end
+        end
+        pinfo.Op = opType.gang.id
+        table.insert(pinfo.Cs, cards[1])
+    end
     self.deskUI:onPlayerGang(acId)
     self.operationUI:onOpDoGang(acId, cards, beAcId, beCard, t)
 end
