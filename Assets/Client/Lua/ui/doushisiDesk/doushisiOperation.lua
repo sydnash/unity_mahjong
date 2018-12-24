@@ -759,11 +759,11 @@ function doushisiOperation:onOpDoChu(acId, id)
     local isIm = false
     if self.promoteNode and self.promoteNode.id == id then
         card:hide()
-        return 1.2
+        return 1.0
     end
 
     self:promoteChu(acId, id, isIm)
-    return 1.2
+    return 1.0
 end
 
 function doushisiOperation:opDoChiPengAnHua(acId, delIds, beId, op)

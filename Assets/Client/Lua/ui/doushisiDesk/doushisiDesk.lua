@@ -331,7 +331,7 @@ function doushisiDesk:onOpDoDang(acId, isDang)
     end
 end
 function doushisiDesk:onOpDoChe(acId)
-    self:playGfx(acId, "che")
+    self:playGfx(acId, "peng")
 end
 function doushisiDesk:onOpDoChi(acId)
     self:playGfx(acId, "chi")

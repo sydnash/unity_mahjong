@@ -549,7 +549,7 @@ function doushisiGame:update()
                 if nm and msg.param and nm.param then
                     if msg.param.isFan or (msg.param.isOpDo and msg.param.Op == opType.doushisi.chu.id) then
                         if nm.param.isTou or nm.param.isFan then
-                            msg.deleteTime = msg.deleteTime + 0.1
+                            msg.deleteTime = msg.deleteTime + 0.08
                         elseif nm.param.isOpList then
                             msg.deleteTime = msg.waittime + 0.2
                         elseif nm.param.isOpDo then
