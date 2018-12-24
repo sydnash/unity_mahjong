@@ -102,11 +102,8 @@ public class SceneManager : MonoBehaviour
     /// <param name="scenePath"></param>
     public void Setup(string scenePath)
     {
-        Debug.Log("1111111111");
         mScenePath = scenePath.ToLower();
-        Debug.Log("1111111111");
         mLoader = new AssetLoader(mScenePath);
-        Debug.Log("1111111111");
     }
 
     /// <summary>
