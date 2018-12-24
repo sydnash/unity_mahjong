@@ -46,10 +46,15 @@ local function getMahjongTypeById(mid)
     return c[mid]
 end
 
+local function getMahjongTypeByTypeId(tid)
+    return c[tid]
+end
+
 return {
     c = c,
     getMahjongTypeId = getMahjongTypeId,
     getMahjongTypeById = getMahjongTypeById,
+    getMahjongTypeByTypeId = getMahjongTypeByTypeId,
 }
 
 --endregion
