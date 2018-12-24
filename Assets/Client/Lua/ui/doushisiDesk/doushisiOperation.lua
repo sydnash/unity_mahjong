@@ -317,6 +317,7 @@ function doushisiOperation:setDoushisiStyle(style)
     end
     self.style = style
     self.seats = seatConfig[style]
+--    log(style)
     self.actionCardGap = actionConfig[style].g
     self.actionCardWidth = actionConfig[style].w
     self.actionCardHeight = actionConfig[style].h

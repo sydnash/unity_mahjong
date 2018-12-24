@@ -378,7 +378,7 @@ function loginServer(callback, func)
         loading:setText("正在努力联系服务器，请稍候")
         loading:show()
 
-        sceneManager.load("scene", "mahjongscene", function(completed, progress)
+        sceneManager.load("mahjongscene", function(completed, progress)
             loading:setProgress(progress)
 
             if completed then

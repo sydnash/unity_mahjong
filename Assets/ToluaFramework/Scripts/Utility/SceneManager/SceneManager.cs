@@ -43,6 +43,21 @@ public class SceneManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    public string mScenePath = string.Empty;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public string mSceneName = string.Empty;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private AssetLoader mLoader = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
     private string mLocalizedPath = string.Empty;
 
     /// <summary>
@@ -84,32 +99,50 @@ public class SceneManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="sceneName"></param>
-    public void Load(string scenePath, string sceneName, Action<bool, float> callback)
+    /// <param name="scenePath"></param>
+    public void Setup(string scenePath)
     {
-        scenePath = scenePath.ToLower();
-        sceneName = sceneName.ToLower();
+        Debug.Log("1111111111");
+        mScenePath = scenePath.ToLower();
+        Debug.Log("1111111111");
+        mLoader = new AssetLoader(mScenePath);
+        Debug.Log("1111111111");
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sceneName"></param>
+    public void Load(string sceneName, Action<bool, float> callback)
+    {
+        if (!string.IsNullOrEmpty(mSceneName))
+        {
+            string key = AssetLoader.CreateAssetKey(mScenePath, mSceneName);
+            mLoader.UnloadDependencies(key);
+        }
+
+        mSceneName = sceneName.ToLower();
 
         SceneBundle[] sceneBundles = null;
 
 #if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
-        sceneName = LFS.CombinePath(scenePath, sceneName + ".unity");
+        sceneName = LFS.CombinePath(mScenePath, mSceneName + ".unity");
 
         foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
         {
-            if (scene.path.EndsWith(sceneName, StringComparison.OrdinalIgnoreCase))
+            if (scene.path.EndsWith(mSceneName, StringComparison.OrdinalIgnoreCase))
             {
-                sceneName = scene.path;
+                mSceneName = scene.path;
                 break;
             }
         }
 #else
-        sceneBundles = new SceneBundle[2]{ new SceneBundle(LFS.CombinePath(mDownloadPath,  scenePath, sceneName), true),
-                                           new SceneBundle(LFS.CombinePath(mLocalizedPath, scenePath, sceneName), false)
+        sceneBundles = new SceneBundle[2]{ new SceneBundle(LFS.CombinePath(mDownloadPath,  mScenePath, mSceneName), true),
+                                           new SceneBundle(LFS.CombinePath(mLocalizedPath, mScenePath, mSceneName), false)
         };
 #endif
 
-        StartCoroutine(LoadCoroutine(sceneBundles, sceneName, callback));
+        StartCoroutine(LoadCoroutine(sceneBundles, mSceneName, callback));
     }
 
     /// <summary>
@@ -147,44 +180,25 @@ public class SceneManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator LoadCoroutine(SceneBundle[] bundleInfos, string sceneName, Action<bool, float> callback)
     {
-        float time = Time.realtimeSinceStartup;
-
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
-        AssetBundle bundle = null;
+        mLoader.LoadDependentAB(mScenePath, sceneName);
 
+        InvokeCallback(callback, false, 0.2f);
+        yield return WAIT_FOR_END_OF_FRAME;
+        
+        AssetBundle bundle = null;
         foreach (SceneBundle sb in bundleInfos)
         {
-            string bundleName = sb.bundleName;
-            bool checkExist = sb.checkExists;
-
-            if (!checkExist || System.IO.File.Exists(bundleName))
+            if (!sb.checkExists || System.IO.File.Exists(sb.bundleName))
             {
-                var request = AssetBundle.LoadFromFileAsync(bundleName);
-
-                while (!request.isDone)
-                {
-                    InvokeCallback(callback, false, request.progress * 0.5f);
-                    yield return WAIT_FOR_END_OF_FRAME;
-                }
-
-                bundle = request.assetBundle;
-                if (bundle != null)
-                {
-                    break;
-                }
+                bundle = mLoader.LoadAssetBundle(sb.bundleName);
+                if (bundle != null) break;
             }
-        }
-
-        while (Time.realtimeSinceStartup - time < 0.4f)
-        {
-            yield return WAIT_FOR_END_OF_FRAME;
         }
 #endif
 
-        InvokeCallback(callback, false, 0.5f);
+        InvokeCallback(callback, false, 0.4f);
         yield return WAIT_FOR_END_OF_FRAME;
-
-        time = Time.realtimeSinceStartup;
 
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
         if (bundle != null)
@@ -193,7 +207,7 @@ public class SceneManager : MonoBehaviour
             AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
             while (!op.isDone)
             {
-                InvokeCallback(callback, false, 0.5f + op.progress * 0.5f);
+                InvokeCallback(callback, false, 0.4f + op.progress * 0.6f);
                 yield return WAIT_FOR_END_OF_FRAME;
             }
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
@@ -204,20 +218,6 @@ public class SceneManager : MonoBehaviour
             Logger.LogError(string.Format("can't load the scene: {0}", sceneName));
         }
 #endif
-
-        while (Time.realtimeSinceStartup - time < 0.4f)
-        {
-            yield return WAIT_FOR_END_OF_FRAME;
-        }
-
-        InvokeCallback(callback, false, 1.0f);
-        time = Time.realtimeSinceStartup;
-        yield return WAIT_FOR_END_OF_FRAME;
-
-        while (Time.realtimeSinceStartup - time < 0.2f)
-        {
-            yield return WAIT_FOR_END_OF_FRAME;
-        }
 
         InvokeCallback(callback, true, 1.0f);
         yield return WAIT_FOR_END_OF_FRAME;

@@ -55,8 +55,6 @@ public class AssetLoader
     /// </summary>
     private string mPath = string.Empty;
 
-
-
     /// <summary>
     /// 
     /// </summary>
@@ -98,6 +96,36 @@ public class AssetLoader
 
         mLocalizedPath = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, sub);
         mDownloadPath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, sub);
+
+#if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
+        InitDependentManifest();
+#endif
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="bundleName"></param>
+    /// <param name="checkExists"></param>
+    /// <returns></returns>
+    public AssetBundle LoadAssetBundle(string bundleName, bool checkExists = false)
+    {
+        AssetBundle bundle = null;
+
+        if (!checkExists || System.IO.File.Exists(bundleName))
+        {
+            if (mLoadedBundlePool.ContainsKey(bundleName))
+            {
+                bundle = mLoadedBundlePool[bundleName];
+            }
+            else
+            {
+                bundle = AssetBundle.LoadFromFile(bundleName);
+                mLoadedBundlePool.Add(bundleName, bundle);
+            }
+        }
+
+        return bundle;
     }
 
     /// <summary>
@@ -112,7 +140,6 @@ public class AssetLoader
 #if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
         Object asset = Resources.Load(LFS.CombinePath(mPath, name));
 #else
-        InitDependentManifest();
         LoadDependentAB(assetPath, assetName);
 
         Object asset = Load(LFS.CombinePath(mDownloadPath, name), assetName, true);
@@ -126,12 +153,23 @@ public class AssetLoader
     }
 
     /// <summary>
-    /// 
+    /// 加载依赖资源
     /// </summary>
-    /// <param name="key"></param>
-    public void ReloadDependencies(string key)
+    /// <param name="assetName"></param>
+    public void LoadDependentAB(string assetPath, string assetName)
     {
-        mDependentBundlePool.Reload(key);
+        if (mDependentManifest == null)
+            return;
+
+        string key = CreateAssetKey(assetPath, assetName);
+
+        string target = LFS.CombinePath(mPath, assetPath, assetName);
+        string[] dependentNames = mDependentManifest.GetAllDependencies(target);
+
+        foreach (string dependentName in dependentNames)
+        {
+            mDependentBundlePool.Load(key, dependentName);
+        }
     }
 
     /// <summary>
@@ -195,26 +233,6 @@ public class AssetLoader
     }
 
     /// <summary>
-    /// 加载依赖资源
-    /// </summary>
-    /// <param name="assetName"></param>
-    private void LoadDependentAB(string assetPath, string assetName)
-    {
-        if (mDependentManifest == null)
-            return;
-
-        string key = CreateAssetKey(assetPath, assetName);
-
-        string target = LFS.CombinePath(mPath, assetPath, assetName);
-        string[] dependentNames = mDependentManifest.GetAllDependencies(target);
-
-        foreach (string dependentName in dependentNames)
-        {
-            mDependentBundlePool.Load(key, dependentName);
-        }
-    }
-
-    /// <summary>
     /// 
     /// </summary>
     /// <param name="assetPath"></param>
@@ -233,32 +251,6 @@ public class AssetLoader
         }
 
         return asset;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="bundleName"></param>
-    /// <param name="checkExists"></param>
-    /// <returns></returns>
-    private AssetBundle LoadAssetBundle(string bundleName, bool checkExists = false)
-    {
-        AssetBundle bundle = null;
-
-        if (!checkExists || System.IO.File.Exists(bundleName))
-        {
-            if (mLoadedBundlePool.ContainsKey(bundleName))
-            {
-                bundle = mLoadedBundlePool[bundleName];
-            }
-            else
-            {
-                bundle = AssetBundle.LoadFromFile(bundleName);
-                mLoadedBundlePool.Add(bundleName, bundle);
-            }
-        }
-
-        return bundle;
     }
 
     #endregion

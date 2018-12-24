@@ -7,12 +7,32 @@ public class SceneManagerWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(SceneManager), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("Setup", Setup);
 		L.RegFunction("Load", Load);
 		L.RegFunction("GetActivedSceneName", GetActivedSceneName);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("mScenePath", get_mScenePath, set_mScenePath);
+		L.RegVar("mSceneName", get_mSceneName, set_mSceneName);
 		L.RegVar("instance", get_instance, null);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Setup(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			SceneManager obj = (SceneManager)ToLua.CheckObject<SceneManager>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.Setup(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -20,12 +40,11 @@ public class SceneManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 4);
+			ToLua.CheckArgsCount(L, 3);
 			SceneManager obj = (SceneManager)ToLua.CheckObject<SceneManager>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			System.Action<bool,float> arg2 = (System.Action<bool,float>)ToLua.CheckDelegate<System.Action<bool,float>>(L, 4);
-			obj.Load(arg0, arg1, arg2);
+			System.Action<bool,float> arg1 = (System.Action<bool,float>)ToLua.CheckDelegate<System.Action<bool,float>>(L, 3);
+			obj.Load(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)
@@ -70,6 +89,44 @@ public class SceneManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_mScenePath(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			SceneManager obj = (SceneManager)o;
+			string ret = obj.mScenePath;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index mScenePath on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_mSceneName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			SceneManager obj = (SceneManager)o;
+			string ret = obj.mSceneName;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index mSceneName on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_instance(IntPtr L)
 	{
 		try
@@ -80,6 +137,44 @@ public class SceneManagerWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_mScenePath(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			SceneManager obj = (SceneManager)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.mScenePath = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index mScenePath on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_mSceneName(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			SceneManager obj = (SceneManager)o;
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.mSceneName = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index mSceneName on a nil value");
 		}
 	}
 }
