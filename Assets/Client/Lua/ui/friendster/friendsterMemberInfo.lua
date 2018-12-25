@@ -99,7 +99,7 @@ function friendsterMemberInfo:onDissolveClickedHandler()
 end
 
 function friendsterMemberInfo:onDeleteClickedHandler()
-    showMessageUI(string.format("是否要将玩家（%d）从亲友圈中移除？"), function()
+    showMessageUI(string.format("是否要将玩家（%d）从亲友圈中移除？", self.data.acId), function()
         showWaitingUI("正在将玩家从亲友圈中删除，请稍候")
         networkManager.deleteAcIdFromFriendster(self.friendsterId, self.data.acId, function(msg)
             closeWaitingUI()
