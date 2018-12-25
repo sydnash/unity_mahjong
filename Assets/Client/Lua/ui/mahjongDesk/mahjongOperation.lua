@@ -468,6 +468,11 @@ function mahjongOperation:onGameSync()
         end
     elseif self.game.deskPlayStatus == mahjongGame.status.playing then
         self:onOpList(reenter.CurOpList)
+        if self.canChuPai then
+            self:computeChuHint()
+        else
+            self:computeJiao()
+        end
         self:highlightPlaneByAcId(reenter.CurOpAcId)
         self.turnCountdown = COUNTDOWN_SECONDS_C
         self.countdownTick = time.realtimeSinceStartup()
@@ -745,6 +750,7 @@ function mahjongOperation:onMoPai(acId, cards)
         end
     end
 
+    self:computeChuHint()
 end
 
 -------------------------------------------------------------------------------
@@ -785,10 +791,20 @@ function mahjongOperation:beginChuPai()
         moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
         mahjongs[#mahjongs]:setLocalPosition(moPaiPos)
     end
+end
 
+function mahjongOperation:computeChuHint()
     if self.game.chuHintComputeHelper then
         local ret = self.game.chuHintComputeHelper:checkChuPaiHint()
-        log("===========================================: " .. table.tostring(ret))
+        log("chu hint=====================" .. table.tostring(ret))
+    end
+end
+
+function mahjongOperation:computeJiao()
+    if self.game.chuHintComputeHelper then
+        local inhandCnt, totalCnt = self.game.chuHintComputeHelper:statisticCount()
+        local ret = self.game.chuHintComputeHelper:checkChuPaiHint()
+        log("jiao =====================" .. table.tostring(ret))
     end
 end
 
@@ -1274,6 +1290,7 @@ function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
         local player = self.game:getPlayerByAcId(acId)
         playMahjongOpSound(opType.peng.id, player.sex)
     end
+    self:computeChuHint()
 end
 
 -------------------------------------------------------------------------------

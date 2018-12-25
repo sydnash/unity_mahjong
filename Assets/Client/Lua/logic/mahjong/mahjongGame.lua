@@ -465,7 +465,7 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
     elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
         local pinfo
         for _, info in pairs(infos) do
-            if info.Op == opType.peng and mahjongType.getMahjongTypeId(info.Cs[1]) == mahjongType.getMahjongTypeId(cards[1]) then
+            if info.Op == opType.peng.id and mahjongType.getMahjongTypeId(info.Cs[1]) == mahjongType.getMahjongTypeId(cards[1]) then
                 pinfo = info
                 break
             end

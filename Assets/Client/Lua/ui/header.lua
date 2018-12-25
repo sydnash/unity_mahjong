@@ -12,6 +12,9 @@ function header:onInit()
 end
 
 function header:setTexture(url)
+    --clear pre signal handler.
+    self:reset()
+
     local token, tex = headerManager.request(url)
     self.mIcon:setTexture(tex)
 

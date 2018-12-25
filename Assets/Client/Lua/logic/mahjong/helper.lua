@@ -42,20 +42,16 @@ function helper:checkJiao(cntVec, totalCntVec)
     return ret
 end
 
-function helper:isHu(cntVec, tid, duiCnt, singleIdx)
-    local desc = mahjongType.getMahjongTypeByTypeId(tid)
-    if desc.class == self.que then
-        return false, nil
-    end
-    self:addTypeCnt(cntVec, tid, 1)
-
+function helper:isHu7Dui(cntVec, duiCnt, singleIdx)
     if duiCnt == 6 and singleIdx == tid then
         local ok, ret = self:check7Dui(cntVec)
         if ok then
             return ok, ret
         end
     end
-
+    return false, nil
+end
+function helper:isHuNormal(cntVec)
     for idx, cnt in pairs(cntVec) do
         if cnt >= 2 then
             local vec = setmetatable({}, {__index = cntVec})
@@ -64,13 +60,26 @@ function helper:isHu(cntVec, tid, duiCnt, singleIdx)
             table.insert(ret, { Cs = {idx * 4, idx * 4}, Op = opType.dui.id } )
             local ok, c = self:checkForAllNine(vec)
             if ok then
-                self:addTypeCnt(cntVec, tid, -1)
                 return true, self:appVec(ret, c)
             end
         end
     end
-    self:addTypeCnt(cntVec, tid, -1)
     return false, nil
+end
+
+function helper:isHu(cntVec, tid, duiCnt, singleIdx)
+    local desc = mahjongType.getMahjongTypeByTypeId(tid)
+    if desc.class == self.que then
+        return false, nil
+    end
+    self:addTypeCnt(cntVec, tid, 1)
+    local ok, ret = self:isHu7Dui(cntVec, duiCnt, singleIdx)
+    if ok then
+        return ok, ret
+    end
+    local ok, ret = self:isHuNormal(cntVec)
+    self:addTypeCnt(cntVec, tid, -1)
+    return ok, ret
 end
 
 function helper:appVec(t1, t2)
@@ -173,9 +182,10 @@ function helper:computeCacheId(cntVec, sidx, k)
     for i = 1, 9 do
         local idx = sidx + i - 1
         local t1 = cntVec[idx]
-        ret = ret * 10 + t1
+        ret = ret * 8 + t1
     end
-    return string.format( "%d%d", ret, k )
+    ret = ret * 8 + k
+    return ret
 end
 
 function helper:initVec(cnt)
@@ -185,9 +195,8 @@ function helper:initVec(cnt)
     end
     return ret
 end
---return {id = 1, hu = {} }
-function helper:checkChuPaiHint()
-            local now = tolua.gettime()
+
+function helper:statisticCount()
     local opui = self.game.operationUI
     local inhandMjs = opui.inhandMahjongs[self.acId]
     local handCntVec = self:initVec(27)
@@ -205,21 +214,12 @@ function helper:checkChuPaiHint()
             self:addTypeCnt(totalCntVec, mahjongType.getMahjongTypeId(id), 1)
         end
     end
-    for _, seat in pairs(opui.pengMahjongs) do
-        for _, vec in pairs(seat) do
-            for _, mj in pairs(vec) do
-                local id = mahjongType.getMahjongTypeId(mj.id)
-                self:addTypeCnt(totalCntVec, id, 1)
-            end
-        end
-    end
-    for _, vec in pairs(opui.chuMahjongs) do
-        for _, mj in pairs(vec) do
-            local id = mahjongType.getMahjongTypeId(mj.id)
-            self:addTypeCnt(totalCntVec, id, 1)
-        end
-    end
+    return handCntVec, totalCntVec
+end
 
+function helper:checkChuPaiHint()
+            local now = tolua.gettime()
+    local handCntVec, totalCntVec = self:statisticCount()
     local cntVec = handCntVec
     local ret = {}
     for id, cnt in pairs(cntVec) do
@@ -277,7 +277,7 @@ function helper:computeFanXing(huC)
     local yaoJiu = true
     local jiangDui = true
 
-    local vec = {}
+    local vec = self:initVec(30)
     local function checkC(c)
         if c.Op == opType.chi.id then
             chiCnt = chiCnt + 1
@@ -397,11 +397,11 @@ function helper:getFanShuByFx(fx)
 end
 
 function helper:addTypeCnt(vec, tid, cnt)
-    if vec[tid] == nil then
-        vec[tid] = cnt
-    else
+    -- if vec[tid] == nil then
+        -- vec[tid] = cnt
+    -- else
         vec[tid] = cnt + vec[tid]
-    end
+    -- end
 end
 
 return helper
