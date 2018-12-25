@@ -293,6 +293,7 @@ end
 
 function doushisiGame:onOpListHandler(msg)
     self.operationUI:onOpList(msg)
+    self.deskUI:onOpList(msg)
 end
 
 function doushisiGame:onChiPengGangType(player, op, cards, beCard)
@@ -410,6 +411,7 @@ end
 function doushisiGame:onOpDoHandler(msg)
     self.operationUI:hideAllOpBtn()
     self.operationUI:closeAllBtnPanel()
+    self.deskUI:hideClock()
     local player = self:getPlayerByAcId(msg.AcId)
     player.zhaoCnt = msg.ZhaoCnt
     player.fuShu = msg.FuShu

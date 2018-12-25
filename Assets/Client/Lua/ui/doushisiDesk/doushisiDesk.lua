@@ -320,6 +320,11 @@ function doushisiDesk:playGfx(acId, name)
     header:playGfx(name)
 end
 
+function doushisiDesk:onOpList(msg)
+    local mine = self.game:getSeatTypeByAcId(self.game.mainAcId)
+    self:showClock(mine)
+end
+
 function doushisiDesk:onOpDoHu(acId)
     self:playGfx(acId, "hu")
 end
