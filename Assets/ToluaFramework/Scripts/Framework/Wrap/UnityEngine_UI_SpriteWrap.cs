@@ -7,10 +7,28 @@ public class UnityEngine_UI_SpriteWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UnityEngine.UI.Sprite), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("SetSize", SetSize);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("spriteName", null, set_spriteName);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetSize(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UnityEngine.UI.Sprite obj = (UnityEngine.UI.Sprite)ToLua.CheckObject<UnityEngine.UI.Sprite>(L, 1);
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			obj.SetSize(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

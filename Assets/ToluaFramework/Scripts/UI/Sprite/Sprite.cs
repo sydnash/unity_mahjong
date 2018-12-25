@@ -36,6 +36,7 @@ namespace UnityEngine.UI
         /// 
         /// </summary>
         private Image mImage = null;
+        private RectTransform mRectTransform = null;
 
         /// <summary>
         /// 
@@ -75,6 +76,12 @@ namespace UnityEngine.UI
             }
         }
 
+        public void SetSize(Vector2 size)
+        {
+            mRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
+            mRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y);
+        }
+
         #endregion
 
         #region Private
@@ -85,6 +92,7 @@ namespace UnityEngine.UI
         private void Awake()
         {
             mImage = GetComponent<Image>();
+            mRectTransform = GetComponent<RectTransform>();
         }
 
         #endregion

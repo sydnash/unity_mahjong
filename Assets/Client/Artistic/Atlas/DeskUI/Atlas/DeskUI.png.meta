@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8b67b6a3be3a02c4faecd31caeb2fabe
-timeCreated: 1542771484
+timeCreated: 1545727386
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -48,6 +48,9 @@ TextureImporter:
     21300082: HF_yy_01
     21300084: HF_yy_02
     21300086: HF_yy_03
+    21300088: hp_di
+    21300090: hp_dp
+    21300092: hp_jt
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -172,7 +175,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 470
-        y: 384
+        y: 350
         width: 24
         height: 40
       alignment: 0
@@ -183,20 +186,6 @@ TextureImporter:
       tessellationDetail: -1
     - serializedVersion: 2
       name: HF_yy_02
-      rect:
-        serializedVersion: 2
-        x: 470
-        y: 342
-        width: 24
-        height: 40
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: HF_yy_03
       rect:
         serializedVersion: 2
         x: 140
@@ -210,11 +199,25 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
+      name: HF_yy_03
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 178
+        width: 24
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: HF_yy_di
       rect:
         serializedVersion: 2
-        x: 289
-        y: 106
+        x: 360
+        y: 141
         width: 66
         height: 68
       alignment: 0
@@ -228,7 +231,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 449
-        y: 290
+        y: 298
         width: 58
         height: 50
       alignment: 0
@@ -242,7 +245,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 449
-        y: 176
+        y: 184
         width: 49
         height: 112
       alignment: 0
@@ -256,9 +259,51 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 61
+        y: 69
         width: 73
         height: 113
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: hp_di
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 392
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 11, y: 8, z: 11, w: 10}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: hp_dp
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 113
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: hp_jt
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 144
+        width: 43
+        height: 43
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -284,7 +329,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 76
-        y: 105
+        y: 73
         width: 69
         height: 69
       alignment: 0
@@ -298,7 +343,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 147
-        y: 105
+        y: 107
         width: 69
         height: 69
       alignment: 0
@@ -312,7 +357,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 218
-        y: 105
+        y: 113
         width: 69
         height: 69
       alignment: 0
@@ -326,7 +371,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 245
-        y: 34
+        y: 42
         width: 69
         height: 69
       alignment: 0
@@ -354,7 +399,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 8
+        y: 16
         width: 72
         height: 51
       alignment: 0
@@ -423,8 +468,8 @@ TextureImporter:
       name: ZM_zi01
       rect:
         serializedVersion: 2
-        x: 75
-        y: 10
+        x: 171
+        y: 261
         width: 168
         height: 49
       alignment: 0
@@ -437,8 +482,8 @@ TextureImporter:
       name: ZM_zi01_h
       rect:
         serializedVersion: 2
-        x: 171
-        y: 261
+        x: 75
+        y: 18
         width: 168
         height: 49
       alignment: 0

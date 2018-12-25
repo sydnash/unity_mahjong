@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp/Assets/Client/Resources/UI/DeskUI/Atlas/DeskUI.tps</string>
+        <string>D:/mj/tdqp/Assets/Client/Artistic/Atlas/DeskUI/Atlas/DeskUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -284,6 +284,7 @@
             <key type="filename">Images/ZM_an03.png</key>
             <key type="filename">Images/ZM_an03_1.png</key>
             <key type="filename">Images/ZM_an04.png</key>
+            <key type="filename">Images/hp_dp.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -415,6 +416,32 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/hp_di.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,8,17,16</rect>
+                <key>scale9Paddings</key>
+                <rect>9,8,17,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/hp_jt.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,11,21,21</rect>
+                <key>scale9Paddings</key>
+                <rect>11,11,21,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -442,6 +469,9 @@
             <filename>Images/HF_yy_01.png</filename>
             <filename>Images/HF_yy_02.png</filename>
             <filename>Images/HF_yy_03.png</filename>
+            <filename>Images/hp_di.png</filename>
+            <filename>Images/hp_dp.png</filename>
+            <filename>Images/hp_jt.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

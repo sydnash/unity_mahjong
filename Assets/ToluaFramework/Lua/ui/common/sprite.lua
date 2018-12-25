@@ -31,6 +31,10 @@ function sprite:getHeight()
     return self.rectTransform.rect.height
 end
 
+function sprite:setSize(Vector2 size)
+    self.sprite:SetSize(size)
+end
+
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
