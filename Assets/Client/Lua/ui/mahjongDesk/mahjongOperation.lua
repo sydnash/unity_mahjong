@@ -2387,6 +2387,20 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
     self.animationManager:add(animation)
 end
 
+function mahjongOperation:showHuPaiHint()
+    self:hideHuPaiHint()
+    self.huPaiHintUI = require ("ui.mahjongDesk.huPaiHint").new({1,2,3,4,5,6,7,8,9})
+    self.huPaiHintUI:show()
+    self.huPaiHintUI:setParent(self.mHuPaiHint)
+    self.huPaiHintUI:setAnchoredPosition(Vector2.zero)
+end
+function mahjongOperation:hideHuPaiHint()
+    if self.huPaiHintUI ~= nil then
+        self.huPaiHintUI:close()
+        self.huPaiHintUI = nil
+    end
+end
+
 return mahjongOperation
 
 --endregion

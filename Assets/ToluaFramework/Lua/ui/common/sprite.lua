@@ -2,6 +2,7 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+log("test1")
 local base = require("common.object")
 local sprite = class("sprite", base)
 
@@ -31,7 +32,7 @@ function sprite:getHeight()
     return self.rectTransform.rect.height
 end
 
-function sprite:setSize(Vector2 size)
+function sprite:setSize(size)
     self.sprite:SetSize(size)
 end
 

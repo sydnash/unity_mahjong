@@ -362,11 +362,11 @@ MonoBehaviour:
   - variableName: mA
     widgetType: 1
     gameObject: {fileID: 1135036556162856}
-    panelScript: 
+    panelScript: ui.mahjongDesk.huPaiHintOne
   - variableName: mB
     widgetType: 1
     gameObject: {fileID: 1878950554667124}
-    panelScript: 
+    panelScript: ui.mahjongDesk.huPaiHintOne
 --- !u!114 &114432894826939150
 MonoBehaviour:
   m_ObjectHideFlags: 1

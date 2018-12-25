@@ -257,6 +257,7 @@ function desk:onChatClickedHandler()
     local ui = require("ui.chat").new()
     ui:show()
 
+    self.game.operationUI:showHuPaiHint()
     playButtonClickSound()
 end
 

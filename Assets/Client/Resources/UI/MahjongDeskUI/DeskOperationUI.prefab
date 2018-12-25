@@ -762,6 +762,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1968699739566554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224265887595484088}
+  m_Layer: 5
+  m_Name: HuPaiHint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1981472542101928
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems: []
 --- !u!114 &114069657259642842
 MonoBehaviour:
@@ -1421,6 +1437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: enable
     sprite: {fileID: 21300058, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -1546,6 +1563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems: []
 --- !u!114 &114492414481822864
 MonoBehaviour:
@@ -2133,6 +2151,10 @@ MonoBehaviour:
     widgetType: 3
     gameObject: {fileID: 1468434078553998}
     panelScript: 
+  - variableName: mHuPaiHint
+    widgetType: 0
+    gameObject: {fileID: 1968699739566554}
+    panelScript: 
 --- !u!114 &114814508231342590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2204,6 +2226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: enable
     sprite: {fileID: 21300048, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -2319,6 +2342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: 1tiao
     sprite: {fileID: 21300170, guid: a2bb16f3b9297324fa0184d13a9e341f, type: 3}
@@ -2513,6 +2537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems: []
 --- !u!114 &114934915638761908
 MonoBehaviour:
@@ -2932,6 +2957,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 280}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224265887595484088
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1968699739566554}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 81, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224285343570827100}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 81}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224266065073283528
 RectTransform:
   m_ObjectHideFlags: 1
@@ -2984,6 +3027,7 @@ RectTransform:
   - {fileID: 224368324770250580}
   - {fileID: 224262858100403410}
   - {fileID: 224338956826702700}
+  - {fileID: 224265887595484088}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
