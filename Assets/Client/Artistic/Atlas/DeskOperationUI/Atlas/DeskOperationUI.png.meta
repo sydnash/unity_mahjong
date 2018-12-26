@@ -84,6 +84,7 @@ TextureImporter:
     21300154: ZM_an09_1
     21300156: ZM_an10_1
     21300158: ZM_an11_1
+    21300160: hp_jt
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -179,7 +180,7 @@ TextureImporter:
       name: djs_0
       rect:
         serializedVersion: 2
-        x: 290
+        x: 335
         y: 14
         width: 28
         height: 32
@@ -193,7 +194,7 @@ TextureImporter:
       name: djs_1
       rect:
         serializedVersion: 2
-        x: 557
+        x: 602
         y: 14
         width: 15
         height: 32
@@ -207,7 +208,7 @@ TextureImporter:
       name: djs_2
       rect:
         serializedVersion: 2
-        x: 320
+        x: 365
         y: 14
         width: 28
         height: 32
@@ -221,7 +222,7 @@ TextureImporter:
       name: djs_3
       rect:
         serializedVersion: 2
-        x: 500
+        x: 545
         y: 14
         width: 27
         height: 32
@@ -235,7 +236,7 @@ TextureImporter:
       name: djs_4
       rect:
         serializedVersion: 2
-        x: 350
+        x: 395
         y: 14
         width: 28
         height: 32
@@ -249,7 +250,7 @@ TextureImporter:
       name: djs_5
       rect:
         serializedVersion: 2
-        x: 380
+        x: 425
         y: 14
         width: 28
         height: 32
@@ -263,7 +264,7 @@ TextureImporter:
       name: djs_6
       rect:
         serializedVersion: 2
-        x: 410
+        x: 455
         y: 14
         width: 28
         height: 32
@@ -277,7 +278,7 @@ TextureImporter:
       name: djs_7
       rect:
         serializedVersion: 2
-        x: 529
+        x: 574
         y: 14
         width: 26
         height: 32
@@ -291,7 +292,7 @@ TextureImporter:
       name: djs_8
       rect:
         serializedVersion: 2
-        x: 440
+        x: 485
         y: 14
         width: 28
         height: 32
@@ -305,10 +306,24 @@ TextureImporter:
       name: djs_9
       rect:
         serializedVersion: 2
-        x: 470
+        x: 515
         y: 14
         width: 28
         height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: hp_jt
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 3
+        width: 43
+        height: 43
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

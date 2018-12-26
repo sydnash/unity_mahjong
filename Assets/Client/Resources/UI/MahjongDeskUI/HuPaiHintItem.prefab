@@ -584,15 +584,15 @@ MonoBehaviour:
   mWidgets:
   - variableName: mMahjong
     widgetType: 3
-    gameObject: {fileID: 1916335585830034}
+    gameObject: {fileID: 1889652723232070}
     panelScript: 
   - variableName: mFan
     widgetType: 2
-    gameObject: {fileID: 1118207484054396}
+    gameObject: {fileID: 1775310917136658}
     panelScript: 
   - variableName: mCount
     widgetType: 2
-    gameObject: {fileID: 1670774043653604}
+    gameObject: {fileID: 1853504684113238}
     panelScript: 
 --- !u!114 &114776461727537672
 MonoBehaviour:

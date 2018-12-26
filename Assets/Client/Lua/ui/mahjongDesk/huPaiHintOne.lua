@@ -11,20 +11,14 @@ function huPaiHintOne:onInit()
 end
 
 function huPaiHintOne:setInfo(info)
-    if type(info) ~= "table" then
-        info = {
-            id = math.random(1,26),
-            fan = math.random(0,4),
-            left = math.random(0,4),
-        }
-    end
-    self:setMahjong(info.id)
+    self:setMahjong(info.jiaoTid * 4)
     self:setFanShu(info.fan)
     self:setCount(info.left)
 end
 
 function huPaiHintOne:setMahjong(id)
     local spriteName = mahjongType.getMahjongTypeById(id).name
+    log("prite name : " .. spriteName)
     self.mMahjong:setSprite(spriteName)
 end
 
@@ -35,7 +29,7 @@ end
 
 function huPaiHintOne:setCount(cnt)
     cnt = cnt or 0
-    self.mFan:setText(string.format("%d张", cnt))
+    self.mCount:setText(string.format("%d张", cnt))
 end
 
 return huPaiHintOne

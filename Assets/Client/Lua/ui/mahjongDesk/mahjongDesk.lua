@@ -32,6 +32,23 @@ function mahjongDesk:onInit()
 
     self:updateLeftMahjongCount()
     base.onInit(self)
+    self.mHuHint:addClickListener(self.onHuHintClickedHandler, self)
+    self:hideHuHintButton()
+end
+
+function mahjongDesk:onHuHintClickedHandler()
+    self.game.operationUI:showHuPaiHint()
+end
+
+function mahjongDesk:hideHuHintButton()
+    self.mHuHint:hide()
+end
+function mahjongDesk:showHuHintButton()
+    local p = self.game:getPlayerByAcId(self.game.mainAcId)
+    if p.isHu then
+        return
+    end
+    self.mHuHint:show()
 end
 
 function mahjongDesk:onGameSync()
@@ -63,6 +80,9 @@ function mahjongDesk:onPlayerHu(acId, t)
         p:playGfx("hu")
     end
 
+    if acId == self.game.mainAcId then
+        self:hideHuHintButton()
+    end
     p:showHu()
 end
 

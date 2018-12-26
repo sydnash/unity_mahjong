@@ -17,6 +17,7 @@ function huPaiHintItem:onInit()
         local idx = self.start + i - 1
         local info = self.huInfo[idx]
         if info then
+            log(string.format("===================info:%s : i:%s " , table.tostring(info), i))
             local t = self.items[i]
             t:show()
             t:setInfo(info)
@@ -32,7 +33,7 @@ function huPaiHint:ctor(info)
     base.ctor(self)
 end
 
-local singleSize = Vector2.New(314.6, 168.3)
+local singleSize = Vector2.New(322.0, 168.3)
 local doubleHeight = 288.4
 local add = 195.8
 local base = 314.6

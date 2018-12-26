@@ -120,6 +120,7 @@ function mahjongGame:syncSeats(seats)
         end
 
         if not isNilOrNull(player.hu) then
+            player.isHu = true
             local shou = player[mahjongGame.cardType.shou]
             local huInfo = player.hu[1]
             local detail = opType.hu.detail
@@ -483,6 +484,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard, t)
     self.knownMahjong[beCard] = 1
+    local player = self:getPlayerByAcId(acId)
+    player.isHu = true
     self.deskUI:onPlayerHu(acId, t)
     self.operationUI:onOpDoHu(acId, cards, beAcId, beCard, t)
 end
@@ -554,6 +557,7 @@ function mahjongGame:onGameEndListener(specialData, datas, totalScores)
     datas.scoreChanges = specialData.ScoreChanges
     for _, v in pairs(self.players) do
         v.que = -1
+        v.isHu = false
         self.deskUI:setScore(v.acId, v.score)
     end
     return datas
