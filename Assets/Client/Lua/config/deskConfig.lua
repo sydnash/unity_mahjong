@@ -88,6 +88,14 @@ local mahjongLayoutBase = {
         }, 
         group = { value = false, switchOff = false },
     },
+    [11] = {
+        title = "胡牌",
+        items = {
+            [1] = { style = "radiobox", text = "开启提示", key = "HuPaiHint", value = 1 },
+            [2] = { style = "radiobox", text = "关闭提示", key = "HuPaiHint", value = 2 },
+        },
+        group = {value = true, switchOff = false},
+    }
 }
 
 local chengduMahjongLayout      = table.clone(mahjongLayoutBase)
@@ -202,6 +210,7 @@ local mahjongConfigBase = {
     ["JiangDui"]       = 2,
     ["MenQing"]        = 2,
     ["TianDiHu"]       = 2,
+    ["HuPaiHint"]      = 1,
 }
 
 local chengduMahjongConfig      = table.clone(mahjongConfigBase)
@@ -267,18 +276,19 @@ deskConfig = {
 --
 ----------------------------------------------------------------
 local mahjongShiftConfigBase = {
-    ["RenShu"]         = { [4] = 1, [3]  = 2, [2]  = 3 },
-    ["JuShu"]          = { [8] = 1, [12] = 2, [16] = 3 },
-    ["FangShu"]        = { [3] = 1, [2]  = 2 },
-    ["FengDing"]       = { [3] = 1, [4]  = 2, [5]  = 3 },
-    ["ZiMoJiaX"]       = { [0] = 1, [1]  = 2 },
-    ["DianGangHuaX"]   = { [0] = 1, [1]  = 2 },
-    ["HuanNZhang"]     = { [0] = 1, [3]  = 2, [4]  = 3 },
-    ["YaoJiu"]         = { [true] = 1, [false] = 2 },
-    ["ZhongZhang"]     = { [true] = 1, [false] = 2 },
-    ["JiangDui"]       = { [true] = 1, [false] = 2 },
-    ["MenQing"]        = { [true] = 1, [false] = 2 },
-    ["TianDiHu"]       = { [true] = 1, [false] = 2 },
+    ["RenShu"]          = { [4] = 1, [3]  = 2, [2]  = 3 },
+    ["JuShu"]           = { [8] = 1, [12] = 2, [16] = 3 },
+    ["FangShu"]         = { [3] = 1, [2]  = 2 },
+    ["FengDing"]        = { [3] = 1, [4]  = 2, [5]  = 3 },
+    ["ZiMoJiaX"]        = { [0] = 1, [1]  = 2 },
+    ["DianGangHuaX"]    = { [0] = 1, [1]  = 2 },
+    ["HuanNZhang"]      = { [0] = 1, [3]  = 2, [4]  = 3 },
+    ["YaoJiu"]          = { [true] = 1, [false] = 2 },
+    ["ZhongZhang"]      = { [true] = 1, [false] = 2 },
+    ["JiangDui"]        = { [true] = 1, [false] = 2 },
+    ["MenQing"]         = { [true] = 1, [false] = 2 },
+    ["TianDiHu"]        = { [true] = 1, [false] = 2 },
+    ["HuPaiHint"]       = { [true] = 1, [false] = 2 },
 }
 
 local chengduMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)

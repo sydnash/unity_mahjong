@@ -617,6 +617,10 @@ function mahjongGame:quicklyStartChose(agree, callback)
     networkManager.quicklyStartChose(agree, callback)
 end
 
+function mahjongGame:hasHuPaiHint()
+    return self.config.HuPaiHint and not self:isPlayback()
+end
+
 return mahjongGame
 
 --endregion

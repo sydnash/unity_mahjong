@@ -474,7 +474,7 @@ function mahjongOperation:onGameSync()
         end
     elseif self.game.deskPlayStatus == mahjongGame.status.playing then
         self:onOpList(reenter.CurOpList)
-        if not self.game:isPlayback() then
+        if self.game:hasHuPaiHint() then
             if self.canChuPai then
                 self:computeChuHint()
                 self:showChuPaiArrow()
@@ -804,14 +804,14 @@ function mahjongOperation:beginChuPai()
         mahjongs[#mahjongs]:setLocalPosition(moPaiPos)
     end
 
-    if not self.game:isPlayback() then
+    if self.game:hasHuPaiHint() then
         self.game.deskUI:hideHuHintButton()
         self:showChuPaiArrow()
     end
 end
 
 function mahjongOperation:computeChuHint()
-    if self.game:isPlayback() then
+    if not self.game:hasHuPaiHint() then
         return
     end
     if self.game.chuHintComputeHelper then
@@ -821,7 +821,7 @@ function mahjongOperation:computeChuHint()
 end
 
 function mahjongOperation:computeJiao()
-    if self.game:isPlayback() then
+    if not self.game:hasHuPaiHint() then
         return
     end
     if self.game.chuHintComputeHelper then
