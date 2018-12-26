@@ -1310,9 +1310,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
     local chuId = cards[1]
     if acId == self.game.mainAcId then
         local huPaiHintInfo = self:getHuPaiHintInfo(chuId)
-        if huPaiHintInfo then
-            self.huPaiHintInfo = huPaiHintInfo
-        end
+        self.huPaiHintInfo = huPaiHintInfo
         self:hideHuPaiHint()
         if self.huPaiHintInfo then
             self.game.deskUI:showHuHintButton()
