@@ -474,13 +474,15 @@ function mahjongOperation:onGameSync()
         end
     elseif self.game.deskPlayStatus == mahjongGame.status.playing then
         self:onOpList(reenter.CurOpList)
-        if self.canChuPai then
-            self:computeChuHint()
-            self:showChuPaiForHuHint()
-        else
-            local player = self.game:getPlayerByAcId(self.game.mainAcId)
-            if not player.isHu then
-                self:computeJiao()
+        if not self.game:isPlayback() then
+            if self.canChuPai then
+                self:computeChuHint()
+                self:showChuPaiForHuHint()
+            else
+                local player = self.game:getPlayerByAcId(self.game.mainAcId)
+                if not player.isHu then
+                    self:computeJiao()
+                end
             end
         end
         self:highlightPlaneByAcId(reenter.CurOpAcId)
@@ -802,11 +804,16 @@ function mahjongOperation:beginChuPai()
         mahjongs[#mahjongs]:setLocalPosition(moPaiPos)
     end
 
-    self.game.deskUI:hideHuHintButton()
-    self:showChuPaiForHuHint()
+    if not self.game:isPlayback() then
+        self.game.deskUI:hideHuHintButton()
+        self:showChuPaiForHuHint()
+    end
 end
 
 function mahjongOperation:computeChuHint()
+    if self.game:isPlayback() then
+        return
+    end
     if self.game.chuHintComputeHelper then
         local ret = self.game.chuHintComputeHelper:checkChuPaiHint()
         self.chuPaiHintInfo = ret
@@ -814,6 +821,9 @@ function mahjongOperation:computeChuHint()
 end
 
 function mahjongOperation:computeJiao()
+    if self.game:isPlayback() then
+        return
+    end
     if self.game.chuHintComputeHelper then
         local inhandCnt, totalCnt = self.game.chuHintComputeHelper:statisticCount()
         local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()

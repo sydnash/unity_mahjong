@@ -44,6 +44,9 @@ function mahjongDesk:hideHuHintButton()
     self.mHuHint:hide()
 end
 function mahjongDesk:showHuHintButton()
+    if self.game:isPlayback() then
+        return
+    end
     local p = self.game:getPlayerByAcId(self.game.mainAcId)
     if p.isHu then
         return
