@@ -38,7 +38,7 @@ public class AssetLoader
     /// <summary>
     /// 
     /// </summary>
-    private DependentBundlePool mDependentBundlePool = new DependentBundlePool();
+    private DependentBundlePool mDependentBundlePool = DependentBundlePool.Instance();
 
     /// <summary>
     /// 

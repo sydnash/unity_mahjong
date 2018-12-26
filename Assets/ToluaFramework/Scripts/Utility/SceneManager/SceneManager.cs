@@ -178,7 +178,7 @@ public class SceneManager : MonoBehaviour
     private IEnumerator LoadCoroutine(SceneBundle[] bundleInfos, string sceneName, Action<bool, float> callback)
     {
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
-        mLoader.LoadDependentAB(mScenePath, sceneName);
+        mLoader.LoadDependentAB(string.Empty, sceneName);
 
         InvokeCallback(callback, false, 0.2f);
         yield return WAIT_FOR_END_OF_FRAME;
