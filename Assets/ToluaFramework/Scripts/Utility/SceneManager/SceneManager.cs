@@ -208,7 +208,8 @@ public class SceneManager : MonoBehaviour
                 yield return WAIT_FOR_END_OF_FRAME;
             }
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
-            bundle.Unload(false);
+            //TODO: xieheng  这里删除了，下次再进入的时候会执行下面的logErrror
+            // bundle.Unload(false);
         }
         else
         {
