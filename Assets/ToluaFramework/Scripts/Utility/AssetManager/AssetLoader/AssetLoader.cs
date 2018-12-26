@@ -38,7 +38,8 @@ public class AssetLoader
     /// <summary>
     /// 
     /// </summary>
-    private DependentBundlePool mDependentBundlePool = DependentBundlePool.Instance();
+    // private DependentBundlePool mDependentBundlePool = DependentBundlePool.Instance();
+    private DependentBundlePool mDependentBundlePool = new DependentBundlePool();
 
     /// <summary>
     /// 
@@ -196,6 +197,11 @@ public class AssetLoader
             }
             mLoadedBundlePool.Clear();
         }
+    }
+
+    public void ClearBundlePool()
+    {
+        mLoadedBundlePool.Clear();
     }
 
     /// <summary>

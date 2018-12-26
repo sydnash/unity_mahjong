@@ -22,14 +22,14 @@ public class DependentBundlePool
         public int refCount = 0;
     }
 
-    private static DependentBundlePool sThis = null;
-    public static DependentBundlePool Instance()
-    {
-        if (sThis == null) {
-            sThis = new DependentBundlePool();
-        }
-        return sThis;
-    }
+    // private static DependentBundlePool sThis = null;
+    // public static DependentBundlePool Instance()
+    // {
+    //     if (sThis == null) {
+    //         sThis = new DependentBundlePool();
+    //     }
+    //     return sThis;
+    // }
 
     #endregion
 

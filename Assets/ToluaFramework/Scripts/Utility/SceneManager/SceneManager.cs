@@ -114,7 +114,7 @@ public class SceneManager : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(mSceneName))
         {
-            string key = AssetLoader.CreateAssetKey(mScenePath, mSceneName);
+            string key = AssetLoader.CreateAssetKey(string.Empty, mSceneName);
             mLoader.UnloadDependencies(key);
         }
 
@@ -208,8 +208,11 @@ public class SceneManager : MonoBehaviour
                 yield return WAIT_FOR_END_OF_FRAME;
             }
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
-            //TODO: xieheng  这里删除了，下次再进入的时候会执行下面的logErrror
-            // bundle.Unload(false);
+            //TODO: xieheng  这里scene使用完毕之后，直接清除依赖和bundle，避免后面的重复加载导致失败
+            bundle.Unload(false);
+            string key = AssetLoader.CreateAssetKey(string.Empty, mSceneName);
+            mLoader.UnloadDependencies(key);
+            mLoader.ClearBundlePool();
         }
         else
         {
