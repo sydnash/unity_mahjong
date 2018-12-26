@@ -156,6 +156,7 @@ end
 
 function mahjongGame:onDeskStatusChanged()
     self:createChuHintComputeHlper()
+    self.operationUI:onDeskPlayStatusChanged()
 end
 
 function mahjongGame:createChuHintComputeHlper()

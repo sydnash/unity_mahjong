@@ -810,6 +810,17 @@ function mahjongOperation:beginChuPai()
     end
 end
 
+function mahjongOperation:onDeskPlayStatusChanged()
+    if self.game.deskPlayStatus == mahjongGame.status.playing then
+        if self.game:hasHuPaiHint() then
+            self:computeChuHint()
+            if self.canChuPai then
+                self:showChuPaiArrow()
+            end
+        end
+    end
+end
+
 function mahjongOperation:computeChuHint()
     if not self.game:hasHuPaiHint() then
         return
