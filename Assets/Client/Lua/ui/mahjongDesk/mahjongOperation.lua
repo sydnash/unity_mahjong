@@ -217,7 +217,7 @@ function mahjongOperation:onInit()
         local name = string.format("mChuHuHint%d",i)
         table.insert(self.mChuHuHints, self[name])
     end
-    self:hideChuPaiForHuHint()
+    self:hideChuPaiArrow()
     --按钮
     self.mHnzDo:addClickListener(self.onHnzChooseClickedHandler, self)
     self.mTiao:addClickListener(self.onTiaoClickedHandler, self)
@@ -477,7 +477,7 @@ function mahjongOperation:onGameSync()
         if not self.game:isPlayback() then
             if self.canChuPai then
                 self:computeChuHint()
-                self:showChuPaiForHuHint()
+                self:showChuPaiArrow()
             else
                 local player = self.game:getPlayerByAcId(self.game.mainAcId)
                 if not player.isHu then
@@ -806,7 +806,7 @@ function mahjongOperation:beginChuPai()
 
     if not self.game:isPlayback() then
         self.game.deskUI:hideHuHintButton()
-        self:showChuPaiForHuHint()
+        self:showChuPaiArrow()
     end
 end
 
@@ -1233,7 +1233,7 @@ end
 -- 出牌
 -------------------------------------------------------------------------------
 function mahjongOperation:virtureChu(mj)
-    self:hideChuPaiForHuHint()
+    self:hideChuPaiArrow()
     mj:setShadowMode(mahjong.shadowMode.yang)
 
     local acId = self.game.mainAcId
@@ -1317,7 +1317,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
         else
             self.game.deskUI:hideHuHintButton()
         end
-        self:hideChuPaiForHuHint()
+        self:hideChuPaiArrow()
     end
 
     self:showChuPaiHint(acId, cards[1])
@@ -1363,6 +1363,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
     self:hideChuPaiHint()
+    self:hideChuPaiArrow()
     self:endChuPai()
     local detail = opType.gang.detail
 
@@ -1423,6 +1424,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
     self:hideChuPaiHint()
+    self:hideChuPaiArrow()
     local hu = nil
     local detail = opType.hu.detail
 
@@ -2483,8 +2485,8 @@ function mahjongOperation:worldToUIPos(pos, node, camera)
     return uiPos
 end
 
-function mahjongOperation:showChuPaiForHuHint()
-    self:hideChuPaiForHuHint()
+function mahjongOperation:showChuPaiArrow()
+    self:hideChuPaiArrow()
     local usedIdx = 1
     if self.chuPaiHintInfo and #self.chuPaiHintInfo > 0 then
         local mjTid = {}
@@ -2516,7 +2518,7 @@ function mahjongOperation:showChuPaiForHuHint()
     end
 end
 
-function mahjongOperation:hideChuPaiForHuHint()
+function mahjongOperation:hideChuPaiArrow()
     for _, v in pairs(self.mChuHuHints) do
         v:hide()
     end
