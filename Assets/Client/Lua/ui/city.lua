@@ -7,6 +7,11 @@ local city = class("city", base)
 
 _RES_(city, "CityUI", "CityUI")
 
+function city:ctor(forClub)
+    self.forClub = forClub
+    base.ctor(self)
+end
+
 function city:onInit()
     self.regionId = gamepref.city.Region
 
@@ -95,12 +100,17 @@ end
 
 function city:onCityClickedHandler(sender)
     local cityType = sender.id
-    if gamepref.city.City ~= cityType then
-        gamepref.city.Region = self.regionId
-        gamepref.city.City = cityType
 
-        signalManager.signal(signalType.city, cityType)
-        writeCityConfig(gamepref.city)
+    if self.forClub then
+        signalManager.signal(signalType.cityForClub, cityType)
+    else
+        if gamepref.city.City ~= cityType then
+            gamepref.city.Region = self.regionId
+            gamepref.city.City = cityType
+
+            signalManager.signal(signalType.city, cityType)
+            writeCityConfig(gamepref.city)
+        end
     end
 
     self:close()

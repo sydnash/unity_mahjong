@@ -28,10 +28,11 @@ function createFriendster:onInit()
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
 
     self.mCity:setText(cityName[gamepref.city.City])
+    self.cityId = gamepref.city.City
     self.mName:setCharacterLimit(gameConfig.friendsterNameMaxLength)
     self.mName:setText(string.empty)
 
-    signalManager.registerSignalHandler(signalType.city, self.onCityChangedHandler, self)
+    signalManager.registerSignalHandler(signalType.cityForClub, self.onCityChangedHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
@@ -41,7 +42,7 @@ function createFriendster:onCloseClickedHandler()
 end
 
 function createFriendster:onExpandClickedHandler()
-    local ui = require("ui.city").new()
+    local ui = require("ui.city").new(true)
     ui:show()
 
     playButtonClickSound()
@@ -95,7 +96,7 @@ function createFriendster:onCloseAllUIHandler()
 end
 
 function createFriendster:onDestroy()
-    signalManager.unregisterSignalHandler(signalType.city, self.onCityChangedHandler, self)
+    signalManager.unregisterSignalHandler(signalType.cityForClub, self.onCityChangedHandler, self)
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     base.onDestroy(self)
 end

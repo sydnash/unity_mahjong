@@ -168,6 +168,7 @@ signalType = {
     city                                = 9,
     closeAllUI                          = 10,
     refreshFriendsterDetailInfo         = 11,
+    cityForClub                         = 12,
 }
 
 --------------------------------------------------------------
