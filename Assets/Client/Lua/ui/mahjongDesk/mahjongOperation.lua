@@ -762,7 +762,9 @@ function mahjongOperation:onMoPai(acId, cards)
         end
     end
 
-    self:computeChuHint()
+    if acId == self.game.mainAcId then
+        self:computeChuHint()
+    end
 end
 
 -------------------------------------------------------------------------------
