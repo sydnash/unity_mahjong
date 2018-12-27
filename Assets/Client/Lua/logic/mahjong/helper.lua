@@ -253,22 +253,11 @@ function helper:computeFanXing(huC)
         addFx(fanXingType.jinGouDiao)
     end
     local inhandCnt = 0
-    local hsCnt = {[0] = 0,[1] =  0, [2] =  0}
+
     for _, c in pairs(huC) do
         inhandCnt = inhandCnt + #c.Cs
-        local desc = mahjongType.getMahjongTypeById(c.Cs[1])
-        local class = desc.class
-        hsCnt[class] = hsCnt[class] + 1 
     end 
-    local t = 0
-    for _, c in pairs(hsCnt) do
-        if c > 0 then
-            t = t + 1
-        end
-    end
-    if t == 1 then
-        addFx(fanXingType.qingYiSe)
-    end
+
 
     local chiCnt = 0
     local duiCnt = 0
@@ -276,9 +265,14 @@ function helper:computeFanXing(huC)
     local zhongZhang = true
     local yaoJiu = true
     local jiangDui = true
+    local hsCnt = {[0] = 0,[1] =  0, [2] =  0}
 
     local vec = self:initVec(30)
     local function checkC(c)
+        local desc = mahjongType.getMahjongTypeById(c.Cs[1])
+        local class = desc.class
+        hsCnt[class] = hsCnt[class] + #c.Cs
+
         if c.Op == opType.chi.id then
             chiCnt = chiCnt + 1
             for _, c in pairs(c.Cs) do
@@ -317,6 +311,18 @@ function helper:computeFanXing(huC)
             hasMenQing = false
         end
     end
+
+    --清一色
+    local t = 0
+    for _, c in pairs(hsCnt) do
+        if c > 0 then
+            t = t + 1
+        end
+    end
+    if t == 1 then
+        addFx(fanXingType.qingYiSe)
+    end
+    ------
 
     if hasMenQing then
         addFx(fanXingType.menQing)
