@@ -185,6 +185,9 @@ function gvoiceManager.checkHasNewFileNeedPlay()
     if isPlaying then
         return
     end
+    if isRecording then
+        return
+    end
     if #gvoiceManager.downloadFileQueue == 0 then
         return
     end
