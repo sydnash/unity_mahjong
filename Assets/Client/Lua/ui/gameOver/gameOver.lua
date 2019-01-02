@@ -14,9 +14,17 @@ function gameOver:ctor(game, datas)
 end
 
 function gameOver:onInit()
-    self.mDeskId:setText(string.format("房号:%d", self.datas.deskId))
+    if self.game.friendsterId == 0 then
+        self.mDeskId:setText(string.format("房号:%d", self.datas.deskId))
+    else
+        self.mDeskId:setText(string.format("俱乐部: %d  房号:%d", self.game.friendsterId, self.datas.deskId))
+    end
     self.mFinishCount:setText(string.format("已打%d/%d局", self.datas.finishGameCount, self.datas.totalGameCount))
     self.mDateTime:setText(time.formatDateTime())
+
+    local info = string.format("%s", 
+                               self.game:convertConfigToString(true))
+    self.mDesc:setText(info)
 
     self.items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD, }
 
