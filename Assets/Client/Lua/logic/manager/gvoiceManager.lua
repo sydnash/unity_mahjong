@@ -63,6 +63,7 @@ end
 
 function gvoiceManager.startRecord(filename)
     if gvoiceManager.status then
+        GVoiceEngine.instance:StopRecord()
         isRecording = true
         recordFilename = filename
 
