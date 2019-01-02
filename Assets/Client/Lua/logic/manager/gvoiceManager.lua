@@ -13,6 +13,8 @@ local playStartedCallback = nil
 local playFinishedCallback = nil
 local isPlaying = false
 local isRecording = false
+local isFirstPlay = true
+local tmpRecordFile
 
 local networkConfig = require("config.networkConfig")
 local timeout = networkConfig.gvoiceTimeout * 1000
@@ -43,6 +45,11 @@ function gvoiceManager.update()
     
     if gvoiceManager.status then
         gvoiceManager.checkHasNewFileNeedPlay()
+    end
+
+    if tmpRecordFile then
+        GVoiceEngine.instance:StopRecord()
+        LFS.RemoveFile(tmpRecordFile)
     end
 end
 
@@ -80,6 +87,8 @@ function gvoiceManager.stopRecord(cancel)
             local bytes = LFS.ReadBytes(recordFilename)
             if bytes and bytes.Length > 0 then
                 GVoiceEngine.instance:Upload(recordFilename, timeout)
+            else
+                LFS.RemoveFile(recordFilename)
             end
         end
 
@@ -126,6 +135,11 @@ function gvoiceManager.play(filename, acId)
                 gvoiceManager.fileNameToAcId[filename] = acId
             end
             playStartedCallback(filename, acId)
+            if isFirstPlay then
+                isFirstPlay = false
+                tmpRecordFile = LFS.CombinePath(gvoiceManager.path, "tmpRecordFile" .. ".gcv")
+                GVoiceEngine.instance:StartRecord(filename)
+            end
         else 
             LFS.RemoveFile(filename)
             gvoiceManager.fileNameToAcId[filename] = nil
