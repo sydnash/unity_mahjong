@@ -162,6 +162,7 @@ public abstract class IGCloudVoice
         GV_ON_ROLE_SVR_ERROR, // server's error
 
         GV_ON_RSTT_RETRY, // need retry stt
+        GV_ON_JOINROOM_RETRY_FAIL, //join room try again fail
     };
 
     //realtime call back
@@ -781,7 +782,7 @@ public class GCloudVoice
 		if (instance == null)
 		{
 			instance = new GCloudVoiceEngine();
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID
             Debug.Log("GCloudVoice_C# API: Call java from c sharp before");
             var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             var currentActivity = activity.GetStatic<AndroidJavaObject>("currentActivity");
