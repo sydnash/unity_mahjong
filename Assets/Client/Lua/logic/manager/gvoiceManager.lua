@@ -15,6 +15,7 @@ local isPlaying = false
 local isRecording = false
 local isFirstPlay = true
 local tmpRecordFile
+local startTime = 0
 
 local networkConfig = require("config.networkConfig")
 local timeout = networkConfig.gvoiceTimeout * 1000
@@ -47,9 +48,23 @@ function gvoiceManager.update()
         gvoiceManager.checkHasNewFileNeedPlay()
     end
 
+    gvoiceManager.stopTmpRecord()
+end
+
+function gvoiceManager.stopTmpRecord(force)
     if tmpRecordFile then
+        if not force then
+            local curT = time.realtimeSinceStartup()
+            if curT - startTime > 1 then
+                force = true
+            end
+        end
+        if not force then
+            return
+        end
         GVoiceEngine.instance:StopRecord()
         LFS.RemoveFile(tmpRecordFile)
+        tmpRecordFile = nil
     end
 end
 
@@ -63,7 +78,7 @@ end
 
 function gvoiceManager.startRecord(filename)
     if gvoiceManager.status then
-        GVoiceEngine.instance:StopRecord()
+        gvoiceManager.stopTmpRecord(true)
         isRecording = true
         recordFilename = filename
 
@@ -126,6 +141,12 @@ function gvoiceManager.play(filename, acId)
 
         soundManager.setBGMVolume(0)
         soundManager.setSFXVolume(0)
+        -- if acId == gamepref.player.acId then
+        --     if isFirstPlay then
+        --         isFirstPlay = false
+        --         return false
+        --     end
+        -- end
 
         local ret = GVoiceEngine.instance:StartPlay(filename)
         log("gvoicemanager= start play: " .. filename .. "play ret: " .. tostring(ret))
@@ -136,11 +157,12 @@ function gvoiceManager.play(filename, acId)
                 gvoiceManager.fileNameToAcId[filename] = acId
             end
             playStartedCallback(filename, acId)
-            if isFirstPlay then
-                isFirstPlay = false
-                tmpRecordFile = LFS.CombinePath(gvoiceManager.path, "tmpRecordFile" .. ".gcv")
-                GVoiceEngine.instance:StartRecord(filename)
-            end
+            -- if isFirstPlay then
+            --     isFirstPlay = false
+            --     tmpRecordFile = LFS.CombinePath(gvoiceManager.path, "tmpRecordFile" .. ".gcv")
+            --     startTime = time.realtimeSinceStartup()
+            --     GVoiceEngine.instance:StartRecord(filename)
+            -- end
         else 
             LFS.RemoveFile(filename)
             gvoiceManager.fileNameToAcId[filename] = nil
