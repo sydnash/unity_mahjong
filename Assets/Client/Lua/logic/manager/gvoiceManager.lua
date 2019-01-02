@@ -114,11 +114,11 @@ function gvoiceManager.play(filename, acId)
         end
         isPlaying = true
 
-        log("gvoicemanager= start play: " .. filename)
         soundManager.setBGMVolume(0)
         soundManager.setSFXVolume(0)
 
         local ret = GVoiceEngine.instance:StartPlay(filename)
+        log("gvoicemanager= start play: " .. filename .. "play ret: " .. tostring(ret))
         if ret and playStartedCallback ~= nil then
             if not acId then
                 acId = gvoiceManager.fileNameToAcId[filename]
@@ -128,7 +128,8 @@ function gvoiceManager.play(filename, acId)
             playStartedCallback(filename, acId)
         else 
             LFS.RemoveFile(filename)
-            gvoiceManager.fileNameToAcId[filename] = acId
+            gvoiceManager.fileNameToAcId[filename] = nil
+            isPlaying = false
         end
         return ret
     end
