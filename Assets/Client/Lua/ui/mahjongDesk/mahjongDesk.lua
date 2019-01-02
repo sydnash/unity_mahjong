@@ -124,6 +124,11 @@ function mahjongDesk:onDestroy()
     base.onDestroy(self)
 end
 
+function mahjongDesk:reset()
+    base.reset(self)
+    self:hideHuHintButton()
+end
+
 return mahjongDesk
 
 --endregion

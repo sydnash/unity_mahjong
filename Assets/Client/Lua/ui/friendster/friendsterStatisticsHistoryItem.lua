@@ -38,6 +38,7 @@ function friendsterStatisticsHistoryItem:onSettleClickHandler()
     showWaitingUI("正在通信...")
     networkManager.setClubDeskPayed(self.historyContainer.mClubId, self.mHistoryId, function(msg)
         closeWaitingUI()
+        log("ret " .. table.tostring(msg))
         if not msg then
             showMessageUI("网络错误")
             return
