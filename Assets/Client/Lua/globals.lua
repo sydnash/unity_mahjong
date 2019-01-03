@@ -156,7 +156,7 @@ end
 
 local d14opsound = {
     [opType.doushisi.an]            = {
-        default = "action_anpa",
+        default = "action_anpai",
     },
     [opType.doushisi.baGang]        = {
         default = "action_dengpai",

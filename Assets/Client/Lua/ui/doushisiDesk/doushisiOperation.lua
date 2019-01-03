@@ -987,6 +987,8 @@ function doushisiOperation:onOpDoCaiShen(acId, id)
 
     self:relocateChiPengCards(acId)
 
+    local player = self.game:getPlayerByAcId(acId)
+    playDoushisiSound(id, player.sex)
     return self:chiPengAction(acId, {card})
 end
 
