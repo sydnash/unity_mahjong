@@ -188,8 +188,8 @@ public class AudioManager
     private void Initialize(Transform root)
     {
         mBGMChannel   = new AudioChannel(root, 1);
-        mUIChannel    = new AudioChannel(root, 2);
-        mGfxChannel   = new AudioChannel(root, 2);
+        mUIChannel    = new AudioChannel(root, 3);
+        mGfxChannel   = new AudioChannel(root, 5);
 
         mBGMChannel.volume = 0.1f;
         mUIChannel.volume  = 0.1f;
