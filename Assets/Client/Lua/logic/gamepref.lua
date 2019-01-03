@@ -12,6 +12,7 @@ local tablecloth_key    = "TABLECLOTH"
 local tablelayout_key   = "TABLELAYOUT"
 local chipengziti_key   = "CHIPENGZITI"
 local lastchatchose_key = "LASTCHATCHOSE"
+local refreshtoken_key  = "RESFRESHTOKEN_KEY"
 
 -------------------------------------------------------------
 --
@@ -115,6 +116,16 @@ local function getLastChatChose()
         return chatType.emoji
     end
     return PlayerPrefs.GetInt(lastchatchose_key)
+end
+
+local function setWXRefreshToken(refreshToken)
+    PlayerPrefs.SetString(refreshtoken_key, refreshToken)
+end
+local function getWXRefreshToken()
+    if not PlayerPrefs.HasKey(refreshtoken_key) then
+        return nil
+    end
+    return PlayerPrefs.HasKey(refreshtoken_key)
 end
 
 -------------------------------------------------------------

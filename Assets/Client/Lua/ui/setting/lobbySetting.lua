@@ -24,6 +24,7 @@ function lobbySetting:onExitClickedHandler()
     local ui = require("ui.login").new()
     ui:show()
 
+    gamepref.setWXRefreshToken(string.empty)
     playButtonClickSound()
 end
 

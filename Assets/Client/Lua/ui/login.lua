@@ -103,6 +103,11 @@ function login:onInit()
     end
 
     signalManager.registerSignalHandler(signalType.city, self.onCityChangedHandler, self)
+
+    local cacheToken = gamepref.getWXRefreshToken
+    if not string.isNilOrEmpty(cacheToken) then
+        self:loginWithWx()
+    end
 end
 
 function login:onSwitchCityClickedHandler()
@@ -113,6 +118,11 @@ function login:onSwitchCityClickedHandler()
 end
 
 function login:onWechatLoginClickedHandler()
+    self:loginWithWx()
+    playButtonClickSound()
+end
+
+function login:loginWithWx()
     --登录服务器
     loginServer(function(ok)
         closeWaitingUI()
@@ -120,8 +130,6 @@ function login:onWechatLoginClickedHandler()
             self:close()
         end
     end, networkManager.loginWx)
-
-    playButtonClickSound()
 end
 
 function login:onGuestLoginClickedHandler()
