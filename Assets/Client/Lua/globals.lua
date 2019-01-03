@@ -21,6 +21,7 @@ locationManager = require("logic.manager.locationManager")
 local waiting       = require("ui.waiting")
 local messagebox    = require("ui.messagebox")
 local mahjongType   = require("logic.mahjong.mahjongType")
+local doushisiType  = require("logic.doushisi.doushisiType")
 local http          = require("network.http")
 
 local K = 1024
@@ -135,6 +136,20 @@ function playMahjongOpSound(optype, sex)
         prefix = prefix .. "_"
     end
     local resource = prefix .. opsounds[optype]
+
+    return soundManager.playGfx(folder, resource)
+end
+
+-------------------------------------------------------------
+-- 播放斗十四的音效
+-------------------------------------------------------------
+function playDoushisiSound(doushisiId, sex)
+    local folder = (sex == sexType.boy) and "doushisi/boy" or "doushisi/girl"
+    local prefix = gamepref.getLanguage()
+    if not string.isNilOrEmpty(prefix) then
+        prefix = prefix .. "_"
+    end
+    local resource = prefix .. doushisiType.getDoushisiTypeById(doushisiId).audio
 
     return soundManager.playGfx(folder, resource)
 end
