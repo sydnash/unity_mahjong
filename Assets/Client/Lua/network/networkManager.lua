@@ -422,6 +422,20 @@ end
 -- 微信登录
 -------------------------------------------------------------------
 function networkManager.loginWx(callback) 
+    local function loginToServerWithToken(token)
+        local form = table.toUrlArgs({ wxtoken = p.refresh_token, appclass = "mj" })
+        gamepref.setWXRefreshToken(p.refresh_token)
+        local loginURL = networkConfig.server.wechatURL
+        http.getText(loginURL .. "?" .. form, timeout, function(text)
+            if string.isNilOrEmpty(text) then
+                closeWaitingUI()
+                callback(nil)
+                showMessageUI("微信登录失败")
+            else
+                loginC(text, callback)
+            end
+        end)
+    end
     platformHelper.registerLoginWxCallback(function(json)
         if string.isNilOrEmpty(json) then
             callback(nil)
@@ -445,24 +459,49 @@ function networkManager.loginWx(callback)
             if string.isNilOrEmpty(text) then
                 closeWaitingUI()
                 callback(nil)
+                showMessageUI("微信登录失败")
                 return
             end
 
             local p = table.fromjson(text)
-            local form = table.toUrlArgs({ wxtoken = p.refresh_token, appclass = "mj" })
-            local loginURL = networkConfig.server.wechatURL
-            http.getText(loginURL .. "?" .. form, timeout, function(text)
-                if string.isNilOrEmpty(text) then
-                    closeWaitingUI()
-                    callback(nil)
-                else
-                    loginC(text, callback)
-                end
-            end)
+            if not isNilOrNull(p.errcode) then
+                closeWaitingUI()
+                callback(nil)
+                showMessageUI("微信登录失败：" .. tostring(p.errmsg))
+                return
+            end
+            loginToServerWithToken(p.refresh_token)
         end)
     end)
 
-    platformHelper.loginWx()
+    local cacheWXToken = gamepref.getWXRefreshToken()
+
+    if string.isNilOrNull(cacheWXToken) then
+        platformHelper.loginWx()
+    else
+        networkManager.checkRefreshToken(cacheWXToken, function(ok)
+            if ok then
+                loginToServerWithToken(cacheWXToken)
+            else
+                platformHelper.loginWx()
+            end
+        end)
+    end
+end
+
+function networkManager.checkRefreshToken(token, cb)
+    local refreshUrl = string.format("https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s", resp.appid, token)
+    local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
+    http.getText(refreshUrl, timeout, function(text)
+        if string.isNilOrEmpty(text) then
+            cb(false)
+        end
+        local p = table.fromjson(text)
+        if not isNilOrNull(p.errcode) then
+            cb(false)
+        end
+        cb(true)
+    end)
 end
 
 -------------------------------------------------------------------
