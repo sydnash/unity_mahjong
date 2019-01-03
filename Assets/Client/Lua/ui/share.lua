@@ -51,11 +51,11 @@ function share:claimShareCardsReward()
         return
     end
 
-    showWaitingUI("正在领取房卡...")
+    showWaitingUI("正在领取房卡，请稍候")
     networkManager.claimShareReward(function(msg)
         closeWaitingUI()
         if not msg then
-            showMessageUI("领取失败。")
+            showMessageUI("领取失败")
         end
 
         gamepref.player.cards = msg.CurCoin
@@ -65,7 +65,7 @@ function share:claimShareCardsReward()
 
         self:updateTips()
         if not msg.Ok then
-            gameAssistant.showHintAlertUI("领取失败")
+            showMessageUI("领取失败")
             return
         end
         self:updateTips()

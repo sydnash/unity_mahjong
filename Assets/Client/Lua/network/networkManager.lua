@@ -337,11 +337,11 @@ local function loginC(text, callback)
     gamepref.port    = port
 
     networkManager.author(host, port, function(connected)
-        closeWaitingUI()
-
         local loginType = 1
         local data = { AcId = acid, Session = session, LoginType = loginType }
         send(protoType.cs.loginHs, data, function(msg)
+            closeWaitingUI()
+
             if msg == nil or msg.RetCode ~= retc.ok then
                 callback(nil)
                 networkManager.disconnect()
@@ -386,8 +386,10 @@ local function loginC(text, callback)
         end)
     end, function()
         --connect timeout
+        closeWaitingUI()
         callback(nil)
     end, function()
+        closeWaitingUI()
         --disconnectd
         if networkManager.authored then
             networkManager.disconnectedCallback()
