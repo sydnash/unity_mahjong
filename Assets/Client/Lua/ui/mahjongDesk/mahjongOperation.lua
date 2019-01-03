@@ -361,6 +361,7 @@ function mahjongOperation:onGameStart()
     self:darkPlanes()
     self:setCountdownVisible(false)
     self.chupaiPtr:hide()
+    self.game.deskUI:hideHuHintButton()
 
     self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
     self:relocateIdleMahjongs(false)
@@ -2131,6 +2132,9 @@ function mahjongOperation:reset()
     self.mDQTips:hide()
     self.mHnzNotify:hide()
     self:hideOperations()
+
+    self:hideChuPaiArrow()
+    self:hideHuPaiHint()
 end
 
 function mahjongOperation:onCloseAllUIHandler()

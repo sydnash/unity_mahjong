@@ -110,6 +110,7 @@ function friendsterDetail:onShareClickedHandler()
     local title = string.format("%s 邀请您加入幺九麻将", gamepref.player.nickname)
     local desc = string.format("点击亲友圈，输入编号[%d]和邀请码[%s]加入亲友圈开始游戏", self.data.id, self.data.applyCode)
     
+    log("desc: " .. desc)
     local url = networkConfig.server.shareURL
     local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then

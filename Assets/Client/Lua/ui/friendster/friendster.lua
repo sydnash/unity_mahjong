@@ -359,7 +359,7 @@ function friendster:onNotifyFriendster(msg)
     elseif t == friendsterNotifyType.applyEnterRequest then
         if lc ~= nil then
             for _, v in pairs(lc.applyList) do
-                if v.acId == d.Info.AcId then return end
+                if v.AcId == d.Info.AcId then return end
             end
 
             table.insert(lc.applyList, d.Info)

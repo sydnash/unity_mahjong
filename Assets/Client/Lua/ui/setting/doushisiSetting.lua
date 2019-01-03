@@ -7,6 +7,18 @@ local doushisiSetting = class("doushisiSetting", base)
 
 _RES_(doushisiSetting, "SettingUI", "DoushisiSettingUI")
 
+local LABEL_S_COLOR = Color.New(12  / 255, 138 / 255, 33 / 255, 1)
+local LABEL_U_COLOR = Color.New(146 / 255, 84  / 255, 46 / 255, 1)
+
+local function setTextColor(node, selection)
+    if node.label then
+        node.label:setColor(selection and LABEL_S_COLOR or LABEL_U_COLOR)
+    end
+end
+
+local function initLable(node)
+    node.label = findText(node.transform, "Label")
+end
 
 function doushisiSetting:ctor(game)
     self.game = game
@@ -25,8 +37,11 @@ function doushisiSetting:onInit()
     }
 
     local lan = gamepref.getLanguage()
+    self.languagesNodes = languages
     for _, v in pairs(languages) do
         v:setSelected(v.key == lan)
+        initLable(v)
+        setTextColor(v, v.key == lan)
         v:addChangedListener(self.onLanguageChangedHandler, self)
     end
 
@@ -43,8 +58,11 @@ function doushisiSetting:onInit()
     }
 
     local tbc = gamepref.getTablecloth()
+    self.tableclothesNodes = tableclothes
     for _, v in pairs(tableclothes) do
         v:setSelected(v.key == tbc)
+        initLable(v)
+        setTextColor(v, v.key == tbc)
         v:addChangedListener(self.onTableclothChangedHandler, self)
     end
 
@@ -57,14 +75,19 @@ function doushisiSetting:onInit()
     }
 
     local tbl = gamepref.getTablelayout()
+    self.tablelayoutsNodes = tablelayouts
     for _, v in pairs(tablelayouts) do
         v:setSelected(v.key == tbl)
+        initLable(v)
+        setTextColor(v, v.key == tbl)
         v:addChangedListener(self.onTablelayoutChangedHandler, self)
     end
 
     local cpzt = gamepref.getChiPengZiTi()
     self.mCPZT:setSelected(cpzt)
     self.mCPZT:addChangedListener(self.onChiPengZiTiChangedHandler, self)
+    initLable(self.mCPZT)
+    setTextColor(self.mCPZT, cpzt)
 
     if self.game:isCreator(gamepref.player.acId) or self.game:isPlaying() then
         self.mDissolveText:setSprite("js")
@@ -85,7 +108,9 @@ function doushisiSetting:onInit()
 end
 
 function doushisiSetting:onChiPengZiTiChangedHandler()
-    gamepref.setChiPengZiTi(self.mCPZT:getSelected())
+    local selected = self.mCPZT:getSelected()
+    gamepref.setChiPengZiTi(selected)
+    setTextColor(self.mCPZT, selected)
 end
 
 function doushisiSetting:onLanguageChangedHandler(sender, selected, clicked)
@@ -94,6 +119,11 @@ function doushisiSetting:onLanguageChangedHandler(sender, selected, clicked)
             gamepref.setLanguage(sender.key)
         end
 
+        for _, v in pairs(self.languagesNodes) do
+            setTextColor(v, false)
+        end
+
+        setTextColor(sender, selected)
         playButtonClickSound()
     end
 end
@@ -105,6 +135,10 @@ function doushisiSetting:onTableclothChangedHandler(sender, selected, clicked)
            gamepref.setTablecloth(sender.key)
         end
 
+        for _, v in pairs(self.tableclothesNodes) do
+            setTextColor(v, false)
+        end
+        setTextColor(sender, selected)
         playButtonClickSound()
     end
 end
@@ -124,7 +158,11 @@ function doushisiSetting:onTablelayoutChangedHandler(sender, selected, clicked)
         else
             self.game.operationUI:setDoushisiStyle(sender.key)
         end
+        for _, v in pairs(self.tablelayoutsNodes) do
+            setTextColor(v, false)
+        end
 
+        setTextColor(sender, selected)
         playButtonClickSound()
     end
 end
