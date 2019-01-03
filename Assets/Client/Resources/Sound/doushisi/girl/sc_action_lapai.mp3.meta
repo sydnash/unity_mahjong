@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: ef62068a1a917c846a3feb1c02250a3d
+timeCreated: 1546497616
+licenseType: Pro
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: sound/doushisi/girl/sc_action_lapai
+  assetBundleVariant: 

@@ -320,6 +320,11 @@ function doushisiDesk:playGfx(acId, name)
     header:playGfx(name)
 end
 
+function doushisiDesk:playSound(acId, optype)
+    local player = self.game:getPlayerByAcId(acId)
+    playDoushisiOpSound(gamepref.cityType, optype, player.sex) 
+end
+
 function doushisiDesk:onOpList(msg)
     local mine = self.game:getSeatTypeByAcId(self.game.mainAcId)
     self:showClock(mine)
@@ -327,34 +332,43 @@ end
 
 function doushisiDesk:onOpDoHu(acId)
     self:playGfx(acId, "hu")
+    self:playSound(acId, opType.doushisi.hu)
 end
 function doushisiDesk:onOpDoDang(acId, isDang)
     if isDang then
         self:playGfx(acId, "dang")
+        self:playSound(acId, opType.doushisi.dang)
     else
         self:playGfx(acId, "budang")
     end
 end
 function doushisiDesk:onOpDoChe(acId)
     self:playGfx(acId, "peng")
+    self:playSound(acId, opType.doushisi.che)
 end
 function doushisiDesk:onOpDoChi(acId)
     self:playGfx(acId, "chi")
+    self:playSound(acId, opType.doushisi.chi)
 end
 function doushisiDesk:onOpDoAn(acId)
     self:playGfx(acId, "an")
+    self:playSound(acId, opType.doushisi.an)
 end
 function doushisiDesk:onOpDoHua(acId)
     self:playGfx(acId, "hua")
+    self:playSound(acId, opType.doushisi.hua)
 end
 function doushisiDesk:onOpDoBaGang(acId)
     self:playGfx(acId, "deng")
+    self:playSound(acId, opType.doushisi.baGang)
 end
 function doushisiDesk:onOpDoBao(acId)
     self:playGfx(acId, "bao")
+    self:playSound(acId, opType.doushisi.bao)
 end
 function doushisiDesk:onOpDoWeiGui(acId)
     self:playGfx(acId, "weigui")
+    self:playSound(acId, opType.doushisi.weiGui)
 end
 
 return doushisiDesk

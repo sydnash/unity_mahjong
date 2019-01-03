@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 6ac4da5df8736f04a8015cbd9a169912
+timeCreated: 1546497547
+licenseType: Pro
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: sound/doushisi/girl/sc_action_wenroudian
+  assetBundleVariant: 

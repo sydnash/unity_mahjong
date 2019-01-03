@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 53a9d46faa430f44780e7d75664a0c39
+timeCreated: 1546497538
+licenseType: Pro
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: sound/doushisi/boy/action_chichengsanzhang
+  assetBundleVariant: 
