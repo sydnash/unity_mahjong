@@ -76,7 +76,9 @@
         </activity>
         <activity
             android:name="com.bshy.mahjong.wxapi.WXEntryActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent" >
         </activity>
         <activity
             android:name="com.bshy.mahjong.sgapi.SGEntryActivity"
