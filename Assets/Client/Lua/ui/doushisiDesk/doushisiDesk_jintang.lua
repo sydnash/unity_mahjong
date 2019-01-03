@@ -14,6 +14,7 @@ end
 function doushisiDesk_jintang:onOpDoDang(acId, isDang)
     if isDang then
         self:playGfx(acId, "zuozhuang")
+        self:playSound(acId, opType.doushisi.dang)
     else
         self:playGfx(acId, "huazhuang")
     end
