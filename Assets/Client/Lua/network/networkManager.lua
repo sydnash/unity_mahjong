@@ -423,9 +423,10 @@ end
 -------------------------------------------------------------------
 function networkManager.loginWx(callback) 
     local function loginToServerWithToken(token)
-        local form = table.toUrlArgs({ wxtoken = p.refresh_token, appclass = "mj" })
-        gamepref.setWXRefreshToken(p.refresh_token)
+        local form = table.toUrlArgs({ wxtoken = token, appclass = "mj" })
+        gamepref.setWXRefreshToken(token)
         local loginURL = networkConfig.server.wechatURL
+        local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
         http.getText(loginURL .. "?" .. form, timeout, function(text)
             if string.isNilOrEmpty(text) then
                 closeWaitingUI()
@@ -476,13 +477,15 @@ function networkManager.loginWx(callback)
 
     local cacheWXToken = gamepref.getWXRefreshToken()
 
-    if string.isNilOrNull(cacheWXToken) then
+    if string.isNilOrEmpty(cacheWXToken) then
         platformHelper.loginWx()
     else
+        showWaitingUI("正在登录，请稍候")
         networkManager.checkRefreshToken(cacheWXToken, function(ok)
             if ok then
                 loginToServerWithToken(cacheWXToken)
             else
+                closeWaitingUI()
                 platformHelper.loginWx()
             end
         end)
@@ -490,7 +493,7 @@ function networkManager.loginWx(callback)
 end
 
 function networkManager.checkRefreshToken(token, cb)
-    local refreshUrl = string.format("https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s", resp.appid, token)
+    local refreshUrl = string.format("https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s", "wx2ca58653c3f50625", token)
     local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
     http.getText(refreshUrl, timeout, function(text)
         if string.isNilOrEmpty(text) then

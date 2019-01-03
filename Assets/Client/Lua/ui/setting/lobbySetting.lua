@@ -21,10 +21,10 @@ function lobbySetting:onExitClickedHandler()
     networkManager.disconnect()
     closeAllUI()
 
+    gamepref.setWXRefreshToken(string.empty)
     local ui = require("ui.login").new()
     ui:show()
 
-    gamepref.setWXRefreshToken(string.empty)
     playButtonClickSound()
 end
 

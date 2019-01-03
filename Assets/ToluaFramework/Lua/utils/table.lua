@@ -147,7 +147,7 @@ local function escape(k)
     if type(ret) ~= "string" then
         ret = tostring(ret)
     end
-    ret = string.gsub(k, "[^a-zA-Z0-9%-_%.!%*]", function (c)
+    ret = string.gsub(ret, "[^a-zA-Z0-9%-_%.!%*]", function (c)
         return string.format("%%%02X", string.byte(c))
     end)
     ret = string.gsub(ret, " ", "+")

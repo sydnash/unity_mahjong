@@ -104,7 +104,7 @@ function login:onInit()
 
     signalManager.registerSignalHandler(signalType.city, self.onCityChangedHandler, self)
 
-    local cacheToken = gamepref.getWXRefreshToken
+    local cacheToken = gamepref.getWXRefreshToken()
     if not string.isNilOrEmpty(cacheToken) then
         self:loginWithWx()
     end

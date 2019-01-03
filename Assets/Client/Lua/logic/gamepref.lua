@@ -125,7 +125,7 @@ local function getWXRefreshToken()
     if not PlayerPrefs.HasKey(refreshtoken_key) then
         return nil
     end
-    return PlayerPrefs.HasKey(refreshtoken_key)
+    return PlayerPrefs.GetString(refreshtoken_key)
 end
 
 -------------------------------------------------------------
@@ -157,6 +157,8 @@ return {
     setChiPengZiTi = setChiPengZiTi,
     getLastChatChose = getLastChatChose,
     setLastChatChose = setLastChatChose,
+    setWXRefreshToken = setWXRefreshToken,
+    getWXRefreshToken = getWXRefreshToken,
 
     save = save
 }
