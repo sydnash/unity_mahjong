@@ -105,7 +105,7 @@ public class WechatHelper
     /// <param name="args"></param>
     public static void OnLoginHandler(string json)
     {
-        Logger.Log("WX.OnLoginHandler, json = " + json);
+        //Logger.Log("WX.OnLoginHandler, json = " + json);
         if (mLoginCallback != null)
         {
             mLoginCallback(json);
@@ -118,7 +118,7 @@ public class WechatHelper
     /// <param name="json"></param>
     public static void OnShareHandler(string json)
     {
-        Logger.Log("WX.OnShareHandler, json = " + json);
+        //Logger.Log("WX.OnShareHandler, json = " + json);
         if (mShareCallback != null)
         {
             mShareCallback(json);

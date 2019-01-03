@@ -114,7 +114,7 @@ public class DependentBundlePool
 
                     if (dependentBundle.refCount == 0 && dependentBundle.bundle != null)
                     {
-                        Debug.Log("unload dependent bundle: " + bundleName);
+                        //Debug.Log("unload dependent bundle: " + bundleName);
                         dependentBundle.bundle.Unload(false);
                         mDependentBundleDict.Remove(bundleName);
                     }
@@ -155,7 +155,7 @@ public class DependentBundlePool
                 dependentBundle.refCount = 1;
             }
 
-            Debug.Log("load dependent bundle: " + bundleName);
+            //Debug.Log("load dependent bundle: " + bundleName);
         }
     }
 
