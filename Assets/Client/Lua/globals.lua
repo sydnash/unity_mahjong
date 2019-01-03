@@ -154,6 +154,89 @@ function playDoushisiSound(doushisiId, sex)
     return soundManager.playGfx(folder, resource)
 end
 
+local d14opsound = {
+    [opType.doushisi.an]            = {
+        default = "action_anpa",
+    },
+    [opType.doushisi.baGang]        = {
+        default = "action_dengpai",
+    },
+    [opType.doushisi.bao]           = {
+        default = "action_baopai",
+    },
+    [opType.doushisi.baoJiao]       = {
+        default = "",
+    },
+    [opType.doushisi.caiShen]       = {
+        default = "",
+    },
+    [opType.doushisi.che]           = {
+        default = "action_pengpai",
+    },
+    [opType.doushisi.chi]           = {
+        default = "action_chipai",
+    },
+    [opType.doushisi.chiChengSan]   = {
+        default = "action_chichengsanzhang",
+    },
+    [opType.doushisi.chu]           = {
+        default = "",
+    },
+    [opType.doushisi.dang]          = {
+        default = "action_dangpai",
+    },
+    [opType.doushisi.fan]           = {
+        default = "",
+    },
+    [opType.doushisi.gang]          = {
+        default = "",
+    },
+    [opType.doushisi.gen]           = {
+        default = "",
+    },
+    [opType.doushisi.hu]            = {
+        default = "action_hupai",
+    },
+    [opType.doushisi.hua]           = {
+        default = "action_huapai",
+    },
+    [opType.doushisi.mo]            = {
+        default = "",
+    },
+    [opType.doushisi.pass]          = {
+        default = "",
+    },
+    [opType.doushisi.shou]          = {
+        default = "action_shoupai",
+    },
+    [opType.doushisi.weiGui]        = {
+        default = "status_weigui",
+    },
+    [opType.doushisi.zhao]          = {
+        default = "",
+    },
+}
+
+-------------------------------------------------------------
+-- 播放斗十四操作音效
+-------------------------------------------------------------
+function playDoushisiOpSound(cityType, optype, sex)
+    local folder = (sex == sexType.boy) and "doushisi/boy" or "doushisi/girl"
+
+    local prefix = gamepref.getLanguage()
+    if not string.isNilOrEmpty(prefix) then
+        prefix = prefix .. "_"
+    end
+
+    local op = d14opsound[optype][cityType]
+    if string.isNilOrEmpty(op) then
+        op = d14opsound[optype].default
+    end
+
+    local resource = prefix .. op
+    return soundManager.playGfx(folder, resource)
+end
+
 -------------------------------------------------------------
 -- 
 -------------------------------------------------------------

@@ -755,6 +755,8 @@ function doushisiOperation:virtureChu(card)
     card:hide()
     self:promoteChu(acId, card.id)
     --play sound for card
+    local player = self.game:getPlayerByAcId(acId)
+    playDoushisiSound(card.id, player.sex)
 end
 
 function doushisiOperation:onOpListChu(opInfo)
@@ -779,6 +781,9 @@ function doushisiOperation:onOpDoChu(acId, id)
 
     self:promoteChu(acId, id, isIm)
     --play sound for card
+    local player = self.game:getPlayerByAcId(acId)
+    playDoushisiSound(id, player.sex)
+
     return 0.4
 end
 
@@ -823,7 +828,6 @@ end
 
 function doushisiOperation:onOpDoHua(acId, delIds)
     local info =self:opDoChiPengAnHua(acId, delIds, nil, opType.doushisi.hua.id)
-    --play sound for hua
     return self:chiPengAction(acId, info.cards)
 end
 
@@ -1943,6 +1947,9 @@ function doushisiOperation:fanPaiAction(time, acId, id)
         self.promoteNode = node
 
         --play sound for card
+        local player = self.game:getPlayerByAcId(acId)
+        playDoushisiSound(id, player.sex)
+
         self:updateLeftCardsCount()
     end
     
