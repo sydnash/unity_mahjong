@@ -322,7 +322,7 @@ end
 
 function doushisiDesk:playSound(acId, optype)
     local player = self.game:getPlayerByAcId(acId)
-    playDoushisiOpSound(gamepref.cityType, optype, player.sex) 
+    playDoushisiOpSound(self.game.cityType, optype, player.sex) 
 end
 
 function doushisiDesk:onOpList(msg)

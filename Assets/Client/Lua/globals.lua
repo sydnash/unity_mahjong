@@ -143,13 +143,23 @@ end
 -------------------------------------------------------------
 -- 播放斗十四的音效
 -------------------------------------------------------------
-function playDoushisiSound(doushisiId, sex)
+local d14sound = {
+}
+function playDoushisiSound(cityType, doushisiId, sex)
     local folder = (sex == sexType.boy) and "doushisi/boy" or "doushisi/girl"
     local prefix = gamepref.getLanguage()
     if not string.isNilOrEmpty(prefix) then
         prefix = prefix .. "_"
     end
     local resource = prefix .. doushisiType.getDoushisiTypeById(doushisiId).audio
+    
+    local cfg = d14sound[resource]
+    if cfg then
+        cfg = cfg[cityType]
+    end
+    if cfg then
+        resource = cfg
+    end
 
     return soundManager.playGfx(folder, resource)
 end
@@ -184,6 +194,7 @@ local d14opsound = {
     },
     [opType.doushisi.dang]          = {
         default = "action_dangpai",
+        [cityType.jintang]  = "action_zuozhuang",
     },
     [opType.doushisi.fan]           = {
         default = "",
@@ -228,6 +239,7 @@ function playDoushisiOpSound(cityType, optype, sex)
         prefix = prefix .. "_"
     end
 
+    log("citype  optype " .. cityType)
     local op = d14opsound[optype][cityType]
     if string.isNilOrEmpty(op) then
         op = d14opsound[optype].default

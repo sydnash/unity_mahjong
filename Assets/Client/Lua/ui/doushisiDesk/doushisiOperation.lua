@@ -756,7 +756,7 @@ function doushisiOperation:virtureChu(card)
     self:promoteChu(acId, card.id)
     --play sound for card
     local player = self.game:getPlayerByAcId(acId)
-    playDoushisiSound(card.id, player.sex)
+    playDoushisiSound(self.game.cityType, card.id, player.sex)
 end
 
 function doushisiOperation:onOpListChu(opInfo)
@@ -782,7 +782,7 @@ function doushisiOperation:onOpDoChu(acId, id)
     self:promoteChu(acId, id, isIm)
     --play sound for card
     local player = self.game:getPlayerByAcId(acId)
-    playDoushisiSound(id, player.sex)
+    playDoushisiSound(self.game.cityType, id, player.sex)
 
     return 0.4
 end
@@ -987,9 +987,17 @@ function doushisiOperation:onOpDoCaiShen(acId, id)
 
     self:relocateChiPengCards(acId)
 
-    local player = self.game:getPlayerByAcId(acId)
-    playDoushisiSound(id, player.sex)
-    return self:chiPengAction(acId, {card})
+    local playsound = true
+    if self.promoteNode and self.promoteNode.acId == acId and self.promoteNode.id == id then
+        playsound = false
+    end
+    if playsound then
+        local player = self.game:getPlayerByAcId(acId)
+        playDoushisiSound(self.game.cityType, id, player.sex)
+    end
+
+    self:pushBackPromoteNode()
+    return self:chiPengAction(acId, {card}, not playsound)
 end
 
 function doushisiOperation:onPanelBtnClick(btn, createFunc)
@@ -1796,7 +1804,7 @@ end
 --动画
 ----------------------------------------------------------------------------------------
 ---------------吃 碰 按 滑------------------------
-function doushisiOperation:chiPengAction(acId, cards)
+function doushisiOperation:chiPengAction(acId, cards, widthoutScale)
     local ids = {}
     for _, card in pairs(cards) do
         card:hide()
@@ -1841,15 +1849,27 @@ function doushisiOperation:chiPengAction(acId, cards)
         end
     end
 
-    local seqAction = self:getSequenceAction({shakeAction, delayAction, flyAction, tweenFunction.new(function()
-        self:pushFlyNode(node)
-        self:relocateChiPengCards(acId)
-    end)})
-    self.animationManager:add(seqAction)
-    seqAction:play()
+    if not widthoutScale then
+        local seqAction = self:getSequenceAction({shakeAction, delayAction, flyAction, tweenFunction.new(function()
+            self:pushFlyNode(node)
+            self:relocateChiPengCards(acId)
+        end)})
+        self.animationManager:add(seqAction)
+        seqAction:play()
 
-    local added = 0.03 * ((#seqAction.queue + 1) * 2 + 1)
-    return shakeTime + delayTime + flyTime + added
+        local added = 0.03 * ((#seqAction.queue + 1) * 2 + 1)
+        return shakeTime + delayTime + flyTime + added
+    else
+        local seqAction = self:getSequenceAction({flyAction, tweenFunction.new(function()
+            self:pushFlyNode(node)
+            self:relocateChiPengCards(acId)
+        end)})
+        self.animationManager:add(seqAction)
+        seqAction:play()
+
+        local added = 0.03 * ((#seqAction.queue + 1) * 2 + 1)
+        return flyTime + added
+    end
 end
 
 ---------------------摸牌
@@ -1950,7 +1970,7 @@ function doushisiOperation:fanPaiAction(time, acId, id)
 
         --play sound for card
         local player = self.game:getPlayerByAcId(acId)
-        playDoushisiSound(id, player.sex)
+        playDoushisiSound(self.game.cityType, id, player.sex)
 
         self:updateLeftCardsCount()
     end

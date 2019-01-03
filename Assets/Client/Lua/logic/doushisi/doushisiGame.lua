@@ -419,7 +419,7 @@ function doushisiGame:onOpDoHandler(msg)
     local cards = msg.DelCards
     local beCard = msg.Card
 
-    if op ~= opType.doushisi.chu.id then
+    if op ~= opType.doushisi.chu.id and op ~= opType.doushisi.caiShen.id then
         self.operationUI:pushBackPromoteNode()
     end
     local time = 0

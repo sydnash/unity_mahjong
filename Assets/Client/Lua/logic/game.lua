@@ -272,7 +272,7 @@ function game:onOtherEnterHandler(msg)
         player.headerUrl    = msg.HeadUrl
         player.nickname     = msg.Nickname
         player.ip           = msg.Ip
-        player.sex          = msg.Sex
+        player.sex          = Mathf.Clamp(msg.Sex, sexType.boy, sexType.girl)
         player.laolai       = msg.IsLaoLai
         player.connected    = msg.IsConnected
         player.ready        = msg.Ready
