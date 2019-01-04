@@ -51,6 +51,7 @@ function doushisiDeskHeader:reset()
     self:hidePiao()
     self:hideBao()
     self:hideXiao()
+    self:setFuShu(0)
 end
 
 --dang

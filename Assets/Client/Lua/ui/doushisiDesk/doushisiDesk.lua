@@ -273,6 +273,12 @@ function doushisiDesk:syncHeadInfo()
     end
 end
 
+function doushisiDesk:setFuShu(acId, fuShu)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    header:setFuShu(fuShu)
+end
+
 function doushisiDesk:updateInhandCardCount(acId)
     local p = self.game:getPlayerByAcId(acId)
     local st = self.game:getSeatTypeByAcId(p.acId)

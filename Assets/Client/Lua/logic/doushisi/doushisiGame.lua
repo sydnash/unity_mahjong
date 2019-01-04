@@ -262,6 +262,7 @@ function doushisiGame:onAnPaiNotifyHandler(msg)
         t = t + t1
     end
     self.deskUI:onOpDoAn(player.acId)
+    self.deskUI:setFuShu(player.acId, player.fuShu)
     return t
 end
 
@@ -452,6 +453,8 @@ function doushisiGame:onOpDoHandler(msg)
     else
         log("on op do handler: receive not supported handler." .. tostring(op))
     end
+
+    self.deskUI:setFuShu(player.acId, player.fuShu)
 
     return time
 end
