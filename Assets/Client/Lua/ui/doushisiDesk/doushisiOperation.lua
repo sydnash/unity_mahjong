@@ -682,7 +682,7 @@ function doushisiOperation:showOpBtn(btn, opInfo)
     local leftCnt = math.floor(#self.curShowOpBtns / 2)
     local right = leftCnt + 1
     
-    local y = self.leftPos.y
+    local y = self.leftPos.y - 15
 
     local leftStart     = self.leftPos.x
     local rightStart    = self.rightPos.x
@@ -1013,7 +1013,7 @@ function doushisiOperation:onPanelBtnClick(btn, createFunc)
     panel:show()
     panel:setParent(btn)
     --panel:setLocalPosition(Vector3.New(0, 0, 0))
-    panel:setAnchoredPosition(Vector3.New(0, 0, 0))
+    panel:setAnchoredPosition(Vector3.New(0, -20, 0))
 end
 
 function doushisiOperation:getOpChoseData(op, card, hasTY, baos)
