@@ -15,8 +15,9 @@ local detailConfigs = {}
 
 function createDesk:ctor(cityType, friendsterId)
     self.cityType = cityType
-    self.gameType = gameType.mahjong
+    self.gameType = gamepref.getSelectedGameType(friendsterId)
     self.friendsterId = friendsterId
+    
 
     base.ctor(self)
 end
@@ -26,7 +27,15 @@ function createDesk:onInit()
 
     if c.mahjong.enable then
         self.mMahjong:show()
-        self.mMahjong:setSelected(true)
+
+        if self.gameType == gameType.mahjong then
+            self.mMahjong:setSelected(true)
+
+            self.mMahjongPanel:show()
+            self.mChangpaiPanel:hide()
+        else
+            self.mMahjong:setSelected(false)
+        end
     else
         self.mMahjong:hide()
     end
@@ -34,17 +43,20 @@ function createDesk:onInit()
     if c.changpai.enable then
         self.mChangpai:show()
 
-        if c.mahjong.enable then
-            self.mChangpai:setSelected(false)
+        if self.gameType == gameType.doushisi then
+            self.mChangpai:setSelected(true)
+
+            self.mMahjongPanel:hide()
+            self.mChangpaiPanel:show()
         else
-            self.mChangpai_S:setSelected(true)
+            self.mChangpai:setSelected(false)
         end
     else
         self.mChangpai:hide()
     end
 
-    self.mMahjongPanel:show()
-    self.mChangpaiPanel:hide()
+--    self.mMahjongPanel:show()
+--    self.mChangpaiPanel:hide()
 
     self.config = self:readConfig()
     self:createDetail()
@@ -123,7 +135,9 @@ function createDesk:onCreateClickedHandler()
         self:close()
     end)
 
+    gamepref.setSelectedGameType(self.friendsterId, self.gameType)
     self:writeConfig()
+
     playButtonClickSound()
 end
 
