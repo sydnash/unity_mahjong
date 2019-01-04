@@ -19,6 +19,8 @@ public class BuildManager : EditorWindow
     private bool mBuildLua = true;
     private bool mBuildBundle = true;
     private bool mBuildPatch = true;
+    private int mVersionNum = 1;
+    private string mVersionUrl = "http://test.cdbshy.com/mahjong_update/";
     private bool mBuildPackage = true;
     private bool mProcessResources = false;
     private string mPackagePath = string.Empty;
@@ -42,6 +44,13 @@ public class BuildManager : EditorWindow
         mBuildLua       = EditorGUILayout.Toggle("Build Lua", mBuildLua);
         mBuildBundle    = EditorGUILayout.Toggle("Build Bundle", mBuildBundle);
         mBuildPatch     = EditorGUILayout.Toggle("Build Patch", mBuildPatch);
+
+        if (mBuildPatch)
+        {
+            mVersionNum = EditorGUILayout.IntField("Version Num", mVersionNum);
+            mVersionUrl = EditorGUILayout.TextField("Version Url", mVersionUrl);
+        }
+
         mBuildPackage   = EditorGUILayout.Toggle("Build Package", mBuildPackage);
 
         if (mBuildPackage)
@@ -85,18 +94,36 @@ public class BuildManager : EditorWindow
             if (mBuildPatch)
             {
                 Build.BuildPatchlist();
+                Build.BuildVersion(mVersionNum, mVersionUrl);
 
                 string patchPath = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, "Patches");
                 LFS.MakeDir(patchPath);
 
+                EditorUtility.DisplayProgressBar("Build", "Copy lua fils", 0.45f);
+                
                 string luaFrom = LFS.CombinePath(Application.dataPath, "Resources/Lua");
                 string luaTo = LFS.CombinePath(patchPath, "Lua");
                 LFS.CopyDir(luaFrom, luaTo);
+
+                EditorUtility.DisplayProgressBar("Build", "Copy asset bundle fils", 0.9f);
 
                 string resFrom = LFS.CombinePath(Application.streamingAssetsPath, "Res");
                 string resTo = LFS.CombinePath(patchPath, "Res");
                 LFS.CopyDir(resFrom, resTo);
 
+                EditorUtility.DisplayProgressBar("Build", "Copy patchlist fil", 0.95f);
+
+                string patchlistFrom = LFS.CombinePath(Application.dataPath, "Resources", Build.PATCHLIST_FILE_NAME);
+                string patchlistTo = LFS.CombinePath(patchPath, Build.PATCHLIST_FILE_NAME);
+                LFS.CopyFile(patchlistFrom, patchlistTo);
+
+                EditorUtility.DisplayProgressBar("Build", "Copy version file", 1.0f);
+
+                string versionFrom = LFS.CombinePath(Application.dataPath, "Resources", Build.VERSION_FILE_NAME);
+                string versionTo = LFS.CombinePath(patchPath, Build.VERSION_FILE_NAME);
+                LFS.CopyFile(versionFrom, versionTo);
+
+                EditorUtility.ClearProgressBar();
                 Debug.Log(timestamp + ": build patch over");
             }
 

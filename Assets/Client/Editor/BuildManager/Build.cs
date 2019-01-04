@@ -52,7 +52,8 @@ public class Build
         AssetBundleBrowser.AssetBundleBrowserMain.ExecuteBuild(buildTarget, targetDir);
     }
 
-    private const string PATCHLIST_FILE_NAME = "patchlist.txt";
+    public const string PATCHLIST_FILE_NAME = "patchlist.txt";
+    public const string VERSION_FILE_NAME = "version.txt";
 
     /// <summary>
     /// 
@@ -69,6 +70,7 @@ public class Build
         for (int i = 0; i < luaFiles.Length; i++)
         {
             string file = luaFiles[i];
+            EditorUtility.DisplayProgressBar("Build", file, 0.0f);
 
             string path = file.Substring(resourcesPath.Length + 1).Replace("\\", "/");
             string code = MD5.GetHashFromFile(file);
@@ -78,6 +80,8 @@ public class Build
             sb.Append("{");
             sb.AppendFormat("[\"hash\"]=\"{0}\", [\"size\"]={1}", code, info.Length);
             sb.Append("},\n");
+
+            EditorUtility.DisplayProgressBar("Build", file, 1.0f);
         }
 
         string resPath = LFS.CombinePath(Application.streamingAssetsPath, "Res", LFS.OS_PATH);
@@ -88,6 +92,8 @@ public class Build
             string file = resFiles[i];
             if (file.EndsWith(".meta")) continue;
 
+            EditorUtility.DisplayProgressBar("Build", file, 0.0f);
+
             string path = file.Substring(Application.streamingAssetsPath.Length + 1).Replace("\\", "/");
             string code = MD5.GetHashFromFile(file);
             FileInfo info = new FileInfo(file);
@@ -96,12 +102,33 @@ public class Build
             sb.Append("{");
             sb.AppendFormat("[\"hash\"]=\"{0}\", [\"size\"]={1}", code, info.Length);
             sb.Append("},\n");
+
+            EditorUtility.DisplayProgressBar("Build", file, 1.0f);
         }
 
         sb.Append("}");
 
         string text = sb.ToString();
         LFS.WriteText(LFS.CombinePath(Application.dataPath, "Resources", PATCHLIST_FILE_NAME), text, LFS.UTF8_WITHOUT_BOM);
+
+        EditorUtility.ClearProgressBar();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ver"></param>
+    /// <param name="url"></param>
+    public static void BuildVersion(int ver, string url)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("return {\n");
+        sb.AppendFormat("[\"num\"]={0},\n", ver);
+        sb.AppendFormat("[\"url\"]=\"{0}\",\n", url);
+        sb.Append("}");
+
+        string text = sb.ToString();
+        LFS.WriteText(LFS.CombinePath(Application.dataPath, "Resources", VERSION_FILE_NAME), text, LFS.UTF8_WITHOUT_BOM);
     }
 
     /// <summary>
