@@ -135,7 +135,29 @@ local function save()
     PlayerPrefs.Save()
 end
 
+local selectedGameType = {
+    [0] = gameType.mahjong,
+}
 
+-------------------------------------------------------------
+--
+-------------------------------------------------------------
+local function setSelectedGameType(friendsterId, gameType)
+    selectedGameType[math.max(0, friendsterId)] = gameType
+end
+
+-------------------------------------------------------------
+--
+-------------------------------------------------------------
+local function getSelectedGameType(friendsterId)
+    local gt = selectedGameType[math.max(0, friendsterId)]
+    if gt == nil then
+        gt = gameType.mahjong
+        setSelectedGameType(friendsterId, gt)
+    end
+
+    return gt
+end
 
 return {
     acId = 0,
@@ -160,7 +182,10 @@ return {
     setWXRefreshToken = setWXRefreshToken,
     getWXRefreshToken = getWXRefreshToken,
 
-    save = save
+    save = save,
+
+    setSelectedGameType = setSelectedGameType,
+    getSelectedGameType = getSelectedGameType,
 }
 
 --endregion
