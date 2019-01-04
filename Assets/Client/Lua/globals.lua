@@ -144,6 +144,15 @@ end
 -- 播放斗十四的音效
 -------------------------------------------------------------
 local d14sound = {
+    ["sc_pai_yaoliu"] = {
+        [cityType.jintang] = "sc_pai_gaojiao",
+    },
+    ["sc_pai_erliu"] = {
+        [cityType.jintang] = "sc_pai_erpang",
+    },
+    ["sc_pai_zhuzhu"] = {
+        [cityType.jintang] = "sc_pai_maomao",
+    },
 }
 function playDoushisiSound(cityType, doushisiId, sex)
     local folder = (sex == sexType.boy) and "doushisi/boy" or "doushisi/girl"
@@ -153,10 +162,13 @@ function playDoushisiSound(cityType, doushisiId, sex)
     end
     local resource = prefix .. doushisiType.getDoushisiTypeById(doushisiId).audio
     
+    -- log("=================" .. tostring(cityType) .. tostring(resource))
     local cfg = d14sound[resource]
+    -- log("=================" .. table.tostring(cfg))
     if cfg then
         cfg = cfg[cityType]
     end
+    -- log("=================" .. table.tostring(cfg))
     if cfg then
         resource = cfg
     end

@@ -776,7 +776,7 @@ function doushisiOperation:onOpDoChu(acId, id)
     local isIm = false
     if self.promoteNode and self.promoteNode.id == id then
         card:hide()
-        return 0.4
+        return 0.5
     end
 
     self:promoteChu(acId, id, isIm)
@@ -784,7 +784,7 @@ function doushisiOperation:onOpDoChu(acId, id)
     local player = self.game:getPlayerByAcId(acId)
     playDoushisiSound(self.game.cityType, id, player.sex)
 
-    return 0.4
+    return 0.5
 end
 
 function doushisiOperation:opDoChiPengAnHua(acId, delIds, beId, op)
@@ -1203,7 +1203,7 @@ function doushisiOperation:onFanPai(acId, id)
 
     card:hide()
     time = self:fanPaiAction(time, acId, id)
-    return math.max(time, 1.0)
+    return math.max(time, 1.1)
 end
 
 function doushisiOperation:onAnPaiShow(acId, idInfo)
