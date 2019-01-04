@@ -273,6 +273,12 @@ function doushisiDesk:syncHeadInfo()
     end
 end
 
+function doushisiDesk:setFuShu(acId, fuShu)
+    local st = self.game:getSeatTypeByAcId(acId)
+    local header = self.headers[st]
+    header:setFuShu(fuShu)
+end
+
 function doushisiDesk:updateInhandCardCount(acId)
     local p = self.game:getPlayerByAcId(acId)
     local st = self.game:getSeatTypeByAcId(p.acId)
@@ -289,12 +295,23 @@ function doushisiDesk:onDangNotifyHandler(acId, dang)
         local markerSeatType = self.game:getSeatTypeByAcId(markerPlayer.acId)
         self:showClock(markerSeatType)
     else
-        local player = self.game:getPlayerByAcId(acId)
-        local nextPlayerSeatType = (player.seatType + 1) % 4
+        local st = self.game:getSeatTypeByAcId(acId)
+        local nextPlayerSeatType = self:getNextSeat(st)
         self:showClock(nextPlayerSeatType)
     end
 
     return 0.7
+end
+
+function doushisiDesk:getNextSeat(st)
+    local nt = st
+    for i = 1, 4 do
+        nt = (nt + 1) % 4
+        if self.headers[nt] then
+            return nt
+        end
+    end
+    return nt
 end
 
 function doushisiDesk:getHeaderByAcId(acId)
@@ -340,6 +357,7 @@ function doushisiDesk:onOpDoDang(acId, isDang)
         self:playSound(acId, opType.doushisi.dang)
     else
         self:playGfx(acId, "budang")
+        self:playSound(acId, opType.doushisi.budang)
     end
 end
 function doushisiDesk:onOpDoChe(acId)

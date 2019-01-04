@@ -162,13 +162,10 @@ function playDoushisiSound(cityType, doushisiId, sex)
     end
     local resource = prefix .. doushisiType.getDoushisiTypeById(doushisiId).audio
     
-    -- log("=================" .. tostring(cityType) .. tostring(resource))
     local cfg = d14sound[resource]
-    -- log("=================" .. table.tostring(cfg))
     if cfg then
         cfg = cfg[cityType]
     end
-    -- log("=================" .. table.tostring(cfg))
     if cfg then
         resource = cfg
     end
@@ -222,6 +219,7 @@ local d14opsound = {
     },
     [opType.doushisi.hua]           = {
         default = "action_huapai",
+        [cityType.jintang] = "action_anpai",
     },
     [opType.doushisi.mo]            = {
         default = "",
@@ -238,6 +236,10 @@ local d14opsound = {
     [opType.doushisi.zhao]          = {
         default = "",
     },
+    [opType.doushisi.budang]          = {
+        default = "action_guopai",
+        [cityType.jintang]  = "action_huazhuang",
+    },
 }
 
 -------------------------------------------------------------
@@ -251,7 +253,6 @@ function playDoushisiOpSound(cityType, optype, sex)
         prefix = prefix .. "_"
     end
 
-    log("citype  optype " .. cityType)
     local op = d14opsound[optype][cityType]
     if string.isNilOrEmpty(op) then
         op = d14opsound[optype].default
