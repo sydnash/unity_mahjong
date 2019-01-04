@@ -71,6 +71,7 @@ mahjongOperation.seats = {
         },
     },
 }
+
 local topChuPosTwo = Vector3.New( 0.200, 0.156,  0.173)
 local mineChuPosTwo = Vector3.New(-0.200, 0.156, -0.100)
 
@@ -88,17 +89,18 @@ local inhandCameraParams = {
     position = Vector3.New(0, 0.315, -1),
     size = 0.165,
 }
+
 local COUNTDOWN_SECONDS_C = 20
+local PLANE_BREATHE_SECONDS = 1.5
 
 -------------------------------------------------------------------------------
--- 交换两个牌
+-- 交换两个牌，包括位置、旋转、缩放、可见性及阴影模式
 -------------------------------------------------------------------------------
 local function swap(ta, ia, tb, ib)
     local a = ta[ia]
     local b = tb[ib]
 
     if a ~= nil and b ~= nil then
-        --交换位置
         local p = a:getLocalPosition()
         local r = a:getLocalRotation()
         local s = a:getLocalScale()
@@ -317,8 +319,9 @@ function mahjongOperation:update()
         return
     end
 
+    local now = time.realtimeSinceStartup()
+
     if self.countdownTick ~= nil and self.countdownTick > 0 and self.turnCountdown > 0 then
-        local now = time.realtimeSinceStartup()
         local delta = math.floor(now - self.countdownTick)
         
         if delta >= 1 then
@@ -330,6 +333,28 @@ function mahjongOperation:update()
             self.countdown.b:setSprite(tostring(b))
 
             self.countdownTick = now
+        end
+    end
+
+    if self.curPlaneMat ~= nil then
+        local delta = now - self.planeTick
+
+        if self.curPlaneToD then
+            local c = 0.4 + 0.6 * (1 - (delta / PLANE_BREATHE_SECONDS))
+            self.curPlaneMat.color = Color.New(c, c, c, 1)
+        else
+            local c = 0.4 + 0.6 * (delta / PLANE_BREATHE_SECONDS)
+            self.curPlaneMat.color = Color.New(c, c, c, 1)
+        end
+
+        if delta >= PLANE_BREATHE_SECONDS then
+            if self.curPlaneToD then
+                self.curPlaneToD = false 
+            else
+                self.curPlaneToD = true
+            end
+
+            self.planeTick = now
         end
     end
 end
@@ -2018,6 +2043,7 @@ end
 function mahjongOperation:highlightPlaneByAcId(acId)
     if self.game.markerAcId == nil or acId <= 0 then
         self:darkPlanes()
+        self.curPlaneMat = nil
     else
         local base = self.game:getSeatTypeByAcId(self.game.markerAcId)
         local seat = self.game:getSeatTypeByAcId(acId)
@@ -2030,6 +2056,10 @@ function mahjongOperation:highlightPlaneByAcId(acId)
 
             if diff ~= nil and s == diff then
                 m.mainTexture = textureManager.load(string.empty, "deskfw_gl")
+
+                self.curPlaneMat = m
+                self.curPlaneToD = true
+                self.planeTick = time.realtimeSinceStartup()
             else
                 m.mainTexture = textureManager.load(string.empty, "deskfw")
             end
@@ -2048,6 +2078,8 @@ function mahjongOperation:darkPlanes()
 
         m.mainTexture = textureManager.load(string.empty, "deskfw")
     end
+
+    self.curPlaneMat = nil
 end
 
 -------------------------------------------------------------------------------
@@ -2172,6 +2204,7 @@ function mahjongOperation:onDestroy()
             v.mainTexture = nil
         end
     end
+    self.curPlaneMat = nil
 
     self.diceRoot:show()
     self.centerGlass:show()
