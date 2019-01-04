@@ -12,11 +12,11 @@ local ret = {
     patchTimeout    = 30,  --秒
     releaseServer   = {
         gameURL         = "http://login.cdbshy.com:17776/",
-        shareURL        = "http://www.cdbshy.com",
+        shareURL        = "http://www.cdbshy.com/mahjong",
     }, 
     localServer     = {
         gameURL         = "http://192.168.0.80:17776/",
-        shareURL        = "http://www.cdbshy.com",
+        shareURL        = "http://www.cdbshy.com/mahjong",
     },
     testServer      = {
         gameURL         = "http://test.cdbshy.com:17776/",
