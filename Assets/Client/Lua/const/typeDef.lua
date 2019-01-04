@@ -139,7 +139,8 @@ opType = {
 	    caiShen     = {id = 16},
 	    baoJiao     = {id = 17},
 	    gen         = {id = 18},
-	    weiGui      = {id = 19},
+        weiGui      = {id = 19},
+        budang      = {id = 100},
 	},
 }
 

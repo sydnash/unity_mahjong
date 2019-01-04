@@ -219,6 +219,7 @@ local d14opsound = {
     },
     [opType.doushisi.hua]           = {
         default = "action_huapai",
+        [cityType.jintang] = "action_anpai",
     },
     [opType.doushisi.mo]            = {
         default = "",
@@ -234,6 +235,10 @@ local d14opsound = {
     },
     [opType.doushisi.zhao]          = {
         default = "",
+    },
+    [opType.doushisi.budang]          = {
+        default = "action_guopai",
+        [cityType.jintang]  = "action_huazhuang",
     },
 }
 
