@@ -279,21 +279,25 @@ function clientApp:start()
     patch()
 end
 
+local escape = false
+
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
 function clientApp:update()
     -- 检测返回键状态
-    if input.GetKeyDown(keycode.Escape) then
+    if input.GetKeyDown(keycode.Escape) and not escape then
         showMessageUI("确定要退出游戏吗？", 
                       function()
+                          escape = false
                           Application.Quit()
                       end,
                       function()
-                          --
+                          escape = false
                       end)
+        escape = true
     end
-    --测试用
+    --测试用，响应键盘按键执行特定指令
     if appConfig.debug and not deviceConfig.isMobile then
         if input.GetKeyDown(keycode.C) then
 
