@@ -2040,7 +2040,7 @@ end
 
 function doushisiOperation:getCenterFanPaiPos()
     local x, y = 0, 0
-    return x, y + 0.1
+    return x, y + 1.2
 end
 
 function doushisiOperation:setNodeAtCenter(node)
