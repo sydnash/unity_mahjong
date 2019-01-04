@@ -162,13 +162,10 @@ function playDoushisiSound(cityType, doushisiId, sex)
     end
     local resource = prefix .. doushisiType.getDoushisiTypeById(doushisiId).audio
     
-    -- log("=================" .. tostring(cityType) .. tostring(resource))
     local cfg = d14sound[resource]
-    -- log("=================" .. table.tostring(cfg))
     if cfg then
         cfg = cfg[cityType]
     end
-    -- log("=================" .. table.tostring(cfg))
     if cfg then
         resource = cfg
     end
@@ -251,7 +248,6 @@ function playDoushisiOpSound(cityType, optype, sex)
         prefix = prefix .. "_"
     end
 
-    log("citype  optype " .. cityType)
     local op = d14opsound[optype][cityType]
     if string.isNilOrEmpty(op) then
         op = d14opsound[optype].default
