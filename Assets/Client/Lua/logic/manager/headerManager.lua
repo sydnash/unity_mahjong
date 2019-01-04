@@ -46,11 +46,19 @@ function headerManager.request(url)
     download(url, function(icon)
         if icon ~= nil then
             textureManager.unload(tex)
-            headerManager.downloadedHeaders[token] = { icon = icon, ref = 1 }
+
+            local h = headerManager.downloadedHeaders[token]
+            if h ~= nil then
+                h.ref = h.ref + 1
+                icon = h.icon
+            else
+                headerManager.downloadedHeaders[token] = { icon = icon, ref = 1 }
+            end
+
             signalManager.signal(token, icon)
         end
     end)
-
+    
     return token, tex 
 end
 
