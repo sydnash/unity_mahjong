@@ -21,7 +21,7 @@ retcText = {
     [retc.coinNotEnough]                   = "房卡不足",
     [retc.transferToSelf]                  = "不能转账给自己",
     [retc.willClose]                       = "服务器即将出现",
-    [retc.notSupportGameType]              = "玩家不在亲友圈",
+    [retc.notSupportGameType]              = "暂不支持该区域",
     [retc.notInClub]                       = "您不是亲友圈的成员",
     [retc.playerHasTooMuchClub]            = "玩家亲友圈数量达到上限",
     [retc.clubIsFull]                      = "亲友圈已经满员了",
@@ -41,7 +41,7 @@ gameName = {
     [gameType.paodekuai]   = "跑得快",
     [gameType.mahjong]     = "血战到底",
     [gameType.doudizhu]    = "斗地主",
-    [gameType.hundizhu]    = "荤地主",
+    [gameType.hundizhu]    = "昏地主",
     [gameType.dpd14]       = "短牌斗十四",
 }
 
