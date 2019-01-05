@@ -17,7 +17,6 @@ function createDesk:ctor(cityType, friendsterId)
     self.cityType = cityType
     self.gameType = gamepref.getSelectedGameType(friendsterId)
     self.friendsterId = friendsterId
-    
 
     base.ctor(self)
 end
