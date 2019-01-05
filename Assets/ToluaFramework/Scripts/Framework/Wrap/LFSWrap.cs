@@ -25,6 +25,7 @@ public class LFSWrap
 		L.RegVar("LOCALIZED_DATA_PATH", get_LOCALIZED_DATA_PATH, null);
 		L.RegVar("DOWNLOAD_DATA_PATH", get_DOWNLOAD_DATA_PATH, null);
 		L.RegVar("OS_PATH", get_OS_PATH, null);
+		L.RegVar("PATCH_PATH", get_PATCH_PATH, null);
 		L.EndStaticLibs();
 	}
 
@@ -330,6 +331,20 @@ public class LFSWrap
 		try
 		{
 			LuaDLL.lua_pushstring(L, LFS.OS_PATH);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PATCH_PATH(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, LFS.PATCH_PATH);
 			return 1;
 		}
 		catch (Exception e)

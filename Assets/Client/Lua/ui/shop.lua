@@ -7,7 +7,7 @@ local shop = class("shop", base)
 
 _RES_(shop, "ShopUI", "ShopUI")
 
-local COPY_TO_CLIPBOARD_STRING = "tdcpkf001"
+local COPY_TO_CLIPBOARD_STRING = "天地川牌斗十四"
 
 function shop:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)

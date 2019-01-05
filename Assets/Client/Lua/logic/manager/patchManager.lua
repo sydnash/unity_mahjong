@@ -14,7 +14,7 @@ patchManager.PATCHLIST_FILE_NAME = "patchlist.txt"
 -- 
 -------------------------------------------------------------------
 local function downloadOfflineVersionFile()
-    local filename = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH,  LFS.OS_PATH, patchManager.VERSION_FILE_NAME)
+    local filename = LFS.CombinePath(LFS.PATCH_PATH, patchManager.VERSION_FILE_NAME)
     local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
 
     if string.isNilOrEmpty(text) then
@@ -38,7 +38,7 @@ end
 -- 
 -------------------------------------------------------------------
 local function downloadOfflinePatchlistFile()
-    local filename = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME)
+    local filename = LFS.CombinePath(LFS.PATCH_PATH, patchManager.PATCHLIST_FILE_NAME)
     local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
 
     if string.isNilOrEmpty(text) then
@@ -112,12 +112,15 @@ function patchManager.checkPatches(callback)
             callback(nil, nil, nil)
             return
         end
-        log("patchManager.checkPatches  5, url = " .. onlineVersion.url)
-        downloadOnlinePatchlistFile(networkConfig.patchURL, function(onpt)
+
+        local url = onlineVersion.url .. LFS.OS_PATH .. "/"
+        log("patchManager.checkPatches  5, url = " .. url)
+
+        downloadOnlinePatchlistFile(url, function(onpt)
             local onlinePatchlistText = onpt
 
             local plist = filterPatchList(offlinePatchlistText, onlinePatchlistText)
-            callback(plist, onlineVersionText, onlinePatchlistText, onlineVersion.url)
+            callback(plist, onlineVersionText, onlinePatchlistText, url)
         end)
     end)
 end

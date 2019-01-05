@@ -140,7 +140,7 @@ public class DependentBundlePool
         }
         else
         {
-            AssetBundle ab = LoadBundle(LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, SUB_PATH), bundleName, true);
+            AssetBundle ab = LoadBundle(LFS.CombinePath(LFS.PATCH_PATH, SUB_PATH), bundleName, true);
             if (ab == null)
             {
                 ab = LoadBundle(LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, SUB_PATH), bundleName, false);

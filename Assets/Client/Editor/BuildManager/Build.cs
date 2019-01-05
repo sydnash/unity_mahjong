@@ -124,7 +124,7 @@ public class Build
         StringBuilder sb = new StringBuilder();
         sb.Append("return {\n");
         sb.AppendFormat("[\"num\"]={0},\n", ver);
-        sb.AppendFormat("[\"url\"]=\"{0}\",\n", url);
+        sb.AppendFormat("[\"url\"]=\"{0}{1}/\",\n", url, ver);
         sb.Append("}");
 
         string text = sb.ToString();

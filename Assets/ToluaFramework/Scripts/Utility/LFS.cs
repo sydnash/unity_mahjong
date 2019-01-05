@@ -8,7 +8,8 @@ public static class LFS
     public static readonly Encoding UTF8_WITHOUT_BOM  = new System.Text.UTF8Encoding(false);
     public static readonly string LOCALIZED_DATA_PATH = Application.streamingAssetsPath;
     public static readonly string DOWNLOAD_DATA_PATH  = Application.persistentDataPath;
-    public static readonly string OS_PATH = LuaConst.osDir;    
+    public static readonly string OS_PATH = LuaConst.osDir;
+    public static readonly string PATCH_PATH = CombinePath(DOWNLOAD_DATA_PATH, LuaConst.patchDir);
 
     /// <summary>
     /// 

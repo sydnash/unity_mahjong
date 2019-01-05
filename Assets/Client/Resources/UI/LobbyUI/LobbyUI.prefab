@@ -2406,6 +2406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: ChengDu
     sprite: {fileID: 21300006, guid: 4b23a62bd794b2f4fad55542c331cfcf, type: 3}

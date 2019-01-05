@@ -164,7 +164,7 @@ public class SceneManager : MonoBehaviour
 
         SUB_PATH = LFS.CombinePath("Res", LFS.OS_PATH);
         mLocalizedPath = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, SUB_PATH);
-        mDownloadPath  = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH,  SUB_PATH);
+        mDownloadPath = LFS.CombinePath(LFS.PATCH_PATH, SUB_PATH);
     }
 
     /// <summary>
