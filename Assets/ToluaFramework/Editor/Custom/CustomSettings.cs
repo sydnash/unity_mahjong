@@ -216,6 +216,7 @@ public static class CustomSettings
 		_GT(typeof(WINHelper)),
         _GT(typeof(Utils)),
         _GT(typeof(GVoiceEngine)),
+        _GT(typeof(TalkingDataGA)),
     };
 
     public static List<Type> dynamicList = new List<Type>()
