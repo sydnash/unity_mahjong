@@ -100,6 +100,9 @@ local tcp = tcpClass.new()
 --
 -------------------------------------------------------------------
 local function getDeviceId()
+    if not deviceConfig.isMobile then
+        return deviceConfig.deviceId
+    end
     if appConfig.debug and (not deviceConfig.isMobile) then
         return deviceConfig.deviceId
     end
