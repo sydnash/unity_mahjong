@@ -17,6 +17,7 @@ platformHelper  = require("platform.platformHelper")
 networkManager  = require("network.networkManager")
 gvoiceManager   = require("logic.manager.gvoiceManager")
 locationManager = require("logic.manager.locationManager")
+talkingData     = require("platform.talkingData")
 
 local waiting       = require("ui.waiting")
 local messagebox    = require("ui.messagebox")
@@ -478,6 +479,9 @@ function loginServer(callback, func)
 
         platformHelper.setLogined(true)
         gvoiceManager.setup(tostring(gamepref.player.acId))
+
+        talkingData.setAccount(tostring(gamepref.player.acId))
+        talkingData.setAccountType(AccountType.WEIXIN)
 
         local cityType = 0
         local deskId   = 0

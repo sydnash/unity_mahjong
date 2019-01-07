@@ -217,6 +217,9 @@ public static class CustomSettings
         _GT(typeof(Utils)),
         _GT(typeof(GVoiceEngine)),
         _GT(typeof(TalkingDataGA)),
+        _GT(typeof(TDGAAccount)),
+        _GT(typeof(AccountType)),
+        _GT(typeof(Gender)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

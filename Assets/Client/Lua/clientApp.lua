@@ -204,15 +204,13 @@ local function checkPatches()
             end)
             return
         end
-        log("checkPatches   1")
+      
         if #plist == 0 then--未检测到更新
-            log("checkPatches   2")
             local login = require("ui.login").new()
             login:show()
 
             loading:close()
         else
-            log("checkPatches   3")
             local size = 0
             for _, v in pairs(plist) do
                 size = size + v.size
@@ -267,6 +265,8 @@ function clientApp:start()
     locationManager.checkEnabled()
     locationManager.start()
 
+    talkingData.start()
+
     gamepref.city = readCityConfig()
     
     if gameConfig.patchEnabled then
@@ -308,6 +308,7 @@ end
 ----------------------------------------------------------------
 function clientApp:onDestroy()
     locationManager.stop()
+    talkingData.stop()
 end
 
 return clientApp

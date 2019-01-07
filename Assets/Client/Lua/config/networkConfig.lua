@@ -2,11 +2,8 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
---local patchURL = "http://test.cdbshy.com/mahjong_update/"
-local patchURL = "http://www.cdbshy.com/mahjong_update/"
---local gameURL  = "http://login.cdbshy.com:17776/"
---local gameURL  = "http://test.cdbshy.com:17776/"
---local gameURL  = "http://192.168.0.80:17776/"
+local appConfig = require("config.appConfig")
+local patchURL = appConfig.debug and "http://test.cdbshy.com/mahjong_update/" or "http://www.cdbshy.com/mahjong_update/"
 
 local ret = {
     patchURL        = patchURL,
@@ -25,7 +22,7 @@ local ret = {
     },
     httpTimeout     = 10,  --秒
     tcpTimeout      = 10,  --秒
-    ping            = 3,  --秒
+    ping            = 3,   --秒
     pong            = 15,  --秒
     encrypt         = true,--对网络数据进行加解密
     gvoiceTimeout   = 10,  --秒

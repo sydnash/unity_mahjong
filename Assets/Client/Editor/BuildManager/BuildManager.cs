@@ -124,8 +124,6 @@ public class BuildManager : EditorWindow
 
                 string versionFrom = LFS.CombinePath(Application.dataPath, "Resources", Build.VERSION_FILE_NAME);
                 string versionTo = LFS.CombinePath(patchPath, Build.VERSION_FILE_NAME);
-                Debug.Log(patchPath);
-                Debug.Log(versionTo);
                 LFS.CopyFile(versionFrom, versionTo);
 
                 EditorUtility.ClearProgressBar();

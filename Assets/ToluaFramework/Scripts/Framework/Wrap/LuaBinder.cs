@@ -34,6 +34,10 @@ public static class LuaBinder
 		WINHelperWrap.Register(L);
 		UtilsWrap.Register(L);
 		GVoiceEngineWrap.Register(L);
+		TalkingDataGAWrap.Register(L);
+		TDGAAccountWrap.Register(L);
+		AccountTypeWrap.Register(L);
+		GenderWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);
 		LuaInterface_InjectTypeWrap.Register(L);
