@@ -33,8 +33,12 @@ end
 
 function talkingData.event(eventId, args)
     if deviceConfig.isMobile then
+        local dic = Dictionary.New()
+        for k, v in pairs(args) do
+            dic:Add(tostring(k), v)
+        end
         log("talkingData.event, eventId = " .. eventId)
-        TalkingDataGA.OnEvent(eventId, args)
+        TalkingDataGA.OnEvent(eventId, dic)
     end
 end
 
