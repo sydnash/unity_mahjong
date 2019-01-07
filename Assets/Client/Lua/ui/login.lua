@@ -97,7 +97,7 @@ function login:onInit()
         self.serverConfig = readServerConfig()
         tmp[self.serverConfig.chose]:setSelected(true)
     end
-    if gameConfig.debug and deviceConfig.isMobile then
+    if appConfig.debug and deviceConfig.isMobile then
         self.mGuestLogin:show()
         self.mWechatLogin:show()
     end

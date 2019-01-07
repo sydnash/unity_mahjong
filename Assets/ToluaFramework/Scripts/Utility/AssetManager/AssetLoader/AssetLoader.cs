@@ -96,7 +96,7 @@ public class AssetLoader
         string sub = LFS.CombinePath(SUB_PATH, mPath);
 
         mLocalizedPath = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, sub);
-        mDownloadPath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, sub);
+        mDownloadPath = LFS.CombinePath(LFS.PATCH_PATH, sub);
 
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
         InitDependentManifest();
@@ -112,6 +112,7 @@ public class AssetLoader
     public AssetBundle LoadAssetBundle(string bundleName, bool checkExists = false)
     {
         AssetBundle bundle = null;
+        Logger.Log("bundle path = " + bundleName + ", check = " + checkExists.ToString() + ", exist = " + System.IO.File.Exists(bundleName).ToString());
 
         if (!checkExists || System.IO.File.Exists(bundleName))
         {
@@ -136,7 +137,10 @@ public class AssetLoader
     /// <returns></returns>
     public Object Load(string assetPath, string assetName)
     {
-        string name = LFS.CombinePath(assetPath.ToLower(), assetName.ToLower());
+        assetPath = assetPath.ToLower();
+        assetName = assetName.ToLower();
+
+        string name = LFS.CombinePath(assetPath, assetName);
 
 #if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
         Object asset = Resources.Load(LFS.CombinePath(mPath, name));
@@ -229,7 +233,7 @@ public class AssetLoader
 
         string dependencies = LFS.CombinePath(SUB_PATH, LFS.OS_PATH);
 
-        Object asset = Load(LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, dependencies), ASSETBUNDLE_MANIFEST, true);
+        Object asset = Load(LFS.CombinePath(LFS.PATCH_PATH, dependencies), ASSETBUNDLE_MANIFEST, true);
         if (asset == null)
         {
             asset = Load(LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, dependencies), ASSETBUNDLE_MANIFEST, false);

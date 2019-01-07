@@ -8,7 +8,7 @@ local lobby = class("lobby", base)
 _RES_(lobby, "LobbyUI", "LobbyUI")
 
 function lobby:onInit()
-    log("lobby.onInit, headerUrl = " .. gamepref.player.headerUrl)
+--    log("lobby.onInit, headerUrl = " .. gamepref.player.headerUrl)
     self.mIcon:setTexture(gamepref.player.headerUrl)
     self.mNickname:setText(cutoutString(gamepref.player.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText("帐号:" .. gamepref.player.acId)
@@ -90,7 +90,7 @@ end
 
 function lobby:onAccuseClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能暂未开放，敬请期待")
+    showMessageUI("功能暂未开放，敬请期待！")
 end
 
 function lobby:onEnterDeskClickedHandler()
@@ -161,7 +161,7 @@ end
 function lobby:onHistoryClickedHandler()
     playButtonClickSound()
 
-    showWaitingUI("正在同步战绩")
+    showWaitingUI("正在拉取战绩数据，请稍候")
     gamepref.player.playHistory:updateHistory(function(ok)
         closeWaitingUI()
         if not ok then
@@ -175,7 +175,7 @@ end
 
 function lobby:onRankClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能暂未开放，敬请期待")
+    showMessageUI("功能暂未开放，敬请期待！")
 end
 
 function lobby:onActivityClickedHandler()

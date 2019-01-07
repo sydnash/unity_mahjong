@@ -132,7 +132,7 @@ end
 --
 ----------------------------------------------------------------
 local function downloadPatches(url, patchlist, size, versText, plistText, loading)
-    log("downloadPatches, url = " .. url)
+--    log("downloadPatches, url = " .. url)
     local totalCount        = #patchlist
     local successfulCount   = 0
 
@@ -144,11 +144,13 @@ local function downloadPatches(url, patchlist, size, versText, plistText, loadin
             else
                 successfulCount = successfulCount + 1
 
-                local path = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, name)
+                local path = LFS.CombinePath(LFS.PATCH_PATH, name)
                 LFS.WriteBytes(path, bytes)
             end
 
-            loading:setProgress(math.min(1, successfulCount / totalCount))
+            local per = math.min(1, successfulCount / totalCount)
+            loading:setText(string.format("已更新%.1f%%，请稍候...", per * 100))
+            loading:setProgress(per)
 
             if successfulCount + #failedList == totalCount then
                 callback(failedList)
@@ -167,10 +169,10 @@ local function downloadPatches(url, patchlist, size, versText, plistText, loadin
                                   Application.Quit()
                               end)
             else
-                local vpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.VERSION_FILE_NAME)
+                local vpath = LFS.CombinePath(LFS.PATCH_PATH, patchManager.VERSION_FILE_NAME)
                 LFS.WriteText(vpath, versText, LFS.UTF8_WITHOUT_BOM)
 
-                local ppath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, LFS.OS_PATH, patchManager.PATCHLIST_FILE_NAME)
+                local ppath = LFS.CombinePath(LFS.PATCH_PATH, patchManager.PATCHLIST_FILE_NAME)
                 LFS.WriteText(ppath, plistText, LFS.UTF8_WITHOUT_BOM)
 
                 local login = require("ui.login").new()
@@ -197,7 +199,9 @@ local function checkPatches()
         closeWaitingUI()
 
         if plist == nil then
-            showMessageUI("更新检测失败")
+            showMessageUI("更新检测失败", function()
+                Application.Quit()
+            end)
             return
         end
         log("checkPatches   1")
@@ -223,18 +227,6 @@ local function checkPatches()
                           end)
         end
     end)
-end
-
-----------------------------------------------------------------
---
-----------------------------------------------------------------
-local function patch()
-    if gameConfig.patchEnabled then
-        checkPatches(loading)
-    else
-        local login = require("ui.login").new()
-        login:show()
-    end
 end
 
 
@@ -276,7 +268,13 @@ function clientApp:start()
     locationManager.start()
 
     gamepref.city = readCityConfig()
-    patch()
+    
+    if gameConfig.patchEnabled then
+        checkPatches(loading)
+    else
+        local login = require("ui.login").new()
+        login:show()
+    end
 end
 
 local escape = false
