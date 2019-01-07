@@ -33,9 +33,9 @@ end
 
 function talkingData.event(eventId, args)
     if deviceConfig.isMobile then
-        local dic = Dictionary.New()
+        local dic = Utils.CreateDictionarySO()
         for k, v in pairs(args) do
-            dic:Add(tostring(k), v)
+            Utils.AddDictionarySO(dic, tostring(k), v)
         end
         log("talkingData.event, eventId = " .. eventId)
         TalkingDataGA.OnEvent(eventId, dic)

@@ -274,4 +274,19 @@ public class Utils
 
         return null;
     }
+
+	public static Dictionary<string, object> CreateDictionarySO() {
+		return new Dictionary<string, object>();
+	}
+    public static void AddDictionarySO(Dictionary<string, object> dic, string key, object value) 
+    {
+        if (dic.ContainsKey(key)) 
+        {
+            dic[key] = value;
+        }
+        else 
+        {
+            dic.Add(key, value);
+        }
+    }
 }

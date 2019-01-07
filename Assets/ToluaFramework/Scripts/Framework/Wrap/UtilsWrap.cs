@@ -21,6 +21,8 @@ public class UtilsWrap
 		L.RegFunction("CaptureScreenshot", CaptureScreenshot);
 		L.RegFunction("CommitError", CommitError);
 		L.RegFunction("ConvertTextureToSprite", ConvertTextureToSprite);
+		L.RegFunction("CreateDictionarySO", CreateDictionarySO);
+		L.RegFunction("AddDictionarySO", AddDictionarySO);
 		L.RegFunction("New", _CreateUtils);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -318,6 +320,40 @@ public class UtilsWrap
 			UnityEngine.Sprite o = Utils.ConvertTextureToSprite(arg0, arg1);
 			ToLua.PushSealed(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CreateDictionarySO(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			System.Collections.Generic.Dictionary<string,object> o = Utils.CreateDictionarySO();
+			ToLua.PushSealed(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AddDictionarySO(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			System.Collections.Generic.Dictionary<string,object> arg0 = (System.Collections.Generic.Dictionary<string,object>)ToLua.CheckObject(L, 1, typeof(System.Collections.Generic.Dictionary<string,object>));
+			string arg1 = ToLua.CheckString(L, 2);
+			object arg2 = ToLua.ToVarObject(L, 3);
+			Utils.AddDictionarySO(arg0, arg1, arg2);
+			return 0;
 		}
 		catch (Exception e)
 		{

@@ -115,7 +115,7 @@ public class TalkingDataGA {
 #endif
 		}
 	}
-	
+
 	public static void OnEvent(string actionId, Dictionary<string, object> parameters) {
 		if (Application.platform != RuntimePlatform.OSXEditor && Application.platform != RuntimePlatform.WindowsEditor) {
 #if UNITY_IPHONE
