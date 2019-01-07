@@ -18,7 +18,7 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.bshy.mahjong</key>
-		<string>pgy_adhoc</string>
+		<string>mj_adhoc</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>iPhone Distribution</string>
