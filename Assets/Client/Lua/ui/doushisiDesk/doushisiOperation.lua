@@ -1231,6 +1231,7 @@ function doushisiOperation:onAnPaiShow(acId, idInfo)
         table.insert(chipengCards, info)
     end
 
+    self.chipengCards[acId] = chipengCards
     self:relocateChiPengCards(acId)
 
     if self.promoteNode and self.promoteNode.cards then

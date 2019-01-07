@@ -18,7 +18,7 @@ local gameConfig = {
     },
 }
 
-gameConfig.serverList = nil
+-- gameConfig.serverList = nil
 
 return gameConfig
 

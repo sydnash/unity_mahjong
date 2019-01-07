@@ -200,21 +200,39 @@ end
 
 function doushisiGame:onAnPaiShowHandler(msg)
     local player = self:getPlayerByAcId(msg.AcId)
+    local pengInfos = player[self.cardType.peng]
+
+    local caiShens = nil
+    for _, info in pairs(pengInfos) do
+        if info.Op == opType.doushisi.caiShen.id then
+            caiShens = info
+        end
+    end
+
+    local csTypes = {}
+    if caiShens then
+        for _, c in pairs(caiShens.Cards) do
+            local cardType = doushisi.typeId(c) 
+            csTypes[cardType] = true
+        end
+    end
+
     local t = {}
     for _, c in pairs(msg.Cards) do
         local cardType = doushisi.typeId(c) 
-        local vec = t[cardType]
-        if vec == nil then
-            vec = {}
-            t[cardType] = vec
+        if not csTypes[cardType] then
+            local vec = t[cardType]
+            if vec == nil then
+                vec = {}
+                t[cardType] = vec
+            end
+            table.insert(vec, c)
         end
-        table.insert(vec, c)
     end
     local cards = {}
     for _, cs in pairs(t) do
         table.insert(cards, cs)
     end
-    local pengInfos = player[self.cardType.peng]
     local i = 1
     for _, info in pairs(pengInfos) do
         if info.Op ~= opType.doushisi.caiShen.id then
