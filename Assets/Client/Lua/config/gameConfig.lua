@@ -4,7 +4,7 @@
 
 local gameConfig = {
     fps                     = 30,       --帧率
-    patchEnabled            = true,     --启用热更
+    -- patchEnabled            = true,     --启用热更
 --    patchEnabled            = false,    --不启用热更
     nicknameMaxLength       = 5,        --玩家昵称可显示的最大长度
     friendsterNameMaxLength = 10,       --亲友圈名称可显示的最大长度
