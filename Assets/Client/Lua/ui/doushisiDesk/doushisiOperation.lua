@@ -62,7 +62,7 @@ local inhandCameraParams = {
     size = 3.6
 }
 
-doushisiOperation.shakepaitime = 0.3
+doushisiOperation.shakepaitime = 0.2
 
 local actionCardHeight = 2.14
 local actionCardWidth = 0.72
@@ -776,7 +776,7 @@ function doushisiOperation:onOpDoChu(acId, id)
     local isIm = false
     if self.promoteNode and self.promoteNode.id == id then
         card:hide()
-        return 0.5
+        return 0.3
     end
 
     self:promoteChu(acId, id, isIm)
@@ -784,7 +784,7 @@ function doushisiOperation:onOpDoChu(acId, id)
     local player = self.game:getPlayerByAcId(acId)
     playDoushisiSound(self.game.cityType, id, player.sex)
 
-    return 0.5
+    return 0.3
 end
 
 function doushisiOperation:opDoChiPengAnHua(acId, delIds, beId, op)
@@ -1834,10 +1834,8 @@ function doushisiOperation:chiPengAction(acId, cards, widthoutScale)
     x = x / #cards
     y = y / #cards
 
-    local delayTime = 0.10
 
     local shakeAction, shakeTime = self:getShakeAction(node)
-    local delayAction = self:getDelayAction(delayTime)
     local flyAction, flyTime = self:getFlyAction(node, x1, y1, x, y, cfg.rotEuler.z, 0.6, nil, 1)
     node:setLocalPosition(Vector3.New(x1, y1, 0))
     node:show()
@@ -1851,15 +1849,19 @@ function doushisiOperation:chiPengAction(acId, cards, widthoutScale)
     end
 
     if not widthoutScale then
-        local seqAction = self:getSequenceAction({shakeAction, delayAction, flyAction, tweenFunction.new(function()
+        self.animationManager:add(shakeAction)
+        shakeAction:play()
+
+        local delayAction = self:getDelayAction(shakeTime - 0.01)
+        local seqAction = self:getSequenceAction({delayAction, flyAction, tweenFunction.new(function()
             self:pushFlyNode(node)
             self:relocateChiPengCards(acId)
-        end)})
+        end)}, true)
         self.animationManager:add(seqAction)
         seqAction:play()
 
         local added = 0.03 * ((#seqAction.queue + 1) * 2 + 1)
-        return shakeTime + delayTime + flyTime + added
+        return shakeTime + flyTime + added
     else
         local seqAction = self:getSequenceAction({flyAction, tweenFunction.new(function()
             self:pushFlyNode(node)
@@ -2060,8 +2062,8 @@ function doushisiOperation:getCenterScaleAction(node)
     return action, time
 end
 
-function doushisiOperation:getSequenceAction(actions)
-    local t = tweenSerial.new(true)
+function doushisiOperation:getSequenceAction(actions, im)
+    local t = tweenSerial.new(true, im)
     for _, a in pairs(actions) do
         t:add(a)
     end
@@ -2073,11 +2075,11 @@ function doushisiOperation:getDelayAction(delayTime)
 end
 
 function doushisiOperation:getShakeAction(node)
-    local smax = 1.2
+    local smax = 1.1
     local sNormal = 1
     local t = self.shakepaitime
-    local aMax = tweenScale.new(node, t / 2, Vector3.one, Vector3.New(1.2, 1.2, 1.2))
-    local aNormal = tweenScale.new(node, t / 2, Vector3.New(1.2, 1.2, 1.2), Vector3.one)
+    local aMax = tweenScale.new(node, t / 2, Vector3.one, Vector3.New(smax, smax, smax))
+    local aNormal = tweenScale.new(node, t / 2, Vector3.New(smax, smax, smax), Vector3.one)
     local action = tweenSerial.new(true)
     action:add(aMax)
     action:add(aNormal)

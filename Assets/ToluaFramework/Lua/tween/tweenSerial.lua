@@ -62,6 +62,7 @@ function tweenSerial:update()
                 table.remove(self.queue, 1)
                 if self.doNextImmediately then
                     loop = true
+                    count = #self.queue
                 end
             end
         end
