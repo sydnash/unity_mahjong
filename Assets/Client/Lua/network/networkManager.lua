@@ -645,11 +645,17 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.sendChatMessage(chatType, chatContent, callback)
-    local data = { Type = chatType, Data = chatContent }
+function networkManager.sendChatMessage(ct, chatContent, callback)
+    local data = { Type = ct, Data = chatContent }
+    local param 
+    if ct == chatType.voice or ct == chatType.cmsg then
+        param = tostring(ct)
+    else
+        param = tostring(ct) .. tostring(chatContent)
+    end
+
     talkingData.event("chat", {
-        Type = tostring(chatType),
-        Data = chatContent,
+        Type = param,
     })
     talkingData.onPurchase("item", 1, 1)
     send(protoType.cs.chatMessage, data, callback)
