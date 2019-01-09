@@ -651,7 +651,7 @@ function networkManager.sendChatMessage(ct, chatContent, callback)
     if ct == chatType.voice or ct == chatType.cmsg then
         param = tostring(ct)
     else
-        param = tostring(ct) .. tostring(chatContent)
+        param = string.format("%s_%s", tostring(ct) .. tostring(chatContent))
     end
 
     talkingData.event("chat", {
