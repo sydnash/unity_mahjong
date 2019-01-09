@@ -31,6 +31,15 @@ function talkingData.setAccountType(accountType)
     end
 end
 
+function talkingData.setCity(city)
+end
+
+function talkingData.onPurchase(item, itemNumber, itemPrice)
+    if deviceConfig.isMobile then 
+        TalkingDataGA.OnPurchase(item, itemNumber, itemPrice)
+    end
+end
+
 function talkingData.event(eventId, args)
     if deviceConfig.isMobile then
         local dic = Utils.CreateDictionarySO()

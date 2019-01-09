@@ -647,6 +647,11 @@ end
 -------------------------------------------------------------------
 function networkManager.sendChatMessage(chatType, chatContent, callback)
     local data = { Type = chatType, Data = chatContent }
+    talkingData.event("chat", {
+        Type = tostring(chatType),
+        Data = chatContent,
+    })
+    talkingData.onPurchaset("item", 1, 1)
     send(protoType.cs.chatMessage, data, callback)
 end
 
