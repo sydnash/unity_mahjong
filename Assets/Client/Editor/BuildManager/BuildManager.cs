@@ -24,7 +24,7 @@ public class BuildManager : EditorWindow
     //private int mVersionNum = 1;
     //private string mVersionUrl = "http://test.cdbshy.com/mahjong_update/";
     private bool mBuildPackage = true;
-    private bool mProcessResources = false;
+    //private bool mProcessResources = false;
     private string mPackagePath = string.Empty;
 
     [MenuItem("Window/Build Manager #&B", priority = 2051)]
@@ -66,7 +66,7 @@ public class BuildManager : EditorWindow
 
         if (mBuildPackage)
         {
-            mProcessResources = EditorGUILayout.Toggle("Process Resources", mProcessResources);
+            //mProcessResources = EditorGUILayout.Toggle("Process Resources", mProcessResources);
 
             EditorGUILayout.BeginHorizontal();
             {
@@ -175,15 +175,15 @@ public class BuildManager : EditorWindow
                     PlayerSettings.companyName = "成都巴蜀互娱科技有限公司";
                     PlayerSettings.productName = "幺九麻将";
 
-                    if (mProcessResources) Build.PrepareRes();
+                    //if (mProcessResources) Build.PrepareRes();
                     packageName = LFS.CombinePath(mPackagePath, packageName);
                     string err = Build.BuildPackage(packageName, mTargetPlatform, mDevelopment);
-                    if (mProcessResources) Build.ResetRes();
+                    //if (mProcessResources) Build.ResetRes();
 
                     PlayerSettings.companyName = companyName;
                     PlayerSettings.productName = productName;
 
-                    Debug.Log(timestamp + ": build package [ver =  " + mVersionDic[numk] + "]" + (string.IsNullOrEmpty(err) ? "successfully! " : "failed!"));
+                    Debug.Log(timestamp + ": build package [ver =  " + mVersionDic[numk] + "] " + (string.IsNullOrEmpty(err) ? "successfully! " : "failed!"));
                 }
 
                 EditorUtility.DisplayDialog("Build", "Build finished", "OK");

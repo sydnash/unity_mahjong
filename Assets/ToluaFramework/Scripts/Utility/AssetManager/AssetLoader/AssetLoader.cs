@@ -48,6 +48,8 @@ public class AssetLoader
         mDownloadPath = LFS.CombinePath(LFS.PATCH_PATH, sub);
     }
 
+    private static readonly string[] postfix = { ".prefab", ".jpg", ".png", ".mp3", ".anim" };
+
     /// <summary>
     /// 
     /// </summary>
@@ -59,8 +61,17 @@ public class AssetLoader
         assetName = assetName.ToLower();
 
 #if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
-        return Resources.Load(LFS.CombinePath(mPath, assetPath, assetName));
-        //return UnityEditor.AssetDatabase.LoadMainAssetAtPath(LFS.CombinePath("Assets/Client/Resources", mPath, name));
+        //return Resources.Load(LFS.CombinePath(mPath, assetPath, assetName));
+        string path = LFS.CombinePath(LFS.CombinePath("Assets/Client/_Resources", mPath), assetPath, assetName);
+        foreach (string pf in postfix)
+        {
+            string filename = path + pf;
+            if (System.IO.File.Exists(filename))
+            {
+                return UnityEditor.AssetDatabase.LoadMainAssetAtPath(filename);
+            }
+        }
+        return null;
 #else
         LoadDependentAB(assetPath, assetName);
 
