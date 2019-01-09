@@ -36,7 +36,7 @@ end
 
 function talkingData.onPurchase(item, itemNumber, itemPrice)
     if deviceConfig.isMobile then 
-        TalkingDataGA.OnPurchase(item, itemNumber, itemPrice)
+        TDGAItem.OnPurchase(item, itemNumber, itemPrice)
     end
 end
 

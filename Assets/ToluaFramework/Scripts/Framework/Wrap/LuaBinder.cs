@@ -35,6 +35,7 @@ public static class LuaBinder
 		UtilsWrap.Register(L);
 		GVoiceEngineWrap.Register(L);
 		TalkingDataGAWrap.Register(L);
+		TDGAItemWrap.Register(L);
 		TDGAAccountWrap.Register(L);
 		AccountTypeWrap.Register(L);
 		GenderWrap.Register(L);
