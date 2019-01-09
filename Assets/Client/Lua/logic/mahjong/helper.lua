@@ -42,7 +42,7 @@ function helper:checkJiao(cntVec, totalCntVec)
     return ret
 end
 
-function helper:isHu7Dui(cntVec, duiCnt, singleIdx)
+function helper:isHu7Dui(cntVec, duiCnt, singleIdx, tid)
     if duiCnt == 6 and singleIdx == tid then
         local ok, ret = self:check7Dui(cntVec)
         if ok then
@@ -73,8 +73,9 @@ function helper:isHu(cntVec, tid, duiCnt, singleIdx)
         return false, nil
     end
     self:addTypeCnt(cntVec, tid, 1)
-    local ok, ret = self:isHu7Dui(cntVec, duiCnt, singleIdx)
+    local ok, ret = self:isHu7Dui(cntVec, duiCnt, singleIdx, tid)
     if ok then
+        self:addTypeCnt(cntVec, tid, -1)
         return ok, ret
     end
     local ok, ret = self:isHuNormal(cntVec)
@@ -109,13 +110,15 @@ function helper:check7Dui(cntVec)
         end
         total = total + cnt
     end
-    if cnt ~= 14 then
+    if total ~= 14 then
         return false, nil
     end
     local ret = {}
     for idx, cnt in pairs(cntVec) do
-        for i = 1, 4, 2 do
-            table.insert(ret, { Cs = {idx * 4, idx * 4}, Op = opType.dui.id })
+        if cnt >= 2 then
+            for i = 1, cnt, 2 do
+                table.insert(ret, { Cs = {idx * 4, idx * 4}, Op = opType.dui.id })
+            end
         end
     end
     return true, ret
@@ -246,10 +249,10 @@ function helper:computeFanXing(huC)
     local function addFx(fx)
         table.insert(ret, fx)
     end
-    if huC == 7 then
+    if #huC == 7 then
         addFx(fanXingType.qiDui)
     end
-    if huC == 1 then
+    if #huC == 1 then
         addFx(fanXingType.jinGouDiao)
     end
     local inhandCnt = 0
