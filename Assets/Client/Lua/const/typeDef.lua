@@ -84,6 +84,7 @@ fanXingType = {
     yaoJiu              = 7,
     menQing             = 8,
     zhongZhang          = 9,
+    jiangQiDui          = 10,
 }
 
 --------------------------------------------------------------

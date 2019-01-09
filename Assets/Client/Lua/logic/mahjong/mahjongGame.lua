@@ -458,7 +458,8 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
     elseif t == detail.angang then
         table.insert(infos, {
             Op = opType.gang.id,
-            Cs = {cards[1], cards[2], cards[3], cards[4]}
+            Cs = {cards[1], cards[2], cards[3], cards[4]},
+            D = detail.angang,
         })
         self.knownMahjong[cards[1]] = 1
         self.knownMahjong[cards[2]] = 1

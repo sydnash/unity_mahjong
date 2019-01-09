@@ -41,6 +41,7 @@ local fanxingTypeName = {
     [fanXingType.yaoJiu]        = "幺九", 
     [fanXingType.menQing]       = "门清", 
     [fanXingType.zhongZhang]    = "中张", 
+    [fanXingType.jiangQiDui]    = "将七对", 
 }
 
 function scoreDetailItem:setData(data)

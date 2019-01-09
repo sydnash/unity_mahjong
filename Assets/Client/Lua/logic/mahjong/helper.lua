@@ -249,8 +249,9 @@ function helper:computeFanXing(huC)
     local function addFx(fx)
         table.insert(ret, fx)
     end
+    local isQiDui = false
     if #huC == 7 then
-        addFx(fanXingType.qiDui)
+        isQiDui = true
     end
     if #huC == 1 then
         addFx(fanXingType.jinGouDiao)
@@ -343,6 +344,13 @@ function helper:computeFanXing(huC)
             addFx(fanXingType.daDuiZi)
         end
     end
+    if isQiDui then
+        if jiangDui then
+            addFx(fanXingType.jiangQiDui)
+        else
+            addFx(fanXingType.qiDui)
+        end
+    end
     if #ret == 0 then
         addFx(fanXingType.su)
     end
@@ -365,6 +373,8 @@ function helper:isSupportFx(fx)
     elseif fx == fanXingType.zhongZhang then
         return config.ZhongZhang
     elseif fx == fanXingType.jiangDui then
+        return config.JiangDui
+    elseif fx == fanXingType.jiangQiDui then
         return config.JiangDui
     end
     return true
@@ -401,6 +411,8 @@ function helper:getFanShuByFx(fx)
         fan = 1
     elseif fx == fanXingType.zhongZhang then
         fan = 1
+    elseif fx == fanXingType.jiangQiDui then
+        fan = 4
     end
     return fan
 end
