@@ -651,7 +651,7 @@ function networkManager.sendChatMessage(chatType, chatContent, callback)
         Type = tostring(chatType),
         Data = chatContent,
     })
-    talkingData.onPurchaset("item", 1, 1)
+    talkingData.onPurchase("item", 1, 1)
     send(protoType.cs.chatMessage, data, callback)
 end
 
