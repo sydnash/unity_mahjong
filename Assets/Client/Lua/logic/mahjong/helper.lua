@@ -29,7 +29,7 @@ function helper:checkJiao(cntVec, totalCntVec)
     for i = 0, 26 do
         local ok, c = self:isHu(cntVec, i, duiCnt, singleIdx)
         if ok then
-            local fxs, gen = self:computeFanXing(c)
+            local fxs, gen = self:computeFanXing(c, i)
             local fan = self:getFanShu(fxs, gen)
             table.insert(ret, {
                 jiaoTid = i,
@@ -242,7 +242,7 @@ function helper:checkChuPaiHint()
     return ret
 end
 
-function helper:computeFanXing(huC)
+function helper:computeFanXing(huC, huCardTypeId)
     local player = self.game:getPlayerByAcId(self.acId)
 
     local ret = {}
@@ -269,7 +269,10 @@ function helper:computeFanXing(huC)
     local zhongZhang = true
     local yaoJiu = true
     local jiangDui = true
+    local jiaXinWu = false
     local hsCnt = {[0] = 0,[1] =  0, [2] =  0}
+
+    local huCardTypeInfo = mahjongType.getMahjongTypeByTypeId(huCardTypeId)
 
     local vec = self:initVec(30)
     local function checkC(c)
@@ -279,6 +282,7 @@ function helper:computeFanXing(huC)
 
         if c.Op == opType.chi.id then
             chiCnt = chiCnt + 1
+            local middleV = 0
             for _, c in pairs(c.Cs) do
                 local desc = mahjongType.getMahjongTypeById(c)
                 if desc.value == 9 or desc.value == 1 then
@@ -287,6 +291,13 @@ function helper:computeFanXing(huC)
                     yaoJiu = false
                 end
                 self:addTypeCnt(vec, mahjongType.getMahjongTypeId(c), 1)
+                middleV = middleV + desc.value
+            end
+            middleV = math.floor(middleV / 3)
+            if middleV == 5 and huCardTypeInfo.value == 5 then
+                if huCardTypeInfo.class == mahjongType.getMahjongTypeById(c.Cs[1]).class then
+                    jiaXinWu = true
+                end
             end
         else
             if c.Op == opType.dui.id then
@@ -337,6 +348,9 @@ function helper:computeFanXing(huC)
     if zhongZhang then
         addFx(fanXingType.zhongZhang)
     end
+    if jiaXinWu then
+        addFx(fanXingType.jiaXinWu)
+    end
     if duiCnt == 1 and chiCnt == 0 then
         if jiangDui then
             addFx(fanXingType.jiangDui)
@@ -376,6 +390,8 @@ function helper:isSupportFx(fx)
         return config.JiangDui
     elseif fx == fanXingType.jiangQiDui then
         return config.JiangDui
+    elseif fx == fanXingType.jiaXinWu then
+        return config.JiaXinWu
     end
     return true
 end
@@ -383,28 +399,37 @@ end
 function helper:getFanShu(fxs, gen)
     local fan = 0
     fan = fan + gen
+    local duiduiHu2 = self.game.config.DuiDuiHu2
     for _, fx in pairs(fxs) do
         if self:isSupportFx(fx) then
-            fan = fan + self:getFanShuByFx(fx)
+            fan = fan + self:getFanShuByFx(fx, duiduiHu2)
         end
     end
     return fan
 end
 
-function helper:getFanShuByFx(fx)
+function helper:getFanShuByFx(fx, duiduiHu2)
     local fan = 0
     if fx == fanXingType.su then
         fan = 0
     elseif fx == fanXingType.qingYiSe then
         fan = 2
     elseif fx == fanXingType.daDuiZi then
-        fan = 1
+        if duiduiHu2 then
+            fan = 2
+        else
+            fan = 1
+        end
     elseif fx == fanXingType.qiDui then
         fan = 2
     elseif fx == fanXingType.yaoJiu then
         fan = 3
     elseif fx == fanXingType.jiangDui then
-        fan = 3
+        if duiduiHu2 then
+            fan = 4
+        else
+            fan = 3
+        end
     elseif fx == fanXingType.jinGouDiao then
         fan = 1
     elseif fx == fanXingType.menQing then
@@ -413,6 +438,8 @@ function helper:getFanShuByFx(fx)
         fan = 1
     elseif fx == fanXingType.jiangQiDui then
         fan = 4
+    elseif fx == fanXingType.jiaXinWu then
+        fan = 1
     end
     return fan
 end

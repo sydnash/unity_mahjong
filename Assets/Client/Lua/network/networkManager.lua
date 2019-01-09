@@ -651,13 +651,13 @@ function networkManager.sendChatMessage(ct, chatContent, callback)
     if ct == chatType.voice or ct == chatType.cmsg then
         param = tostring(ct)
     else
-        param = string.format("%s_%s", tostring(ct) .. tostring(chatContent))
+        param = string.format("%s_%s", tostring(ct), tostring(chatContent))
     end
 
     talkingData.event("chat", {
         Type = param,
     })
-    talkingData.onPurchase("item", 1, 1)
+    -- talkingData.onPurchase("item", 1, 1)
     send(protoType.cs.chatMessage, data, callback)
 end
 

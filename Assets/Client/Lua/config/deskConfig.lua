@@ -81,14 +81,23 @@ local mahjongLayoutBase = {
         }, 
         group = { value = false, switchOff = false },
     },
-    [10] = { 
+    [10] = {
+        title = string.empty,
+        items = {
+            [1] = { style = "checkbox", text = "对对胡2番", key = "DuiDuiHu2",  value = { selected = 1, unselected = 2 }, },
+            [2] = { style = "checkbox", text = "点炮可平胡",key = "CanPingHu",  value = { selected = 1, unselected = 2 }, },
+        },
+        group = { value = false, switchOff = false },
+    },
+    [11] = { 
         title = string.empty, 
         items = { 
-            [1] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
+            [1] = { style = "checkbox", text = "夹心五",    key = "JiaXinWu", value = { selected = 1, unselected = 2 }, },
+            [2] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
         }, 
         group = { value = false, switchOff = false },
     },
-    [11] = {
+    [12] = {
         title = "胡牌",
         items = {
             [1] = { style = "radiobox", text = "开启提示", key = "HuPaiHint", value = 1 },
@@ -211,6 +220,9 @@ local mahjongConfigBase = {
     ["MenQing"]        = 2,
     ["TianDiHu"]       = 2,
     ["HuPaiHint"]      = 1,
+    ["CanPingHu"]      = 1,
+    ["JiaXinWu"]       = 2,
+    ["DuiDuiHu2"]      = 2,
 }
 
 local chengduMahjongConfig      = table.clone(mahjongConfigBase)
@@ -289,6 +301,9 @@ local mahjongShiftConfigBase = {
     ["MenQing"]         = { [true] = 1, [false] = 2 },
     ["TianDiHu"]        = { [true] = 1, [false] = 2 },
     ["HuPaiHint"]       = { [true] = 1, [false] = 2 },
+    ["CanPingHu"]       = { [true] = 1, [false] = 2 },
+    ["DuiDuiHu2"]       = { [true] = 1, [false] = 2 },
+    ["JiaXinWu"]        = { [true] = 1, [false] = 2 },
 }
 
 local chengduMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
