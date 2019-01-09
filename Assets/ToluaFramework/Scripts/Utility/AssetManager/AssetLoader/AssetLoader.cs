@@ -8,48 +8,7 @@ using LoadedBundlePool = System.Collections.Generic.Dictionary<string, UnityEngi
 /// </summary>
 public class AssetLoader
 {
-    #region Class
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private class Bundle
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public float timestamp = 0;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public AssetBundle bundle = null;
-    }
-
-    #endregion
-
     #region Data
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private static AssetBundleManifest mDependentManifest = null;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    // private DependentBundlePool mDependentBundlePool = DependentBundlePool.Instance();
-    private DependentBundlePool mDependentBundlePool = new DependentBundlePool();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private LoadedBundlePool mLoadedBundlePool = new LoadedBundlePool();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private float mLoadedTimestamp = 0;
 
     /// <summary>
     /// 
@@ -71,16 +30,6 @@ public class AssetLoader
     /// </summary>
     private static readonly string SUB_PATH = LFS.CombinePath("Res", LFS.OS_PATH);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private const string ASSETBUNDLE_MANIFEST = "AssetBundleManifest";
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private const float UNLOAD_DELAY_TIME = 0.5f;
-
     #endregion
 
     #region Public
@@ -97,37 +46,6 @@ public class AssetLoader
 
         mLocalizedPath = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, sub);
         mDownloadPath = LFS.CombinePath(LFS.PATCH_PATH, sub);
-
-#if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
-        InitDependentManifest();
-#endif
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="bundleName"></param>
-    /// <param name="checkExists"></param>
-    /// <returns></returns>
-    public AssetBundle LoadAssetBundle(string bundleName, bool checkExists = false)
-    {
-        AssetBundle bundle = null;
-        Logger.Log("bundle path = " + bundleName + ", check = " + checkExists.ToString() + ", exist = " + System.IO.File.Exists(bundleName).ToString());
-
-        if (!checkExists || System.IO.File.Exists(bundleName))
-        {
-            if (mLoadedBundlePool.ContainsKey(bundleName))
-            {
-                bundle = mLoadedBundlePool[bundleName];
-            }
-            else
-            {
-                bundle = AssetBundle.LoadFromFile(bundleName);
-                mLoadedBundlePool.Add(bundleName, bundle);
-            }
-        }
-
-        return bundle;
     }
 
     /// <summary>
@@ -140,50 +58,76 @@ public class AssetLoader
         assetPath = assetPath.ToLower();
         assetName = assetName.ToLower();
 
-        string name = LFS.CombinePath(assetPath, assetName);
-
 #if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
-        Object asset = Resources.Load(LFS.CombinePath(mPath, name));
+        return Resources.Load(LFS.CombinePath(mPath, assetPath, assetName));
+        //return UnityEditor.AssetDatabase.LoadMainAssetAtPath(LFS.CombinePath("Assets/Client/Resources", mPath, name));
 #else
         LoadDependentAB(assetPath, assetName);
 
-        Object asset = Load(LFS.CombinePath(mDownloadPath, name), assetName, true);
-        if (asset == null)
+        AssetBundle bundle = LoadAB(assetPath, assetName);
+        if (bundle != null)
         {
-            asset = Load(LFS.CombinePath(mLocalizedPath, name), assetName, false);
-        }
-#endif
+            Object asset = bundle.LoadAsset(assetName);
+            UnloadAB(bundle); //Unity 2017.2中会引发crash，故屏蔽之
 
-        return asset;
+            return asset;
+        }
+
+        return null;
+#endif
     }
 
     /// <summary>
     /// 加载依赖资源
     /// </summary>
     /// <param name="assetName"></param>
-    public void LoadDependentAB(string assetPath, string assetName)
+    public string LoadDependentAB(string assetPath, string assetName)
     {
-        if (mDependentManifest == null)
-            return;
-
         string key = CreateAssetKey(assetPath, assetName);
-
         string target = LFS.CombinePath(mPath, assetPath, assetName);
-        string[] dependentNames = mDependentManifest.GetAllDependencies(target);
 
-        foreach (string dependentName in dependentNames)
-        {
-            mDependentBundlePool.Load(key, dependentName);
-        }
+        DependentBundlePool.instance.Load(key, target);
+
+        return key;
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="key"></param>
-    public void UnloadDependencies(string key)
+    public void UnloadDependentAB(string key)
     {
-        mDependentBundlePool.Unload(key);
+        DependentBundlePool.instance.Unload(key);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="bundlePath"></param>
+    /// <returns></returns>
+    public AssetBundle LoadAB(string bundlePath)
+    {
+        return BundlePool.instance.Load(bundlePath);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="assetPath"></param>
+    /// <param name="assetName"></param>
+    /// <returns></returns>
+    public AssetBundle LoadAB(string assetPath, string assetName)
+    {
+        return LoadAB(LFS.CombinePath(mPath, assetPath, assetName));
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ab"></param>
+    public void UnloadAB(AssetBundle ab)
+    {
+        BundlePool.instance.Unload(ab);
     }
 
     /// <summary>
@@ -191,21 +135,7 @@ public class AssetLoader
     /// </summary>
     public void Update()
     {
-        //在这里卸载bundle是因为：
-        //   Unity2017.2版本中同步加载asset之后马上卸载bundle会引发crash
-        if (Time.realtimeSinceStartup - mLoadedTimestamp > UNLOAD_DELAY_TIME)
-        {
-            foreach (KeyValuePair<string, AssetBundle> ab in mLoadedBundlePool)
-            {
-                ab.Value.Unload(false);
-            }
-            mLoadedBundlePool.Clear();
-        }
-    }
 
-    public void ClearBundlePool()
-    {
-        mLoadedBundlePool.Clear();
     }
 
     /// <summary>
@@ -217,50 +147,6 @@ public class AssetLoader
     public static string CreateAssetKey(string assetPath, string assetName)
     {
         return LFS.CombinePath(assetPath, assetName).Replace("/", "|");
-    }
-
-    #endregion
-
-    #region Private
-
-    /// <summary>
-    /// 加载 manifest
-    /// </summary>
-    private void InitDependentManifest()
-    {
-        if (mDependentManifest != null)
-            return;
-
-        string dependencies = LFS.CombinePath(SUB_PATH, LFS.OS_PATH);
-
-        Object asset = Load(LFS.CombinePath(LFS.PATCH_PATH, dependencies), ASSETBUNDLE_MANIFEST, true);
-        if (asset == null)
-        {
-            asset = Load(LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, dependencies), ASSETBUNDLE_MANIFEST, false);
-        }
-
-        mDependentManifest = asset as AssetBundleManifest;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="assetPath"></param>
-    /// <param name="assetName"></param>
-    /// <returns></returns>
-    private Object Load(string bundleName, string assetName, bool checkExists = false)
-    {
-        Object asset = null;
-
-        AssetBundle ab = LoadAssetBundle(bundleName, checkExists);
-        if (ab != null)
-        {
-            asset = ab.LoadAsset(assetName);
-            //ab.Unload(false);  Unity 2017.2中会引发crash，故屏蔽之
-            mLoadedTimestamp = Time.realtimeSinceStartup;
-        }
-
-        return asset;
     }
 
     #endregion

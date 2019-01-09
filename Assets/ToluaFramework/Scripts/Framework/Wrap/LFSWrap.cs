@@ -8,6 +8,7 @@ public class LFSWrap
 	{
 		L.BeginStaticLibs("LFS");
 		L.RegFunction("CombinePath", CombinePath);
+		L.RegFunction("FileExist", FileExist);
 		L.RegFunction("WriteText", WriteText);
 		L.RegFunction("ReadText", ReadText);
 		L.RegFunction("ReadTextFromResources", ReadTextFromResources);
@@ -57,6 +58,23 @@ public class LFSWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: LFS.CombinePath");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int FileExist(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			bool o = LFS.FileExist(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{

@@ -22,18 +22,14 @@ public class DependentBundlePool
         public int refCount = 0;
     }
 
-    // private static DependentBundlePool sThis = null;
-    // public static DependentBundlePool Instance()
-    // {
-    //     if (sThis == null) {
-    //         sThis = new DependentBundlePool();
-    //     }
-    //     return sThis;
-    // }
-
     #endregion
 
     #region Data
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static AssetBundleManifest mDependentManifest = null;
 
     /// <summary>
     /// 
@@ -50,6 +46,22 @@ public class DependentBundlePool
     /// </summary>
     private static readonly string SUB_PATH = LFS.CombinePath("Res", LFS.OS_PATH);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    private const string ASSETBUNDLE_MANIFEST = "AssetBundleManifest";
+
+    #endregion
+
+    #region Instance
+
+    private static DependentBundlePool mInstance = new DependentBundlePool();
+
+    public static DependentBundlePool instance
+    {
+        get { return mInstance; }
+    }
+
     #endregion
 
     #region Public
@@ -60,21 +72,28 @@ public class DependentBundlePool
     /// <param name="assetName"></param>
     /// <param name="dependentBundleName"></param>
     /// <param name="checkExists"></param>
-    public void Load(string key, string dependentBundleName)
+    public void Load(string key, string assetName)
     {
-        LoadBundle(dependentBundleName);
+        InitDependentManifest();
 
-        if (!mAssetDict.ContainsKey(key))
-        {
-            HashSet<string> set = new HashSet<string>();
-            set.Add(dependentBundleName);
+        string[] dependentNames = mDependentManifest.GetAllDependencies(assetName);
 
-            mAssetDict.Add(key, set);
-        }
-        else
+        foreach (string dependentName in dependentNames)
         {
-            HashSet<string> set = mAssetDict[key];
-            set.Add(dependentBundleName);
+            LoadBundle(dependentName);
+
+            if (!mAssetDict.ContainsKey(key))
+            {
+                HashSet<string> set = new HashSet<string>();
+                set.Add(dependentName);
+
+                mAssetDict.Add(key, set);
+            }
+            else
+            {
+                HashSet<string> set = mAssetDict[key];
+                set.Add(dependentName);
+            }
         }
     }
 
@@ -128,6 +147,20 @@ public class DependentBundlePool
     #region Private
 
     /// <summary>
+    /// 加载 manifest
+    /// </summary>
+    private void InitDependentManifest()
+    {
+        if (mDependentManifest != null)
+            return;
+
+        string dependencies = LFS.OS_PATH;// LFS.CombinePath(SUB_PATH, LFS.OS_PATH);
+        AssetBundle ab = BundlePool.instance.Load(dependencies);
+
+        mDependentManifest = ab.LoadAsset<AssetBundleManifest>(ASSETBUNDLE_MANIFEST);
+    }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="bundleName"></param>
@@ -140,42 +173,19 @@ public class DependentBundlePool
         }
         else
         {
-            AssetBundle ab = LoadBundle(LFS.CombinePath(LFS.PATCH_PATH, SUB_PATH), bundleName, true);
-            if (ab == null)
-            {
-                ab = LoadBundle(LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, SUB_PATH), bundleName, false);
-            }
+            AssetBundle ab = BundlePool.instance.Load(bundleName);
 
             if (ab != null)
             {
                 DependentBundle dependentBundle = new DependentBundle();
-                mDependentBundleDict.Add(bundleName, dependentBundle);
-
                 dependentBundle.bundle = ab;
                 dependentBundle.refCount = 1;
+
+                mDependentBundleDict.Add(bundleName, dependentBundle);
             }
 
             //Debug.Log("load dependent bundle: " + bundleName);
         }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="bundlePath"></param>
-    /// <param name="bundleName"></param>
-    /// <param name="checkExists"></param>
-    /// <returns></returns>
-    private AssetBundle LoadBundle(string bundlePath, string bundleName, bool checkExists)
-    {
-        string path = LFS.CombinePath(bundlePath, bundleName);
-
-        if (!checkExists || System.IO.File.Exists(path))
-        {
-            return AssetBundle.LoadFromFile(path);
-        }
-
-        return null;
     }
 
     #endregion

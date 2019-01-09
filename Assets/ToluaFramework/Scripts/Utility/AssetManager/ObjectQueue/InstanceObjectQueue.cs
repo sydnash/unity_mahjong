@@ -65,7 +65,7 @@ public class InstanceObjectQueue : ObjectQueue
 
         foreach(Slot s in unused)
         {
-            loader.UnloadDependencies(s.asset.name);
+            loader.UnloadDependentAB(s.asset.name);
             GameObject.Destroy(s.asset);
         }
     }

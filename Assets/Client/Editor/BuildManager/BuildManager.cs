@@ -107,6 +107,8 @@ public class BuildManager : EditorWindow
 
                 if (mBuildPatch)
                 {
+                    WriteVersion();
+
                     Build.BuildPatchlist();
                     Build.BuildVersion(int.Parse(mVersionDic[numk]), mVersionDic[urlk]);
 
@@ -180,11 +182,6 @@ public class BuildManager : EditorWindow
 
                     PlayerSettings.companyName = companyName;
                     PlayerSettings.productName = productName;
-
-                    if (mBuildPatch)
-                    {
-                        WriteVersion();
-                    }
 
                     Debug.Log(timestamp + ": build package [ver =  " + mVersionDic[numk] + "]" + (string.IsNullOrEmpty(err) ? "successfully! " : "failed!"));
                 }
