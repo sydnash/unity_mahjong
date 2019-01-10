@@ -277,7 +277,7 @@ function getLogicGame(citytype, gametype)
     end
 end
 
-local function checkGame(cityType, gameType)
+function checkGame(cityType, gameType)
     local cityConfig = enableConfig[cityType]
     if cityConfig == nil then
         return false, string.format("暂不支持%s地区", cityName[cityType])

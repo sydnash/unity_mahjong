@@ -20,6 +20,19 @@ function friendsterDesk:onClickedHandler()
     if self.data ~= nil then
         playButtonClickSound()
 
+        
+        local ok, errText = checkGame(self.data.cityType, self.data.gameType)
+        if not ok then
+            showMessageUI(string.format("%s, 可点击确定下载<color=red>天地长牌</color>进入游戏", errText), 
+                          function()
+                              platformHelper.openExplorer("http://www.cdbshy.com")
+                          end,
+                          function()
+                          end)
+            return
+        end
+
+
         local ui = require("ui.deskDetail.deskDetail").new(self.data.cityType, 
                                                            self.data.gameType,
                                                            self.data.friendsterId, 

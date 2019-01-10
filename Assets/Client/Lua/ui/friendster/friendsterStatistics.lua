@@ -156,24 +156,29 @@ function friendsterStatistics:set(data, historyContainer)
         end
     end
 
-    local totalCost = 0
+    self.totalCost = {
+        [filter.today]    = 0,
+        [filter.yestoday] = 0,
+    }
 
     for _, v in pairs(data) do
-        totalCost = totalCost + v.Cost
 
         if v.EndTime >= today then
             table.insert(self.history[filter.today], v)
             fillRankData(v.DeskId, filter.today, v.Players, v.Scores, v.EndTime)
+            self.totalCost[filter.today] = self.totalCost[filter.today] + v.Cost
         elseif v.EndTime >= yestoday then
             table.insert(self.history[filter.yestoday], v)
             fillRankData(v.DeskId, filter.yestoday, v.Players, v.Scores, v.EndTime)
+            self.totalCost[filter.yestoday] = self.totalCost[filter.yestoday] + v.Cost
         end
     end
 
-    self.mCastCount:setText(string.format("消耗房卡:%d", totalCost))
-    self.mTotalCount:setText(string.format("建房总数:%d", #data))
-
     self.filter = filter.today
+
+    self.mCastCount:setText(string.format("消耗房卡:%d", self.totalCost[self.filter]))
+    self.mTotalCount:setText(string.format("建房总数:%d", #self.history[self.filter]))
+
     self:refreshHistory()
 end
 
@@ -192,6 +197,9 @@ function friendsterStatistics:refreshHistory()
 
     local histories = self.history[self.filter]
     local count = #histories
+
+    self.mCastCount:setText(string.format("消耗房卡:%d", self.totalCost[self.filter]))
+    self.mTotalCount:setText(string.format("建房总数:%d", #self.history[self.filter]))
 
     if count <= 0 then
         self.mHistoryEmpty:show()
