@@ -344,7 +344,7 @@ function mahjongGame:onOpDoHandler(msg)
                 self:onOpDoGang(acId, cards, beAcId, beCard, t)
             elseif optype == opType.hu.id then
                 local t = v.Do.T
-                self:onOpDoHu(acId, cards, beAcId, beCard, t)
+                self:onOpDoHu(acId, cards, beAcId, beCard, t, v.FT)
             elseif optype == opType.guo.id then
                 self:onOpDoGuo(acId)
             else
@@ -484,12 +484,12 @@ end
 -------------------------------------------------------------------------------
 -- SC 胡
 -------------------------------------------------------------------------------
-function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard, t)
+function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
     self.knownMahjong[beCard] = 1
     local player = self:getPlayerByAcId(acId)
     player.isHu = true
     self.deskUI:onPlayerHu(acId, t)
-    self.operationUI:onOpDoHu(acId, cards, beAcId, beCard, t)
+    self.operationUI:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
 end
 
 -------------------------------------------------------------------------------

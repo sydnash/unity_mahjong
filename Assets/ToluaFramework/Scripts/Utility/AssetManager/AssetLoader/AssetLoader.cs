@@ -112,7 +112,6 @@ public class AssetLoader
     public AssetBundle LoadAssetBundle(string bundleName, bool checkExists = false)
     {
         AssetBundle bundle = null;
-        Logger.Log("bundle path = " + bundleName + ", check = " + checkExists.ToString() + ", exist = " + System.IO.File.Exists(bundleName).ToString());
 
         if (!checkExists || System.IO.File.Exists(bundleName))
         {

@@ -1478,13 +1478,21 @@ end
 -------------------------------------------------------------------------------
 -- 胡
 -------------------------------------------------------------------------------
-function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t)
+local fromType = {
+    inhand = 1,
+    dianpao = 2,
+    qianggang = 3,
+}
+function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
     self:hideChuPaiHint()
     self:hideChuPaiArrow()
     local hu = nil
     local detail = opType.hu.detail
 
-    if t == detail.zimo or t == detail.gangshanghua or t == detail.haidilao then
+    local isFromHand
+
+    log("=============================:  " .. ft)
+    if ft == fromType.inhand then
         local inhand = self.inhandMahjongs[acId]
 
         if acId ~= self.game.mainAcId then
