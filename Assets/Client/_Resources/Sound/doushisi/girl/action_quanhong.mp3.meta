@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: c56c7b6d013f6ab4ca2d888b7eb633b6
+timeCreated: 1546497508
+licenseType: Pro
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: sound/doushisi/girl/action_quanhong
+  assetBundleVariant: 

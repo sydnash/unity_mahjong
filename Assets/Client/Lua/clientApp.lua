@@ -5,6 +5,7 @@
 require("globals")
 
 local patchManager      = require("logic.manager.patchManager")
+local headerManager     = require("logic.manager.headerManager")
 local input             = UnityEngine.Input
 local keycode           = UnityEngine.KeyCode
 
@@ -268,6 +269,7 @@ function clientApp:start()
     talkingData.start()
 
     gamepref.city = readCityConfig()
+    headerManager.setup()
     
     if gameConfig.patchEnabled then
         checkPatches(loading)

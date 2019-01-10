@@ -4,8 +4,7 @@
 
 local gameConfig = {
     fps                     = 30,       --帧率
-    -- patchEnabled            = true,     --启用热更
---    patchEnabled            = false,    --不启用热更
+    patchEnabled            = true,     --启用热更
     nicknameMaxLength       = 5,        --玩家昵称可显示的最大长度
     friendsterNameMaxLength = 10,       --亲友圈名称可显示的最大长度
     messageTextMaxLength    = 50,       --可输入聊天信息的最大长度
@@ -16,15 +15,13 @@ local gameConfig = {
 local appConfig = require("config.appConfig")
 
 if appConfig.debug then
-    gameConfig.patchEnabled = false
+    gameConfig.patchEnabled = false     --不启用热更
     gameConfig.serverList   = {
         localServer     = true,
         testServer      = true,
         releaseServer   = false,
     }
 end
-
--- gameConfig.serverList = nil
 
 return gameConfig
 

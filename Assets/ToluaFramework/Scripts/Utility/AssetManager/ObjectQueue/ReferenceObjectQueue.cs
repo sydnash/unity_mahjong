@@ -61,7 +61,7 @@ public class ReferenceObjectQueue : ObjectQueue
 
         if (Time.realtimeSinceStartup - mReferenceSlot.timestamp >= time)
         {
-            loader.UnloadDependencies(mReferenceSlot.asset.name);
+            loader.UnloadDependentAB(mReferenceSlot.asset.name);
             mReferenceSlot = null;
         }
     }

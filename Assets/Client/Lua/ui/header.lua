@@ -15,11 +15,10 @@ function header:setTexture(url)
     --clear pre signal handler.
     self:reset()
 
-    local token, tex = headerManager.request(url)
-    self.mIcon:setTexture(tex)
-
-    self.signalId = token
+    self.signalId = headerManager.token(url)
     signalManager.registerSignalHandler(self.signalId, self.onHeaderDownloadedHandler, self)
+
+    headerManager.request(self.signalId, url)
 end
 
 function header:setColor(color)
@@ -31,13 +30,10 @@ function header:onHeaderDownloadedHandler(tex)
 end
 
 function header:reset()
-    local tex = self.mIcon:getTexture()
-    if tex ~= nil then
-        self.mIcon:setTexture(nil)
-        headerManager.drop(self.signalId, tex)
-    end
+    self.mIcon:setTexture(nil)
 
     if not string.isNilOrEmpty(self.signalId) then
+        headerManager.drop(self.signalId)
         signalManager.unregisterSignalHandler(self.signalId, self.onHeaderDownloadedHandler, self)
         self.signalId = nil
     end

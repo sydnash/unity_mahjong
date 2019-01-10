@@ -37,6 +37,16 @@ public static class LFS
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static bool FileExist(string path)
+    {
+        return File.Exists(path);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="filename"></param>
     /// <param name="content"></param>
     public static void WriteText(string filename, string content, Encoding encode)

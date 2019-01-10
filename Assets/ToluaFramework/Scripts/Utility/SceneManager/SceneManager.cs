@@ -58,22 +58,7 @@ public class SceneManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private string mLocalizedPath = string.Empty;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private string mDownloadPath = string.Empty;
-
-    /// <summary>
-    /// 
-    /// </summary>
     private static readonly WaitForEndOfFrame WAIT_FOR_END_OF_FRAME = new WaitForEndOfFrame();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private static string SUB_PATH = string.Empty;
 
     #endregion
 
@@ -115,7 +100,7 @@ public class SceneManager : MonoBehaviour
         if (!string.IsNullOrEmpty(mSceneName))
         {
             string key = AssetLoader.CreateAssetKey(string.Empty, mSceneName);
-            mLoader.UnloadDependencies(key);
+            mLoader.UnloadDependentAB(key);
         }
 
         mSceneName = sceneName.ToLower();
@@ -134,8 +119,8 @@ public class SceneManager : MonoBehaviour
             }
         }
 #else
-        sceneBundles = new SceneBundle[2]{ new SceneBundle(LFS.CombinePath(mDownloadPath,  mScenePath, mSceneName), true),
-                                           new SceneBundle(LFS.CombinePath(mLocalizedPath, mScenePath, mSceneName), false)
+        sceneBundles = new SceneBundle[2]{ new SceneBundle(LFS.CombinePath(mScenePath, mSceneName), true),
+                                           new SceneBundle(LFS.CombinePath(mScenePath, mSceneName), false)
         };
 #endif
 
@@ -161,10 +146,6 @@ public class SceneManager : MonoBehaviour
     private void Awake()
     {
         mInstance = this;
-
-        SUB_PATH = LFS.CombinePath("Res", LFS.OS_PATH);
-        mLocalizedPath = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, SUB_PATH);
-        mDownloadPath = LFS.CombinePath(LFS.PATCH_PATH, SUB_PATH);
     }
 
     /// <summary>
@@ -178,18 +159,18 @@ public class SceneManager : MonoBehaviour
     private IEnumerator LoadCoroutine(SceneBundle[] bundleInfos, string sceneName, Action<bool, float> callback)
     {
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
-        mLoader.LoadDependentAB(string.Empty, sceneName);
+        string key = mLoader.LoadDependentAB(string.Empty, sceneName);
 
         InvokeCallback(callback, false, 0.2f);
         yield return WAIT_FOR_END_OF_FRAME;
         
-        AssetBundle bundle = null;
+        AssetBundle ab = null;
         foreach (SceneBundle sb in bundleInfos)
         {
             if (!sb.checkExists || System.IO.File.Exists(sb.bundleName))
             {
-                bundle = mLoader.LoadAssetBundle(sb.bundleName);
-                if (bundle != null) break;
+                ab = mLoader.LoadAB(sb.bundleName);
+                if (ab != null) break;
             }
         }
 #endif
@@ -198,7 +179,7 @@ public class SceneManager : MonoBehaviour
         yield return WAIT_FOR_END_OF_FRAME;
 
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
-        if (bundle != null)
+        if (ab != null)
         {
 #endif
             AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
@@ -209,10 +190,8 @@ public class SceneManager : MonoBehaviour
             }
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
             //TODO: xieheng  这里scene使用完毕之后，直接清除依赖和bundle，避免后面的重复加载导致失败
-            bundle.Unload(false);
-            string key = AssetLoader.CreateAssetKey(string.Empty, mSceneName);
-            mLoader.UnloadDependencies(key);
-            mLoader.ClearBundlePool();
+            mLoader.UnloadAB(ab);
+            mLoader.UnloadDependentAB(key);
         }
         else
         {
