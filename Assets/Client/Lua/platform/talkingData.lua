@@ -8,7 +8,12 @@ local appId = "76A5A32477784D3EAFA378C5ED29AD73"
 local channelId = "mahjong.bshy.com"
 local account = nil
 
+local hasTalkingDataSDK = TalkingDataGA
+
 function talkingData.start()
+    if not hasTalkingDataSDK then
+        return
+    end
     if deviceConfig.isMobile then
         log("talkingData.start, channelId = " .. channelId)
         TalkingDataGA.OnStart(appId, channelId)
@@ -16,6 +21,9 @@ function talkingData.start()
 end
 
 function talkingData.setAccount(accountId)
+    if not hasTalkingDataSDK then
+        return
+    end
     if deviceConfig.isMobile then
         log("talkingData.setAccount, accountId = " .. accountId)
         account = TDGAAccount.SetAccount(accountId)
@@ -23,6 +31,9 @@ function talkingData.setAccount(accountId)
 end
 
 function talkingData.setAccountType(accountType)
+    if not hasTalkingDataSDK then
+        return
+    end
     if deviceConfig.isMobile then 
         if account ~= nil then
             log("talkingData.setAccountType, accountType = " .. tostring(accountType))
@@ -32,15 +43,24 @@ function talkingData.setAccountType(accountType)
 end
 
 function talkingData.setCity(city)
+    if not hasTalkingDataSDK then
+        return
+    end
 end
 
 function talkingData.onPurchase(item, itemNumber, itemPrice)
+    if not hasTalkingDataSDK then
+        return
+    end
     if deviceConfig.isMobile then 
         TDGAItem.OnPurchase(item, itemNumber, itemPrice)
     end
 end
 
 function talkingData.event(eventId, args)
+    if not hasTalkingDataSDK then
+        return
+    end
     if deviceConfig.isMobile then
         local dic = Utils.CreateDictionarySO()
         for k, v in pairs(args) do
@@ -52,6 +72,9 @@ function talkingData.event(eventId, args)
 end
 
 function talkingData.stop()
+    if not hasTalkingDataSDK then
+        return
+    end
     if deviceConfig.isMobile then
         log("talkingData.stop")
         TalkingDataGA.OnEnd()
