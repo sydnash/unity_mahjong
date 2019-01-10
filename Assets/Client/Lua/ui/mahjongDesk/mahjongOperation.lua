@@ -918,7 +918,9 @@ function mahjongOperation:onClickOnMahjong(mj)
         else
             --出牌
             if self.canChuPai then
-                self:onChosedChuPai()
+                if self:onChosedChuPai() then
+                    self.curSelectedMahjong = nil
+                end
                 self:hideChuPaiHint()
             end
         end
@@ -1057,7 +1059,10 @@ function mahjongOperation:touchHandler(phase, pos)
                             self:clearChosedMahjong()
                         else
                             --出牌
-                            self:onChosedChuPai()
+                            if not self:onChosedChuPai() then
+                                self.selectedMahjong:setPosition(self.selectedOrgPos)
+                                self:clearChosedMahjong()
+                            end
                         end
                     end
                 end
@@ -1071,7 +1076,20 @@ function mahjongOperation:touchHandler(phase, pos)
 end
 
 function mahjongOperation:onChosedChuPai()
+    local player = self.game:getPlayerByAcId(self.game.mainAcId)
     local id = self.selectedMahjong.id
+
+    if player.que >= 0 then
+        local chuCardType = mahjongType.getMahjongTypeById(id)
+        if chuCardType.class ~= player.que then
+            for _, mj in pairs(self.inhandMahjongs[self.game.mainAcId]) do
+                local typ = mahjongType.getMahjongTypeById(mj.id)
+                if typ.class == player.que then
+                    return false
+                end
+            end
+        end
+    end
 
     networkManager.chuPai({ id }, function(msg)
         self:relocateInhandMahjongs(self.game.mainAcId)
@@ -1080,10 +1098,9 @@ function mahjongOperation:onChosedChuPai()
     self:virtureChu(self.selectedMahjong)
 
     soundManager.playGfx("mahjong", "chupai")
-    local player = self.game:getPlayerByAcId(self.game.mainAcId)
     playMahjongSound(id, player.sex)
 
-    self.curSelectedMahjong = nil
+    return true
 end
 
 -------------------------------------------------------------------------------
