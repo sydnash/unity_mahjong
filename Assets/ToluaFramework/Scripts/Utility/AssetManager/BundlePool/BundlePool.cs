@@ -74,13 +74,13 @@ public class BundlePool
     /// <returns></returns>
     public AssetBundle Load(string bundleName)
     {
-        AssetBundle bundle = Load(LFS.CombinePath(LFS.PATCH_PATH, SUB_PATH), bundleName, true);
-        if (bundle == null)
+        AssetBundle ab = Load(LFS.CombinePath(LFS.PATCH_PATH, SUB_PATH), bundleName, true);
+        if (ab == null)
         {
-            bundle = Load(LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, SUB_PATH), bundleName, false);
+            ab = Load(LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, SUB_PATH), bundleName, false);
         }
 
-        return bundle;
+        return ab;
     }
 
     /// <summary>
@@ -105,6 +105,7 @@ public class BundlePool
         {
             Bundle bundle = mBundles[bundleName];
             bundle.refCount = Mathf.Max(0, bundle.refCount - 1);
+            //Debug.Log("BundlePool.UnloadByName, name = " + bundle.bundle.name + ", ref = " + bundle.refCount.ToString());
 
             if (bundle.refCount == 0)
             {
@@ -138,11 +139,16 @@ public class BundlePool
             }
             else
             {
-                AssetBundle assetBundle = AssetBundle.LoadFromFile(path);
+                AssetBundle ab = AssetBundle.LoadFromFile(path);
 
-                bundle = new Bundle(assetBundle);
-                mBundles.Add(assetBundle.name, bundle);
+                bundle = new Bundle(ab);
+                mBundles.Add(ab.name, bundle);
             }
+        }
+
+        if (bundle != null)
+        {
+            //Debug.Log("BundlePool.Load, name = " + bundle.bundle.name + ", ref = " + bundle.refCount.ToString());
         }
 
         return (bundle == null) ? null : bundle.bundle;
