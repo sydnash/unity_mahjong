@@ -39,11 +39,6 @@ public class DependentBundlePool
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, DependentBundle> mDependentBundleDict = new Dictionary<string, DependentBundle>();
-
-    /// <summary>
-    /// 
-    /// </summary>
     private static readonly string SUB_PATH = LFS.CombinePath("Res", LFS.OS_PATH);
 
     /// <summary>
@@ -80,19 +75,21 @@ public class DependentBundlePool
 
         foreach (string dependentName in dependentNames)
         {
-            LoadBundle(dependentName);
-
-            if (!mAssetDict.ContainsKey(key))
+            AssetBundle ab = BundlePool.instance.Load(dependentName);
+            if (ab != null)
             {
-                HashSet<string> set = new HashSet<string>();
-                set.Add(dependentName);
+                if (!mAssetDict.ContainsKey(key))
+                {
+                    HashSet<string> set = new HashSet<string>();
+                    set.Add(ab.name);
 
-                mAssetDict.Add(key, set);
-            }
-            else
-            {
-                HashSet<string> set = mAssetDict[key];
-                set.Add(dependentName);
+                    mAssetDict.Add(key, set);
+                }
+                else
+                {
+                    HashSet<string> set = mAssetDict[key];
+                    set.Add(ab.name);
+                }
             }
         }
     }
@@ -109,7 +106,7 @@ public class DependentBundlePool
 
             foreach (string bundleName in set)
             {
-                LoadBundle(bundleName);
+                BundlePool.instance.Load(bundleName);
             }
         }
     }
@@ -126,18 +123,7 @@ public class DependentBundlePool
 
             foreach (string bundleName in dependentBundleNames)
             {
-                if (mDependentBundleDict.ContainsKey(bundleName))
-                {
-                    DependentBundle dependentBundle = mDependentBundleDict[bundleName];
-                    dependentBundle.refCount--;
-
-                    if (dependentBundle.refCount == 0 && dependentBundle.bundle != null)
-                    {
-                        //Debug.Log("unload dependent bundle: " + bundleName);
-                        dependentBundle.bundle.Unload(false);
-                        mDependentBundleDict.Remove(bundleName);
-                    }
-                }
+                BundlePool.instance.UnloadByName(bundleName);
             }
         }
     }
@@ -158,34 +144,6 @@ public class DependentBundlePool
         AssetBundle ab = BundlePool.instance.Load(dependencies);
 
         mDependentManifest = ab.LoadAsset<AssetBundleManifest>(ASSETBUNDLE_MANIFEST);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="bundleName"></param>
-    private void LoadBundle(string bundleName)
-    {
-        if (mDependentBundleDict.ContainsKey(bundleName))
-        {
-            DependentBundle dependentBundle = mDependentBundleDict[bundleName];
-            dependentBundle.refCount++;
-        }
-        else
-        {
-            AssetBundle ab = BundlePool.instance.Load(bundleName);
-
-            if (ab != null)
-            {
-                DependentBundle dependentBundle = new DependentBundle();
-                dependentBundle.bundle = ab;
-                dependentBundle.refCount = 1;
-
-                mDependentBundleDict.Add(bundleName, dependentBundle);
-            }
-
-            //Debug.Log("load dependent bundle: " + bundleName);
-        }
     }
 
     #endregion

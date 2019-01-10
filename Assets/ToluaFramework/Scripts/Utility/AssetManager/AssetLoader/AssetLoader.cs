@@ -48,7 +48,7 @@ public class AssetLoader
         mDownloadPath = LFS.CombinePath(LFS.PATCH_PATH, sub);
     }
 
-    private static readonly string[] postfix = { ".prefab", ".jpg", ".png", ".mp3", ".anim" };
+    private static readonly string[] postfix = { ".prefab", ".jpg", ".png", ".mp3", ".wav", ".anim" };
 
     /// <summary>
     /// 
