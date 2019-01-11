@@ -12,9 +12,24 @@ local defaultIcon = nil
 local rootPath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "wxicons")
 local emptyTokenIdx = 0
 
+local function fileExist(path)
+    if LFS.FileExist == nil then
+        local f = io.open(path,"r")
+    
+        if f ~= nil then
+            io.close(f)
+            return true
+        end
+
+        return false
+    end
+
+    return LFS.FileExist(path)
+end
+
 local function downloaded(name)
     local path = LFS.CombinePath(rootPath, name)
-    return LFS.FileExist(path)
+    return fileExist(path)
 end
 
 local function downloadDefaultIcon()
