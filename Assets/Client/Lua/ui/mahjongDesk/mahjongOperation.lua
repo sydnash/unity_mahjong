@@ -17,8 +17,8 @@ mahjongOperation.seats = {
     [seatType.mine] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.235, 0.156, -0.268), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [gameMode.normal]   = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
-            [gameMode.playback] = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
+            [gameMode.normal]   = { pos = Vector3.New(-0.226, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
+            [gameMode.playback] = { pos = Vector3.New(-0.226, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
         },
         [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 1, 0.156, -0.340), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.074, 0.156, -0.100), rot = Quaternion.Euler(0, 0, 0), },
@@ -86,8 +86,8 @@ local mainCameraParams = {
     fov      = 30,
 }
 local inhandCameraParams = {
-    position = Vector3.New(0, 0.315, -1),
-    size = 0.165,
+    position = Vector3.New(0, 0.291, -1),
+    size = 0.14,
 }
 
 local COUNTDOWN_SECONDS_C = 20
