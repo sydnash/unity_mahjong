@@ -79,7 +79,7 @@ public class AssetLoader
         if (bundle != null)
         {
             Object asset = bundle.LoadAsset(assetName);
-            UnloadAB(bundle); //Unity 2017.2中会引发crash，故屏蔽之
+            // UnloadAB(bundle); //Unity 2017.2中会引发crash，故屏蔽之
 
             return asset;
         }
