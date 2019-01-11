@@ -25,8 +25,10 @@ end
 function createDesk:onInit()
     if self.friendsterId and self.friendsterId > 0 then
         self.mSetting:show()
+        self.mLock:show()
     else
         self.mSetting:hide()
+        self.mLock:hide()
     end
     local c = enableConfig[self.cityType]
 
@@ -71,8 +73,47 @@ function createDesk:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
+    self.mLock:addChangedListener(self.onLockChangedHandler, self)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+
+    self:onGameTypeChanged()
+end
+
+function createDesk:onLockChangedHandler(sender, selected, isClicked)
+    if not isClicked then
+        return
+    end
+    local data = {}
+    local cfg = ""
+    if selected then
+        local choose = table.clone(self.config[self.gameType])
+        choose.Game = self.gameType
+        cfg = table.tostring(choose)
+    else
+        cfg = ""
+    end
+    table.insert(data, {
+        Id = self.gameType,
+        Cfg = cfg,
+    })
+    networkManager.friendsterGameSetting(self.friendsterId, 2, data)
+end
+
+function createDesk:onGameTypeChanged()
+    if self.friendsterData then
+        local has, cfg = self.friendsterData:isSupportGame(self.gameType)
+        if has then
+            self.mLock:show()
+            if cfg and cfg ~= "" then
+                self.mLock:setSelected(true)
+            else
+                self.mLock:setSelected(false)
+            end
+        else
+            self.mLock:hide()
+        end
+    end
 end
 
 function createDesk:onSettingClickedHandler()
@@ -104,6 +145,7 @@ function createDesk:onMahjongChangedHandler(sender, selected, clicked)
         self.mChangpaiPanel:hide()
 
         playButtonClickSound()
+        self:onGameTypeChanged()
     end
 end
 
@@ -118,6 +160,7 @@ function createDesk:onChangpaiChangedHandler(sender, selected, clicked)
         self.mChangpaiPanel:show()
 
         playButtonClickSound()
+        self:onGameTypeChanged()
     end
 end
 

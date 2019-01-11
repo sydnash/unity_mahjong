@@ -19,6 +19,8 @@ TextureImporter:
     21300024: ZY_1
     21300026: ZY_1_01
     21300028: wfsz_zi01
+    21300030: wfsz_jcsd
+    21300032: wfsz_sdwf
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -240,8 +242,8 @@ TextureImporter:
       name: CJ_zi01
       rect:
         serializedVersion: 2
-        x: 231
-        y: 400
+        x: 1
+        y: 309
         width: 140
         height: 47
       alignment: 0
@@ -254,8 +256,8 @@ TextureImporter:
       name: CJ_zi02
       rect:
         serializedVersion: 2
-        x: 231
-        y: 351
+        x: 143
+        y: 294
         width: 140
         height: 47
       alignment: 0
@@ -269,9 +271,37 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 309
+        y: 260
         width: 140
         height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: wfsz_jcsd
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 396
+        width: 163
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: wfsz_sdwf
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 343
+        width: 163
+        height: 51
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -282,8 +312,8 @@ TextureImporter:
       name: wfsz_zi01
       rect:
         serializedVersion: 2
-        x: 373
-        y: 408
+        x: 285
+        y: 302
         width: 134
         height: 39
       alignment: 0
