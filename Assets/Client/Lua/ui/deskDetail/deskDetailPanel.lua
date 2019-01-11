@@ -179,7 +179,7 @@ function detailPanel:processLayout()
                 self.groups[5].items[2].label:setText("4番(120)")
             else
                 self.groups[5].items[1].label:setText("3番(100)")
-                self.groups[5].items[2].label:setText("4番(140)")
+                self.groups[5].items[2].label:setText("4番(150)")
             end
         end
     end
