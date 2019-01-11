@@ -1242,6 +1242,7 @@ function mahjongOperation:onGangClickedHandler()
             local cs = c.Cs
             buttons[i].cs = cs
             sprites[i]:setSprite(mahjongType.getMahjongTypeById(cs[1]).name)
+            log("name: ===============" .. mahjongType.getMahjongTypeById(cs[1]).name)
 
             buttons[i]:show()
         end
