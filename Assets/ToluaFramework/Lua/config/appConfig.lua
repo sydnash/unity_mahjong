@@ -2,8 +2,8 @@
 --Date
 
 local appConfig = {
-    debug = true,
-    loadCountPreFrame = 6,
+    debug = false,
+    loadCountPreFrame = 3,
 }
 
 return appConfig
