@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/FriendsterUI/Atlas/FriendsterUI.tps</string>
+        <string>D:/mj/tdqp/Assets/Client/Artistic/Atlas/FriendsterUI/Atlas/FriendsterUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -451,6 +451,8 @@
                 <false/>
             </struct>
             <key type="filename">Images/QYQ_qizi01.png</key>
+            <key type="filename">Images/wfsz_sc.png</key>
+            <key type="filename">Images/wfsz_tj.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -834,6 +836,8 @@
                 <false/>
             </struct>
             <key type="filename">Images/QYQ_zi14_1.png</key>
+            <key type="filename">Images/wfsz_zi01.png</key>
+            <key type="filename">Images/wfsz_zi02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -856,6 +860,71 @@
                 <rect>1,19,1,38</rect>
                 <key>scale9Paddings</key>
                 <rect>1,19,1,38</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/wfsz_an_01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>29,26,59,53</rect>
+                <key>scale9Paddings</key>
+                <rect>29,26,59,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/wfsz_di01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,13,37,25</rect>
+                <key>scale9Paddings</key>
+                <rect>18,13,37,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/wfsz_di02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,13,39,27</rect>
+                <key>scale9Paddings</key>
+                <rect>19,13,39,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/wfsz_suo.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,15,29,29</rect>
+                <key>scale9Paddings</key>
+                <rect>15,15,29,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/wfsz_zi03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,9,36,19</rect>
+                <key>scale9Paddings</key>
+                <rect>18,9,36,19</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -950,6 +1019,15 @@
             <filename>Images/zn_1.png</filename>
             <filename>Images/zn_2.png</filename>
             <filename>Images/QYQ_qizi02_1.png</filename>
+            <filename>Images/wfsz_an_01.png</filename>
+            <filename>Images/wfsz_di01.png</filename>
+            <filename>Images/wfsz_di02.png</filename>
+            <filename>Images/wfsz_sc.png</filename>
+            <filename>Images/wfsz_suo.png</filename>
+            <filename>Images/wfsz_tj.png</filename>
+            <filename>Images/wfsz_zi01.png</filename>
+            <filename>Images/wfsz_zi02.png</filename>
+            <filename>Images/wfsz_zi03.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
