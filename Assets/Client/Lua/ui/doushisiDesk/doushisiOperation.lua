@@ -2140,7 +2140,7 @@ end
 function doushisiOperation:computeFlyTime(x1, y1, x2, y2) 
     local d1 = math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2)
     local dis = math.sqrt(d1)
-    local speed = 11.80 --pixels per second
+    local speed = 11.40 --pixels per second
     local time = dis / speed
     if time < 0.23 then
         time = 0.23
