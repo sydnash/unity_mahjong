@@ -17,7 +17,6 @@ function huPaiHintItem:onInit()
         local idx = self.start + i - 1
         local info = self.huInfo[idx]
         if info then
-            log(string.format("===================info:%s : i:%s " , table.tostring(info), i))
             local t = self.items[i]
             t:show()
             t:setInfo(info)

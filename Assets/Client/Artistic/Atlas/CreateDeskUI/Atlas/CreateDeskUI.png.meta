@@ -18,6 +18,7 @@ TextureImporter:
     21300022: CJ_zi03
     21300024: ZY_1
     21300026: ZY_1_01
+    21300028: wfsz_zi01
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -271,6 +272,20 @@ TextureImporter:
         y: 309
         width: 140
         height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: wfsz_zi01
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 408
+        width: 134
+        height: 39
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

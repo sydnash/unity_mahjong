@@ -39,6 +39,7 @@ function friendster:ctor(id)
     self.applyCode          = 0
     self.managerAcId        = 0
     self.managerNickname    = string.empty
+    self.createSetting      = {}
 end
 
 function friendster:setData(data)
@@ -53,6 +54,7 @@ function friendster:setData(data)
     lc.managerAcId      = data.AcId
     lc.managerNickname  = data.NickName
     lc.applyList        = isNilOrNull(data.ApplyList) and {} or data.ApplyList
+    self.createSetting  = data.CreateSettings
 end
 
 function friendster:setMembers(data)
@@ -167,7 +169,59 @@ function friendster:removePlayerFromDesk(acId, deskId)
 end
 
 function friendster:destroy()
-    
+end
+
+function friendster:isSupportGame(id)
+	if self.createSetting == nil or #self.createSetting == 0 then
+		return true
+	end
+	local find = false
+	local cfg = nil
+	for _, info in pairs(self.createSetting) do
+		if info.Id == id then
+			find = true
+			cfg = info.Cfg
+			break
+		end
+	end
+	return find, cfg
+end
+
+function friendster:setSupportGameId(ids)
+	local old = self.createSetting
+	self.createSetting = {}
+	for _, id in pairs(ids) do
+		table.insert(self.createSetting, {
+			Id = id,
+		})
+	end
+	if old ~= nil then
+		for _, info in pairs(self.createSetting) do
+			for _, oldInfo in pairs(old) do
+				if info.Id == oldInfo.Id then
+					info.Cfg = oldInfo.Cfg
+					break
+				end
+			end
+		end
+	end
+end
+
+function friendster:setGameIDCfg(cfg)
+	local find = false
+	for _, info in pairs(self.createSetting) do
+		if info.Id == cfg.Id then
+			info.Cfg = cfg.Cfg
+			find = true
+			break
+		end
+	end
+	if not find then
+		table.insert(self.createSetting, {
+			Id = cfg.Id,
+			Cfg = cfg.Cfg,
+		})
+	end
 end
 
 return friendster

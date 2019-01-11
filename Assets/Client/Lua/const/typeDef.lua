@@ -282,6 +282,8 @@ friendsterNotifyType = {
     playerPlayInClub    = 13,
     playerPlayEndClub   = 14,
     deskJuShuChanged    = 15,
+    supportGameIdChanged= 16,
+    gameIdCfgChanged    = 17,
 }
 
 --------------------------------------------------------------

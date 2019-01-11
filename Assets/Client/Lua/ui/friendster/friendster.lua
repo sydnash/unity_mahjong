@@ -370,6 +370,14 @@ function friendster:onNotifyFriendster(msg)
                 self.detailUI:refreshUI()
             end
         end
+    elseif t == friendsterNotifyType.supportGameIdChanged then
+        if lc then
+		    lc:setSupportGameId(d.Ids)
+        end
+    elseif t == friendsterNotifyType.gameIdCfgChanged then
+        if lc then
+            lc:setGameIDCfg(d.Cfg)
+        end
     end
 end
 

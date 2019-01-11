@@ -133,7 +133,7 @@ function friendsterDetail:onCreateClickedHandler()
         return
     end
 
-    local ui = require("ui.createDesk").new(self.data.cityType, self.data.id)
+    local ui = require("ui.createDesk").new(self.data.cityType, self.data.id, self.data)
     ui:show()
 
     playButtonClickSound()

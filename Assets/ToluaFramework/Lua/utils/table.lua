@@ -165,6 +165,15 @@ function table.toUrlArgs(t)
     return table.concat(b, "&")
 end 
 
+function table.indexOf(t, f)
+    for k, v in pairs(t) do
+        if v == f then
+            return k
+        end
+    end
+    return nil
+end
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------

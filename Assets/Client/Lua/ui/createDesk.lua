@@ -13,15 +13,21 @@ _RES_(createDesk, "CreateDeskUI", "CreateDeskUI")
 local CONFIGS_FOLDER = "CreateDeskConfigs"
 local detailConfigs = {}
 
-function createDesk:ctor(cityType, friendsterId)
+function createDesk:ctor(cityType, friendsterId, friendsterData)
     self.cityType = cityType
     self.gameType = gamepref.getSelectedGameType(friendsterId)
     self.friendsterId = friendsterId
+    self.friendsterData = friendsterData
 
     base.ctor(self)
 end
 
 function createDesk:onInit()
+    if self.friendsterId and self.friendsterId > 0 then
+        self.mSetting:show()
+    else
+        self.mSetting:hide()
+    end
     local c = enableConfig[self.cityType]
 
     if c.mahjong.enable then
@@ -64,8 +70,14 @@ function createDesk:onInit()
     self.mChangpai:addChangedListener(self.onChangpaiChangedHandler, self)
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
+    self.mSetting:addClickListener(self.onSettingClickedHandler, self)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+end
+
+function createDesk:onSettingClickedHandler()
+    local ui = require ("ui.friendster.friendsterLockSettingUI").new(self.cityType, self.friendsterId, self.friendsterData)
+    ui:show()
 end
 
 function createDesk:updateCost()
