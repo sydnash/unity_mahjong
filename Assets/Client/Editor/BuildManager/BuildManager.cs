@@ -79,16 +79,25 @@ public class BuildManager : EditorWindow
 
         if (mBuildPackage)
         {
+            if (string.IsNullOrEmpty(mPackagePath))
+            {
+                mPackagePath = ReadOutputPath();
+            }
+
             EditorGUILayout.BeginHorizontal();
             {
+                GUI.enabled = false;
                 EditorGUILayout.TextField("Package Path", mPackagePath);
+                GUI.enabled = true;
+
                 if (GUILayout.Button("...", GUILayout.Width(30)))
                 {
                     string packagePath = EditorUtility.SaveFolderPanel("Build", mPackagePath, string.Empty);
 
-                    if (!string.IsNullOrEmpty(packagePath))
+                    if (!string.IsNullOrEmpty(packagePath) && packagePath != mPackagePath)
                     {
                         mPackagePath = packagePath;
+                        WriteOutputPath(mPackagePath);
                     }
                 }
             }
@@ -133,13 +142,13 @@ public class BuildManager : EditorWindow
 
                     string luaFrom = LFS.CombinePath(Application.dataPath, "Resources/Lua");
                     string luaTo = LFS.CombinePath(osPath, "Lua");
-                    LFS.CopyDir(luaFrom, luaTo);
+                    LFS.CopyDir(luaFrom, luaTo, ".meta");
 
                     EditorUtility.DisplayProgressBar("Build", "Copy asset bundle fils", 0.9f);
 
                     string resFrom = LFS.CombinePath(Application.streamingAssetsPath, "Res");
                     string resTo = LFS.CombinePath(osPath, "Res");
-                    LFS.CopyDir(resFrom, resTo);
+                    LFS.CopyDir(resFrom, resTo, ".meta");
 
                     EditorUtility.DisplayProgressBar("Build", "Copy patchlist fil", 0.95f);
 
@@ -269,5 +278,32 @@ public class BuildManager : EditorWindow
         }
 
         File.WriteAllText(path, text);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    private string ReadOutputPath()
+    {
+        string outputPath = string.Empty;
+
+        string path = LFS.CombinePath(Application.dataPath, "Client/Editor/BuildManager/output.txt");
+        if (File.Exists(path))
+        {
+            outputPath = File.ReadAllText(path);
+        }
+
+        return outputPath;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="outputPath"></param>
+    private void WriteOutputPath(string outputPath)
+    {
+        string path = LFS.CombinePath(Application.dataPath, "Client/Editor/BuildManager/output.txt");
+        File.WriteAllText(path, outputPath);
     }
 }

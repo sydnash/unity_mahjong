@@ -367,7 +367,7 @@ public static class LFS
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
-    public static void CopyDir(string from, string to)
+    public static void CopyDir(string from, string to, string exceptPostfix = null)
     {
         try
         {
@@ -383,11 +383,14 @@ public static class LFS
 
                     if (!IsDirectory(path))
                     {
-                        CopyFile(src, dst);
+                        if (!string.IsNullOrEmpty(exceptPostfix) && !path.EndsWith(exceptPostfix))
+                        {
+                            CopyFile(src, dst);
+                        }
                     }
                     else
                     {
-                        CopyDir(src, dst);
+                        CopyDir(src, dst, exceptPostfix);
                     }
                 }
             }
