@@ -56,10 +56,16 @@ public class BuildManager : EditorWindow
 
         if (mBuildPatch)
         {
-            mVersionDic[numk] = EditorGUILayout.IntField("Version Num", int.Parse(mVersionDic[numk])).ToString();
+            mVersionDic[numk] = EditorGUILayout.IntField("Ver Num", int.Parse(mVersionDic[numk])).ToString();
             GUI.enabled = false;
-            mVersionDic[urlk] = EditorGUILayout.TextField("Version Url", mVersionDic[urlk]);
+            mVersionDic[urlk] = EditorGUILayout.TextField("Ver Url", mVersionDic[urlk]);
             GUI.enabled = true;
+
+            if (GUILayout.Button("Refresh"))
+            {
+                ParseDebug();
+                ReadVersion();
+            }
         }
 
         mBuildPackage   = EditorGUILayout.Toggle("Build Package", mBuildPackage);
@@ -155,7 +161,10 @@ public class BuildManager : EditorWindow
                     switch (mTargetPlatform)
                     {
                         case BuildTarget.Android:
-                            packageName = timestamp + "_mahjong_" + (mDevelopment ? "debug" : "release") + ".apk";
+                            string debug = mDebug ? "_debug" : "_release";
+                            string dev = mDevelopment ? "_dev" : "";
+                            
+                            packageName = timestamp + "_mahjong_" + debug + dev + ".apk";
                             PlayerSettings.Android.keystoreName = Application.dataPath + "/Keystore/mahjong.keystore";
                             PlayerSettings.Android.keystorePass = "com.bshy.mahjong";
                             PlayerSettings.Android.keyaliasName = "mahjong";
@@ -175,10 +184,8 @@ public class BuildManager : EditorWindow
                     PlayerSettings.companyName = "成都巴蜀互娱科技有限公司";
                     PlayerSettings.productName = "幺九麻将";
 
-                    //if (mProcessResources) Build.PrepareRes();
                     packageName = LFS.CombinePath(mPackagePath, packageName);
                     string err = Build.BuildPackage(packageName, mTargetPlatform, mDevelopment);
-                    //if (mProcessResources) Build.ResetRes();
 
                     PlayerSettings.companyName = companyName;
                     PlayerSettings.productName = productName;
@@ -191,11 +198,11 @@ public class BuildManager : EditorWindow
         }
     }
 
-    private void OnFocus()
-    {
-        ParseDebug();
-        ReadVersion();
-    }
+    //private void OnFocus()
+    //{
+    //    ParseDebug();
+    //    ReadVersion();
+    //}
 
     /// <summary>
     /// 
