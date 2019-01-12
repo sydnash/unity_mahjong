@@ -21,10 +21,7 @@ public class BuildManager : EditorWindow
     private bool mBuildBundle = true;
     private bool mBuildPatch = true;
     private Dictionary<string, string> mVersionDic = new Dictionary<string, string>();
-    //private int mVersionNum = 1;
-    //private string mVersionUrl = "http://test.cdbshy.com/mahjong_update/";
     private bool mBuildPackage = true;
-    //private bool mProcessResources = false;
     private string mPackagePath = string.Empty;
 
     [MenuItem("Window/Build Manager #&B", priority = 2051)]
@@ -45,6 +42,11 @@ public class BuildManager : EditorWindow
     {
         GUILayout.Space(10);
 
+        if (mVersionDic.Count < 2)
+        {
+            ParseDebug();
+        }
+
         string numk = mDebug ? "num_debug" : "num_release";
         string urlk = mDebug ? "url_debug" : "url_release";
 
@@ -52,10 +54,15 @@ public class BuildManager : EditorWindow
         mDevelopment    = EditorGUILayout.Toggle("Development", mDevelopment);
         mBuildLua       = EditorGUILayout.Toggle("Build Lua", mBuildLua);
         mBuildBundle    = EditorGUILayout.Toggle("Build Bundle", mBuildBundle);
-        mBuildPatch = EditorGUILayout.Toggle("Build Patch", mBuildPatch);
+        mBuildPatch     = EditorGUILayout.Toggle("Build Patch", mBuildPatch);
 
         if (mBuildPatch)
         {
+            if (!mVersionDic.ContainsKey(numk) || !mVersionDic.ContainsKey(urlk))
+            {
+                ReadVersion();
+            }
+
             mVersionDic[numk] = EditorGUILayout.IntField("Ver Num", int.Parse(mVersionDic[numk])).ToString();
             GUI.enabled = false;
             mVersionDic[urlk] = EditorGUILayout.TextField("Ver Url", mVersionDic[urlk]);
@@ -72,8 +79,6 @@ public class BuildManager : EditorWindow
 
         if (mBuildPackage)
         {
-            //mProcessResources = EditorGUILayout.Toggle("Process Resources", mProcessResources);
-
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.TextField("Package Path", mPackagePath);
@@ -197,12 +202,6 @@ public class BuildManager : EditorWindow
             }
         }
     }
-
-    //private void OnFocus()
-    //{
-    //    ParseDebug();
-    //    ReadVersion();
-    //}
 
     /// <summary>
     /// 
