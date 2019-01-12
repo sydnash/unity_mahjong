@@ -65,17 +65,19 @@ end
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
-local function filterPatchList(offlinePatchlistText, onlinePatchlistText)
+local function filterPatchList(offlinePatchlistText, onlinePatchlistText, ignores)
     local retb = {}
     
     local oftb = loadstring(offlinePatchlistText)()
     local ontb = loadstring(onlinePatchlistText)()
 
     for k, v in pairs(ontb) do
-        local u = oftb[k]
+        if not ignores[k] then
+            local u = oftb[k]
 
-        if u == nil or v.hash ~= u.hash or v.size ~= u.size then
-            table.insert(retb, { name = k, size = v.size })
+            if u == nil or v.hash ~= u.hash or v.size ~= u.size then
+                table.insert(retb, { name = k, size = v.size })
+            end
         end
     end
 
@@ -109,6 +111,12 @@ local function checkPatches(callback)
             return
         end
 
+        local cachedVersionNum = LFS.ReadText(CACHE_VER_FILE_NAME, LFS.UTF8_WITHOUT_BOM)
+        if cachedVersionNum ~= nil and cachedVersionNum ~= tostring(onlineVersion.num) then
+            LFS.RemoveDir(CACHE_PATH)
+        end
+        LFS.WriteText(CACHE_VER_FILE_NAME, tostring(onlineVersion.num), LFS.UTF8_WITHOUT_BOM)
+
         local offlinePatchlistText = downloadOfflinePatchlistFile()
 
         if string.isNilOrEmpty(offlinePatchlistText) then
@@ -120,9 +128,17 @@ local function checkPatches(callback)
 
         downloadOnlinePatchlistFile(url, function(onpt)
             local onlinePatchlistText = onpt
+            local cachedPatchList = {}
 
-            local plist = filterPatchList(offlinePatchlistText, onlinePatchlistText)
-            callback(onlineVersion.num, plist, onlineVersionText, onlinePatchlistText, url)
+            local lines = LFS.ReadLines(CACHE_FILES_FILE_NAME, LFS.UTF8_WITHOUT_BOM)
+            if lines ~= nil then
+                for i=0, lines.Length - 1 do
+                    cachedPatchList[lines[i]] = true
+                end
+            end
+
+            local plist = filterPatchList(offlinePatchlistText, onlinePatchlistText, cachedPatchList)
+            callback(plist, onlineVersionText, onlinePatchlistText, url)
         end)
     end)
 end
@@ -130,40 +146,21 @@ end
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
-local function downloadPatches(ver, url, files, callback)
-    local currentVer  = tostring(ver)
-    local cachedVer   = LFS.ReadText(CACHE_VER_FILE_NAME, LFS.UTF8_WITHOUT_BOM)
-    local cachedFiles = {}
-
-    if currentVer ~= cachedVer then
-        LFS.RemoveDir(CACHE_PATH)
-    else
-        local lines = LFS.ReadLines(CACHE_FILES_FILE_NAME, LFS.UTF8_WITHOUT_BOM)
-        if lines ~= nil then
-            for i=1, lines.Length do
-                cachedFiles[lines[i]] = true
-            end
-        end
-    end
-
-    LFS.WriteText(CACHE_VER_FILE_NAME, currentVer, LFS.UTF8_WITHOUT_BOM)
-
+local function downloadPatches(url, files, callback)
     for _, v in pairs(files) do
-        if currentVer ~= cachedVer or not cachedFiles[v.name] then
-            local www = url .. v.name
+        local www = url .. v.name
 
-            http.getBytes(www, networkConfig.patchTimeout * 1000, function(bytes)
-                if bytes == nil then
-                    callback(false, v.name)
-                else
-                    local path = LFS.CombinePath(CACHE_PATH, v.name)
-                    LFS.WriteBytes(path, bytes)
-                    LFS.AppendLine(CACHE_FILES_FILE_NAME, v.name, LFS.UTF8_WITHOUT_BOM)
+        http.getBytes(www, networkConfig.patchTimeout * 1000, function(bytes)
+            if bytes == nil then
+                callback(false, v.name)
+            else
+                local path = LFS.CombinePath(CACHE_PATH, v.name)
+                LFS.WriteBytes(path, bytes)
+                LFS.AppendLine(CACHE_FILES_FILE_NAME, v.name, LFS.UTF8_WITHOUT_BOM)
 
-                    callback(true, v.name)
-                end
-            end)
-        end
+                callback(true, v.name)
+            end
+        end)
     end
 end
 
@@ -184,7 +181,7 @@ function patchManager.patch()
     loading:show()
 
     showWaitingUI("正在检测更新，请稍候")
-    checkPatches(function(ver, plist, versText, plistText, url)
+    checkPatches(function(plist, versText, plistText, url)
         closeWaitingUI()
 
         if plist == nil then
@@ -213,7 +210,7 @@ function patchManager.patch()
         local function download(files)
             local failedList    = {}
             
-            downloadPatches(ver, url, files, function(success, filename)
+            downloadPatches(url, files, function(success, filename)
                 if success then
                     successCount = successCount + 1
                 else
