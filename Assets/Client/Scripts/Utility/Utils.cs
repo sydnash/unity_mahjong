@@ -275,9 +275,21 @@ public class Utils
         return null;
     }
 
-	public static Dictionary<string, object> CreateDictionarySO() {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+	public static Dictionary<string, object> CreateDictionarySO() 
+    {
 		return new Dictionary<string, object>();
 	}
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="dic"></param>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
     public static void AddDictionarySO(Dictionary<string, object> dic, string key, object value) 
     {
         if (dic.ContainsKey(key)) 

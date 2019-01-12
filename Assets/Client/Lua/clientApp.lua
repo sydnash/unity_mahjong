@@ -129,104 +129,7 @@ local function inviteSgCallback(params)
     platformHelper.clearSGInviteParam()
 end
 
-----------------------------------------------------------------
---
-----------------------------------------------------------------
-local function downloadPatches(url, patchlist, size, versText, plistText, loading)
---    log("downloadPatches, url = " .. url)
-    local totalCount        = #patchlist
-    local successfulCount   = 0
 
-    local function downloadC(files, callback)
-        local failedList = {}
-        patchManager.downloadPatches(url, files, function(url, name, bytes)
-            if bytes == nil then
-                table.insert(failedList, { name = name })
-            else
-                successfulCount = successfulCount + 1
-
-                local path = LFS.CombinePath(LFS.PATCH_PATH, name)
-                LFS.WriteBytes(path, bytes)
-            end
-
-            local per = math.min(1, successfulCount / totalCount)
-            loading:setText(string.format("已更新%.1f%%，请稍候...", per * 100))
-            loading:setProgress(per)
-
-            if successfulCount + #failedList == totalCount then
-                callback(failedList)
-            end
-        end)
-    end
-
-    local function download(files)
-        downloadC(files, function(failedList)
-            if #failedList > 0 then
-                showMessageUI("有部分更新资源下载失败，是否重新下载？", 
-                              function()
-                                  download(failedList)
-                              end,
-                              function()
-                                  Application.Quit()
-                              end)
-            else
-                local vpath = LFS.CombinePath(LFS.PATCH_PATH, patchManager.VERSION_FILE_NAME)
-                LFS.WriteText(vpath, versText, LFS.UTF8_WITHOUT_BOM)
-
-                local ppath = LFS.CombinePath(LFS.PATCH_PATH, patchManager.PATCHLIST_FILE_NAME)
-                LFS.WriteText(ppath, plistText, LFS.UTF8_WITHOUT_BOM)
-
-                local login = require("ui.login").new()
-                login:show()
-
-                loading:close()
-            end
-        end)
-    end
-
-    download(patchlist)
-end
-
-----------------------------------------------------------------
---
-----------------------------------------------------------------
-local function checkPatches()
-    local loading = require("ui.loading").new()
-    loading:show()
-
-    showWaitingUI("正在检测可更新资源，请稍候")
-
-    patchManager.checkPatches(function(plist, versText, plistText, url)
-        closeWaitingUI()
-
-        if plist == nil then
-            showMessageUI("更新检测失败", function()
-                Application.Quit()
-            end)
-            return
-        end
-      
-        if #plist == 0 then--未检测到更新
-            local login = require("ui.login").new()
-            login:show()
-
-            loading:close()
-        else
-            local size = 0
-            for _, v in pairs(plist) do
-                size = size + v.size
-            end
-
-            showMessageUI("检测到" .. BKMGT(size) .."新资源，是否立即下载更新？",
-                          function()
-                              downloadPatches(url, plist, size, versText, plistText, loading)
-                          end,
-                          function()
-                              Application.Quit()
-                          end)
-        end
-    end)
-end
 
 
 
@@ -272,7 +175,7 @@ function clientApp:start()
     headerManager.setup()
     
     if gameConfig.patchEnabled then
-        checkPatches(loading)
+        patchManager.patch()
     else
         local login = require("ui.login").new()
         login:show()

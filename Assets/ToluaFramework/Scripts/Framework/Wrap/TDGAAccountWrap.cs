@@ -7,6 +7,7 @@ public class TDGAAccountWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(TDGAAccount), typeof(System.Object));
+		L.RegFunction("setAccountObject", setAccountObject);
 		L.RegFunction("SetAccount", SetAccount);
 		L.RegFunction("SetAccountName", SetAccountName);
 		L.RegFunction("SetAccountType", SetAccountType);
@@ -36,6 +37,23 @@ public class TDGAAccountWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: TDGAAccount.New");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int setAccountObject(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			TDGAAccount obj = (TDGAAccount)ToLua.CheckObject<TDGAAccount>(L, 1);
+			UnityEngine.AndroidJavaObject arg0 = (UnityEngine.AndroidJavaObject)ToLua.CheckObject<UnityEngine.AndroidJavaObject>(L, 2);
+			obj.setAccountObject(arg0);
+			return 0;
 		}
 		catch (Exception e)
 		{
