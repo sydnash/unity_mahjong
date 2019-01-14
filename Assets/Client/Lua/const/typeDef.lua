@@ -375,7 +375,7 @@ doushisiColor = {
 defaultFriendsterSupporCityGames = {
     [cityType.chengdu] = {
         gameType.mahjong,
-    }
+    },
     [cityType.wenjiang] = {
         gameType.mahjong, gameType.doushisi, gameType.hundizhu,
     },
