@@ -10,7 +10,7 @@ public class UnityEngine_UI_PointerToggleWrap
 		L.RegFunction("OnPointerClick", OnPointerClick);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("clicked", get_clicked, null);
+		L.RegVar("clicked", get_clicked, set_clicked);
 		L.EndClass();
 	}
 
@@ -61,6 +61,25 @@ public class UnityEngine_UI_PointerToggleWrap
 			bool ret = obj.clicked;
 			LuaDLL.lua_pushboolean(L, ret);
 			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index clicked on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_clicked(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.UI.PointerToggle obj = (UnityEngine.UI.PointerToggle)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.clicked = arg0;
+			return 0;
 		}
 		catch(Exception e)
 		{

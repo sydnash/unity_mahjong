@@ -54,7 +54,7 @@ function friendster:setData(data)
     lc.managerAcId      = data.AcId
     lc.managerNickname  = data.NickName
     lc.applyList        = isNilOrNull(data.ApplyList) and {} or data.ApplyList
-    self.createSetting  = data.CreateSettings
+    self.createSetting  = isNilOrNull(data.CreateSettings) and {} or data.CreateSettings
 end
 
 function friendster:setMembers(data)
@@ -169,6 +169,13 @@ function friendster:removePlayerFromDesk(acId, deskId)
 end
 
 function friendster:destroy()
+end
+
+function friendster:hasCreateSetting()
+    if self.createSetting == nil or #self.createSetting == 0 then
+        return false
+    end
+    return true
 end
 
 function friendster:isSupportGame(id)

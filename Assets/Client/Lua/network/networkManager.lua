@@ -668,7 +668,7 @@ function networkManager.queryFriendsterList(callback)
     send(protoType.cs.queryFriendsterList, table.empty, callback)
 end
 
-function networkManager.friendsterGameSetting(friendsterId, typ, msg)
+function networkManager.friendsterGameSetting(friendsterId, typ, msg, callback)
     local data = {
         ClubId      = friendsterId,
         Type        = typ,

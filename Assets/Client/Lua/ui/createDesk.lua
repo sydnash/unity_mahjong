@@ -22,17 +22,10 @@ function createDesk:ctor(cityType, friendsterId, friendsterData)
     base.ctor(self)
 end
 
-function createDesk:onInit()
-    if self.friendsterId and self.friendsterId > 0 then
-        self.mSetting:show()
-        self.mLock:show()
-    else
-        self.mSetting:hide()
-        self.mLock:hide()
-    end
-    local c = enableConfig[self.cityType]
-
+function createDesk:refreshLeftList(c)
+    local has = false
     if c.mahjong.enable then
+        has = true
         self.mMahjong:show()
 
         if self.gameType == gameType.mahjong then
@@ -48,6 +41,7 @@ function createDesk:onInit()
     end
 
     if c.changpai.enable then
+        has = true
         self.mChangpai:show()
 
         if self.gameType == gameType.doushisi then
@@ -62,11 +56,84 @@ function createDesk:onInit()
         self.mChangpai:hide()
     end
 
+    if has then
+        self.mEmpty:hide()
+    else
+        self.mEmpty:show()
+    end
+    self.mGameType:hide()
+    self.mGameType:show()
+end
+
+function createDesk:onSupportGameChanges(games)
+    if self.friendsterId and self.friendsterId > 0 and self.friendsterData.managerAcId == gamepref.player.acId  then
+        local c = table.clone(enableConfig[self.cityType])
+        c.mahjong.enable = false
+        c.changpai.enable = false
+        local supportGame
+        local needChanged = true
+        local hasMore = false
+        for _, gt in pairs(games) do
+            if gt == self.gameType then
+                needChanged = false
+            end
+            if gt == gameType.mahjong then
+                supportGame = gt
+                hasMore = true
+                c.mahjong.enable = true
+            elseif gt == gameType.doushisi then
+                supportGame = gt
+                hasMore = true
+                c.changpai.enable = true
+            end
+        end
+        if needChanged then
+            if not hasMore then
+                showMessageUI("该亲友圈因为圈主设置原因，无法创建长牌和麻将，如有疑问请联系圈主。")
+            else
+                self.gameType = supportGame
+            end
+        end
+        self:refreshLeftList(c)
+        if needChanged then
+            if not hasMore then
+            else
+                self.config = self:readConfig()
+                self:createDetail()
+                self:onGameTypeChanged()
+            end
+        end
+    end
+end
+
+function createDesk:onInit()
+    if self.friendsterId and self.friendsterId > 0 and self.friendsterData.managerAcId == gamepref.player.acId  then
+        self.mSetting:show()
+        self.mLock:show()
+    else
+        self.mSetting:hide()
+        self.mLock:hide()
+    end
+    local c = table.clone(enableConfig[self.cityType])
+    if self.friendsterId and self.friendsterId > 0 and self.friendsterData.managerAcId == gamepref.player.acId  then
+        local chosedGames = {}
+        if self.friendsterData.createSetting then
+            for _, gt in pairs(self.friendsterData.createSetting) do
+                table.insert(chosedGames, gt.Id)
+            end
+        end
+        self:onSupportGameChanges(chosedGames)
+    else
+        self:refreshLeftList(c)
+    end
+
+    
 --    self.mMahjongPanel:show()
 --    self.mChangpaiPanel:hide()
 
     self.config = self:readConfig()
     self:createDetail()
+    self:onGameTypeChanged()
 
     self.mMahjong:addChangedListener(self.onMahjongChangedHandler, self)
     self.mChangpai:addChangedListener(self.onChangpaiChangedHandler, self)
@@ -77,47 +144,125 @@ function createDesk:onInit()
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 
-    self:onGameTypeChanged()
 end
 
 function createDesk:onLockChangedHandler(sender, selected, isClicked)
     if not isClicked then
         return
     end
-    local data = {}
-    local cfg = ""
+    local msg
     if selected then
-        local choose = table.clone(self.config[self.gameType])
-        choose.Game = self.gameType
-        cfg = table.tostring(choose)
+        msg = "锁定之后本亲友圈玩家创建房间只能选择当前锁定玩法，是否锁定？"
     else
-        cfg = ""
+        msg = "解锁之后本亲友圈玩家创建房间可以自由选择玩法，是否解锁？"
     end
-    table.insert(data, {
-        Id = self.gameType,
-        Cfg = cfg,
-    })
-    networkManager.friendsterGameSetting(self.friendsterId, 2, data)
+    sender:setSelected(not selected)
+    showMessageUI(msg, function()
+        self:saveSettingToServer(selected, sender)
+    end, function()
+    end)
+end
+
+function createDesk:saveSettingToServer(lock, node)
+    showWaitingUI("正在保存数据...")
+
+    local function saveOneSetting()
+        local data = {}
+        local cfg = ""
+        if lock then
+            local choose = table.clone(self.config[self.gameType])
+            choose.Game = self.gameType
+            cfg = table.tojson(choose)
+        else
+            cfg = ""
+        end
+        table.insert(data, {
+            Id = self.gameType,
+            Cfg = cfg,
+        })
+        networkManager.friendsterGameSetting(self.friendsterId, 2, data, function(msg)
+            closeWaitingUI()
+            if msg == nil then
+                showMessageUI("保存数据失败，请重试。")
+                return
+            end
+            if msg.RetCode ~= retc.ok then
+                showMessageUI("保存数据失败，请重试。")
+                return
+            end
+            showMessageUI("保存数据成功")
+            node:setSelected(lock)
+            self.isCreateLocked = lock
+            if self.isCreateLocked then
+                self.mLockedHint:show()
+            else
+                self.mLockedHint:hide()
+            end
+        end)
+    end
+
+    if self.friendsterData:hasCreateSetting() then
+        saveOneSetting()
+    else
+        local data = {}
+        for _, gt in pairs(defaultFriendsterSupporCityGames[self.cityType]) do
+            table.insert(data, {Id = gt})
+        end
+        networkManager.friendsterGameSetting(self.friendsterId, 1, data, function(msg)
+            if msg == nil then
+                showMessageUI("保存数据失败，请重试。")
+                closeWaitingUI()
+                return
+            end
+            if msg.RetCode ~= retc.ok then
+                showMessageUI("保存数据失败，请重试。")
+                closeWaitingUI()
+                return
+            end
+            saveOneSetting()
+        end)
+    end
 end
 
 function createDesk:onGameTypeChanged()
-    if self.friendsterData then
-        local has, cfg = self.friendsterData:isSupportGame(self.gameType)
-        if has then
-            self.mLock:show()
-            if cfg and cfg ~= "" then
-                self.mLock:setSelected(true)
+    if self.friendsterId and self.friendsterId > 0 then
+        if self.friendsterData.managerAcId == gamepref.player.acId  then
+            local has, cfg = self.friendsterData:isSupportGame(self.gameType)
+            if has then
+                self.mLock:show()
+                if cfg and cfg ~= "" then
+                    self.mLock:setSelected(true)
+                    self.isCreateLocked = true
+                else
+                    self.mLock:setSelected(false)
+                    self.isCreateLocked = false
+                end
             else
-                self.mLock:setSelected(false)
+                self.mLock:hide()
+                self.isCreateLocked = false
             end
         else
-            self.mLock:hide()
+            local has, cfg = self.friendsterData:isSupportGame(self.gameType)
+            if has then
+                if cfg and cfg ~= "" then
+                    self.isCreateLocked = true
+                else
+                    self.isCreateLocked = false
+                end
+            else
+                self.isCreateLocked = false
+            end
         end
+    end
+    if self.isCreateLocked then
+        self.mLockedHint:show()
+    else
+        self.mLockedHint:hide()
     end
 end
 
 function createDesk:onSettingClickedHandler()
-    local ui = require ("ui.friendster.friendsterLockSettingUI").new(self.cityType, self.friendsterId, self.friendsterData)
+    local ui = require ("ui.friendster.friendsterLockSettingUI").new(self.cityType, self.friendsterId, self.friendsterData, self)
     ui:show()
 end
 
@@ -200,12 +345,20 @@ function createDesk:createDetail()
         self.detail = require("ui.deskDetail.deskDetailPanel").new(true, function(renshu, jushu)
             local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
             self.mCost:setText(tostring(cost))
-        end)
+        end, self)
         self.detail:setParent(self.mDetailRoot)
     end
     
     local layout = deskConfigLayout[self.cityType][self.gameType]
     local config = self.config[self.gameType]
+
+    if self.friendsterData then
+        local has, cfg = self.friendsterData:isSupportGame(self.gameType)
+        if has and cfg ~= nil and cfg ~= "" then
+            local cfgJson = table.fromjson(cfg)
+            config = cfgJson
+        end
+    end
 
     self:updateCost()
     self.detail:set(self.cityType, self.gameType, layout, config)

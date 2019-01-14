@@ -359,6 +359,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/wfsz_yz.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>58,34,115,69</rect>
+                <key>scale9Paddings</key>
+                <rect>58,34,115,69</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/wfsz_zi01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -392,6 +405,7 @@
             <filename>Images/wfsz_zi01.png</filename>
             <filename>Images/wfsz_jcsd.png</filename>
             <filename>Images/wfsz_sdwf.png</filename>
+            <filename>Images/wfsz_yz.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

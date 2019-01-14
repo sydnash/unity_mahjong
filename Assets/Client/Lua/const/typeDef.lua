@@ -372,4 +372,55 @@ doushisiColor = {
     none    = 3,
 }
 
+defaultFriendsterSupporCityGames = {
+    [cityType.chengdu] = {
+        gameType.mahjong,
+    }
+    [cityType.wenjiang] = {
+        gameType.mahjong, gameType.doushisi, gameType.hundizhu,
+    },
+    [cityType.jintang] = {
+        gameType.doushisi, gameType.paodekuai, gameType.mahjong, gameType.doudizhu,
+    },
+    [cityType.yingjing] = {
+        gameType.mahjong, gameType.erqishi,
+    },
+    [cityType.zhongjiang] = {
+        gameType.mahjong, gameType.doushisi,
+    },
+    [cityType.nanchong] = {
+        gameType.mahjong, gameType.doushisi, gameType.doudizhu, gameType.hundizhu,
+    },
+    [cityType.xichong] = {
+        gameType.mahjong, gameType.doushisi, gameType.doudizhu, gameType.hundizhu,
+    },
+}
+
+gameClassify = {
+    {
+        id = 1,
+        name = "麻将",
+        games = {gameType.mahjong},
+    },
+    {
+        id = 2,
+        name = "长牌",
+        games = {gameType.doushisi, gameType.erqishi},
+    },
+    {
+        id = 3,
+        name = "扑克",
+        games = {gameType.doudizhu, gameType.paodekuai, gameType.hundizhu},
+    },
+}
+
+function getGameClassify(gt)
+    for _, v in pairs(gameClassify) do
+        if table.indexOf(v.games, gt) then
+            return v.id, v.name
+        end
+    end
+    return nil, nil
+end
+
 --endregion

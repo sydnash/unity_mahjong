@@ -38,7 +38,8 @@ end
 
 local MAX_GROUP_COUNT = 15
 
-function detailPanel:ctor(interactable, callback)
+function detailPanel:ctor(interactable, callback, createUI)
+    self.createUI = createUI
     self.interactable = interactable
     self.callback = callback
 
@@ -69,6 +70,7 @@ function detailPanel:set(cityType, gameType, layout, config)
 
     for _, g in pairs(self.groups) do
         for _, v in pairs(g.items) do
+            v:removeAllListeners()
             v:hide()
         end
         g:hide()
@@ -125,9 +127,24 @@ function detailPanel:set(cityType, gameType, layout, config)
     end
 end
 
+function detailPanel:checkIsLocked(item, selected)
+    local isLocked = self.createUI.isCreateLocked
+
+    if isLocked then
+        item:setSelected(not selected)
+        self:set(self.cityType, self.gameType, self.layout, self.config)
+        showMessageUI("玩法已被亲友圈圈主锁定，如有疑问请联系圈主。")
+    end
+
+    return isLocked
+end
+
 function detailPanel:onItemChangedHandler(sender, selected, clicked)
     if clicked then
         playButtonClickSound()
+        if self:checkIsLocked(sender, selected) then
+            return
+        end
         self.config[sender.key] = selected and sender.value.selected or sender.value.unselected
     end
 
@@ -138,6 +155,9 @@ function detailPanel:onGroupItemChangedHandler(sender, selected, clicked)
     if clicked then
         playButtonClickSound()
 
+        if self:checkIsLocked(sender, selected) then
+            return
+        end
         if selected then
             self.config[sender.key] = sender.value
             self:processLayout()
@@ -161,6 +181,9 @@ function detailPanel:onSwitchOffGroupItemChangedHandler(sender, selected, clicke
     if clicked then
         playButtonClickSound()
 
+        if self:checkIsLocked(sender, selected) then
+            return
+        end
         if selected then
             self.config[sender.key] = sender.value.selected
         else

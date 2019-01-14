@@ -9,6 +9,7 @@ namespace UnityEngine.UI
         public bool clicked
         {
             get { return mClicked; }
+            set { mClicked = value; }
         }
 
         public override void OnPointerClick(EventSystems.PointerEventData eventData)

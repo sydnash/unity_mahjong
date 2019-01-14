@@ -87,6 +87,7 @@ TextureImporter:
     21300160: wfsz_zi01
     21300162: wfsz_zi02
     21300164: wfsz_zi03
+    21300166: wfsz_bc
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -210,8 +211,8 @@ TextureImporter:
       name: GY_an_fh
       rect:
         serializedVersion: 2
-        x: 410
-        y: 426
+        x: 166
+        y: 474
         width: 62
         height: 63
       alignment: 0
@@ -238,8 +239,8 @@ TextureImporter:
       name: QYQ_an01
       rect:
         serializedVersion: 2
-        x: 911
-        y: 554
+        x: 782
+        y: 513
         width: 112
         height: 53
       alignment: 9
@@ -266,8 +267,8 @@ TextureImporter:
       name: QYQ_an03
       rect:
         serializedVersion: 2
-        x: 474
-        y: 404
+        x: 585
+        y: 492
         width: 62
         height: 63
       alignment: 0
@@ -280,8 +281,8 @@ TextureImporter:
       name: QYQ_an04
       rect:
         serializedVersion: 2
-        x: 645
-        y: 414
+        x: 649
+        y: 435
         width: 62
         height: 63
       alignment: 0
@@ -294,8 +295,8 @@ TextureImporter:
       name: QYQ_an05
       rect:
         serializedVersion: 2
-        x: 538
-        y: 360
+        x: 445
+        y: 475
         width: 62
         height: 63
       alignment: 0
@@ -308,8 +309,8 @@ TextureImporter:
       name: QYQ_an06
       rect:
         serializedVersion: 2
-        x: 513
-        y: 498
+        x: 168
+        y: 539
         width: 42
         height: 30
       alignment: 0
@@ -322,8 +323,8 @@ TextureImporter:
       name: QYQ_an06_di
       rect:
         serializedVersion: 2
-        x: 905
-        y: 389
+        x: 169
+        y: 603
         width: 59
         height: 56
       alignment: 0
@@ -378,8 +379,8 @@ TextureImporter:
       name: QYQ_di01_1
       rect:
         serializedVersion: 2
-        x: 611
-        y: 571
+        x: 725
+        y: 605
         width: 80
         height: 37
       alignment: 0
@@ -406,8 +407,8 @@ TextureImporter:
       name: QYQ_di01_3
       rect:
         serializedVersion: 2
-        x: 299
-        y: 459
+        x: 753
+        y: 407
         width: 109
         height: 104
       alignment: 0
@@ -434,8 +435,8 @@ TextureImporter:
       name: QYQ_di02_1
       rect:
         serializedVersion: 2
-        x: 136
-        y: 513
+        x: 135
+        y: 442
         width: 26
         height: 48
       alignment: 0
@@ -448,8 +449,8 @@ TextureImporter:
       name: QYQ_duiju
       rect:
         serializedVersion: 2
-        x: 410
-        y: 501
+        x: 136
+        y: 533
         width: 28
         height: 29
       alignment: 0
@@ -476,8 +477,8 @@ TextureImporter:
       name: QYQ_kf_di
       rect:
         serializedVersion: 2
-        x: 911
-        y: 447
+        x: 896
+        y: 461
         width: 109
         height: 105
       alignment: 0
@@ -490,8 +491,8 @@ TextureImporter:
       name: QYQ_man
       rect:
         serializedVersion: 2
-        x: 760
-        y: 487
+        x: 591
+        y: 590
         width: 30
         height: 31
       alignment: 0
@@ -504,8 +505,8 @@ TextureImporter:
       name: QYQ_qizi01
       rect:
         serializedVersion: 2
-        x: 852
-        y: 369
+        x: 170
+        y: 661
         width: 50
         height: 49
       alignment: 9
@@ -518,8 +519,8 @@ TextureImporter:
       name: QYQ_qizi02
       rect:
         serializedVersion: 2
-        x: 580
-        y: 425
+        x: 688
+        y: 500
         width: 63
         height: 63
       alignment: 9
@@ -532,8 +533,8 @@ TextureImporter:
       name: QYQ_qizi02_1
       rect:
         serializedVersion: 2
-        x: 789
-        y: 407
+        x: 509
+        y: 473
         width: 61
         height: 65
       alignment: 9
@@ -574,8 +575,8 @@ TextureImporter:
       name: QYQ_qz
       rect:
         serializedVersion: 2
-        x: 513
-        y: 469
+        x: 621
+        y: 557
         width: 65
         height: 27
       alignment: 0
@@ -588,8 +589,8 @@ TextureImporter:
       name: QYQ_shenglv
       rect:
         serializedVersion: 2
-        x: 410
-        y: 532
+        x: 591
+        y: 557
         width: 28
         height: 31
       alignment: 0
@@ -616,8 +617,8 @@ TextureImporter:
       name: QYQ_tj_an02
       rect:
         serializedVersion: 2
-        x: 441
-        y: 530
+        x: 807
+        y: 568
         width: 117
         height: 49
       alignment: 0
@@ -630,8 +631,8 @@ TextureImporter:
       name: QYQ_tj_an03
       rect:
         serializedVersion: 2
-        x: 560
-        y: 528
+        x: 978
+        y: 609
         width: 42
         height: 51
       alignment: 0
@@ -742,8 +743,8 @@ TextureImporter:
       name: QYQ_tj_zi02
       rect:
         serializedVersion: 2
-        x: 448
-        y: 581
+        x: 815
+        y: 619
         width: 161
         height: 41
       alignment: 0
@@ -756,8 +757,8 @@ TextureImporter:
       name: QYQ_tj_zi02_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 563
+        x: 461
+        y: 623
         width: 161
         height: 42
       alignment: 0
@@ -812,8 +813,8 @@ TextureImporter:
       name: QYQ_tj_zi04_1
       rect:
         serializedVersion: 2
-        x: 169
-        y: 620
+        x: 312
+        y: 610
         width: 140
         height: 36
       alignment: 9
@@ -896,8 +897,8 @@ TextureImporter:
       name: QYQ_woman
       rect:
         serializedVersion: 2
-        x: 764
-        y: 525
+        x: 753
+        y: 530
         width: 24
         height: 33
       alignment: 0
@@ -911,7 +912,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 522
+        y: 523
         width: 133
         height: 39
       alignment: 0
@@ -924,8 +925,8 @@ TextureImporter:
       name: QYQ_zi02
       rect:
         serializedVersion: 2
-        x: 164
-        y: 537
+        x: 310
+        y: 527
         width: 133
         height: 40
       alignment: 9
@@ -953,7 +954,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 607
+        y: 564
         width: 165
         height: 39
       alignment: 0
@@ -967,7 +968,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 481
+        y: 482
         width: 132
         height: 39
       alignment: 0
@@ -980,8 +981,8 @@ TextureImporter:
       name: QYQ_zi05_h
       rect:
         serializedVersion: 2
-        x: 815
-        y: 621
+        x: 1
+        y: 441
         width: 132
         height: 39
       alignment: 9
@@ -994,8 +995,8 @@ TextureImporter:
       name: QYQ_zi06
       rect:
         serializedVersion: 2
-        x: 628
-        y: 610
+        x: 230
+        y: 617
         width: 80
         height: 41
       alignment: 0
@@ -1008,8 +1009,8 @@ TextureImporter:
       name: QYQ_zi06_h
       rect:
         serializedVersion: 2
-        x: 710
-        y: 601
+        x: 230
+        y: 574
         width: 80
         height: 41
       alignment: 0
@@ -1022,8 +1023,8 @@ TextureImporter:
       name: QYQ_zi07
       rect:
         serializedVersion: 2
-        x: 604
-        y: 490
+        x: 647
+        y: 627
         width: 76
         height: 39
       alignment: 9
@@ -1036,8 +1037,8 @@ TextureImporter:
       name: QYQ_zi07_h
       rect:
         serializedVersion: 2
-        x: 682
-        y: 479
+        x: 926
+        y: 568
         width: 76
         height: 39
       alignment: 9
@@ -1050,8 +1051,8 @@ TextureImporter:
       name: QYQ_zi08
       rect:
         serializedVersion: 2
-        x: 604
-        y: 531
+        x: 230
+        y: 534
         width: 78
         height: 38
       alignment: 0
@@ -1064,8 +1065,8 @@ TextureImporter:
       name: QYQ_zi08_h
       rect:
         serializedVersion: 2
-        x: 684
-        y: 520
+        x: 230
+        y: 494
         width: 78
         height: 38
       alignment: 9
@@ -1078,8 +1079,8 @@ TextureImporter:
       name: QYQ_zi09
       rect:
         serializedVersion: 2
-        x: 602
-        y: 382
+        x: 168
+        y: 571
         width: 60
         height: 30
       alignment: 0
@@ -1092,8 +1093,8 @@ TextureImporter:
       name: QYQ_zi10
       rect:
         serializedVersion: 2
-        x: 709
-        y: 411
+        x: 572
+        y: 457
         width: 61
         height: 33
       alignment: 9
@@ -1106,8 +1107,8 @@ TextureImporter:
       name: QYQ_zi11
       rect:
         serializedVersion: 2
-        x: 693
-        y: 560
+        x: 624
+        y: 586
         width: 78
         height: 39
       alignment: 9
@@ -1120,8 +1121,8 @@ TextureImporter:
       name: QYQ_zi12
       rect:
         serializedVersion: 2
-        x: 792
-        y: 474
+        x: 704
+        y: 565
         width: 76
         height: 38
       alignment: 0
@@ -1134,8 +1135,8 @@ TextureImporter:
       name: QYQ_zi13
       rect:
         serializedVersion: 2
-        x: 480
-        y: 665
+        x: 1
+        y: 605
         width: 165
         height: 41
       alignment: 0
@@ -1148,8 +1149,8 @@ TextureImporter:
       name: QYQ_zi14
       rect:
         serializedVersion: 2
-        x: 461
-        y: 624
+        x: 480
+        y: 667
         width: 165
         height: 39
       alignment: 0
@@ -1162,8 +1163,8 @@ TextureImporter:
       name: QYQ_zi14_1
       rect:
         serializedVersion: 2
-        x: 311
-        y: 606
+        x: 454
+        y: 581
         width: 135
         height: 40
       alignment: 9
@@ -1173,57 +1174,15 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: wfsz_an_01
-      rect:
-        serializedVersion: 2
-        x: 792
-        y: 514
-        width: 117
-        height: 105
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: wfsz_di01
-      rect:
-        serializedVersion: 2
-        x: 949
-        y: 609
-        width: 73
-        height: 51
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 28, y: 16, z: 27, w: 17}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: wfsz_di02
+      name: wfsz_bc
       rect:
         serializedVersion: 2
         x: 647
-        y: 653
+        y: 668
         width: 77
-        height: 53
+        height: 38
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 28, y: 15, z: 28, w: 15}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: wfsz_sc
-      rect:
-        serializedVersion: 2
-        x: 170
-        y: 658
-        width: 51
-        height: 52
-      alignment: 9
-      pivot: {x: 0.5, y: 0.50961536}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1232,8 +1191,8 @@ TextureImporter:
       name: wfsz_suo
       rect:
         serializedVersion: 2
-        x: 760
-        y: 446
+        x: 136
+        y: 492
         width: 27
         height: 39
       alignment: 9
@@ -1243,25 +1202,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: wfsz_tj
-      rect:
-        serializedVersion: 2
-        x: 852
-        y: 420
-        width: 51
-        height: 52
-      alignment: 9
-      pivot: {x: 0.5, y: 0.50961536}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
       name: wfsz_zi01
       rect:
         serializedVersion: 2
-        x: 305
-        y: 565
+        x: 449
+        y: 540
         width: 134
         height: 39
       alignment: 0
@@ -1274,26 +1219,12 @@ TextureImporter:
       name: wfsz_zi02
       rect:
         serializedVersion: 2
-        x: 168
-        y: 579
+        x: 312
+        y: 569
         width: 135
         height: 39
       alignment: 9
       pivot: {x: 0.5037037, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: wfsz_zi03
-      rect:
-        serializedVersion: 2
-        x: 440
-        y: 491
-        width: 71
-        height: 37
-      alignment: 9
-      pivot: {x: 0.5070422, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
