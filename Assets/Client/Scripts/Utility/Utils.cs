@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using UnityEngine;
 
 public class Utils
@@ -44,6 +45,20 @@ public class Utils
     public static int BytesToInt32(byte[] bytes, int offset = 0)
     {
         return BitConverter.ToInt32(bytes, offset);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
+    public static Texture2D BytesToTexture2D(int width, int height, byte[] bytes)
+    {
+        Texture2D tex = new Texture2D(width, height);
+        tex.LoadImage(bytes);
+        //tex.Apply();
+
+        return tex;
     }
 
     /// <summary>

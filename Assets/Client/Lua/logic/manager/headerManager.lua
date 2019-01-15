@@ -41,25 +41,32 @@ local function downloadDefaultIcon()
 end
 
 local function downloadOfflineIcon(path, callback)
-    http.getTexture2D("file:///" .. path, function(tex, bytes)
-        callback(tex)
-    end)
+    local bytes = LFS.ReadBytes(path)
+    local icon = Utils.BytesToTexture2D(640, 640, bytes)
+
+    callback(icon)
 end
 
+local httpAsync = http.createAsync()
+
 local function downloadOnlineIcon(url, callback)
-    http.getTexture2D(url, function(tex, bytes)
+    local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
+    httpAsync:addTextureRequest(url, timeout, function(tex, bytes)
         callback(tex, bytes)
     end)
+    httpAsync:start()
 end
 
 function headerManager.setup()
     downloadDefaultIcon()
 end
 
+local UNKNOWN_TOKEN_PREFIX = "ZsXQwa5mArMmI4A44uJgQyevo9VhePyUbv6MwhsWTzrqttXsUdzJL0LcT5I9reGA_"
+
 function headerManager.token(url)
     if string.isNilOrEmpty(url) then
         emptyTokenIdx = emptyTokenIdx + 1
-        return "ZsXQwa5mArMmI4A44uJgQyevo9VhePyUbv6MwhsWTzrqttXsUdzJL0LcT5I9reGA_" .. tostring(emptyTokenIdx)
+        return UNKNOWN_TOKEN_PREFIX .. tostring(emptyTokenIdx)
     end
 
     return Hash.GetHash(url)

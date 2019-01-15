@@ -2,41 +2,26 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local httpAsync     = require("network.httpAsync")
+
 local http = class("http")
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function http.getText(url, timeout, callback)
-    Http.instance:RequestBytes(url, "GET", timeout * 1000, function(bytes)
-        if bytes == nil then
-            callback(string.empty)
-        else
-            local text = Utils.BytesToString(bytes, 0, bytes.Length)
-            callback(text)
-        end
-    end)
+function http.createAsync(threadCount)
+    if threadCount == nil then
+        threadCount = 1
+    end
+
+    return httpAsync.new(HttpDispatcher.instance:CreateHttpAsync(threadCount))
 end
 
--------------------------------------------------------------------
---
--------------------------------------------------------------------
-function http.getBytes(url, timeout, callback)
-    Http.instance:RequestBytes(url, "GET", timeout * 1000, callback)
-end
-
--------------------------------------------------------------------
---
--------------------------------------------------------------------
-function http.getTexture2D(url, callback)
-    Http.instance:RequestTexture(url, callback)
-end
-
--------------------------------------------------------------------
---
--------------------------------------------------------------------
-function http.getFile(url, callback)
-    Http.instance:RequestFile(url, callback)
+function http.destroyAsync(async)
+    if async ~= nil then
+        HttpDispatcher.instance:DestroyHttpAsync(async.async)
+        async.async = nil
+    end
 end
 
 return http

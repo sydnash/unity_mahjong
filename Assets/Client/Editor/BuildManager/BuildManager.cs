@@ -45,6 +45,7 @@ public class BuildManager : EditorWindow
         if (mVersionDic.Count < 2)
         {
             ParseDebug();
+            ReadVersion();
         }
 
         string numk = mDebug ? "num_debug" : "num_release";
@@ -58,10 +59,6 @@ public class BuildManager : EditorWindow
 
         if (mBuildPatch)
         {
-            if (!mVersionDic.ContainsKey(numk) || !mVersionDic.ContainsKey(urlk))
-            {
-                ReadVersion();
-            }
 
             mVersionDic[numk] = EditorGUILayout.IntField("Ver Num", int.Parse(mVersionDic[numk])).ToString();
             GUI.enabled = false;

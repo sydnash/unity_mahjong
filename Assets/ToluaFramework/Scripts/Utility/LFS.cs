@@ -142,6 +142,29 @@ public static class LFS
     /// 
     /// </summary>
     /// <param name="filename"></param>
+    /// <param name="bytes"></param>
+    public static void AppendBytes(string filename, byte[] bytes)
+    {
+        try
+        {
+            MakeDirByFilename(filename);
+
+            FileStream fs = new FileStream(filename, FileMode.Append, FileAccess.Write);
+            fs.Write(bytes, 0, bytes.Length);
+            fs.Close();
+        }
+        catch (Exception ex)
+        {
+#if UNITY_EDITOR
+            Debug.LogError(ex.Message);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filename"></param>
     /// <param name="encode"></param>
     /// <returns></returns>
     public static string ReadText(string filename, Encoding encode)
@@ -383,10 +406,10 @@ public static class LFS
 
                     if (!IsDirectory(path))
                     {
-                        if (!string.IsNullOrEmpty(exceptPostfix) && !path.EndsWith(exceptPostfix))
-                        {
-                            CopyFile(src, dst);
-                        }
+                        if (!string.IsNullOrEmpty(exceptPostfix) && path.EndsWith(exceptPostfix))
+                            continue;
+                        
+                        CopyFile(src, dst);
                     }
                     else
                     {

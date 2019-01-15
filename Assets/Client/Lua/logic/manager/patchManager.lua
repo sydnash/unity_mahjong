@@ -13,6 +13,7 @@ local CACHE_PATH            = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "patchCach
 local CACHE_VER_FILE_NAME   = LFS.CombinePath(CACHE_PATH, "cver.txt")
 local CACHE_FILES_FILE_NAME = LFS.CombinePath(CACHE_PATH, "cfiles.txt")
 
+local downloadTextAsync = http.createAsync()
 
 -------------------------------------------------------------------
 -- 
@@ -33,9 +34,9 @@ end
 -------------------------------------------------------------------
 local function downloadOnlineVersionFile(url, callback)
     url = LFS.CombinePath(url, VERSION_FILE_NAME)
-    http.getText(url, 20 * 1000, function(text)
-        callback(text)
-    end)
+
+    downloadTextAsync:addTextRequest(url, networkConfig.httpTimeout * 1000, callback)
+    downloadTextAsync:start()
 end
 
 -------------------------------------------------------------------
@@ -57,9 +58,9 @@ end
 -------------------------------------------------------------------
 local function downloadOnlinePatchlistFile(url, callback)
     url = LFS.CombinePath(url, PATCHLIST_FILE_NAME)
-    http.getText(url, 20 * 1000, function(text)
-        callback(text)
-    end)
+
+    downloadTextAsync:addTextRequest(url, networkConfig.httpTimeout * 1000, callback)
+    downloadTextAsync:start()
 end
 
 -------------------------------------------------------------------
@@ -91,7 +92,7 @@ local function checkPatches(callback)
     local offlineVersionText = downloadOfflineVersionFile()
 
     if string.isNilOrEmpty(offlineVersionText) then
-        callback(-1, nil, nil, nil)
+        callback(nil, nil, nil)
         return
     end
 
@@ -99,15 +100,15 @@ local function checkPatches(callback)
         local onlineVersionText = onvt
 
         if string.isNilOrEmpty(onlineVersionText) then
-            callback(-1, nil, nil, nil)
+            callback(nil, nil, nil)
             return
         end
 
         local offlineVersion = loadstring(offlineVersionText)()
         local onlineVersion = loadstring(onlineVersionText)()
 
-        if onlineVersion.num <= offlineVersion.num then
-            callback(offlineVersion.num, {}, true, true)
+        if onlineVersion.num == offlineVersion.num then
+            callback({}, true, true)
             return
         end
 
@@ -120,7 +121,7 @@ local function checkPatches(callback)
         local offlinePatchlistText = downloadOfflinePatchlistFile()
 
         if string.isNilOrEmpty(offlinePatchlistText) then
-            callback(-1, nil, nil, nil)
+            callback(nil, nil, nil)
             return
         end
 
@@ -138,10 +139,24 @@ local function checkPatches(callback)
             end
 
             local plist = filterPatchList(offlinePatchlistText, onlinePatchlistText, cachedPatchList)
+            local size = 0
+            for _, v in pairs(plist) do
+                size = size + v.size
+            end
+
+            http.destroyAsync(downloadTextAsync)
+            downloadTextAsync = nil
+
             callback(plist, onlineVersionText, onlinePatchlistText, url)
         end)
     end)
 end
+
+local downloadPatchAsync = http.createAsync(5)
+
+local DOWNLOAD_FAILED       = -1 --下载失败
+local DOWNLOAD_COMPLETED    = 0  --下载完成
+local DOWNLOAD_WORKING      = 1  --正在下载
 
 -------------------------------------------------------------------
 -- 
@@ -150,18 +165,24 @@ local function downloadPatches(url, files, callback)
     for _, v in pairs(files) do
         local www = url .. v.name
 
-        http.getBytes(www, networkConfig.patchTimeout * 1000, function(bytes)
+        downloadPatchAsync:addBytesRequest(www, networkConfig.patchTimeout * 1000, function(bytes, size, completed)
             if bytes == nil then
-                callback(false, v.name)
+                callback(DOWNLOAD_FAILED, v.name, 0)
             else
                 local path = LFS.CombinePath(CACHE_PATH, v.name)
-                LFS.WriteBytes(path, bytes)
-                LFS.AppendLine(CACHE_FILES_FILE_NAME, v.name, LFS.UTF8_WITHOUT_BOM)
+                LFS.AppendBytes(path, bytes)
 
-                callback(true, v.name)
+                if completed then
+                    LFS.AppendLine(CACHE_FILES_FILE_NAME, v.name, LFS.UTF8_WITHOUT_BOM)
+                    callback(DOWNLOAD_COMPLETED, v.name, bytes.Length)
+                else
+                    callback(DOWNLOAD_WORKING, v.name, bytes.Length)
+                end
             end
         end)
     end
+
+    downloadPatchAsync:start()
 end
 
 
@@ -201,6 +222,8 @@ function patchManager.patch()
         local totalCount    = #plist
         local successCount  = 0
         local downloadBytes = 0
+        local downloadedBytes = 0
+        local failedList = {}
 
         for _, v in pairs(plist) do
             downloadBytes = downloadBytes + v.size
@@ -208,16 +231,21 @@ function patchManager.patch()
         local downloadBytesTxt = BKMGT(downloadBytes)
 
         local function download(files)
-            local failedList    = {}
-            
-            downloadPatches(url, files, function(success, filename)
-                if success then
-                    successCount = successCount + 1
-                else
+            failedList = {}
+
+            downloadPatches(url, files, function(status, filename, size)
+                if status == DOWNLOAD_FAILED then 
                     table.insert(failedList, { name = filename })
+                    log("download failed, " .. filename)
+                else
+                    if status == DOWNLOAD_COMPLETED then
+                        successCount = successCount + 1
+                    end
+
+                    downloadedBytes = downloadedBytes + size
                 end
 
-                local progress = math.min(1, successCount / totalCount)
+                local progress = math.min(1, downloadedBytes / downloadBytes)
 
                 if successCount + #failedList < totalCount then
                     loading:setProgress(progress)
@@ -232,6 +260,9 @@ function patchManager.patch()
                                             Application.Quit()
                                         end)
                     else
+                        http.destroyAsync(downloadPatchAsync)
+                        downloadPatchAsync = nil
+
                         LFS.MoveDir(CACHE_PATH, LFS.PATCH_PATH)
 
                         local vpath = LFS.CombinePath(LFS.PATCH_PATH, VERSION_FILE_NAME)
