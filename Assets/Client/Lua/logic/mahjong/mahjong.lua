@@ -16,7 +16,8 @@ local INHAND_MAHJONG_LAYER  = 8
 
 local d = 160 / 255
 local DARK_COLOR  = Color.New(d, d, d, 1)
-local LIGHT_COLOR = Color.New(1, 1, 1, 1)
+local l = 234 / 255
+local LIGHT_COLOR = Color.New(l, l, l, 1)
 
 local colorMode = {
     dark  = 1,
