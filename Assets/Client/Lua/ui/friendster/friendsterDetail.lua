@@ -126,9 +126,9 @@ function friendsterDetail:onManageClickedHandler()
 end
 
 function friendsterDetail:onCreateClickedHandler()
-    local citySid = cityTypeSID[self.data.cityType]
-    if citySid == nil then
-        showMessageUI(string.format("暂不支持%s地区创建%s房间", cityName[self.cityType], gameName[self.gameType]))
+    local cfg = defaultFriendsterSupporCityGames[self.data.cityType]
+    if cfg == nil then
+        showMessageUI(string.format("暂不支持%s地区创建房间", cityName[self.data.cityType]))
         playButtonClickSound()
         return
     end

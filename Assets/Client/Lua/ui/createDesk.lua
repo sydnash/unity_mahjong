@@ -67,6 +67,7 @@ end
 
 function createDesk:onSupportGameChanges(games)
     if self.friendsterId and self.friendsterId > 0 and self.friendsterData.managerAcId == gamepref.player.acId  then
+        local oric = table.clone(enableConfig[self.cityType])
         local c = table.clone(enableConfig[self.cityType])
         c.mahjong.enable = false
         c.changpai.enable = false
@@ -80,11 +81,11 @@ function createDesk:onSupportGameChanges(games)
             if gt == gameType.mahjong then
                 supportGame = gt
                 hasMore = true
-                c.mahjong.enable = true
+                c.mahjong.enable = oric.mahjong.enable
             elseif gt == gameType.doushisi then
                 supportGame = gt
                 hasMore = true
-                c.changpai.enable = true
+                c.changpai.enable = oric.changpai.enable
             end
         end
         if needChanged then
@@ -116,12 +117,7 @@ function createDesk:onInit()
     end
     local c = table.clone(enableConfig[self.cityType])
     if self.friendsterId and self.friendsterId > 0 and self.friendsterData.managerAcId == gamepref.player.acId  then
-        local chosedGames = {}
-        if self.friendsterData.createSetting then
-            for _, gt in pairs(self.friendsterData.createSetting) do
-                table.insert(chosedGames, gt.Id)
-            end
-        end
+        local chosedGames = self.friendsterData:getSupportGames()
         self:onSupportGameChanges(chosedGames)
     else
         self:refreshLeftList(c)
@@ -143,7 +139,6 @@ function createDesk:onInit()
     self.mLock:addChangedListener(self.onLockChangedHandler, self)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
-
 end
 
 function createDesk:onLockChangedHandler(sender, selected, isClicked)

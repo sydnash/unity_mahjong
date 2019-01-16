@@ -40,7 +40,7 @@ function friendster:ctor(id)
     self.managerAcId        = 0
     self.managerNickname    = string.empty
     self.createSetting      = {}
-    self:checkCreateSetting()
+    -- self:checkCreateSetting()
 end
 
 function friendster:setData(data)
@@ -56,18 +56,22 @@ function friendster:setData(data)
     lc.managerNickname  = data.NickName
     lc.applyList        = isNilOrNull(data.ApplyList) and {} or data.ApplyList
     self.createSetting  = isNilOrNull(data.CreateSettings) and {} or data.CreateSettings
-    self:checkCreateSetting()
+    -- self:checkCreateSetting()
 end
 
-function friendster:checkCreateSetting()
+function friendster:getSupportGames()
+    local ret = {}
     if #self.createSetting == 0 then
         local games = defaultFriendsterSupporCityGames[self.cityType]
         for _, gt in pairs(games) do
-            table.insert(self.createSetting, {
-                Id = gt,
-            })
+            table.insert(ret, gt)
+        end
+    else
+        for _, gt in pairs(self.createSetting) do
+            table.insert(ret, gt.Id)
         end
     end
+    return ret
 end
 
 function friendster:setMembers(data)

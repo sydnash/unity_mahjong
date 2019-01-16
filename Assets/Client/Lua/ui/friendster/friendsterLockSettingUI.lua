@@ -171,17 +171,7 @@ function friendsterLockSettingUI:onInit()
     if games == nil then
         games = {}
     end
-    local chosedGames = {}
-    if self.friendsterData.createSetting then
-        for _, gt in pairs(self.friendsterData.createSetting) do
-            table.insert(chosedGames, gt.Id)
-        end
-    end
-    if #chosedGames == 0 then
-        for _, gt in pairs(games) do
-            table.insert(chosedGames, gt)
-        end
-    end
+    local chosedGames = self.friendsterData:getSupportGames()
 
     local notChosedGames = self:computeNotChosedGames(games, chosedGames)
     self.chosedGames = chosedGames
