@@ -1765,7 +1765,7 @@ function mahjongOperation:computeMyPengStartPos()
     local project = Vector3.Project(direct, sceneCamera.transform.forward)
 
     local wpPos = sceneCamera:ScreenToWorldPoint(Vector3.New(scPos.x, scPos.y, project.magnitude))
-    seat[mahjongGame.cardType.peng].pos = Vector3.New(wpPos.x + mahjong.w * -0.5, pengPos.y, pengPos.z)
+    seat[mahjongGame.cardType.peng].pos = Vector3.New(wpPos.x + mahjong.w * 0.7, pengPos.y, pengPos.z)
 end
 -------------------------------------------------------------------------------
 -- 调整手牌位置
@@ -2554,7 +2554,7 @@ function mahjongOperation:showChuPaiArrow()
             local tid = mahjongType.getMahjongTypeId(mahjong.id)
             if mjTid[tid] then
                 local pos = mahjong:getPosition()
-                pos.y = pos.y + mahjong.h * 1.15
+                pos.y = pos.y + mahjong.h * 1
                 pos = self:worldToUIPos(pos, self.mChuHuHints[usedIdx], inhandCamera)
                 self.mChuHuHints[usedIdx]:setAnchoredPosition(pos)
                 self.mChuHuHints[usedIdx]:show()
