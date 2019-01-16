@@ -16,7 +16,7 @@ return {
     isAndroid = isAndroid(),
     isApple   = isApple(),
     isMobile  = isAndroid() or isApple(),
-    deviceId  = "sy13",
+    deviceId  = "sy2",
 }
 
 --endregion

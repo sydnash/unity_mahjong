@@ -305,7 +305,7 @@ function createDesk:onChangpaiChangedHandler(sender, selected, clicked)
 end
 
 function createDesk:onCreateClickedHandler()
-    local choose = table.clone(self.config[self.gameType])
+    local choose = self.detail:getCreateConfig()
     choose.Game = self.gameType
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 

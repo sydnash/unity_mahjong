@@ -127,6 +127,10 @@ function detailPanel:set(cityType, gameType, layout, config)
     end
 end
 
+function detailPanel:getCreateConfig()
+    return self.config
+end
+
 function detailPanel:checkIsLocked(item, selected)
     local isLocked = self.createUI.isCreateLocked
 
