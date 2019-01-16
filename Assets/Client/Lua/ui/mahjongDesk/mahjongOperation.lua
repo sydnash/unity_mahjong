@@ -93,6 +93,9 @@ local inhandCameraParams = {
 local COUNTDOWN_SECONDS_C = 20
 local PLANE_BREATHE_SECONDS = 1.5
 
+local panleDarkTex = nil
+local panleHighlightTex = nil
+
 -------------------------------------------------------------------------------
 -- 交换两个牌，包括位置、旋转、缩放、可见性及阴影模式
 -------------------------------------------------------------------------------
@@ -160,10 +163,6 @@ function mahjongOperation:onInit()
     local mahjongsRootClip = animationManager.load("mahjongroot", "mahjongroot")
     self.mahjongsRootAnim:AddClip(mahjongsRootClip, mahjongsRootClip.name)
     self.mahjongsRootAnim.clip = mahjongsRootClip
-    --圆盘
-    local circle = find("mahjong/planes/cricle/Cricle_0")
-    local circleMat = getComponentU(circle.gameObject, typeof(UnityEngine.MeshRenderer)).sharedMaterial
-    circleMat.mainTexture = textureManager.load(string.empty, "deskfw")
     --方向指示节点
     self.planeRoot = find("mahjong/planes")
     self:rotatePlanes()
@@ -180,6 +179,12 @@ function mahjongOperation:onInit()
         local mat = mesh.sharedMaterial
 
         self.planeMats[i] = mat
+    end
+    if panleDarkTex == nil then
+        panleDarkTex = textureManager.load(string.empty, "deskfw")
+    end
+    if panleHighlightTex == nil then
+        panleHighlightTex = textureManager.load(string.empty, "deskfw_gl")
     end
     self:darkPlanes()
     --骰子节点和动画
@@ -2050,18 +2055,14 @@ function mahjongOperation:highlightPlaneByAcId(acId)
         local diff = (seat ~= nil) and (seat - base + 4) % 4 or nil
 
         for s, m in pairs(self.planeMats) do
-            if m.mainTexture ~= nil then
-                textureManager.unload(m.mainTexture)
-            end
-
             if diff ~= nil and s == diff then
-                m.mainTexture = textureManager.load(string.empty, "deskfw_gl")
+                m.mainTexture = panleHighlightTex
 
                 self.curPlaneMat = m
                 self.curPlaneToD = true
                 self.planeTick = time.realtimeSinceStartup()
             else
-                m.mainTexture = textureManager.load(string.empty, "deskfw")
+                m.mainTexture = panleDarkTex
             end
         end
     end
@@ -2072,11 +2073,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:darkPlanes()
     for _, m in pairs(self.planeMats) do
-        if m.mainTexture ~= nil then
-            textureManager.unload(m.mainTexture)
-        end
-
-        m.mainTexture = textureManager.load(string.empty, "deskfw")
+        m.mainTexture = panleDarkTex
     end
 
     self.curPlaneMat = nil
@@ -2177,6 +2174,7 @@ end
 -- 销毁
 -------------------------------------------------------------------------------
 function mahjongOperation:onDestroy()
+    log("mahjongOperation:onDestroy")
     if self.game.mode == gameMode.normal then
         touch.removeListener()
     end
@@ -2198,13 +2196,22 @@ function mahjongOperation:onDestroy()
         end
     end
 
-    for _, v in pairs(self.planeMats) do
-        if v.mainTexture ~= nil then
-            textureManager.unload(v.mainTexture)
-            v.mainTexture = nil
+    for _, m in pairs(self.planeMats) do
+        if m.mainTexture ~= nil then
+            m.mainTexture = nil
+            m.color = Color.white
         end
     end
     self.curPlaneMat = nil
+
+    if panleDarkTex ~= nil then
+        textureManager.unload(panleDarkTex)
+        panleDarkTex = nil
+    end
+    if panleHighlightTex ~= nil then
+        textureManager.unload(panleHighlightTex)
+        panleHighlightTex = nil
+    end
 
     self.diceRoot:show()
     self.centerGlass:show()

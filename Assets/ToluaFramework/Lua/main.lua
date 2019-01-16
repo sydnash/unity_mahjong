@@ -5,6 +5,7 @@
 require("std")
 
 local profiler  = require("UnityEngine.Profiler")
+local app = nil
 
 --主入口函数。从这里开始lua逻辑
 function main()
@@ -20,7 +21,7 @@ function main()
     eventManager.setup()
     sceneManager.setup()
     
-    local app = require("clientApp")
+    app = require("clientApp")
     app:start()
 end
 
@@ -38,7 +39,9 @@ function onApplicationQuit()
         profiler:stop()
     end
 
+    app:quit()
     Logger.Close()
+
     log("application quit")
 end
 

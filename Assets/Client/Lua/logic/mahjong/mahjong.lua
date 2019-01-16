@@ -44,7 +44,6 @@ local mahjongTex = {
 
 function mahjong:ctor(id)
     self.id = id
---    self.pickabled = false
     self.selected = false
     self.cmode = colorMode.light
 
@@ -70,8 +69,45 @@ function mahjong:ctor(id)
     self.name  = mtype.name
     self.class = mtype.class
 
+    self:loadTex()
     self:setPickabled(false)
     self:reset()
+end
+
+function mahjong:loadTex()
+    if mahjongTex.normal.samp == nil then 
+        mahjongTex.normal.samp = textureManager.load("mahjong", "mj_dif_u")
+    end
+    if mahjongTex.normal.mask == nil then
+        mahjongTex.normal.mask  = textureManager.load("mahjong", "mj_dif_mask_u")
+    end
+
+    if mahjongTex.inhand.samp == nil then 
+        mahjongTex.inhand.samp = textureManager.load("mahjong", "mj_dif")
+    end
+    if mahjongTex.inhand.mask == nil then
+        mahjongTex.inhand.mask  = textureManager.load("mahjong", "mj_dif_mask")
+    end
+end
+
+function mahjong:unloadTex()
+    if mahjongTex.normal.samp ~= nil then 
+        textureManager.unload(mahjongTex.normal.samp)
+        mahjongTex.normal.samp = nil
+    end
+    if mahjongTex.normal.mask ~= nil then 
+        textureManager.unload(mahjongTex.normal.mask)
+        mahjongTex.normal.mask = nil
+    end
+
+    if mahjongTex.inhand.samp ~= nil then 
+        textureManager.unload(mahjongTex.inhand.samp)
+        mahjongTex.inhand.samp = nil
+    end
+    if mahjongTex.inhand.mask ~= nil then 
+        textureManager.unload(mahjongTex.inhand.mask)
+        mahjongTex.inhand.mask = nil
+    end
 end
 
 function mahjong:dark()
@@ -139,6 +175,10 @@ end
 function mahjong:onDestroy()
     self:reset()
     self:hide()
+
+    self.mat:SetTexture("_Diffuse", nil)
+    self.mat:SetTexture("_DiffuseMask", nil)
+    self:unloadTex()
 
     modelManager.unload(self)
 end

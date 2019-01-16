@@ -308,7 +308,11 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-function clientApp:onDestroy()
+function clientApp:quit()
+    if self.currentDesk ~= nil then
+        self.currentDesk:destroy()
+    end
+
     locationManager.stop()
 end
 
