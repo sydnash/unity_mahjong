@@ -2554,7 +2554,7 @@ function mahjongOperation:showChuPaiArrow()
             local tid = mahjongType.getMahjongTypeId(mahjong.id)
             if mjTid[tid] then
                 local pos = mahjong:getPosition()
-                pos.y = pos.y + mahjong.h * 1.15
+                pos.y = pos.y + mahjong.h * 1
                 pos = self:worldToUIPos(pos, self.mChuHuHints[usedIdx], inhandCamera)
                 self.mChuHuHints[usedIdx]:setAnchoredPosition(pos)
                 self.mChuHuHints[usedIdx]:show()
