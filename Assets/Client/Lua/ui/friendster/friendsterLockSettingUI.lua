@@ -128,7 +128,7 @@ function friendsterLockSettingUI:initUI()
                 local col = i - 1
                 local rowNode = self.lines[row + math.floor( col / 3 ) ]
                 rowNode:show()
-                local gname = gameName[gt]
+                local gname = gameName[self.cityType].games[gt]
                 local item = rowNode.items[col % 3 + 1]
                 item:show()
                 item.label:setText(gname)

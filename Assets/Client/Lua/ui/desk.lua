@@ -124,7 +124,7 @@ function desk:refreshUI()
         self.headers[seatType.right]:hide()
     end
 
-    self.mDeskID:setText(string.format("%s%s:%d", cityName[self.game.cityType], gameName[self.game.gameType], self.game.deskId))
+    self.mDeskID:setText(string.format("%s%s:%d", cityName[self.game.cityType], gameName[self.game.cityName].games[self.game.gameType], self.game.deskId))
     self:updateCurrentGameIndex()
     self.mTime:setText(time.formatTime())
 
@@ -173,7 +173,7 @@ function desk:onInviteWXClickedHandler()
 
     local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then
-        platformHelper.shareUrlWx(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.gameType], self.game.deskId), 
+        platformHelper.shareUrlWx(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.game.deskId), 
                                   self:getInvitationInfo(), 
                                   networkConfig.server.shareURL,
                                   image,
@@ -191,7 +191,7 @@ function desk:onInviteXLClickedHandler()
     if image ~= nil then
         local params = { cityType = self.game.cityType, deskId = self.game.deskId, }
 
-        platformHelper.shareInvitationSg(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.gameType], self.game.deskId), 
+        platformHelper.shareInvitationSg(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.game.deskId), 
                                          self:getInvitationInfo(), 
                                          image,
                                          table.tojson(params),
