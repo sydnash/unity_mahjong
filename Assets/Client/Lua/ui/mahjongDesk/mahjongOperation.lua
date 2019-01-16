@@ -1765,7 +1765,7 @@ function mahjongOperation:computeMyPengStartPos()
     local project = Vector3.Project(direct, sceneCamera.transform.forward)
 
     local wpPos = sceneCamera:ScreenToWorldPoint(Vector3.New(scPos.x, scPos.y, project.magnitude))
-    seat[mahjongGame.cardType.peng].pos = Vector3.New(wpPos.x + mahjong.w * -0.5, pengPos.y, pengPos.z)
+    seat[mahjongGame.cardType.peng].pos = Vector3.New(wpPos.x + mahjong.w * 0.7, pengPos.y, pengPos.z)
 end
 -------------------------------------------------------------------------------
 -- 调整手牌位置
