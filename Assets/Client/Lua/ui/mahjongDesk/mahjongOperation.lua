@@ -20,7 +20,7 @@ mahjongOperation.seats = {
             [gameMode.normal]   = { pos = Vector3.New(-0.226, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
             [gameMode.playback] = { pos = Vector3.New(-0.226, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
         },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 1, 0.156, -0.340), rot = Quaternion.Euler(0, 0, 0), },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 0, 0.156, -0.340), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.074, 0.156, -0.100), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.huan] = {
@@ -395,7 +395,7 @@ function mahjongOperation:onGameStart()
         for i=1, self.game:getTotalCardsCount() do
             local m = self.idleMahjongs[i]
             m:show()
-            m:setPickabled(false)
+--            m:setPickabled(false)
         end
     end)
 
