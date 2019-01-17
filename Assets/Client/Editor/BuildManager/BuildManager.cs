@@ -19,7 +19,7 @@ public class BuildManager : EditorWindow
     private bool mDevelopment = false;
     private bool mBuildLua = true;
     private bool mBuildBundle = true;
-    private bool mBuildPatch = true;
+    private bool mBuildPatch = false;
     private Dictionary<string, string> mVersionDic = new Dictionary<string, string>();
     private bool mBuildPackage = true;
     private string mPackagePath = string.Empty;
@@ -32,6 +32,7 @@ public class BuildManager : EditorWindow
         window.mDevelopment = EditorUserBuildSettings.development;
         window.ParseDebug();
         window.ReadVersion();
+        window.ReadPackageOutputPath();
         
         window.Show();
     }
@@ -53,14 +54,14 @@ public class BuildManager : EditorWindow
         }
 
         mTargetPlatform = (BuildTarget)EditorGUILayout.EnumPopup("Platform", mTargetPlatform);
-        bool development    = EditorGUILayout.Toggle("Development", mDevelopment);
+        bool development = EditorGUILayout.Toggle("Development", mDevelopment);
         if (development != mDevelopment)
         {
             mDevelopment = development;
             EditorUserBuildSettings.development = mDevelopment;
         }
-        mBuildLua       = EditorGUILayout.Toggle("Build Lua", mBuildLua);
-        mBuildBundle    = EditorGUILayout.Toggle("Build Bundle", mBuildBundle);
+        mBuildLua = EditorGUILayout.Toggle("Build Lua", mBuildLua);
+        mBuildBundle = EditorGUILayout.Toggle("Build Bundle", mBuildBundle);
         mBuildPatch = EditorGUILayout.Toggle("Build Patch", mBuildPatch);
 
         if (mBuildPatch)
@@ -77,7 +78,7 @@ public class BuildManager : EditorWindow
             }
         }
 
-        mBuildPackage   = EditorGUILayout.Toggle("Build Package", mBuildPackage);
+        mBuildPackage = EditorGUILayout.Toggle("Build Package", mBuildPackage);
 
         if (mBuildPackage)
         {
@@ -104,6 +105,8 @@ public class BuildManager : EditorWindow
             string tips = string.Format("Are you sure to build package?\ndebug is {0}\nver is {1}", mDebug, mVersionDic[numk]);
             if (EditorUtility.DisplayDialog("Build", tips, "OK", "Cancel"))
             {
+                WritePackageOutputPath();
+
                 string finishedText = string.Empty;
                 string timestamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
 
@@ -198,25 +201,19 @@ public class BuildManager : EditorWindow
                     PlayerSettings.companyName = "成都巴蜀互娱科技有限公司";
                     PlayerSettings.productName = "幺九麻将";
 
-                    packageName = LFS.CombinePath(mPackagePath, packageName);
-                    string err = Build.BuildPackage(packageName, mTargetPlatform, mDevelopment);
+                    string packageFullName = LFS.CombinePath(mPackagePath, packageName);
+                    string err = Build.BuildPackage(packageFullName, mTargetPlatform, mDevelopment);
 
                     PlayerSettings.companyName = companyName;
                     PlayerSettings.productName = productName;
 
-                    finishedText = "Build package [" + packageName + "] " + (string.IsNullOrEmpty(err) ? "successfully! " : "failed!");
+                    finishedText = "Build package " + (string.IsNullOrEmpty(err) ? "successfully! " : "failed!") + "\n" + packageName;
                 }
 
                 EditorUtility.DisplayDialog("Build", finishedText, "OK");
             }
         }
     }
-
-    //private void OnFocus()
-    //{
-    //    ParseDebug();
-    //    ReadVersion();
-    //}
 
     /// <summary>
     /// 
@@ -284,5 +281,26 @@ public class BuildManager : EditorWindow
         }
 
         File.WriteAllText(path, text);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void ReadPackageOutputPath()
+    {
+        string path = LFS.CombinePath(Application.dataPath, "Client/Editor/BuildManager/output.txt");
+        if (File.Exists(path))
+        {
+            mPackagePath = File.ReadAllText(path);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void WritePackageOutputPath()
+    {
+        string path = LFS.CombinePath(Application.dataPath, "Client/Editor/BuildManager/output.txt");
+        File.WriteAllText(path, mPackagePath);
     }
 }
