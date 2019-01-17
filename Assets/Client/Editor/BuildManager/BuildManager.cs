@@ -16,15 +16,12 @@ public class BuildManager : EditorWindow
 #endif
 
     private bool mDebug = true;
-    private bool mDevelopment = true;
+    private bool mDevelopment = false;
     private bool mBuildLua = true;
     private bool mBuildBundle = true;
     private bool mBuildPatch = true;
     private Dictionary<string, string> mVersionDic = new Dictionary<string, string>();
-    //private int mVersionNum = 1;
-    //private string mVersionUrl = "http://test.cdbshy.com/mahjong_update/";
     private bool mBuildPackage = true;
-    //private bool mProcessResources = false;
     private string mPackagePath = string.Empty;
 
     [MenuItem("Window/Build Manager #&B", priority = 2051)]
@@ -32,6 +29,7 @@ public class BuildManager : EditorWindow
     {
         BuildManager window = EditorWindow.GetWindow(typeof(BuildManager)) as BuildManager;
 
+        window.mDevelopment = EditorUserBuildSettings.development;
         window.ParseDebug();
         window.ReadVersion();
         
@@ -48,8 +46,19 @@ public class BuildManager : EditorWindow
         string numk = mDebug ? "num_debug" : "num_release";
         string urlk = mDebug ? "url_debug" : "url_release";
 
+        if (mVersionDic.Count < 2)
+        {
+            ParseDebug();
+            ReadVersion();
+        }
+
         mTargetPlatform = (BuildTarget)EditorGUILayout.EnumPopup("Platform", mTargetPlatform);
-        mDevelopment    = EditorGUILayout.Toggle("Development", mDevelopment);
+        bool development    = EditorGUILayout.Toggle("Development", mDevelopment);
+        if (development != mDevelopment)
+        {
+            mDevelopment = development;
+            EditorUserBuildSettings.development = mDevelopment;
+        }
         mBuildLua       = EditorGUILayout.Toggle("Build Lua", mBuildLua);
         mBuildBundle    = EditorGUILayout.Toggle("Build Bundle", mBuildBundle);
         mBuildPatch = EditorGUILayout.Toggle("Build Patch", mBuildPatch);
@@ -72,8 +81,6 @@ public class BuildManager : EditorWindow
 
         if (mBuildPackage)
         {
-            //mProcessResources = EditorGUILayout.Toggle("Process Resources", mProcessResources);
-
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.TextField("Package Path", mPackagePath);
@@ -97,18 +104,19 @@ public class BuildManager : EditorWindow
             string tips = string.Format("Are you sure to build package?\ndebug is {0}\nver is {1}", mDebug, mVersionDic[numk]);
             if (EditorUtility.DisplayDialog("Build", tips, "OK", "Cancel"))
             {
+                string finishedText = string.Empty;
                 string timestamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
 
                 if (mBuildLua)
                 {
                     Build.BuildLuaFiles();
-                    Debug.Log(timestamp + ": build lua over");
+                    finishedText = "Build lua files finished";
                 }
 
                 if (mBuildBundle)
                 {
                     Build.BuildAssetBundles(mTargetPlatform);
-                    Debug.Log(timestamp + ": build bundle over");
+                    finishedText = "Build asset bundles finished";
                 }
 
                 if (mBuildPatch)
@@ -149,13 +157,19 @@ public class BuildManager : EditorWindow
                     LFS.CopyFile(versionFrom, versionTo);
 
                     EditorUtility.ClearProgressBar();
-                    Debug.Log(timestamp + ": build patch over");
+                    finishedText = "Build patch files finished";
                 }
 
                 AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
 
-                if (mBuildPackage && !string.IsNullOrEmpty(mPackagePath))
+                if (mBuildPackage)
                 {
+                    if (string.IsNullOrEmpty(mPackagePath))
+                    {
+                        EditorUtility.DisplayDialog("Build", "Please set the package output path!", "OK");
+                        return;
+                    }
+
                     string packageName = string.Empty;
 
                     switch (mTargetPlatform)
@@ -190,10 +204,10 @@ public class BuildManager : EditorWindow
                     PlayerSettings.companyName = companyName;
                     PlayerSettings.productName = productName;
 
-                    Debug.Log(timestamp + ": build package [ver =  " + mVersionDic[numk] + "] " + (string.IsNullOrEmpty(err) ? "successfully! " : "failed!"));
+                    finishedText = "Build package [" + packageName + "] " + (string.IsNullOrEmpty(err) ? "successfully! " : "failed!");
                 }
 
-                EditorUtility.DisplayDialog("Build", "Build finished", "OK");
+                EditorUtility.DisplayDialog("Build", finishedText, "OK");
             }
         }
     }
