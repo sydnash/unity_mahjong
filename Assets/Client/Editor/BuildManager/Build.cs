@@ -46,7 +46,7 @@ public class Build
     /// </summary>
     public static void BuildAssetBundles(BuildTarget buildTarget)
     {
-        string targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res", LFS.OS_PATH);
+        string targetDir = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, "Res");
         LFS.RemoveDir(targetDir);
 
         AssetBundleBrowser.AssetBundleBrowserMain.ExecuteBuild(buildTarget, targetDir);
@@ -84,7 +84,7 @@ public class Build
             EditorUtility.DisplayProgressBar("Build", file, 1.0f);
         }
 
-        string resPath = LFS.CombinePath(Application.streamingAssetsPath, "Res", LFS.OS_PATH);
+        string resPath = LFS.CombinePath(Application.streamingAssetsPath, "Res");
         string[] resFiles = Directory.GetFiles(resPath, "*.*", SearchOption.AllDirectories);
 
         for (int i=0; i<resFiles.Length; i++)
@@ -124,7 +124,7 @@ public class Build
         StringBuilder sb = new StringBuilder();
         sb.Append("return {\n");
         sb.AppendFormat("[\"num\"]={0},\n", ver);
-        sb.AppendFormat("[\"url\"]=\"{0}{1}/\",\n", url, ver);
+        sb.AppendFormat("[\"url\"]=\"{0}\",\n", url);
         sb.Append("}");
 
         string text = sb.ToString();
