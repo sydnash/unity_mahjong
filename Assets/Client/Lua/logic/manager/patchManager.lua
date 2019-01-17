@@ -165,7 +165,7 @@ local DOWNLOAD_WORKING      = 1  --正在下载
 -------------------------------------------------------------------
 local function downloadPatches(url, files, callback)
     for _, v in pairs(files) do
-        local www = url .. v.name
+        local www = url .. "/" .. v.name
 
         downloadPatchAsync:addBytesRequest(www, networkConfig.patchTimeout * 1000, function(bytes, size, completed)
             if bytes == nil then
