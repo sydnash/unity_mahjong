@@ -79,7 +79,9 @@ public class BuildManager : EditorWindow
 
         mCopyPatch = EditorGUILayout.Toggle("Copy To Patch Folder", mCopyPatch);
 
-        ReadPackageOutputPath();
+        if (string.IsNullOrEmpty(mPackagePath)) {
+            ReadPackageOutputPath();
+        }
         mBuildPackage = EditorGUILayout.Toggle("Build Package", mBuildPackage);
 
         EditorGUILayout.BeginHorizontal();
