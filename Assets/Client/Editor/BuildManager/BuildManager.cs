@@ -15,12 +15,15 @@ public class BuildManager : EditorWindow
     private BuildTarget mTargetPlatform = BuildTarget.StandaloneWindows64;
 #endif
 
+    private const string PATCH_PATH = "Patches";
+
     private static bool mDebug = true;
     private static bool mDevelopment = false;
     private static bool mBuildLua = true;
     private static bool mBuildBundle = true;
     private static bool mBuildPatch = false;
     private static Dictionary<string, string> mVersionDic = new Dictionary<string, string>();
+    private static bool mCopyPatch = false;
     private static bool mBuildPackage = true;
     private static string mPackagePath = string.Empty;
 
@@ -46,59 +49,59 @@ public class BuildManager : EditorWindow
         string numk = mDebug ? "num_debug" : "num_release";
         string urlk = mDebug ? "url_debug" : "url_release";
 
-        mTargetPlatform = (BuildTarget)EditorGUILayout.EnumPopup("Platform", mTargetPlatform);
-        bool development = EditorGUILayout.Toggle("Development", mDevelopment);
-        if (development != mDevelopment)
+        EditorGUILayout.BeginHorizontal();
         {
-            mDevelopment = development;
-            EditorUserBuildSettings.development = mDevelopment;
+            mTargetPlatform = (BuildTarget)EditorGUILayout.EnumPopup("Platform", mTargetPlatform);
+            bool development = EditorGUILayout.ToggleLeft("Development", mDevelopment, GUILayout.Width(100));
+            if (development != mDevelopment)
+            {
+                mDevelopment = development;
+                EditorUserBuildSettings.development = mDevelopment;
+            }
         }
+        EditorGUILayout.EndHorizontal();
+
         mBuildLua = EditorGUILayout.Toggle("Build Lua", mBuildLua);
         mBuildBundle = EditorGUILayout.Toggle("Build Bundle", mBuildBundle);
-        mBuildPatch = EditorGUILayout.Toggle("Build Patch", mBuildPatch);
+        mBuildPatch = EditorGUILayout.Toggle("Build Version & Patchlist", mBuildPatch);
 
-        if (mBuildPatch)
-        {
-            ParseDebug();
-            ReadVersion();
+        ParseDebug();
+        ReadVersion();
 
-            mVersionDic[numk] = EditorGUILayout.IntField("Ver Num", int.Parse(mVersionDic[numk])).ToString();
-            GUI.enabled = false;
-            mVersionDic[urlk] = EditorGUILayout.TextField("Ver Url", mVersionDic[urlk]);
-            GUI.enabled = true;
-        }
+        GUI.enabled = mBuildPatch;
+        mVersionDic[numk] = EditorGUILayout.IntField("Version Num", int.Parse(mVersionDic[numk])).ToString();
+        GUI.enabled = false;
+        string versionUrl = EditorGUILayout.TextField("Version Url", string.Format("{0}/{1}/{2}", mVersionDic[urlk], LuaConst.osDir, mVersionDic[numk]));
+        GUI.enabled = true;
 
+        mCopyPatch = EditorGUILayout.Toggle("Copy To Patch Folder", mCopyPatch);
+
+        ReadPackageOutputPath();
         mBuildPackage = EditorGUILayout.Toggle("Build Package", mBuildPackage);
 
-        if (mBuildPackage)
+        EditorGUILayout.BeginHorizontal();
         {
-            ReadPackageOutputPath();
+            GUI.enabled = mBuildPackage;
+            EditorGUILayout.TextField("Package Path", mPackagePath);
+            GUI.enabled = true;
 
-            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("...", GUILayout.Width(30)))
             {
-                GUI.enabled = false;
-                EditorGUILayout.TextField("Package Path", mPackagePath);
-                GUI.enabled = true;
+                string packagePath = EditorUtility.SaveFolderPanel("Build", mPackagePath, string.Empty);
 
-                if (GUILayout.Button("...", GUILayout.Width(30)))
+                if (!string.IsNullOrEmpty(packagePath) && packagePath != mPackagePath)
                 {
-                    string packagePath = EditorUtility.SaveFolderPanel("Build", mPackagePath, string.Empty);
-
-                    if (!string.IsNullOrEmpty(packagePath) && packagePath != mPackagePath)
-                    {
-                        mPackagePath = packagePath;
-                    }
+                    mPackagePath = packagePath;
                 }
             }
-            EditorGUILayout.EndHorizontal();
         }
+        EditorGUILayout.EndHorizontal();
 
         GUILayout.Space(10);
 
         if (GUILayout.Button("Build"))
         {
-            string tips = string.Format("Are you sure to build package?\ndebug is {0}\nver is {1}", mDebug, mVersionDic[numk]);
-            if (EditorUtility.DisplayDialog("Build", tips, "OK", "Cancel"))
+            if (EditorUtility.DisplayDialog("Build", "Are you sure to build package?", "OK", "Cancel"))
             {
                 WritePackageOutputPath();
 
@@ -122,30 +125,34 @@ public class BuildManager : EditorWindow
                     WriteVersion();
 
                     Build.BuildPatchlist();
-                    Build.BuildVersion(int.Parse(mVersionDic[numk]), mVersionDic[urlk]);
+                    Build.BuildVersion(int.Parse(mVersionDic[numk]), versionUrl);
+                    finishedText = "Build asset bundles finished";
+                }
 
-                    string patchPath = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, "Patches");
+                if (mCopyPatch)
+                {
+                    string patchPath = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, PATCH_PATH);
                     LFS.MakeDir(patchPath);
 
-                    string osPath = LFS.CombinePath(patchPath, mVersionDic[numk], LFS.OS_PATH);
-                    LFS.MakeDir(osPath);
+                    string verPath = LFS.CombinePath(patchPath, mVersionDic[numk]);
+                    LFS.MakeDir(verPath);
 
                     EditorUtility.DisplayProgressBar("Build", "Copy lua fils", 0.45f);
 
                     string luaFrom = LFS.CombinePath(Application.dataPath, "Resources/Lua");
-                    string luaTo = LFS.CombinePath(osPath, "Lua");
+                    string luaTo = LFS.CombinePath(verPath, "Lua");
                     LFS.CopyDir(luaFrom, luaTo, ".meta");
 
                     EditorUtility.DisplayProgressBar("Build", "Copy asset bundle fils", 0.9f);
 
                     string resFrom = LFS.CombinePath(Application.streamingAssetsPath, "Res");
-                    string resTo = LFS.CombinePath(osPath, "Res");
+                    string resTo = LFS.CombinePath(verPath, "Res");
                     LFS.CopyDir(resFrom, resTo, ".meta");
 
                     EditorUtility.DisplayProgressBar("Build", "Copy patchlist fil", 0.95f);
 
                     string patchlistFrom = LFS.CombinePath(Application.dataPath, "Resources", Build.PATCHLIST_FILE_NAME);
-                    string patchlistTo = LFS.CombinePath(osPath, Build.PATCHLIST_FILE_NAME);
+                    string patchlistTo = LFS.CombinePath(verPath, Build.PATCHLIST_FILE_NAME);
                     LFS.CopyFile(patchlistFrom, patchlistTo);
 
                     EditorUtility.DisplayProgressBar("Build", "Copy version file", 1.0f);
@@ -155,7 +162,7 @@ public class BuildManager : EditorWindow
                     LFS.CopyFile(versionFrom, versionTo);
 
                     EditorUtility.ClearProgressBar();
-                    finishedText = "Build patch files finished";
+                    finishedText = "Copy patch files finished";
                 }
 
                 AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
@@ -175,7 +182,7 @@ public class BuildManager : EditorWindow
                         case BuildTarget.Android:
                             string debug = mDebug ? "_debug" : "_release";
                             string dev = mDevelopment ? "_dev" : "";
-                            
+
                             packageName = timestamp + "_mahjong_" + debug + dev + ".apk";
                             PlayerSettings.Android.keystoreName = Application.dataPath + "/Keystore/mahjong.keystore";
                             PlayerSettings.Android.keystorePass = "com.bshy.mahjong";

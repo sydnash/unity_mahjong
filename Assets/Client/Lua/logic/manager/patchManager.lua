@@ -72,12 +72,14 @@ local function filterPatchList(offlinePatchlistText, onlinePatchlistText, ignore
     local oftb = loadstring(offlinePatchlistText)()
     local ontb = loadstring(onlinePatchlistText)()
 
-    for k, v in pairs(ontb) do
-        if not ignores[k] then
-            local u = oftb[k]
+    if ontb ~= nil then
+        for k, v in pairs(ontb) do
+            if not ignores[k] then
+                local u = oftb[k]
 
-            if u == nil or v.hash ~= u.hash or v.size ~= u.size then
-                table.insert(retb, { name = k, size = v.size })
+                if u == nil or v.hash ~= u.hash or v.size ~= u.size then
+                    table.insert(retb, { name = k, size = v.size })
+                end
             end
         end
     end
@@ -125,7 +127,7 @@ local function checkPatches(callback)
             return
         end
 
-        local url = onlineVersion.url .. LFS.OS_PATH .. "/"
+        local url = onlineVersion.url
 
         downloadOnlinePatchlistFile(url, function(onpt)
             local onlinePatchlistText = onpt

@@ -15,7 +15,7 @@ local gameConfig = {
 local appConfig = require("config.appConfig")
 
 if appConfig.debug then
-    gameConfig.patchEnabled = true     --不启用热更
+    gameConfig.patchEnabled = false     --不启用热更
     gameConfig.serverList   = {
         localServer     = true,
         testServer      = true,

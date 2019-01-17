@@ -44,7 +44,7 @@ public class BundlePool
     /// <summary>
     /// 
     /// </summary>
-    private static readonly string SUB_PATH = LFS.CombinePath("Res", LFS.OS_PATH);
+    private const string SUB_PATH = "Res";
 
     #endregion
 

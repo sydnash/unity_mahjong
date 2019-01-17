@@ -39,7 +39,7 @@ public class DependentBundlePool
     /// <summary>
     /// 
     /// </summary>
-    private static readonly string SUB_PATH = LFS.CombinePath("Res", LFS.OS_PATH);
+    private const string SUB_PATH = "Res";
 
     /// <summary>
     /// 
@@ -140,9 +140,7 @@ public class DependentBundlePool
         if (mDependentManifest != null)
             return;
 
-        string dependencies = LFS.OS_PATH;// LFS.CombinePath(SUB_PATH, LFS.OS_PATH);
-        AssetBundle ab = BundlePool.instance.Load(dependencies);
-
+        AssetBundle ab = BundlePool.instance.Load("Res");
         mDependentManifest = ab.LoadAsset<AssetBundleManifest>(ASSETBUNDLE_MANIFEST);
     }
 
