@@ -15,7 +15,7 @@ local seatTypeName = {
     [seatType.left]     = "上家",
 }
 local detailTypeName = {
-    [opType.gang.detail.angang]                     = {"刮风", "被刮风"},
+    [opType.gang.detail.angang]                     = {"下雨", "被下雨"},
     [opType.gang.detail.bagangwithmoney]            = {"刮风", "被刮风"},
     [opType.gang.detail.minggang]                   = {"下雨", "被下雨"},
     [opType.gang.detail.zhuanyu]                    = {"转雨", "转雨"},

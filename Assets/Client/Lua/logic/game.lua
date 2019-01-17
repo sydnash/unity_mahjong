@@ -742,9 +742,18 @@ function game:destroy()
         end
     end
 
-    self.deskUI = nil
-    self.operationUI = nil
-    self.exitDeskUI = nil
+    if self.deskUI ~= nil then
+        self.deskUI:close()
+        self.deskUI = nil
+    end
+    if self.operationUI ~= nil then
+        self.operationUI:close()
+        self.operationUI = nil
+    end
+    if self.exitDeskUI ~= nil then
+        self.exitDeskUI:close()
+        self.exitDeskUI = nil
+    end
 
     self.deskId = nil
     clientApp.currentDesk = nil

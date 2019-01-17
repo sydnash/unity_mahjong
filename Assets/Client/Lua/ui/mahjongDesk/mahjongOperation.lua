@@ -17,10 +17,10 @@ mahjongOperation.seats = {
     [seatType.mine] = { 
         [mahjongGame.cardType.idle] = { pos = Vector3.New( 0.235, 0.156, -0.268), rot = Quaternion.Euler(180, 0, 0), len = 0.50 },
         [mahjongGame.cardType.shou] = { 
-            [gameMode.normal]   = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
-            [gameMode.playback] = { pos = Vector3.New(-0.204, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
+            [gameMode.normal]   = { pos = Vector3.New(-0.226, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
+            [gameMode.playback] = { pos = Vector3.New(-0.226, 0.175, -0.355), rot = Quaternion.Euler(-100, 0, 0), },
         },
-        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 1, 0.156, -0.340), rot = Quaternion.Euler(0, 0, 0), },
+        [mahjongGame.cardType.peng] = { pos = Vector3.New(-0.400 + mahjong.w * 0, 0.156, -0.340), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.chu ] = { pos = Vector3.New(-0.074, 0.156, -0.100), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.hu  ] = { pos = Vector3.New( 0.290, 0.156, -0.250), rot = Quaternion.Euler(0, 0, 0), },
         [mahjongGame.cardType.huan] = {
@@ -86,12 +86,15 @@ local mainCameraParams = {
     fov      = 30,
 }
 local inhandCameraParams = {
-    position = Vector3.New(0, 0.315, -1),
-    size = 0.165,
+    position = Vector3.New(0, 0.291, -1),
+    size = 0.14,
 }
 
 local COUNTDOWN_SECONDS_C = 20
 local PLANE_BREATHE_SECONDS = 1.5
+
+local panleDarkTex = nil
+local panleHighlightTex = nil
 
 -------------------------------------------------------------------------------
 -- 交换两个牌，包括位置、旋转、缩放、可见性及阴影模式
@@ -160,10 +163,6 @@ function mahjongOperation:onInit()
     local mahjongsRootClip = animationManager.load("mahjongroot", "mahjongroot")
     self.mahjongsRootAnim:AddClip(mahjongsRootClip, mahjongsRootClip.name)
     self.mahjongsRootAnim.clip = mahjongsRootClip
-    --圆盘
-    local circle = find("mahjong/planes/cricle/Cricle_0")
-    local circleMat = getComponentU(circle.gameObject, typeof(UnityEngine.MeshRenderer)).sharedMaterial
-    circleMat.mainTexture = textureManager.load(string.empty, "deskfw")
     --方向指示节点
     self.planeRoot = find("mahjong/planes")
     self:rotatePlanes()
@@ -180,6 +179,12 @@ function mahjongOperation:onInit()
         local mat = mesh.sharedMaterial
 
         self.planeMats[i] = mat
+    end
+    if panleDarkTex == nil then
+        panleDarkTex = textureManager.load(string.empty, "deskfw")
+    end
+    if panleHighlightTex == nil then
+        panleHighlightTex = textureManager.load(string.empty, "deskfw_gl")
     end
     self:darkPlanes()
     --骰子节点和动画
@@ -395,7 +400,7 @@ function mahjongOperation:onGameStart()
         for i=1, self.game:getTotalCardsCount() do
             local m = self.idleMahjongs[i]
             m:show()
-            m:setPickabled(false)
+--            m:setPickabled(false)
         end
     end)
 
@@ -1799,7 +1804,7 @@ function mahjongOperation:computeMyPengStartPos()
     local project = Vector3.Project(direct, sceneCamera.transform.forward)
 
     local wpPos = sceneCamera:ScreenToWorldPoint(Vector3.New(scPos.x, scPos.y, project.magnitude))
-    seat[mahjongGame.cardType.peng].pos = Vector3.New(wpPos.x + mahjong.w * -0.5, pengPos.y, pengPos.z)
+    seat[mahjongGame.cardType.peng].pos = Vector3.New(wpPos.x + mahjong.w * 0.7, pengPos.y, pengPos.z)
 end
 -------------------------------------------------------------------------------
 -- 调整手牌位置
@@ -2084,18 +2089,14 @@ function mahjongOperation:highlightPlaneByAcId(acId)
         local diff = (seat ~= nil) and (seat - base + 4) % 4 or nil
 
         for s, m in pairs(self.planeMats) do
-            if m.mainTexture ~= nil then
-                textureManager.unload(m.mainTexture)
-            end
-
             if diff ~= nil and s == diff then
-                m.mainTexture = textureManager.load(string.empty, "deskfw_gl")
+                m.mainTexture = panleHighlightTex
 
                 self.curPlaneMat = m
                 self.curPlaneToD = true
                 self.planeTick = time.realtimeSinceStartup()
             else
-                m.mainTexture = textureManager.load(string.empty, "deskfw")
+                m.mainTexture = panleDarkTex
             end
         end
     end
@@ -2106,11 +2107,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:darkPlanes()
     for _, m in pairs(self.planeMats) do
-        if m.mainTexture ~= nil then
-            textureManager.unload(m.mainTexture)
-        end
-
-        m.mainTexture = textureManager.load(string.empty, "deskfw")
+        m.mainTexture = panleDarkTex
     end
 
     self.curPlaneMat = nil
@@ -2211,6 +2208,7 @@ end
 -- 销毁
 -------------------------------------------------------------------------------
 function mahjongOperation:onDestroy()
+    log("mahjongOperation:onDestroy")
     if self.game.mode == gameMode.normal then
         touch.removeListener()
     end
@@ -2232,13 +2230,22 @@ function mahjongOperation:onDestroy()
         end
     end
 
-    for _, v in pairs(self.planeMats) do
-        if v.mainTexture ~= nil then
-            textureManager.unload(v.mainTexture)
-            v.mainTexture = nil
+    for _, m in pairs(self.planeMats) do
+        if m.mainTexture ~= nil then
+            m.mainTexture = nil
+            m.color = Color.white
         end
     end
     self.curPlaneMat = nil
+
+    if panleDarkTex ~= nil then
+        textureManager.unload(panleDarkTex)
+        panleDarkTex = nil
+    end
+    if panleHighlightTex ~= nil then
+        textureManager.unload(panleHighlightTex)
+        panleHighlightTex = nil
+    end
 
     self.diceRoot:show()
     self.centerGlass:show()
@@ -2588,7 +2595,7 @@ function mahjongOperation:showChuPaiArrow()
             local tid = mahjongType.getMahjongTypeId(mahjong.id)
             if mjTid[tid] then
                 local pos = mahjong:getPosition()
-                pos.y = pos.y + mahjong.h * 1.15
+                pos.y = pos.y + mahjong.h * 1
                 pos = self:worldToUIPos(pos, self.mChuHuHints[usedIdx], inhandCamera)
                 self.mChuHuHints[usedIdx]:setAnchoredPosition(pos)
                 self.mChuHuHints[usedIdx]:show()
