@@ -1080,11 +1080,20 @@ function mahjongOperation:onChosedChuPai()
     local id = self.selectedMahjong.id
 
     if player.que >= 0 then
+        local function isQue(mj)
+            local typ = mahjongType.getMahjongTypeById(mj.id)
+            if typ.class == player.que then
+                return true
+            end
+            return false
+        end
         local chuCardType = mahjongType.getMahjongTypeById(id)
         if chuCardType.class ~= player.que then
+            if self.mo and isQue(self.mo) then
+                return false
+            end
             for _, mj in pairs(self.inhandMahjongs[self.game.mainAcId]) do
-                local typ = mahjongType.getMahjongTypeById(mj.id)
-                if typ.class == player.que then
+                if isQue(mj) then
                     return false
                 end
             end

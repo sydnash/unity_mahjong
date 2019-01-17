@@ -199,7 +199,7 @@ function mahjongGame:onGameStartHandler(msg)
 
     if self.mode == gameMode.normal then
         -- self.messageHandlers:add(tweenDelay.new(2.5))
-        self:addDelay(2.5)
+        self:addDelay(1.0)
     end
 end
 
