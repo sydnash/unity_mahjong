@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/mj/tdqp/Assets/Client/Artistic/Atlas/DeskOperationUI/Atlas/DeskOperationUI.tps</string>
+        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/DeskOperationUI/Atlas/DeskOperationUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -99,7 +99,7 @@
             <key>width</key>
             <int>1024</int>
             <key>height</key>
-            <int>512</int>
+            <int>320</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -108,7 +108,7 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
             <false/>
             <key>maxRects</key>
