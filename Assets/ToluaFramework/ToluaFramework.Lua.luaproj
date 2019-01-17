@@ -27,6 +27,7 @@
     <Folder Include="Lua\config\" />
     <Folder Include="Lua\manager\" />
     <Folder Include="Lua\network\" />
+    <Folder Include="Lua\thread\" />
     <Folder Include="Lua\tween\" />
     <Folder Include="Lua\ui\" />
     <Folder Include="Lua\ui\common\" />
@@ -60,8 +61,11 @@
     <Compile Include="Lua\manager\tweenManager.lua" />
     <Compile Include="Lua\manager\viewManager.lua" />
     <Compile Include="Lua\network\http.lua" />
+    <Compile Include="Lua\network\httpAsync.lua" />
     <Compile Include="Lua\network\tcp.lua" />
     <Compile Include="Lua\std.lua" />
+    <Compile Include="Lua\thread\synclock.lua" />
+    <Compile Include="Lua\thread\thread.lua" />
     <Compile Include="Lua\tween\tweenDelay.lua" />
     <Compile Include="Lua\tween\tweenFunction.lua" />
     <Compile Include="Lua\tween\tweenParallel.lua" />
