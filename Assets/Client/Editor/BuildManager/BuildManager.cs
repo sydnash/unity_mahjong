@@ -66,7 +66,10 @@ public class BuildManager : EditorWindow
         mBuildPatch = EditorGUILayout.Toggle("Build Version & Patchlist", mBuildPatch);
 
         ParseDebug();
-        ReadVersion();
+        if (mVersionDic.Count < 2)
+        {
+            ReadVersion();
+        }
 
         GUI.enabled = mBuildPatch;
         mVersionDic[numk] = EditorGUILayout.IntField("Version Num", int.Parse(mVersionDic[numk])).ToString();
