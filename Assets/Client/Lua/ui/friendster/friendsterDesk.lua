@@ -49,7 +49,7 @@ function friendsterDesk:set(data)
 
     if self.data ~= nil then
 --        log(table.tostring(self.data))
-        self.mType:setText(gameName[self.data.gameType])
+        self.mType:setText(gameName[self.data.cityType].games[self.data.gameType])
         self.mNum:setText(string.format("（第%d/%d局）", self.data.playedCount, self.data.totalCount))
         self:setState(self.data.state)
 

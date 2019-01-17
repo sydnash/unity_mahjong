@@ -74,10 +74,13 @@ local function networkDisconnectedCallback(idx)
             return
         end
 
-        enterDesk(cityType, deskId, function(ok)
+        enterDesk(cityType, deskId, function(ok, func)
             if not ok then
                 local ui = require("ui.lobby").new()
                 ui:show()
+            end
+            if func then
+                func()
             end
         end)
     end)

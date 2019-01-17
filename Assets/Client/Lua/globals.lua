@@ -293,13 +293,13 @@ function checkGame(cityType, gameType)
         end
     end
 
-    return false, string.format("%s地区暂不支持%s", cityName[cityType], gameName[gameType])
+    return false, string.format("%s地区暂不支持%s", cityName[cityType], gameName[citytype].games[gameType])
 end
 
 -------------------------------------------------------------
 -- 进入桌子
 -------------------------------------------------------------
-function enterDesk(cityType, deskId, callback)
+function enterDesk(cityType, deskId, callback, isFromLogining)
     showWaitingUI("正在进入房间，请稍候...")
 
     --开始预加载资源
@@ -340,14 +340,25 @@ function enterDesk(cityType, deskId, callback)
         local ok, errText = checkGame(msg.GameType, msg.Config.Game)
         if not ok then
             closeWaitingUI()
-            showMessageUI(string.format("%s, 可点击确定下载<color=red>天地长牌</color>进入游戏", errText), 
-                          function()
-                              callback(false)
-                              platformHelper.openExplorer("http://www.cdbshy.com")
-                          end,
-                          function()
-                              callback(false)
-                          end)
+            if isFromLogining then
+                callback(false, function()
+                    showMessageUI(string.format("%s, 可点击确定下载<color=red>天地长牌</color>进入游戏", errText), 
+                                function()
+                                    platformHelper.openExplorer("http://www.cdbshy.com")
+                                end,
+                                function()
+                                end)
+                end)
+            else
+                showMessageUI(string.format("%s, 可点击确定下载<color=red>天地长牌</color>进入游戏", errText), 
+                            function()
+                                callback(false)
+                                platformHelper.openExplorer("http://www.cdbshy.com")
+                            end,
+                            function()
+                                callback(false)
+                            end)
+            end
             return
         end
 
@@ -514,12 +525,17 @@ function loginServer(callback, func)
                     lobby:show()
 
                     callback(true)
-                    loading:close()
                 else -- 如有在房间内则跳过大厅直接进入房间
                     loading:setText("正在进入房间，请稍候")
-                    enterDesk(cityType, deskId, function(ok)
-                        callback(ok)
-                    end)
+                    enterDesk(cityType, deskId, function(ok, func)
+                        local lobby = require("ui.lobby").new()
+                        lobby:show()
+                        if func then
+                            func()
+                        end
+                        callback(true)
+                        loading:close()
+                    end, true)
                 end
             end
         end)

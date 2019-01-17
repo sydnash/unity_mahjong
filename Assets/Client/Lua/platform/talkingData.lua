@@ -10,6 +10,11 @@ local account = nil
 
 local hasTalkingDataSDK = TalkingDataGA
 
+talkingData.eventType = {
+    chat                    = "chat",
+    clicklocation           = "clicklocation",
+}
+
 function talkingData.start()
     if not hasTalkingDataSDK then
         return

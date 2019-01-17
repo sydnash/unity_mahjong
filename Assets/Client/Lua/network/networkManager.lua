@@ -654,7 +654,7 @@ function networkManager.sendChatMessage(ct, chatContent, callback)
         param = string.format("%s_%s", tostring(ct), tostring(chatContent))
     end
 
-    talkingData.event("chat", {
+    talkingData.event(talkingData.eventType.chat, {
         Type = param,
     })
     -- talkingData.onPurchase("item", 1, 1)
@@ -666,6 +666,16 @@ end
 -------------------------------------------------------------------
 function networkManager.queryFriendsterList(callback)
     send(protoType.cs.queryFriendsterList, table.empty, callback)
+end
+
+function networkManager.friendsterGameSetting(friendsterId, typ, msg, callback)
+    local data = {
+        ClubId      = friendsterId,
+        Type        = typ,
+        Settings    = msg, 
+    }
+    log("send data : " .. table.tostring(data))
+    send(protoType.cs.friendsterGameSetting, data, callback)
 end
 
 -------------------------------------------------------------------

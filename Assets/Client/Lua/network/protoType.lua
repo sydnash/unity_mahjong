@@ -36,6 +36,7 @@ return {
         takeoutFromFriendsterBank   = "CmdType.fly.CS.WithdrawFromClub",
         queryFriendsterStatistics   = "CmdType.fly.CS_GetClubDeskHistory",
         replyFriendsterRequest      = "CmdType.fly.CS.ManageApplyRequest",
+        friendsterGameSetting       = "CmdType.fly.CS.SetClubCreateCfg",
         dissolveFriendsterDesk      = "CmdType.fly.CS.ClubCloseDesk",
         mailOp                      = "CmdType.fly.CS.MailOp",
         proposerQuicklyStart        = "CmdType.fly.CS.ProposerQuicklyStart",
