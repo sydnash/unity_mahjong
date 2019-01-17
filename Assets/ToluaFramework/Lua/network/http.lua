@@ -14,7 +14,8 @@ function http.createAsync(threadCount)
         threadCount = 1
     end
 
-    return httpAsync.new(HttpDispatcher.instance:CreateHttpAsync(threadCount))
+    local t = httpAsync.new(HttpDispatcher.instance:CreateHttpAsync(threadCount))
+    return t
 end
 
 function http.destroyAsync(async)
