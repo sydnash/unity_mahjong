@@ -48,7 +48,7 @@ function httpAsync:addTextureRequest(url, timeout, callback)
     if self.async ~= nil then
         local buffer = nil
         local bufferOffset = 0
-        log("httpAsync:addTextureRequest, url = " .. url)
+
         self.async:AddRequest(url, timeout, function(bytes, totalSize, completed)
             if bytes == nil then
                 callback(nil, nil)

@@ -82,7 +82,7 @@ public class HttpAsync
         for (int i = 0; i < count; i++)
         {
             mHttps[i] = new Http();
-            mHttps[i].token.working = mWorking;
+            mHttps[i].working = mWorking;
 
             mThreads[i] = new Thread(OnThread);
             mThreads[i].Start(mHttps[i]);
@@ -154,7 +154,7 @@ public class HttpAsync
        
         foreach (Http http in mHttps)
         {
-            http.token.working = mWorking;
+            http.working = mWorking;
         }
 
         mEvent.Close();

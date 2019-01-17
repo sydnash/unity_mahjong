@@ -5,18 +5,6 @@ using System.Security.Cryptography.X509Certificates;
 
 public class Http
 {
-    #region Class
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public class Token
-    {
-        public bool working = false;
-    }
-
-    #endregion
-
     #region Data
 
     /// <summary>
@@ -27,7 +15,7 @@ public class Http
     /// <summary>
     /// 
     /// </summary>
-    private Token mToken = new Token();
+    private bool mWorking = false;
 
     /// <summary>
     /// 
@@ -42,9 +30,10 @@ public class Http
     /// 
     /// </summary>
     /// <returns></returns>
-    public Token token
+    public bool working
     {
-        get { return mToken; }
+        set { mWorking = value; }
+        get { return mWorking; }
     }
 
     /// <summary>
@@ -77,10 +66,10 @@ public class Http
                 int contentLength = (int)response.ContentLength;
                 System.IO.Stream responseStream = response.GetResponseStream();
 
-                mToken.working = true;
+                working = true;
                 int downloadLength = 0;
 
-                while (mToken.working && downloadLength < contentLength)
+                while (working && downloadLength < contentLength)
                 {
                     int size = Math.Min(mDownloadBuffer.Length, contentLength - downloadLength);
                     size = responseStream.Read(mDownloadBuffer, 0, size);
@@ -126,7 +115,7 @@ public class Http
         finally
         {
             request.Abort();
-            mToken.working = false;
+            working = false;
         }
     }
 
