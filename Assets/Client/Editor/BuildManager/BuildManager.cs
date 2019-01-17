@@ -48,6 +48,12 @@ public class BuildManager : EditorWindow
         string numk = mDebug ? "num_debug" : "num_release";
         string urlk = mDebug ? "url_debug" : "url_release";
 
+        if (mVersionDic.Count < 2)
+        {
+            ParseDebug();
+            ReadVersion();
+        }
+
         mTargetPlatform = (BuildTarget)EditorGUILayout.EnumPopup("Platform", mTargetPlatform);
         mDevelopment    = EditorGUILayout.Toggle("Development", mDevelopment);
         mBuildLua       = EditorGUILayout.Toggle("Build Lua", mBuildLua);
