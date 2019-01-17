@@ -15,25 +15,24 @@ public class BuildManager : EditorWindow
     private BuildTarget mTargetPlatform = BuildTarget.StandaloneWindows64;
 #endif
 
-    private bool mDebug = true;
-    private bool mDevelopment = false;
-    private bool mBuildLua = true;
-    private bool mBuildBundle = true;
-    private bool mBuildPatch = false;
-    private Dictionary<string, string> mVersionDic = new Dictionary<string, string>();
-    private bool mBuildPackage = true;
-    private string mPackagePath = string.Empty;
+    private static bool mDebug = true;
+    private static bool mDevelopment = false;
+    private static bool mBuildLua = true;
+    private static bool mBuildBundle = true;
+    private static bool mBuildPatch = false;
+    private static Dictionary<string, string> mVersionDic = new Dictionary<string, string>();
+    private static bool mBuildPackage = true;
+    private static string mPackagePath = string.Empty;
 
     [MenuItem("Window/Build Manager #&B", priority = 2051)]
     private static void Init()
     {
-        BuildManager window = EditorWindow.GetWindow(typeof(BuildManager)) as BuildManager;
+        mDevelopment = EditorUserBuildSettings.development;
+        ParseDebug();
+        ReadVersion();
+        ReadPackageOutputPath();
 
-        window.mDevelopment = EditorUserBuildSettings.development;
-        window.ParseDebug();
-        window.ReadVersion();
-        window.ReadPackageOutputPath();
-        
+        BuildManager window = EditorWindow.GetWindow(typeof(BuildManager)) as BuildManager;
         window.Show();
     }
 
@@ -46,12 +45,6 @@ public class BuildManager : EditorWindow
 
         string numk = mDebug ? "num_debug" : "num_release";
         string urlk = mDebug ? "url_debug" : "url_release";
-
-        if (mVersionDic.Count < 2)
-        {
-            ParseDebug();
-            ReadVersion();
-        }
 
         mTargetPlatform = (BuildTarget)EditorGUILayout.EnumPopup("Platform", mTargetPlatform);
         bool development = EditorGUILayout.Toggle("Development", mDevelopment);
@@ -66,30 +59,32 @@ public class BuildManager : EditorWindow
 
         if (mBuildPatch)
         {
+            ParseDebug();
+            ReadVersion();
+
             mVersionDic[numk] = EditorGUILayout.IntField("Ver Num", int.Parse(mVersionDic[numk])).ToString();
             GUI.enabled = false;
             mVersionDic[urlk] = EditorGUILayout.TextField("Ver Url", mVersionDic[urlk]);
             GUI.enabled = true;
-
-            if (GUILayout.Button("Refresh"))
-            {
-                ParseDebug();
-                ReadVersion();
-            }
         }
 
         mBuildPackage = EditorGUILayout.Toggle("Build Package", mBuildPackage);
 
         if (mBuildPackage)
         {
+            ReadPackageOutputPath();
+
             EditorGUILayout.BeginHorizontal();
             {
+                GUI.enabled = false;
                 EditorGUILayout.TextField("Package Path", mPackagePath);
+                GUI.enabled = true;
+
                 if (GUILayout.Button("...", GUILayout.Width(30)))
                 {
                     string packagePath = EditorUtility.SaveFolderPanel("Build", mPackagePath, string.Empty);
 
-                    if (!string.IsNullOrEmpty(packagePath))
+                    if (!string.IsNullOrEmpty(packagePath) && packagePath != mPackagePath)
                     {
                         mPackagePath = packagePath;
                     }
@@ -139,13 +134,13 @@ public class BuildManager : EditorWindow
 
                     string luaFrom = LFS.CombinePath(Application.dataPath, "Resources/Lua");
                     string luaTo = LFS.CombinePath(osPath, "Lua");
-                    LFS.CopyDir(luaFrom, luaTo);
+                    LFS.CopyDir(luaFrom, luaTo, ".meta");
 
                     EditorUtility.DisplayProgressBar("Build", "Copy asset bundle fils", 0.9f);
 
                     string resFrom = LFS.CombinePath(Application.streamingAssetsPath, "Res");
                     string resTo = LFS.CombinePath(osPath, "Res");
-                    LFS.CopyDir(resFrom, resTo);
+                    LFS.CopyDir(resFrom, resTo, ".meta");
 
                     EditorUtility.DisplayProgressBar("Build", "Copy patchlist fil", 0.95f);
 
@@ -218,7 +213,7 @@ public class BuildManager : EditorWindow
     /// <summary>
     /// 
     /// </summary>
-    private void ParseDebug()
+    private static void ParseDebug()
     {
         string path = LFS.CombinePath(Application.dataPath, "ToluaFramework/Lua/config/appConfig.lua");
         string[] lines = File.ReadAllLines(path);
@@ -247,7 +242,7 @@ public class BuildManager : EditorWindow
     /// <summary>
     /// 
     /// </summary>
-    private void ReadVersion()
+    private static void ReadVersion()
     {
         string path = LFS.CombinePath(Application.dataPath, "Client/Editor/BuildManager/version.txt");
         string[] lines = File.ReadAllLines(path);
@@ -286,7 +281,7 @@ public class BuildManager : EditorWindow
     /// <summary>
     /// 
     /// </summary>
-    private void ReadPackageOutputPath()
+    private static void ReadPackageOutputPath()
     {
         string path = LFS.CombinePath(Application.dataPath, "Client/Editor/BuildManager/output.txt");
         if (File.Exists(path))

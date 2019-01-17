@@ -96,7 +96,7 @@ public class Http : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private Thread[] mThreads = new Thread[5];
+    private Thread[] mThreads = new Thread[10];
 
     /// <summary>
     /// 

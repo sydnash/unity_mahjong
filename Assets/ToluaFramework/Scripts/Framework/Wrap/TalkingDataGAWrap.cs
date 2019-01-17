@@ -7,6 +7,8 @@ public class TalkingDataGAWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(TalkingDataGA), typeof(System.Object));
+		L.RegFunction("AttachCurrentThread", AttachCurrentThread);
+		L.RegFunction("DetachCurrentThread", DetachCurrentThread);
 		L.RegFunction("GetDeviceId", GetDeviceId);
 		L.RegFunction("OnStart", OnStart);
 		L.RegFunction("OnEnd", OnEnd);
@@ -35,6 +37,36 @@ public class TalkingDataGAWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: TalkingDataGA.New");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AttachCurrentThread(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			TalkingDataGA.AttachCurrentThread();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int DetachCurrentThread(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			TalkingDataGA.DetachCurrentThread();
+			return 0;
 		}
 		catch (Exception e)
 		{
