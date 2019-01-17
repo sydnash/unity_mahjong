@@ -654,7 +654,7 @@ function networkManager.sendChatMessage(ct, chatContent, callback)
         param = string.format("%s_%s", tostring(ct), tostring(chatContent))
     end
 
-    talkingData.event("chat", {
+    talkingData.event(talkingData.eventType.chat, {
         Type = param,
     })
     -- talkingData.onPurchase("item", 1, 1)

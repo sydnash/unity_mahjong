@@ -215,6 +215,8 @@ end
 
 function desk:onPositionClickedHandler()
     local location = locationManager.getData()
+    talkingData.event(talkingData.eventType.clicklocation, {
+    })
     if not location.status then
         local ui = require("ui.location").new(self.game)
         ui:show()
