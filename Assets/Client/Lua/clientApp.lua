@@ -312,9 +312,7 @@ end
 --
 ----------------------------------------------------------------
 function clientApp:quit()
-    if self.currentDesk ~= nil then
-        self.currentDesk:destroy()
-    end
+    closeAllUI()
 
     locationManager.stop()
     talkingData.stop()
