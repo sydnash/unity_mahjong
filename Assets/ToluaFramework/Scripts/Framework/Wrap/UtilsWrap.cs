@@ -11,6 +11,7 @@ public class UtilsWrap
 		L.RegFunction("BytesToString", BytesToString);
 		L.RegFunction("Int32ToBytes", Int32ToBytes);
 		L.RegFunction("BytesToInt32", BytesToInt32);
+		L.RegFunction("BytesToTexture2D", BytesToTexture2D);
 		L.RegFunction("NewByteArray", NewByteArray);
 		L.RegFunction("NewEmptyByteArray", NewEmptyByteArray);
 		L.RegFunction("CopyBytes", CopyBytes);
@@ -131,6 +132,25 @@ public class UtilsWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: Utils.BytesToInt32");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int BytesToTexture2D(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+			byte[] arg2 = ToLua.CheckByteBuffer(L, 3);
+			UnityEngine.Texture2D o = Utils.BytesToTexture2D(arg0, arg1, arg2);
+			ToLua.PushSealed(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{

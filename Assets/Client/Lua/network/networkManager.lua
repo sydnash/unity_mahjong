@@ -402,6 +402,14 @@ local function loginC(text, callback)
     end)
 end 
 
+local httpAsync = http.createAsync()
+
+local function getTextWithHttp(url, callback)
+    local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
+    httpAsync:addTextRequest(url, timeout, callback)
+    httpAsync:start()
+end
+
 -------------------------------------------------------------------
 -- 游客登录
 -------------------------------------------------------------------
@@ -409,10 +417,9 @@ function networkManager.loginGuest(callback)
     showWaitingUI("正在登录，请稍候")
 
     local form = table.toUrlArgs({ mac = getDeviceId() })
-    local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
 
     local loginURL = networkConfig.server.guestURL
-    http.getText(loginURL .. "?" .. form, timeout, function(text)
+    getTextWithHttp(loginURL .. "?" .. form, function(text)
         if string.isNilOrEmpty(text) then
             closeWaitingUI()
             callback(nil)
@@ -431,8 +438,7 @@ function networkManager.loginWx(callback)
         local form = table.toUrlArgs({ wxtoken = token, appclass = "mj" })
         gamepref.setWXRefreshToken(token)
         local loginURL = networkConfig.server.wechatURL
-        local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
-        http.getText(loginURL .. "?" .. form, timeout, function(text)
+        getTextWithHttp(loginURL .. "?" .. form, function(text)
             if string.isNilOrEmpty(text) then
                 closeWaitingUI()
                 callback(nil)
@@ -459,9 +465,7 @@ function networkManager.loginWx(callback)
         showWaitingUI("正在登录，请稍候")
 
         local accessUrl = string.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code", resp.appid, resp.secret, resp.code)
-        local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
-
-        http.getText(accessUrl, timeout, function(text)
+        getTextWithHttp(accessUrl, function(text)
             if string.isNilOrEmpty(text) then
                 closeWaitingUI()
                 callback(nil)
@@ -499,8 +503,7 @@ end
 
 function networkManager.checkRefreshToken(token, cb)
     local refreshUrl = string.format("https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s", "wx2ca58653c3f50625", token)
-    local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
-    http.getText(refreshUrl, timeout, function(text)
+    getTextWithHttp(refreshUrl, timeout, function(text)
         if string.isNilOrEmpty(text) then
             cb(false)
         end

@@ -13,6 +13,7 @@ public class LFSWrap
 		L.RegFunction("WriteBytes", WriteBytes);
 		L.RegFunction("AppendText", AppendText);
 		L.RegFunction("AppendLine", AppendLine);
+		L.RegFunction("AppendBytes", AppendBytes);
 		L.RegFunction("ReadText", ReadText);
 		L.RegFunction("ReadBytes", ReadBytes);
 		L.RegFunction("ReadLines", ReadLines);
@@ -148,6 +149,23 @@ public class LFSWrap
 			string arg1 = ToLua.CheckString(L, 2);
 			System.Text.Encoding arg2 = (System.Text.Encoding)ToLua.CheckObject<System.Text.Encoding>(L, 3);
 			LFS.AppendLine(arg0, arg1, arg2);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AppendBytes(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
+			LFS.AppendBytes(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)
