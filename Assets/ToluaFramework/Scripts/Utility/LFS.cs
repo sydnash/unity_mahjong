@@ -45,7 +45,8 @@ public static class LFS
     }
 
     /// <summary>
-    /// 
+    /// 将文本写入文件
+    /// 如果该文件不存在则创建新文件，否则覆盖写入
     /// </summary>
     /// <param name="filename"></param>
     /// <param name="content"></param>
@@ -57,6 +58,76 @@ public static class LFS
 
             StreamWriter sw = new StreamWriter(filename, false, encode);
             sw.Write(content);
+            sw.Close();
+        }
+        catch (Exception ex)
+        {
+#if UNITY_EDITOR
+            Debug.LogError(ex.Message);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="content"></param>
+    public static void WriteBytes(string filename, byte[] content)
+    {
+        try
+        {
+            MakeDirByFilename(filename);
+            File.WriteAllBytes(filename, content);
+        }
+        catch (Exception ex)
+        {
+#if UNITY_EDITOR
+            Debug.LogError(ex.Message);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// 将文本写入文件
+    /// 如果该文件不存在则创建新文件，否则在文件尾部添加
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="content"></param>
+    /// <param name="encode"></param>
+    public static void AppendText(string filename, string content, Encoding encode)
+    {
+        try
+        {
+            MakeDirByFilename(filename);
+
+            StreamWriter sw = new StreamWriter(filename, true, encode);
+            sw.Write(content);
+            sw.Close();
+        }
+        catch (Exception ex)
+        {
+#if UNITY_EDITOR
+            Debug.LogError(ex.Message);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// 将文本作为独立一行写入文件
+    /// 如果该文件不存在则创建新文件，否则在文件尾部添加
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="content"></param>
+    /// <param name="encode"></param>
+    public static void AppendLine(string filename, string content, Encoding encode)
+    {
+        try
+        {
+            MakeDirByFilename(filename);
+
+            StreamWriter sw = new StreamWriter(filename, true, encode);
+            sw.WriteLine(content);
             sw.Close();
         }
         catch (Exception ex)
@@ -99,36 +170,6 @@ public static class LFS
     /// <summary>
     /// 
     /// </summary>
-    /// <returns></returns>
-    public static string ReadTextFromResources(string filename)
-    {
-        TextAsset asset = Resources.Load<TextAsset>(filename);
-        return (asset == null) ? null : asset.text;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="filename"></param>
-    /// <param name="content"></param>
-    public static void WriteBytes(string filename, byte[] content)
-    {
-        try
-        {
-            MakeDirByFilename(filename);
-            File.WriteAllBytes(filename, content);
-        }
-        catch (Exception ex)
-        {
-#if UNITY_EDITOR
-            Debug.LogError(ex.Message);
-#endif
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="filename"></param>
     /// <returns></returns>
     public static byte[] ReadBytes(string filename)
@@ -150,6 +191,43 @@ public static class LFS
         }
 
         return bytes;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="encode"></param>
+    /// <returns></returns>
+    public static string[] ReadLines(string filename, Encoding encode)
+    {
+        string[] lines = null;
+
+        try
+        {
+            if (File.Exists(filename))
+            {
+                lines = File.ReadAllLines(filename, encode);
+            }
+        }
+        catch (Exception ex)
+        {
+#if UNITY_EDITOR
+            Debug.LogError(ex.Message);
+#endif
+        }
+
+        return lines;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public static string ReadTextFromResources(string filename)
+    {
+        TextAsset asset = Resources.Load<TextAsset>(filename);
+        return (asset == null) ? null : asset.text;
     }
 
     /// <summary>
@@ -289,7 +367,7 @@ public static class LFS
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
-    public static void CopyDir(string from, string to)
+    public static void CopyDir(string from, string to, string exceptPostfix = null)
     {
         try
         {
@@ -305,11 +383,14 @@ public static class LFS
 
                     if (!IsDirectory(path))
                     {
-                        CopyFile(src, dst);
+                        if (!string.IsNullOrEmpty(exceptPostfix) && !path.EndsWith(exceptPostfix))
+                        {
+                            CopyFile(src, dst);
+                        }
                     }
                     else
                     {
-                        CopyDir(src, dst);
+                        CopyDir(src, dst, exceptPostfix);
                     }
                 }
             }

@@ -10,10 +10,13 @@ public class LFSWrap
 		L.RegFunction("CombinePath", CombinePath);
 		L.RegFunction("FileExist", FileExist);
 		L.RegFunction("WriteText", WriteText);
-		L.RegFunction("ReadText", ReadText);
-		L.RegFunction("ReadTextFromResources", ReadTextFromResources);
 		L.RegFunction("WriteBytes", WriteBytes);
+		L.RegFunction("AppendText", AppendText);
+		L.RegFunction("AppendLine", AppendLine);
+		L.RegFunction("ReadText", ReadText);
 		L.RegFunction("ReadBytes", ReadBytes);
+		L.RegFunction("ReadLines", ReadLines);
+		L.RegFunction("ReadTextFromResources", ReadTextFromResources);
 		L.RegFunction("MoveFile", MoveFile);
 		L.RegFunction("CopyFile", CopyFile);
 		L.RegFunction("RemoveFile", RemoveFile);
@@ -101,6 +104,59 @@ public class LFSWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int WriteBytes(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
+			LFS.WriteBytes(arg0, arg1);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AppendText(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			string arg0 = ToLua.CheckString(L, 1);
+			string arg1 = ToLua.CheckString(L, 2);
+			System.Text.Encoding arg2 = (System.Text.Encoding)ToLua.CheckObject<System.Text.Encoding>(L, 3);
+			LFS.AppendText(arg0, arg1, arg2);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AppendLine(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			string arg0 = ToLua.CheckString(L, 1);
+			string arg1 = ToLua.CheckString(L, 2);
+			System.Text.Encoding arg2 = (System.Text.Encoding)ToLua.CheckObject<System.Text.Encoding>(L, 3);
+			LFS.AppendLine(arg0, arg1, arg2);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int ReadText(IntPtr L)
 	{
 		try
@@ -119,14 +175,14 @@ public class LFSWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int ReadTextFromResources(IntPtr L)
+	static int ReadBytes(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			string o = LFS.ReadTextFromResources(arg0);
-			LuaDLL.lua_pushstring(L, o);
+			byte[] o = LFS.ReadBytes(arg0);
+			ToLua.Push(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -136,15 +192,16 @@ public class LFSWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int WriteBytes(IntPtr L)
+	static int ReadLines(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
 			string arg0 = ToLua.CheckString(L, 1);
-			byte[] arg1 = ToLua.CheckByteBuffer(L, 2);
-			LFS.WriteBytes(arg0, arg1);
-			return 0;
+			System.Text.Encoding arg1 = (System.Text.Encoding)ToLua.CheckObject<System.Text.Encoding>(L, 2);
+			string[] o = LFS.ReadLines(arg0, arg1);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
@@ -153,14 +210,14 @@ public class LFSWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int ReadBytes(IntPtr L)
+	static int ReadTextFromResources(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
-			byte[] o = LFS.ReadBytes(arg0);
-			ToLua.Push(L, o);
+			string o = LFS.ReadTextFromResources(arg0);
+			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}
 		catch (Exception e)
@@ -273,11 +330,27 @@ public class LFSWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			string arg0 = ToLua.CheckString(L, 1);
-			string arg1 = ToLua.CheckString(L, 2);
-			LFS.CopyDir(arg0, arg1);
-			return 0;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2)
+			{
+				string arg0 = ToLua.CheckString(L, 1);
+				string arg1 = ToLua.CheckString(L, 2);
+				LFS.CopyDir(arg0, arg1);
+				return 0;
+			}
+			else if (count == 3)
+			{
+				string arg0 = ToLua.CheckString(L, 1);
+				string arg1 = ToLua.CheckString(L, 2);
+				string arg2 = ToLua.CheckString(L, 3);
+				LFS.CopyDir(arg0, arg1, arg2);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: LFS.CopyDir");
+			}
 		}
 		catch (Exception e)
 		{
