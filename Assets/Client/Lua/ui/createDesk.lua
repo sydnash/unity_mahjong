@@ -66,7 +66,7 @@ function createDesk:refreshLeftList(c)
 end
 
 function createDesk:onSupportGameChanges(games)
-    if self.friendsterId and self.friendsterId > 0 and self.friendsterData.managerAcId == gamepref.player.acId  then
+    if self.friendsterId and self.friendsterId > 0 then
         local oric = table.clone(enableConfig[self.cityType])
         local c = table.clone(enableConfig[self.cityType])
         c.mahjong.enable = false
@@ -116,7 +116,7 @@ function createDesk:onInit()
         self.mLock:hide()
     end
     local c = table.clone(enableConfig[self.cityType])
-    if self.friendsterId and self.friendsterId > 0 and self.friendsterData.managerAcId == gamepref.player.acId  then
+    if self.friendsterId and self.friendsterId > 0 then
         local chosedGames = self.friendsterData:getSupportGames()
         self:onSupportGameChanges(chosedGames)
     else
