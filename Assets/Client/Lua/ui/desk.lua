@@ -124,7 +124,7 @@ function desk:refreshUI()
         self.headers[seatType.right]:hide()
     end
 
-    self.mDeskID:setText(string.format("%s%s:%d", cityName[self.game.cityType], gameName[self.game.cityName].games[self.game.gameType], self.game.deskId))
+    self.mDeskID:setText(string.format("%s%s:%d", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.game.deskId))
     self:updateCurrentGameIndex()
     self.mTime:setText(time.formatTime())
 
