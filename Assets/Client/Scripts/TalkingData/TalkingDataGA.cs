@@ -58,6 +58,14 @@ public class TalkingDataGA {
 	public static void DetachCurrentThread() {
 		AndroidJNI.DetachCurrentThread();
 	}
+#else
+    public static void AttachCurrentThread()
+    {
+    }
+
+    public static void DetachCurrentThread()
+    {
+    }
 #endif
 	private static string deviceId = null;
 
@@ -269,5 +277,15 @@ public class TalkingDataGA {
         
     }
     //end
+#else
+    public static void SetDeviceToken()
+    {
+
+    }
+
+    public static void HandlePushMessage()
+    {
+
+    }
 #endif
 }
