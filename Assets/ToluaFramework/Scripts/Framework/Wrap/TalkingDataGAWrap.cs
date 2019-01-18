@@ -15,6 +15,8 @@ public class TalkingDataGAWrap
 		L.RegFunction("OnKill", OnKill);
 		L.RegFunction("OnEvent", OnEvent);
 		L.RegFunction("SetVerboseLogDisabled", SetVerboseLogDisabled);
+		L.RegFunction("SetDeviceToken", SetDeviceToken);
+		L.RegFunction("HandlePushMessage", HandlePushMessage);
 		L.RegFunction("New", _CreateTalkingDataGA);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -161,6 +163,36 @@ public class TalkingDataGAWrap
 		{
 			ToLua.CheckArgsCount(L, 0);
 			TalkingDataGA.SetVerboseLogDisabled();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetDeviceToken(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			TalkingDataGA.SetDeviceToken();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int HandlePushMessage(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			TalkingDataGA.HandlePushMessage();
 			return 0;
 		}
 		catch (Exception e)
