@@ -9,6 +9,7 @@ function httpAsync:ctor(async)
 end
 
 function httpAsync:addTextRequest(url, timeout, callback)
+    assert(callback ~= nil, "callback must not be nil.")
     if self.async ~= nil then
         local buffer = nil
         local bufferOffset = 0
@@ -26,7 +27,6 @@ function httpAsync:addTextRequest(url, timeout, callback)
 
                 if completed then
                     local text = Utils.BytesToString(buffer, 0, totalSize)
-                    LFS.WriteText("c:/1.txt", text, LFS.UTF8_WITHOUT_BOM)
                     callback(text)
                 end
             end
