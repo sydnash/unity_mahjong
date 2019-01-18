@@ -115,10 +115,12 @@ local function checkPatches(callback)
         end
 
         local cachedVersionNum = LFS.ReadText(CACHE_VER_FILE_NAME, LFS.UTF8_WITHOUT_BOM)
-        if cachedVersionNum ~= nil and cachedVersionNum ~= tostring(onlineVersion.num) then
+        local onlineVersionNum = tostring(onlineVersion.num)
+
+        if cachedVersionNum ~= nil and cachedVersionNum ~= onlineVersionNum then
             LFS.RemoveDir(CACHE_PATH)
         end
-        LFS.WriteText(CACHE_VER_FILE_NAME, tostring(onlineVersion.num), LFS.UTF8_WITHOUT_BOM)
+        LFS.WriteText(CACHE_VER_FILE_NAME, onlineVersionNum, LFS.UTF8_WITHOUT_BOM)
 
         local offlinePatchlistText = downloadOfflinePatchlistFile()
 
@@ -127,7 +129,8 @@ local function checkPatches(callback)
             return
         end
 
-        local url = onlineVersion.url
+        local url = string.format("%s/%s/%s", onlineVersion.url, LFS.OS_PATH, onlineVersionNum)
+        log("patch url = " .. url)
 
         downloadOnlinePatchlistFile(url, function(onpt)
             local onlinePatchlistText = onpt

@@ -74,7 +74,7 @@ public class BuildManager : EditorWindow
         GUI.enabled = mBuildPatch;
         mVersionDic[numk] = EditorGUILayout.IntField("Version Num", int.Parse(mVersionDic[numk])).ToString();
         GUI.enabled = false;
-        string versionUrl = EditorGUILayout.TextField("Version Url", string.Format("{0}/{1}/{2}", mVersionDic[urlk], LuaConst.osDir, mVersionDic[numk]));
+        mVersionDic[urlk] = EditorGUILayout.TextField("Version Url", mVersionDic[urlk]);
         GUI.enabled = true;
 
         mCopyPatch = EditorGUILayout.Toggle("Copy To Patch Folder", mCopyPatch);
@@ -130,7 +130,7 @@ public class BuildManager : EditorWindow
                     WriteVersion();
 
                     Build.BuildPatchlist();
-                    Build.BuildVersion(int.Parse(mVersionDic[numk]), versionUrl);
+                    Build.BuildVersion(int.Parse(mVersionDic[numk]), mVersionDic[urlk]);
                     finishedText = "Build asset bundles finished";
                 }
 
