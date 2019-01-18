@@ -258,7 +258,7 @@ function patchManager.patch()
             downloadPatches(url, files, function(status, filename, size)
                 if status == DOWNLOAD_FAILED then 
                     table.insert(failedList, { name = filename })
-                    log("download failed, " .. filename)
+                    log("download failed, filename = " .. filename)
                 else
                     if status == DOWNLOAD_COMPLETED then
                         successCount = successCount + 1
@@ -281,9 +281,6 @@ function patchManager.patch()
                                         function()
                                             Application.Quit()
                                         end)
-                        for _, v in pairs(failedList) do
-                            log(v)
-                        end
                     else
                         http.destroyAsync(downloadPatchAsync)
                         downloadPatchAsync = nil
