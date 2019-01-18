@@ -109,7 +109,13 @@ local function checkPatches(callback)
         local offlineVersion = loadstring(offlineVersionText)()
         local onlineVersion = loadstring(onlineVersionText)()
 
-        if not onlineVersion.hotfix then
+        local offlineVersionNum = offlineVersion.num
+        local onlineVersionNum = onlineVersion.num
+
+        local offlineVersionNumArray = string.split(offlineVersionNum)
+        local onlineVersionNumArray = string.split(onlineVersionNum)
+
+        if offlineVersionNumArray[2] ~= onlineVersionNumArray[2] then
             closeWaitingUI();
             showMessageUI("您的版本太旧，是否下载并安装最新版？", 
                           function()
@@ -122,13 +128,12 @@ local function checkPatches(callback)
             return
         end
 
-        if onlineVersion.num == offlineVersion.num then
+        if onlineVersionNum == offlineVersion.num then
             callback({}, true, true)
             return
         end
 
         local cachedVersionNum = LFS.ReadText(CACHE_VER_FILE_NAME, LFS.UTF8_WITHOUT_BOM)
-        local onlineVersionNum = tostring(onlineVersion.num)
 
         if cachedVersionNum ~= nil and cachedVersionNum ~= onlineVersionNum then
             LFS.RemoveDir(CACHE_PATH)
