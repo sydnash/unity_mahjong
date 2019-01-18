@@ -53,8 +53,11 @@ public class TDGAAccount {
 	
 	[DllImport ("__Internal")]   
 	private static extern void tdgaSetGameServer(string ameServer);
+
+    //for wrap
+    public void setAccountObject(object account) { }
 #elif UNITY_ANDROID
-	//init static class --save memory/space
+                             //init static class --save memory/space
 	private static string JAVA_CLASS = "com.tendcloud.tenddata.TDGAAccount";
 	static AndroidJavaClass agent = null;
 	private static AndroidJavaClass GetAgent() {

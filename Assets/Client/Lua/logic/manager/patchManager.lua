@@ -281,6 +281,9 @@ function patchManager.patch()
                                         function()
                                             Application.Quit()
                                         end)
+                        for _, v in pairs(failedList) do
+                            log(v)
+                        end
                     else
                         http.destroyAsync(downloadPatchAsync)
                         downloadPatchAsync = nil

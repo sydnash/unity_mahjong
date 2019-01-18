@@ -31,8 +31,14 @@ public class TalkingDataGA {
 	private static extern void tdgaHandlePushMessage(string message);
 	
 	private static bool hasTokenBeenObtained = false;
+
+    //for wrap
+    public static void AttachCurrentThread() { }
+	
+	public static void DetachCurrentThread() { }
+    //
 #elif UNITY_ANDROID
-	//init static class --save memory/space
+                               //init static class --save memory/space
 	private static AndroidJavaClass agent;
 	private static AndroidJavaClass unityClass;
 	
