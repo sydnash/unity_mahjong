@@ -119,11 +119,12 @@ public class Build
     /// </summary>
     /// <param name="ver"></param>
     /// <param name="url"></param>
-    public static void BuildVersion(int ver, string url)
+    public static void BuildVersion(bool hotfix, string ver, string url)
     {
         StringBuilder sb = new StringBuilder();
         sb.Append("return {\n");
-        sb.AppendFormat("[\"num\"]={0},\n", ver);
+        sb.AppendFormat("[\"hotfix\"]={0},\n", hotfix);
+        sb.AppendFormat("[\"num\"]=\"{0}\",\n", ver);
         sb.AppendFormat("[\"url\"]=\"{0}\",\n", url);
         sb.Append("}");
 

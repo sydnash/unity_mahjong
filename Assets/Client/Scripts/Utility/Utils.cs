@@ -316,4 +316,18 @@ public class Utils
             dic.Add(key, value);
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="str"></param>
+    /// <param name="separator"></param>
+    /// <returns></returns>
+    public static string[] SplitString(string str, string separator)
+    {
+        if (string.IsNullOrEmpty(str))
+            return null;
+
+        return str.Split(new string[]{separator}, StringSplitOptions.None);
+    }
 }
