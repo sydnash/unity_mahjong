@@ -503,7 +503,7 @@ end
 
 function networkManager.checkRefreshToken(token, cb)
     local refreshUrl = string.format("https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=%s&grant_type=refresh_token&refresh_token=%s", "wx2ca58653c3f50625", token)
-    getTextWithHttp(refreshUrl, timeout, function(text)
+    getTextWithHttp(refreshUrl, function(text)
         if string.isNilOrEmpty(text) then
             cb(false)
         end

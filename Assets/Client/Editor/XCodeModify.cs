@@ -82,7 +82,8 @@ public class XCodeModify
 		proj.SetBuildProperty(target, "CODE_SIGN_STYLE", "Manual");
 													 
 		proj.SetBuildPropertyForConfig(debugConfig, "PROVISIONING_PROFILE_SPECIFIER", "mj_development");
-		proj.SetBuildPropertyForConfig(releaseConfig, "PROVISIONING_PROFILE", "mj_distribution");
+		//proj.SetBuildPropertyForConfig(releaseConfig, "PROVISIONING_PROFILE", "mj_distribution");
+		proj.SetBuildPropertyForConfig(releaseConfig, "PROVISIONING_PROFILE", "mj_adhoc");
 		proj.SetBuildPropertyForConfig(debugConfig, "CODE_SIGN_IDENTITY", "iPhone Developer: jun dai (U493TM8SDC)");
 		proj.SetBuildPropertyForConfig(releaseConfig, "CODE_SIGN_IDENTITY", "iPhone Distribution: jun dai (ECJJEKLSES)");
 
