@@ -33,10 +33,16 @@ public class TalkingDataGA {
 	private static bool hasTokenBeenObtained = false;
 
     //for wrap
-    public static void AttachCurrentThread() { }
+    public static void AttachCurrentThread() 
+    { 
+
+    }
 	
-	public static void DetachCurrentThread() { }
-    //
+	public static void DetachCurrentThread() 
+    {
+    
+    }
+    //end
 #elif UNITY_ANDROID
                                //init static class --save memory/space
 	private static AndroidJavaClass agent;
@@ -251,5 +257,17 @@ public class TalkingDataGA {
 		}
 	}
 #endif
+#elif UNITY_ANDROID
+    //for wrap
+    public static void SetDeviceToken()
+    {
+        
+    }
+
+    public static void HandlePushMessage()
+    {
+        
+    }
+    //end
 #endif
 }

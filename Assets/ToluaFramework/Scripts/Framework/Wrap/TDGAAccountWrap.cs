@@ -51,7 +51,7 @@ public class TDGAAccountWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			TDGAAccount obj = (TDGAAccount)ToLua.CheckObject<TDGAAccount>(L, 1);
-			object arg0 = ToLua.ToVarObject(L, 2);
+			UnityEngine.AndroidJavaObject arg0 = (UnityEngine.AndroidJavaObject)ToLua.CheckObject<UnityEngine.AndroidJavaObject>(L, 2);
 			obj.setAccountObject(arg0);
 			return 0;
 		}
