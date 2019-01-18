@@ -63,6 +63,7 @@ function detailPanel:onInit()
 end
 
 function detailPanel:set(cityType, gameType, layout, config)
+    -- log("config" .. table.tostring(config))
     self.cityType = cityType
     self.gameType = gameType
     self.layout = layout
