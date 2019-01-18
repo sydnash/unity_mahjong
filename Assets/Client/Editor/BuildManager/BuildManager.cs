@@ -22,6 +22,7 @@ public class BuildManager : EditorWindow
     private static bool mBuildLua = true;
     private static bool mBuildBundle = true;
     private static bool mBuildPatch = false;
+    private static bool mHotfix = true;
     private static Dictionary<string, string> mVersionDic = new Dictionary<string, string>();
     private static bool mCopyPatch = false;
     private static bool mBuildPackage = true;
@@ -72,7 +73,8 @@ public class BuildManager : EditorWindow
         }
 
         GUI.enabled = mBuildPatch;
-        mVersionDic[numk] = EditorGUILayout.IntField("Version Num", int.Parse(mVersionDic[numk])).ToString();
+        mHotfix = EditorGUILayout.Toggle("Hotfix", mHotfix);
+        mVersionDic[numk] = EditorGUILayout.TextField("Version Num", mVersionDic[numk]);
         GUI.enabled = false;
         mVersionDic[urlk] = EditorGUILayout.TextField("Version Url", mVersionDic[urlk]);
         GUI.enabled = true;
@@ -130,7 +132,7 @@ public class BuildManager : EditorWindow
                     WriteVersion();
 
                     Build.BuildPatchlist();
-                    Build.BuildVersion(int.Parse(mVersionDic[numk]), mVersionDic[urlk]);
+                    Build.BuildVersion(mHotfix, mVersionDic[numk], mVersionDic[urlk]);
                     finishedText = "Build asset bundles finished";
                 }
 

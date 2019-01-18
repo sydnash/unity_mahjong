@@ -2,6 +2,34 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+---------------------------------------------------------------------
+-- 在加载任何lua文件前检测本地已下载的热更资源是否有效，无效则删除
+---------------------------------------------------------------------
+local pverTxt = LFS.ReadText(LFS.CombinePath(LFS.PATCH_PATH, "version.txt"), LFS.UTF8_WITHOUT_BOM)
+if pverTxt ~= nil and pverTxt ~= "" then
+    local separator = "."
+
+    local pverLua = loadstring(pverTxt)()
+    local pverArr = Utils.SplitString(pverLua.num, separator)
+
+    local cverTxt = LFS.ReadTextFromResources("version")
+    if pverTxt ~= nil and pverTxt ~= "" then
+        local cverLua = loadstring(cverTxt)()
+        local cverArr = Utils.SplitString(cverLua.num, separator)
+
+        if pverArr[1] ~= cverArr[1] then
+            LFS.RemoveDir(LFS.PATCH_PATH)
+        end
+    end
+end
+
+
+
+
+
+
+
+
 require("std")
 
 local profiler  = require("UnityEngine.Profiler")

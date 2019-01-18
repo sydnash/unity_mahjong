@@ -1,4 +1,4 @@
-num_debug=5
+num_debug=1.1.6
 url_debug=http://test.cdbshy.com/mahjong_update
 num_release=3
 url_release=http://www.cdbshy.com/mahjong_update

@@ -31,21 +31,27 @@ end
 function messageBox:onConfirmClickedHandler()
     playButtonClickSound()
 
+    local keepAlive = false
     if self.confirmCallback ~= nil then
-        self.confirmCallback()
+        keepAlive = self.confirmCallback()
     end
 
-    self:close()
+    if not keepAlive then
+        self:close()
+    end
 end
 
 function messageBox:onCancelClickedHandler()
     playButtonClickSound()
 
+    local keepAlive = false
     if self.cancelCallback ~= nil then
-        self.cancelCallback()
+        keepAlive = self.cancelCallback()
     end
 
-    self:close()
+    if not keepAlive then
+        self:close()
+    end
 end
 
 return messageBox

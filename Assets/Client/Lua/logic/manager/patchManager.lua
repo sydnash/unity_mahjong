@@ -109,6 +109,19 @@ local function checkPatches(callback)
         local offlineVersion = loadstring(offlineVersionText)()
         local onlineVersion = loadstring(onlineVersionText)()
 
+        if not onlineVersion.hotfix then
+            closeWaitingUI();
+            showMessageUI("您的版本太旧，是否下载并安装最新版？", 
+                          function()
+                              platformHelper.openExplorer("http://www.cdbshy.com/mahjong")
+                              return true
+                          end,
+                          function()
+                              Application.Quit()
+                          end)
+            return
+        end
+
         if onlineVersion.num == offlineVersion.num then
             callback({}, true, true)
             return
@@ -130,7 +143,6 @@ local function checkPatches(callback)
         end
 
         local url = string.format("%s/%s/%s", onlineVersion.url, LFS.OS_PATH, onlineVersionNum)
-        log("patch url = " .. url)
 
         downloadOnlinePatchlistFile(url, function(onpt)
             local onlinePatchlistText = onpt

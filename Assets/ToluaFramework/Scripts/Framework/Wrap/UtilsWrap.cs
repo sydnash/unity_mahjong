@@ -24,6 +24,7 @@ public class UtilsWrap
 		L.RegFunction("ConvertTextureToSprite", ConvertTextureToSprite);
 		L.RegFunction("CreateDictionarySO", CreateDictionarySO);
 		L.RegFunction("AddDictionarySO", AddDictionarySO);
+		L.RegFunction("SplitString", SplitString);
 		L.RegFunction("New", _CreateUtils);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -374,6 +375,24 @@ public class UtilsWrap
 			object arg2 = ToLua.ToVarObject(L, 3);
 			Utils.AddDictionarySO(arg0, arg1, arg2);
 			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SplitString(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			string arg1 = ToLua.CheckString(L, 2);
+			string[] o = Utils.SplitString(arg0, arg1);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
