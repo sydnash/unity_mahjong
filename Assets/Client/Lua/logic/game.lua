@@ -106,6 +106,7 @@ function game:startLoop()
 end
 
 function game:onGameStart()
+    gc()
     self.deskStatus = deskStatus.playing
 end
 
@@ -748,6 +749,8 @@ function game:destroy()
 
     self.deskId = nil
     clientApp.currentDesk = nil
+    
+    gc()
 end
 
 -------------------------------------------------------------------------------

@@ -702,4 +702,9 @@ function findSpriteRD(transform, name)
     return nil
 end
 
+function gc()
+    AssetPoolManager.instance:UnloadUnused()
+--    collectgarbage("collect")
+end
+
 --endregion
