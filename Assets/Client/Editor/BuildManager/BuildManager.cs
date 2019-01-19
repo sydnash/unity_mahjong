@@ -194,21 +194,22 @@ public class BuildManager : EditorWindow
                     switch (mTargetPlatform)
                     {
                         case BuildTarget.Android:
+                            if (!mDebug)
+                            {
+                                PlayerSettings.Android.bundleVersionCode++;
+                            }
+
                             string debug = mDebug ? "_debug" : "_release";
                             string dev = mDevelopment ? "_dev" : "";
 
-                            packageName = "mahjong_" + mVersionDic[numk] + debug + dev + ".apk";
+                            string prefix = System.DateTime.Now.ToString("yyMMddHHmm");
+                            packageName = prefix + "_mahjong_" + mVersionDic[numk] + "_" + PlayerSettings.Android.bundleVersionCode.ToString() + debug + dev + ".apk";
                             
                             PlayerSettings.bundleVersion = mVersionDic[numk];
                             PlayerSettings.Android.keystoreName = Application.dataPath + "/Keystore/mahjong.keystore";
                             PlayerSettings.Android.keystorePass = "com.bshy.mahjong";
                             PlayerSettings.Android.keyaliasName = "mahjong";
                             PlayerSettings.Android.keyaliasPass = "com.bshy.mahjong";
-
-                            if (!mDebug)
-                            {
-                                PlayerSettings.Android.bundleVersionCode++;
-                            }
 
                             break;
                         case BuildTarget.iOS:
