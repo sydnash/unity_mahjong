@@ -13,7 +13,7 @@ if pverTxt ~= nil and pverTxt ~= "" then
     local pverArr = Utils.SplitString(pverLua.num, separator)
 
     local cverTxt = LFS.ReadTextFromResources("version")
-    if pverTxt ~= nil and pverTxt ~= "" then
+    if cverTxt ~= nil and cverTxt ~= "" then
         local cverLua = loadstring(cverTxt)()
         local cverArr = Utils.SplitString(cverLua.num, separator)
 

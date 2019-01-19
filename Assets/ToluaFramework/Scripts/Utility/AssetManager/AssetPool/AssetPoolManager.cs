@@ -18,6 +18,11 @@ public class AssetPoolManager
     /// </summary>
     private Transform mRoot = null;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    private float mTimestamp = Time.realtimeSinceStartup;
+
     #endregion
 
     #region Instance
@@ -146,9 +151,13 @@ public class AssetPoolManager
     /// </summary>
     public void Update()
     {
-        foreach (KeyValuePair<string, AssetPool> kvp in mPools)
+        if (Time.realtimeSinceStartup - mTimestamp >= 60)//一分钟执行一次
         {
-            kvp.Value.Update();
+            foreach (KeyValuePair<string, AssetPool> kvp in mPools)
+            {
+                kvp.Value.Update();
+            }
+            mTimestamp = Time.realtimeSinceStartup;
         }
     }
 

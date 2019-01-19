@@ -115,6 +115,17 @@ public class BundlePool
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="assetPath"></param>
+    /// <param name="assetName"></param>
+    /// <returns></returns>
+    public static string CreateAssetKey(string assetPath, string assetName)
+    {
+        return LFS.CombinePath(assetPath, assetName).Replace("/", "|");
+    }
+
     #endregion
 
     #region Pirvate

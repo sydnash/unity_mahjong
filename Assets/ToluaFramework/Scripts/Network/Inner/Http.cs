@@ -10,7 +10,7 @@ public class Http
     /// <summary>
     /// 
     /// </summary>
-    private byte[] mDownloadBuffer = new byte[1024 * 100];
+    private byte[] mDownloadBuffer = new byte[1024 * 200];
 
     /// <summary>
     /// 
@@ -94,7 +94,7 @@ public class Http
             {
                 if (response != null)
                 {
-                    Logger.LogError("http failed: " + response.StatusDescription);
+                    Logger.LogError("http failed: " + url + "\n" + response.StatusDescription);
                 }
 
                 if (callback != null)
@@ -105,7 +105,7 @@ public class Http
         }
         catch (Exception ex)
         {
-            Logger.LogError("http exception: " + ex.Message + "\n" + ex.StackTrace);
+            Logger.LogError("http exception: " + url + "\n" + ex.Message + "\n" + ex.StackTrace);
 
             if (callback != null)
             {

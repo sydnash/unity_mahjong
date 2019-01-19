@@ -112,15 +112,15 @@ local function checkPatches(callback)
         local offlineVersionNum = offlineVersion.num
         local onlineVersionNum = onlineVersion.num
 
-        local offlineVersionNumArray = string.split(offlineVersionNum)
-        local onlineVersionNumArray = string.split(onlineVersionNum)
-
+        local offlineVersionNumArray = string.split(offlineVersionNum, ".")
+        local onlineVersionNumArray = string.split(onlineVersionNum, ".")
+        
         if offlineVersionNumArray[2] ~= onlineVersionNumArray[2] then
             closeWaitingUI();
             showMessageUI("您的版本太旧，是否下载并安装最新版？", 
                           function()
                               platformHelper.openExplorer("http://www.cdbshy.com/mahjong")
-                              return true
+                              return true --keep the message ui alived
                           end,
                           function()
                               Application.Quit()
@@ -160,15 +160,10 @@ local function checkPatches(callback)
                 end
             end
 
-            local plist = filterPatchList(offlinePatchlistText, onlinePatchlistText, cachedPatchList)
-            local size = 0
-            for _, v in pairs(plist) do
-                size = size + v.size
-            end
-
             http.destroyAsync(downloadTextAsync)
             downloadTextAsync = nil
 
+            local plist = filterPatchList(offlinePatchlistText, onlinePatchlistText, cachedPatchList)
             callback(plist, onlineVersionText, onlinePatchlistText, url)
         end)
     end)
@@ -235,9 +230,11 @@ function patchManager.patch()
         end
       
         if #plist == 0 then--未检测到更新
+            log("patchManager: plsit is empty")
             local login = require("ui.login").new()
             login:show()
             loading:close()
+
             return
         end
 

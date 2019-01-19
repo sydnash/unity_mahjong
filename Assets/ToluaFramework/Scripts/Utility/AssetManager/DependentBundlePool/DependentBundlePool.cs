@@ -39,11 +39,6 @@ public class DependentBundlePool
     /// <summary>
     /// 
     /// </summary>
-    private const string SUB_PATH = "Res";
-
-    /// <summary>
-    /// 
-    /// </summary>
     private const string ASSETBUNDLE_MANIFEST = "AssetBundleManifest";
 
     #endregion
@@ -71,6 +66,7 @@ public class DependentBundlePool
     {
         InitDependentManifest();
 
+        key = key.ToLower();
         string[] dependentNames = mDependentManifest.GetAllDependencies(assetName);
 
         foreach (string dependentName in dependentNames)
@@ -100,6 +96,8 @@ public class DependentBundlePool
     /// <param name="assetName"></param>
     public void Reload(string key)
     {
+        key = key.ToLower();
+
         if (mAssetDict.ContainsKey(key))
         {
             HashSet<string> set = mAssetDict[key];
@@ -117,6 +115,8 @@ public class DependentBundlePool
     /// <param name="assetName"></param>
     public void Unload(string key)
     {
+        key = key.ToLower();
+
         if (mAssetDict.ContainsKey(key))
         {
             HashSet<string> dependentBundleNames = mAssetDict[key];

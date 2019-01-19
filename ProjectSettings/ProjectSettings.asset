@@ -126,7 +126,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0
+  bundleVersion: 1.1.1
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -154,8 +154,9 @@ PlayerSettings:
     Android: com.bshy.mahjong
     Standalone: com.bshy.mahjong
     iOS: com.bshy.mahjong
-  buildNumber: {}
-  AndroidBundleVersionCode: 1
+  buildNumber:
+    iOS: 0
+  AndroidBundleVersionCode: 0
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -712,7 +713,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     1: DEBUG_WITH_EXTRA_FILES
     4: 
-    7: 
+    7: SIMULATE_RUNTIME_ENVIRONMENT
   platformArchitecture: {}
   scriptingBackend:
     Android: 0

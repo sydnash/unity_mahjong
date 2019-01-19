@@ -144,20 +144,12 @@ public class AssetLoader
     /// <summary>
     /// 
     /// </summary>
-    public void Update()
-    {
-
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="assetPath"></param>
     /// <param name="assetName"></param>
     /// <returns></returns>
     public static string CreateAssetKey(string assetPath, string assetName)
     {
-        return LFS.CombinePath(assetPath, assetName).Replace("/", "|");
+        return BundlePool.CreateAssetKey(assetPath, assetName);
     }
 
     #endregion

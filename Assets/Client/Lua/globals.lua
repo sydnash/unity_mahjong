@@ -525,6 +525,7 @@ function loginServer(callback, func)
                     lobby:show()
 
                     callback(true)
+                    loading:close()
                 else -- 如有在房间内则跳过大厅直接进入房间
                     loading:setText("正在进入房间，请稍候")
                     enterDesk(cityType, deskId, function(ok, func)

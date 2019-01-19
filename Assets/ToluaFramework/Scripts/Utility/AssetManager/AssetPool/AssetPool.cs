@@ -27,10 +27,6 @@ public class AssetPool
     /// 
     /// </summary>
     private float mAliveTime = 2 * 60;
-    /// <summary>
-    /// 
-    /// </summary>
-    private float mTimestamp = Time.realtimeSinceStartup;
 
     #endregion
 
@@ -143,18 +139,11 @@ public class AssetPool
     /// </summary>
     public void Update()
     {
-        if (Time.realtimeSinceStartup - mTimestamp >= 60)//一分钟执行一次
+        foreach (KeyValuePair<string, ObjectQueue> kvp in mQueueDic)
         {
-            foreach (KeyValuePair<string, ObjectQueue> kvp in mQueueDic)
-            {
-                ObjectQueue queue = kvp.Value;
-                queue.DestroyUnused(mAliveTime, mLoader);
-            }
-
-            mTimestamp = Time.realtimeSinceStartup;
+            ObjectQueue queue = kvp.Value;
+            queue.DestroyUnused(mAliveTime, mLoader);
         }
-
-        mLoader.Update();
     }
 
     /// <summary>

@@ -111,7 +111,6 @@ public class BuildManager : EditorWindow
                 WritePackageOutputPath();
 
                 string finishedText = string.Empty;
-                string timestamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss");
 
                 if (mBuildLua)
                 {
@@ -122,6 +121,16 @@ public class BuildManager : EditorWindow
                 if (mBuildBundle)
                 {
                     Build.BuildAssetBundles(mTargetPlatform);
+
+                    string[] files = Directory.GetFiles(LFS.CombinePath(Application.streamingAssetsPath, "Res"), "*.manifest", SearchOption.AllDirectories);
+                    foreach (string file in files)
+                    {
+                        if (!Path.GetFileNameWithoutExtension(file).EndsWith("Res"))
+                        {
+                            LFS.RemoveFile(file);
+                        }
+                    }
+
                     finishedText = "Build asset bundles finished";
                 }
 
@@ -131,7 +140,7 @@ public class BuildManager : EditorWindow
 
                     Build.BuildPatchlist();
                     Build.BuildVersion(mVersionDic[numk], mVersionDic[urlk]);
-                    finishedText = "Build asset bundles finished";
+                    finishedText = "Build version & patchlist files finished";
                 }
 
                 if (mCopyPatch)
@@ -188,14 +197,29 @@ public class BuildManager : EditorWindow
                             string debug = mDebug ? "_debug" : "_release";
                             string dev = mDevelopment ? "_dev" : "";
 
-                            packageName = timestamp + "_mahjong_" + debug + dev + ".apk";
+                            packageName = "mahjong_" + mVersionDic[numk] + debug + dev + ".apk";
+                            
+                            PlayerSettings.bundleVersion = mVersionDic[numk];
                             PlayerSettings.Android.keystoreName = Application.dataPath + "/Keystore/mahjong.keystore";
                             PlayerSettings.Android.keystorePass = "com.bshy.mahjong";
                             PlayerSettings.Android.keyaliasName = "mahjong";
                             PlayerSettings.Android.keyaliasPass = "com.bshy.mahjong";
+
+                            if (!mDebug)
+                            {
+                                PlayerSettings.Android.bundleVersionCode++;
+                            }
+
                             break;
                         case BuildTarget.iOS:
                             packageName = "mahjong_" + (mDevelopment ? "debug" : "release");
+
+                            if (!mDebug)
+                            {
+                                string buildNumber = PlayerSettings.iOS.buildNumber;
+                                PlayerSettings.iOS.buildNumber = (int.Parse(buildNumber) + 1).ToString();
+                            }
+
                             break;
                         default:
                             packageName = "mahjong_" + (mDevelopment ? "debug" : "release") + ".exe";
