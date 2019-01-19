@@ -79,6 +79,10 @@ public class TDGAAccount {
 	public void setAccountObject(TalkingDataGAWP.TDGAAccount account) {
 		mAccount = account;
 	}
+#else
+    public void setAccountObject(AndroidJavaObject account)
+    {
+    }
 #endif
 	private static TDGAAccount account = null;
 	

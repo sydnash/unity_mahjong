@@ -165,7 +165,7 @@ function createDesk:saveSettingToServer(lock, node)
         local data = {}
         local cfg = ""
         if lock then
-            local choose = table.clone(self.config[self.gameType])
+            local choose = self.detail:getCreateConfig()
             choose.Game = self.gameType
             cfg = table.tojson(choose)
         else
