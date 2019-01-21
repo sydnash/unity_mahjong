@@ -8,12 +8,14 @@ local lobby = class("lobby", base)
 _RES_(lobby, "LobbyUI", "LobbyUI")
 
 function lobby:onInit()
---    log("lobby.onInit, headerUrl = " .. gamepref.player.headerUrl)
     self.mIcon:setTexture(gamepref.player.headerUrl)
     self.mNickname:setText(cutoutString(gamepref.player.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText("帐号:" .. gamepref.player.acId)
     self.mCards:setText(tostring(gamepref.player.cards))
     self.mCityText:setSprite(cityTypeSID[gamepref.city.City])
+
+    self.mHelp:hide()
+    self.mAccuse:hide()
 
     self.mHead:addClickListener(self.onHeadClickedHandler, self)
     self.mSwitchCity:addClickListener(self.onSwitchCityClickedHandler, self)
@@ -41,11 +43,11 @@ function lobby:onInit()
         self.mCreateDesk:show()
     end
 
-    if gamepref.player.complainLevel == 0 then
-        self.mAccuse:hide()
-    else
-        self.mAccuse:show()
-    end
+--    if gamepref.player.complainLevel == 0 then
+--        self.mAccuse:hide()
+--    else
+--        self.mAccuse:show()
+--    end
 
     self:refreshMailRP()
 
