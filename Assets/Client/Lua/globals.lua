@@ -2,28 +2,138 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-require("const.typeDef")
-require("const.textDef")
-require("const.statusDef")
+reload("const.typeDef")
+reload("const.textDef")
+reload("const.statusDef")
+reload("config.deskConfig")
 
-require("config.deskConfig")
+deviceConfig    = reload("config.deviceConfig")
+gameConfig      = reload("config.gameConfig")
+enableConfig    = reload("config.enableConfig")
+networkConfig   = reload("config.networkConfig")
+gamepref        = reload("logic.gamepref")
+platformHelper  = reload("platform.platformHelper")
+networkManager  = reload("network.networkManager")
+gvoiceManager   = reload("logic.manager.gvoiceManager")
+locationManager = reload("logic.manager.locationManager")
+talkingData     = reload("platform.talkingData")
 
-deviceConfig    = require("config.deviceConfig")
-gameConfig      = require("config.gameConfig")
-enableConfig    = require("config.enableConfig")
-networkConfig   = require("config.networkConfig")
-gamepref        = require("logic.gamepref")
-platformHelper  = require("platform.platformHelper")
-networkManager  = require("network.networkManager")
-gvoiceManager   = require("logic.manager.gvoiceManager")
-locationManager = require("logic.manager.locationManager")
-talkingData     = require("platform.talkingData")
+local waiting       = reload("ui.waiting")
+local messagebox    = reload("ui.messagebox")
+local mahjongType   = reload("logic.mahjong.mahjongType")
+local doushisiType  = reload("logic.doushisi.doushisiType")
+local http          = reload("network.http")
 
-local waiting       = require("ui.waiting")
-local messagebox    = require("ui.messagebox")
-local mahjongType   = require("logic.mahjong.mahjongType")
-local doushisiType  = require("logic.doushisi.doushisiType")
-local http          = require("network.http")
+----------------------------------------------------------------
+-- 断开连接后的回调
+----------------------------------------------------------------
+local function networkDisconnectedCallback(idx)
+    log("[test for reconnect] networkDisconnectedCallback : " .. tostring(idx))
+    if idx ~= nil and idx > 5 then
+        closeWaitingUI()
+
+        if clientApp.currentDesk ~= nil then
+            clientApp.currentDesk:destroy()
+            clientApp.currentDesk = nil
+        end
+        gamepref.player.currentDesk = nil
+
+        closeAllUI()
+        networkManager.disconnect()
+
+        showMessageUI("与服务器失去连接，请重新登录。", 
+                      function()--确定：回到登录界面
+                          local ui = require("ui.login").new()
+                          ui:show()
+                      end)
+        return
+    end
+
+    local idx = idx or 1
+    showWaitingUI(string.format("正在尝试重连(%d/5)，请稍候...", idx))
+
+    networkManager.reconnect(gamepref.host, gamepref.port, function(connected, curCoin, cityType, deskId)
+        if not connected then
+            networkDisconnectedCallback(idx + 1)
+            return
+        end
+
+        closeWaitingUI()
+
+        networkManager.startPingPong()
+        signalManager.signal(signalType.refreshFriendsterDetailInfo)
+
+        if deskId <= 0 then
+            gamepref.player.currentDesk = nil
+            if clientApp.currentDesk and not clientApp.currentDesk:isPlayback() and not clientApp.currentDesk.isGameOverUIShow then
+                showMessageUI("牌局已经结束，请点击确定并去战绩查看详情", function()
+                    clientApp.currentDesk:exitGame()
+                end)
+            end
+            return
+        end
+
+        if clientApp.currentDesk ~= nil and clientApp.currentDesk:isPlayback() then
+            return
+        end
+
+        enterDesk(cityType, deskId, function(ok, func)
+            if not ok then
+                local ui = require("ui.lobby").new()
+                ui:show()
+            end
+            if func then
+                func()
+            end
+        end)
+    end)
+end
+
+----------------------------------------------------------------
+-- 闲聊邀请的回调
+----------------------------------------------------------------
+local function inviteSgCallback(params)
+    if clientApp.currentDesk == nil then
+        closeAllUI()
+
+        local t = table.fromjson(params)
+
+        local cityType = t.cityType
+        local deskId = t.deskId
+
+        if clientApp.currentDesk ~= nil and clientApp.currentDesk:isPlayback() then
+            return
+        end
+
+        enterDesk(cityType, deskId, function(ok)
+            if not ok then
+                local ui = require("ui.lobby").new()
+                ui:show()
+            end
+        end)
+    end
+
+    platformHelper.clearSGInviteParam()
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function initClientApp()
+    clientApp.currentDesk = nil
+    networkManager.setup(networkDisconnectedCallback)
+
+    local headerManager = require("logic.manager.headerManager")
+    headerManager.setup()
+
+    locationManager.checkEnabled()
+    locationManager.start()
+
+    platformHelper.registerInviteSgCallback(inviteSgCallback)
+    talkingData.start()
+
+    gamepref.city = readCityConfig()
+end
 
 local K = 1024
 local M = K * K
@@ -87,7 +197,7 @@ function playButtonClickSound()
     soundManager.playUI(string.empty, "click")
 end
 
-local chatConfig = require("config.chatConfig")
+local chatConfig = reload("config.chatConfig")
 
 -------------------------------------------------------------
 -- 播放聊天的音效

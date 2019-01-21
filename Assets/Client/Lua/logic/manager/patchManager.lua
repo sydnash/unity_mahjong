@@ -119,7 +119,17 @@ local function checkPatches(callback)
             closeWaitingUI();
             showMessageUI("您的版本太旧，是否下载并安装最新版？", 
                           function()
-                              platformHelper.openExplorer("http://www.cdbshy.com/mahjong")
+                              local downloadUrl = "http://www.cdbshy.com/mahjong"
+
+                              if appConfig.debug then
+                                  if deviceConfig.isAndroid then
+                                      downloadUrl = "https://fir.im/ea8c"
+                                  elseif deviceConfig.isApple then
+                                      downloadUrl = "https://fir.im/w3de"
+                                  end
+                              end
+
+                              platformHelper.openExplorer(downloadUrl)
                               return true --keep the message ui alived
                           end,
                           function()
@@ -209,10 +219,11 @@ end
 
 
 
+
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-function patchManager.patch()
+function patchManager.patch(callback)
     LFS.MakeDir(CACHE_PATH)
 
     local loading = require("ui.loading").new()
@@ -228,9 +239,17 @@ function patchManager.patch()
             end)
             return
         end
+
+        local function invokeCallback(reload)
+            if callback ~= nil then
+                callback(reload)
+            end
+        end
       
         if #plist == 0 then--未检测到更新
             log("patchManager: plsit is empty")
+            invokeCallback(false)
+
             local login = require("ui.login").new()
             login:show()
             loading:close()
@@ -289,6 +308,8 @@ function patchManager.patch()
 
                         local ppath = LFS.CombinePath(LFS.PATCH_PATH, PATCHLIST_FILE_NAME)
                         LFS.WriteText(ppath, plistText, LFS.UTF8_WITHOUT_BOM)
+                        
+                        invokeCallback(true)
 
                         local login = require("ui.login").new()
                         login:show()

@@ -2,6 +2,8 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local idcardVerifier = require("ui.authentication.idcardVerifier")
+
 local base = require("ui.common.view")
 local authentication = class("authentication", base)
 
@@ -24,13 +26,13 @@ function authentication:onCommitClickedHandler()
 
     local name = self.mName:getText()
     if string.isNilOrEmpty(name) then
-        showMessageUI("请输入真实姓名")
+        showMessageUI("请输入姓名")
         return
     end
 
     local sfz = self.mSFZ:getText()
-    if string.isNilOrEmpty(sfz) then
-        showMessageUI("请输入真实身份证号")
+    if string.isNilOrEmpty(sfz) or not idcardVerifier.verify(sfz) then
+        showMessageUI("请输入正确身份证号")
         return
     end
 

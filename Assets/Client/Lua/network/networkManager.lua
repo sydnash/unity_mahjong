@@ -85,7 +85,7 @@ end
 
 
 
-protoType               = require("network.protoType")
+protoType               = reload("network.protoType")
 
 local http              = require("network.http")
 local tcpClass          = require("network.tcp")

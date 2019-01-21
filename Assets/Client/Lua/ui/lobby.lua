@@ -195,7 +195,7 @@ function lobby:onShareClickedHandler()
 end
 
 function lobby:onAuthenticateClickedHandler()
-    local ui = require("ui.authentication").new()
+    local ui = require("ui.authentication.authentication").new()
     ui:show()
 
     playButtonClickSound()

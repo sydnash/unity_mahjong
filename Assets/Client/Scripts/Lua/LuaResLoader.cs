@@ -42,7 +42,6 @@ public class LuaResLoader : LuaFileUtils
         Debug.Assert(buffer != null, "load file [" + fileName + "] failed");
     #else 
         byte[] buffer = ReadResourceFile(fileName);
-
         if (buffer == null)
         {
             buffer = ReadDownLoadFile(fileName);
@@ -55,9 +54,9 @@ public class LuaResLoader : LuaFileUtils
 
         Debug.Assert(buffer != null);
         buffer = MD5.Decrypt(buffer);        
-    #endif //SIMULATE_RUNTIME_ENVIRONMENT
+#endif //SIMULATE_RUNTIME_ENVIRONMENT
 #else
-    #if DEBUG_WITH_EXTRA_FILES
+#if DEBUG_WITH_EXTRA_FILES
         byte[] buffer = base.ReadFile(fileName);
         if (buffer != null)
         {
@@ -65,9 +64,9 @@ public class LuaResLoader : LuaFileUtils
         }
      
         buffer = ReadDownLoadFile(fileName);
-    #else
+#else
         byte[] buffer = ReadDownLoadFile(fileName);
-    #endif //DEBUG_WITH_EXTRA_CONFIGS
+#endif //DEBUG_WITH_EXTRA_CONFIGS
         
         if (buffer == null)
         {

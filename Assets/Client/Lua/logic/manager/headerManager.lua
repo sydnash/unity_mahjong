@@ -132,7 +132,7 @@ function headerManager.drop(token)
         end
     end
 end
-
+log("headerManager loaded")
 return headerManager
 
 --endregion

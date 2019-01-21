@@ -2,7 +2,7 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local gamePlayer        = require("logic.player.gamePlayer")
+local gamePlayer = require("logic.player.gamePlayer")
 
 local base = require("logic.game")
 local mahjongGame = class("mahjongGame", base)

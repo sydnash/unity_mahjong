@@ -11,28 +11,36 @@ RectTransform   = UnityEngine.RectTransform
 BoxCollider 	= UnityEngine.BoxCollider
 
 ---------------------------------------------------------------------------
+-- reload lua module
+---------------------------------------------------------------------------
+function reload(packageName)
+    package.loaded[packageName] = nil
+    return require(packageName)
+end
+
+---------------------------------------------------------------------------
 -- Lua Module
 ---------------------------------------------------------------------------
 
-appConfig = require("config.appConfig")
+appConfig = reload("config.appConfig")
 
-require("utils.string")
-require("utils.table")
-require("utils.utils")
+reload("utils.string")
+reload("utils.table")
+reload("utils.utils")
 
-object              = require("common.object")
-component           = require("common.component")
-time                = require("utils.time")
-json                = require("utils.json")
-viewManager         = require("manager.viewManager")
-eventManager        = require("manager.eventManager")
-soundManager        = require("manager.soundManager")
-sceneManager        = require("manager.sceneManager")
-tweenManager        = require("manager.tweenManager")
-modelManager        = require("manager.modelManager")
-textureManager      = require("manager.textureManager")
-animationManager    = require("manager.animationManager")
-preloadManager      = require("manager.preloadManager")
-signalManager       = require("manager.signalManager")
+object              = reload("common.object")
+component           = reload("common.component")
+time                = reload("utils.time")
+json                = reload("utils.json")
+viewManager         = reload("manager.viewManager")
+eventManager        = reload("manager.eventManager")
+soundManager        = reload("manager.soundManager")
+sceneManager        = reload("manager.sceneManager")
+tweenManager        = reload("manager.tweenManager")
+modelManager        = reload("manager.modelManager")
+textureManager      = reload("manager.textureManager")
+animationManager    = reload("manager.animationManager")
+preloadManager      = reload("manager.preloadManager")
+signalManager       = reload("manager.signalManager")
 
 --endregion
