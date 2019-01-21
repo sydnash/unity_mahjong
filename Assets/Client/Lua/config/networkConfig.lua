@@ -3,7 +3,7 @@
 --此文件由[BabeLua]插件自动生成
 
 local appConfig = require("config.appConfig")
-local patchURL = appConfig.debug and "http://test.cdbshy.com/mahjong_update/" or "http://www.cdbshy.com/mahjong_update/"
+local patchURL = appConfig.debug and "http://test.cdbshy.com/mahjong_hotfix/" or "http://www.cdbshy.com/mahjong_hotfix/"
 
 local ret = {
     patchURL        = patchURL,
