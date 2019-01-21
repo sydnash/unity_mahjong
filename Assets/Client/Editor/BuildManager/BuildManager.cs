@@ -84,12 +84,15 @@ public class BuildManager : EditorWindow
         }
         mBuildPackage = EditorGUILayout.Toggle("Build Package", mBuildPackage);
 
-        string outputPath = string.Empty;
+        string outputPath = mPackagePath;
+        if (mTargetPlatform == BuildTarget.Android)
+        {
+            outputPath = mPackagePath + (mDebug ? "/Debug" : "/Release");
+        }
 
         EditorGUILayout.BeginHorizontal();
         {
             GUI.enabled = mBuildPackage;
-            outputPath = mPackagePath + (mDebug ? "/Debug" : "/Release");
             EditorGUILayout.TextField("Package Path", outputPath);
             GUI.enabled = true;
 
