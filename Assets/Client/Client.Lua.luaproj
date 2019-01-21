@@ -45,6 +45,7 @@
     <Folder Include="Lua\ui\friendster\" />
     <Folder Include="Lua\ui\mail\" />
     <Folder Include="Lua\ui\deskDetail\" />
+    <Folder Include="Lua\ui\authentication\" />
     <Folder Include="Lua\ui\setting\" />
     <Folder Include="Lua\ui\playHistory\" />
   </ItemGroup>
@@ -88,7 +89,8 @@
     <Compile Include="Lua\scene\common\spriteRD.lua" />
     <Compile Include="Lua\ui\activity.lua" />
     <Compile Include="Lua\ui\agreement.lua" />
-    <Compile Include="Lua\ui\authentication.lua" />
+    <Compile Include="Lua\ui\authentication\authentication.lua" />
+    <Compile Include="Lua\ui\authentication\idcardVerifier.lua" />
     <Compile Include="Lua\ui\chat.lua" />
     <Compile Include="Lua\ui\city.lua" />
     <Compile Include="Lua\ui\deskDetail\deskDetail.lua" />
