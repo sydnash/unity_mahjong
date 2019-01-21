@@ -120,7 +120,6 @@ end
 --
 ----------------------------------------------------------------
 function initClientApp()
-    clientApp.currentDesk = nil
     networkManager.setup(networkDisconnectedCallback)
 
     local headerManager = require("logic.manager.headerManager")

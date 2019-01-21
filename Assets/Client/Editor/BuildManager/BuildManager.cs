@@ -84,10 +84,13 @@ public class BuildManager : EditorWindow
         }
         mBuildPackage = EditorGUILayout.Toggle("Build Package", mBuildPackage);
 
+        string outputPath = string.Empty;
+
         EditorGUILayout.BeginHorizontal();
         {
             GUI.enabled = mBuildPackage;
-            EditorGUILayout.TextField("Package Path", mPackagePath);
+            outputPath = mPackagePath + (mDebug ? "/Debug" : "/Release");
+            EditorGUILayout.TextField("Package Path", outputPath);
             GUI.enabled = true;
 
             if (GUILayout.Button("...", GUILayout.Width(30)))
@@ -145,7 +148,7 @@ public class BuildManager : EditorWindow
 
                 if (mCopyPatch)
                 {
-                    string patchPath = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, PATCH_PATH);
+                    string patchPath = LFS.CombinePath(Directory.GetParent(Application.dataPath).FullName, PATCH_PATH, mDebug ? "Debug" : "Release");
                     LFS.MakeDir(patchPath);
 
                     string verPath = LFS.CombinePath(patchPath, mVersionDic[numk]);
@@ -233,7 +236,7 @@ public class BuildManager : EditorWindow
                     PlayerSettings.companyName = "成都巴蜀互娱科技有限公司";
                     PlayerSettings.productName = "幺九麻将";
 
-                    string packageFullName = LFS.CombinePath(mPackagePath, packageName);
+                    string packageFullName = LFS.CombinePath(outputPath, packageName);
                     string err = Build.BuildPackage(packageFullName, mTargetPlatform, mDevelopment);
 
                     PlayerSettings.companyName = companyName;
