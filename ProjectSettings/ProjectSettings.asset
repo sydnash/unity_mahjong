@@ -155,7 +155,7 @@ PlayerSettings:
     Standalone: com.bshy.mahjong
     iOS: com.bshy.mahjong
   buildNumber:
-    iOS: 0
+    iOS: 1
   AndroidBundleVersionCode: 0
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
