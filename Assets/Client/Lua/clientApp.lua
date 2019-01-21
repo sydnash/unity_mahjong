@@ -72,6 +72,8 @@ function clientApp:start()
 
     platformHelper.changeWindowTitle(deviceConfig.deviceId)
     registerUpdateListener(self.update, self)
+
+    clientApp.currentDesk = nil
     
     if not gameConfig.patchEnabled then
         initClientApp()
