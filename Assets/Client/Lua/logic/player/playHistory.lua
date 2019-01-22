@@ -103,7 +103,7 @@ end
 function playHistory:getScoreDetail(id, callback)
     local history = self:findHistoryById(id)
 
-    if history.PlayTimes == 0 or (not isNilOrNull(history.ScoreDetail) and #history.ScoreDetail == history.PlayTimes) then
+    if history.PlayTimes == 0 or (not json.isNilOrNull(history.ScoreDetail) and #history.ScoreDetail == history.PlayTimes) then
 		callback(true, history.ScoreDetail)
 		return
     end

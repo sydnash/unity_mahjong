@@ -8,7 +8,7 @@ local waiting = class("waiting", base)
 _RES_(waiting, "WaitingUI", "WaitingUI")
 
 function waiting:ctor(text)
-    self.text = string.isNilOrEmpty(text) and "请稍候..." or text
+    self.text = string.isNilOrEmpty(text) and "请稍候" or text
     base.ctor(self)
     self:setLevel(base.level.top)
 end

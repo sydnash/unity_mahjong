@@ -119,7 +119,7 @@ function mahjongGame:syncSeats(seats)
             end
         end
 
-        if not isNilOrNull(player.hu) then
+        if not json.isNilOrNull(player.hu) then
             player.isHu = true
             local shou = player[mahjongGame.cardType.shou]
             local huInfo = player.hu[1]
@@ -540,7 +540,7 @@ function mahjongGame:onGameEndListener(specialData, datas, totalScores)
         end
 
         local peng = v.ChiChe
-        if not isNilOrNull(peng) then
+        if not json.isNilOrNull(peng) then
             for _, u in pairs(peng) do
                 if d[u.Op] == nil then
                     d[u.Op] = {}

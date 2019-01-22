@@ -474,7 +474,7 @@ function networkManager.loginWx(callback)
             end
 
             local p = table.fromjson(text)
-            if not isNilOrNull(p.errcode) then
+            if not json.isNilOrNull(p.errcode) then
                 closeWaitingUI()
                 callback(nil)
                 showMessageUI("微信登录失败：" .. tostring(p.errmsg))
@@ -508,7 +508,7 @@ function networkManager.checkRefreshToken(token, cb)
             cb(false)
         end
         local p = table.fromjson(text)
-        if not isNilOrNull(p.errcode) then
+        if not json.isNilOrNull(p.errcode) then
             cb(false)
         end
         cb(true)

@@ -26,6 +26,14 @@ local levelNode = {
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function _RES_(cls, folder, resource)
+    cls._folder = folder
+    cls._resource = resource
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function view:ctor()
     local gameObject = viewManager.load(self._folder, self._resource)
 

@@ -35,7 +35,7 @@ function playHistoryDetail:setHistory(historyId, historyContainer)
     self.mHistoryId = historyId
     local history = self.historyContainer:findHistoryById(historyId)
 
-    if isNilOrNull(history.ScoreDetail) or #history.ScoreDetail == 0 then
+    if json.isNilOrNull(history.ScoreDetail) or #history.ScoreDetail == 0 then
         return
     end
 

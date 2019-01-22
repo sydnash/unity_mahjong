@@ -2,7 +2,7 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local httpAsync     = require("network.httpAsync")
+local httpAsync = require("network.httpAsync")
 
 local http = class("http")
 

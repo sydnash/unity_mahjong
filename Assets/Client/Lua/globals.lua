@@ -2,27 +2,57 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-reload("const.typeDef")
-reload("const.textDef")
-reload("const.statusDef")
-reload("config.deskConfig")
+---------------------------------------------------------------------------
+-- reload lua module
+---------------------------------------------------------------------------
+function reload(packageName)
+    package.loaded[packageName] = nil
+    return require(packageName)
+end
 
-deviceConfig    = reload("config.deviceConfig")
-gameConfig      = reload("config.gameConfig")
-enableConfig    = reload("config.enableConfig")
-networkConfig   = reload("config.networkConfig")
-gamepref        = reload("logic.gamepref")
-platformHelper  = reload("platform.platformHelper")
-networkManager  = reload("network.networkManager")
-gvoiceManager   = reload("logic.manager.gvoiceManager")
-locationManager = reload("logic.manager.locationManager")
-talkingData     = reload("platform.talkingData")
+appConfig = reload("config.appConfig")
+reload("utils.class")
 
-local waiting       = reload("ui.waiting")
-local messagebox    = reload("ui.messagebox")
-local mahjongType   = reload("logic.mahjong.mahjongType")
-local doushisiType  = reload("logic.doushisi.doushisiType")
-local http          = reload("network.http")
+require("utils.string")
+require("utils.table")
+require("utils.utils")
+
+time                = require("utils.time")
+json                = require("utils.json")
+viewManager         = require("manager.viewManager")
+eventManager        = require("manager.eventManager")
+soundManager        = require("manager.soundManager")
+sceneManager        = require("manager.sceneManager")
+tweenManager        = require("manager.tweenManager")
+modelManager        = require("manager.modelManager")
+textureManager      = require("manager.textureManager")
+animationManager    = require("manager.animationManager")
+preloadManager      = require("manager.preloadManager")
+signalManager       = require("manager.signalManager")
+
+require("const.typeDef")
+require("const.textDef")
+require("const.statusDef")
+require("config.deskConfig")
+
+deviceConfig    = require("config.deviceConfig")
+gameConfig      = require("config.gameConfig")
+enableConfig    = require("config.enableConfig")
+networkConfig   = require("config.networkConfig")
+gamepref        = require("logic.gamepref")
+platformHelper  = require("platform.platformHelper")
+networkManager  = require("network.networkManager")
+gvoiceManager   = require("logic.manager.gvoiceManager")
+locationManager = require("logic.manager.locationManager")
+talkingData     = require("platform.talkingData")
+
+local waiting       = require("ui.waiting")
+local messagebox    = require("ui.messagebox")
+local mahjongType   = require("logic.mahjong.mahjongType")
+local doushisiType  = require("logic.doushisi.doushisiType")
+
+reload("network.httpAsync")
+local http = reload("network.http")
 
 ----------------------------------------------------------------
 -- 断开连接后的回调
@@ -119,9 +149,16 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-function initClientApp()
-    viewManager.init()
+function clientAppSetup()
     networkManager.setup(networkDisconnectedCallback)
+
+    soundManager.setup()
+    viewManager.setup()
+    modelManager.setup()
+    textureManager.setup()
+    animationManager.setup()
+    eventManager.setup()
+    sceneManager.setup()
 
     local headerManager = require("logic.manager.headerManager")
     headerManager.setup()

@@ -395,4 +395,9 @@
 --return json
 
 local json = require("cjson")
+
+function json.isNilOrNull(jsn)
+    return jsn == nil or jsn == json.null
+end
+
 return json

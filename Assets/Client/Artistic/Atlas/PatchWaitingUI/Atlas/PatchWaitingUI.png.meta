@@ -1,0 +1,225 @@
+fileFormatVersion: 2
+guid: cd3dbb90183e51a4a81158e8be788e97
+timeCreated: 1543669624
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: dl_jiazai01
+    21300002: dl_jiazai02
+    21300004: bird00
+    21300006: bird01
+    21300008: bird02
+    21300010: bird03
+    21300012: bird04
+    21300014: bird05
+    21300016: bird06
+    21300018: bird07
+    21300020: bird08
+    21300022: bird09
+    21300024: bird10
+    21300026: bird11
+    21300028: bird12
+    21300030: bird13
+    21300032: bird14
+    21300034: bird15
+    21300036: bird16
+    21300038: bird17
+    21300040: bird18
+    21300042: bird19
+    21300044: bird20
+    21300046: bird21
+    21300048: bird22
+    21300050: bird23
+    21300052: bird24
+    21300054: bird25
+    21300056: bird26
+    21300058: bird27
+    21300060: bird28
+    21300062: bird29
+    21300064: DL_jz01
+    21300066: DL_jz02
+    21300068: DL_di01
+    21300070: DL_di02
+    21300072: mask
+    21300074: gy_lw
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+  - buildTarget: Android
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+  - buildTarget: iPhone
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bird23
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 188
+        width: 67
+        height: 67
+      alignment: 9
+      pivot: {x: 0.5074627, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_di02
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 214
+        width: 44
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 10, y: 9, z: 8, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_jz01
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 46
+        width: 140
+        height: 140
+      alignment: 9
+      pivot: {x: 0.50357145, y: 0.50357145}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: DL_jz02
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 44
+        width: 140
+        height: 141
+      alignment: 9
+      pivot: {x: 0.50357145, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gy_lw
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 187
+        width: 76
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 24, y: 25, z: 23, w: 25}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: mask
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 188
+        width: 65
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

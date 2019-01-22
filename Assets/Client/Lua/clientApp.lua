@@ -4,9 +4,8 @@
 
 require("globals")
 
-local patchManager      = require("logic.manager.patchManager")
-local input             = UnityEngine.Input
-local keycode           = UnityEngine.KeyCode
+local Input             = UnityEngine.Input
+local KeyCode           = UnityEngine.KeyCode
 
 -------------------------------------------------------------------
 -- 禁止定义全局变量
@@ -58,6 +57,7 @@ end
 --
 ----------------------------------------------------------------
 clientApp = {}
+local Application = UnityEngine.Application
 
 ----------------------------------------------------------------
 --
@@ -65,6 +65,8 @@ clientApp = {}
 function clientApp:start()
     registerTracebackCallback(tracebackHandler)
     Application.targetFrameRate = gameConfig.fps
+
+    clientAppSetup()
 
     soundManager.setBGMVolume(gamepref.getBGMVolume())
     soundManager.setSFXVolume(gamepref.getSFXVolume())
@@ -74,24 +76,10 @@ function clientApp:start()
     registerUpdateListener(self.update, self)
 
     clientApp.currentDesk = nil
+    DISABLE_GLOBAL_VARIABLE_DECLARATION()
     
-    if not gameConfig.patchEnabled then
-        initClientApp()
-        DISABLE_GLOBAL_VARIABLE_DECLARATION()
-
-        local login = require("ui.login").new()
-        login:show()
-    else
-        patchManager.patch(function(forceReload)
-            if forceReload then--重新加载已被加载过的lua文件
-                reload("std")
-                reload("globals")
-            end
-
-            initClientApp()
-            DISABLE_GLOBAL_VARIABLE_DECLARATION()
-        end)
-    end
+    local login = require("ui.login").new()
+    login:show()
 end
 
 local escape = false
@@ -101,7 +89,7 @@ local escape = false
 ----------------------------------------------------------------
 function clientApp:update()
     -- 检测返回键状态
-    if input.GetKeyDown(keycode.Escape) and not escape then
+    if Input.GetKeyDown(KeyCode.Escape) and not escape then
         showMessageUI("确定要退出游戏吗？", 
                       function()
                           escape = false
@@ -114,7 +102,7 @@ function clientApp:update()
     end
     --测试用，响应键盘按键执行特定指令
     if appConfig.debug and not deviceConfig.isMobile then
-        if input.GetKeyDown(keycode.C) then
+        if Input.GetKeyDown(KeyCode.C) then
             
         end
     end
@@ -125,7 +113,7 @@ end
 ----------------------------------------------------------------
 function clientApp:quit()
     closeAllUI()
-
+    networkManager.disconnect()
     locationManager.stop()
     talkingData.stop()
 end

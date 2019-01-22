@@ -4,6 +4,9 @@
 
 local object = class("object")
 
+Transform   	= UnityEngine.Transform
+RectTransform   = UnityEngine.RectTransform
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------

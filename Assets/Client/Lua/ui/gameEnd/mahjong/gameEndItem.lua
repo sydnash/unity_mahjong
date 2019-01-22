@@ -57,7 +57,7 @@ function gameEndItem:setPlayerInfo(player, cb)
         self.mQue:show()
     end
 
-    if not isNilOrNull(player.hu) and player.hu >= 0 then
+    if not json.isNilOrNull(player.hu) and player.hu >= 0 then
         self.mResult:show()
     end
 
@@ -116,7 +116,7 @@ function gameEndItem:setPlayerInfo(player, cb)
     end
 
     local hu = player.hu
-    if not isNilOrNull(hu) and hu >= 0 then
+    if not json.isNilOrNull(hu) and hu >= 0 then
         self.mResult:setSprite("hu")
         self.mResult:show()
 

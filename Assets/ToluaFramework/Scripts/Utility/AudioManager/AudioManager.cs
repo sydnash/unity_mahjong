@@ -165,9 +165,18 @@ public class AudioManager
     /// </summary>
     public void Update()
     {
-        mBGMChannel.Update();
-        mUIChannel.Update();
-        mGfxChannel.Update();
+        if (mBGMChannel != null)
+        {
+            mBGMChannel.Update();
+        }
+        if (mUIChannel != null)
+        {
+            mUIChannel.Update();
+        }
+        if (mGfxChannel != null)
+        {
+            mGfxChannel.Update();
+        }
     }
 
     #endregion

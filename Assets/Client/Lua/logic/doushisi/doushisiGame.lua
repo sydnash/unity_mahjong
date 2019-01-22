@@ -267,7 +267,7 @@ end
 function doushisiGame:onAnPaiNotifyHandler(msg)
     local player = self:getPlayerByAcId(msg.AcId)
     player.fuShu = msg.FuShu
-    if isNilOrNull(msg.Dos) or #msg.Dos == 0 then
+    if json.isNilOrNull(msg.Dos) or #msg.Dos == 0 then
         return
     end
     for _, info in pairs(msg.Dos) do
@@ -493,7 +493,7 @@ end
 function doushisiGame:faPai(msg)
     self.totalCardsCount = self:getTotalCardCountByGame(self.cityType)
     self.leftCardsCount = self.totalCardsCount
-    if not isNilOrNull(msg.Seats) then
+    if not json.isNilOrNull(msg.Seats) then
         for _, v in pairs(msg.Seats) do
             local player = self:getPlayerByAcId(v.AcId)
             player[doushisiGame.cardType.shou] = v.Cards

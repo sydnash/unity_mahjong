@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.tps</string>
+        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>512</int>
+            <int>320</int>
             <key>height</key>
-            <int>512</int>
+            <int>256</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -108,9 +108,9 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
-            <true/>
+            <false/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>
@@ -239,138 +239,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/bird00.png</key>
-            <key type="filename">Images/bird03.png</key>
-            <key type="filename">Images/bird08.png</key>
-            <key type="filename">Images/bird15.png</key>
-            <key type="filename">Images/bird16.png</key>
-            <key type="filename">Images/bird17.png</key>
-            <key type="filename">Images/bird18.png</key>
-            <key type="filename">Images/bird19.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>17,17,34,34</rect>
-                <key>scale9Paddings</key>
-                <rect>17,17,34,34</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird01.png</key>
-            <key type="filename">Images/bird02.png</key>
-            <key type="filename">Images/bird06.png</key>
-            <key type="filename">Images/bird07.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>17,17,33,33</rect>
-                <key>scale9Paddings</key>
-                <rect>17,17,33,33</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird04.png</key>
-            <key type="filename">Images/bird05.png</key>
-            <key type="filename">Images/bird20.png</key>
-            <key type="filename">Images/bird21.png</key>
-            <key type="filename">Images/bird22.png</key>
-            <key type="filename">Images/bird29.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>17,17,33,34</rect>
-                <key>scale9Paddings</key>
-                <rect>17,17,33,34</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird09.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,17,33,34</rect>
-                <key>scale9Paddings</key>
-                <rect>16,17,33,34</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird10.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>15,16,31,32</rect>
-                <key>scale9Paddings</key>
-                <rect>15,16,31,32</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird11.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>14,15,27,29</rect>
-                <key>scale9Paddings</key>
-                <rect>14,15,27,29</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird12.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>14,14,29,28</rect>
-                <key>scale9Paddings</key>
-                <rect>14,14,29,28</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird13.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,15,31,31</rect>
-                <key>scale9Paddings</key>
-                <rect>16,15,31,31</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird14.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>17,16,33,33</rect>
-                <key>scale9Paddings</key>
-                <rect>17,16,33,33</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/bird23.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -381,71 +249,6 @@
                 <rect>17,17,34,33</rect>
                 <key>scale9Paddings</key>
                 <rect>17,17,34,33</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird24.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,16,33,31</rect>
-                <key>scale9Paddings</key>
-                <rect>16,16,33,31</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird25.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>15,15,30,29</rect>
-                <key>scale9Paddings</key>
-                <rect>15,15,30,29</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird26.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>14,14,27,27</rect>
-                <key>scale9Paddings</key>
-                <rect>14,14,27,27</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird27.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>15,15,29,31</rect>
-                <key>scale9Paddings</key>
-                <rect>15,15,29,31</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">Images/bird28.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,17,31,33</rect>
-                <key>scale9Paddings</key>
-                <rect>16,17,31,33</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -481,35 +284,6 @@
             <filename>Images/bird23.png</filename>
             <filename>Images/DL_jz01.png</filename>
             <filename>Images/DL_jz02.png</filename>
-            <filename>Images/bird00.png</filename>
-            <filename>Images/bird01.png</filename>
-            <filename>Images/bird02.png</filename>
-            <filename>Images/bird03.png</filename>
-            <filename>Images/bird04.png</filename>
-            <filename>Images/bird05.png</filename>
-            <filename>Images/bird06.png</filename>
-            <filename>Images/bird07.png</filename>
-            <filename>Images/bird08.png</filename>
-            <filename>Images/bird09.png</filename>
-            <filename>Images/bird10.png</filename>
-            <filename>Images/bird11.png</filename>
-            <filename>Images/bird12.png</filename>
-            <filename>Images/bird13.png</filename>
-            <filename>Images/bird14.png</filename>
-            <filename>Images/bird15.png</filename>
-            <filename>Images/bird16.png</filename>
-            <filename>Images/bird17.png</filename>
-            <filename>Images/bird18.png</filename>
-            <filename>Images/bird19.png</filename>
-            <filename>Images/bird20.png</filename>
-            <filename>Images/bird21.png</filename>
-            <filename>Images/bird22.png</filename>
-            <filename>Images/bird24.png</filename>
-            <filename>Images/bird25.png</filename>
-            <filename>Images/bird26.png</filename>
-            <filename>Images/bird27.png</filename>
-            <filename>Images/bird28.png</filename>
-            <filename>Images/bird29.png</filename>
             <filename>Images/DL_di01.png</filename>
             <filename>Images/DL_di02.png</filename>
             <filename>Images/mask.png</filename>

@@ -2,10 +2,53 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
+local patchViewManager  = require("ui.patch.patchViewManager")
+local patchWaiting      = require("ui.patch.patchWaiting")
+local patchDownload     = require("ui.patch.patchDownload")
+local patchMessageBox   = require("ui.patch.patchMessageBox")
+
+local waiting = nil
+ 
+local function showWaitingUI(text)
+    if waiting == nil then
+        waiting = patchWaiting.new(text)
+    end
+
+    waiting:show()
+end
+
+local function closeWaitingUI()
+    if waiting ~= nil then
+        waiting:close()
+    end
+
+    waiting = nil
+end
+
+
+
+
+
+
+
+
+
+
+local appConfig     = require("config.appConfig")
 local networkConfig = require("config.networkConfig")
 local http          = require("network.http")
 
-local patchManager = {}
+local downloadUrl = "http://www.cdbshy.com/mahjong"
+if appConfig.debug then
+    if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android then
+        downloadUrl = "https://fir.im/ea8c"
+    elseif UnityEngine.Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer then
+        downloadUrl = "https://fir.im/w3de"
+    end
+end
+
+local patchURL      = appConfig.debug and "http://test.cdbshy.com/mahjong_hotfix/" or "http://www.cdbshy.com/mahjong_hotfix/"
+local patchTimeout  = 30  --秒
 
 local VERSION_FILE_NAME     = "version.txt"
 local PATCHLIST_FILE_NAME   = "patchlist.txt"
@@ -22,7 +65,7 @@ local function downloadOfflineVersionFile()
     local filename = LFS.CombinePath(LFS.PATCH_PATH, VERSION_FILE_NAME)
     local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
 
-    if string.isNilOrEmpty(text) then
+    if text == nil or text == "" then
         text = LFS.ReadTextFromResources("version")
     end
 
@@ -35,7 +78,7 @@ end
 local function downloadOnlineVersionFile(url, callback)
     url = LFS.CombinePath(url, VERSION_FILE_NAME)
 
-    downloadTextAsync:addTextRequest(url, networkConfig.httpTimeout * 1000, callback)
+    downloadTextAsync:addTextRequest(url, patchTimeout * 1000, callback)
     downloadTextAsync:start()
 end
 
@@ -46,7 +89,7 @@ local function downloadOfflinePatchlistFile()
     local filename = LFS.CombinePath(LFS.PATCH_PATH, PATCHLIST_FILE_NAME)
     local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
 
-    if string.isNilOrEmpty(text) then
+    if text == nil or text == "" then
         text = LFS.ReadTextFromResources("patchlist")
     end
 
@@ -59,7 +102,7 @@ end
 local function downloadOnlinePatchlistFile(url, callback)
     url = LFS.CombinePath(url, PATCHLIST_FILE_NAME)
 
-    downloadTextAsync:addTextRequest(url, networkConfig.httpTimeout * 1000, callback)
+    downloadTextAsync:addTextRequest(url, patchTimeout * 1000, callback)
     downloadTextAsync:start()
 end
 
@@ -93,15 +136,20 @@ end
 local function checkPatches(callback)
     local offlineVersionText = downloadOfflineVersionFile()
 
-    if string.isNilOrEmpty(offlineVersionText) then
+    if offlineVersionText == nil or offlineVersionText == "" then
         callback(nil, nil, nil)
         return
     end
 
-    downloadOnlineVersionFile(networkConfig.patchURL, function(onvt)
+    downloadOnlineVersionFile(patchURL, function(onvt)
+        if not appConfig.patchEnabled then
+            callback({}, true, true)
+            return
+        end
+
         local onlineVersionText = onvt
 
-        if string.isNilOrEmpty(onlineVersionText) then
+        if onlineVersionText == nil or onlineVersionText == "" then
             callback(nil, nil, nil)
             return
         end
@@ -116,25 +164,16 @@ local function checkPatches(callback)
         local onlineVersionNumArray = string.split(onlineVersionNum, ".")
         
         if offlineVersionNumArray[2] ~= onlineVersionNumArray[2] then
-            closeWaitingUI();
-            showMessageUI("您的版本太旧，是否下载并安装最新版？", 
-                          function()
-                              local downloadUrl = "http://www.cdbshy.com/mahjong"
-
-                              if appConfig.debug then
-                                  if deviceConfig.isAndroid then
-                                      downloadUrl = "https://fir.im/ea8c"
-                                  elseif deviceConfig.isApple then
-                                      downloadUrl = "https://fir.im/w3de"
-                                  end
-                              end
-
-                              platformHelper.openExplorer(downloadUrl)
-                              return true --keep the message ui alived
-                          end,
-                          function()
-                              Application.Quit()
-                          end)
+            closeWaitingUI()
+            local message = patchMessageBox.new("您的版本太旧，是否下载并安装最新版？", 
+                                                function()
+                                                    platformHelper.openExplorer(downloadUrl)
+                                                    return true --keep the message ui alived
+                                                end,
+                                                function()
+                                                    Application.Quit()
+                                                end)
+            message:show()
             return
         end
 
@@ -152,7 +191,7 @@ local function checkPatches(callback)
 
         local offlinePatchlistText = downloadOfflinePatchlistFile()
 
-        if string.isNilOrEmpty(offlinePatchlistText) then
+        if offlinePatchlistText == nil or offlinePatchlistText == "" then
             callback(nil, nil, nil)
             return
         end
@@ -192,7 +231,7 @@ local function downloadPatches(url, files, callback)
     for _, v in pairs(files) do
         local www = url .. "/" .. v.name
 
-        downloadPatchAsync:addBytesRequest(www, networkConfig.patchTimeout * 1000, function(bytes, size, completed)
+        downloadPatchAsync:addBytesRequest(www, patchTimeout * 1000, function(bytes, size, completed)
             if bytes == nil then
                 callback(DOWNLOAD_FAILED, v.name, 0)
             else
@@ -212,6 +251,25 @@ local function downloadPatches(url, files, callback)
     downloadPatchAsync:start()
 end
 
+local K = 1024
+local M = K * K
+local G = K * M
+local T = G * K
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function BKMGT(bytes)
+    assert(type(bytes) == "number")
+
+    if bytes == nil then bytes = 0 end
+    if bytes < K then return string.format("%dB",   bytes) end
+    if bytes < M then return string.format("%.1fKB", bytes / K) end
+    if bytes < G then return string.format("%.1fMB", bytes / M) end
+    if bytes < T then return string.format("%.1fGB", bytes / G) end
+
+    return string.format("%.1fT", bytes / T)
+end
 
 
 
@@ -219,41 +277,48 @@ end
 
 
 
+
+
+
+
+
+
+
+
+local patchManager = {}
 
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
 function patchManager.patch(callback)
-    LFS.MakeDir(CACHE_PATH)
+    patchViewManager.setup()
 
-    local loading = require("ui.loading").new()
-    loading:show()
+    local downloading = patchDownload.new()
+    downloading:show()
 
     showWaitingUI("正在检测更新，请稍候")
     checkPatches(function(plist, versText, plistText, url)
         closeWaitingUI()
 
         if plist == nil then
-            showMessageUI("更新检测失败", function()
-                Application.Quit()
-            end)
+            local message = patchMessageBox.new("更新检测失败", 
+                                                function()
+                                                    Application.Quit()
+                                                end)
+            message:show()
             return
         end
 
-        local function invokeCallback(reload)
+        local function invokeCallback()
             if callback ~= nil then
-                callback(reload)
+                callback()
             end
         end
       
         if #plist == 0 then--未检测到更新
-            log("patchManager: plsit is empty")
-            invokeCallback(false)
-
-            local login = require("ui.login").new()
-            login:show()
-            loading:close()
-
+            print("patchManager: plsit is empty")
+            invokeCallback()
+            downloading:close()
             return
         end
 
@@ -274,7 +339,7 @@ function patchManager.patch(callback)
             downloadPatches(url, files, function(status, filename, size)
                 if status == DOWNLOAD_FAILED then 
                     table.insert(failedList, { name = filename })
-                    log("download failed, filename = " .. filename)
+                    print("download failed, filename = " .. filename)
                 else
                     if status == DOWNLOAD_COMPLETED then
                         successCount = successCount + 1
@@ -286,35 +351,30 @@ function patchManager.patch(callback)
                 local progress = math.min(1, downloadedBytes / downloadBytes)
 
                 if successCount + #failedList < totalCount then
-                    loading:setProgress(progress)
-                    loading:setText(string.format("检测到%s更新资源，已下载%.1f%%", downloadBytesTxt, progress * 100))
+                    downloading:setProgress(progress)
+                    downloading:setText(string.format("检测到%s更新资源，已下载%.1f%%", downloadBytesTxt, progress * 100))
                 else    
                     if #failedList > 0 then
-                        showMessageUI("部分更新资源下载失败，是否重新下载？", 
-                                        function()
-                                            download(failedList)
-                                        end,
-                                        function()
-                                            Application.Quit()
-                                        end)
+                        local message = patchMessageBox.new("部分更新资源下载失败，是否重新下载？", 
+                                                            function()
+                                                                download(failedList)
+                                                            end,
+                                                            function()
+                                                                Application.Quit()
+                                                            end)
+                        message:show()
                     else
                         http.destroyAsync(downloadPatchAsync)
                         downloadPatchAsync = nil
 
+                        LFS.RemoveFile(LFS.CombinePath(CACHE_PATH, "cver.txt"))
+                        LFS.RemoveFile(LFS.CombinePath(CACHE_PATH, "cfiles.txt"))
                         LFS.MoveDir(CACHE_PATH, LFS.PATCH_PATH)
-
-                        local vpath = LFS.CombinePath(LFS.PATCH_PATH, VERSION_FILE_NAME)
-                        LFS.WriteText(vpath, versText, LFS.UTF8_WITHOUT_BOM)
-
-                        local ppath = LFS.CombinePath(LFS.PATCH_PATH, PATCHLIST_FILE_NAME)
-                        LFS.WriteText(ppath, plistText, LFS.UTF8_WITHOUT_BOM)
+                        LFS.WriteText(LFS.CombinePath(LFS.PATCH_PATH, VERSION_FILE_NAME), versText, LFS.UTF8_WITHOUT_BOM)
+                        LFS.WriteText(LFS.CombinePath(LFS.PATCH_PATH, PATCHLIST_FILE_NAME), plistText, LFS.UTF8_WITHOUT_BOM)
                         
-                        invokeCallback(true)
-
-                        local login = require("ui.login").new()
-                        login:show()
-
-                        loading:close()
+                        invokeCallback()
+                        downloading:close()
                     end
                 end
             end)

@@ -54,8 +54,8 @@ function friendster:setData(data)
     lc.applyCode        = data.ApplyCode
     lc.managerAcId      = data.AcId
     lc.managerNickname  = data.NickName
-    lc.applyList        = isNilOrNull(data.ApplyList) and {} or data.ApplyList
-    self.createSetting  = isNilOrNull(data.CreateSettings) and {} or data.CreateSettings
+    lc.applyList        = json.isNilOrNull(data.ApplyList) and {} or data.ApplyList
+    self.createSetting  = json.isNilOrNull(data.CreateSettings) and {} or data.CreateSettings
     -- self:checkCreateSetting()
     -- log("club setting: " .. table.tostring(self.createSetting))
 end

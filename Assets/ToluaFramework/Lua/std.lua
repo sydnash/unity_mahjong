@@ -10,13 +10,7 @@ Transform   	= UnityEngine.Transform
 RectTransform   = UnityEngine.RectTransform
 BoxCollider 	= UnityEngine.BoxCollider
 
----------------------------------------------------------------------------
--- reload lua module
----------------------------------------------------------------------------
-function reload(packageName)
-    package.loaded[packageName] = nil
-    return require(packageName)
-end
+
 
 ---------------------------------------------------------------------------
 -- Lua Module
@@ -28,8 +22,8 @@ reload("utils.string")
 reload("utils.table")
 reload("utils.utils")
 
-object              = reload("common.object")
-component           = reload("common.component")
+--object              = reload("common.object")
+--component           = reload("common.component")
 time                = reload("utils.time")
 json                = reload("utils.json")
 viewManager         = reload("manager.viewManager")

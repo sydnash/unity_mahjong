@@ -29,7 +29,7 @@ function mahjongDeskHeader:setPlayerInfo(player)
             self:hideMarker()
         end
 
-        if not isNilOrNull(player.hu) and player.hu[1].HuCard >= 0 then
+        if not json.isNilOrNull(player.hu) and player.hu[1].HuCard >= 0 then
             self:showHu()
         else
             self:hideHu()

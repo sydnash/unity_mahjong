@@ -626,10 +626,10 @@ function doushisiOperation:onOpList(opList)
     self:sortOpList(opList)
     for _, opInfo in pairs(opList.OpInfos) do
         local op = opInfo.Op
-        if isNilOrNull(opInfo.HasTY) then
+        if json.isNilOrNull(opInfo.HasTY) then
             opInfo.HasTY = {}
         end
-        if isNilOrNull(opInfo.HasWarning) then
+        if json.isNilOrNull(opInfo.HasWarning) then
             opInfo.HasWarning = {}
         end
         if op == opType.doushisi.hua.id then

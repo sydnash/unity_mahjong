@@ -5,6 +5,7 @@
 local base = require("common.object")
 local panel = class("panel", base)
 
+local object        = base
 local text          = require("ui.common.text")
 local sprite        = require("ui.common.sprite")
 local image         = require("ui.common.image")

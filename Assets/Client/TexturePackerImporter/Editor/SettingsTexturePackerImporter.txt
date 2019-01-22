@@ -25,6 +25,9 @@ tpsheetFileNames:
 - Assets/Client/Artistic/Atlas/LoginUI/Atlas/LoginUI.tpsheet
 - Assets/Client/Artistic/Atlas/Mahjong/Atlas/Mahjong.tpsheet
 - Assets/Client/Artistic/Atlas/MailUI/Atlas/MailUI.tpsheet
+- Assets/Client/Artistic/Atlas/PatchDownloadUI/Atlas/PatchDownloadUI.tpsheet
+- Assets/Client/Artistic/Atlas/PatchMessageBoxUI/Atlas/PatchMessageBoxUI.tpsheet
+- Assets/Client/Artistic/Atlas/PatchWaitingUI/Atlas/PatchWaitingUI.tpsheet
 - Assets/Client/Artistic/Atlas/PlaybackUI/Atlas/PlaybackUI.tpsheet
 - Assets/Client/Artistic/Atlas/PlayHistoryUI/Atlas/PlayHistory.tpsheet
 - Assets/Client/Artistic/Atlas/SettingUI/Atlas/SettingUI.tpsheet
@@ -59,6 +62,9 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/LoginUI/Atlas/LoginUI.png
 - Assets/Client/Artistic/Atlas/Mahjong/Atlas/Mahjong.png
 - Assets/Client/Artistic/Atlas/MailUI/Atlas/MailUI.png
+- Assets/Client/Artistic/Atlas/PatchDownloadUI/Atlas/PatchDownloadUI.png
+- Assets/Client/Artistic/Atlas/PatchMessageBoxUI/Atlas/PatchMessageBoxUI.png
+- Assets/Client/Artistic/Atlas/PatchWaitingUI/Atlas/PatchWaitingUI.png
 - Assets/Client/Artistic/Atlas/PlaybackUI/Atlas/PlaybackUI.png
 - Assets/Client/Artistic/Atlas/PlayHistoryUI/Atlas/PlayHistory.png
 - Assets/Client/Artistic/Atlas/SettingUI/Atlas/SettingUI.png
@@ -69,6 +75,9 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
+- 
+- 
 - 
 - 
 - 

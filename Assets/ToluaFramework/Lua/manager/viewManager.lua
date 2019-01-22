@@ -5,23 +5,21 @@
 local viewManager = {}
 local assetType = "view"
 
+local GameObject = UnityEngine.GameObject
+local Camera     = UnityEngine.Camera
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function viewManager.setup()
     AssetPoolManager.instance:AddPool(assetType, "UI", false)
-    local root = find("UIRoot")
-    GameObject.DontDestroyOnLoad(root.gameObject);
 
-    viewManager.init()
-end
-
-function viewManager.init()
     local root = find("UIRoot")
     viewManager.canvas = root:findChild("Canvas")
-
     local camera = root:findChild("UICamera")
-    viewManager.camera = getComponentU(camera.gameObject, typeof(UnityEngine.Camera))
+    viewManager.camera = getComponentU(camera.gameObject, typeof(Camera))
+
+    GameObject.DontDestroyOnLoad(root.gameObject);
 end
 
 -------------------------------------------------------------------

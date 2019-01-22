@@ -2,14 +2,15 @@
 --Date
 --此文件由[BabeLua]插件自动生成
 
-local platform = UnityEngine.RuntimePlatform
+local Application       = UnityEngine.Application
+local RuntimePlatform   = UnityEngine.RuntimePlatform
 
 local function isAndroid()
-    return Application.platform == platform.Android
+    return Application.platform == RuntimePlatform.Android
 end
 
 local function isApple()
-    return Application.platform == platform.IPhonePlayer
+    return Application.platform == RuntimePlatform.IPhonePlayer
 end
 
 return {
