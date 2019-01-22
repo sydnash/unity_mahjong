@@ -10,6 +10,8 @@ function reload(packageName)
     return require(packageName)
 end
 
+Application = UnityEngine.Application
+
 appConfig = reload("config.appConfig")
 reload("utils.class")
 
