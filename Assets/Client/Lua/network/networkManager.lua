@@ -448,13 +448,13 @@ function networkManager.loginWx(callback)
             end
         end)
     end
-    platformHelper.registerLoginWxCallback(function(json)
-        if string.isNilOrEmpty(json) then
+    platformHelper.registerLoginWxCallback(function(jsn)
+        if string.isNilOrEmpty(jsn) then
             callback(nil)
             return
         end
 
-        local resp = table.fromjson(json)
+        local resp = table.fromjson(jsn)
             
         if resp.errCode ~= errCodeWx.ok then
             callback(nil)
