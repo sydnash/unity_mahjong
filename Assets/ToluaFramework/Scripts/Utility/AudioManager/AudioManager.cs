@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 
@@ -15,12 +16,22 @@ public class AudioManager
     /// <summary>
     /// 
     /// </summary>
-    private AudioChannel mUIChannel = null; 
+    private AudioChannel mUIChannel = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Transform mRoot = null;
 
     /// <summary>
     /// 
     /// </summary>
     private AudioChannel mGfxChannel = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Dictionary<string, AudioChannel> mChannels = new Dictionary<string, AudioChannel>();
 
     #endregion
 
@@ -46,69 +57,46 @@ public class AudioManager
     /// <summary>
     /// 
     /// </summary>
-    public void Setup()
+    /// <param name="channelName"></param>
+    /// <param name="capacity"></param>
+    /// <returns></returns>
+    public AudioChannel AddChannel(string channelName, int capacity)
     {
-        Transform root = null;
-
-        GameObject go = GameObject.Find("AudioManager");
-        if (go != null)
+        if (mChannels.ContainsKey(channelName))
         {
-            GameObject.DontDestroyOnLoad(go);
-            root = go.transform;
+            return mChannels[channelName];
         }
 
-        Initialize(root);
+        AudioChannel channel = new AudioChannel(root, capacity);
+        channel.volume = 0.1f;
+        mChannels.Add(channelName, channel);
+
+        return channel;
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="audioName"></param>
-    public void PlayBGM(string audioPath, string audioName)
+    public void Play(string channelName, string audioPath, string audioName, bool loop)
     {
-        mBGMChannel.Play(audioPath, audioName, Audio.PlayMode.Loop);
+        if (mChannels.ContainsKey(channelName))
+        {
+            AudioChannel channel = mChannels[channelName];
+            channel.Play(audioPath, audioName, loop ? Audio.PlayMode.Loop : Audio.PlayMode.Once);
+        }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public void StopBGM()
+    public void Stop(string channelName)
     {
-        mBGMChannel.Stop();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="audioName"></param>
-    public void PlayUI(string audioPath, string audioName)
-    {
-        mUIChannel.Play(audioPath, audioName, Audio.PlayMode.Once);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void StopUI()
-    {
-        mUIChannel.Stop();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="audioName"></param>
-    public void PlayGfx(string audioPath, string audioName)
-    {
-        mGfxChannel.Play(audioPath, audioName, Audio.PlayMode.Once);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void StopGfx()
-    {
-        mGfxChannel.Stop();
+        if (mChannels.ContainsKey(channelName))
+        {
+            AudioChannel channel = mChannels[channelName];
+            channel.Stop();
+        }
     }
 
     /// <summary>
@@ -116,9 +104,11 @@ public class AudioManager
     /// </summary>
     public void StopAll()
     {
-        StopBGM();
-        StopUI();
-        StopGfx();
+        foreach (KeyValuePair<string, AudioChannel> kvp in mChannels)
+        {
+            AudioChannel channel = kvp.Value;
+            channel.Stop();
+        }
     }
 
     /// <summary>
@@ -126,38 +116,28 @@ public class AudioManager
     /// </summary>
     /// <param name="type"></param>
     /// <param name="volume"></param>
-    public void SetBGMVolume(float volume)
+    public void SetVolume(string channelName, float volume)
     {
-        mBGMChannel.volume = volume;
+        if (mChannels.ContainsKey(channelName))
+        {
+            AudioChannel channel = mChannels[channelName];
+            channel.volume = volume;
+        }
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="type"></param>
-    public float GetBGMVolume()
+    public float GetVolume(string channelName)
     {
-        return mBGMChannel.volume;
-    }
+        if (mChannels.ContainsKey(channelName))
+        {
+            AudioChannel channel = mChannels[channelName];
+            return channel.volume;
+        }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="volume"></param>
-    public void SetSFXVolume(float volume)
-    {
-        mUIChannel.volume = volume;
-        mGfxChannel.volume = volume;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    public float GetSFXVolume()
-    {
-        return mUIChannel.volume;
+        return -1;
     }
 
     /// <summary>
@@ -165,17 +145,10 @@ public class AudioManager
     /// </summary>
     public void Update()
     {
-        if (mBGMChannel != null)
+        foreach (KeyValuePair<string, AudioChannel> kvp in mChannels)
         {
-            mBGMChannel.Update();
-        }
-        if (mUIChannel != null)
-        {
-            mUIChannel.Update();
-        }
-        if (mGfxChannel != null)
-        {
-            mGfxChannel.Update();
+            AudioChannel channel = kvp.Value;
+            channel.Update();
         }
     }
 
@@ -192,17 +165,24 @@ public class AudioManager
     }
 
     /// <summary>
-    /// 初始化
+    /// 
     /// </summary>
-    private void Initialize(Transform root)
+    private Transform root
     {
-        mBGMChannel   = new AudioChannel(root, 1);
-        mUIChannel    = new AudioChannel(root, 3);
-        mGfxChannel   = new AudioChannel(root, 5);
+        get
+        {
+            if (mRoot == null)
+            {
+                GameObject go = GameObject.Find("AudioManager");
+                if (go != null)
+                {
+                    GameObject.DontDestroyOnLoad(go);
+                    mRoot = go.transform;
+                }
+            }
 
-        mBGMChannel.volume = 0.1f;
-        mUIChannel.volume  = 0.1f;
-        mGfxChannel.volume = 0.1f;
+            return mRoot;
+        }
     }
 
     #endregion

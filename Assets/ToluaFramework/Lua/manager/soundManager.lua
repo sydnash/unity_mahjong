@@ -5,68 +5,75 @@
 local soundManager = {}
 local assetType = "sound"
 
+local BGM_CHANNEL = "bgm"
+local UI_CHANNEL  = "ui"
+local GFX_CHANNEL = "sfx"
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.setup()
     AssetPoolManager.instance:AddPool(assetType, "Sound", true)
-    AudioManager.instance:Setup()
+    AudioManager.instance:AddChannel(BGM_CHANNEL, 1)
+    AudioManager.instance:AddChannel(UI_CHANNEL, 3)
+    AudioManager.instance:AddChannel(GFX_CHANNEL, 5)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.playBGM(audioPath, audioName)
-    AudioManager.instance:PlayBGM(audioPath, audioName)
+    AudioManager.instance:Play(BGM_CHANNEL, audioPath, audioName, true)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.stopBGM()
-    AudioManager.instance:StopBGM()
+    AudioManager.instance:Stop(BGM_CHANNEL)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.setBGMVolume(volume)
-    AudioManager.instance:SetBGMVolume(volume)
+    AudioManager.instance:SetVolume(BGM_CHANNEL, volume)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.getBGMVolume()
-    return AudioManager.instance:GetBGMVolume()
+    return AudioManager.instance:GetVolume(BGM_CHANNEL)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.setSFXVolume(volume)
-    AudioManager.instance:SetSFXVolume(volume)
+    AudioManager.instance:SetVolume(UI_CHANNEL,  volume)
+    AudioManager.instance:SetVolume(GFX_CHANNEL, volume)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.getSFXVolume()
-    return AudioManager.instance:GetSFXVolume()
+    return AudioManager.instance:GetVolume(GFX_CHANNEL)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.playUI(audioPath, audioName)
-    AudioManager.instance:PlayUI(audioPath, audioName)
+    AudioManager.instance:Play(UI_CHANNEL, audioPath, audioName, false)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.playGfx(audioPath, audioName)
-    AudioManager.instance:PlayGfx(audioPath, audioName)
+    AudioManager.instance:Play(GFX_CHANNEL, audioPath, audioName, false)
 end
 
 return soundManager

@@ -177,7 +177,7 @@ local function checkPatches(callback)
             return
         end
 
-        if onlineVersionNum == offlineVersion.num then
+        if onlineVersionNum == offlineVersionNum then
             callback({}, true, true)
             return
         end
@@ -200,6 +200,12 @@ local function checkPatches(callback)
 
         downloadOnlinePatchlistFile(url, function(onpt)
             local onlinePatchlistText = onpt
+
+            if onlinePatchlistText == nil or onlinePatchlistText == "" then
+                callback(nil, nil, nil)
+                return
+            end
+
             local cachedPatchList = {}
 
             local lines = LFS.ReadLines(CACHE_FILES_FILE_NAME, LFS.UTF8_WITHOUT_BOM)
