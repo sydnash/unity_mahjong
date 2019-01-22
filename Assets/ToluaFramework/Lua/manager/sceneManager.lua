@@ -3,23 +3,18 @@
 --此文件由[BabeLua]插件自动生成
 
 local sceneManager = {}
-local hasSetup = false
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function sceneManager.setup()
+    SceneManager.instance:Setup("Scene")
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function sceneManager.load(sceneName, completedCallback)
-    if not hasSetup then
-        SceneManager.instance:Setup("Scene")
-        hasSetup = true
-    end
-
     SceneManager.instance:Load(sceneName, completedCallback)
 end
 

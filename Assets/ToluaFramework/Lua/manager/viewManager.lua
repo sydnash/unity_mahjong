@@ -10,9 +10,14 @@ local assetType = "view"
 -------------------------------------------------------------------
 function viewManager.setup()
     AssetPoolManager.instance:AddPool(assetType, "UI", false)
-
     local root = find("UIRoot")
     GameObject.DontDestroyOnLoad(root.gameObject);
+
+    viewManager.init()
+end
+
+function viewManager.init()
+    local root = find("UIRoot")
     viewManager.canvas = root:findChild("Canvas")
 
     local camera = root:findChild("UICamera")

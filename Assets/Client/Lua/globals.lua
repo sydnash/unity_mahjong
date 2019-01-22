@@ -120,6 +120,7 @@ end
 --
 ----------------------------------------------------------------
 function initClientApp()
+    viewManager.init()
     networkManager.setup(networkDisconnectedCallback)
 
     local headerManager = require("logic.manager.headerManager")
