@@ -830,7 +830,7 @@ end
 ----------------------------------------------------------------
 function destroyTexture(tex)
     if tex ~= nil then
-        GameObject.DestroyImmediate(tex, true)
+        UnityEngine.GameObject.DestroyImmediate(tex, true)
     end
 end
 
