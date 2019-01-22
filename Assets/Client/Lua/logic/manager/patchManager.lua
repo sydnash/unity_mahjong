@@ -38,11 +38,14 @@ local appConfig     = require("config.appConfig")
 local networkConfig = require("config.networkConfig")
 local http          = require("network.http")
 
+local Application       = UnityEngine.Application
+local RuntimePlatform   = UnityEngine.RuntimePlatform
+
 local downloadUrl = "http://www.cdbshy.com/mahjong"
 if appConfig.debug then
-    if UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android then
+    if Application.platform == RuntimePlatform.Android then
         downloadUrl = "https://fir.im/ea8c"
-    elseif UnityEngine.Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer then
+    elseif Application.platform == RuntimePlatform.IPhonePlayer then
         downloadUrl = "https://fir.im/w3de"
     end
 end
@@ -167,7 +170,11 @@ local function checkPatches(callback)
             closeWaitingUI()
             local message = patchMessageBox.new("您的版本太旧，是否下载并安装最新版？", 
                                                 function()
-                                                    platformHelper.openExplorer(downloadUrl)
+                                                    if Application.platform == RuntimePlatform.Android then
+                                                        AndroidHelper.instance:OpenExplore(downloadUrl)
+                                                    elseif Application.platform == RuntimePlatform.IPhonePlayer then
+                                                        IOSHelper.instance:OpenExplore(downloadUrl)
+                                                    end
                                                     return true --keep the message ui alived
                                                 end,
                                                 function()
