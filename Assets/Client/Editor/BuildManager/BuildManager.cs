@@ -200,10 +200,10 @@ public class BuildManager : EditorWindow
                     switch (mTargetPlatform)
                     {
                         case BuildTarget.Android:
-                            if (!mDebug)
-                            {
-                                PlayerSettings.Android.bundleVersionCode++;
-                            }
+                            //if (!mDebug)
+                            //{
+                            //    PlayerSettings.Android.bundleVersionCode++;
+                            //}
 
                             string debug = mDebug ? "_debug" : "_release";
                             string dev = mDevelopment ? "_dev" : "";
@@ -221,11 +221,11 @@ public class BuildManager : EditorWindow
                         case BuildTarget.iOS:
                             packageName = "mahjong_" + (mDevelopment ? "debug" : "release");
 
-                            if (!mDebug)
-                            {
-                                string buildNumber = PlayerSettings.iOS.buildNumber;
-                                PlayerSettings.iOS.buildNumber = (int.Parse(buildNumber) + 1).ToString();
-                            }
+                            //if (!mDebug)
+                            //{
+                            //    string buildNumber = PlayerSettings.iOS.buildNumber;
+                            //    PlayerSettings.iOS.buildNumber = (int.Parse(buildNumber) + 1).ToString();
+                            //}
 
                             break;
                         default:
