@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/SettingUI/Atlas/SettingUI.tps</string>
+        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/SettingUI/Atlas/SettingUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -317,6 +317,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/SZ_qhzh.png</key>
             <key type="filename">Images/SZ_tcyx.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -390,6 +391,7 @@
             <filename>Images/SZ_zi01_1.png</filename>
             <filename>Images/SZ_07.png</filename>
             <filename>Images/SZ_08.png</filename>
+            <filename>Images/SZ_qhzh.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
