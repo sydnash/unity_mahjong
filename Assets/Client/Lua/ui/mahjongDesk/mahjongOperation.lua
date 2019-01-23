@@ -144,7 +144,7 @@ function mahjongOperation:onInit()
     local mainCamera = UnityEngine.Camera.main
     mainCamera.transform.position = mainCameraParams.position
     mainCamera.transform.rotation = mainCameraParams.rotation
-    -- fixMainCameraByFov(mainCameraParams.fov, mainCamera)
+    fixMainCameraByFov(mainCameraParams.fov, mainCamera)
 
     local camera = GameObjectPicker.instance.camera
     camera.transform.position = inhandCameraParams.position
