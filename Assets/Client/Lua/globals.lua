@@ -442,7 +442,7 @@ function checkGame(cityType, gameType)
         end
     end
 
-    return false, string.format("%s地区暂不支持%s", cityName[cityType], gameName[citytype].games[gameType])
+    return false, string.format("%s地区暂不支持%s", cityName[cityType], gameName[cityType].games[gameType])
 end
 
 -------------------------------------------------------------
