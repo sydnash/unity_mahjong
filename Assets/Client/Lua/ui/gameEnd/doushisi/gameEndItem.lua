@@ -145,7 +145,7 @@ function gameEndItem:initPai(p)
         self:addInhandCards(t)
     end
     self.nextPos = self.nextPos + shouChiGap
-    if not isNilOrNull(p.chiChe) then
+    if not json.isNilOrNull(p.chiChe) then
         for _, v in pairs(p.chiChe) do
             self:addChiChe(v)
         end
