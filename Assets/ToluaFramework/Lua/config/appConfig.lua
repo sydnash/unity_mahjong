@@ -2,8 +2,8 @@
 --Date
 
 local appConfig = {
-    debug               = true,
-    patchEnabled        = true,--�����ȸ�
+    debug               = false,
+    patchEnabled        = true,
     loadCountPreFrame   = 3,
 }
 
