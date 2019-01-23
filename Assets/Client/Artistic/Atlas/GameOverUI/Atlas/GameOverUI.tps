@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/GameOverUI/Atlas/GameOverUI.tps</string>
+        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/GameOverUI/Atlas/GameOverUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>512</int>
+            <int>960</int>
             <key>height</key>
-            <int>512</int>
+            <int>420</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -108,9 +108,9 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
-            <true/>
+            <false/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>
@@ -199,6 +199,58 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Images/ZJS_boli01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.53125,0.416667</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>24,96,47,191</rect>
+                <key>scale9Paddings</key>
+                <rect>24,96,47,191</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZJS_boli02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.53125,0.416667</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>45,1,91,2</rect>
+                <key>scale9Paddings</key>
+                <rect>45,1,91,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZJS_boli03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.53125,0.416667</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>47,54,93,108</rect>
+                <key>scale9Paddings</key>
+                <rect>47,54,93,108</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZJS_boli04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.53125,0.416667</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>72,80,144,161</rect>
+                <key>scale9Paddings</key>
+                <rect>72,80,144,161</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/ZJS_di.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -225,6 +277,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/ZJS_dik.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.444444</point_f>
+                <key>scale9Enabled</key>
+                <true/>
+                <key>scale9Borders</key>
+                <rect>19,18,16,18</rect>
+                <key>scale9Paddings</key>
+                <rect>14,14,27,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/ZJS_dyj.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -235,6 +300,19 @@
                 <rect>87,41,173,81</rect>
                 <key>scale9Paddings</key>
                 <rect>87,41,173,81</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZJS_pjjs.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.53125,0.416667</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>90,28,181,56</rect>
+                <key>scale9Paddings</key>
+                <rect>90,28,181,56</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -251,7 +329,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/fx_di01 (1).png</key>
+            <key type="filename">Images/fx_di01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.53125,0.416667</point_f>
@@ -284,8 +362,14 @@
             <filename>Images/ZJS_dyj.png</filename>
             <filename>Images/ZJS_zi01.png</filename>
             <filename>Images/ZJS_di02.png</filename>
-            <filename>Images/fx_di01 (1).png</filename>
             <filename>Images/mask.png</filename>
+            <filename>Images/fx_di01.png</filename>
+            <filename>Images/ZJS_boli01.png</filename>
+            <filename>Images/ZJS_boli02.png</filename>
+            <filename>Images/ZJS_boli03.png</filename>
+            <filename>Images/ZJS_boli04.png</filename>
+            <filename>Images/ZJS_dik.png</filename>
+            <filename>Images/ZJS_pjjs.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

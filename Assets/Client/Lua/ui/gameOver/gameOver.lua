@@ -14,17 +14,15 @@ function gameOver:ctor(game, datas)
 end
 
 function gameOver:onInit()
-    if self.game.friendsterId == 0 then
-        self.mDeskId:setText(string.format("房号:%d", self.datas.deskId))
+    if self.game.friendsterId <= 0 then
+        self.mTextL:setText(string.format("%s%s:%d  第%d/%d局", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.datas.deskId, self.datas.finishGameCount, self.datas.totalGameCount))
     else
-        self.mDeskId:setText(string.format("俱乐部: %d  房号:%d", self.game.friendsterId, self.datas.deskId))
+        self.mTextL:setText(string.format("俱乐部:%d\n%s%s:%d  第%d/%d局", self.game.friendsterId, cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.datas.deskId, self.datas.finishGameCount, self.datas.totalGameCount))
     end
-    self.mFinishCount:setText(string.format("已打%d/%d局", self.datas.finishGameCount, self.datas.totalGameCount))
     self.mDateTime:setText(time.formatDateTime())
 
-    local info = string.format("%s", 
-                               self.game:convertConfigToString(true))
-    self.mDesc:setText(info)
+    local info = string.format("%s", self.game:convertConfigToString(true))
+    self.mTextR:setText(info)
 
     self.items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD, }
 

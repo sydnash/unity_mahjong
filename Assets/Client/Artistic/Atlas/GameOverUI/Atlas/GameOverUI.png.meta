@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4a8ae480eb7080e4aa7806e75c6645d9
-timeCreated: 1536111909
+timeCreated: 1548214850
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,13 @@ TextureImporter:
     21300006: ZJS_di02
     21300008: fx_di01 (1)
     21300010: mask
+    21300012: fx_di01
+    21300014: ZJS_boli01
+    21300016: ZJS_boli02
+    21300018: ZJS_boli03
+    21300020: ZJS_boli04
+    21300022: ZJS_dik
+    21300024: ZJS_pjjs
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -66,7 +73,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -102,11 +109,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fx_di01 (1)
+      name: fx_di01
       rect:
         serializedVersion: 2
-        x: 1
-        y: 350
+        x: 387
+        y: 258
         width: 420
         height: 161
       alignment: 9
@@ -119,8 +126,8 @@ TextureImporter:
       name: mask
       rect:
         serializedVersion: 2
-        x: 489
-        y: 499
+        x: 1
+        y: 23
         width: 12
         height: 12
       alignment: 9
@@ -130,11 +137,67 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
-      name: ZJS_di
+      name: ZJS_boli01
       rect:
         serializedVersion: 2
         x: 1
-        y: 48
+        y: 37
+        width: 94
+        height: 382
+      alignment: 9
+      pivot: {x: 0.53125, y: 0.583333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZJS_boli02
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 17
+        width: 181
+        height: 4
+      alignment: 9
+      pivot: {x: 0.53125, y: 0.583333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZJS_boli03
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 40
+        width: 187
+        height: 216
+      alignment: 9
+      pivot: {x: 0.53125, y: 0.583333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZJS_boli04
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 109
+        width: 288
+        height: 310
+      alignment: 9
+      pivot: {x: 0.53125, y: 0.568548}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZJS_di
+      rect:
+        serializedVersion: 2
+        x: 809
+        y: 274
         width: 110
         height: 145
       alignment: 0
@@ -147,8 +210,8 @@ TextureImporter:
       name: ZJS_di02
       rect:
         serializedVersion: 2
-        x: 423
-        y: 475
+        x: 305
+        y: 17
         width: 64
         height: 36
       alignment: 9
@@ -158,15 +221,43 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
     - serializedVersion: 2
+      name: ZJS_dik
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 53
+        width: 54
+        height: 54
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5555556}
+      border: {x: 19, y: 18, z: 19, w: 18}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
       name: ZJS_dyj
       rect:
         serializedVersion: 2
-        x: 1
-        y: 195
-        width: 342
-        height: 153
+        x: 184
+        y: 15
+        width: 119
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZJS_pjjs
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 144
+        width: 361
+        height: 112
       alignment: 9
-      pivot: {x: 0.50584793, y: 0.47058824}
+      pivot: {x: 0.53125, y: 0.583333}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -175,8 +266,8 @@ TextureImporter:
       name: ZJS_zi01
       rect:
         serializedVersion: 2
-        x: 113
-        y: 141
+        x: 153
+        y: 55
         width: 181
         height: 52
       alignment: 9
