@@ -609,6 +609,9 @@ end
 
 function fixMainCameraByFov(fov, mainCamera)
     local oriAspect = 16 / 9
+    if oriAspect < mainCamera.aspect then
+        return
+    end
     local wFov = fov * oriAspect
     local newHFov = wFov / mainCamera.aspect
     mainCamera.fieldOfView = newHFov
