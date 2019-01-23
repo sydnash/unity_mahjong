@@ -46,6 +46,7 @@
     <Folder Include="Lua\ui\mail\" />
     <Folder Include="Lua\ui\deskDetail\" />
     <Folder Include="Lua\ui\authentication\" />
+    <Folder Include="Lua\ui\patch\" />
     <Folder Include="Lua\ui\setting\" />
     <Folder Include="Lua\ui\playHistory\" />
   </ItemGroup>
@@ -114,6 +115,10 @@
     <Compile Include="Lua\ui\doushisiDesk\doushisiDeskHeader.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
     <Compile Include="Lua\ui\mail\mailItem.lua" />
+    <Compile Include="Lua\ui\patch\patchDownload.lua" />
+    <Compile Include="Lua\ui\patch\patchMessageBox.lua" />
+    <Compile Include="Lua\ui\patch\patchViewManager.lua" />
+    <Compile Include="Lua\ui\patch\patchWaiting.lua" />
     <Compile Include="Lua\ui\playback.lua" />
     <Compile Include="Lua\ui\playerInfo.lua" />
     <Compile Include="Lua\ui\friendster\friendsterMemberInfo.lua" />
