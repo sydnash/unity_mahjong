@@ -1,12 +1,12 @@
 fileFormatVersion: 2
 guid: 841a69be90fa1524083d4c2978989c76
-timeCreated: 1547174121
+timeCreated: 1548336789
 licenseType: Pro
 ShaderImporter:
   externalObjects: {}
   defaultTextures:
-  - _Diffuse: {fileID: 2800000, guid: 1d58f231d36b06147b1e1f90f14dd808, type: 3}
-  - _DiffuseMask: {fileID: 2800000, guid: 7e691cdf01cd40a4c98db3fb198478bb, type: 3}
+  - _Diffuse: {instanceID: 0}
+  - _DiffuseMask: {instanceID: 0}
   userData: 
   assetBundleName: shader/mahjongspecular
   assetBundleVariant: 

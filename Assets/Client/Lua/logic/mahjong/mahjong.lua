@@ -31,17 +31,6 @@ mahjong.shadowMode = {
     li       = 3
 }
 
--- local mahjongTex = {
---     normal = {
---         samp = nil,
---         mask = nil,
---     },
---     inhand = {
---         samp = nil,
---         mask = nil,
---     },
-}
-
 function mahjong:ctor(id)
     self.id = id
     self.selected = false
@@ -78,7 +67,6 @@ function mahjong:ctor(id)
             mask = nil,
         },
     }
-
 
     self:loadTex()
     self:setPickabled(false)
