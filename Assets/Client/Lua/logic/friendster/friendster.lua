@@ -170,7 +170,7 @@ function friendster:addPlayerToDesk(acId, deskId)
     local player = self.members[acId]
     local desk = self.desks[deskId]
 
-    if not player and not desk then
+    if not player or not desk then
         return
     end
 
