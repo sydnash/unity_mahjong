@@ -13,6 +13,7 @@ local hasTalkingDataSDK = TalkingDataGA
 talkingData.eventType = {
     chat                    = "chat",
     clicklocation           = "clicklocation",
+    errmsg                  = "errmsg",
 }
 
 function talkingData.start()

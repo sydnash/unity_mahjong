@@ -26,6 +26,7 @@ local errorMessageUI = nil
 ----------------------------------------------------------------
 local function tracebackHandler(errorMessage, debug)
     logError(errorMessage)
+    talkingData.event(talkingData.eventType.errmsg, errorMessage)
 
     if errorMessageUI == nil then
         errorMessageUI = require("ui.errorMessage").new()
