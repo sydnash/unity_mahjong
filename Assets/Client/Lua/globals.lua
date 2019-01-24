@@ -14,6 +14,8 @@ Application = UnityEngine.Application
 
 appConfig = reload("config.appConfig")
 reload("utils.class")
+reload("network.httpAsync")
+local http = reload("network.http")
 
 require("utils.string")
 require("utils.table")
@@ -52,9 +54,6 @@ local waiting       = require("ui.waiting")
 local messagebox    = require("ui.messagebox")
 local mahjongType   = require("logic.mahjong.mahjongType")
 local doushisiType  = require("logic.doushisi.doushisiType")
-
-reload("network.httpAsync")
-local http = reload("network.http")
 
 ----------------------------------------------------------------
 -- 断开连接后的回调
@@ -823,12 +822,14 @@ end
 --
 ----------------------------------------------------------------
 function commitError(errorText)
-    local web = http.createAsync()
-    local tbl = { 
-        Title = "[ERR]" .. G_Current_Version .. "|" .. tostring(gamepref.player.acId) .. "|" .. time.formatDateTime(),
+    local ver = G_Current_Version ~= nil and (G_Current_Version .. "|") or string.empty
+    local ctt = { 
+        Title = "[ERR]" .. ver .. tostring(gamepref.player.acId) .. "|" .. time.formatDateTime(),
         Content = errorText,
     }
-    web:addTextRequest("http://test.cdbshy.com:17776/errorreport", "POST", 10 * 1000, table.tojson(tbl), function(text)
+
+    local web = http.createAsync()
+    web:addTextRequest("http://test.cdbshy.com:17776/errorreport", "POST", 10 * 1000, table.tojson(ctt), function(text)
         
     end)
     web:start()

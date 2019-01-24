@@ -68,7 +68,9 @@ function login:onInit()
         self.mGuestLogin:show()
     end
 
-    self.mVersion:setText("V" .. G_Current_Version)
+    if G_Current_Version ~= nil then
+        self.mVersion:setText("V" .. G_Current_Version)
+    end
 
     self.mSwitchCity:addClickListener(self.onSwitchCityClickedHandler, self)
     self.mWechatLogin:addClickListener(self.onWechatLoginClickedHandler, self)
