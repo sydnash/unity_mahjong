@@ -855,7 +855,7 @@ function findSpriteRD(transform, name)
 end
 
 function gc()
-    AssetPoolManager.instance:UnloadUnused()
+--    AssetPoolManager.instance:UnloadUnused()
 --    collectgarbage("collect")
 end
 
