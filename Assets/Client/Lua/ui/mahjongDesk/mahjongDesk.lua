@@ -78,16 +78,19 @@ function mahjongDesk:onPlayerHu(acId, t)
 
     local detail = opType.hu.detail
 
+    local name 
     if t == detail.zimo then
+        name = "zimo"
         p:playGfx("zimo")
     else
+        name = "hu"
         p:playGfx("hu")
     end
 
     if acId == self.game.mainAcId then
         self:hideHuHintButton()
     end
-    p:showHu()
+    p:showHu(name)
 end
 
 function mahjongDesk:updateLeftMahjongCount(cnt)

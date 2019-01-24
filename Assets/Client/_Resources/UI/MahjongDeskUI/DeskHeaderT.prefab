@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 224287928528799514}
   - component: {fileID: 222519947782058964}
   - component: {fileID: 114647972810806956}
+  - component: {fileID: 114488410956945816}
   m_Layer: 5
   m_Name: Hu
   m_TagString: Untagged
@@ -543,6 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: 1
     sprite: {fileID: 21300008, guid: e0b14a4d4b3afc44f97c6b7fb8f0a130, type: 3}
@@ -603,6 +605,23 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114488410956945816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1662764252367488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mAutoSize: 1
+  mItems:
+  - key: hu
+    sprite: {fileID: 21300136, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
+  - key: zimo
+    sprite: {fileID: 21300134, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
 --- !u!114 &114499168381779516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -864,6 +883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: peng
     sprite: {fileID: 21300188, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -1047,7 +1067,7 @@ MonoBehaviour:
     gameObject: {fileID: 1382149830872248}
     panelScript: 
   - variableName: mHu
-    widgetType: 0
+    widgetType: 3
     gameObject: {fileID: 1662764252367488}
     panelScript: 
   - variableName: mGfx
@@ -1124,6 +1144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: tiao
     sprite: {fileID: 21300128, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
