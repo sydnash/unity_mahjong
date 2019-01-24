@@ -736,6 +736,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224672404272598164}
   - component: {fileID: 114843489626436488}
+  - component: {fileID: 114976196022679668}
   m_Layer: 5
   m_Name: Region
   m_TagString: Untagged
@@ -1452,7 +1453,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u9EBB\u5C06"
+  m_Text: "\u9EBB\u5C06 \u957F\u724C"
 --- !u!114 &114132258557177146
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1979,7 +1980,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114342596822997126}
   toggleTransition: 1
   graphic: {fileID: 114626313352029462}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 114976196022679668}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2328,7 +2329,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114922701542773378}
   toggleTransition: 1
   graphic: {fileID: 114366093595311220}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 114976196022679668}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2750,7 +2751,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114926279953442764}
   toggleTransition: 1
   graphic: {fileID: 114150396027634144}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 114976196022679668}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3380,7 +3381,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114759224493444334}
   toggleTransition: 1
   graphic: {fileID: 114914095252328718}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 114976196022679668}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3659,6 +3660,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u5357\u5145"
+--- !u!114 &114976196022679668
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1677077069576094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1184210157, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 0
 --- !u!222 &222052812698078016
 CanvasRenderer:
   m_ObjectHideFlags: 1

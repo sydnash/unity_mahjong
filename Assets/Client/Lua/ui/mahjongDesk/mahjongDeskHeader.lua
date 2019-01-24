@@ -70,6 +70,7 @@ end
 
 function mahjongDeskHeader:reset()
     self:hideDingQue()
+    self:hideHu()
     base.reset(self)
 end
 

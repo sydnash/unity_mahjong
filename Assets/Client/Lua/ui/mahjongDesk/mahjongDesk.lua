@@ -43,6 +43,7 @@ end
 function mahjongDesk:hideHuHintButton()
     self.mHuHint:hide()
 end
+
 function mahjongDesk:showHuHintButton()
     if not self.game:hasHuPaiHint() then
         return
