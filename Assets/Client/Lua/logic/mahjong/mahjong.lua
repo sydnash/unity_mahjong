@@ -31,15 +31,15 @@ mahjong.shadowMode = {
     li       = 3
 }
 
-local mahjongTex = {
-    normal = {
-        samp = nil,
-        mask = nil,
-    },
-    inhand = {
-        samp = nil,
-        mask = nil,
-    },
+-- local mahjongTex = {
+--     normal = {
+--         samp = nil,
+--         mask = nil,
+--     },
+--     inhand = {
+--         samp = nil,
+--         mask = nil,
+--     },
 }
 
 function mahjong:ctor(id)
@@ -68,6 +68,17 @@ function mahjong:ctor(id)
 
     self.name  = mtype.name
     self.class = mtype.class
+    self.mahjongTex = {
+        normal = {
+            samp = nil,
+            mask = nil,
+        },
+        inhand = {
+            samp = nil,
+            mask = nil,
+        },
+    }
+
 
     self:loadTex()
     self:setPickabled(false)
@@ -75,6 +86,7 @@ function mahjong:ctor(id)
 end
 
 function mahjong:loadTex()
+    local mahjongTex = self.mahjongTex
     if mahjongTex.normal.samp == nil then 
         mahjongTex.normal.samp = textureManager.load("mahjong", "mj_dif_u")
     end
@@ -91,6 +103,7 @@ function mahjong:loadTex()
 end
 
 function mahjong:unloadTex()
+    local mahjongTex = self.mahjongTex
     if mahjongTex.normal.samp ~= nil then 
         textureManager.unload(mahjongTex.normal.samp)
         mahjongTex.normal.samp = nil
@@ -131,6 +144,7 @@ function mahjong:setPickabled(pickabled)
         local layer = pickabled and INHAND_MAHJONG_LAYER or DEFAULT_LAYER
         self:setLayer(layer, true)
 
+        local mahjongTex = self.mahjongTex
         local tex = pickabled and mahjongTex.inhand or mahjongTex.normal
         self.mat:SetTexture("_Diffuse", tex.samp)
         self.mat:SetTexture("_DiffuseMask", tex.mask)
