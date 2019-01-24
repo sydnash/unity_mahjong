@@ -537,6 +537,7 @@ function mahjongGame:onGameEndListener(specialData, datas, totalScores)
     for _, v in pairs(self.players) do
         v.que = -1
         v.isHu = false
+        v.hu = nil
         self.deskUI:setScore(v.acId, v.score)
     end
     return datas
