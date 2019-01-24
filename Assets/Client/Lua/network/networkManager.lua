@@ -403,10 +403,11 @@ local function loginC(text, callback)
 end 
 
 local httpAsync = http.createAsync()
+local HTTP_METHOD = "POST"
 
 local function getTextWithHttp(url, callback)
     local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
-    httpAsync:addTextRequest(url, timeout, callback)
+    httpAsync:addTextRequest(url, HTTP_METHOD, timeout, nil, callback)
     httpAsync:start()
 end
 

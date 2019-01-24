@@ -30,6 +30,7 @@ end
 
 
 require("utils.class")
+G_Current_Version = "0.0.0"
 
 local appConfig = require("config.appConfig")
 local profiler  = require("UnityEngine.Profiler")

@@ -2113,7 +2113,7 @@ function doushisiOperation:pushFlyNode(node)
     node:setLocalScale(Vector3.one)
     for _, t in pairs(self.idleFlyNodes) do
         if t == node then
-            printError("repush back node.")
+            --printError("repush back node.")
         end
     end
     table.insert(self.idleFlyNodes, node)

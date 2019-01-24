@@ -17,12 +17,16 @@ public class HttpAsync
     private class Request
     {
         public string url;
+        public string method;
         public int timeout;
+        public string args;
 
-        public Request(string url, int timeout)
+        public Request(string url, string method, int timeout, string args)
         {
             this.url = url;
+            this.method = method.ToUpper();
             this.timeout = timeout;
+            this.args = args;
         }
     }
 
@@ -65,6 +69,11 @@ public class HttpAsync
     /// </summary>
     private Dictionary<string, Action<byte[], int, bool>> mCallbacks = new Dictionary<string, Action<byte[], int, bool>>();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public static int nv = 2;
+
     #endregion
 
     #region Public
@@ -74,12 +83,12 @@ public class HttpAsync
     /// </summary>
     public HttpAsync(HttpDispatcher dispatcher, int threadCount)
     {
-        int count = Mathf.Clamp(threadCount, 1, 10);
+        threadCount = Mathf.Clamp(threadCount, 1, 10);
 
-        mHttps = new Http[count];
-        mThreads = new Thread[count];
+        mHttps = new Http[threadCount];
+        mThreads = new Thread[threadCount];
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < threadCount; i++)
         {
             mHttps[i] = new Http();
             mHttps[i].working = mWorking;
@@ -97,7 +106,7 @@ public class HttpAsync
     /// <param name="url"></param>
     /// <param name="timeout"></param>
     /// <param name="callback"></param>
-    public void AddRequest(string url, int timeout, Action<byte[], int, bool> callback)
+    public void AddRequest(string url, string method, int timeout, string args, Action<byte[], int, bool> callback)
     {
         if (string.IsNullOrEmpty(url) || callback == null)
             return;
@@ -105,7 +114,7 @@ public class HttpAsync
         lock (mRequests)
         {
             timeout = Mathf.Clamp(timeout, 100, 120 * 1000);
-            mRequests.Enqueue(new Request(url, timeout));
+            mRequests.Enqueue(new Request(url, method, timeout, args));
         }
 
         lock (mCallbacks)
@@ -192,7 +201,7 @@ public class HttpAsync
                     continue;
                 }
 
-                http.Request(request.url, "GET", request.timeout, OnDownloaded);
+                http.Request(request.url, request.method, request.timeout, request.args, OnDownloaded);
             }
         }
         catch (Exception ex)

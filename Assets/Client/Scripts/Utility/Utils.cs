@@ -263,20 +263,6 @@ public class Utils
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <param name="subject"></param>
-    /// <param name="body"></param>
-    /// <param name="attachment"></param>
-    /// <param name="password"></param>
-    public static void CommitError(string from, string to, string subject, string body, string attachment, string password)
-    {
-        ErrorEmail.Commit(from, to, subject, body, attachment, password);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="tex"></param>
     /// <returns></returns>
     public static Sprite ConvertTextureToSprite(Texture2D tex, Vector2 pivot)

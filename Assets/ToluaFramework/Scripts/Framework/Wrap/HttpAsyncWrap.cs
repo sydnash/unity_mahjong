@@ -47,12 +47,14 @@ public class HttpAsyncWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 4);
+			ToLua.CheckArgsCount(L, 6);
 			HttpAsync obj = (HttpAsync)ToLua.CheckObject<HttpAsync>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
-			System.Action<byte[],int,bool> arg2 = (System.Action<byte[],int,bool>)ToLua.CheckDelegate<System.Action<byte[],int,bool>>(L, 4);
-			obj.AddRequest(arg0, arg1, arg2);
+			string arg1 = ToLua.CheckString(L, 3);
+			int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
+			string arg3 = ToLua.CheckString(L, 5);
+			System.Action<byte[],int,bool> arg4 = (System.Action<byte[],int,bool>)ToLua.CheckDelegate<System.Action<byte[],int,bool>>(L, 6);
+			obj.AddRequest(arg0, arg1, arg2, arg3, arg4);
 			return 0;
 		}
 		catch (Exception e)

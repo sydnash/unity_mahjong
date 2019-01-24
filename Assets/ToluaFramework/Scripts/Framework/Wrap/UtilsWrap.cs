@@ -20,7 +20,6 @@ public class UtilsWrap
 		L.RegFunction("TrimBytes", TrimBytes);
 		L.RegFunction("SizeTextureBilinear", SizeTextureBilinear);
 		L.RegFunction("CaptureScreenshot", CaptureScreenshot);
-		L.RegFunction("CommitError", CommitError);
 		L.RegFunction("ConvertTextureToSprite", ConvertTextureToSprite);
 		L.RegFunction("CreateDictionarySO", CreateDictionarySO);
 		L.RegFunction("AddDictionarySO", AddDictionarySO);
@@ -302,27 +301,6 @@ public class UtilsWrap
 			UnityEngine.Texture2D o = Utils.CaptureScreenshot(arg0);
 			ToLua.PushSealed(L, o);
 			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int CommitError(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 6);
-			string arg0 = ToLua.CheckString(L, 1);
-			string arg1 = ToLua.CheckString(L, 2);
-			string arg2 = ToLua.CheckString(L, 3);
-			string arg3 = ToLua.CheckString(L, 4);
-			string arg4 = ToLua.CheckString(L, 5);
-			string arg5 = ToLua.CheckString(L, 6);
-			Utils.CommitError(arg0, arg1, arg2, arg3, arg4, arg5);
-			return 0;
 		}
 		catch (Exception e)
 		{

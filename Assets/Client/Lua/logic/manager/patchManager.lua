@@ -60,6 +60,7 @@ local CACHE_VER_FILE_NAME   = LFS.CombinePath(CACHE_PATH, "cver.txt")
 local CACHE_FILES_FILE_NAME = LFS.CombinePath(CACHE_PATH, "cfiles.txt")
 
 local downloadTextAsync = http.createAsync()
+local HTTP_METHOD = "GET"
 
 -------------------------------------------------------------------
 -- 
@@ -81,7 +82,7 @@ end
 local function downloadOnlineVersionFile(url, callback)
     url = LFS.CombinePath(url, VERSION_FILE_NAME)
 
-    downloadTextAsync:addTextRequest(url, patchTimeout * 1000, callback)
+    downloadTextAsync:addTextRequest(url, HTTP_METHOD, patchTimeout * 1000, nil, callback)
     downloadTextAsync:start()
 end
 
@@ -105,7 +106,7 @@ end
 local function downloadOnlinePatchlistFile(url, callback)
     url = LFS.CombinePath(url, PATCHLIST_FILE_NAME)
 
-    downloadTextAsync:addTextRequest(url, patchTimeout * 1000, callback)
+    downloadTextAsync:addTextRequest(url, HTTP_METHOD, patchTimeout * 1000, nil, callback)
     downloadTextAsync:start()
 end
 
@@ -144,6 +145,10 @@ local function checkPatches(callback)
         return
     end
 
+    local offlineVersion = loadstring(offlineVersionText)()
+    local offlineVersionNum = offlineVersion.num
+    G_Current_Version = offlineVersionNum
+
     downloadOnlineVersionFile(patchURL, function(onvt)
         if not appConfig.patchEnabled then
             callback({}, true, true)
@@ -157,10 +162,8 @@ local function checkPatches(callback)
             return
         end
 
-        local offlineVersion = loadstring(offlineVersionText)()
+        
         local onlineVersion = loadstring(onlineVersionText)()
-
-        local offlineVersionNum = offlineVersion.num
         local onlineVersionNum = onlineVersion.num
 
         local offlineVersionNumArray = string.split(offlineVersionNum, ".")
@@ -188,6 +191,7 @@ local function checkPatches(callback)
             callback({}, true, true)
             return
         end
+        G_Current_Version = onlineVersionNum
 
         local cachedVersionNum = LFS.ReadText(CACHE_VER_FILE_NAME, LFS.UTF8_WITHOUT_BOM)
 
@@ -244,7 +248,7 @@ local function downloadPatches(url, files, callback)
     for _, v in pairs(files) do
         local www = url .. "/" .. v.name
 
-        downloadPatchAsync:addBytesRequest(www, patchTimeout * 1000, function(bytes, size, completed)
+        downloadPatchAsync:addBytesRequest(www, HTTP_METHOD, patchTimeout * 1000, nil, function(bytes, size, completed)
             if bytes == nil then
                 callback(DOWNLOAD_FAILED, v.name, 0)
             else

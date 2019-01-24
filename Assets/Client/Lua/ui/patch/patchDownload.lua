@@ -27,9 +27,8 @@ function patchDownload:ctor()
     if versionTr ~= nil then
         local go = versionTr.gameObject
         local verText = go:GetComponent(typeof(UnityEngine.UI.Text))
-        local verNum = self:readVersion()
 
-        verText.text = string.format("V%s", verNum)
+        verText.text = string.format("V%s", G_Current_Version)
     end
 end
 
@@ -49,18 +48,6 @@ function patchDownload:close()
     patchViewManager.unload(self)
     self.gameObject = nil
     self.transform  = nil
-end
-
-function patchDownload:readVersion()
-    local filename = LFS.CombinePath(LFS.PATCH_PATH, "version.txt")
-    local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
-
-    if text == nil or text == "" then
-        text = LFS.ReadTextFromResources("version")
-    end
-
-    local jsn = loadstring(text)()
-    return jsn.num
 end
 
 return patchDownload

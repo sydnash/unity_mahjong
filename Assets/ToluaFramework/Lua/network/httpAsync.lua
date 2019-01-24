@@ -8,13 +8,13 @@ function httpAsync:ctor(async)
     self.async = async
 end
 
-function httpAsync:addTextRequest(url, timeout, callback)
-    assert(callback ~= nil, "callback must not be nil.")
+function httpAsync:addTextRequest(url, method, timeout, args, callback)
     if self.async ~= nil then
         local buffer = nil
         local bufferOffset = 0
 
-        self.async:AddRequest(url, timeout, function(bytes, totalSize, completed)
+        method = method or "GET"
+        local function onResponsed(bytes, totalSize, completed)
             if bytes == nil then
                 callback(string.empty)
             else
@@ -30,26 +30,40 @@ function httpAsync:addTextRequest(url, timeout, callback)
                     callback(text)
                 end
             end
-        end)
+        end
+
+        if self.async.nv == nil then
+            self.async:AddRequest(url, timeout, onResponsed)
+        else
+            self.async:AddRequest(url, method, timeout, args, onResponsed)
+        end
     end
 end
 
-function httpAsync:addBytesRequest(url, timeout, callback)
+function httpAsync:addBytesRequest(url, method, timeout, args, callback)
     if self.async ~= nil then
-        self.async:AddRequest(url, timeout, function(bytes, totalSize, completed)
+        method = method or "GET"
+        local function onResponsed(bytes, totalSize, completed)
             if callback ~= nil then
                 callback(bytes, size, completed)
             end
-        end)
+        end
+
+        if self.async.nv == nil then
+            self.async:AddRequest(url, timeout, onResponsed)
+        else
+            self.async:AddRequest(url, method, timeout, args, onResponsed)
+        end
     end
 end
 
-function httpAsync:addTextureRequest(url, timeout, callback)
+function httpAsync:addTextureRequest(url, method, timeout, args, callback)
     if self.async ~= nil then
         local buffer = nil
         local bufferOffset = 0
 
-        self.async:AddRequest(url, timeout, function(bytes, totalSize, completed)
+        method = method or "GET"
+        local function onResponsed(bytes, totalSize, completed)
             if bytes == nil then
                 callback(nil, nil)
             else
@@ -65,7 +79,13 @@ function httpAsync:addTextureRequest(url, timeout, callback)
                     callback(tex, buffer)
                 end
             end
-        end)
+        end
+
+        if self.async.nv == nil then
+            self.async:AddRequest(url, timeout, onResponsed)
+        else
+            self.async:AddRequest(url, method, timeout, args, onResponsed)
+        end
     end
 end
 

@@ -48,10 +48,11 @@ local function downloadOfflineIcon(path, callback)
 end
 
 local httpAsync = http.createAsync()
+local HTTP_METHOD = "GET"
 
 local function downloadOnlineIcon(url, callback)
     local timeout = networkConfig.httpTimeout * 1000 -- 转为毫秒
-    httpAsync:addTextureRequest(url, timeout, function(tex, bytes)
+    httpAsync:addTextureRequest(url, HTTP_METHOD, timeout, nil, function(tex, bytes)
         callback(tex, bytes)
     end)
     httpAsync:start()

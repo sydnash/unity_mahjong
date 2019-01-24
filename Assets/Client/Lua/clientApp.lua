@@ -24,9 +24,12 @@ local errorMessageUI = nil
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-local function tracebackHandler(errorMessage, debug)
+local function tracebackHandler(errorMessage)
     logError(errorMessage)
-    talkingData.event(talkingData.eventType.errmsg, errorMessage)
+
+    if not appConfig.debug then
+        commitError(errorMessage)
+    end
 
     if errorMessageUI == nil then
         errorMessageUI = require("ui.errorMessage").new()
@@ -36,9 +39,7 @@ local function tracebackHandler(errorMessage, debug)
     errorMessageUI:setDebug(debug)
 
     --断开网络，主要是中断消息接收和处理的过程
-    if not debug then
-        networkManager.disconnect()
-    end
+    networkManager.disconnect()
 end
 
 

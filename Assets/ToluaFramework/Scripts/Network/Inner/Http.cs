@@ -2,6 +2,8 @@
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.IO;
+using System.Text;
 
 public class Http
 {
@@ -43,7 +45,7 @@ public class Http
     /// <param name="method"></param>
     /// <param name="timeout"></param>
     /// <param name="callback"></param>
-    public void Request(string url, string method, int timeout, Action<string, byte[], int, bool> callback)
+    public void Request(string url, string method, int timeout, string args, Action<string, byte[], int, bool> callback)
     {
         HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
 
@@ -58,6 +60,20 @@ public class Http
             request.Method = method;
             request.Timeout = timeout;
             request.ReadWriteTimeout = timeout;
+
+            if (!string.IsNullOrEmpty(args))
+            {
+                byte[] bts = Encoding.UTF8.GetBytes(args);
+
+                request.ContentType = "application/json";
+                request.ContentLength = bts.Length;
+
+                using (Stream sm = request.GetRequestStream())
+                {
+                    sm.Write(bts, 0, bts.Length);
+                    sm.Close();
+                }
+            }
 
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 

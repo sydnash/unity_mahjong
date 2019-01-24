@@ -822,12 +822,18 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
-function commitError(subject, body, attachment)
-    local from = gameConfig.errorEmail.from
-    local to   = gameConfig.errorEmail.to
-    local psw  = "Forwork123"
+function commitError(errorText)
+    local web = http.createAsync()
+    local tbl = { 
+        Title = "[ERR]" .. G_Current_Version .. "|" .. tostring(gamepref.player.acId) .. "|" .. time.formatDateTime(),
+        Content = errorText,
+    }
+    web:addTextRequest("http://test.cdbshy.com:17776/errorreport", "POST", 10 * 1000, table.tojson(tbl), function(text)
+        
+    end)
+    web:start()
 
-    Utils.CommitError(from, to, subject, body, attachment, psw)
+    talkingData.event(talkingData.eventType.errmsg, { err = errorText })
 end
 
 ----------------------------------------------------------------

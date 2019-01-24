@@ -68,8 +68,7 @@ function login:onInit()
         self.mGuestLogin:show()
     end
 
-    local verNum = self:readVersion()
-    self.mVersion:setText("V" .. verNum)
+    self.mVersion:setText("V" .. G_Current_Version)
 
     self.mSwitchCity:addClickListener(self.onSwitchCityClickedHandler, self)
     self.mWechatLogin:addClickListener(self.onWechatLoginClickedHandler, self)
@@ -165,18 +164,6 @@ end
 
 function login:onCityChangedHandler(city)
     self.mCityText:setSprite(cityTypeSID[city])
-end
-
-function login:readVersion()
-    local filename = LFS.CombinePath(LFS.PATCH_PATH, "version.txt")
-    local text = LFS.ReadText(filename, LFS.UTF8_WITHOUT_BOM)
-
-    if text == nil or text == "" then
-        text = LFS.ReadTextFromResources("version")
-    end
-
-    local jsn = loadstring(text)()
-    return jsn.num
 end
 
 function login:onDestroy()
