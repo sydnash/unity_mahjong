@@ -101,12 +101,10 @@ function game:startLoop()
         self:syncExitVote(self.data)
     end
 
-    --self.messageHandlers:play()
     self:startMessageQueue()
 end
 
 function game:onGameStart()
-    gc()
     self.deskStatus = deskStatus.playing
 end
 
@@ -128,8 +126,6 @@ end
 -- 
 -------------------------------------------------------------------------------
 function game:stopLoop()
-    -- self.messageHandlers:stop()
-    -- self.messageHandlers:clear()
     self:stopMessageQueue()
 end
 
@@ -162,7 +158,6 @@ function game:registerPlaybackHandlers(playback)
     for _, v in pairs(playback) do
         local func = self.commandHandlers[v.Command].func
         func(self, v.Payload)
-        -- self.messageHandlers:add(tweenDelay.new(1.5))
         self:addDelay(1.5)
     end
 end
@@ -182,7 +177,6 @@ end
 -------------------------------------------------------------------------------
 function game:onEnter(msg)
     if not self:isPlayback() then
-        --self.messageHandlers:clear()
         self:clearMessageQueue()
     end
     self.data = msg
@@ -265,9 +259,8 @@ end
 -- 其他玩家加入
 -------------------------------------------------------------------------------
 function game:onOtherEnterHandler(msg)
-    -- local func = tweenFunction.new(function()
     local func = (function()
-        log("otherEnter, msg = " .. table.tostring(msg))
+--        log("otherEnter, msg = " .. table.tostring(msg))
         local player = gamePlayer.new(msg.AcId)
 
         player.headerUrl    = msg.HeadUrl
@@ -286,7 +279,6 @@ function game:onOtherEnterHandler(msg)
 
         self.deskUI:onPlayerEnter(player)
     end)
-    --self.messageHandlers:add(func)
     self:pushMessage(func)
 end
 
@@ -294,16 +286,14 @@ end
 -- 准备
 -------------------------------------------------------------------------------
 function game:onReadyHandler(msg)
-    -- local func = tweenFunction.new(function()
     local func = (function()
-        log("ready, msg = " .. table.tostring(msg))
+--        log("ready, msg = " .. table.tostring(msg))
 
         local player = self:getPlayerByAcId(msg.AcId)
         player.ready = msg.Ready
 
         self.deskUI:setReady(player.acId, player.ready) 
     end)
-    --self.messageHandlers:add(func)
     self:pushMessage(func)
 end
 
@@ -340,7 +330,6 @@ function game:endGame()
             self.exitDeskUI = require("ui.exitDesk").new(self)
             self.exitDeskUI:show()
         else
---            signalManager.signal(signalType.deskDestroy)
             gamepref.player.currentDesk = nil
             self:exitGame()
         end
@@ -478,12 +467,8 @@ local exitReason = {
 -- 服务器通知直接退出
 -------------------------------------------------------------------------------
 function game:onExitDeskHandler(msg)
-    -- local func = tweenFunction.new(function()
     local func = (function()
 --        log("exit desk, msg = " .. table.tostring(msg))
-
---        signalManager.signal(signalType.deskDestroy, self.deskId)
---        gamepref.player.currentDesk = nil
 
         if msg.Reason == exitReason.voteExit then
             --投票解散房间，关闭投票界面并显示大结算界面
@@ -559,7 +544,6 @@ function game:onExitDeskHandler(msg)
         end
     end)
 
-    --self.messageHandlers:add(func)
     self:pushMessage(func)
 end
 
@@ -567,7 +551,6 @@ end
 -- 服务器通知其他玩家退出
 -------------------------------------------------------------------------------
 function game:onOtherExitHandler(msg)
-    -- local func = tweenFunction.new(function()
     local func = (function()
     --    log("other exit, msg = " .. table.tostring(msg))
         if self.leftGames > 0 then
@@ -577,7 +560,6 @@ function game:onOtherExitHandler(msg)
             self.deskUI:onPlayerExit(seatType, msg)
         end
     end)
-    --self.messageHandlers:add(func)
     self:pushMessage(func)
 end
 
@@ -585,7 +567,6 @@ end
 -- 
 -------------------------------------------------------------------------------
 function game:onOtherConnectStatusChanged(msg)
-    -- local func = tweenFunction.new(function()
     local func = (function()
         local player = self:getPlayerByAcId(msg.AcId)
         player.connected = msg.IsConnected
@@ -593,7 +574,6 @@ function game:onOtherConnectStatusChanged(msg)
             self.deskUI:onPlayerConnectStatusChanged(player)
         end
     end)
-    --self.messageHandlers:add(func)
     self:pushMessage(func)
 end
 
@@ -627,7 +607,7 @@ end
 -------------------------------------------------------------------------------
 function game:onNotifyExitVoteFailedHandler(msg)
     local func = (function()
-        log("notify exit vote failed, msg = " .. table.tostring(msg))
+--        log("notify exit vote failed, msg = " .. table.tostring(msg))
         local player = self.players[msg.Rejecter]
         showMessageUI(string.format("玩家 %s 拒绝了解散申请", cutoutString(player.nickname,gameConfig.nicknameMaxLength)))
         self.exitDeskUI:close()
@@ -641,7 +621,6 @@ end
 -- 服务器通知有人投票
 -------------------------------------------------------------------------------
 function game:onExitVoteHandler(msg)
-    -- local func = tweenFunction.new(function()
     local func = (function()
     --    log("exit vote, msg = " .. table.tostring(msg))
         if self.exitDeskUI ~= nil then
@@ -654,7 +633,6 @@ function game:onExitVoteHandler(msg)
             self.exitDeskUI:setPlayerState(player)
         end
     end)
-    --self.messageHandlers:add(func)
     self:pushMessage(func)
 end
 
@@ -692,7 +670,6 @@ function game:onGameEndHandler(msg)
         self.deskUI:reset()
         self.operationUI:reset()
     end)
-    --self.messageHandlers:add(func)
     self:pushMessage(func)
 end
 
@@ -779,7 +756,6 @@ end
 -------------------------------------------------------------------------------
 function game:startPlayback()
     if self.mode == gameMode.playback then
-        --self.messageHandlers:play()
         self:resumeMessageQueue()
     end
 end
@@ -789,7 +765,6 @@ end
 -------------------------------------------------------------------------------
 function game:stopPlayback()
     if self.mode == gameMode.playback then
-        --self.messageHandlers:stop()
         self:pauseMessageQueue()
     end
 end
@@ -936,7 +911,7 @@ function game:openLobbyUI()
         return
     end
 
-    showWaitingUI("请稍候...")
+    showWaitingUI("请稍候")
     networkManager.queryFriendsterList(function(msg)
         if msg == nil then
             closeWaitingUI()
@@ -956,7 +931,7 @@ function game:openLobbyUI()
             return
         end
 
-        showWaitingUI("请稍候...")
+        showWaitingUI("请稍候")
 
         networkManager.queryFriendsterMembers(self.friendsterId, function(msg)
             if msg == nil or msg.RetCode ~= retc.ok then
