@@ -91,7 +91,7 @@ function playHistoryDetailItem:onPlayClickHandler()
         data.ExitVoteProposer   = 0
         data.GameType           = history.GameType
         data.IsInExitVote       = false
-        data.LeftTime           = data.Config.JuShu - self.mRound - 1
+        data.LeftTime           = data.Config.JuShu - self.mRound + 1
         data.LeftVoteTime       = 0
         data.Ready              = true
         data.Players            = history.Players

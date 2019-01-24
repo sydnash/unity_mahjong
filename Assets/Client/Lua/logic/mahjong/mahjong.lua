@@ -33,12 +33,12 @@ mahjong.shadowMode = {
 
 local mahjongTex = {
     normal = {
-        samp = textureManager.load("mahjong", "mj_dif_u"),
-        mask = textureManager.load("mahjong", "mj_dif_mask_u"),
+        samp = nil,
+        mask = nil,
     },
     inhand = {
-        samp = textureManager.load("mahjong", "mj_dif"),
-        mask = textureManager.load("mahjong", "mj_dif_mask"),
+        samp = nil,
+        mask = nil,
     },
 }
 
