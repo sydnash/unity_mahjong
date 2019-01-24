@@ -2,13 +2,13 @@
 --Date
 
 local appConfig = {
-    debug               = false,
+    debug               = true,
     patchEnabled        = true,
     loadCountPreFrame   = 3,
 }
 
 if appConfig.debug then
-    appConfig.patchEnabled = false
+    appConfig.patchEnabled = true
 end
 
 return appConfig

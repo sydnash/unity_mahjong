@@ -222,6 +222,7 @@ public static class CustomSettings
         _GT(typeof(TDGAAccount)),
         _GT(typeof(AccountType)),
         _GT(typeof(Gender)),
+        _GT(typeof(CSV)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

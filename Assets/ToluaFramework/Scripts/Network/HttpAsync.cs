@@ -72,7 +72,7 @@ public class HttpAsync
     /// <summary>
     /// 
     /// </summary>
-    public static int nv = 2;
+    //public static int nv = 2;
 
     #endregion
 

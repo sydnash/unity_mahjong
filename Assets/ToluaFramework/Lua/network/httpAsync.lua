@@ -32,7 +32,7 @@ function httpAsync:addTextRequest(url, method, timeout, args, callback)
             end
         end
 
-        if self.async.nv == nil then
+        if CSV == nil or CSV.instance:Query("http") == nil then
             self.async:AddRequest(url, timeout, onResponsed)
         else
             self.async:AddRequest(url, method, timeout, args, onResponsed)
@@ -49,7 +49,7 @@ function httpAsync:addBytesRequest(url, method, timeout, args, callback)
             end
         end
 
-        if self.async.nv == nil then
+        if CSV == nil or CSV.instance:Query("http") == nil then
             self.async:AddRequest(url, timeout, onResponsed)
         else
             self.async:AddRequest(url, method, timeout, args, onResponsed)
@@ -81,7 +81,7 @@ function httpAsync:addTextureRequest(url, method, timeout, args, callback)
             end
         end
 
-        if self.async.nv == nil then
+        if CSV == nil or CSV.instance:Query("http") == nil then
             self.async:AddRequest(url, timeout, onResponsed)
         else
             self.async:AddRequest(url, method, timeout, args, onResponsed)

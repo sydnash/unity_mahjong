@@ -40,6 +40,7 @@ public static class LuaBinder
 		TDGAAccountWrap.Register(L);
 		AccountTypeWrap.Register(L);
 		GenderWrap.Register(L);
+		CSVWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);
 		LuaInterface_InjectTypeWrap.Register(L);
