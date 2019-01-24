@@ -30,7 +30,15 @@ function mahjongDeskHeader:setPlayerInfo(player)
         end
 
         if not json.isNilOrNull(player.hu) and player.hu[1].HuCard >= 0 then
-            self:showHu()
+            local name
+            local t = player.hu[1].HuType
+            local detail = opType.hu.detail
+            if t == detail.zimo then
+                name = "zimo"
+            else
+                name = "hu"
+            end
+            self:showHu(name)
         else
             self:hideHu()
         end
@@ -60,8 +68,9 @@ function mahjongDeskHeader:hideDingQue()
     self.mQue:hide()
 end
 
-function mahjongDeskHeader:showHu()
+function mahjongDeskHeader:showHu(name)
     self.mHu:show()
+    self.mHu:setSprite(name)
 end
 
 function mahjongDeskHeader:hideHu()
