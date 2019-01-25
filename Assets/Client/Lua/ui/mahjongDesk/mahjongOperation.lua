@@ -1505,7 +1505,6 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
 
     local isFromHand
 
-    log("=============================:  " .. ft)
     if ft == fromType.inhand then
         local inhand = self.inhandMahjongs[acId]
 
@@ -1709,13 +1708,13 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
     for _, id in pairs(datas) do
         local m = self:getMahjongFromIdle(id)
         m:show()
-        m:setPickabled(true)
 
         table.insert(mahjongs, m)
         self:removeFromIdle()
 
         if acId == self.game.mainAcId then
             local player = self.game:getPlayerByAcId(acId)
+            m:setPickabled(true)
             if m.class == player.que then
                 m:dark()
             else
@@ -1723,6 +1722,7 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
             end
             m:setShadowMode(mahjong.shadowMode.noshadow)
         else
+            m:setPickabled(false)
             if self.game.mode == gameMode.playback then
                 m:setShadowMode(mahjong.shadowMode.yang)
             else
@@ -1746,14 +1746,6 @@ function mahjongOperation:insertMahjongToInhand(m)
     self:relocateInhandMahjongs(self.game.mainAcId)
 end
 
-function mahjongOperation:logInhandMahjong(acId)
-    -- local mahjongs = self.inhandMahjongs[acId]
-    -- log("logInhandMahjong=================== start" .. acId)
-    -- for _, v in pairs(mahjongs) do
-    --     log(tostring(v.id))
-    -- end
-    -- log("logInhandMahjong=================== end" .. acId)
-end
 -------------------------------------------------------------------------------
 -- 减少手牌
 -------------------------------------------------------------------------------
@@ -1774,12 +1766,10 @@ function mahjongOperation:decreaseInhandMahjongs(acId, datas)
         end
     else
         for _, id in pairs(datas) do
-            self:logInhandMahjong(acId)
             local m, mahjongQueue, idx = self:getMahjongFromIdle(id)
             swap(mahjongs, 1, mahjongQueue, idx)
             table.insert(decreaseMahjongs, m)
             table.remove(mahjongs, 1)
-            self:logInhandMahjong(acId)
         end
     end
 
