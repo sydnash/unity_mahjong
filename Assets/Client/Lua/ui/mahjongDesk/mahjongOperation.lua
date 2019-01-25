@@ -2225,8 +2225,8 @@ function mahjongOperation:onDestroy()
     for _, m in pairs(self.planeMats) do
         if m.mainTexture ~= nil then
             m.mainTexture = nil
-            m.color = Color.white
         end
+        m.color = Color.white
     end
     self.curPlaneMat = nil
 
