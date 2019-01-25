@@ -17,7 +17,7 @@ function game:ctor(data, playback)
     self.messageHandlers = tweenSerial.new(false)
     tweenManager.add(self.messageHandlers)
 
-    self.totalCardsCount    = 0
+--    self.totalCardsCount    = 0
     self.leftCardsCount     = 0
     self.deskId             = data.DeskId
     self.cityType           = data.GameType
