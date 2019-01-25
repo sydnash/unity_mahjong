@@ -1505,7 +1505,6 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
 
     local isFromHand
 
-    log("=============================:  " .. ft)
     if ft == fromType.inhand then
         local inhand = self.inhandMahjongs[acId]
 
@@ -1545,11 +1544,11 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
         end
         if hu == nil then --如果是抢杠，在出牌里面搜不到，要去碰牌里面搜
             local pengMahjongs = self.pengMahjongs[beAcId]
-            if not pengMahjongs then
+            if pengMahjongs then
                 for i, mahjongs in pairs(pengMahjongs) do
                     for k, m in pairs(mahjongs) do 
                         if m.id == beCard then
-                            hu = v
+                            hu = m
                             table.remove(mahjongs, k)
                         end
                     end
