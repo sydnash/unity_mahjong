@@ -45,12 +45,18 @@ function playHistoryItem:set(data, historyContainer)
     local config = table.fromjson(data.DeskConfig)
 
     self.mDeskId:setText(string.format("房号:%d", data.DeskId))
+
+    local cityType = data.GameType
+    local gameType = config.Game
+    self.mGame:setText(string.format("%s%s", cityName[cityType], gameName[cityType].games[gameType]))
+
     if data.ClubId > 0 then
         self.mId:setText(string.format("账号:%d", data.ClubId))
         self.mId:show()
     else
         self.mId:hide()
     end
+    
     self.mCount:setText(string.format("局数:%d/%d", data.PlayTimes, config.JuShu))
     self.mDatetime:setText(time.formatDateTime(data.EndTime))
     self.mHistoryId = data.Id
