@@ -544,9 +544,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:relocateIdleMahjongs(visible)
     local mahjongCount = self.game:getTotalCardsCount()
-    local markerTurn   = self.game:getMarkerPlayer().turn
-    local playerStart  = (self.game.dices[1] + self.game.dices[2] + markerTurn) % 4 - 1
-    local playerStartDir = self.game:getSeatTypeByAcId(self.game:getPlayerByTurn(playerStart).acId)
+    local markerDir   = self.game:getSeatTypeByAcId(self.game:getMarkerPlayer().acId)
+    local playerStartDir  = (self.game.dices[1] + self.game.dices[2] + markerDir) % 4 - 1
 
     local dirMahjongCnt = {}
     for i = 0, 3 do
