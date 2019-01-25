@@ -183,14 +183,18 @@ function enterPlaybackCode:enter()
             end
         end
 
-        closeAllUI()
-
         local cityType = data.GameType
         local gameType = data.Config.Game
-        clientApp.currentDesk = getLogicGame(cityType, gameType).new(data, playback)
-        clientApp.currentDesk:startLoop()
 
---        self:close()
+        local support, errText = checkGame(cityType, gameType)
+        if not support then
+            showMessageUI(errText)
+        else
+            closeAllUI()
+
+            clientApp.currentDesk = getLogicGame(cityType, gameType).new(data, playback)
+            clientApp.currentDesk:startLoop()
+        end
     end)
 end
 

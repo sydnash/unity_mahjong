@@ -46,6 +46,8 @@ function playHistoryDetailItem:onShareClickHandler()
             return
         end
 
+        log("shareId = " .. tostring(msg.ShareId))
+
         local title = string.format("战绩回放查看码:%d", msg.ShareId)
         local desc = "打开主页战绩界面，点击查看他人回放，输入战绩查看码即可观看回放。"
         local url = appConfig.shareUrl
@@ -110,12 +112,18 @@ function playHistoryDetailItem:onPlayClickHandler()
             end
         end
 
-        closeAllUI()
-
         local cityType = data.GameType
         local gameType = data.Config.Game
-        clientApp.currentDesk = getLogicGame(cityType, gameType).new(data, playback)
-        clientApp.currentDesk:startLoop()
+
+        local support, errText = checkGame(cityType, gameType)
+        if not support then
+            showMessageUI(errText)
+        else
+            closeAllUI()
+        
+            clientApp.currentDesk = getLogicGame(cityType, gameType).new(data, playback)
+            clientApp.currentDesk:startLoop()
+        end
     end)
 end
 
