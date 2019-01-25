@@ -8,7 +8,7 @@ local appConfig = {
 }
 
 if appConfig.debug then
-    appConfig.patchEnabled = true
+    appConfig.patchEnabled = false
 end
 
 return appConfig

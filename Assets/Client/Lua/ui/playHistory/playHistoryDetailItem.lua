@@ -153,6 +153,8 @@ function playHistoryDetailItem:set(data, round, historyId, historyContainer)
         end
         ui:setColor(c)
     end
+
+    self.mIndex:setText(string.format("第%d局", self.mRound))
 end
 
 function playHistoryDetailItem:onDestroy()

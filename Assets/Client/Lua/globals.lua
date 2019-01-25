@@ -450,16 +450,6 @@ end
 function enterDesk(cityType, deskId, callback, isFromLogining)
     showWaitingUI("正在进入房间，请稍候...")
 
-    --开始预加载资源
-    local preload = modelManager.preload()
-
-    for _, v in pairs(mahjongType.c) do
-        for i=1, 4 do
-            preload:push(v.folder, v.resource)
-        end
-    end
-    preload:start()
-
     if callback == nil then
         callback = function(ok) end
     end
@@ -529,7 +519,7 @@ function enterDesk(cityType, deskId, callback, isFromLogining)
                 return
             end
 
-            log("enter desk, msg = " .. table.tostring(msg))
+--            log("enter desk, msg = " .. table.tostring(msg))
 
             msg.Config  = table.fromjson(msg.Config)
             msg.Reenter = table.fromjson(msg.Reenter)
@@ -562,10 +552,6 @@ function enterDesk(cityType, deskId, callback, isFromLogining)
                 local cityType = msg.GameType
                 local gameType = msg.Config.Game
                 clientApp.currentDesk = getLogicGame(cityType, gameType).new(msg)
-
-                if preload ~= nil then
-                    preload:stop()
-                end
                     
                 if callback ~= nil then
                     callback(true)

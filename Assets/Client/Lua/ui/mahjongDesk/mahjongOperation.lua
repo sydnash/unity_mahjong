@@ -317,7 +317,7 @@ function mahjongOperation:hideChuPaiHint()
 end
 
 -------------------------------------------------------------------------------
--- 主要处理中间的倒计时
+-- 主要处理中间的倒计时和指向的呼吸闪烁
 -------------------------------------------------------------------------------
 function mahjongOperation:update()
     if self.game.mode == gameMode.playback then
@@ -1708,13 +1708,13 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
     for _, id in pairs(datas) do
         local m = self:getMahjongFromIdle(id)
         m:show()
-        m:setPickabled(true)
 
         table.insert(mahjongs, m)
         self:removeFromIdle()
 
         if acId == self.game.mainAcId then
             local player = self.game:getPlayerByAcId(acId)
+            m:setPickabled(true)
             if m.class == player.que then
                 m:dark()
             else
@@ -1722,6 +1722,7 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
             end
             m:setShadowMode(mahjong.shadowMode.noshadow)
         else
+            m:setPickabled(false)
             if self.game.mode == gameMode.playback then
                 m:setShadowMode(mahjong.shadowMode.yang)
             else
@@ -1745,14 +1746,6 @@ function mahjongOperation:insertMahjongToInhand(m)
     self:relocateInhandMahjongs(self.game.mainAcId)
 end
 
-function mahjongOperation:logInhandMahjong(acId)
-    -- local mahjongs = self.inhandMahjongs[acId]
-    -- log("logInhandMahjong=================== start" .. acId)
-    -- for _, v in pairs(mahjongs) do
-    --     log(tostring(v.id))
-    -- end
-    -- log("logInhandMahjong=================== end" .. acId)
-end
 -------------------------------------------------------------------------------
 -- 减少手牌
 -------------------------------------------------------------------------------
@@ -1773,12 +1766,10 @@ function mahjongOperation:decreaseInhandMahjongs(acId, datas)
         end
     else
         for _, id in pairs(datas) do
-            self:logInhandMahjong(acId)
             local m, mahjongQueue, idx = self:getMahjongFromIdle(id)
             swap(mahjongs, 1, mahjongQueue, idx)
             table.insert(decreaseMahjongs, m)
             table.remove(mahjongs, 1)
-            self:logInhandMahjong(acId)
         end
     end
 
@@ -2129,7 +2120,6 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:clear(forceDestroy)
 --    log("clear start, idle count = " .. tostring(#self.idleMahjongs))
-
     self.idleMahjongs = {}
 
     for _, p in pairs(self.game.players) do
@@ -2163,7 +2153,6 @@ function mahjongOperation:clear(forceDestroy)
     self.selectedMahjong = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
-
 --    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
 end
 
@@ -2173,6 +2162,11 @@ end
 function mahjongOperation:reset()
     if self.game.mode == gameMode.normal then
         touch.removeListener()
+    end
+
+    self:darkPlanes()
+    for _, m in pairs(self.planeMats) do
+        m.color = Color.white
     end
 
     self:hideChuPaiHint()
@@ -2234,8 +2228,8 @@ function mahjongOperation:onDestroy()
     for _, m in pairs(self.planeMats) do
         if m.mainTexture ~= nil then
             m.mainTexture = nil
-            m.color = Color.white
         end
+        m.color = Color.white
     end
     self.curPlaneMat = nil
 
