@@ -317,7 +317,7 @@ function mahjongOperation:hideChuPaiHint()
 end
 
 -------------------------------------------------------------------------------
--- 主要处理中间的倒计时
+-- 主要处理中间的倒计时和指向的呼吸闪烁
 -------------------------------------------------------------------------------
 function mahjongOperation:update()
     if self.game.mode == gameMode.playback then
@@ -2120,7 +2120,6 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:clear(forceDestroy)
 --    log("clear start, idle count = " .. tostring(#self.idleMahjongs))
-
     self.idleMahjongs = {}
 
     for _, p in pairs(self.game.players) do
@@ -2154,7 +2153,6 @@ function mahjongOperation:clear(forceDestroy)
     self.selectedMahjong = nil
     self.chupaiPtr:hide()
     self.canChuPai = false
-
 --    log("clear over, idle count = " .. tostring(#self.idleMahjongs))
 end
 
@@ -2164,6 +2162,11 @@ end
 function mahjongOperation:reset()
     if self.game.mode == gameMode.normal then
         touch.removeListener()
+    end
+
+    self:darkPlanes()
+    for _, m in pairs(self.planeMats) do
+        m.color = Color.white
     end
 
     self:hideChuPaiHint()
