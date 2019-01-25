@@ -546,6 +546,7 @@ function mahjongOperation:relocateIdleMahjongs(visible)
     local mahjongCount = self.game:getTotalCardsCount()
     local markerTurn   = self.game:getMarkerPlayer().turn
     local playerStart  = (self.game.dices[1] + self.game.dices[2] + markerTurn) % 4 - 1
+    local playerStartDir = self.game:getSeatTypeByAcId(self.game:getPlayerByTurn(playerStart).acId)
 
     local dirMahjongCnt = {}
     for i = 0, 3 do
@@ -559,7 +560,7 @@ function mahjongOperation:relocateIdleMahjongs(visible)
     end
 
     local acc = 1
-    for dir = playerStart, playerStart-3, -1 do
+    for dir = playerStartDir, playerStartDir-3, -1 do
         if dir < 0 then
             dir = dir + 4
         end
@@ -612,6 +613,12 @@ function mahjongOperation:relocateIdleMahjongs(visible)
                 m:hide()
             end
         end
+    end
+    local mahjongCount = self.game:getTotalCardsCount()
+    for i = 1, self.idleMahjongStart - 1, 1 do
+        local mj = self.idleMahjongs[1]
+        table.remove(self.idleMahjongs, 1)
+        table.insert(self.idleMahjongs, mahjongCount, mj)
     end
 end
 
@@ -1593,7 +1600,8 @@ end
 -- 获取从idle列表拿牌的索引值
 -------------------------------------------------------------------------------
 function mahjongOperation:getIdleStart()
-    return (self.idleMahjongStart <= self.game:getLeftCardsCount()) and self.idleMahjongStart or 1
+    -- return (self.idleMahjongStart <= self.game:getLeftCardsCount()) and self.idleMahjongStart or 1
+    return 1
 end
 
 function mahjongOperation:getMahjongFromIdleForPlayback(mid)
