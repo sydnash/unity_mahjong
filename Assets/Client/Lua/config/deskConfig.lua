@@ -57,7 +57,15 @@ local mahjongLayoutBase = {
         }, 
         group = { value = true, switchOff = false },
     },
-    [7] = { 
+    [7] = {
+        title = string.empty,
+        items = {
+            [1] = { style = "radiobox", text = "1番起胡",key = "CanPingHu",  value = 1, },
+            [2] = { style = "radiobox", text = "2番起胡",key = "CanPingHu",  value = 2, },
+        },
+        group = { value = true, switchOff = false },
+    },
+    [8] = { 
         title = string.empty, 
         items = { 
             [1] = { style = "checkbox", text = "换三张", key = "HuanNZhang", value = { selected = 2, unselected = 1 }, },
@@ -65,7 +73,7 @@ local mahjongLayoutBase = {
         }, 
         group = { value = true, switchOff = true },
     },
-    [8] = { 
+    [9] = { 
         title = string.empty, 
         items = { 
             [1] = { style = "checkbox", text = "幺九", key = "YaoJiu",     value = { selected = 1, unselected = 2 }, },
@@ -73,7 +81,7 @@ local mahjongLayoutBase = {
         }, 
         group = { value = false, switchOff = false },
     },
-    [9] = { 
+    [10] = { 
         title = string.empty, 
         items = { 
             [1] = { style = "checkbox", text = "将对", key = "JiangDui", value = { selected = 1, unselected = 2 }, },
@@ -81,23 +89,23 @@ local mahjongLayoutBase = {
         }, 
         group = { value = false, switchOff = false },
     },
-    [10] = {
+    [11] = {
         title = string.empty,
         items = {
             [1] = { style = "checkbox", text = "对对胡2番", key = "DuiDuiHu2",  value = { selected = 1, unselected = 2 }, },
-            [2] = { style = "checkbox", text = "点炮可平胡",key = "CanPingHu",  value = { selected = 1, unselected = 2 }, },
+            -- [2] = { style = "checkbox", text = "点炮可平胡",key = "CanPingHu",  value = { selected = 1, unselected = 2 }, },
+            [2] = { style = "checkbox", text = "夹心五",    key = "JiaXinWu", value = { selected = 1, unselected = 2 }, },
         },
         group = { value = false, switchOff = false },
     },
-    [11] = { 
+    [12] = { 
         title = string.empty, 
         items = { 
-            [1] = { style = "checkbox", text = "夹心五",    key = "JiaXinWu", value = { selected = 1, unselected = 2 }, },
-            [2] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
+            [1] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
         }, 
         group = { value = false, switchOff = false },
     },
-    [12] = {
+    [13] = {
         title = "胡牌",
         items = {
             [1] = { style = "radiobox", text = "开启提示", key = "HuPaiHint", value = 1 },
@@ -109,6 +117,7 @@ local mahjongLayoutBase = {
 
 local chengduMahjongLayout      = table.clone(mahjongLayoutBase)
 local jintangMahjongLayout      = table.clone(mahjongLayoutBase)
+jintangMahjongLayout[12].items[2] = {style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, }
 local xichongMahjongLayout      = table.clone(mahjongLayoutBase)
 local yingjingMahjongLayout     = table.clone(mahjongLayoutBase)
 local nanchongMahjongLayout     = table.clone(mahjongLayoutBase)
@@ -227,6 +236,7 @@ local mahjongConfigBase = {
 
 local chengduMahjongConfig      = table.clone(mahjongConfigBase)
 local jintangMahjongConfig      = table.clone(mahjongConfigBase)
+jintangMahjongConfig["DaXiaoYu"] = 2
 local xichongMahjongConfig      = table.clone(mahjongConfigBase)
 local yingjingMahjongConfig     = table.clone(mahjongConfigBase)
 local nanchongMahjongConfig     = table.clone(mahjongConfigBase)
@@ -308,6 +318,7 @@ local mahjongShiftConfigBase = {
 
 local chengduMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
 local jintangMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
+jintangMahjongShiftConfig.DaXiaoYu = {[true] = 1, [false] = 2}
 local xichongMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
 local yingjingMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)
 local nanchongMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)
