@@ -59,7 +59,7 @@ function detailPanel:onInit()
         group:hide()
     end
 
-    self.mLayout:setSpacing(self.interactable and -10 or -40)
+    self.mLayout:setSpacing(self.interactable and -25 or -40)
 end
 
 function detailPanel:set(cityType, gameType, layout, config)

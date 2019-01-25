@@ -4811,6 +4811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -4827,6 +4828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -4843,6 +4845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5111,6 +5114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5174,6 +5178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5217,6 +5222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5359,6 +5365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5420,6 +5427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5449,6 +5457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5465,6 +5474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5592,6 +5602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5635,6 +5646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5783,6 +5795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -5976,6 +5989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6124,6 +6138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6440,6 +6455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6456,6 +6472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6499,6 +6516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6575,6 +6593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6591,6 +6610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6607,6 +6627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6713,6 +6734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6897,6 +6919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6913,6 +6936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -6929,6 +6953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7131,6 +7156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7234,6 +7260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7304,6 +7331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7320,6 +7348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7336,6 +7365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7352,6 +7382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7428,6 +7459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7588,6 +7620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7649,6 +7682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7692,6 +7726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7708,6 +7743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7796,6 +7832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7812,6 +7849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7855,6 +7893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7871,6 +7910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7932,6 +7972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -7948,6 +7989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -8024,6 +8066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -8040,6 +8083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -8227,6 +8271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -8243,6 +8288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -8292,6 +8338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -8368,6 +8415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -8471,6 +8519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -8676,6 +8725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -8821,6 +8871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -8897,6 +8948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -9087,6 +9139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -9334,6 +9387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -9350,6 +9404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -9612,6 +9667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -9844,6 +9900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -9860,6 +9917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -9876,6 +9934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -9964,6 +10023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10061,6 +10121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10149,6 +10210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10210,6 +10272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10331,6 +10394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10437,6 +10501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10453,6 +10518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10496,6 +10562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10512,6 +10579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10648,6 +10716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10664,6 +10733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10680,6 +10750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10723,6 +10794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10739,6 +10811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10788,6 +10861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10837,6 +10911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -10994,6 +11069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -11010,6 +11086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -11146,6 +11223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -11384,6 +11462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -11427,6 +11506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -11533,6 +11613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -11609,6 +11690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -11670,6 +11752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -11878,7 +11961,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: -10
+  m_Spacing: -25
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -11921,6 +12004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12102,6 +12186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12118,6 +12203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12179,6 +12265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12393,6 +12480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12409,6 +12497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12452,6 +12541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12468,6 +12558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12562,6 +12653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12605,6 +12697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12714,6 +12807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12913,6 +13007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -12929,6 +13024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -13149,6 +13245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -13390,6 +13487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -13529,6 +13627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -13632,6 +13731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -13726,6 +13826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -13769,6 +13870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -13926,6 +14028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -13975,6 +14078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14265,6 +14369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14347,6 +14452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14408,6 +14514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14469,6 +14576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14497,6 +14605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14513,6 +14622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14628,6 +14738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14671,6 +14782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14765,6 +14877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14886,6 +14999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14902,6 +15016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14918,6 +15033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -14979,6 +15095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -15073,6 +15190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -15161,6 +15279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300036, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -15177,6 +15296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: radiobox
     sprite: {fileID: 21300038, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
@@ -18192,7 +18312,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1487991433666980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -417.4, y: -5.69908, z: 0}
+  m_LocalPosition: {x: -417.4, y: -5.813, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224526823551823674}
@@ -19197,7 +19317,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1152757019825174}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.15182999, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224204870127488266}
@@ -19206,8 +19326,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.15183}
-  m_SizeDelta: {x: 835, y: 0.22784}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 835, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224526823551823674
 RectTransform:
