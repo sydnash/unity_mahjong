@@ -124,6 +124,7 @@ function mahjongGame:syncSeats(seats)
             local shou = player[mahjongGame.cardType.shou]
             local huInfo = player.hu[1]
             local detail = opType.hu.detail
+            player.huType = huInfo.HuType
             if huInfo.HuType == detail.zimo or huInfo.HuType == detail.gangshanghua or huInfo.HuType == detail.haidilao then --自摸
                 if player.acId == self.mainAcId then
                     for k, u in pairs(shou) do
@@ -466,6 +467,7 @@ function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
     self.knownMahjong[beCard] = 1
     local player = self:getPlayerByAcId(acId)
     player.isHu = true
+    player.huType = t 
     self.deskUI:onPlayerHu(acId, t)
     self.operationUI:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
 end
@@ -507,6 +509,7 @@ function mahjongGame:onGameEndListener(specialData, datas, totalScores)
                     isMarker        = self:isMarker(v.AcId),
                     que             = p.que,
                     seatType        = self:getSeatTypeByAcId(v.AcId),
+                    huType          = p.huType,
         }
 
         for k, u in pairs(d.inhand) do 

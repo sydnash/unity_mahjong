@@ -59,6 +59,12 @@ function gameEndItem:setPlayerInfo(player, cb)
 
     if not json.isNilOrNull(player.hu) and player.hu >= 0 then
         self.mResult:show()
+        local detail = opType.hu.detail
+        if player.huType == detail.detail.zimo  then
+            self.mResult:setSprite("zimo")
+        else
+            self.mResult:setSprite("hu")
+        end
     end
 
     if player.isCreator then

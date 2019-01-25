@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 222316956997406064}
   - component: {fileID: 114493016170988928}
   - component: {fileID: 114940503968126148}
+  - component: {fileID: 114116882668357872}
   m_Layer: 5
   m_Name: Result
   m_TagString: Untagged
@@ -416,6 +417,23 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114116882668357872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1248317343930638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mAutoSize: 1
+  mItems:
+  - key: hu
+    sprite: {fileID: 21300144, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
+  - key: zimo
+    sprite: {fileID: 21300142, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
 --- !u!114 &114139275695948742
 MonoBehaviour:
   m_ObjectHideFlags: 1
