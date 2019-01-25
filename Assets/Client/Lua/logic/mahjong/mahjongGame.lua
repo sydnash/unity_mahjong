@@ -32,8 +32,8 @@ mahjongGame.cardType = {
 -- 构造函数
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data, playback)
-    base.ctor(self, data, playback)
     self.totalCardsCount = 108
+    base.ctor(self, data, playback)
 end
 
 -------------------------------------------------------------------------------
