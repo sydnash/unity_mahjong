@@ -22,21 +22,21 @@ function errorMessage:appendErrorMessage(message)
 end
 
 function errorMessage:setDebug(debug)
-    self.debug = debug
-    if debug then
-        self.mQuitDesc:setText("拷贝关闭")
-    else
+--    self.debug = debug
+--    if debug then
+--        self.mQuitDesc:setText("拷贝关闭")
+--    else
         self.mQuitDesc:setText("关闭退出")
-    end
+--    end
 end
 
 function errorMessage:onQuitClickedHandler()
     playButtonClickSound()
-    if self.debug then
-        self.mText:setText(string.empty)
-        self:close()
-        return
-    end
+--    if self.debug then
+--        self.mText:setText(string.empty)
+--        self:close()
+--        return
+--    end
     Application.Quit()
 end
 
