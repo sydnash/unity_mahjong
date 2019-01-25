@@ -2095,11 +2095,12 @@ function mahjongOperation:highlightPlaneByAcId(acId)
 end
 
 -------------------------------------------------------------------------------
--- 将当前acid的plane高亮
+-- 将plane变暗
 -------------------------------------------------------------------------------
 function mahjongOperation:darkPlanes()
     for _, m in pairs(self.planeMats) do
         m.mainTexture = panleDarkTex
+        m.color = Color.white
     end
 
     self.curPlaneMat = nil
@@ -2165,9 +2166,9 @@ function mahjongOperation:reset()
     end
 
     self:darkPlanes()
-    for _, m in pairs(self.planeMats) do
-        m.color = Color.white
-    end
+--    for _, m in pairs(self.planeMats) do
+--        m.color = Color.white
+--    end
 
     self:hideChuPaiHint()
     if self.animationManager ~= nil then
