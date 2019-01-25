@@ -51,7 +51,6 @@
     <Folder Include="Lua\ui\playHistory\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="helper.lua" />
     <Compile Include="Lua\clientApp.lua" />
     <Compile Include="Lua\config\chatConfig.lua" />
     <Compile Include="Lua\config\costConfig.lua" />
@@ -70,6 +69,7 @@
     <Compile Include="Lua\logic\doushisi\doushisiGame.lua" />
     <Compile Include="Lua\logic\doushisi\doushisiType.lua" />
     <Compile Include="Lua\logic\game.lua" />
+    <Compile Include="Lua\logic\mahjong\helper.lua" />
     <Compile Include="Lua\logic\manager\gvoiceManager.lua" />
     <Compile Include="Lua\logic\friendster\friendster.lua" />
     <Compile Include="Lua\logic\friendster\friendsterDesk.lua" />
