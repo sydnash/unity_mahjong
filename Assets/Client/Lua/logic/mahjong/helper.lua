@@ -221,7 +221,7 @@ function helper:statisticCount()
 end
 
 function helper:checkChuPaiHint()
-            local now = tolua.gettime()
+    local now = tolua.gettime()
     local handCntVec, totalCntVec = self:statisticCount()
     local cntVec = handCntVec
     local ret = {}
@@ -237,8 +237,8 @@ function helper:checkChuPaiHint()
             self:addTypeCnt(cntVec, id, 1)
         end
     end
-            local t2 = tolua.gettime()
-            log("check jiao : used time: " .. tostring(ok) .. "   " .. t2 - now)
+--            local t2 = tolua.gettime()
+--            log("check jiao : used time: " .. tostring(ok) .. "   " .. t2 - now)
     return ret
 end
 
