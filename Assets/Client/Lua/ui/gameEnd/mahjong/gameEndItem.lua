@@ -125,9 +125,6 @@ function gameEndItem:setPlayerInfo(player, cb)
 
     local hu = player.hu
     if not json.isNilOrNull(hu) and hu >= 0 then
-        self.mResult:setSprite("hu")
-        self.mResult:show()
-
         local p = require("ui.gameEnd.mahjong.gameEndPai").new()
         p:setParent(self.mPai)
         p:show()

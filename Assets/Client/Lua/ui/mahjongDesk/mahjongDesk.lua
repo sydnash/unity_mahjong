@@ -82,6 +82,9 @@ function mahjongDesk:onPlayerHu(acId, t)
     if t == detail.zimo then
         name = "zimo"
         p:playGfx("zimo")
+    elseif t == detail.gangshanghua then
+        name = "gangshanghua"
+        p:playGfx("zimo")
     else
         name = "hu"
         p:playGfx("hu")
