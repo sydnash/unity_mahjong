@@ -62,6 +62,8 @@ function gameEndItem:setPlayerInfo(player, cb)
         local detail = opType.hu.detail
         if player.huType == detail.zimo  then
             self.mResult:setSprite("zimo")
+        elseif player.huType == detail.gangshanghua then
+            self.mResult:setSprite("gangshanghua")
         else
             self.mResult:setSprite("hu")
         end
@@ -123,9 +125,6 @@ function gameEndItem:setPlayerInfo(player, cb)
 
     local hu = player.hu
     if not json.isNilOrNull(hu) and hu >= 0 then
-        self.mResult:setSprite("hu")
-        self.mResult:show()
-
         local p = require("ui.gameEnd.mahjong.gameEndPai").new()
         p:setParent(self.mPai)
         p:show()

@@ -393,6 +393,8 @@ MonoBehaviour:
     sprite: {fileID: 21300136, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
   - key: zimo
     sprite: {fileID: 21300134, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
+  - key: gangshanghua
+    sprite: {fileID: 21300140, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
 --- !u!114 &114103748362372806
 MonoBehaviour:
   m_ObjectHideFlags: 1

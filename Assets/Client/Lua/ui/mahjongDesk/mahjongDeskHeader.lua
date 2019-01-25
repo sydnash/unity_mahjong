@@ -35,6 +35,8 @@ function mahjongDeskHeader:setPlayerInfo(player)
             local detail = opType.hu.detail
             if t == detail.zimo then
                 name = "zimo"
+            elseif t == detail.gangshanghua then
+                name = "gangshanghua"
             else
                 name = "hu"
             end
