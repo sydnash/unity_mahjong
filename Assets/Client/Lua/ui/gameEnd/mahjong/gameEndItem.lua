@@ -62,6 +62,8 @@ function gameEndItem:setPlayerInfo(player, cb)
         local detail = opType.hu.detail
         if player.huType == detail.zimo  then
             self.mResult:setSprite("zimo")
+        elseif player.huType == detail.gangshanghua then
+            self.mResult:setSprite("gangshanghua")
         else
             self.mResult:setSprite("hu")
         end
