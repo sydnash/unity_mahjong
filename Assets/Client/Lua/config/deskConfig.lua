@@ -78,6 +78,7 @@ local mahjongLayoutBase = {
         items = { 
             [1] = { style = "checkbox", text = "幺九", key = "YaoJiu",     value = { selected = 1, unselected = 2 }, },
             [2] = { style = "checkbox", text = "中张", key = "ZhongZhang", value = { selected = 1, unselected = 2 }, },
+            [3] = { style = "checkbox", text = "比叫", key = "BiJiao", value = { selected = 1, unselected = 2 }, },
         }, 
         group = { value = false, switchOff = false },
     },
@@ -225,6 +226,7 @@ local mahjongConfigBase = {
     ["HuanNZhang"]     = 1,
     ["YaoJiu"]         = 2,
     ["ZhongZhang"]     = 2,
+    ["BiJiao"]         = 2,
     ["JiangDui"]       = 2,
     ["MenQing"]        = 2,
     ["TianDiHu"]       = 2,
@@ -307,6 +309,7 @@ local mahjongShiftConfigBase = {
     ["HuanNZhang"]      = { [0] = 1, [3]  = 2, [4]  = 3 },
     ["YaoJiu"]          = { [true] = 1, [false] = 2 },
     ["ZhongZhang"]      = { [true] = 1, [false] = 2 },
+    ["BiJiao"]      = { [true] = 1, [false] = 2 },
     ["JiangDui"]        = { [true] = 1, [false] = 2 },
     ["MenQing"]         = { [true] = 1, [false] = 2 },
     ["TianDiHu"]        = { [true] = 1, [false] = 2 },
