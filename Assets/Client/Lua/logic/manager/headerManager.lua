@@ -62,12 +62,14 @@ function headerManager.setup()
     downloadDefaultIcon()
 end
 
-local UNKNOWN_TOKEN_PREFIX = "ZsXQwa5mArMmI4A44uJgQyevo9VhePyUbv6MwhsWTzrqttXsUdzJL0LcT5I9reGA_"
+local TOKEN_PREFIX_FOR_EMPTY_URL = "tPfEu_ZsXQwa5mArMmI4A44uJgQyevo9VhePyUbv6MwhsWTzrqttXsUdzJL0LcT5I9reGA_"
 
 function headerManager.token(url)
+--    url = "http://wx.qlogo.cn/mmopen/zhK3MN44IcibtzxZibicddSyp4qVX3rTtfMZsXQwa5mArMmI4A44uJgQyevo9VhePyUbv6MwhsWTzrqttXsUdzJL0LcT5I9reGA/0"
+
     if string.isNilOrEmpty(url) then
         emptyTokenIdx = emptyTokenIdx + 1
-        return UNKNOWN_TOKEN_PREFIX .. tostring(emptyTokenIdx)
+        return TOKEN_PREFIX_FOR_EMPTY_URL .. tostring(emptyTokenIdx)
     end
 
     return Hash.GetHash(url)
@@ -75,6 +77,7 @@ end
 
 function headerManager.request(token, url)
 --    url = "http://wx.qlogo.cn/mmopen/zhK3MN44IcibtzxZibicddSyp4qVX3rTtfMZsXQwa5mArMmI4A44uJgQyevo9VhePyUbv6MwhsWTzrqttXsUdzJL0LcT5I9reGA/0"
+--    token = headerManager.token(url)
 
     if string.isNilOrEmpty(url) then
         local icon = downloadDefaultIcon()
@@ -83,16 +86,22 @@ function headerManager.request(token, url)
     end
 
     local header = headerManager.downloadedHeaders[token]
-    if header ~= nil then
-        header.ref = header.ref + 1
+    if header == nil then
+        local icon = downloadDefaultIcon()
+        headerManager.downloadedHeaders[token] = { icon = icon, ref = 1 }
+        signalManager.signal(token, icon)
+    else
+        if header.icon.name ~= DEFAULT_HEADER_RES then
+            header.ref = header.ref + 1
+        end
         signalManager.signal(token, header.icon)
         return
     end
-    
+
     local function callback(icon)
         if icon ~= nil then
             local h = headerManager.downloadedHeaders[token]
-            if h ~= nil then
+            if h ~= nil and h.icon.name ~= DEFAULT_HEADER_RES then
                 h.ref = h.ref + 1
                 icon = h.icon
             else
@@ -102,9 +111,6 @@ function headerManager.request(token, url)
             signalManager.signal(token, icon)
         end
     end
-
-    local tex = downloadDefaultIcon()
-    signalManager.signal(token, tex)
 
     local path = LFS.CombinePath(rootPath, token .. ".jpg")
 
@@ -123,7 +129,7 @@ end
 function headerManager.drop(token)
     if not string.isNilOrEmpty(token) then
         local header = headerManager.downloadedHeaders[token]
-        if header ~= nil then
+        if header ~= nil and header.icon.name ~= DEFAULT_HEADER_RES then
             header.ref = math.max(0, header.ref - 1)
         
             if header.ref == 0 then
