@@ -399,10 +399,7 @@ function mahjongOperation:onGameStart()
     eventManager.registerAnimationTrigger("table_plane_down", function()
         for i=1, self.game:getTotalCardsCount() do
             local m = self.idleMahjongs[i]
-            if m ~= nil then
-                m:show()
---              m:setPickabled(false)
-            end
+            m:show()
         end
     end)
 
@@ -545,9 +542,9 @@ end
 -- 创建“城墙”
 -------------------------------------------------------------------------------
 function mahjongOperation:relocateIdleMahjongs(visible)
-    local mahjongCount = self.game:getTotalCardsCount()
-    local markerDir   = self.game:getSeatTypeByAcId(self.game:getMarkerPlayer().acId)
-    local playerStartDir  = (self.game.dices[1] + self.game.dices[2] + markerDir) % 4 - 1
+    local mahjongCount   = self.game:getTotalCardsCount()
+    local markerDir      = self.game:getSeatTypeByAcId(self.game:getMarkerPlayer().acId)
+    local playerStartDir = (self.game.dices[1] + self.game.dices[2] + markerDir) % 4 - 1
 
     local dirMahjongCnt = {}
     for i = 0, 3 do
