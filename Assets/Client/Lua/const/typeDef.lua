@@ -116,7 +116,8 @@ opType = {
                       tianhu        = 17,
 	                  dihu          = 18,
 	                  chahuazhu     = 30,
-	                  chajiao       = 31,
+                      chajiao       = 31,
+                      bijiao        = 34,
            } 
     },
     guo  = { id = 6, },

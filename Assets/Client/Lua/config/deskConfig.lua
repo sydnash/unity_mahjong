@@ -78,6 +78,7 @@ local mahjongLayoutBase = {
         items = { 
             [1] = { style = "checkbox", text = "幺九", key = "YaoJiu",     value = { selected = 1, unselected = 2 }, },
             [2] = { style = "checkbox", text = "中张", key = "ZhongZhang", value = { selected = 1, unselected = 2 }, },
+            [3] = { style = "checkbox", text = "比叫", key = "BiJiao", value = { selected = 1, unselected = 2 }, },
         }, 
         group = { value = false, switchOff = false },
     },
@@ -102,6 +103,7 @@ local mahjongLayoutBase = {
         title = string.empty, 
         items = { 
             [1] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
+            [2] = {style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, }
         }, 
         group = { value = false, switchOff = false },
     },
@@ -117,7 +119,6 @@ local mahjongLayoutBase = {
 
 local chengduMahjongLayout      = table.clone(mahjongLayoutBase)
 local jintangMahjongLayout      = table.clone(mahjongLayoutBase)
-jintangMahjongLayout[12].items[2] = {style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, }
 local xichongMahjongLayout      = table.clone(mahjongLayoutBase)
 local yingjingMahjongLayout     = table.clone(mahjongLayoutBase)
 local nanchongMahjongLayout     = table.clone(mahjongLayoutBase)
@@ -225,6 +226,7 @@ local mahjongConfigBase = {
     ["HuanNZhang"]     = 1,
     ["YaoJiu"]         = 2,
     ["ZhongZhang"]     = 2,
+    ["BiJiao"]         = 2,
     ["JiangDui"]       = 2,
     ["MenQing"]        = 2,
     ["TianDiHu"]       = 2,
@@ -232,11 +234,11 @@ local mahjongConfigBase = {
     ["CanPingHu"]      = 1,
     ["JiaXinWu"]       = 2,
     ["DuiDuiHu2"]      = 2,
+    ["DaXiaoYu"]       = 2,
 }
 
 local chengduMahjongConfig      = table.clone(mahjongConfigBase)
 local jintangMahjongConfig      = table.clone(mahjongConfigBase)
-jintangMahjongConfig["DaXiaoYu"] = 2
 local xichongMahjongConfig      = table.clone(mahjongConfigBase)
 local yingjingMahjongConfig     = table.clone(mahjongConfigBase)
 local nanchongMahjongConfig     = table.clone(mahjongConfigBase)
@@ -307,6 +309,7 @@ local mahjongShiftConfigBase = {
     ["HuanNZhang"]      = { [0] = 1, [3]  = 2, [4]  = 3 },
     ["YaoJiu"]          = { [true] = 1, [false] = 2 },
     ["ZhongZhang"]      = { [true] = 1, [false] = 2 },
+    ["BiJiao"]      = { [true] = 1, [false] = 2 },
     ["JiangDui"]        = { [true] = 1, [false] = 2 },
     ["MenQing"]         = { [true] = 1, [false] = 2 },
     ["TianDiHu"]        = { [true] = 1, [false] = 2 },
@@ -314,11 +317,11 @@ local mahjongShiftConfigBase = {
     ["CanPingHu"]       = { [true] = 1, [false] = 2 },
     ["DuiDuiHu2"]       = { [true] = 1, [false] = 2 },
     ["JiaXinWu"]        = { [true] = 1, [false] = 2 },
+    ["DaXiaoYu"]        = { [true] = 1, [false] = 2 },
 }
 
 local chengduMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
 local jintangMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
-jintangMahjongShiftConfig.DaXiaoYu = {[true] = 1, [false] = 2}
 local xichongMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
 local yingjingMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)
 local nanchongMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)

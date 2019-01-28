@@ -29,6 +29,7 @@ local detailTypeName = {
     [opType.hu.detail.dihu]                         = {"地胡", "被地胡"},
     [opType.hu.detail.chahuazhu]                    = {"查花猪", "被查花猪"},
     [opType.hu.detail.chajiao]                      = {"查叫", "被查叫"},
+    [opType.hu.detail.bijiao]                       = {"比叫", "被比叫"},
 }
 
 local fanxingTypeName = {
@@ -77,27 +78,32 @@ function scoreDetailItem:setData(data)
     end
     local name2
 
-    if data.Op == opType.hu.id then
-        local names = {}
-        if data.FanXing and #data.FanXing > 0 then
-            for _, fanxing in pairs(data.FanXing) do
-                table.insert(names, fanxingTypeName[fanxing])
+    if data.Detail ~= opType.hu.detail.bijiao then
+        if data.Op == opType.hu.id then
+            local names = {}
+            if data.FanXing and #data.FanXing > 0 then
+                for _, fanxing in pairs(data.FanXing) do
+                    table.insert(names, fanxingTypeName[fanxing])
+                end
+            else
+                table.insert(names, "平胡")
             end
-        else
-            table.insert(names, "平胡")
+            if data.IsHaiDi then
+                table.insert(names, "海底")
+            end
+            if data.Gen and data.Gen > 0 then
+                table.insert(names, tostring(data.Gen) .. "根")
+            end
+            if #names > 0 then
+                name2 = table.concat(names, "、")
+            end
         end
-        if data.IsHaiDi then
-            table.insert(names, "海底")
+        if name2 ~= nil then
+            name1 = name1 .. "(" .. name2 .. ")"
         end
-        if data.Gen and data.Gen > 0 then
-            table.insert(names, tostring(data.Gen) .. "根")
-        end
-        if #names > 0 then
-            name2 = table.concat(names, "、")
-        end
-    end
-    if name2 ~= nil then
-        name1 = name1 .. "(" .. name2 .. ")"
+    else
+        name1 = name1 .. string.format("(%s番比%s番)", tostring(data.HuFanShu), tostring(data.BeFanShu))
+        self.mMultiply:setText("")
     end
     self.mName:setText(name1)
 end
@@ -150,6 +156,8 @@ function scoreDetail:onInit()
                 t.IsHaiDi       = info.IsHaiDi
                 t.FanXing       = info.FanXing
                 t.Gen           = info.Gen
+                t.HuFanShu      = info.HuFanShu or 0
+                t.BeFanShu      = info.BeFanShu or 0
 
                 t.Fan           = selfResult.Fan
                 t.Score         = selfResult.Change
