@@ -32,8 +32,19 @@ mahjongGame.cardType = {
 -- 构造函数
 -------------------------------------------------------------------------------
 function mahjongGame:ctor(data, playback)
-    self.totalCardsCount = 108
+    self.totalCardsCount = self:getTotalCountByConfig(data.Config)
     base.ctor(self, data, playback)
+end
+
+-------------------------------------------------------------------------------
+-- 通过配置获取麻将总数
+-------------------------------------------------------------------------------
+function mahjongGame:getTotalCountByConfig(config)
+    if config.FangShu == 2 then
+        return 72
+    end
+
+    return 108
 end
 
 -------------------------------------------------------------------------------

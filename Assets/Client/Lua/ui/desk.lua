@@ -8,6 +8,8 @@ local base = require("ui.common.view")
 local desk = class("desk", base)
 
 function desk:onInit()
+    self.voiceDownPos = Vector2.zero
+
     if self.game.mode == gameMode.normal then
         self.mInvite:show()
         self.mReady:show()
@@ -277,6 +279,10 @@ function desk:onVoiceDownClickedHandler(sender, pos)
 end
 
 function desk:onVoiceMoveClickedHandler(sender, pos)
+    if self.voiceDownPos == nil then
+        self.voiceDownPos = pos
+    end
+
     if pos.y - self.voiceDownPos.y > 150 then
         self.mVoiceTipsOk:hide()
         self.mVoiceTipsCancel:show()
@@ -287,13 +293,19 @@ function desk:onVoiceMoveClickedHandler(sender, pos)
 end
 
 function desk:onVoiceUpClickedHandler(sender, pos)
+    self.mVoiceTips:hide()
+
+    if self.voiceDownPos == nil then
+        gvoiceManager.stopRecord(true)
+        return
+    end
+
     if pos.y - self.voiceDownPos.y > 150 then
         gvoiceManager.stopRecord(true)
     else 
         gvoiceManager.stopRecord(false)
     end
 
-    self.mVoiceTips:hide()
     self.voiceDownPos = Vector2.zero
 end
 

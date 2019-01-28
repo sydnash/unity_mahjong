@@ -18,7 +18,7 @@ end
 
 function huPaiHintOne:setMahjong(id)
     local spriteName = mahjongType.getMahjongTypeById(id).name
-    log("prite name : " .. spriteName)
+--    log("sprite name : " .. spriteName)
     self.mMahjong:setSprite(spriteName)
 end
 

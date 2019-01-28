@@ -104,8 +104,17 @@ public class BundlePool
         if (mBundles.ContainsKey(bundleName))
         {
             Bundle bundle = mBundles[bundleName];
+#if UNITY_EDITOR
+            if (bundle.refCount - 1 == 0)
+            {
+                Debug.LogWarning("BundlePool.UnloadByName, name = " + bundle.bundle.name + ", ref = " + bundle.refCount.ToString());
+            }
+            else if (bundle.refCount - 1 < 0)
+            {
+                Debug.LogError("BundlePool.UnloadByName, name = " + bundle.bundle.name + ", ref = " + bundle.refCount.ToString());
+            }
+#endif
             bundle.refCount = Mathf.Max(0, bundle.refCount - 1);
-            //Debug.Log("BundlePool.UnloadByName, name = " + bundle.bundle.name + ", ref = " + bundle.refCount.ToString());
 
             if (bundle.refCount == 0)
             {
