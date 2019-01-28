@@ -102,6 +102,7 @@ local mahjongLayoutBase = {
         title = string.empty, 
         items = { 
             [1] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
+            [2] = {style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, }
         }, 
         group = { value = false, switchOff = false },
     },
@@ -117,7 +118,6 @@ local mahjongLayoutBase = {
 
 local chengduMahjongLayout      = table.clone(mahjongLayoutBase)
 local jintangMahjongLayout      = table.clone(mahjongLayoutBase)
-jintangMahjongLayout[12].items[2] = {style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, }
 local xichongMahjongLayout      = table.clone(mahjongLayoutBase)
 local yingjingMahjongLayout     = table.clone(mahjongLayoutBase)
 local nanchongMahjongLayout     = table.clone(mahjongLayoutBase)
@@ -232,11 +232,11 @@ local mahjongConfigBase = {
     ["CanPingHu"]      = 1,
     ["JiaXinWu"]       = 2,
     ["DuiDuiHu2"]      = 2,
+    ["DaXiaoYu"]       = 2,
 }
 
 local chengduMahjongConfig      = table.clone(mahjongConfigBase)
 local jintangMahjongConfig      = table.clone(mahjongConfigBase)
-jintangMahjongConfig["DaXiaoYu"] = 2
 local xichongMahjongConfig      = table.clone(mahjongConfigBase)
 local yingjingMahjongConfig     = table.clone(mahjongConfigBase)
 local nanchongMahjongConfig     = table.clone(mahjongConfigBase)
@@ -314,11 +314,11 @@ local mahjongShiftConfigBase = {
     ["CanPingHu"]       = { [true] = 1, [false] = 2 },
     ["DuiDuiHu2"]       = { [true] = 1, [false] = 2 },
     ["JiaXinWu"]        = { [true] = 1, [false] = 2 },
+    ["DaXiaoYu"]        = { [true] = 1, [false] = 2 },
 }
 
 local chengduMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
 local jintangMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
-jintangMahjongShiftConfig.DaXiaoYu = {[true] = 1, [false] = 2}
 local xichongMahjongShiftConfig     = table.clone(mahjongShiftConfigBase)
 local yingjingMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)
 local nanchongMahjongShiftConfig    = table.clone(mahjongShiftConfigBase)
