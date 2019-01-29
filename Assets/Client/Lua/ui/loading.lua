@@ -16,9 +16,6 @@ end
 
 function loading:setProgress(value)
     self.mProgress:setFillAmount(value)
-    
-    local x = self.mProgress:getWidth() * value
-    self.mDot:setAnchoredPosition(Vector3.New(x, 0, 0))
 end
 
 function loading:setText(text)
