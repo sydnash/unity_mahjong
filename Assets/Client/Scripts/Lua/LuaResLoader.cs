@@ -32,7 +32,34 @@ public class LuaResLoader : LuaFileUtils
     {
         instance = this;
         beZip = false;
+
+#if UNITY_EDITOR
+        InitLuaFullNames();
+#endif
     }
+
+#if UNITY_EDITOR
+    protected override void InitLuaFullNames()
+    {
+        string[] a = Directory.GetFiles(Path.Combine(Application.dataPath, "Client/Lua"), "*.lua", SearchOption.AllDirectories);
+        foreach (string f in a)
+        {
+            luaFullNames.Add(f.Replace("\\", "/"));
+        }
+
+        string[] b = Directory.GetFiles(Path.Combine(Application.dataPath, "ToluaFramework/Lua"), "*.lua", SearchOption.AllDirectories);
+        foreach (string f in b)
+        {
+            luaFullNames.Add(f.Replace("\\", "/"));
+        }
+
+        string[] c = Directory.GetFiles(Path.Combine(Application.dataPath, "ToluaFramework/ToLua"), "*.lua", SearchOption.AllDirectories);
+        foreach (string f in c)
+        {
+            luaFullNames.Add(f.Replace("\\", "/"));
+        }
+    }
+#endif
 
     public override byte[] ReadFile(string fileName)
     {

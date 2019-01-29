@@ -53,7 +53,7 @@ end
 
 function deskHeader:onIconClickedHandler()
     playButtonClickSound()
-    local ui = require("ui.playerinfo").new(self.player, true)
+    local ui = require("ui.playerInfo").new(self.player, true)
     ui:show()
 end
 

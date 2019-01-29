@@ -51,7 +51,7 @@ locationManager = require("logic.manager.locationManager")
 talkingData     = require("platform.talkingData")
 
 local waiting       = require("ui.waiting")
-local messagebox    = require("ui.messagebox")
+local messagebox    = require("ui.messageBox")
 local mahjongType   = require("logic.mahjong.mahjongType")
 local doushisiType  = require("logic.doushisi.doushisiType")
 
