@@ -209,7 +209,7 @@ function friendsterStatistics:refreshHistory()
         self.mHistoryList:show()
 
         local createItem = function()
-            return require("ui.friendster.FriendsterStatisticsHistoryItem").new()
+            return require("ui.friendster.friendsterStatisticsHistoryItem").new()
         end
 
         local refreshItem = function(item, index)
@@ -245,7 +245,7 @@ function friendsterStatistics:refreshRank()
         self.mRankList:show()
 
         local createItem = function()
-            return require("ui.friendster.FriendsterStatisticsRankItem").new()
+            return require("ui.friendster.friendsterStatisticsRankItem").new()
         end
 
         local refreshItem = function(item, index)
