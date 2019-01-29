@@ -116,7 +116,7 @@ function gameEnd:onSharePanelClickedHandler()
 end
 
 function gameEnd:onRecordClickedHandler()
-    local ui = require ("ui.GameEnd.ScoreDetail").new(self.datas.scoreChanges)
+    local ui = require ("ui.gameEnd.scoreDetail").new(self.datas.scoreChanges)
     ui:show()
 
     playButtonClickSound()
