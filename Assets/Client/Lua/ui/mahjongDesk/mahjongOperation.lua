@@ -2548,6 +2548,9 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
 end
 
 function mahjongOperation:showHuPaiHintInfo(info)
+    if not self.canChuPai then
+        return
+    end
     self:hideHuPaiHint()
     if not info then
         return
