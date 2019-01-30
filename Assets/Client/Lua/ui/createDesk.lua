@@ -312,7 +312,7 @@ function createDesk:onCreateClickedHandler()
     showWaitingUI("正在创建房间，请稍候...")
     
     local eventName = "createdesk_" .. tostring(self.cityType) .. "_" .. tostring(self.gameType)
-    talkingData.event(eventName, choose)
+    talkingData.event(eventName, choose, true)
 
     networkManager.createDesk(self.cityType, choose, friendsterId, function(msg)
         closeWaitingUI()

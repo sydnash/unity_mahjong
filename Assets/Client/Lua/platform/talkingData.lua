@@ -64,14 +64,18 @@ function talkingData.onPurchase(item, itemNumber, itemPrice)
     end
 end
 
-function talkingData.event(eventId, args)
+function talkingData.event(eventId, args, vstring)
     if not hasTalkingDataSDK then
         return
     end
     if deviceConfig.isMobile then
         local dic = Utils.CreateDictionarySO()
         for k, v in pairs(args) do
-            Utils.AddDictionarySO(dic, tostring(k), v)
+            if vstring then
+                Utils.AddDictionarySO(dic, tostring(k), tostring(v))
+            else
+                Utils.AddDictionarySO(dic, tostring(k), v)
+            end
         end
         log("talkingData.event, eventId = " .. eventId)
         TalkingDataGA.OnEvent(eventId, dic)
