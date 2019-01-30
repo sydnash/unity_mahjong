@@ -14,6 +14,7 @@ talkingData.eventType = {
     chat                    = "chat",
     clicklocation           = "clicklocation",
     errmsg                  = "errmsg",
+    createdesk              = "createdesk",
 }
 
 function talkingData.start()
