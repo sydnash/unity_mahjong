@@ -507,10 +507,12 @@ function networkManager.checkRefreshToken(token, cb)
     getTextWithHttp(refreshUrl, function(text)
         if string.isNilOrEmpty(text) then
             cb(false)
+            return
         end
         local p = table.fromjson(text)
         if not json.isNilOrNull(p.errcode) then
             cb(false)
+            return
         end
         cb(true)
     end)

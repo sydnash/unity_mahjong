@@ -60,8 +60,8 @@ local mahjongLayoutBase = {
     [7] = {
         title = string.empty,
         items = {
-            [1] = { style = "radiobox", text = "1番起胡",key = "CanPingHu",  value = 1, },
-            [2] = { style = "radiobox", text = "2番起胡",key = "CanPingHu",  value = 2, },
+            [1] = { style = "radiobox", text = "可平胡",key = "CanPingHu",  value = 1, },
+            [2] = { style = "radiobox", text = "点炮不可平胡",key = "CanPingHu",  value = 2, },
         },
         group = { value = true, switchOff = false },
     },
