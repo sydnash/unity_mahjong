@@ -793,9 +793,7 @@ function mahjongOperation:onMoPai(acId, cards)
         self.mo:setShadowMode(mahjong.shadowMode.noshadow)
         self.mo:show()
 
-        if self.curSelectedMahjong ~= nil then
-            self.curSelectedMahjong:setSelected(false)
-        end
+        self:clearChosedMahjong()
     end
 
     if acId == self.game.mainAcId then
