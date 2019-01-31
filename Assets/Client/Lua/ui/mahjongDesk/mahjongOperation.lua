@@ -915,7 +915,7 @@ function mahjongOperation:onClickOnMahjong(mj)
         self.curSelectedMahjong = mj
         self.curSelectedMahjong:setSelected(true)
         local huPaiHintInfo = self:getHuPaiHintInfo(mj.id)
-        self:showHuPaiHintInfo(huPaiHintInfo)
+        self:showHuPaiHintInfo(huPaiHintInfo, true)
         soundManager.playGfx("mahjong", "chose")
     else
         if self.curSelectedMahjong.id ~= mj.id then
@@ -923,7 +923,7 @@ function mahjongOperation:onClickOnMahjong(mj)
             self.curSelectedMahjong = mj
             self.curSelectedMahjong:setSelected(true)
             local huPaiHintInfo = self:getHuPaiHintInfo(mj.id)
-            self:showHuPaiHintInfo(huPaiHintInfo)
+            self:showHuPaiHintInfo(huPaiHintInfo, true)
             soundManager.playGfx("mahjong", "chose")
         else
             --出牌
@@ -2547,8 +2547,8 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
     self.animationManager:add(animation)
 end
 
-function mahjongOperation:showHuPaiHintInfo(info)
-    if not self.canChuPai then
+function mahjongOperation:showHuPaiHintInfo(info, fromClickCard)
+    if fromClickCard and not self.canChuPai then
         return
     end
     self:hideHuPaiHint()

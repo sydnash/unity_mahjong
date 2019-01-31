@@ -195,23 +195,18 @@ public class BuildManager : EditorWindow
                         return;
                     }
 
+                    PlayerSettings.bundleVersion = mVersionDic[numk];
                     string packageName = string.Empty;
 
                     switch (mTargetPlatform)
                     {
                         case BuildTarget.Android:
-                            //if (!mDebug)
-                            //{
-                            //    PlayerSettings.Android.bundleVersionCode++;
-                            //}
-
                             string debug = mDebug ? "_debug" : "_release";
                             string dev = mDevelopment ? "_dev" : "";
 
                             string prefix = System.DateTime.Now.ToString("yyMMddHHmm");
-                            packageName = prefix + "_mahjong_" + mVersionDic[numk] + "_" + PlayerSettings.Android.bundleVersionCode.ToString() + debug + dev + ".apk";
+                            packageName = prefix + "_mahjong_" + mVersionDic[numk] + debug + dev + ".apk";
                             
-                            PlayerSettings.bundleVersion = mVersionDic[numk];
                             PlayerSettings.Android.keystoreName = Application.dataPath + "/Keystore/mahjong.keystore";
                             PlayerSettings.Android.keystorePass = "com.bshy.mahjong";
                             PlayerSettings.Android.keyaliasName = "mahjong";
@@ -220,13 +215,6 @@ public class BuildManager : EditorWindow
                             break;
                         case BuildTarget.iOS:
                             packageName = "mahjong_" + (mDevelopment ? "debug" : "release");
-
-                            //if (!mDebug)
-                            //{
-                            //    string buildNumber = PlayerSettings.iOS.buildNumber;
-                            //    PlayerSettings.iOS.buildNumber = (int.Parse(buildNumber) + 1).ToString();
-                            //}
-
                             break;
                         default:
                             packageName = "mahjong_" + (mDevelopment ? "debug" : "release") + ".exe";
