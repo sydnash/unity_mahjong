@@ -498,7 +498,7 @@ function doushisiGame:faPai(msg)
         for _, v in pairs(msg.Seats) do
             local player = self:getPlayerByAcId(v.AcId)
             player[doushisiGame.cardType.shou] = v.Cards
-            player.fushu = v.FuShu
+            player.fuShu = v.FuShu
 
             for _, _ in pairs(v.Cards) do
                 self.leftCardsCount = self.leftCardsCount - 1
@@ -679,7 +679,7 @@ function doushisiGame:clearPlayerGameStatus()
         p.isBao = false
         p.isZhuang = false
         p.isXiao = false
-        p.fushu = 0
+        p.fuShu = 0
         p.zhangShu = 0
     end
 end
