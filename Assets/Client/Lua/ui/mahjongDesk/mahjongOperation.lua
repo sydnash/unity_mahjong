@@ -398,7 +398,7 @@ function mahjongOperation:onGameStart()
 
     eventManager.registerAnimationTrigger("table_plane_down", function()
         for i=1, self.game:getTotalCardsCount() do
-            local m = self.idleMahjongs[i]
+            local m = self.mahjongs[i]
             m:show()
         end
     end)
