@@ -242,7 +242,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 2
   androidSplashScreen: {fileID: 2800000, guid: d753ec840b0dd414799b376ec8317088, type: 3}
-  AndroidKeystoreName: E:/Works/tdqp_android/Assets/Keystore/mahjong.keystore
+  AndroidKeystoreName: D:/Works/CompanyProjects/tdqp_android/Assets/Keystore/mahjong.keystore
   AndroidKeyaliasName: mahjong
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
