@@ -13,10 +13,15 @@ local function isApple()
     return Application.platform == RuntimePlatform.IPhonePlayer
 end
 
+local function isMacOSX()
+    return Application.platform == RuntimePlatform.OSXEditor
+end
+
 return {
     isAndroid = isAndroid(),
     isApple   = isApple(),
     isMobile  = isAndroid() or isApple(),
+    isMacOSX  = isMacOSX(),
     deviceId  = "sy1",
 }
 

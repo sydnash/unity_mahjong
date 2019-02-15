@@ -16,9 +16,10 @@ if pverTxt ~= nil and pverTxt ~= "" then
     if cverTxt ~= nil and cverTxt ~= "" then
         local cverLua = loadstring(cverTxt)()
         local cverArr = Utils.SplitString(cverLua.num, separator)
-
-        if pverArr[1] ~= cverArr[1] then
-            LFS.RemoveDir(LFS.PATCH_PATH)
+        if pverArr.Length > 1 and cverArr.Length > 1 then
+            if pverArr[1] ~= cverArr[1] then
+                LFS.RemoveDir(LFS.PATCH_PATH)
+            end
         end
     end
 end
