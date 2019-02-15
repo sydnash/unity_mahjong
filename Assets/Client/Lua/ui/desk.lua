@@ -360,6 +360,15 @@ function desk:onGameSync()
     self:updateCurrentGameIndex()
 end
 
+function desk:syncPlayerInfo()
+    for _, v in pairs(self.game.players) do 
+        local st = self.game:getSeatTypeByAcId(v.acId)
+        local hd = self.headers[st]
+
+        hd:setPlayerInfo(v)
+    end
+end
+
 function desk:reset()
     if self.game.mode == gameMode.normal then
         self.mInvite:show()
@@ -369,6 +378,7 @@ function desk:reset()
         self.mReady:hide()
     end
     self.mCancel:hide()
+    self:refreshInvitationButtonState()
 
     for _, v in pairs(self.headers) do
         v:reset()

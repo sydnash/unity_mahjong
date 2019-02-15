@@ -21,7 +21,6 @@ local networkConfig = require("config.networkConfig")
 local timeout = networkConfig.gvoiceTimeout * 1000
 
 function gvoiceManager.setup(userId)
-    log("deviceconfig.ismacosx: = " .. tostring(deviceConfig.isMacOSX))
     if deviceConfig.isMacOSX then
     else
         if GVoiceEngine.instance:Setup(userId) then

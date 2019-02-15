@@ -385,6 +385,7 @@ end
 -- 游戏开始
 -------------------------------------------------------------------------------
 function mahjongOperation:onGameStart()
+    self:clearChosedMahjong()
     self:rotatePlanes()
 
     self.countdownTick = -1
@@ -421,6 +422,7 @@ end
 -- 游戏同步
 -------------------------------------------------------------------------------
 function mahjongOperation:onGameSync()
+    self:clearChosedMahjong()
     local reenter = self.game.data.Reenter
 
     self.hnzCount = reenter.HSZCnt
@@ -460,6 +462,7 @@ function mahjongOperation:onGameSync()
 
     local chu = nil
 
+    self.chupaiPtr:hide()
     for acId, u in pairs(self.chuMahjongs) do
         for _, v in pairs(u) do
             if v.id == reenter.CurDiPai then
@@ -1112,6 +1115,7 @@ function mahjongOperation:onChosedChuPai()
         self:relocateInhandMahjongs(self.game.mainAcId)
     end)
 
+    self:clearChosedMahjong()
     self:virtureChu(self.selectedMahjong)
 
     soundManager.playGfx("mahjong", "chupai")
@@ -1344,7 +1348,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
         self:putMahjongToChu(acId, self.mo)
         chu = self.mo
         if self.virtureChuMahjong and self.virtureChuMahjong.id ~= cards[1] then
-            self:relocateInhandMahjongs()
+            self:relocateInhandMahjongs(acId)
         end
     else
         if acId == self.game.mainAcId and self.mo ~= nil then
@@ -1393,6 +1397,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
         self:hideChuPaiArrow()
     end
 
+    self:relocateInhandMahjongs(acId)
     self:showChuPaiHint(acId, cards[1])
     self.virtureChuMahjong = nil
     self.mDQTips:hide()
@@ -1402,6 +1407,7 @@ end
 -- 碰
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
+    self:clearChosedMahjong()
     self:hideChuPaiHint()
     local beAcId = beAcId[1]
 
@@ -1435,6 +1441,7 @@ end
 -- 杠
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
+    self:clearChosedMahjong()
     self:hideChuPaiHint()
     self:hideChuPaiArrow()
     self:endChuPai()
@@ -1758,6 +1765,7 @@ function mahjongOperation:decreaseInhandMahjongs(acId, datas)
     local mahjongs = self.inhandMahjongs[acId]
     
     if acId == self.game.mainAcId then
+        self:clearChosedMahjong()
         for _, id in pairs(datas) do
             for k, v in pairs(mahjongs) do
                 if v.id == id then

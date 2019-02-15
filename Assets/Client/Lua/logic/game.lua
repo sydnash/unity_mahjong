@@ -92,6 +92,7 @@ function game:startLoop()
             self.deskUI:onGameSync()
             self.operationUI:onGameSync()
         else
+            self.deskUI:syncPlayerInfo()
             for _, player in pairs(self.players) do
                 self.deskUI:setReady(player.acId, player.ready)
                 self.deskUI:setScore(player.acId, player.score)
