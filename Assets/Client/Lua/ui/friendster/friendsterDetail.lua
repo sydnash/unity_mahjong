@@ -140,6 +140,12 @@ function friendsterDetail:onCreateClickedHandler()
 end
 
 function friendsterDetail:onReturnClickedHandler()
+    if gamepref.player.currentDesk == nil then
+        self.mCreate:show()
+        self.mReturn:hide()
+        return
+    end
+
     local cityType = gamepref.player.currentDesk.cityType
     local deskId = gamepref.player.currentDesk.deskId
     
