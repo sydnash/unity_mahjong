@@ -92,7 +92,7 @@ function headerManager.request(token, url)
         headerManager.downloadedHeaders[token] = { icon = icon, ref = 1 }
         signalManager.signal(token, icon)
     else
-        if header.icon.name ~= DEFAULT_HEADER_RES then
+        if string.lower(header.icon.name) ~= DEFAULT_HEADER_RES then
             header.ref = header.ref + 1
         end
         signalManager.signal(token, header.icon)
@@ -102,7 +102,7 @@ function headerManager.request(token, url)
     local function callback(icon)
         if icon ~= nil then
             local h = headerManager.downloadedHeaders[token]
-            if h ~= nil and h.icon.name ~= DEFAULT_HEADER_RES then
+            if h ~= nil and string.lower(h.icon.name) ~= DEFAULT_HEADER_RES then
                 h.ref = h.ref + 1
                 icon = h.icon
             else
@@ -130,7 +130,7 @@ end
 function headerManager.drop(token)
     if not string.isNilOrEmpty(token) then
         local header = headerManager.downloadedHeaders[token]
-        if header ~= nil and header.icon.name ~= DEFAULT_HEADER_RES then
+        if header ~= nil and string.lower(header.icon.name) ~= DEFAULT_HEADER_RES then
             header.ref = math.max(0, header.ref - 1)
         
             if header.ref == 0 then
