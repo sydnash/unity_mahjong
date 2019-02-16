@@ -41,7 +41,6 @@ local function downloadDefaultIcon()
 end
 
 local function downloadOfflineIcon(path, callback)
-    log(path)
     local bytes = LFS.ReadBytes(path)
     local icon = Utils.BytesToTexture2D(640, 640, bytes)
 

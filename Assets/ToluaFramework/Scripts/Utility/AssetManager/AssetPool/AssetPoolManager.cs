@@ -128,7 +128,7 @@ public class AssetPoolManager
     /// </summary>
     public void Update()
     {
-        //if (Time.realtimeSinceStartup - mTimestamp >= 60)//一分钟执行一次
+        if (Time.realtimeSinceStartup - mTimestamp >= 60)//一分钟执行一次
         {
             foreach (KeyValuePair<string, AssetPool> kvp in mPools)
             {

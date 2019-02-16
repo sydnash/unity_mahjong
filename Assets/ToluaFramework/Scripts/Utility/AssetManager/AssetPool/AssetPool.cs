@@ -42,7 +42,7 @@ public class AssetPool
     /// </summary>
     /// <param name="root"></param>
     /// /// <param name="loader"></param>
-    public AssetPool(AssetLoader loader, bool reference, float aliveTime = 0 * 60)
+    public AssetPool(AssetLoader loader, bool reference, float aliveTime = 5 * 60)
     {
         mLoader    = loader;
         mReference = reference;

@@ -70,7 +70,10 @@ public class ReferenceObjectQueue : ObjectQueue
 
         if (Time.realtimeSinceStartup - mReferenceSlot.timestamp >= time)
         {
+#if SIMULATE_RUNTIME_ENVIRONMENT || !UNITY_EDITOR
             loader.UnloadDependentAB(mKey);
+            loader.UnloadAB(mKey);
+#endif
             mReferenceSlot = null;
         }
     }
