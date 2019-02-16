@@ -76,8 +76,10 @@ public class InstanceObjectQueue : ObjectQueue
 
         foreach(Slot s in unused)
         {
+#if SIMULATE_RUNTIME_ENVIRONMENT || !UNITY_EDITOR
             loader.UnloadDependentAB(mKey);
             loader.UnloadAB(mKey);
+#endif
             
             GameObject.Destroy(s.asset);
         }

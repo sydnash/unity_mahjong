@@ -41,6 +41,7 @@ local function downloadDefaultIcon()
 end
 
 local function downloadOfflineIcon(path, callback)
+    log(path)
     local bytes = LFS.ReadBytes(path)
     local icon = Utils.BytesToTexture2D(640, 640, bytes)
 
@@ -84,7 +85,7 @@ function headerManager.request(token, url)
         signalManager.signal(token, icon)
         return
     end
-
+    
     local header = headerManager.downloadedHeaders[token]
     if header == nil then
         local icon = downloadDefaultIcon()
@@ -113,7 +114,7 @@ function headerManager.request(token, url)
     end
 
     local path = LFS.CombinePath(rootPath, token .. ".jpg")
-
+    
     if downloaded(path) then
         downloadOfflineIcon(path, callback)
     else

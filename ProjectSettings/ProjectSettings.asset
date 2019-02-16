@@ -126,7 +126,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.3.5
+  bundleVersion: 1.1.12
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -242,7 +242,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 2
   androidSplashScreen: {fileID: 2800000, guid: d753ec840b0dd414799b376ec8317088, type: 3}
-  AndroidKeystoreName: D:/Works/CompanyProjects/tdqp_android/Assets/Keystore/mahjong.keystore
+  AndroidKeystoreName: E:/Works/tdqp_android/Assets/Keystore/mahjong.keystore
   AndroidKeyaliasName: mahjong
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
@@ -713,7 +713,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     1: DEBUG_WITH_EXTRA_FILES
     4: 
-    7: SIMULATE_RUNTIME_ENVIRONMENT
+    7: 
   platformArchitecture: {}
   scriptingBackend:
     Android: 0

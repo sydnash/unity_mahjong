@@ -204,7 +204,6 @@ function showWaitingUI(text)
         waiting_ui:setText(text)
         waiting_ui:setAsLastSibling()
     end
-    log("===============================      showWaitingUI"    .. tostring(waiting_ui))
     waiting_ui:show()
 end
 
@@ -213,7 +212,6 @@ end
 -------------------------------------------------------------
 function closeWaitingUI()
     if waiting_ui~= nil then
-        log("===============================      closeWaitingUI    "    .. tostring(waiting_ui))
         waiting_ui:close()
         waiting_ui = nil
     end
