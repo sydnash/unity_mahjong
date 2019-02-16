@@ -106,5 +106,18 @@ public class AssetLoader
         BundleManager.instance.Unload(ab);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="asset"></param>
+    public void UnloadAB(string key)
+    {
+        if (!key.StartsWith(mPath))
+        {
+            key = LFS.CombinePath(mPath, key);
+        }
+        BundleManager.instance.Unload(key);
+    }
+
     #endregion
 }

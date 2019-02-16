@@ -49,7 +49,7 @@ public class InstanceObjectQueue : ObjectQueue
     public override void DestroyUnused(float time, AssetLoader loader)
     {
         if (isEmpty) return;
-
+        
         List<Slot> used = new List<Slot>();
         List<Slot> unused = new List<Slot>();
 
@@ -61,12 +61,10 @@ public class InstanceObjectQueue : ObjectQueue
 
             if (Time.realtimeSinceStartup - s.timestamp >= time)
             {
-                Debug.LogWarning("DestroyUnused, unused name = " + s.asset.name);
                 unused.Add(s);
             }
             else
             {
-                Debug.LogWarning("DestroyUnused, used name = " + s.asset.name);
                 used.Add(s);
             }
         }
@@ -76,11 +74,11 @@ public class InstanceObjectQueue : ObjectQueue
             mQueue.Enqueue(s);
         }
 
-        Debug.LogWarningFormat("DestroyUnused, {0} + {1} = {2}", mQueue.Count, unused.Count, c);
-
         foreach(Slot s in unused)
         {
             loader.UnloadDependentAB(mKey);
+            loader.UnloadAB(mKey);
+            
             GameObject.Destroy(s.asset);
         }
     }
