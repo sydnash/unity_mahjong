@@ -9,7 +9,6 @@ public class AssetPoolManagerWrap
 		L.BeginClass(typeof(AssetPoolManager), typeof(System.Object));
 		L.RegFunction("Setup", Setup);
 		L.RegFunction("AddPool", AddPool);
-		L.RegFunction("Preload", Preload);
 		L.RegFunction("Alloc", Alloc);
 		L.RegFunction("Dealloc", Dealloc);
 		L.RegFunction("Update", Update);
@@ -48,25 +47,6 @@ public class AssetPoolManagerWrap
 			AssetPool o = obj.AddPool(arg0, arg1, arg2);
 			ToLua.PushObject(L, o);
 			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Preload(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 4);
-			AssetPoolManager obj = (AssetPoolManager)ToLua.CheckObject<AssetPoolManager>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			string arg2 = ToLua.CheckString(L, 4);
-			obj.Preload(arg0, arg1, arg2);
-			return 0;
 		}
 		catch (Exception e)
 		{

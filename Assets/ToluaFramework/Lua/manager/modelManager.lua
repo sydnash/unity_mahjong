@@ -9,21 +9,14 @@ assetType = "model"
 -- 全局初始化
 -------------------------------------------------------------------
 function modelManager.setup()
-    AssetPoolManager.instance:AddPool(assetType, "Model", false)
-end
-
--------------------------------------------------------------------
--- 获取预加载token
--------------------------------------------------------------------
-function modelManager.preload()
-    return preloadManager.createToken(assetType)
+    AssetPoolManager.instance:AddPool(assetType, "model", false)
 end
 
 -------------------------------------------------------------------
 -- 加载资源
 -------------------------------------------------------------------
 function modelManager.load(assetPath, assetName)
-    return AssetPoolManager.instance:Alloc(assetType, assetPath, assetName)
+    return AssetPoolManager.instance:Alloc(assetType, string.lower(assetPath), string.lower(assetName))
 end
 
 -------------------------------------------------------------------

@@ -32,6 +32,11 @@ public abstract class ObjectQueue
     /// <summary>
     /// 
     /// </summary>
+    protected string mKey = string.Empty;
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="obj"></param>
     public abstract void Push(Object obj, float time);
 
@@ -45,6 +50,14 @@ public abstract class ObjectQueue
     /// 
     /// </summary>
     public abstract void DestroyUnused(float time, AssetLoader loader);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public string key
+    {
+        get { return mKey; }
+    }
 
     /// <summary>
     /// 

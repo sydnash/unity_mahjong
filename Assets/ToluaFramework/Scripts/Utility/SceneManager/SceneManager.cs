@@ -87,7 +87,7 @@ public class SceneManager : MonoBehaviour
     /// <param name="scenePath"></param>
     public void Setup(string scenePath)
     {
-        mScenePath = scenePath.ToLower();
+        mScenePath = scenePath;
         mLoader = new AssetLoader(mScenePath);
     }
 
@@ -97,18 +97,10 @@ public class SceneManager : MonoBehaviour
     /// <param name="sceneName"></param>
     public void Load(string sceneName, Action<bool, float> callback)
     {
-        if (!string.IsNullOrEmpty(mSceneName))
-        {
-            string key = AssetLoader.CreateAssetKey(string.Empty, mSceneName);
-            mLoader.UnloadDependentAB(key);
-        }
-
-        mSceneName = sceneName.ToLower();
-
-        SceneBundle[] sceneBundles = null;
+        sceneName = sceneName;
 
 #if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
-        sceneName = LFS.CombinePath(mScenePath, mSceneName + ".unity");
+        mSceneName = LFS.CombinePath(mScenePath, sceneName + ".unity");
 
         foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
         {
@@ -119,21 +111,15 @@ public class SceneManager : MonoBehaviour
             }
         }
 #else
-        sceneBundles = new SceneBundle[2]{ new SceneBundle(LFS.CombinePath(mScenePath, mSceneName), true),
-                                           new SceneBundle(LFS.CombinePath(mScenePath, mSceneName), false)
-        };
+        if (!string.IsNullOrEmpty(mSceneName))
+        {
+            mLoader.UnloadDependentAB(mSceneName);
+        }
+
+        mSceneName = LFS.CombinePath(mScenePath, sceneName);
 #endif
 
-        StartCoroutine(LoadCoroutine(sceneBundles, mSceneName, callback));
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public string GetActivedSceneName()
-    {
-        return UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.ToLower();
+        StartCoroutine(LoadCoroutine(sceneName, callback));
     }
 
     #endregion
@@ -156,7 +142,7 @@ public class SceneManager : MonoBehaviour
     /// <param name="checkExists"></param>
     /// <param name="callback"></param>
     /// <returns></returns>
-    private IEnumerator LoadCoroutine(SceneBundle[] bundleInfos, string sceneName, Action<bool, float> callback)
+    private IEnumerator LoadCoroutine(string sceneName, Action<bool, float> callback)
     {
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
         string key = mLoader.LoadDependentAB(string.Empty, sceneName);
@@ -164,17 +150,8 @@ public class SceneManager : MonoBehaviour
         InvokeCallback(callback, false, 0.2f);
         yield return WAIT_FOR_END_OF_FRAME;
         
-        AssetBundle ab = null;
-        foreach (SceneBundle sb in bundleInfos)
-        {
-            if (!sb.checkExists || System.IO.File.Exists(sb.bundleName))
-            {
-                ab = mLoader.LoadAB(sb.bundleName);
-                if (ab != null) break;
-            }
-        }
+        AssetBundle ab = mLoader.LoadAB(mSceneName);
 #endif
-
         InvokeCallback(callback, false, 0.4f);
         yield return WAIT_FOR_END_OF_FRAME;
 
@@ -189,9 +166,6 @@ public class SceneManager : MonoBehaviour
                 yield return WAIT_FOR_END_OF_FRAME;
             }
 #if !UNITY_EDITOR || SIMULATE_RUNTIME_ENVIRONMENT
-            //TODO: xieheng  这里scene使用完毕之后，直接清除依赖和bundle，避免后面的重复加载导致失败
-            mLoader.UnloadAB(ab);
-            mLoader.UnloadDependentAB(key);
         }
         else
         {

@@ -31,7 +31,6 @@ tweenManager        = require("manager.tweenManager")
 modelManager        = require("manager.modelManager")
 textureManager      = require("manager.textureManager")
 animationManager    = require("manager.animationManager")
-preloadManager      = require("manager.preloadManager")
 signalManager       = require("manager.signalManager")
 
 require("const.typeDef")
@@ -205,7 +204,7 @@ function showWaitingUI(text)
         waiting_ui:setText(text)
         waiting_ui:setAsLastSibling()
     end
-
+    log("===============================      showWaitingUI"    .. tostring(waiting_ui))
     waiting_ui:show()
 end
 
@@ -214,6 +213,7 @@ end
 -------------------------------------------------------------
 function closeWaitingUI()
     if waiting_ui~= nil then
+        log("===============================      closeWaitingUI    "    .. tostring(waiting_ui))
         waiting_ui:close()
         waiting_ui = nil
     end
@@ -649,30 +649,22 @@ function loginServer(callback, func)
             platformHelper.clearSGInviteParam()
         end
 
-        local loading = require("ui.loading").new()
-        loading:setText("正在努力联系服务器，请稍候")
-        loading:show()
-
         sceneManager.load("mahjongscene", function(completed, progress)
-            loading:setProgress(progress)
-
             if completed then
                 if cityType == 0 and deskId == 0 then
                     local lobby = require("ui.lobby").new()
                     lobby:show()
-
+                    
                     callback(true)
-                    loading:close()
                 else -- 如有在房间内则跳过大厅直接进入房间
-                    loading:setText("正在进入房间，请稍候")
                     enterDesk(cityType, deskId, function(ok, func)
                         local lobby = require("ui.lobby").new()
                         lobby:show()
                         if func then
                             func()
                         end
+                        
                         callback(true)
-                        loading:close()
                     end, true)
                 end
             end

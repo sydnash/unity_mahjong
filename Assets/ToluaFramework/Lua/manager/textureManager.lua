@@ -9,14 +9,14 @@ local assetType = "texture"
 --
 -------------------------------------------------------------------
 function textureManager.setup()
-    AssetPoolManager.instance:AddPool(assetType, "Texture", true)
+    AssetPoolManager.instance:AddPool(assetType, "texture", true)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function textureManager.load(assetPath, assetName)  
-    return AssetPoolManager.instance:Alloc(assetType, assetPath, assetName)
+    return AssetPoolManager.instance:Alloc(assetType, string.lower(assetPath), string.lower(assetName))
 end
 
 -------------------------------------------------------------------

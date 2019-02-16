@@ -8,21 +8,14 @@ local sceneManager = {}
 --
 -------------------------------------------------------------------
 function sceneManager.setup()
-    SceneManager.instance:Setup("Scene")
+    SceneManager.instance:Setup("scene")
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function sceneManager.load(sceneName, completedCallback)
-    SceneManager.instance:Load(sceneName, completedCallback)
-end
-
--------------------------------------------------------------------
---
--------------------------------------------------------------------
-function sceneManager.getActivedSceneName()
-    return SceneManager.instance:GetActivedSceneName()
+    SceneManager.instance:Load(string.lower(sceneName), completedCallback)
 end
 
 -------------------------------------------------------------------

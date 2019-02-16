@@ -4,13 +4,13 @@
 
 local patchViewManager = {}
 local assetType = "patchview"
-local assetPath = "PatchUI"
+local assetPath = "patchui"
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function patchViewManager.setup()
-    AssetPoolManager.instance:AddPool(assetType, "UI", false)
+    AssetPoolManager.instance:AddPool(assetType, "ui", false)
     patchViewManager.root = UnityEngine.GameObject.Find("UIRoot/Canvas/Low")
 end
 
@@ -18,7 +18,7 @@ end
 --
 -------------------------------------------------------------------
 function patchViewManager.load(assetName)
-    return AssetPoolManager.instance:Alloc(assetType, assetPath, assetName)
+    return AssetPoolManager.instance:Alloc(assetType, assetPath, string.lower(assetName))
 end
 
 -------------------------------------------------------------------
