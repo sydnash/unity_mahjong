@@ -21,12 +21,17 @@ public class AssetPool
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, ObjectQueue> mQueueDic = new Dictionary<string, ObjectQueue>();
+    private Dictionary<string, ObjectQueue> mQueueDict = new Dictionary<string, ObjectQueue>();
 
     /// <summary>
     /// 
     /// </summary>
-    private float mAliveTime = 2 * 60;
+    private Dictionary<int, string> mIIDDict = new Dictionary<int, string>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private float mAliveTime = int.MaxValue;
 
     #endregion
 
@@ -37,7 +42,7 @@ public class AssetPool
     /// </summary>
     /// <param name="root"></param>
     /// /// <param name="loader"></param>
-    public AssetPool(AssetLoader loader, bool reference, float aliveTime = 2 * 60)
+    public AssetPool(AssetLoader loader, bool reference, float aliveTime = 0 * 60)
     {
         mLoader    = loader;
         mReference = reference;
@@ -51,62 +56,34 @@ public class AssetPool
     /// <returns></returns>
     public Object Alloc(string assetPath, string assetName)
     {
-        Object asset = null;
-        string key = AssetLoader.CreateAssetKey(assetPath, assetName);
+        ObjectQueue queue = null;
+        string key = LFS.CombinePath(assetPath, assetName);
 
-        if (mQueueDic.ContainsKey(key))
+        if (mQueueDict.ContainsKey(key))
         {
-            ObjectQueue queue = mQueueDic[key];
-            if (!queue.isEmpty)
-            {
-                asset = queue.Pop().asset;
-            }
-            else
-            {
-                asset = LoadAsset(assetPath, assetName);
-            }
-
-            if (asset != null)
-            {
-                asset.name = key;
-            }
+            queue = mQueueDict[key];
         }
         else
         {
-            ObjectQueue queue = CreateObjectQueue();
-            mQueueDic.Add(key, queue);
+            queue = CreateObjectQueue(key);
+            mQueueDict.Add(key, queue);
+        }
 
+        Object asset = null;
+
+        if (!queue.isEmpty)
+        {
+            asset = queue.Pop().asset;
+        }
+        else
+        {
             asset = LoadAsset(assetPath, assetName);
-            if (asset != null)
+            int iid = asset.GetInstanceID();
+
+            if (asset != null && !mIIDDict.ContainsKey(iid))
             {
-                asset.name = key;
+                mIIDDict.Add(iid, key);
             }
-        }
-
-        return asset;
-    }
-
-    /// <summary>
-    /// 预加载
-    /// </summary>
-    /// <param name="assetPath"></param>
-    /// <param name="assetName"></param>
-    public Object Preload(string assetPath, string assetName)
-    {
-        string key = AssetLoader.CreateAssetKey(assetPath, assetName);
-        ObjectQueue queue = mQueueDic.ContainsKey(key) ? mQueueDic[key] : null;
-
-        if (queue == null)
-        {
-            queue = CreateObjectQueue();
-            mQueueDic.Add(key, queue);
-        }
-
-        Object asset = LoadAsset(assetPath, assetName);
-        if (asset != null)
-        {
-            asset.name = key;
-            queue.Push(asset, Time.realtimeSinceStartup);
         }
 
         return asset;
@@ -120,17 +97,21 @@ public class AssetPool
     {
         if (asset == null)
             return false;
-
-        string key = asset.name;
-        if (mQueueDic.ContainsKey(key))
+        
+        int iid = asset.GetInstanceID();
+        if (mIIDDict.ContainsKey(iid))
         {
-            ObjectQueue queue = mQueueDic[key];
-            queue.Push(asset, Time.realtimeSinceStartup);
+            string key = mIIDDict[iid];
+            if (mQueueDict.ContainsKey(key))
+            {
+                ObjectQueue queue = mQueueDict[key];
+                queue.Push(asset, Time.realtimeSinceStartup);
 
-            return true;
+                return true;
+            }
         }
 
-        Logger.LogWarning(string.Format("[{0}] didn't load from assetpool！", key));
+        Logger.LogWarning(string.Format("[{0}] didn't load from assetpool！", asset.name));
         return false;
     }
 
@@ -139,7 +120,7 @@ public class AssetPool
     /// </summary>
     public void Update()
     {
-        foreach (KeyValuePair<string, ObjectQueue> kvp in mQueueDic)
+        foreach (KeyValuePair<string, ObjectQueue> kvp in mQueueDict)
         {
             ObjectQueue queue = kvp.Value;
             queue.DestroyUnused(mAliveTime, mLoader);
@@ -162,14 +143,14 @@ public class AssetPool
     /// 
     /// </summary>
     /// <returns></returns>
-    private ObjectQueue CreateObjectQueue()
+    private ObjectQueue CreateObjectQueue(string key)
     {
         if (mReference)
         {
-            return new ReferenceObjectQueue();
+            return new ReferenceObjectQueue(key);
         }
 
-        return new InstanceObjectQueue();
+        return new InstanceObjectQueue(key);
     }
 
     /// <summary>

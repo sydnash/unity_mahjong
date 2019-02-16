@@ -15,20 +15,9 @@ public class AssetLoader
     /// </summary>
     private string mPath = string.Empty;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private string mLocalizedPath = string.Empty;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private string mDownloadPath = string.Empty;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private const string SUB_PATH = "Res";
+#if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
+    private static readonly string[] postfix = { ".prefab", ".jpg", ".png", ".mp3", ".wav", ".anim" };
+#endif
 
     #endregion
 
@@ -41,14 +30,8 @@ public class AssetLoader
     /// <param name="unloadDelayTime"></param>
     public AssetLoader(string path)
     {
-        mPath = path.ToLower();
-        string sub = LFS.CombinePath(SUB_PATH, mPath);
-
-        mLocalizedPath = LFS.CombinePath(LFS.LOCALIZED_DATA_PATH, sub);
-        mDownloadPath = LFS.CombinePath(LFS.PATCH_PATH, sub);
+        mPath = path;
     }
-
-    private static readonly string[] postfix = { ".prefab", ".jpg", ".png", ".mp3", ".wav", ".anim" };
 
     /// <summary>
     /// 
@@ -57,11 +40,7 @@ public class AssetLoader
     /// <returns></returns>
     public Object Load(string assetPath, string assetName)
     {
-        assetPath = assetPath.ToLower();
-        assetName = assetName.ToLower();
-
 #if UNITY_EDITOR && !SIMULATE_RUNTIME_ENVIRONMENT
-        //return Resources.Load(LFS.CombinePath(mPath, assetPath, assetName));
         string path = LFS.CombinePath(LFS.CombinePath("Assets/Client/_Resources", mPath), assetPath, assetName);
         foreach (string pf in postfix)
         {
@@ -75,12 +54,10 @@ public class AssetLoader
 #else
         LoadDependentAB(assetPath, assetName);
 
-        AssetBundle bundle = LoadAB(assetPath, assetName);
+        AssetBundle bundle = LoadAB(LFS.CombinePath(mPath, assetPath, assetName));
         if (bundle != null)
         {
             Object asset = bundle.LoadAsset(assetName);
-            //UnloadAB(bundle); //Unity 2017.2中会引发crash，故屏蔽之
-
             return asset;
         }
 
@@ -94,12 +71,10 @@ public class AssetLoader
     /// <param name="assetName"></param>
     public string LoadDependentAB(string assetPath, string assetName)
     {
-        string key = CreateAssetKey(assetPath, assetName);
-        string target = LFS.CombinePath(mPath, assetPath, assetName);
+        string path = LFS.CombinePath(mPath, assetPath, assetName);
+        DependentBundleManager.instance.Load(path);
 
-        DependentBundlePool.instance.Load(key, target);
-
-        return key;
+        return path;
     }
 
     /// <summary>
@@ -108,7 +83,8 @@ public class AssetLoader
     /// <param name="key"></param>
     public void UnloadDependentAB(string key)
     {
-        DependentBundlePool.instance.Unload(key);
+        key = LFS.CombinePath(mPath, key);
+        DependentBundleManager.instance.Unload(key);
     }
 
     /// <summary>
@@ -118,18 +94,7 @@ public class AssetLoader
     /// <returns></returns>
     public AssetBundle LoadAB(string bundlePath)
     {
-        return BundlePool.instance.Load(bundlePath);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="assetPath"></param>
-    /// <param name="assetName"></param>
-    /// <returns></returns>
-    public AssetBundle LoadAB(string assetPath, string assetName)
-    {
-        return LoadAB(LFS.CombinePath(mPath, assetPath, assetName));
+        return BundleManager.instance.Load(bundlePath);
     }
 
     /// <summary>
@@ -138,18 +103,20 @@ public class AssetLoader
     /// <param name="ab"></param>
     public void UnloadAB(AssetBundle ab)
     {
-        BundlePool.instance.Unload(ab);
+        BundleManager.instance.Unload(ab);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="assetPath"></param>
-    /// <param name="assetName"></param>
-    /// <returns></returns>
-    public static string CreateAssetKey(string assetPath, string assetName)
+    /// <param name="asset"></param>
+    public void UnloadAB(string key)
     {
-        return BundlePool.CreateAssetKey(assetPath, assetName);
+        if (!key.StartsWith(mPath))
+        {
+            key = LFS.CombinePath(mPath, key);
+        }
+        BundleManager.instance.Unload(key);
     }
 
     #endregion

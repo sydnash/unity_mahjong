@@ -19,6 +19,15 @@ public class InstanceObjectQueue : ObjectQueue
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="key"></param>
+    public InstanceObjectQueue(string key)
+    {
+        mKey = key;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="obj"></param>
     public override void Push(Object obj, float time)
     {
@@ -40,9 +49,11 @@ public class InstanceObjectQueue : ObjectQueue
     public override void DestroyUnused(float time, AssetLoader loader)
     {
         if (isEmpty) return;
-
+        
         List<Slot> used = new List<Slot>();
         List<Slot> unused = new List<Slot>();
+
+        int c = mQueue.Count;
 
         while(!isEmpty)
         {
@@ -65,7 +76,9 @@ public class InstanceObjectQueue : ObjectQueue
 
         foreach(Slot s in unused)
         {
-            loader.UnloadDependentAB(s.asset.name);
+            loader.UnloadDependentAB(mKey);
+            loader.UnloadAB(mKey);
+            
             GameObject.Destroy(s.asset);
         }
     }

@@ -2,28 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DependentBundlePool
+public class DependentBundleManager
 {
-    #region Class
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private class DependentBundle
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public AssetBundle bundle = null;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int refCount = 0;
-    }
-
-    #endregion
-
     #region Data
 
     /// <summary>
@@ -45,9 +25,15 @@ public class DependentBundlePool
 
     #region Instance
 
-    private static DependentBundlePool mInstance = new DependentBundlePool();
+    /// <summary>
+    /// 
+    /// </summary>
+    private static DependentBundleManager mInstance = new DependentBundleManager();
 
-    public static DependentBundlePool instance
+    /// <summary>
+    /// 
+    /// </summary>
+    public static DependentBundleManager instance
     {
         get { return mInstance; }
     }
@@ -59,52 +45,36 @@ public class DependentBundlePool
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="key"></param>
     /// <param name="assetName"></param>
-    /// <param name="dependentBundleName"></param>
-    /// <param name="checkExists"></param>
-    public void Load(string key, string assetName)
+    public void Load(string assetName)
     {
+#if UNITY_EDITOR
+        Debug.Log("DependentBundleManager.Load, key = " + assetName);
+#endif
         InitDependentManifest();
 
-        key = key.ToLower();
         string[] dependentNames = mDependentManifest.GetAllDependencies(assetName);
-
         foreach (string dependentName in dependentNames)
         {
-            AssetBundle ab = BundlePool.instance.Load(dependentName);
+#if UNITY_EDITOR
+            Debug.Log("      DependentBundleManager.Load, dependent = " + dependentName);
+#endif
+            AssetBundle ab = BundleManager.instance.Load(dependentName);
             if (ab != null)
             {
-                if (!mAssetDict.ContainsKey(key))
+                if (!mAssetDict.ContainsKey(assetName))
                 {
                     HashSet<string> set = new HashSet<string>();
-                    set.Add(ab.name);
+                    set.Add(dependentName);
 
-                    mAssetDict.Add(key, set);
+                    mAssetDict.Add(assetName, set);
                 }
                 else
                 {
-                    HashSet<string> set = mAssetDict[key];
-                    set.Add(ab.name);
+                    HashSet<string> set = mAssetDict[assetName];
+                    set.Add(dependentName);
                 }
-            }
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="assetName"></param>
-    public void Reload(string key)
-    {
-        key = key.ToLower();
-
-        if (mAssetDict.ContainsKey(key))
-        {
-            HashSet<string> set = mAssetDict[key];
-
-            foreach (string bundleName in set)
-            {
-                BundlePool.instance.Load(bundleName);
             }
         }
     }
@@ -115,15 +85,18 @@ public class DependentBundlePool
     /// <param name="assetName"></param>
     public void Unload(string key)
     {
-        key = key.ToLower();
-
+#if UNITY_EDITOR
+        Debug.Log("DependentBundleManager.Unload, key = " + key);
+#endif
         if (mAssetDict.ContainsKey(key))
         {
             HashSet<string> dependentBundleNames = mAssetDict[key];
-
-            foreach (string bundleName in dependentBundleNames)
+            foreach (string dependentName in dependentBundleNames)
             {
-                BundlePool.instance.UnloadByName(bundleName);
+#if UNITY_EDITOR
+                Debug.Log("      DependentBundleManager.Unload, dependent = " + dependentName);
+#endif
+                BundleManager.instance.Unload(dependentName);
             }
         }
     }
@@ -140,7 +113,7 @@ public class DependentBundlePool
         if (mDependentManifest != null)
             return;
 
-        AssetBundle ab = BundlePool.instance.Load("Res");
+        AssetBundle ab = BundleManager.instance.Load("Res");
         mDependentManifest = ab.LoadAsset<AssetBundleManifest>(ASSETBUNDLE_MANIFEST);
     }
 
