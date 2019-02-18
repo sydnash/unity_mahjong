@@ -879,7 +879,6 @@ function mahjongOperation:computeJiao()
         return
     end
     if self.game.chuHintComputeHelper then
-        local inhandCnt, totalCnt = self.game.chuHintComputeHelper:statisticCount()
         local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
         local ret = self.game.chuHintComputeHelper:checkJiao(handCntVec, totalCntVec)
         if #ret == 0 then
@@ -2564,6 +2563,10 @@ function mahjongOperation:showHuPaiHintInfo(info, fromClickCard)
     self:hideHuPaiHint()
     if not info then
         return
+    end
+    local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
+    for _, t in pairs(info) do
+        t.left = 4 - totalCntVec[t.jiaoTid]
     end
     self.huPaiHintUI = require ("ui.mahjongDesk.huPaiHint").new(info)
     self.huPaiHintUI:show()
