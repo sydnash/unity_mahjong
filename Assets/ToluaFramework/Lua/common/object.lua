@@ -67,8 +67,10 @@ end
 --
 -------------------------------------------------------------------
 function object:hide()
-    unregisterUpdateListener(self.updateHandler)
-    self.updateHandler = nil
+    if self.updateHandler ~= nil then
+        unregisterUpdateListener(self.updateHandler)
+        self.updateHandler = nil
+    end
 
     self.gameObject:SetActive(false)
 end
@@ -102,8 +104,10 @@ end
 --
 -------------------------------------------------------------------
 function object:destroy()
-    unregisterUpdateListener(self.updateHandler)
-    self.updateHandler = nil
+    if self.updateHandler ~= nil then
+        unregisterUpdateListener(self.updateHandler)
+        self.updateHandler = nil
+    end
 
     if self.onDestroy ~= nil and type(self.onDestroy) == "function" then
         self:onDestroy()
@@ -222,6 +226,10 @@ end
 --
 -------------------------------------------------------------------
 function object:setLocalScale(scale)
+    if self.transform == nil then
+        commitError("object.setLocalScale, transform is nil, callstack = " .. callstack())
+    end
+
     self.transform.localScale = scale
 end
 

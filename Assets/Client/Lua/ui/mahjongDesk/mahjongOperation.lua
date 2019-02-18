@@ -401,7 +401,7 @@ function mahjongOperation:onGameStart()
         for i=1, self.game:getTotalCardsCount() do
             local m = self.mahjongs[i]
             if m == nil then
-                assert(false, string.format("i: %d  total:%d mahjongs:%d", i, self.game:getTotalCardsCount(), #self.mahjongs))
+                assert(false, string.format("i:%d   total:%d   mahjongs:%d", i, self.game:getTotalCardsCount(), #self.mahjongs))
             else
                 m:show()
             end

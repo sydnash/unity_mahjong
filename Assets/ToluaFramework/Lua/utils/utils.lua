@@ -181,7 +181,7 @@ function removeComponentU(gameObject, componentType)
     end
 end
 
-Logger.debug = appConfig.debug
+Logger.debug = appConfig.logEnabled
 Logger.Open()
 
 local logInfoD       = Logger.Log
@@ -192,7 +192,7 @@ local logErrorD      = Logger.LogError
 --
 -------------------------------------------------------------------
 function log(message)
-    if appConfig.debug then
+    if appConfig.logEnabled then
         if type(message) == "table" then
             message = table.tostring(message)
         elseif type(message) ~= "string" then 
@@ -207,7 +207,7 @@ end
 --
 -------------------------------------------------------------------
 function logWarning(message)
-    if appConfig.debug then
+    if appConfig.logEnabled then
         if type(message) == "table" then
             message = table.tostring(message)
         elseif type(message) ~= "string" then 
@@ -222,7 +222,7 @@ end
 --
 -------------------------------------------------------------------
 function logError(message)
-    if appConfig.debug then
+    if appConfig.logEnabled then
         if type(message) == "table" then
             message = table.tostring(message)
         elseif type(message) ~= "string" then 
@@ -237,7 +237,7 @@ end
 --
 -------------------------------------------------------------------
 function callstack()
-    return appConfig.debug and debug.traceback() or string.empty
+    return appConfig.logEnabled and debug.traceback() or string.empty
 end
 
 local _gdb_tracebackk_callback_ = nil
