@@ -1231,7 +1231,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:onPengClickedHandler()
     local player = self.game:getPlayerByAcId(self.game.mainAcId)
-    playMahjongOpSound(opType.peng.id, player.sex)
+    -- playMahjongOpSound(opType.peng.id, player.sex)
 
     self.game:peng(self.mPeng.cs)
     self:hideOperations()
@@ -1242,7 +1242,7 @@ end
 -------------------------------------------------------------------------------
 local function opGang(game, cs)
     local player = game:getPlayerByAcId(game.mainAcId)
-    playMahjongOpSound(opType.gang.id, player.sex)
+    -- playMahjongOpSound(opType.gang.id, player.sex)
 
     game:gang(cs)
 end
@@ -1303,7 +1303,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:onHuClickedHandler()
     local player = self.game:getPlayerByAcId(self.game.mainAcId)
-    playMahjongOpSound(opType.hu.id, player.sex)
+    -- playMahjongOpSound(opType.hu.id, player.sex)
 
     self.game:hu(self.mHu.cs)
     self:hideOperations()
@@ -1433,10 +1433,10 @@ function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
 
     self:highlightPlaneByAcId(acId)
 
-    if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
+    -- if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
         local player = self.game:getPlayerByAcId(acId)
         playMahjongOpSound(opType.peng.id, player.sex)
-    end
+    -- end
     self:computeChuHint()
 end
 
@@ -1496,10 +1496,10 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
         self:putMahjongsToPeng(acId, mahjongs)
     end
 
-    if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
+    -- if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
         local player = self.game:getPlayerByAcId(acId)
-        playMahjongOpSound(opType.gang.id, player.sex)
-    end
+        playMahjongOpSound(opType.gang.id, player.sex, t)
+    -- end
 end
 
 -------------------------------------------------------------------------------
@@ -1585,14 +1585,14 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
     self.huMahjongs[acId] = hu
 
     local s = self.game:getSeatTypeByAcId(acId)
-    local t = self.seats[s][mahjongGame.cardType.hu]
-    hu:setLocalPosition(t.pos)
-    hu:setLocalRotation(t.rot)
+    local tc = self.seats[s][mahjongGame.cardType.hu]
+    hu:setLocalPosition(tc.pos)
+    hu:setLocalRotation(tc.rot)
 
-    if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
+    -- if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
         local player = self.game:getPlayerByAcId(acId)
-        playMahjongOpSound(opType.hu.id, player.sex)
-    end
+        playMahjongOpSound(opType.hu.id, player.sex, t)
+    -- end
 end
 
 -------------------------------------------------------------------------------

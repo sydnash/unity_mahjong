@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c6a84935bd4eb17408f80dc4d48d4344
-timeCreated: 1535452254
+guid: ff6a8d401dcbc6e478de454307d31a18
+timeCreated: 1550487463
 licenseType: Pro
 AudioImporter:
   externalObjects: {}
@@ -20,5 +20,5 @@ AudioImporter:
   ambisonic: 0
   3D: 1
   userData: 
-  assetBundleName: sound/mahjong/boy/gang
+  assetBundleName: 
   assetBundleVariant: 
