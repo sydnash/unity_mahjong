@@ -128,13 +128,15 @@ public class AssetPoolManager
     /// </summary>
     public void Update()
     {
-        if (Time.realtimeSinceStartup - mTimestamp >= 60)//一分钟执行一次
+        float now = Time.realtimeSinceStartup;
+
+        if (now - mTimestamp >= 60) //每分钟执行一次
         {
             foreach (KeyValuePair<string, AssetPool> kvp in mPools)
             {
                 kvp.Value.Update();
             }
-            mTimestamp = Time.realtimeSinceStartup;
+            mTimestamp = now;
         }
     }
 

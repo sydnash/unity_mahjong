@@ -14,11 +14,6 @@ public class DependentBundleManager
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<string, HashSet<string>> mAssetDict = new Dictionary<string, HashSet<string>>();
-
-    /// <summary>
-    /// 
-    /// </summary>
     private const string ASSETBUNDLE_MANIFEST = "AssetBundleManifest";
 
     #endregion
@@ -50,7 +45,7 @@ public class DependentBundleManager
     public void Load(string assetName)
     {
 #if UNITY_EDITOR
-        Debug.Log("DependentBundleManager.Load, key = " + assetName);
+        Debug.Log("DependentBundleManager.Load, assetName = " + assetName);
 #endif
         InitDependentManifest();
 
@@ -61,21 +56,9 @@ public class DependentBundleManager
             Debug.Log("      DependentBundleManager.Load, dependent = " + dependentName);
 #endif
             AssetBundle ab = BundleManager.instance.Load(dependentName);
-            if (ab != null)
-            {
-                if (!mAssetDict.ContainsKey(assetName))
-                {
-                    HashSet<string> set = new HashSet<string>();
-                    set.Add(dependentName);
-
-                    mAssetDict.Add(assetName, set);
-                }
-                else
-                {
-                    HashSet<string> set = mAssetDict[assetName];
-                    set.Add(dependentName);
-                }
-            }
+#if UNITY_EDITOR
+            Debug.Assert(ab != null, "Can't load the dependent bundle: " + dependentName);
+#endif
         }
     }
 
@@ -83,21 +66,18 @@ public class DependentBundleManager
     /// 
     /// </summary>
     /// <param name="assetName"></param>
-    public void Unload(string key)
+    public void Unload(string assetName)
     {
 #if UNITY_EDITOR
-        Debug.Log("DependentBundleManager.Unload, key = " + key);
+        Debug.Log("DependentBundleManager.Unload, assetName = " + assetName);
 #endif
-        if (mAssetDict.ContainsKey(key))
+        string[] dependentNames = mDependentManifest.GetAllDependencies(assetName);
+        foreach (string dependentName in dependentNames)
         {
-            HashSet<string> dependentBundleNames = mAssetDict[key];
-            foreach (string dependentName in dependentBundleNames)
-            {
 #if UNITY_EDITOR
-                Debug.Log("      DependentBundleManager.Unload, dependent = " + dependentName);
+            Debug.Log("      DependentBundleManager.Unload, dependent = " + dependentName);
 #endif
-                BundleManager.instance.Unload(dependentName);
-            }
+            BundleManager.instance.Unload(dependentName);
         }
     }
 
