@@ -77,7 +77,6 @@ end
 
 function headerManager.request(token, url)
 --    url = "http://wx.qlogo.cn/mmopen/zhK3MN44IcibtzxZibicddSyp4qVX3rTtfMZsXQwa5mArMmI4A44uJgQyevo9VhePyUbv6MwhsWTzrqttXsUdzJL0LcT5I9reGA/0"
---    token = headerManager.token(url)
 
     if string.isNilOrEmpty(url) then
         local icon = downloadDefaultIcon()
@@ -130,6 +129,9 @@ function headerManager.drop(token)
     if not string.isNilOrEmpty(token) then
         local header = headerManager.downloadedHeaders[token]
         if header ~= nil and string.lower(header.icon.name) ~= DEFAULT_HEADER_RES then
+            if header.ref - 1 <= 0 then
+                log(string.format("headerManager.drop, token = %s, rc = %d, cst = %s", token, header.ref - 1, callstack()))
+            end
             header.ref = math.max(0, header.ref - 1)
         
             if header.ref == 0 then

@@ -45,8 +45,8 @@ end
 -------------------------------------------------------------------
 function tweenSerial:update()
     local count = #self.queue
-
     local loop = true
+
     while loop do
         loop = false
         if self.playing and count > 0 then
@@ -67,6 +67,7 @@ function tweenSerial:update()
             end
         end
     end
+
     return (count == 0)
 end
 
