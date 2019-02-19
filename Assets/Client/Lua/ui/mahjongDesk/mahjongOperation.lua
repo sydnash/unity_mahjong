@@ -398,13 +398,8 @@ function mahjongOperation:onGameStart()
     self:relocateIdleMahjongs(false)
 
     eventManager.registerAnimationTrigger("table_plane_down", function()
-        for i=1, self.game:getTotalCardsCount() do
-            local m = self.mahjongs[i]
-            if m == nil then
-                assert(false, string.format("i:%d   total:%d   mahjongs:%d", i, self.game:getTotalCardsCount(), #self.mahjongs))
-            else
-                m:show()
-            end
+        for i, m in pairs(self.mahjongs) do
+            m:show()
         end
     end)
 

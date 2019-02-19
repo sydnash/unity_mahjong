@@ -801,7 +801,7 @@ function commitError(errorText)
     local ver = G_Current_Version ~= nil and (G_Current_Version .. "|") or string.empty
     local ctt = { 
         Title = "[ERR]" .. ver .. tostring(gamepref.player.acId) .. "|" .. time.formatDateTime(),
-        Content = errorText,
+        Content = string.gsub(errorText, "\n", "<br />"),
     }
 
     local web = http.createAsync()
