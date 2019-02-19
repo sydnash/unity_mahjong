@@ -226,10 +226,6 @@ end
 --
 -------------------------------------------------------------------
 function object:setLocalScale(scale)
-    if self.transform == nil then
-        commitError("object.setLocalScale, transform is nil, callstack = " .. callstack())
-    end
-
     self.transform.localScale = scale
 end
 
