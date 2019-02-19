@@ -563,6 +563,7 @@ function enterDesk(cityType, deskId, callback, isFromLogining)
             table.insert(msg.Players, me)
 
             if clientApp.currentDesk ~= nil then
+                clientApp.currentDesk:stopLoop()
                 clientApp.currentDesk:onEnter(msg)
                 clientApp.currentDesk:startLoop()
             else
