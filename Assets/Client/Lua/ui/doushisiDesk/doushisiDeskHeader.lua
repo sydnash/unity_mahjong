@@ -44,6 +44,11 @@ function doushisiDeskHeader:setFuShu(fushu)
 end
 
 function doushisiDeskHeader:reset()
+    if self.animation ~= nil then
+        tweenManager.remove(self.animation)
+        self.animation = nil
+    end
+
     base.reset(self)
     self:hideDang()
     self:hideDaDang()
@@ -138,15 +143,6 @@ function doushisiDeskHeader:playGfx(name)
     self.animation:play()
 
     return 1
-end
-
-function doushisiDeskHeader:reset()
-    if self.animation ~= nil then
-        tweenManager.remove(self.animation)
-        self.animation = nil
-    end
-
-    base.reset(self)
 end
 
 return doushisiDeskHeader

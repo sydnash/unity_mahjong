@@ -120,7 +120,7 @@ function scoreDetail:ctor(scoreChanges)
 end
 
 function scoreDetail:onInit()
-    if self.scoreChanges == nil or #self.scoreChanges == 0 then
+    if json.isNilOrNull(self.scoreChanges) or #self.scoreChanges == 0 then
         self.mEmpty:show()
         self.mList:hide()
     else

@@ -2,7 +2,7 @@
 --Date
 
 local appConfig = {
-    debug               = false,
+    debug               = true,
     patchEnabled        = true,
     logEnabled          = true,
     loadCountPreFrame   = 3,

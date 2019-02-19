@@ -268,21 +268,40 @@ local opsounds = {
     [opType.chu.id]  = "",
     [opType.chi.id]  = "",
     [opType.peng.id] = "peng",
-    [opType.gang.id] = "gang",
-    [opType.hu.id]   = "hu",
+    [opType.gang.id] =  {
+        default = "gang",
+        [opType.gang.detail.angang] = "angang",
+        [opType.gang.detail.bagangwithmoney] = "bugang",
+        [opType.gang.detail.bagangwithoutmoney] = "bugang",
+        [opType.gang.detail.minggang] = "minggang",
+    },
+    [opType.hu.id]   = {
+        default = "hu",
+        [opType.hu.detail.zimo]             = "hu_zimo",
+        [opType.hu.detail.gangshanghua]     = "hu_zimo",
+    },
     [opType.guo.id]  = "",
 }
 
 -------------------------------------------------------------
 -- 播放麻将操作音效
 -------------------------------------------------------------
-function playMahjongOpSound(optype, sex)
+function playMahjongOpSound(optype, sex, detail)
     local folder = (sex == sexType.boy) and "mahjong/boy" or "mahjong/girl"
     local prefix = gamepref.getLanguage()
     if not string.isNilOrEmpty(prefix) then
         prefix = prefix .. "_"
     end
-    local resource = prefix .. opsounds[optype]
+    local file = opsounds[optype]
+    if type(file) == "table" then
+        if detail ~= nil and file[detail] ~= nil then
+            file = file[detail]
+        end
+        if file == nil or type(file) == "table" then
+            file = file.default
+        end
+    end
+    local resource = prefix .. file
 
     return soundManager.playGfx(folder, resource)
 end
@@ -544,6 +563,7 @@ function enterDesk(cityType, deskId, callback, isFromLogining)
             table.insert(msg.Players, me)
 
             if clientApp.currentDesk ~= nil then
+                clientApp.currentDesk:stopLoop()
                 clientApp.currentDesk:onEnter(msg)
                 clientApp.currentDesk:startLoop()
             else
