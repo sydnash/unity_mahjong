@@ -907,6 +907,57 @@ function mahjongOperation:getHuPaiHintInfo(id)
     return nil
 end
 
+function mahjongOperation:highlightSelectMahjong(id)
+    local id = self.curSelectedMahjong.id
+    local tid = mahjongType.getMahjongTypeId(id)
+    for _, mahjongs in pairs(self.chuMahjongs) do
+        for _, mahjong in pairs(mahjongs) do
+            if mahjong.tid == tid then
+                mahjong:blue(true)
+            end
+        end
+    end
+    for _, lines in pairs(self.pengMahjongs) do
+        for _, mahjongs in pairs(lines) do
+            for _, mahjong in pairs(mahjongs) do
+                if mahjong.tid == tid then
+                    mahjong:blue(true)
+                end
+            end
+        end
+    end
+    for _, mahjong in pairs(self.huMahjongs) do
+        if mahjong.tid == tid then
+            mahjong:blue(true)
+        end
+    end
+end
+function mahjongOperation:clearSelectMahjong(id)
+    local id = self.curSelectedMahjong.id
+    local tid = mahjongType.getMahjongTypeId(id)
+    for _, mahjongs in pairs(self.chuMahjongs) do
+        for _, mahjong in pairs(mahjongs) do
+            if mahjong.tid == tid then
+                mahjong:blue(false)
+            end
+        end
+    end
+    for _, lines in pairs(self.pengMahjongs) do
+        for _, mahjongs in pairs(lines) do
+            for _, mahjong in pairs(mahjongs) do
+                if mahjong.tid == tid then
+                    mahjong:blue(false)
+                end
+            end
+        end
+    end
+    for _, mahjong in pairs(self.huMahjongs) do
+        if mahjong.tid == tid then
+            mahjong:blue(true)
+        end
+    end
+end
+
 -------------------------------------------------------------------------------
 -- 不能出牌
 -------------------------------------------------------------------------------
@@ -918,14 +969,17 @@ function mahjongOperation:onClickOnMahjong(mj)
     if self.curSelectedMahjong == nil then
         self.curSelectedMahjong = mj
         self.curSelectedMahjong:setSelected(true)
+        self:highlightSelectMahjong()
         local huPaiHintInfo = self:getHuPaiHintInfo(mj.id)
         self:showHuPaiHintInfo(huPaiHintInfo, true)
         soundManager.playGfx("mahjong", "chose")
     else
         if self.curSelectedMahjong.id ~= mj.id then
             self.curSelectedMahjong:setSelected(false)
+            self:clearSelectMahjong()
             self.curSelectedMahjong = mj
             self.curSelectedMahjong:setSelected(true)
+            self:highlightSelectMahjong()
             local huPaiHintInfo = self:getHuPaiHintInfo(mj.id)
             self:showHuPaiHintInfo(huPaiHintInfo, true)
             soundManager.playGfx("mahjong", "chose")
@@ -944,6 +998,7 @@ end
 function mahjongOperation:clearChosedMahjong()
     if self.curSelectedMahjong ~= nil then
         self.curSelectedMahjong:setSelected(false)
+        self:clearSelectMahjong()
         self.curSelectedMahjong = nil
     end
 end
@@ -1061,6 +1116,7 @@ function mahjongOperation:touchHandler(phase, pos)
                     else
                         if self.curSelectedMahjong then
                             self.curSelectedMahjong:setSelected(false)
+                            self:clearSelectMahjong()
                             self.curSelectedMahjong = nil
                         end
                     end

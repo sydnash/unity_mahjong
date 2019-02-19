@@ -18,10 +18,12 @@ local d = 160 / 255
 local DARK_COLOR  = Color.New(d, d, d, 1)
 local l = 234 / 255
 local LIGHT_COLOR = Color.New(l, l, l, 1)
+local BLUE_COLOR = Color.New(165/255, 176/255, 249/255, 1)
 
 local colorMode = {
     dark  = 1,
     light = 2,
+    blue  = 3,
 }
 
 mahjong.shadowMode = {
@@ -33,6 +35,7 @@ mahjong.shadowMode = {
 
 function mahjong:ctor(id)
     self.id = id
+    self.tid = mahjongType.getMahjongTypeId(id)
     self.selected = false
     self.cmode = colorMode.light
 
@@ -112,16 +115,32 @@ function mahjong:unloadTex()
 end
 
 function mahjong:dark()
-    if self.mat ~= nil and self.cmode == colorMode.light then
+    if self.mat ~= nil and self.cmode ~= colorMode.dark then
         self.cmode = colorMode.dark
         self.mat.color = DARK_COLOR
     end
 end
 
 function mahjong:light()
-    if self.mat ~= nil and self.cmode == colorMode.dark then
+    if self.mat ~= nil and self.cmode ~= colorMode.light then
         self.cmode = colorMode.light
         self.mat.color = LIGHT_COLOR
+    end
+end
+
+function mahjong:blue(enable)
+    if self.mat ~= nil then
+        if enable then
+            if self.cmode == colorMode.light then
+                self.cmode = colorMode.blue
+                self.mat.color = BLUE_COLOR
+            end
+        else
+            if self.cmode == colorMode.blue then
+                self.cmode = colorMode.light
+                self.mat.color = LIGHT_COLOR
+            end
+        end
     end
 end
 
