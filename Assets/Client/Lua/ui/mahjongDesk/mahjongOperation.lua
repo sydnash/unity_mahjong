@@ -948,7 +948,7 @@ function mahjongOperation:clearSelectMahjong(id)
     end
     for _, mahjong in pairs(self.huMahjongs) do
         if mahjong.tid == tid then
-            mahjong:blue(true)
+            mahjong:blue(false)
         end
     end
 end
