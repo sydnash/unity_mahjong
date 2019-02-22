@@ -257,12 +257,11 @@ function friendster:onNotifyFriendster(msg)
 
     local lc = self.friendsters[d.ClubId]
 
-    log("on notify friednster msg: " .. table.tostring(msg))
     if t == friendsterNotifyType.createDesk then
         if lc ~= nil then
             lc:addDesk(d.DeskInfo)
 
-            if self.detailUI ~= nil then
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
                 self.detailUI:refreshDeskList()
             end
@@ -274,7 +273,7 @@ function friendster:onNotifyFriendster(msg)
                 desk.state = friendsterDeskStatus.playing
             end
 
-            if self.detailUI ~= nil then
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshDeskList()
             end
         end
@@ -282,7 +281,7 @@ function friendster:onNotifyFriendster(msg)
         if lc ~= nil then
             lc:removeDesk(d.DeskId)
 
-            if self.detailUI ~= nil then
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
                 self.detailUI:refreshDeskList()
             end
@@ -290,19 +289,19 @@ function friendster:onNotifyFriendster(msg)
     elseif t == friendsterNotifyType.deskPlayerEnter then
         if lc ~= nil then
             local desk = lc:addPlayerToDesk(d.AcId, d.DeskId)
-            if self.detailUI ~= nil then
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshDeskList()
             end
         end
     elseif t == friendsterNotifyType.deskPlayerExit then
         if lc ~= nil then
             local desk = lc:removePlayerFromDesk(d.AcId, d.DeskId)
-            if self.detailUI ~= nil then
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshDeskList()
             end
         end
     elseif t == friendsterNotifyType.cardsChanged then
-        if self.detailUI ~= nil then
+        if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
             self.detailUI:refreshUI()
         end
     elseif t == friendsterNotifyType.deskJuShuChanged then
@@ -310,7 +309,7 @@ function friendster:onNotifyFriendster(msg)
             local desk = lc:getDeskByDeskId(d.DeskId)
             if desk then
                 desk.playedCount = d.CurJu
-                if self.detailUI ~= nil then
+                if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                     self.detailUI:refreshDeskList()
                 end
             end
@@ -324,7 +323,7 @@ function friendster:onNotifyFriendster(msg)
                 self:deleteFriendsterFromFriendsterList(d.ClubId)
                 return
             end
-            if self.detailUI ~= nil then
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
                 self.detailUI:refreshMemberList()
             end
@@ -337,7 +336,7 @@ function friendster:onNotifyFriendster(msg)
         end
         if lc ~= nil then
             lc:addMember(d.PlayerInfo)
-            if self.detailUI ~= nil then
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
                 self.detailUI:refreshMemberList()
             end
@@ -345,7 +344,7 @@ function friendster:onNotifyFriendster(msg)
     elseif t == friendsterNotifyType.playerOffline then
         if lc ~= nil then
             lc:setMemberOnlineState(d.AcId, false)
-            if self.detailUI ~= nil then
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
                 self.detailUI:refreshMemberList()
             end
@@ -353,7 +352,7 @@ function friendster:onNotifyFriendster(msg)
     elseif t == friendsterNotifyType.playerOnline then
         if lc ~= nil then
             lc:setMemberOnlineState(d.AcId, true)
-            if self.detailUI ~= nil then
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
                 self.detailUI:refreshMemberList()
             end
@@ -366,7 +365,7 @@ function friendster:onNotifyFriendster(msg)
 
             table.insert(lc.applyList, d.Info)
 
-            if self.detailUI ~= nil then
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
             end
         end
@@ -399,11 +398,9 @@ function friendster:deleteFriendsterFromFriendsterList(firendsterId)
 
     self:refreshList()
 
-    if self.detailUI ~= nil then
-        if self.detailUI.data.id == firendsterId then
-            self.detailUI:close()
-            self.detailUI = nil
-        end
+    if self.detailUI ~= nil and self.detailUI.data.id == firendsterId then
+        self.detailUI:close()
+        self.detailUI = nil
     end
 end
 function friendster:addFriendsterToFriendsterList(clubinfo)

@@ -31,7 +31,6 @@ tweenManager        = require("manager.tweenManager")
 modelManager        = require("manager.modelManager")
 textureManager      = require("manager.textureManager")
 animationManager    = require("manager.animationManager")
-preloadManager      = require("manager.preloadManager")
 signalManager       = require("manager.signalManager")
 
 require("const.typeDef")
@@ -205,7 +204,6 @@ function showWaitingUI(text)
         waiting_ui:setText(text)
         waiting_ui:setAsLastSibling()
     end
-
     waiting_ui:show()
 end
 
@@ -270,21 +268,40 @@ local opsounds = {
     [opType.chu.id]  = "",
     [opType.chi.id]  = "",
     [opType.peng.id] = "peng",
-    [opType.gang.id] = "gang",
-    [opType.hu.id]   = "hu",
+    [opType.gang.id] =  {
+        default = "gang",
+        [opType.gang.detail.angang] = "angang",
+        [opType.gang.detail.bagangwithmoney] = "bugang",
+        [opType.gang.detail.bagangwithoutmoney] = "bugang",
+        [opType.gang.detail.minggang] = "minggang",
+    },
+    [opType.hu.id]   = {
+        default = "hu",
+        [opType.hu.detail.zimo]             = "hu_zimo",
+        [opType.hu.detail.gangshanghua]     = "hu_zimo",
+    },
     [opType.guo.id]  = "",
 }
 
 -------------------------------------------------------------
 -- 播放麻将操作音效
 -------------------------------------------------------------
-function playMahjongOpSound(optype, sex)
+function playMahjongOpSound(optype, sex, detail)
     local folder = (sex == sexType.boy) and "mahjong/boy" or "mahjong/girl"
     local prefix = gamepref.getLanguage()
     if not string.isNilOrEmpty(prefix) then
         prefix = prefix .. "_"
     end
-    local resource = prefix .. opsounds[optype]
+    local file = opsounds[optype]
+    if type(file) == "table" then
+        if detail ~= nil and file[detail] ~= nil then
+            file = file[detail]
+        end
+        if file == nil or type(file) == "table" then
+            file = file.default
+        end
+    end
+    local resource = prefix .. file
 
     return soundManager.playGfx(folder, resource)
 end
@@ -546,6 +563,7 @@ function enterDesk(cityType, deskId, callback, isFromLogining)
             table.insert(msg.Players, me)
 
             if clientApp.currentDesk ~= nil then
+                clientApp.currentDesk:stopLoop()
                 clientApp.currentDesk:onEnter(msg)
                 clientApp.currentDesk:startLoop()
             else
@@ -649,30 +667,22 @@ function loginServer(callback, func)
             platformHelper.clearSGInviteParam()
         end
 
-        local loading = require("ui.loading").new()
-        loading:setText("正在努力联系服务器，请稍候")
-        loading:show()
-
         sceneManager.load("mahjongscene", function(completed, progress)
-            loading:setProgress(progress)
-
             if completed then
                 if cityType == 0 and deskId == 0 then
                     local lobby = require("ui.lobby").new()
                     lobby:show()
-
+                    
                     callback(true)
-                    loading:close()
                 else -- 如有在房间内则跳过大厅直接进入房间
-                    loading:setText("正在进入房间，请稍候")
                     enterDesk(cityType, deskId, function(ok, func)
                         local lobby = require("ui.lobby").new()
                         lobby:show()
                         if func then
                             func()
                         end
+                        
                         callback(true)
-                        loading:close()
                     end, true)
                 end
             end
@@ -811,7 +821,7 @@ function commitError(errorText)
     local ver = G_Current_Version ~= nil and (G_Current_Version .. "|") or string.empty
     local ctt = { 
         Title = "[ERR]" .. ver .. tostring(gamepref.player.acId) .. "|" .. time.formatDateTime(),
-        Content = errorText,
+        Content = string.gsub(errorText, "\n", "<br />"),
     }
 
     local web = http.createAsync()

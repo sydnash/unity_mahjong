@@ -78,29 +78,6 @@ public class AssetPoolManager
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="assetType"></param>
-    /// <param name="assetPath"></param>
-    /// <param name="assetName"></param>
-    /// <param name="maxCount"></param>
-    public void Preload(string assetType, string assetPath, string assetName)
-    {
-        AssetPool pool = mPools[assetType];
-#if UNITY_EDITOR
-        Debug.AssertFormat(pool != null, "can't find pool of assetType:[{0}]", assetType);
-#endif
-        Object o = pool.Preload(assetPath, assetName);
-
-        GameObject go = o as GameObject;
-        if (go != null)
-        {
-            go.SetActive(false);
-            go.transform.SetParent(mRoot, false);
-        }
-    }
-
-    /// <summary>
     /// 从指定的pool中获取固有名称的资源对象
     /// </summary>
     /// <param name="type">pool类型</param>
@@ -151,13 +128,15 @@ public class AssetPoolManager
     /// </summary>
     public void Update()
     {
-        if (Time.realtimeSinceStartup - mTimestamp >= 60)//一分钟执行一次
+        float now = Time.realtimeSinceStartup;
+
+        if (now - mTimestamp >= 60) //每分钟执行一次
         {
             foreach (KeyValuePair<string, AssetPool> kvp in mPools)
             {
                 kvp.Value.Update();
             }
-            mTimestamp = Time.realtimeSinceStartup;
+            mTimestamp = now;
         }
     }
 

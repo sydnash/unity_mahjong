@@ -774,9 +774,11 @@ function doushisiOperation:onOpDoChu(acId, id)
         self:pushBackPromoteNode()
     end
     local isIm = false
+    local time = 0.3
     if self.promoteNode and self.promoteNode.id == id then
         card:hide()
-        return 0.3
+        return math.max(time, 1.1)
+        -- return 0.3
     end
 
     self:promoteChu(acId, id, isIm)
@@ -784,7 +786,8 @@ function doushisiOperation:onOpDoChu(acId, id)
     local player = self.game:getPlayerByAcId(acId)
     playDoushisiSound(self.game.cityType, id, player.sex)
 
-    return 0.3
+    return math.max(time, 1.1)
+    -- return 0.3
 end
 
 function doushisiOperation:opDoChiPengAnHua(acId, delIds, beId, op)
@@ -1204,6 +1207,7 @@ function doushisiOperation:onFanPai(acId, id)
     card:hide()
     time = self:fanPaiAction(time, acId, id)
     return math.max(time, 1.1)
+    -- return time
 end
 
 function doushisiOperation:onAnPaiShow(acId, idInfo)
@@ -1852,7 +1856,7 @@ function doushisiOperation:chiPengAction(acId, cards, widthoutScale)
         self.animationManager:add(shakeAction)
         shakeAction:play()
 
-        local delayAction = self:getDelayAction(shakeTime - 0.01)
+        local delayAction = self:getDelayAction(shakeTime + 0.1)
         local seqAction = self:getSequenceAction({delayAction, flyAction, tweenFunction.new(function()
             self:pushFlyNode(node)
             self:relocateChiPengCards(acId)
@@ -1962,7 +1966,12 @@ function doushisiOperation:fanPaiAction(time, acId, id)
         local r = cfg.rotEuler.z
         local flyAction, flyTime = self:getFlyAction(node, nodePos.x, nodePos.y, x2, y2, r)
         -- local seqAction = self:getSequenceAction({centerScaleAction, centerDelayAction, flyAction})
-        local seqAction = self:getSequenceAction({flyAction})
+        local func = tweenFunction.new(function()
+            --play sound for card
+            local player = self.game:getPlayerByAcId(acId)
+            playDoushisiSound(self.game.cityType, id, player.sex)
+        end)
+        local seqAction = self:getSequenceAction({flyAction, func})
         self.animationManager:add(seqAction)
         seqAction:play()
 
@@ -1970,10 +1979,6 @@ function doushisiOperation:fanPaiAction(time, acId, id)
         node.chufan = 2
         node.id = id
         self.promoteNode = node
-
-        --play sound for card
-        local player = self.game:getPlayerByAcId(acId)
-        playDoushisiSound(self.game.cityType, id, player.sex)
 
         self:updateLeftCardsCount()
     end
@@ -2137,16 +2142,16 @@ function doushisiOperation:createFlyNode(ids)
     return node
 end
 
-function doushisiOperation:computeFlyTime(x1, y1, x2, y2) 
+function doushisiOperation:computeFlyTime(x1, y1, x2, y2, speed) 
     local d1 = math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2)
     local dis = math.sqrt(d1)
-    local speed = 11.40 --pixels per second
+    local speed = speed or 11.40 --pixels per second
     local time = dis / speed
     if time < 0.23 then
         time = 0.23
     end
-    if time > 0.35 then
-        time = 0.35
+    if time > 0.40 then
+        time = 0.40
     end
     return time
 end

@@ -565,6 +565,7 @@ function doushisiGame:update()
             msg.isPlayed = true
             msg.deleteTime = now + delay
             msg.waittime = now
+            msg.doTime = now
             if delay <= 0 then
                 --needDelete = true --为了分散操作到每帧，即使不需要延迟，也留到下一帧再处理
             end
@@ -575,11 +576,16 @@ function doushisiGame:update()
                 if nm and msg.param and nm.param then
                     if msg.param.isFan or (msg.param.isOpDo and msg.param.Op == opType.doushisi.chu.id) then
                         if nm.param.isTou or nm.param.isFan then
-                            msg.deleteTime = msg.deleteTime + 0.14
+                            -- msg.deleteTime = msg.deleteTime + 0.4
+                            if msg.param.isFan then
+                                msg.deleteTime = msg.doTime + 1.50
+                            else
+                                msg.deleteTime = msg.doTime + 0.80
+                            end
                         elseif nm.param.isOpList then
                             msg.deleteTime = msg.waittime + 0.2
                         elseif nm.param.isOpDo then
-                            msg.deleteTime = msg.deleteTime + 0.09
+                            msg.deleteTime = msg.deleteTime + 0.11
                         end
                     elseif msg.param.isTou then
                         if nm.param.isOpDo then

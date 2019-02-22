@@ -12,7 +12,7 @@ local Camera     = UnityEngine.Camera
 --
 -------------------------------------------------------------------
 function viewManager.setup()
-    AssetPoolManager.instance:AddPool(assetType, "UI", false)
+    AssetPoolManager.instance:AddPool(assetType, "ui", false)
 
     local root = find("UIRoot")
     viewManager.canvas = root:findChild("Canvas")
@@ -23,17 +23,10 @@ function viewManager.setup()
 end
 
 -------------------------------------------------------------------
--- 获取预加载token
--------------------------------------------------------------------
-function viewManager.preload()
-    return preloadManager.createToken(assetType)
-end
-
--------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function viewManager.load(assetPath, assetName)
-    return AssetPoolManager.instance:Alloc(assetType, assetPath, assetName)
+    return AssetPoolManager.instance:Alloc(assetType, string.lower(assetPath), string.lower(assetName))
 end
 
 -------------------------------------------------------------------

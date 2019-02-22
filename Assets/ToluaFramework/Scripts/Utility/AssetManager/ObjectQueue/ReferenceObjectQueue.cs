@@ -26,6 +26,15 @@ public class ReferenceObjectQueue : ObjectQueue
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="key"></param>
+    public ReferenceObjectQueue(string key)
+    {
+        mKey = key;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="obj"></param>
     public override void Push(Object obj, float time)
     {
@@ -61,7 +70,10 @@ public class ReferenceObjectQueue : ObjectQueue
 
         if (Time.realtimeSinceStartup - mReferenceSlot.timestamp >= time)
         {
-            loader.UnloadDependentAB(mReferenceSlot.asset.name);
+#if SIMULATE_RUNTIME_ENVIRONMENT || !UNITY_EDITOR
+            loader.UnloadDependentAB(mKey);
+            loader.UnloadAB(mKey);
+#endif
             mReferenceSlot = null;
         }
     }

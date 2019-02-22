@@ -13,7 +13,7 @@ local GFX_CHANNEL = "sfx"
 --
 -------------------------------------------------------------------
 function soundManager.setup()
-    AssetPoolManager.instance:AddPool(assetType, "Sound", true)
+    AssetPoolManager.instance:AddPool(assetType, "sound", true)
     AudioManager.instance:AddChannel(BGM_CHANNEL, 1)
     AudioManager.instance:AddChannel(UI_CHANNEL, 3)
     AudioManager.instance:AddChannel(GFX_CHANNEL, 5)
@@ -23,7 +23,7 @@ end
 --
 -------------------------------------------------------------------
 function soundManager.playBGM(audioPath, audioName)
-    AudioManager.instance:Play(BGM_CHANNEL, audioPath, audioName, true)
+    AudioManager.instance:Play(BGM_CHANNEL, string.lower(audioPath), string.lower(audioName), true)
 end
 
 -------------------------------------------------------------------
@@ -66,14 +66,14 @@ end
 --
 -------------------------------------------------------------------
 function soundManager.playUI(audioPath, audioName)
-    AudioManager.instance:Play(UI_CHANNEL, audioPath, audioName, false)
+    AudioManager.instance:Play(UI_CHANNEL, string.lower(audioPath), string.lower(audioName), false)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function soundManager.playGfx(audioPath, audioName)
-    AudioManager.instance:Play(GFX_CHANNEL, audioPath, audioName, false)
+    AudioManager.instance:Play(GFX_CHANNEL, string.lower(audioPath), string.lower(audioName), false)
 end
 
 return soundManager

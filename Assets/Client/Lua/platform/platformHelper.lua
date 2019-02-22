@@ -10,7 +10,7 @@ local platformHelper = {}
 function platformHelper.registerLoginWxCallback(callback)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:RegisterLoginWXCallback(callback)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:RegisterLoginWXCallback(callback)
     end
 end
@@ -21,7 +21,7 @@ end
 function platformHelper.registerShareWXCallback(callback)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:RegisterShareWXCallback(callback)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:RegisterShareWXCallback(callback)
     end
 end
@@ -32,7 +32,7 @@ end
 function platformHelper.registerInviteSgCallback(callback)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:RegisterInviteSGCallback(callback)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:RegisterInviteSGCallback(callback)
     end
 end
@@ -43,7 +43,7 @@ end
 function platformHelper.showErrorMessage(errorMessage)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShowErrorMessage(errorMessage)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
 
     end
 end
@@ -54,7 +54,7 @@ end
 function platformHelper.setLogined(logined)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:SetLogined(logined)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:SetLogined(logined)
     end
 end
@@ -65,7 +65,7 @@ end
 function platformHelper.loginWx()
     if deviceConfig.isAndroid then
         AndroidHelper.instance:LoginWX()
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:LoginWX()
     end
 end
@@ -76,7 +76,7 @@ end
 function platformHelper.shareTextWx(text, pyq)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareTextWX(text, pyq)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:ShareTextWX(text, pyq)
     end
 end
@@ -87,7 +87,7 @@ end
 function platformHelper.shareUrlWx(title, desc, url, thumb, pyq)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareUrlWX(title, desc, url, thumb, pyq)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:ShareUrlWX(title, desc, url, thumb, pyq)
     end
 end
@@ -98,7 +98,7 @@ end
 function platformHelper.shareImageWx(image, thumb, pyq)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareImageWX(image, thumb, pyq)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:ShareImageWX(image, thumb, pyq)
     end
 end
@@ -109,7 +109,7 @@ end
 function platformHelper.shareTextSg(text)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareTextSG(text)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:ShareTextSG(text)
     end
 end
@@ -128,7 +128,7 @@ function platformHelper.shareInvitationSg(title, description, image, params, and
 
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareInvitationSG(title, description, image, params, androidDownloadUrl, iOSDownloadUrl)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:ShareInvitationSG(title, description, image, params, androidDownloadUrl, iOSDownloadUrl)
     end
 end
@@ -139,7 +139,7 @@ end
 function platformHelper.shareImageSg(image)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ShareImageSG(image)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:ShareImageSG(image)
     end
 end
@@ -150,7 +150,7 @@ end
 function platformHelper.getParamsSg()
     if deviceConfig.isAndroid then
         return AndroidHelper.instance:GetParamsSG()
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         return IOSHelper.instance:GetParamsSG()
     end
 end
@@ -161,7 +161,7 @@ end
 function platformHelper.clearSGInviteParam()
     if deviceConfig.isAndroid then
         AndroidHelper.instance:ClearSGInviteParam()
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:ClearSGInviteParam()
     end
 end
@@ -179,7 +179,7 @@ end
 function platformHelper.getDistance(latitude1, longitude1, latitude2, longitude2)
     if deviceConfig.isAndroid then
         return AndroidHelper.instance:GetDistance(latitude1, longitude1, latitude2, longitude2)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         return IOSHelper.instance:GetDistance(latitude1, longitude1, latitude2, longitude2)
     end
 
@@ -192,7 +192,7 @@ end
 function platformHelper.getDeviceId()
     if deviceConfig.isAndroid then
         return AndroidHelper.instance:GetDeviceId()
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         return IOSHelper.instance:GetDeviceId()
     end
 
@@ -205,7 +205,7 @@ end
 function platformHelper.openExplorer(url)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:OpenExplore(url)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:OpenExplore(url)
     end
 end
@@ -216,7 +216,7 @@ end
 function platformHelper.setToClipboard(text)
     if deviceConfig.isAndroid then
         AndroidHelper.instance:SetToClipboard(text)
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:SetToClipboard(text)
     end
 end
@@ -227,7 +227,7 @@ end
 function platformHelper.getFromClipboard()
     if deviceConfig.isAndroid then
         return AndroidHelper.instance:GetFromClipboard()
-    elseif deviceConfig.isApple then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         return IOSHelper.instance:GetFromClipboard()
     end
 

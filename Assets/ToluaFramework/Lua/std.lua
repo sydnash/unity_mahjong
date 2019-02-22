@@ -34,7 +34,6 @@ tweenManager        = reload("manager.tweenManager")
 modelManager        = reload("manager.modelManager")
 textureManager      = reload("manager.textureManager")
 animationManager    = reload("manager.animationManager")
-preloadManager      = reload("manager.preloadManager")
 signalManager       = reload("manager.signalManager")
 
 --endregion

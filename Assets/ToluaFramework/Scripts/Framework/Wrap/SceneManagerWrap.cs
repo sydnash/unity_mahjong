@@ -9,7 +9,6 @@ public class SceneManagerWrap
 		L.BeginClass(typeof(SceneManager), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("Setup", Setup);
 		L.RegFunction("Load", Load);
-		L.RegFunction("GetActivedSceneName", GetActivedSceneName);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("mScenePath", get_mScenePath, set_mScenePath);
@@ -46,23 +45,6 @@ public class SceneManagerWrap
 			System.Action<bool,float> arg1 = (System.Action<bool,float>)ToLua.CheckDelegate<System.Action<bool,float>>(L, 3);
 			obj.Load(arg0, arg1);
 			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int GetActivedSceneName(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			SceneManager obj = (SceneManager)ToLua.CheckObject<SceneManager>(L, 1);
-			string o = obj.GetActivedSceneName();
-			LuaDLL.lua_pushstring(L, o);
-			return 1;
 		}
 		catch (Exception e)
 		{

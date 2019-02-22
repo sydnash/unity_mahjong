@@ -9,21 +9,14 @@ local assetType = "animation"
 --
 -------------------------------------------------------------------
 function animationManager.setup()
-    AssetPoolManager.instance:AddPool(assetType, "Animation", false)
-end
-
--------------------------------------------------------------------
--- 获取预加载token
--------------------------------------------------------------------
-function animationManager.preload()
-    return preloadManager.createToken(assetType)
+    AssetPoolManager.instance:AddPool(assetType, "animation", false)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
 function animationManager.load(assetPath, assetName)
-    return AssetPoolManager.instance:Alloc(assetType, assetPath, assetName)
+    return AssetPoolManager.instance:Alloc(assetType, string.lower(assetPath), string.lower(assetName))
 end
 
 -------------------------------------------------------------------
