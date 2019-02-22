@@ -187,7 +187,7 @@ local function checkPatches(callback)
             return
         end
 
-        if onlineVersionNum == offlineVersionNum then
+        if tonumber(offlineVersionNumArray[3]) >= tonumber(onlineVersionNumArray[3]) then
             callback({}, true, true)
             return
         end

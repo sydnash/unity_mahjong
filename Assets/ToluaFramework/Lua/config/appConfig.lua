@@ -3,7 +3,7 @@
 
 local appConfig = {
     debug               = false,
-    patchEnabled        = false,
+    patchEnabled        = true,
     logEnabled          = false,
     loadCountPreFrame   = 3,
 }
