@@ -90,9 +90,7 @@ function headerManager.request(token, url)
         headerManager.downloadedHeaders[token] = { icon = icon, ref = 1 }
         signalManager.signal(token, icon)
     else
-        if string.lower(header.icon.name) ~= DEFAULT_HEADER_RES then
-            header.ref = header.ref + 1
-        end
+        header.ref = header.ref + 1
         signalManager.signal(token, header.icon)
         return
     end
@@ -100,11 +98,10 @@ function headerManager.request(token, url)
     local function callback(icon)
         if icon ~= nil then
             local h = headerManager.downloadedHeaders[token]
-            if h ~= nil and string.lower(h.icon.name) ~= DEFAULT_HEADER_RES then
-                h.ref = h.ref + 1
-                icon = h.icon
-            else
+            if h == nil then
                 headerManager.downloadedHeaders[token] = { icon = icon, ref = 1 }
+            else
+                h.icon = icon
             end
 
             signalManager.signal(token, icon)
@@ -128,14 +125,13 @@ end
 function headerManager.drop(token)
     if not string.isNilOrEmpty(token) then
         local header = headerManager.downloadedHeaders[token]
-        if header ~= nil and string.lower(header.icon.name) ~= DEFAULT_HEADER_RES then
-            if header.ref - 1 <= 0 then
-                log(string.format("headerManager.drop, token = %s, rc = %d, cst = %s", token, header.ref - 1, callstack()))
-            end
+        if header ~= nil then
             header.ref = math.max(0, header.ref - 1)
         
             if header.ref == 0 then
-                destroyTexture(header.icon)
+                if string.lower(header.icon.name) ~= DEFAULT_HEADER_RES then 
+                    destroyTexture(header.icon)
+                end
                 headerManager.downloadedHeaders[token] = nil
             end
         end
