@@ -169,7 +169,7 @@ local function checkPatches(callback)
         local offlineVersionNumArray = string.split(offlineVersionNum, ".")
         local onlineVersionNumArray = string.split(onlineVersionNum, ".")
         
-        if offlineVersionNumArray[2] ~= onlineVersionNumArray[2] then
+        if tonumber(offlineVersionNumArray[2]) < tonumber(onlineVersionNumArray[2]) then
             closeWaitingUI()
             local message = patchMessageBox.new("您的版本太旧，是否下载并安装最新版？", 
                                                 function()
