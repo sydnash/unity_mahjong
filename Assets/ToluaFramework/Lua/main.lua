@@ -16,8 +16,15 @@ if pverTxt ~= nil and pverTxt ~= "" then
     if cverTxt ~= nil and cverTxt ~= "" then
         local cverLua = loadstring(cverTxt)()
         local cverArr = Utils.SplitString(cverLua.num, separator)
-        if pverArr.Length > 1 and cverArr.Length > 1 then
-            if pverArr[1] ~= cverArr[1] then
+        if pverArr.Length > 2 and cverArr.Length > 2 then
+            local pv1 = tonumber(pverArr[1])
+            local cv1 = tonumber(cverArr[1])
+            local pv2 = tonumber(pverArr[2])
+            local cv2 = tonumber(cverArr[2])
+
+            if pv1 < cv1 then
+                LFS.RemoveDir(LFS.PATCH_PATH)
+            elseif pv1 == cv1 and pv2 < cv2 then
                 LFS.RemoveDir(LFS.PATCH_PATH)
             end
         end
