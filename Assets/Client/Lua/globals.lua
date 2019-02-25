@@ -439,6 +439,8 @@ function getLogicGame(citytype, gametype)
             return require ("logic.doushisi.doushisiGame_jintang")
         end
         return require("logic.doushisi.doushisiGame")
+    elseif gametype == gameType.paodekuai then
+        return require("logic.paodekuai.paodekuaiGame")
     end
 end
 
