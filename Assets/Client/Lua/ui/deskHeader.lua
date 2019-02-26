@@ -143,8 +143,15 @@ end
 
 function deskHeader:reset()
     self:setReady(false)
-    self.mGfx:hide()
-    self.mZhuang:hide()
+
+    if self.mGfx ~= nil then
+        self.mGfx:hide()
+    end
+
+    if self.mZhuang ~= nil then
+        self.mZhuang:hide()
+    end
+
     self:hideChatEmoji()
     self:hideChatText()
     self:hideChatVoice()

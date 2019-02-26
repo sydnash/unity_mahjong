@@ -57,7 +57,7 @@ function doushisiSetting:onInit()
         self.mTableclothHJ,
     }
 
-    local tbc = gamepref.getTablecloth()
+    local tbc = gamepref.getTablecloth(gameType.doushisi)
     self.tableclothesNodes = tableclothes
     for _, v in pairs(tableclothes) do
         v:setSelected(v.key == tbc)
@@ -132,7 +132,7 @@ function doushisiSetting:onTableclothChangedHandler(sender, selected, clicked)
     if clicked then
         if selected then
            self.game.operationUI:changeBG(sender.key)
-           gamepref.setTablecloth(sender.key)
+           gamepref.setTablecloth(gameType.doushisi, sender.key)
         end
 
         for _, v in pairs(self.tableclothesNodes) do

@@ -27,6 +27,7 @@
     <Folder Include="Lua\logic\mahjong\" />
     <Folder Include="Lua\logic\friendster\" />
     <Folder Include="Lua\logic\manager\" />
+    <Folder Include="Lua\logic\poker\" />
     <Folder Include="Lua\logic\paodekuai\" />
     <Folder Include="Lua\logic\player\" />
     <Folder Include="Lua\network\" />
@@ -85,6 +86,7 @@
     <Compile Include="Lua\logic\paodekuai\paodekuai.lua" />
     <Compile Include="Lua\logic\paodekuai\paodekuaiGame.lua" />
     <Compile Include="Lua\logic\player\playHistory.lua" />
+    <Compile Include="Lua\logic\poker\pokerType.lua" />
     <Compile Include="Lua\logic\touch.lua" />
     <Compile Include="Lua\network\proto.lua" />
     <Compile Include="Lua\logic\player\gamePlayer.lua" />
@@ -118,6 +120,7 @@
     <Compile Include="Lua\ui\deskHeader.lua" />
     <Compile Include="Lua\ui\doushisiDesk\doushisiDesk.lua" />
     <Compile Include="Lua\ui\doushisiDesk\doushisiDeskHeader.lua" />
+    <Compile Include="Lua\ui\paodekuaiDesk\paodekuaiDeskHeader.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
     <Compile Include="Lua\ui\mail\mailItem.lua" />
     <Compile Include="Lua\ui\paodekuaiDesk\paodekuaiDesk.lua" />
@@ -165,6 +168,7 @@
     <Compile Include="Lua\ui\playHistory\playHistoryItem.lua" />
     <Compile Include="Lua\ui\setting\lobbySetting.lua" />
     <Compile Include="Lua\ui\setting\doushisiSetting.lua" />
+    <Compile Include="Lua\ui\setting\paodekuaiSetting.lua" />
     <Compile Include="Lua\ui\setting\mahjongSetting.lua" />
     <Compile Include="Lua\ui\setting\playbackSetting.lua" />
     <Compile Include="Lua\ui\setting\setting.lua" />

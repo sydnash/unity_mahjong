@@ -25,6 +25,7 @@ tpsheetFileNames:
 - Assets/Client/Artistic/Atlas/LoginUI/Atlas/LoginUI.tpsheet
 - Assets/Client/Artistic/Atlas/Mahjong/Atlas/Mahjong.tpsheet
 - Assets/Client/Artistic/Atlas/MailUI/Atlas/MailUI.tpsheet
+- Assets/Client/Artistic/Atlas/PaodekuaiOperationUI/Atlas/PaodekuaiOperationUI.tpsheet
 - Assets/Client/Artistic/Atlas/PatchDownloadUI/Atlas/PatchDownloadUI.tpsheet
 - Assets/Client/Artistic/Atlas/PatchMessageBoxUI/Atlas/PatchMessageBoxUI.tpsheet
 - Assets/Client/Artistic/Atlas/PatchWaitingUI/Atlas/PatchWaitingUI.tpsheet
@@ -62,6 +63,7 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/LoginUI/Atlas/LoginUI.png
 - Assets/Client/Artistic/Atlas/Mahjong/Atlas/Mahjong.png
 - Assets/Client/Artistic/Atlas/MailUI/Atlas/MailUI.png
+- Assets/Client/Artistic/Atlas/PaodekuaiOperationUI/Atlas/PaodekuaiOperationUI.png
 - Assets/Client/Artistic/Atlas/PatchDownloadUI/Atlas/PatchDownloadUI.png
 - Assets/Client/Artistic/Atlas/PatchMessageBoxUI/Atlas/PatchMessageBoxUI.png
 - Assets/Client/Artistic/Atlas/PatchWaitingUI/Atlas/PatchWaitingUI.png
@@ -75,6 +77,7 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Works/CompanyProjects/tdqp_android/Assets/Client/Artistic/Atlas/Common/Atlas/Common.tps</string>
+        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/Common/Atlas/Common.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -108,9 +108,9 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
-            <true/>
+            <false/>
             <key>maxRects</key>
             <struct type="AlgorithmMaxRectsSettings">
                 <key>heuristic</key>
@@ -603,6 +603,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/Pb_ss.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,20,28,40</rect>
+                <key>scale9Paddings</key>
+                <rect>14,20,28,40</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/QYQ_zi02.png</key>
             <key type="filename">Images/QYQ_zi15.png</key>
             <key type="filename">Images/QYQ_zi16.png</key>
@@ -1030,6 +1043,7 @@
             <filename>Images/head_zhuang.png</filename>
             <filename>Images/ZM_6_1.png</filename>
             <filename>Images/GY_rw_01.png</filename>
+            <filename>Images/Pb_ss.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

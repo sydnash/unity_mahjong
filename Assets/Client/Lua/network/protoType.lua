@@ -56,7 +56,9 @@ return {
             opChose                 = "CmdType.fly.CS.DSSOpChoose",
             bdChose                 = "CmdType.fly.CS.DSSBDChose",
             piao                    = "CmdType.fly.CS.DSSPiao",
-        }
+        },
+        paodekuai = {
+        },
     },
     -- server to client
     sc = {
@@ -114,7 +116,11 @@ return {
             piao                    = "CmdType.fly.SC.DSSPiao",
             piaoNotify              = "CmdType.fly.SC.DSSPiaoNotify",
             anPaiShow               = "CmdType.fly.SC.AnPaiShow",
-        }
+        },
+        paodekuai = {
+            start                   = "CmdType.fly.SC.PDKStart",
+            faPai                   = "CmdType.fly.SC.PDKFaPai",
+        },
     },
 }
 

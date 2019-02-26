@@ -63,19 +63,27 @@ end
 -------------------------------------------------------------
 --
 -------------------------------------------------------------
-local function setTablecloth(tbc)
-    PlayerPrefs.SetString(tablecloth_key, tbc)
+local function setTablecloth(gametype, tbc)
+    PlayerPrefs.SetString(tablecloth_key .. tostring(gametype), tbc)
 end
 
 -------------------------------------------------------------
 --
 -------------------------------------------------------------
-local function getTablecloth()
-    if not PlayerPrefs.HasKey(tablecloth_key) then
-        return tablecloth.dft
+local function getTablecloth(gametype)
+    local key = tablecloth_key .. tostring(gametype)
+
+    if not PlayerPrefs.HasKey(key) then
+        if gametype == gameType.doushisi then
+            return tablecloth.dft
+        elseif gametype == gameType.paodekuai then
+            return tablecloth.paodekuai.qsl
+        else
+            return tablecloth.dft
+        end
     end
 
-    return PlayerPrefs.GetString(tablecloth_key)
+    return PlayerPrefs.GetString(key)
 end
 
 -------------------------------------------------------------

@@ -26,6 +26,10 @@ tablecloth = {
     qxl = "zm_zb02",
     mhw = "zm_zb03",
     hj  = "zm_zb04",
+    paodekuai = { 
+        qsl = "pdk_zb01", 
+        bsl = "pdk_zb02", 
+    },
 }
 
 --------------------------------------------------------------
