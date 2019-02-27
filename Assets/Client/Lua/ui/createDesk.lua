@@ -266,7 +266,7 @@ function createDesk:updateCost()
     gameConfig = self.detail:getCreateConfig()
     local renshu = gameConfig.RenShu
     local jushu  = gameConfig.JuShu
-    local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
+    local cost = self:getCost(renshu, jushu)
     self.mCost:setText(tostring(cost))
 end
 
@@ -342,7 +342,7 @@ end
 function createDesk:createDetail()
     if self.detail == nil then
         self.detail = require("ui.deskDetail.deskDetailPanel").new(true, function(renshu, jushu)
-            local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
+            local cost = self:getCost(renshu, jushu)
             self.mCost:setText(tostring(cost))
         end, self)
         self.detail:setParent(self.mDetailRoot)
@@ -362,6 +362,13 @@ function createDesk:createDetail()
     self.detail:set(self.cityType, self.gameType, layout, config)
     self.detail:show()
     self:updateCost()
+end
+
+function createDesk:getCost(renshu, jushu)
+    local price = costConfig.prices[self.cityType][self.gameType][renshu][jushu]
+    local discount = costConfig.discounts[self.cityType][self.gameType]
+
+    return price * discount
 end
 
 function createDesk:readConfig()

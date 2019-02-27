@@ -3,8 +3,8 @@
 
 local appConfig = {
     debug               = true,
-    patchEnabled        = false,
-    logEnabled          = true,
+    patchEnabled        = true,
+    logEnabled          = false,
     loadCountPreFrame   = 3,
 }
 
