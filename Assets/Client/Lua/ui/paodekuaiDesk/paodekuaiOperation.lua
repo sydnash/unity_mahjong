@@ -25,7 +25,8 @@ local inhandCameraParams = {
 local seats = {
     [seatType.mine] = {
         [pokerType.cardType.shou] = {
-            pos = Vector3.New(0, 0, 0),
+            pos = Vector3.New(-3.7, -3.15, 0),
+            inv = 0.54,
         },
         [pokerType.cardType.chu] = {
             pos = Vector3.New(0, 0, 0),
@@ -66,6 +67,7 @@ function paodekuaiOperation:ctor(game)
 
     self.inhandCards = {}
     self.chuCards = {}
+    self.touchedCards = {}
 end
 
 -------------------------------------------------------------------------------
@@ -183,7 +185,39 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:touchHandler(phase, pos)
+    local camera = GameObjectPicker.instance.camera
 
+    if phase == touch.phaseType.began then
+        local go = GameObjectPicker.instance:Pick(pos)
+        if go ~= nil then
+            local card = self:getCardByGo(go)
+            if card ~= nil and self.touchedCards[card.id] == nil then
+                if card.selected then
+                    card:setSelected(false)
+                else
+                    card:setSelected(true)
+                end
+
+                self.touchedCards[card.id] = card
+            end
+        end
+    elseif phase == touch.phaseType.moved then
+        local go = GameObjectPicker.instance:Pick(pos)
+        if go ~= nil then
+            local card = self:getCardByGo(go)
+            if card ~= nil and self.touchedCards[card.id] == nil then
+                if card.selected then
+                    card:setSelected(false)
+                else
+                    card:setSelected(true)
+                end
+
+                self.touchedCards[card.id] = card
+            end
+        end
+    else --phase == touch.phaseType.end
+        self.touchedCards = {}
+    end
 end
 
 -----------------------------------------------------------
@@ -236,11 +270,15 @@ function paodekuaiOperation:relocateInhandCards(acId)
 
     local seatType = self.game:getSeatTypeByAcId(acId)
     local startPos = self:getInhandCardStartPos(seatType)
+    local interval = self:getInhandCardInterval(seatType)
     local z = startPos.z
 
-    for _, card in pairs(cards) do
-        z = z - 0.00001
+    for k, card in pairs(cards) do
+        local pos = Vector3.New(startPos.x + (k - 1) * interval, startPos.y, z)
+        card:setLocalPosition(pos)
         card:setPickabled(true)
+
+        z = z - 0.00001
     end
 end
 
@@ -248,7 +286,12 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:sortInhandCards(cards)
-    
+    table.sort(cards, function(a, b)
+        local at = pokerType.getPokerTypeById(a.id)
+        local bt = pokerType.getPokerTypeById(b.id)
+
+        return (at.value > bt.value)
+    end)
 end
 
 ----------------------------------------------------------------------------------
@@ -261,7 +304,36 @@ end
 ----------------------------------------------------------------------------------
 -- 
 ----------------------------------------------------------------------------------
+function paodekuaiOperation:getInhandCardInterval(st)
+    return seats[st][pokerType.cardType.shou].inv
+end
+
+----------------------------------------------------------------------------------
+-- 
+----------------------------------------------------------------------------------
+function paodekuaiOperation:getCardByGo(go)
+    local cards = self.inhandCards[self.game.mainAcId]
+
+    for _, c in pairs(cards) do
+        if c.gameObject == go then
+            return c
+        end
+    end
+
+    return nil
+end
+
+----------------------------------------------------------------------------------
+-- 
+----------------------------------------------------------------------------------
 function paodekuaiOperation:initChuCards()
+
+end
+
+----------------------------------------------------------------------------------
+-- 
+----------------------------------------------------------------------------------
+function paodekuaiOperation:onOpList(msg)
 
 end
 

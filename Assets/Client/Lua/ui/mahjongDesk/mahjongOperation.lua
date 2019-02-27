@@ -329,8 +329,12 @@ function mahjongOperation:update()
     if self.countdownTick ~= nil and self.countdownTick > 0 and self.turnCountdown > 0 then
         local delta = math.floor(now - self.countdownTick)
         
-        if delta >= 1 then
+        if delta > 0.99999 then
             self.turnCountdown = math.max(0, self.turnCountdown - delta)
+
+            if self.turnCountdown <= 5 then
+                playClockTimerSound()
+            end
 
             local a = math.floor(self.turnCountdown / 10)
             self.countdown.a:setSprite(tostring(a))

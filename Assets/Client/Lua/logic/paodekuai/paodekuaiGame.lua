@@ -49,14 +49,11 @@ function paodekuaiGame:onEnter(msg)
     base.onEnter(self, msg)
 
     if msg.Reenter ~= nil then
-        log(msg.Reenter)
-        self.markerTurn         = msg.Reenter.MarkerTurn
-        self.markerAcId         = self:getPlayerByTurn(self.markerTurn).acId
-        self.curOpTurn          = msg.Reenter.CurOpTurn
-        self.curOpAcId          = self:getPlayerByTurn(self.curOpTurn).acId
-        self.curOpType          = msg.Reenter.CurOpType
---        self.deskPlayStatus     = msg.Reenter.DeskStatus
---        self.canBack            = (self.deskPlayStatus < 0)
+--        self.markerTurn = msg.Reenter.MarkerTurn
+--        self.markerAcId = self:getPlayerByTurn(self.markerTurn).acId
+        self.curOpTurn  = msg.Reenter.CurOpTurn
+        self.curOpAcId  = self:getPlayerByTurn(self.curOpTurn).acId
+        self.curOpType  = msg.Reenter.CurOpType
         
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
@@ -99,6 +96,7 @@ function paodekuaiGame:initMessageHandlers()
 
     self.commandHandlers[protoType.sc.paodekuai.start]      = {func = self:onMessageHandler("onGameStartHandler"),      nr = true}
     self.commandHandlers[protoType.sc.paodekuai.faPai]      = {func = self:onMessageHandler("onFaPaiHandler"),          nr = true}
+    self.commandHandlers[protoType.sc.paodekuai.opList]     = {func = self:onMessageHandler("onOpListHandler"),         nr = true}
 end
 
 -------------------------------------------------------------------------------
@@ -113,7 +111,6 @@ function paodekuaiGame:onGameStartHandler(msg)
     end
 
     self.markerTurn     = msg.Marker
---    self.deskPlayStatus = msg.CurDeskStatus
     self.markerAcId     = self:getPlayerByTurn(self.markerTurn).acId
     self:faPai(msg)
     
@@ -152,7 +149,7 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiGame:onMessageHandler(name)
-    assert(self[name], string.format("on message handler: function<%s> must exist.", name))
+    assert(self[name], string.format("onMessageHandler: function [%s] must exist.", name))
 
     local func = function(self, msg)
         if name == "onOpDoHandler" then
@@ -167,6 +164,14 @@ function paodekuaiGame:onMessageHandler(name)
     end
 
     return func
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function paodekuaiGame:onOpListHandler(msg)
+    self.operationUI:onOpList(msg)
+    self.deskUI:onOpList(msg)
 end
 
 return paodekuaiGame
