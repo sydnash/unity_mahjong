@@ -90,7 +90,7 @@ local inhandCameraParams = {
     size = 0.14,
 }
 
-local COUNTDOWN_SECONDS_C = 20
+local COUNTDOWN_SECONDS_C = 15
 local PLANE_BREATHE_SECONDS = 1.5
 
 local panleDarkTex = nil
