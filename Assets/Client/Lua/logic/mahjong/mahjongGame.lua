@@ -135,6 +135,7 @@ function mahjongGame:syncSeats(seats)
             local shou = player[mahjongGame.cardType.shou]
             local huInfo = player.hu[1]
             local detail = opType.hu.detail
+            self.knownMahjong[player.hu[1].HuCard] = 1
             player.huType = huInfo.HuType
             if huInfo.HuType == detail.zimo or huInfo.HuType == detail.gangshanghua or huInfo.HuType == detail.haidilao then --自摸
                 if player.acId == self.mainAcId then
