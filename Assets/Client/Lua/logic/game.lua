@@ -839,7 +839,9 @@ function game:pushMessage(func, delay, param)
     end
     table.insert(self.messageQueue, {func = func, delay = delay, param = param})
 
-    self:update()
+    if self.mode == gameMode.normal then
+        self:update()
+    end
 end
 
 function game:addDelay(delay)
