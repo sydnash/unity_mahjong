@@ -233,6 +233,13 @@ function playButtonClickSound()
     soundManager.playUI(string.empty, "click")
 end
 
+-------------------------------------------------------------
+-- 播放倒计时的音效
+-------------------------------------------------------------
+function playClockTimerSound()
+    soundManager.playUI(string.empty, "timer")
+end
+
 local chatConfig = reload("config.chatConfig")
 
 -------------------------------------------------------------
