@@ -120,6 +120,7 @@ return {
         paodekuai = {
             start                   = "CmdType.fly.SC.PDKStart",
             faPai                   = "CmdType.fly.SC.PDKFaPai",
+            opList                  = "CmdType.fly.SC.PDKOpList",
         },
     },
 }

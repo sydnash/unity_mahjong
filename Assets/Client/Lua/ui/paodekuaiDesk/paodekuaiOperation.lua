@@ -171,6 +171,20 @@ function paodekuaiOperation:onGameSync()
 
     self:initInhandCards()
     self:initChuCards()
+
+    local reenter = self.game.data.Reenter
+    log(table.tostring(reenter))
+    local lastChupaiInfo = reenter.LastChuPaiInfo
+    if lastChupaiInfo ~= nil then
+        local cards  = lastChupaiInfo.Cards
+        local turn   = lastChupaiInfo.Turn
+        local player = self.game:getPlayerByTurn(turn)
+
+        if player.acId == gamepref.player.acId then
+            self.mHint:show()
+            self.mChu:show()
+        end
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -334,7 +348,7 @@ end
 -- 
 ----------------------------------------------------------------------------------
 function paodekuaiOperation:onOpList(msg)
-
+    
 end
 
 -------------------------------------------------------------------------------

@@ -9,6 +9,15 @@ local paodekuaiDesk = class("paodekuaiDesk", base)
 
 _RES_(paodekuaiDesk, "PaodekuaiDeskUI", "DeskUI")
 
+local clockPosition = {
+    [seatType.mine]  = Vector3.New( 0,   90, 0),
+    [seatType.right] = Vector3.New(-280, 0,  0),
+    [seatType.top]   = Vector3.New( 0,   0,  0),
+    [seatType.left]  = Vector3.New( 280, 0,  0),
+}
+
+local COUNTDOWN_SECONDS_C = 15
+
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
@@ -21,7 +30,7 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiDesk:onInit()
-    local parents = {
+    self.headerParents = {
         [seatType.mine]  = self.mPlayerM, 
         [seatType.right] = self.mPlayerR,  
         [seatType.top]   = self.mPlayerT, 
@@ -30,13 +39,13 @@ function paodekuaiDesk:onInit()
 
     self.headers = {}
 
-    for k, v in pairs(parents) do
+    for k, v in pairs(self.headerParents) do
         self.headers[k] = header.new(k)
         self.headers[k]:setParent(v)
         self.headers[k]:show()
     end
 
-    self.mClock:hide()
+    self:hideClock()
 
     base.onInit(self)
 end
@@ -61,6 +70,27 @@ end
 -------------------------------------------------------------------------------
 function paodekuaiDesk:onGameSync()
     base.onGameSync(self)
+
+    local st = self.game:getSeatTypeByAcId(self.game.curOpAcId)
+    self:showClock(st)
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function paodekuaiDesk:showClock(seat)
+    self.mClock:setParent(self.headerParents[seat])
+    self.mClock:setLocalPosition(clockPosition[seat])
+    self.countdown = COUNTDOWN_SECONDS_C
+    self.mClockText:setText(tostring(self.countdown))
+    self.mClock:show()
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function paodekuaiDesk:hideClock()
+    self.mClock:hide()
 end
 
 -------------------------------------------------------------------------------

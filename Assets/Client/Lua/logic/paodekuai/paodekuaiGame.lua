@@ -49,11 +49,13 @@ function paodekuaiGame:onEnter(msg)
     base.onEnter(self, msg)
 
     if msg.Reenter ~= nil then
---        self.markerTurn = msg.Reenter.MarkerTurn
---        self.markerAcId = self:getPlayerByTurn(self.markerTurn).acId
         self.curOpTurn  = msg.Reenter.CurOpTurn
         self.curOpAcId  = self:getPlayerByTurn(self.curOpTurn).acId
         self.curOpType  = msg.Reenter.CurOpType
+
+        log(self.curOpTurn)
+        log(self.curOpAcId)
+        log(self.curOpType)
         
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
@@ -68,7 +70,7 @@ function paodekuaiGame:syncSeats(seats)
     for _, v in pairs(seats) do
         local player = self:getPlayerByAcId(v.AcId)
         player.ready = false --如果游戏中，清除ready状态
-        player.isMarker = self:isMarker(player.acId)
+--        player.isMarker = self:isMarker(player.acId)
 
         player[pokerType.cardType.shou] = v.CardsInHand
         player[pokerType.cardType.chu]  = v.CardsInChuPai
@@ -110,8 +112,6 @@ function paodekuaiGame:onGameStartHandler(msg)
         player[pokerType.cardType.chu] = {}
     end
 
-    self.markerTurn     = msg.Marker
-    self.markerAcId     = self:getPlayerByTurn(self.markerTurn).acId
     self:faPai(msg)
     
     self.deskUI:onGameStart()
