@@ -163,7 +163,7 @@ function mahjong:setSelected(selected)
         self.selected = selected
 
         local pos = self:getLocalPosition()
-        pos:Set(pos.x, pos.y + mahjong.h * (selected and 0.3 or -0.3), pos.z)
+        pos:Set(pos.x, pos.y + mahjong.h * (selected and 0.2 or -0.2), pos.z)
         self:setLocalPosition(pos)
     end
 end

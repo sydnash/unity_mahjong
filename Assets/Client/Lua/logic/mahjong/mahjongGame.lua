@@ -345,7 +345,7 @@ function mahjongGame:onOpDoHandler(msg)
             end
         end
     end)
-    self:pushMessage(func)
+    self:pushMessage(func, nil, msg)
 end
 
 -------------------------------------------------------------------------------

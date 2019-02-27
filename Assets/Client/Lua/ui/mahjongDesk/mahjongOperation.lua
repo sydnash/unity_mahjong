@@ -90,7 +90,7 @@ local inhandCameraParams = {
     size = 0.14,
 }
 
-local COUNTDOWN_SECONDS_C = 20
+local COUNTDOWN_SECONDS_C = 15
 local PLANE_BREATHE_SECONDS = 1.5
 
 local panleDarkTex = nil
@@ -329,8 +329,12 @@ function mahjongOperation:update()
     if self.countdownTick ~= nil and self.countdownTick > 0 and self.turnCountdown > 0 then
         local delta = math.floor(now - self.countdownTick)
         
-        if delta >= 1 then
-            self.turnCountdown = math.max(0, self.turnCountdown - delta)
+        if delta > 0.99999 then
+            self.turnCountdown = math.max(0, self.turnCountdown - 1)
+
+            if self.turnCountdown <= 5 then
+                --playClockTimerSound()
+            end
 
             local a = math.floor(self.turnCountdown / 10)
             self.countdown.a:setSprite(tostring(a))
@@ -776,12 +780,12 @@ function mahjongOperation:onMoPai(acId, cards)
         local moPaiPos = self:getMyInhandMahjongPos(player, #mahjongs + 1)
         moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
 
-        local to = Vector3.New(moPaiPos.x, moPaiPos.y, moPaiPos.z)
-        moPaiPos.y = moPaiPos.y + 0.04
+        -- local to = Vector3.New(moPaiPos.x, moPaiPos.y, moPaiPos.z)
+        -- moPaiPos.y = moPaiPos.y + 0.04
         self.mo:setLocalPosition(moPaiPos)
-        local mv = tweenPosition.new(self.mo, 0.04, moPaiPos, to, nil)
-        tweenManager.add(mv)
-        mv:play()
+        -- local mv = tweenPosition.new(self.mo, 0.04, moPaiPos, to, nil)
+        -- tweenManager.add(mv)
+        -- mv:play()
 
         self.mo:setLocalRotation(mopaiConfig.rotation)
 

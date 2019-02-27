@@ -128,6 +128,23 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+
+local function processMessageQueue()
+    while #networkManager.messageQueue > 0 do
+        local msg = networkManager.messageQueue[1]
+        table.remove(networkManager.messageQueue, 1)
+
+        local callback = networkCallbackPool:pop(msg.RequestId, true)
+        if callback == nil then
+            callback = networkCallbackPool:pop(msg.Command, false)
+        end
+
+        if callback ~= nil then
+            callback(table.fromjson(msg.Payload))
+        end
+    end
+end
+
 local receiveBuffer = nil
 local receiveBufferLenght = 0
 local function receive(bytes, size)
@@ -157,6 +174,8 @@ local function receive(bytes, size)
         --触发回调
         table.insert(networkManager.messageQueue, msg)
     end
+
+    processMessageQueue()
 end
 
 -------------------------------------------------------------------
@@ -239,20 +258,8 @@ function networkManager.update()
         end
     end
     --处理消息队列
-    if #networkManager.messageQueue > 0 then
-        local msg = networkManager.messageQueue[1]
-        table.remove(networkManager.messageQueue, 1)
-
-        local callback = networkCallbackPool:pop(msg.RequestId, true)
-        if callback == nil then
-            callback = networkCallbackPool:pop(msg.Command, false)
-        end
-
-        if callback ~= nil then
-            callback(table.fromjson(msg.Payload))
-        end
-    end
-end
+    processMessageQueue()
+  end
 
 -------------------------------------------------------------------
 --

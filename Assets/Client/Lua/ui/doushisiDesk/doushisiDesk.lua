@@ -215,7 +215,7 @@ function doushisiDesk:updateClock()
         self.mClockText:setText(tostring(self.countdown))
 
         if self.countdown > 0 and self.countdown <= 5 then
-            --播放倒计时音效
+            --playClockTimerSound()
         end
     end
 end
