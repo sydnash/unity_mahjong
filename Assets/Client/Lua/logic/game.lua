@@ -838,6 +838,8 @@ function game:pushMessage(func, delay, param)
         delay = 0
     end
     table.insert(self.messageQueue, {func = func, delay = delay, param = param})
+
+    self:update()
 end
 
 function game:addDelay(delay)
@@ -884,8 +886,8 @@ function game:update()
             msg.isPlayed = true
             msg.deleteTime = now + delay
             msg.waittime = now
-            if delay <= 0 then
-                --needDelete = true --为了分散操作到每帧，即使不需要延迟，也留到下一帧再处理
+            if delay <= 0.0000001 then
+                needDelete = true --为了分散操作到每帧，即使不需要延迟，也留到下一帧再处理
             end
         else
             msg.waittime = msg.waittime + dt
@@ -895,7 +897,7 @@ function game:update()
         end
         if needDelete then
             self:popFrontMessage()
-            loop = false
+            loop = true
         end
     end
 end

@@ -567,7 +567,7 @@ function doushisiGame:update()
             msg.waittime = now
             msg.doTime = now
             if delay <= 0 then
-                --needDelete = true --为了分散操作到每帧，即使不需要延迟，也留到下一帧再处理
+                needDelete = true --为了分散操作到每帧，即使不需要延迟，也留到下一帧再处理
             end
         else
             msg.waittime = msg.waittime + dt
@@ -601,7 +601,7 @@ function doushisiGame:update()
         end
         if needDelete then
             self:popFrontMessage()
-            loop = false
+            loop = true
         end
     end
 end

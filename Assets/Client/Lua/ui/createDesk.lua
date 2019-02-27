@@ -263,6 +263,7 @@ end
 
 function createDesk:updateCost()
     local gameConfig = self.config[self.gameType]
+    gameConfig = self.detail:getCreateConfig()
     local renshu = gameConfig.RenShu
     local jushu  = gameConfig.JuShu
     local cost = costConfig[self.cityType][self.gameType][renshu][jushu]
@@ -358,9 +359,9 @@ function createDesk:createDetail()
         end
     end
 
-    self:updateCost()
     self.detail:set(self.cityType, self.gameType, layout, config)
     self.detail:show()
+    self:updateCost()
 end
 
 function createDesk:readConfig()
