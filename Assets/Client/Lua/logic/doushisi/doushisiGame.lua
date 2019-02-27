@@ -583,7 +583,11 @@ function doushisiGame:update()
                                 msg.deleteTime = msg.doTime + 0.80
                             end
                         elseif nm.param.isOpList then
-                            msg.deleteTime = msg.waittime + 0.2
+                            if msg.param.isFan then
+                                msg.deleteTime = msg.waittime + 0.2
+                            else
+                                msg.deleteTime = msg.doTime + 0.15
+                            end
                         elseif nm.param.isOpDo then
                             msg.deleteTime = msg.deleteTime + 0.11
                         end
