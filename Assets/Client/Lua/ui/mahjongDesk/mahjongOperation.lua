@@ -333,7 +333,7 @@ function mahjongOperation:update()
             self.turnCountdown = math.max(0, self.turnCountdown - 1)
 
             if self.turnCountdown <= 5 then
-                playClockTimerSound()
+                --playClockTimerSound()
             end
 
             local a = math.floor(self.turnCountdown / 10)
