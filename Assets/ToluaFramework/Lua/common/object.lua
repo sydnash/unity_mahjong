@@ -226,6 +226,7 @@ end
 --
 -------------------------------------------------------------------
 function object:setLocalScale(scale)
+    assert(self.transform ~= nil, string.format( "set local scale %s", self.name))
     self.transform.localScale = scale
 end
 
