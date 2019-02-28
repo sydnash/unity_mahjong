@@ -58,6 +58,7 @@ return {
             piao                    = "CmdType.fly.CS.DSSPiao",
         },
         paodekuai = {
+            opChoose                = "CmdType.fly.CS.PDKOPChose",
         },
     },
     -- server to client
@@ -120,7 +121,8 @@ return {
         paodekuai = {
             start                   = "CmdType.fly.SC.PDKStart",
             faPai                   = "CmdType.fly.SC.PDKFaPai",
-            opList                  = "CmdType.fly.SC.PDKOpList",
+            opList                  = "CmdType.fly.SC.PDKOPList",
+            opDo                    = "CmdType.fly.SC.PDKOPDo",
         },
     },
 }

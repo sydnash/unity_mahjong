@@ -921,6 +921,7 @@ end
 function networkManager.csPiao(data)
     send(protoType.cs.doushisi.piao, data)
 end
+
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
@@ -932,6 +933,15 @@ end
 function networkManager.choseCity(cityType, callback)
     local data = { GameType = cityType }
     send(protoType.cs.cityType, callback)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.pdkChuPai(cards, callback)
+    local data = { Op = opType.paodekuai.chu.id, Cards = cards }
+    log("networkManager.pdkChuPai, data = " .. table.tostring(data))
+    send(protoType.cs.paodekuai.opChoose, data, callback)
 end
 
 return networkManager

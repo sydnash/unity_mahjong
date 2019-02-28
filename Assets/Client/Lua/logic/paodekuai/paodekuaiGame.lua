@@ -49,13 +49,16 @@ function paodekuaiGame:onEnter(msg)
     base.onEnter(self, msg)
 
     if msg.Reenter ~= nil then
+        log(msg.Reenter)
         self.curOpTurn  = msg.Reenter.CurOpTurn
         self.curOpAcId  = self:getPlayerByTurn(self.curOpTurn).acId
         self.curOpType  = msg.Reenter.CurOpType
 
-        log(self.curOpTurn)
-        log(self.curOpAcId)
-        log(self.curOpType)
+        local lastChupaiInfo = msg.Reenter.LastChuPaiInfo
+        if lastChupaiInfo ~= nil then
+            local player = self:getPlayerByTurn(lastChupaiInfo.Turn)
+            player[pokerType.cardType.chu] = json.isNilOrNull(lastChupaiInfo.Cards) and {} or lastChupaiInfo.Cards
+        end
         
         self:syncSeats(msg.Reenter.SyncSeatInfos)
     end
@@ -70,11 +73,8 @@ function paodekuaiGame:syncSeats(seats)
     for _, v in pairs(seats) do
         local player = self:getPlayerByAcId(v.AcId)
         player.ready = false --如果游戏中，清除ready状态
---        player.isMarker = self:isMarker(player.acId)
 
         player[pokerType.cardType.shou] = v.CardsInHand
-        player[pokerType.cardType.chu]  = v.CardsInChuPai
-
         player.zhangShu = #v.CardsInHand
     end
 end
@@ -99,6 +99,7 @@ function paodekuaiGame:initMessageHandlers()
     self.commandHandlers[protoType.sc.paodekuai.start]      = {func = self:onMessageHandler("onGameStartHandler"),      nr = true}
     self.commandHandlers[protoType.sc.paodekuai.faPai]      = {func = self:onMessageHandler("onFaPaiHandler"),          nr = true}
     self.commandHandlers[protoType.sc.paodekuai.opList]     = {func = self:onMessageHandler("onOpListHandler"),         nr = true}
+    self.commandHandlers[protoType.sc.paodekuai.opDo]       = {func = self:onMessageHandler("onOpDoHandler"),           nr = true}
 end
 
 -------------------------------------------------------------------------------
@@ -138,9 +139,9 @@ function paodekuaiGame:faPai(msg)
         for _, v in pairs(msg.Seats) do
             local player = self:getPlayerByAcId(v.AcId)
             player[pokerType.cardType.shou] = v.Cards
-            player.zhangShu = #player[self.cardType.shou]
+            player.zhangShu = #player[pokerType.cardType.shou]
 
-            self.deskUI:updateInhandCardCount(player.acId)
+            self.deskUI:updateInhandCardsCount(player.acId)
         end
     end
 end
@@ -170,8 +171,62 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiGame:onOpListHandler(msg)
+    log("paodekuaiGame.onOpListHandler, msg = " .. table.tostring(msg))
+
     self.operationUI:onOpList(msg)
     self.deskUI:onOpList(msg)
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function paodekuaiGame:onOpDoHandler(msg)
+    log("paodekuaiGame.onOpDoHandler, msg = " .. table.tostring(msg))
+
+    self.operationUI:hideOpButtons()
+    self.deskUI:hideClock()
+
+    if msg.Op == opType.paodekuai.chu.id then
+        self:onOpDoChu(msg)
+    elseif msg.Op == opType.paodekuai.buChu.id then
+        self:onOpDoBuChu(msg)
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function paodekuaiGame:onOpDoChu(msg)
+    local player = self:getPlayerByAcId(msg.AcId)
+
+    if msg.DelCards ~= nil then
+        local inhandCards = player[pokerType.cardType.shou]
+        for _, id in pairs(msg.Del) do
+            table.removeItem(inhandCards, id)
+        end
+    end
+
+    player[pokerType.cardType.chu] = msg.DelCards
+
+    self.deskUI:updateInhandCardsCount()
+    self.deskUI:showClock(msg.AcId)
+    self.operationUI:onOpDoChu(msg.AcId, msg.Del)
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function paodekuaiGame:onOpDoBuChu(msg)
+
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function paodekuaiGame:onGameEndListener(specialData, datas, totalScores)
+    log("paodekuaiGame.onGameEndListener")
+    self.deskUI:reset()
+    self.operationUI:reset()
 end
 
 return paodekuaiGame

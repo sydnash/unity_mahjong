@@ -85,7 +85,7 @@ function paodekuai:resetRender()
     if sprite ~= nil then
         local tex = sprite.texture
         textureManager.unload(tex)
-        GameObject.Destroy(sprite)
+        UnityEngine.GameObject.Destroy(sprite)
         self.render.sprite = nil
     end
 end

@@ -120,7 +120,9 @@ end
 function desk:refreshUI()
     local totalCount = self.game:getTotalPlayerCount()
     if totalCount == 3 then
-        self.headers[seatType.top]:hide()
+        if self.headers[seatType.top] ~= nil then
+            self.headers[seatType.top]:hide()
+        end
     elseif totalCount == 2 then
         self.headers[seatType.left]:hide()
         self.headers[seatType.right]:hide()

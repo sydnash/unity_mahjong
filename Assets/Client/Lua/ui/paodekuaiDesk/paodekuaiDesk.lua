@@ -33,7 +33,7 @@ function paodekuaiDesk:onInit()
     self.headerParents = {
         [seatType.mine]  = self.mPlayerM, 
         [seatType.right] = self.mPlayerR,  
-        [seatType.top]   = self.mPlayerT, 
+--        [seatType.top]   = self.mPlayerT, 
         [seatType.left]  = self.mPlayerL, 
     }
 
@@ -70,18 +70,26 @@ end
 -------------------------------------------------------------------------------
 function paodekuaiDesk:onGameSync()
     base.onGameSync(self)
-
-    local st = self.game:getSeatTypeByAcId(self.game.curOpAcId)
-    self:showClock(st)
+    self:showClock(self.game.curOpAcId)
 end
 
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
-function paodekuaiDesk:showClock(seat)
-    self.mClock:setParent(self.headerParents[seat])
-    self.mClock:setLocalPosition(clockPosition[seat])
+function paodekuaiDesk:syncHeadInfo()
+    self:updateInhandCardsCount()
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function paodekuaiDesk:showClock(acId)
+    local st = self.game:getSeatTypeByAcId(acId)
+
+    self.mClock:setParent(self.headerParents[st])
+    self.mClock:setLocalPosition(clockPosition[st])
     self.countdown = COUNTDOWN_SECONDS_C
+    self.clockTimestamp = time.realtimeSinceStartup()
     self.mClockText:setText(tostring(self.countdown))
     self.mClock:show()
 end
@@ -96,10 +104,27 @@ end
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
+function paodekuaiDesk:update()
+    if self.mClock:getVisibled() and self.countdown > 0 then
+        local now = time.realtimeSinceStartup()
+        if now - self.clockTimestamp > 0.99999 then
+            self.countdown = self.countdown - 1
+            self.mClockText:setText(tostring(self.countdown))
+
+            self.clockTimestamp = now
+        end
+    end
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
 function paodekuaiDesk:onFaPai()
     for k, v in pairs(self.headers) do
         local player = self.game:getPlayerByTurn(k)
-        v:setCount(player.zhangShu)
+        if player ~= nil then
+            v:setCount(player.zhangShu)
+        end
     end
 end
 
@@ -107,14 +132,28 @@ end
 -- 
 ----------------------------------------------------------------------------------
 function paodekuaiDesk:onOpList(msg)
+    local opinfo = msg.OpInfos[1]
+    if opinfo.Op == opType.paodekuai.chu.id then
+        self:showClock(msg.AcId)
+    end
+end
 
+----------------------------------------------------------------------------------
+-- 
+----------------------------------------------------------------------------------
+function paodekuaiDesk:updateInhandCardsCount()
+    for _, p in pairs(self.game.players) do
+        local st = self.game:getSeatTypeByAcId(p.acId)
+        local header = self.headers[st]
+        header:setCount(p.zhangShu)
+    end
 end
 
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiDesk:reset()
-    
+    self:hideClock()
 end
 
 return paodekuaiDesk
