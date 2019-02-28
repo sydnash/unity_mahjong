@@ -291,6 +291,9 @@ function game:onReadyHandler(msg)
 --        log("ready, msg = " .. table.tostring(msg))
 
         local player = self:getPlayerByAcId(msg.AcId)
+        if player == nil then
+            return
+        end
         player.ready = msg.Ready
 
         self.deskUI:setReady(player.acId, player.ready) 
@@ -840,7 +843,7 @@ function game:pushMessage(func, delay, param)
     table.insert(self.messageQueue, {func = func, delay = delay, param = param})
 
     if self.mode == gameMode.normal then
-        self:update()
+        -- self:update()
     end
 end
 

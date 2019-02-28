@@ -2068,6 +2068,7 @@ function doushisiOperation:getCenterScaleAction(node)
 end
 
 function doushisiOperation:getSequenceAction(actions, im)
+    im = true
     local t = tweenSerial.new(true, im)
     for _, a in pairs(actions) do
         t:add(a)
