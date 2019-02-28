@@ -777,8 +777,8 @@ function doushisiOperation:onOpDoChu(acId, id)
     local time = 0.3
     if self.promoteNode and self.promoteNode.id == id then
         card:hide()
-        return math.max(time, 1.1)
-        -- return 0.3
+        -- return math.max(time, 1.1)
+        return 0.5
     end
 
     self:promoteChu(acId, id, isIm)
@@ -786,8 +786,8 @@ function doushisiOperation:onOpDoChu(acId, id)
     local player = self.game:getPlayerByAcId(acId)
     playDoushisiSound(self.game.cityType, id, player.sex)
 
-    return math.max(time, 1.1)
-    -- return 0.3
+    -- return math.max(time, 1.1)
+    return 0.5
 end
 
 function doushisiOperation:opDoChiPengAnHua(acId, delIds, beId, op)
