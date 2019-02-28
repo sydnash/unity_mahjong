@@ -777,8 +777,8 @@ function doushisiOperation:onOpDoChu(acId, id)
     local time = 0.3
     if self.promoteNode and self.promoteNode.id == id then
         card:hide()
-        return math.max(time, 1.1)
-        -- return 0.3
+        -- return math.max(time, 1.1)
+        return 0.5
     end
 
     self:promoteChu(acId, id, isIm)
@@ -786,8 +786,8 @@ function doushisiOperation:onOpDoChu(acId, id)
     local player = self.game:getPlayerByAcId(acId)
     playDoushisiSound(self.game.cityType, id, player.sex)
 
-    return math.max(time, 1.1)
-    -- return 0.3
+    -- return math.max(time, 1.1)
+    return 0.5
 end
 
 function doushisiOperation:opDoChiPengAnHua(acId, delIds, beId, op)
@@ -2068,6 +2068,7 @@ function doushisiOperation:getCenterScaleAction(node)
 end
 
 function doushisiOperation:getSequenceAction(actions, im)
+    im = true
     local t = tweenSerial.new(true, im)
     for _, a in pairs(actions) do
         t:add(a)
@@ -2147,11 +2148,11 @@ function doushisiOperation:computeFlyTime(x1, y1, x2, y2, speed)
     local dis = math.sqrt(d1)
     local speed = speed or 11.40 --pixels per second
     local time = dis / speed
-    if time < 0.23 then
-        time = 0.23
+    if time < 0.22 then
+        time = 0.22
     end
-    if time > 0.40 then
-        time = 0.40
+    if time > 0.26 then
+        time = 0.26
     end
     return time
 end
