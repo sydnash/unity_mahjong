@@ -82,6 +82,10 @@ local function networkDisconnectedCallback(idx)
     local idx = idx or 1
     showWaitingUI(string.format("正在尝试重连(%d/5)，请稍候...", idx))
 
+    if clientApp.currentDesk ~= nil and not clientApp.currentDesk:isPlayback() then
+        clientApp.currentDesk:stopLoop()
+    end
+
     networkManager.reconnect(gamepref.host, gamepref.port, function(connected, curCoin, cityType, deskId)
         if not connected then
             networkDisconnectedCallback(idx + 1)
@@ -590,23 +594,33 @@ function enterDesk(cityType, deskId, callback, isFromLogining)
 end
 
 function fixInhandCameraParam(originSize, inhandCamera)
-    local oriScreenAspect = 16 / 9
+    local oriAspect = 16 / 9
+    local newH = originSize
     local inhandCameraH = originSize
-    local inhandCameraW = inhandCameraH * oriScreenAspect
+    if oriAspect < inhandCamera.aspect then
+    else
+        local oriScreenAspect = 16 / 9
+        local inhandCameraW = inhandCameraH * oriScreenAspect
 
-    local newH = inhandCameraW / inhandCamera.aspect
+        newH = inhandCameraW / inhandCamera.aspect
+    end
 
     local inhandCameraT = inhandCamera.transform
     local inhandCameraP = inhandCameraT.position
 
     local inhandCameraBottom = inhandCameraP.y - inhandCameraH
-    inhandCamera.orthographicSize = newH
     local newy = inhandCameraBottom + newH
 
+    inhandCamera.orthographicSize = newH
     inhandCameraT.position = Vector3.New(inhandCameraP.x, newy, inhandCameraP.z)
 end
 
 function fixMainCameraParam(fov, mainCamera)
+    local oriAspect = 16 / 9
+    if oriAspect < mainCamera.aspect then
+        mainCamera.fieldOfView = fov
+        return
+    end
     local oriW = 12.80
     local aspect = mainCamera.aspect
     local nheight = oriW / aspect
@@ -620,6 +634,7 @@ end
 function fixMainCameraByFov(fov, mainCamera)
     local oriAspect = 16 / 9
     if oriAspect < mainCamera.aspect then
+        mainCamera.fieldOfView = fov
         return
     end
     local wFov = fov * oriAspect

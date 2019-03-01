@@ -136,6 +136,10 @@ function doushisiDeskHeader:getOpTween(node, baseS)
 end
 
 function doushisiDeskHeader:playGfx(name)
+    if self.animation ~= nil then
+        tweenManager.remove(self.animation)
+        self.animation = nil
+    end
     self.mGfx:setSprite(name)
     self.mGfx:show()
     self.animation = self:getOpTween(self.mGfx, 1)
