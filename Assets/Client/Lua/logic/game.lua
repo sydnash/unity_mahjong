@@ -63,6 +63,8 @@ function game:initMessageHandlers()
         [protoType.sc.exitVote]                 = { func = self.onExitVoteHandler,              nr = true },
         [protoType.sc.gameEnd]                  = { func = self.onGameEndHandler,               nr = true },
         [protoType.sc.deskStatusChange]         = { func = self.onDeskStatusChangedHandler,             nr = true },
+        [protoType.sc.chatMessage]              = { func = self.onChatMessageHandler,             nr = true },
+        -- networkManager.registerCommandHandler(protoType.sc.chatMessage, function(msg)
     }
 end
 
@@ -299,6 +301,17 @@ function game:onReadyHandler(msg)
         self.deskUI:setReady(player.acId, player.ready) 
     end)
     self:pushMessage(func)
+end
+
+function game:onChatMessageHandler(msg)
+    if self.messageQueueHandler then
+    -- local func = function()
+        if self.deskUI then
+            self.deskUI:onChatMessageHandler(msg)
+        end
+    -- end
+    -- self:pushMessage(func)
+    end
 end
 
 function game:onDeskStatusChangedHandler(msg)
@@ -644,7 +657,7 @@ end
 -- 服务器通知牌局结束
 -------------------------------------------------------------------------------
 function game:onGameEndHandler(msg)
-    self:addDelay(1)
+    self:addDelay(0.1)
  
     local func = (function()
 --    log("game end, msg = " .. table.tostring(msg))

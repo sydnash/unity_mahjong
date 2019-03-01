@@ -55,6 +55,7 @@ local mainCameraParams = {
     position = Vector3.New(1000, 0, -13.43),
     rotation = Quaternion.Euler(0, 0, 0),
     hWidth   = 12.80,
+    fov      = 30,
 }
 
 local inhandCameraParams = {
@@ -281,6 +282,7 @@ function doushisiOperation:fix(min, max, nmin, nmax, p, align)
     elseif align == alignType.percent then
         r = ((p - min) / (max - min) * (nmax - nmin)) + nmin
     end
+    -- log(string.format("min: %f max: %f nmin: %f nmax: %f p: %f align: %d r:%f", min, max, nmin, nmax, p, align, r))
     return r
 end
 
@@ -296,27 +298,27 @@ function doushisiOperation:alignPos()
         return
     end
     for _, s in pairs(seatConfig) do
-        s[seatType.mine][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.mine][doushisiGame.cardType.shou].pos, alignType.min, alignType.min)
+        s[seatType.mine][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.mine][doushisiGame.cardType.shou].pos, alignType.center, alignType.min)
         s[seatType.mine][doushisiGame.cardType.chu].pos = self:fixPos(s[seatType.mine][doushisiGame.cardType.chu].pos, alignType.min, alignType.min)
-        s[seatType.mine][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.mine][doushisiGame.cardType.peng].pos, alignType.max, alignType.min)
+        s[seatType.mine][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.mine][doushisiGame.cardType.peng].pos, alignType.center, alignType.min)
         s[seatType.mine].promote.pos = self:fixPos(s[seatType.mine].promote.pos, alignType.center, alignType.min)
         s[seatType.mine].action.pos = self:fixPos(s[seatType.mine].action.pos, alignType.center, alignType.min)
 
-        s[seatType.right][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.right][doushisiGame.cardType.shou].pos, alignType.min, alignType.min)
-        s[seatType.right][doushisiGame.cardType.chu].pos = self:fixPos(s[seatType.right][doushisiGame.cardType.chu].pos, alignType.min, alignType.percent)
-        s[seatType.right][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.right][doushisiGame.cardType.peng].pos, alignType.min, alignType.percent)
-        s[seatType.right].promote.pos = self:fixPos(s[seatType.right].promote.pos, alignType.min, alignType.percent)
-        s[seatType.right].action.pos = self:fixPos(s[seatType.right].action.pos, alignType.min, alignType.percent)
+        s[seatType.right][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.right][doushisiGame.cardType.shou].pos, alignType.max, alignType.min)
+        s[seatType.right][doushisiGame.cardType.chu].pos = self:fixPos(s[seatType.right][doushisiGame.cardType.chu].pos, alignType.max, alignType.percent)
+        s[seatType.right][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.right][doushisiGame.cardType.peng].pos, alignType.max, alignType.percent)
+        s[seatType.right].promote.pos = self:fixPos(s[seatType.right].promote.pos, alignType.max, alignType.percent)
+        s[seatType.right].action.pos = self:fixPos(s[seatType.right].action.pos, alignType.max, alignType.percent)
 
-        s[seatType.left][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.left][doushisiGame.cardType.shou].pos, alignType.max, alignType.min)
-        s[seatType.left][doushisiGame.cardType.chu].pos = self:fixPos(s[seatType.left][doushisiGame.cardType.chu].pos, alignType.max, alignType.percent)
-        s[seatType.left][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.left][doushisiGame.cardType.peng].pos, alignType.max, alignType.percent)
-        s[seatType.left].promote.pos = self:fixPos(s[seatType.left].promote.pos, alignType.max, alignType.percent)
-        s[seatType.left].action.pos = self:fixPos(s[seatType.left].action.pos, alignType.max, alignType.percent)
+        s[seatType.left][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.left][doushisiGame.cardType.shou].pos, alignType.min, alignType.min)
+        s[seatType.left][doushisiGame.cardType.chu].pos = self:fixPos(s[seatType.left][doushisiGame.cardType.chu].pos, alignType.min, alignType.percent)
+        s[seatType.left][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.left][doushisiGame.cardType.peng].pos, alignType.min, alignType.percent)
+        s[seatType.left].promote.pos = self:fixPos(s[seatType.left].promote.pos, alignType.min, alignType.percent)
+        s[seatType.left].action.pos = self:fixPos(s[seatType.left].action.pos, alignType.min, alignType.percent)
         
         s[seatType.top][doushisiGame.cardType.shou].pos = self:fixPos(s[seatType.top][doushisiGame.cardType.shou].pos, alignType.max, alignType.max)
         s[seatType.top][doushisiGame.cardType.chu].pos = self:fixPos(s[seatType.top][doushisiGame.cardType.chu].pos, alignType.min, alignType.max)
-        s[seatType.top][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.top][doushisiGame.cardType.peng].pos, alignType.min, alignType.max)
+        s[seatType.top][doushisiGame.cardType.peng].pos = self:fixPos(s[seatType.top][doushisiGame.cardType.peng].pos, alignType.center, alignType.max)
         s[seatType.top].promote.pos = self:fixPos(s[seatType.top].promote.pos, alignType.center, alignType.max)
         s[seatType.top].action.pos = self:fixPos(s[seatType.top].action.pos, alignType.center, alignType.max)
     end
@@ -342,7 +344,7 @@ function doushisiOperation:onInit()
     local mainCamera = UnityEngine.Camera.main
     mainCamera.transform.position = mainCameraParams.position
     mainCamera.transform.rotation = mainCameraParams.rotation
-    fixMainCameraParam(mainCameraParams.hWidth, mainCamera)
+    fixMainCameraParam(mainCameraParams.fov, mainCamera, mainCameraParams.fov)
     local bl = Vector3.New(0, 0, math.abs(mainCamera.transform.position.z))
     local tr = Vector3.New(1, 1, math.abs(mainCamera.transform.position.z))
 
@@ -1168,9 +1170,9 @@ function doushisiOperation:onMoPai(acId, ids)
 end
 
 local poses = {
-    [seatType.top]          = { pos = Vector3.New(0, 5.17, 0)},
-    [seatType.right]        = { pos = Vector3.New(9, 0.2, 0)},
-    [seatType.left]         = { pos = Vector3.New(-9, 0.2, 0)},
+    [seatType.top]          = { pos = Vector3.New(0, 4.17, 0)},
+    [seatType.right]        = { pos = Vector3.New(7, 0.2, 0)},
+    [seatType.left]         = { pos = Vector3.New(-7, 0.2, 0)},
 }
 
 function doushisiOperation:moOnePai(acId, id)
@@ -1900,9 +1902,10 @@ function doushisiOperation:moPaiAction(time, acId, id, handPos, order, scale)
 
     local r = cfg.rotEuler.z
     local flyAction, flyTime = self:getFlyAction(node, startPos.x, startPos.y, x2, y2, r)
-    local delayTime2 = 0.1
+    local delayTime2 = 0.2
     local delayAction2 = self:getDelayAction(delayTime2)
     local flyAction2, flyTime2 = self:getFlyAction(node, x2, y2, handPos.x, handPos.y, nil, scale, nil, 1)
+    -- log(string.format( "fly1: %f  fly2: %f fly3: %f", flyTime, delayTime2, flyTime2 ))
 
     --local sq = self:getSequenceAction({centerScaleAction, centerDelayAction, flyAction, delayAction2, flyAction2, tweenFunction.new(function()
     local sq = self:getSequenceAction({flyAction, delayAction2, flyAction2, tweenFunction.new(function()
