@@ -61,7 +61,7 @@ function paodekuai:fix()
         if self.render.sprite ~= nil then
             local rect = self.render.sprite.rect
             local pixelsPerUnit = self.render.sprite.pixelsPerUnit
-            local size = Vector2.New(rect.width / pixelsPerUnit, rect.height / pixelsPerUnit)
+            local size = Vector3.New(rect.width / pixelsPerUnit, rect.height / pixelsPerUnit, 0.01)
             self.collider.center = Vector2.zero
             self.collider.size = size
         end

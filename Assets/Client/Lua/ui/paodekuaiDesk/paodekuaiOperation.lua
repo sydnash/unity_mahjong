@@ -26,7 +26,7 @@ local inhandCameraParams = {
 local seats = {
     [seatType.mine] = {
         [pokerType.cardType.shou] = {
-            pos = Vector3.New(1.2, -3.15, 0),
+            pos = Vector3.New(1, -3.15, 0),
             inv = 0.54,
         },
         [pokerType.cardType.chu] = {
@@ -39,7 +39,7 @@ local seats = {
             pos = Vector3.New(0, 0, 0),
         },
         [pokerType.cardType.chu] = {
-            pos = Vector3.New(4, 0.7, 0),
+            pos = Vector3.New(4.2, 0.3, 0),
             inv = 0.36,
         },
     },
@@ -56,7 +56,7 @@ local seats = {
             pos = Vector3.New(0, 0, 0),
         },
         [pokerType.cardType.chu] = {
-            pos = Vector3.New(-4, 0.7, 0),
+            pos = Vector3.New(-4.2, 0.3, 0),
             inv = 0.36,
         },
     },
@@ -162,6 +162,7 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:onGameStart()
+    log("paodekuaiOperation.onGameStart")
     touch.addListener(self.touchHandler, self)
 end
 
@@ -190,6 +191,7 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:onFaPai()
+    log("paodekuaiOperation.onFaPai")
     self:createInhandCards()
 end
 
@@ -454,9 +456,7 @@ function paodekuaiOperation:onOpList(msg)
     if msg.AcId == self.game.mainAcId then
         for _, v in pairs(msg.OpInfos) do
             if v.Op == opType.paodekuai.chu.id then
-                if v.DetailTyp == helper.paixing.none then
-                    self:showOpButtons()
-                end
+                self:showOpButtons()
             elseif v.Op == opType.paodekuai.tianGuan.id then
 
             elseif v.Op == opType.paodekuai.pass.id then
@@ -565,6 +565,8 @@ function paodekuaiOperation:reset()
         end
         self.chuCards[acId] = {}
     end
+
+    self.touchedCards = {}
 
     self:hideOpButtons()
 end

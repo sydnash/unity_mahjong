@@ -40,7 +40,9 @@
     <Folder Include="Lua\ui\" />
     <Folder Include="Lua\ui\doushisiDesk\" />
     <Folder Include="Lua\ui\gameEnd\" />
+    <Folder Include="Lua\ui\gameEnd\doushisi\" />
     <Folder Include="Lua\ui\gameEnd\mahjong\" />
+    <Folder Include="Lua\ui\gameEnd\paodekuai\" />
     <Folder Include="Lua\ui\mahjongDesk\" />
     <Folder Include="Lua\ui\gameOver\" />
     <Folder Include="Lua\ui\exitDesk\" />
@@ -111,7 +113,11 @@
     <Compile Include="Lua\ui\friendster\friendsterBank.lua" />
     <Compile Include="Lua\ui\friendster\winnerDetail.lua" />
     <Compile Include="Lua\ui\friendster\winnerDetailItem.lua" />
+    <Compile Include="Lua\ui\gameEnd\doushisi\gameEndItem.lua" />
+    <Compile Include="Lua\ui\gameEnd\doushisi\gameEndPai.lua" />
     <Compile Include="Lua\ui\gameEnd\gameEnd.lua" />
+    <Compile Include="Lua\ui\gameEnd\paodekuai\gameEndItem.lua" />
+    <Compile Include="Lua\ui\gameEnd\paodekuai\gameEndPai.lua" />
     <Compile Include="Lua\ui\gameEnd\scoreDetail.lua" />
     <Compile Include="Lua\ui\gameOver\gameOver.lua" />
     <Compile Include="Lua\ui\header.lua" />

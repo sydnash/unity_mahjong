@@ -22,7 +22,7 @@ end
 function paodekuaiDeskHeader:setPlayerInfo(player)
     base.setPlayerInfo(self, player)
 
-    if player ~= nil then
+    if player ~= nil then  
         self:setCount(player.zhangShu)
     else
         self:setCount(nil)

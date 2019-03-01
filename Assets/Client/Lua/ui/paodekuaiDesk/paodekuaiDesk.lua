@@ -3,6 +3,7 @@
 --此文件由[BabeLua]插件自动生成
 
 local header = require("ui.paodekuaiDesk.paodekuaiDeskHeader")
+local helper = require("logic.paodekuai.helper")
 
 local base = require("ui.desk")
 local paodekuaiDesk = class("paodekuaiDesk", base)
@@ -133,14 +134,20 @@ end
 ----------------------------------------------------------------------------------
 function paodekuaiDesk:onOpList(msg)
     local acId = msg.AcId
-    local opinfo = msg.OpInfos[1]
-
-    if opinfo.Op == opType.paodekuai.chu.id then
-        self:showClock(acId)
-        local st = self.game:getSeatTypeByAcId(acId)
-        self.headers[st]:hideBuChu()
-    elseif opinfo.Op == opType.paodekuai.buChu.id then
+    for _, v in pairs(msg.OpInfos) do
+        if v.Op == opType.paodekuai.chu.id then
+            self:showClock(acId)
+            if v.DetailTyp == helper.paixing.none then
+                for _, h in pairs(self.headers) do
+                    h:hideBuChu()
+                end
+            else
+                local st = self.game:getSeatTypeByAcId(acId)
+                self.headers[st]:hideBuChu()
+            end
+        elseif v.Op == opType.paodekuai.buChu.id then
         
+        end
     end
 end
 
