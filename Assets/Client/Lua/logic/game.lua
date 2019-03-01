@@ -161,7 +161,7 @@ function game:registerPlaybackHandlers(playback)
     for _, v in pairs(playback) do
         local func = self.commandHandlers[v.Command].func
         func(self, v.Payload)
-        self:addDelay(1.5)
+        self:addDelay(0.5)
     end
 end
 
