@@ -5,6 +5,7 @@
 local pokerType = require("logic.poker.pokerType")
 local paodekuai = require("logic.paodekuai.paodekuai")
 local touch     = require("logic.touch")
+local helper    = require("logic.paodekuai.helper")
 
 local base = require("ui.common.view")
 local paodekuaiOperation = class("paodekuaiOperation", base)
@@ -25,12 +26,12 @@ local inhandCameraParams = {
 local seats = {
     [seatType.mine] = {
         [pokerType.cardType.shou] = {
-            pos = Vector3.New(-3.7, -3.15, 0),
+            pos = Vector3.New(1.2, -3.15, 0),
             inv = 0.54,
         },
         [pokerType.cardType.chu] = {
-            pos = Vector3.New(0, -1.3, 0),
-            inv = 0.2,
+            pos = Vector3.New(0, -1.1, 0),
+            inv = 0.36,
         },
     },
     [seatType.right] = {
@@ -38,8 +39,8 @@ local seats = {
             pos = Vector3.New(0, 0, 0),
         },
         [pokerType.cardType.chu] = {
-            pos = Vector3.New(3.5, 0.7, 0),
-            inv = 0.2,
+            pos = Vector3.New(4, 0.7, 0),
+            inv = 0.36,
         },
     },
     [seatType.top] = {
@@ -55,8 +56,8 @@ local seats = {
             pos = Vector3.New(0, 0, 0),
         },
         [pokerType.cardType.chu] = {
-            pos = Vector3.New(-3.5, 0.7, 0),
-            inv = 0.2,
+            pos = Vector3.New(-4, 0.7, 0),
+            inv = 0.36,
         },
     },
 }
@@ -250,6 +251,7 @@ function paodekuaiOperation:createOnePlayerInhandCards(acId, ids)
     for _, id in pairs(ids) do
         if id >= 0 then
             local card = self:createCardById(id)
+            card:setPickabled(true)
             table.insert(cards, card)
         end
     end
@@ -278,14 +280,17 @@ function paodekuaiOperation:relocateInhandCards(acId)
         local seatType = self.game:getSeatTypeByAcId(acId)
         local startPos = self:getInhandCardStartPos(seatType)
         local interval = self:getInhandCardInterval(seatType)
+        local x = startPos.x + ((#cards - 1) * interval + 1.3) * -0.5
         local z = startPos.z
+        local order = 0
 
         for k, card in pairs(cards) do
-            local pos = Vector3.New(startPos.x + (k - 1) * interval, startPos.y, z)
+            local pos = Vector3.New(x + (k - 1) * interval, startPos.y, z)
             card:setLocalPosition(pos)
-            card:setPickabled(true)
-
             z = z - 0.00001
+
+            order = order + 1
+            card:setSortingOrder(order)
         end
     end
 end
@@ -369,12 +374,17 @@ end
 -------------------------------------------------------------------------------
 function paodekuaiOperation:createOnePlayerChuCards(acId, ids)
     if ids ~= nil then
+        if self.chuCards[acId] == nil then
+            self.chuCards[acId] = {}
+        end
+
         local cards = self.chuCards[acId]
 
         for _, id in pairs(ids) do
             if id >= 0 then
                 local card = self:createCardById(id)
                 card:setType(pokerType.cardType.chu)
+                card:setPickabled(false)
                 card:fix()
                 table.insert(cards, card)
             end
@@ -388,37 +398,51 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:destoryOnePlayerChuCards(acId)
-    for _, v in pairs(self.chuCards[acId]) do
-        v:destroy()
+    local cards = self.chuCards[acId]
+    if cards ~= nil then
+        for _, v in pairs(cards) do
+            v:destroy()
+        end
+        self.chuCards[acId] = {}
     end
-    self.chuCards[acId] = {}
 end
 
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:relocateChuCards(acId)
-    local st = self.game:getSeatTypeByAcId(acId)
     local cards = self.chuCards[acId]
+    self:sortCards(cards)
+
+    local st = self.game:getSeatTypeByAcId(acId)
     local startPos = self:getChuCardStartPos(st)
     local interval = self:getChuCardInterval(st)
-    local z = startPos.z
+    local order = 0
 
     if st == seatType.mine then
+        local x = startPos.x + ((#cards - 1) * interval + 0) * -0.5
+        for k, v in pairs(cards) do
+            local pos = Vector3.New(x + (k - 1) * interval, startPos.y, startPos.z)
+            v:setLocalPosition(pos)
 
+            order = order + 1
+            v:setSortingOrder(order)
+        end
     elseif st == seatType.right then
         for i=#cards, 1, -1 do
-            local pos = Vector3.New(startPos.x + (i - 1) * interval, startPos.y, z)
+            local pos = Vector3.New(startPos.x - (i - 1) * interval, startPos.y, startPos.z)
             cards[i]:setLocalPosition(pos)
 
-            z = z - 0.00001
+            order = order + 1
+            cards[i]:setSortingOrder(order)
         end
     elseif st == seatType.left then
         for k, v in pairs(cards) do
-            local pos = Vector3.New(startPos.x + (k - 1) * interval, startPos.y, z)
+            local pos = Vector3.New(startPos.x + (k - 1) * interval, startPos.y, startPos.z)
             v:setLocalPosition(pos)
 
-            z = z - 0.00001
+            order = order + 1
+            v:setSortingOrder(order)
         end
     end
 end
@@ -428,9 +452,20 @@ end
 ----------------------------------------------------------------------------------
 function paodekuaiOperation:onOpList(msg)
     if msg.AcId == self.game.mainAcId then
-        local opinfo = msg.OpInfos[1]
-        if opinfo.Op == opType.paodekuai.chu.id then
-            self:showOpButtons()
+        for _, v in pairs(msg.OpInfos) do
+            if v.Op == opType.paodekuai.chu.id then
+                if v.DetailTyp == helper.paixing.none then
+                    self:showOpButtons()
+                end
+            elseif v.Op == opType.paodekuai.tianGuan.id then
+
+            elseif v.Op == opType.paodekuai.pass.id then
+
+            elseif v.Op == opType.paodekuai.buChu.id then
+
+            else
+
+            end
         end
     end
 
@@ -502,6 +537,13 @@ function paodekuaiOperation:onOpDoChu(acId, cards)
         self:relocateInhandCards(acId)
     end
     self:createOnePlayerChuCards(acId, cards)
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function paodekuaiOperation:onOpDoBuChu(acId)
+    self:destoryOnePlayerChuCards(acId)
 end
 
 -------------------------------------------------------------------------------

@@ -10,10 +10,10 @@ local paodekuaiDesk = class("paodekuaiDesk", base)
 _RES_(paodekuaiDesk, "PaodekuaiDeskUI", "DeskUI")
 
 local clockPosition = {
-    [seatType.mine]  = Vector3.New( 0,   90, 0),
-    [seatType.right] = Vector3.New(-280, 0,  0),
-    [seatType.top]   = Vector3.New( 0,   0,  0),
-    [seatType.left]  = Vector3.New( 280, 0,  0),
+    [seatType.mine]  = Vector3.New( 0,    90,  0),
+    [seatType.right] = Vector3.New(-170, -24,  0),
+    [seatType.top]   = Vector3.New( 0,    0,   0),
+    [seatType.left]  = Vector3.New( 170, -24,  0),
 }
 
 local COUNTDOWN_SECONDS_C = 15
@@ -132,10 +132,24 @@ end
 -- 
 ----------------------------------------------------------------------------------
 function paodekuaiDesk:onOpList(msg)
+    local acId = msg.AcId
     local opinfo = msg.OpInfos[1]
+
     if opinfo.Op == opType.paodekuai.chu.id then
-        self:showClock(msg.AcId)
+        self:showClock(acId)
+        local st = self.game:getSeatTypeByAcId(acId)
+        self.headers[st]:hideBuChu()
+    elseif opinfo.Op == opType.paodekuai.buChu.id then
+        
     end
+end
+
+----------------------------------------------------------------------------------
+-- 
+----------------------------------------------------------------------------------
+function paodekuaiDesk:onOpDoBuChu(acId)
+    local st = self.game:getSeatTypeByAcId(acId)
+    self.headers[st]:showBuChu()
 end
 
 ----------------------------------------------------------------------------------
@@ -153,6 +167,11 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiDesk:reset()
+    for _, h in pairs(self.headers) do
+        h:hideBuChu()
+        h:setCount(nil)
+    end
+
     self:hideClock()
 end
 

@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1103372378055890
 GameObject:
   m_ObjectHideFlags: 1
@@ -401,50 +401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mAutoSize: 1
   mItems:
-  - key: bao
-    sprite: {fileID: 21300000, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: budang
-    sprite: {fileID: 21300320, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: bupiao
-    sprite: {fileID: 21300322, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: chi
-    sprite: {fileID: 21300002, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: dang
-    sprite: {fileID: 21300324, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: deng
-    sprite: {fileID: 21300326, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: gou
-    sprite: {fileID: 21300332, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: hu
-    sprite: {fileID: 21300008, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: hua
-    sprite: {fileID: 21300334, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: jiao
-    sprite: {fileID: 21300336, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: la
-    sprite: {fileID: 21300338, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: peng
-    sprite: {fileID: 21300010, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: piao
-    sprite: {fileID: 21300340, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: shou
-    sprite: {fileID: 21300342, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: shui
-    sprite: {fileID: 21300344, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: tou
-    sprite: {fileID: 21300346, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: zhao
-    sprite: {fileID: 21300348, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: zuozhuang
-    sprite: {fileID: 21300364, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: huazhuang
-    sprite: {fileID: 21300352, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: che
-    sprite: {fileID: 21300362, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: weigui
-    sprite: {fileID: 21300354, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
-  - key: an
-    sprite: {fileID: 21300316, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  - key: buchu
+    sprite: {fileID: 21300218, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
 --- !u!114 &114031906507217856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -562,10 +520,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: b38bed603092c95488eb3df27323943f, type: 3}
-    m_FontSize: 20
+    m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 42
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -647,7 +605,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300316, guid: 2d253b3c0d9f3f44bbfd4da49b1a1993, type: 3}
+  m_Sprite: {fileID: 21300218, guid: ad3a954b133ab2841a6dd140248f07b1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -763,10 +721,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -890,7 +848,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: b38bed603092c95488eb3df27323943f, type: 3}
-    m_FontSize: 22
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -1323,7 +1281,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -21, y: -146}
-  m_SizeDelta: {x: 104, y: 100}
+  m_SizeDelta: {x: 159, y: 69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224124216311783266
 RectTransform:
@@ -1369,7 +1327,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1595844540546442}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224582136814616036}
@@ -1377,8 +1335,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.5, y: -0.5}
-  m_SizeDelta: {x: 90, y: 90}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224385827361868490
 RectTransform:
@@ -1455,7 +1413,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 76, y: 76}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224582136814616036
 RectTransform:
@@ -1474,7 +1432,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 76, y: 76}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224583233403046774
 RectTransform:
@@ -1511,16 +1469,16 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1388713647469438}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.48242188, y: -0.6484375, z: 0}
-  m_LocalScale: {x: 0.99910116, y: 0.99910116, z: 0.99910116}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224495513355370160}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.48242188, y: -0.6484375}
-  m_SizeDelta: {x: 90, y: 90}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224615873536401354
 RectTransform:

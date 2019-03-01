@@ -39,6 +39,15 @@ function paodekuaiDeskHeader:setCount(cnt)
     end
 end
 
+function paodekuaiDeskHeader:showBuChu()
+    self.mGfx:setSprite("buchu")
+    self.mGfx:show()
+end
+
+function paodekuaiDeskHeader:hideBuChu()
+    self.mGfx:hide()
+end
+
 return paodekuaiDeskHeader
 
 --endregion

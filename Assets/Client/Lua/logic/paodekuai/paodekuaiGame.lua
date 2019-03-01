@@ -12,6 +12,10 @@ local totalCardCountByCity = {
     [cityType.jintang] = 52,
 }
 
+local huType = {
+    hu = 0,
+}
+
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
@@ -217,14 +221,43 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiGame:onOpDoBuChu(msg)
-
+    self.deskUI:onOpDoBuChu(msg.AcId)
+    self.operationUI:onOpDoBuChu(msg.AcId)
 end
 
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiGame:onGameEndListener(specialData, datas, totalScores)
-    log("paodekuaiGame.onGameEndListener")
+--    log("paodekuaiGame.onGameEndListener, specialData = " .. table.tostring(specialData))
+    datas.huAcId = specialData.HuAcId
+    datas.huType = specialData.HuType
+
+    for _, v in pairs(specialData.PlayerInfos) do
+        local acId = v.AcId
+        local p = self.players[acId]
+
+        local d = {
+            acId            = v.AcId, 
+            headerUrl       = self.players[p.acId].headerUrl,
+            nickname        = p.nickname, 
+            score           = v.Score,
+            totalScore      = totalScores[v.AcId], 
+            turn            = p.turn,
+            inhand          = v.ShouPai,
+            isCreator       = self:isCreator(v.AcId),
+            isWinner        = false,
+            seatType        = self:getSeatTypeByAcId(v.AcId),
+        }
+        table.insert(datas.players, d)
+    end
+    
+    table.sort(datas.players, function(t1, t2)
+        return t1.seatType < t2.seatType
+    end)
+
+    self:clearPlayerGameStatus()
+
     self.deskUI:reset()
     self.operationUI:reset()
 end

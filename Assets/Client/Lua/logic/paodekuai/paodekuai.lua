@@ -34,6 +34,8 @@ function paodekuai:ctor(id)
     self.ctype = pokerType.cardType.shou
     self.dirty = true
     self:fix()
+
+    self:setColliderEnabled(true)
 end
 
 -------------------------------------------------------------------------------
@@ -64,6 +66,13 @@ function paodekuai:fix()
             self.collider.size = size
         end
     end
+end
+
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
+function paodekuai:setSortingOrder(order)
+    self.render.sortingOrder = order
 end
 
 -------------------------------------------------------------------------------
@@ -127,7 +136,6 @@ end
 -------------------------------------------------------------------------------
 function paodekuai:reset()
     self.id = nil
-    self.style = nil
     self.ctype = nil
 
     self:resetRender()
@@ -139,6 +147,7 @@ end
 -------------------------------------------------------------------------------
 function paodekuai:onDestroy()
     self:reset()
+    modelManager.unload(self)
 end
 
 return paodekuai
