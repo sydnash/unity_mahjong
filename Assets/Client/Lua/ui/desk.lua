@@ -55,9 +55,9 @@ end
 
 function desk:registerHandlers()
     if self.game.mode == gameMode.normal then
-        networkManager.registerCommandHandler(protoType.sc.chatMessage, function(msg)
-            self:onChatMessageHandler(msg)
-        end, true)
+        -- networkManager.registerCommandHandler(protoType.sc.chatMessage, function(msg)
+        --     self:onChatMessageHandler(msg)
+        -- end, true)
 
         gvoiceManager.registerRecordFinishedHandler(function(filename)
             self:onGVoiceRecordFinishedHandler(filename)
@@ -79,7 +79,7 @@ end
 
 function desk:unregisterHandlers()
     if self.game.mode == gameMode.normal then
-        networkManager.unregisterCommandHandler(protoType.sc.chatMessage)
+        -- networkManager.unregisterCommandHandler(protoType.sc.chatMessage)
 
         gvoiceManager.unregisterRecordFinishedHandler()
         gvoiceManager.unregisterPlayStartedHandler()

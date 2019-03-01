@@ -339,6 +339,7 @@ function mahjongGame:onOpDoHandler(msg)
             elseif optype == opType.hu.id then
                 local t = v.Do.T
                 self:onOpDoHu(acId, cards, beAcId, beCard, t, v.FT)
+                return 0.9
             elseif optype == opType.guo.id then
                 self:onOpDoGuo(acId)
             else
