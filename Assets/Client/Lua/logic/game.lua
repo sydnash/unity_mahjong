@@ -305,12 +305,12 @@ end
 
 function game:onChatMessageHandler(msg)
     if self.messageQueueHandler then
-    -- local func = function()
-        if self.deskUI then
-            self.deskUI:onChatMessageHandler(msg)
+        local func = function()
+            if self.deskUI then
+                self.deskUI:onChatMessageHandler(msg)
+            end
         end
-    -- end
-    -- self:pushMessage(func)
+        self:pushMessage(func)
     end
 end
 
