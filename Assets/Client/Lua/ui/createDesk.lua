@@ -310,6 +310,7 @@ function createDesk:onCreateClickedHandler()
     choose.Game = self.gameType
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 
+    log("-----------" .. table.tostring(choose))
     showWaitingUI("正在创建房间，请稍候...")
     
     local eventName = "createdesk_" .. tostring(self.cityType) .. "_" .. tostring(self.gameType)

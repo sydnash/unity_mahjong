@@ -30,8 +30,28 @@ local SpriteRenderer = UnityEngine.SpriteRenderer
 local BoxCollider = UnityEngine.BoxCollider
 local GameObject = UnityEngine.GameObject
 
+local d = 160 / 255
+local DARK_COLOR  = Color.New(d, d, d, 1)
+local l = 255 / 255
+local LIGHT_COLOR = Color.New(l, l, l, 1)
+
+function doushisi:setCanChu(can)
+    if can == self.canChu then
+        return
+    end
+    self.canChu = can
+    if self.render ~= nil then
+        if can then
+            self.render.color = LIGHT_COLOR
+        else
+            self.render.color = DARK_COLOR
+        end
+    end
+end
+
 function doushisi:ctor(id)
     self.id = id
+    self.canChu = true
 
     local go = modelManager.load("doushisi", "doushisi")
     self:init(go)
