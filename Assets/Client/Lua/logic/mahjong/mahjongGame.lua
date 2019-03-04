@@ -137,7 +137,8 @@ function mahjongGame:syncSeats(seats)
             local detail = opType.hu.detail
             self.knownMahjong[player.hu[1].HuCard] = 1
             player.huType = huInfo.HuType
-            if huInfo.HuType == detail.zimo or huInfo.HuType == detail.gangshanghua or huInfo.HuType == detail.haidilao then --自摸
+--            if huInfo.HuType == detail.zimo or huInfo.HuType == detail.gangshanghua or huInfo.HuType == detail.haidilao then --自摸
+            if (#shou - 2) % 3 == 0 then --自摸
                 if player.acId == self.mainAcId then
                     for k, u in pairs(shou) do
                         if u == player.hu[1].HuCard then
@@ -320,6 +321,7 @@ end
 function mahjongGame:onOpDoHandler(msg)
 --    log("opdo, msg = " .. table.tostring(msg))
     local func = (function()
+        local time
         for _, v in pairs(msg.Do) do
             local optype = v.Op
             local acId   = v.AcId
@@ -335,17 +337,17 @@ function mahjongGame:onOpDoHandler(msg)
                 self:onOpDoPeng(acId, cards, beAcId, beCard)
             elseif optype == opType.gang.id then
                 local t = v.Do.T
-                self:onOpDoGang(acId, cards, beAcId, beCard, t)
+                time = self:onOpDoGang(acId, cards, beAcId, beCard, t)
             elseif optype == opType.hu.id then
                 local t = v.Do.T
-                self:onOpDoHu(acId, cards, beAcId, beCard, t, v.FT)
-                return 0.9
+                time = self:onOpDoHu(acId, cards, beAcId, beCard, t, v.FT)
             elseif optype == opType.guo.id then
                 self:onOpDoGuo(acId)
             else
                 log("unknown optype: " .. tostring(optype))
             end
         end
+        return time
     end)
     self:pushMessage(func, nil, msg)
 end
@@ -483,6 +485,16 @@ function mahjongGame:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
     player.huType = t 
     self.deskUI:onPlayerHu(acId, t)
     self.operationUI:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
+    local huCnt = 0
+    for _, p in pairs(self.players) do
+        if p.isHu then
+            huCnt = huCnt + 1
+        end
+    end
+    if self:getTotalPlayerCount() - huCnt <= 1 then
+        return 0.9
+    end
+    return 0
 end
 
 -------------------------------------------------------------------------------

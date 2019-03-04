@@ -739,13 +739,42 @@ function doushisiOperation:hideChuHint()
     self.mChuHint:hide()
 end
 
-function doushisiOperation:enableChu()
+function doushisiOperation:enableAllInhandCards(acId)
+    if not self.inhandCards then
+        return
+    end
+    local inhandCards = self.inhandCards[acId]
+    if not inhandCards then
+        return
+    end
+    for idx, card in pairs(inhandCards) do
+        card:setCanChu(true)
+    end
+end
+
+function doushisiOperation:enableChu(opInfo)
     self.canChuPai = true
+    self:enableAllInhandCards(self.game.mainAcId)
+    if not json.isNilOrNull(opInfo.Cards) and #opInfo.Cards > 0 then
+        local acId = self.game.mainAcId
+        local inhandCards = self.inhandCards[acId]
+        for idx, card in pairs(inhandCards) do
+            card:setCanChu(false)
+        end
+        for _, id in pairs(opInfo.Cards) do
+            local card = self:findCardFromInhand(self.game.mainAcId, id, false)
+            if card then
+                card:setCanChu(true)
+            end
+        end
+    end
     self:showChuHint()
 end
 
 function doushisiOperation:disableChu()
     self.canChuPai = false
+    self:enableAllInhandCards(self.game.mainAcId)
+
     self:hideChuHint()
 end
 
@@ -762,7 +791,7 @@ function doushisiOperation:virtureChu(card)
 end
 
 function doushisiOperation:onOpListChu(opInfo)
-    self:enableChu()
+    self:enableChu(opInfo)
 end
 
 function doushisiOperation:onOpDoChu(acId, id)
@@ -1145,6 +1174,7 @@ function doushisiOperation:addCardTo(card, pos, seatType, cardType, rot, scale, 
     card:setType(cardType)
     card:fix()
     card:setLocalPosition(pos)
+    card:setCanChu(true)
     if rot then
         card:setLocalRotation(rot)
     end
@@ -1170,9 +1200,9 @@ function doushisiOperation:onMoPai(acId, ids)
 end
 
 local poses = {
-    [seatType.top]          = { pos = Vector3.New(0, 4.17, 0)},
-    [seatType.right]        = { pos = Vector3.New(7, 0.2, 0)},
-    [seatType.left]         = { pos = Vector3.New(-7, 0.2, 0)},
+    [seatType.top]          = { pos = Vector3.New(0, 3.20, 0)},
+    [seatType.right]        = { pos = Vector3.New(6.4, 0.2, 0)},
+    [seatType.left]         = { pos = Vector3.New(-6.4, 0.2, 0)},
 }
 
 function doushisiOperation:moOnePai(acId, id)
@@ -1619,6 +1649,9 @@ function doushisiOperation:touchHandler(phase, pos)
             if clickCard == nil then
                 return
             end
+            if not clickCard.canChu then
+                return
+            end
             local preSelectedCard = self.curSelectdCard
             self.curSelectdCard = clickCard
 
@@ -2035,7 +2068,7 @@ function doushisiOperation:movePromoteCardToChu()
     self.animationManager:add(seqAction)
     seqAction:play()
 
-    return flyTime
+    return flyTime + 0.1
 end
 
 ----------------------------------------------------------------------------------------
@@ -2146,10 +2179,13 @@ function doushisiOperation:createFlyNode(ids)
     return node
 end
 
-function doushisiOperation:computeFlyTime(x1, y1, x2, y2, speed) 
+function doushisiOperation:computeFlyTime(x1, y1, x2, y2, time) 
+    if time then
+        return time
+    end
     local d1 = math.pow(x2 - x1, 2) + math.pow(y2 - y1, 2)
     local dis = math.sqrt(d1)
-    local speed = speed or 11.40 --pixels per second
+    local speed = 11.40 --pixels per second
     local time = dis / speed
     if time < 0.22 then
         time = 0.22
@@ -2160,8 +2196,8 @@ function doushisiOperation:computeFlyTime(x1, y1, x2, y2, speed)
     return time
 end
 
-function doushisiOperation:getFlyAction(node, x1, y1, x2, y2, r2, s2, r1, s1)
-    local flyTime = self:computeFlyTime(x1, y1, x2, y2)
+function doushisiOperation:getFlyAction(node, x1, y1, x2, y2, r2, s2, r1, s1, time)
+    local flyTime = self:computeFlyTime(x1, y1, x2, y2, time)
 
     local mvaction = tweenPosition.new(node, flyTime, Vector3.New(x1, y1, 0), Vector3.New(x2, y2, 0))
     local actions = {}

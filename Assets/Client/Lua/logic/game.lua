@@ -305,12 +305,12 @@ end
 
 function game:onChatMessageHandler(msg)
     if self.messageQueueHandler then
-    -- local func = function()
-        if self.deskUI then
-            self.deskUI:onChatMessageHandler(msg)
+        local func = function()
+            if self.deskUI then
+                self.deskUI:onChatMessageHandler(msg)
+            end
         end
-    -- end
-    -- self:pushMessage(func)
+        self:pushMessage(func)
     end
 end
 
@@ -524,7 +524,7 @@ function game:onExitDeskHandler(msg)
                 }
 
                 datas.players[p.acId] = d
-            end
+            end 
 
             local ui = require("ui.gameOver.gameOver").new(self, datas)
             ui:show()
@@ -562,6 +562,25 @@ function game:onExitDeskHandler(msg)
     end)
 
     self:pushMessage(func)
+end
+
+-------------------------------------------------------------------------------
+-- 服务器通知其他玩家退出
+-------------------------------------------------------------------------------
+function game:markWinners(players)
+    local maxScore = 1
+
+    for _, v in pairs(players) do
+        if v.totalScore > maxScore then
+            maxScore = v.totalScore
+        end
+    end
+
+    for _, v in pairs(players) do
+        if v.totalScore == maxScore then
+            v.isWinner = true
+        end
+    end
 end
 
 -------------------------------------------------------------------------------

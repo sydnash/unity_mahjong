@@ -77,9 +77,6 @@ function detailPanel:set(cityType, gameType, layout, config)
         g:hide()
     end
 
-    self:processLayout()
-    self:processConfig()
-
     for k, L in pairs(self.layout) do
         local group = self.groups[k]
         group.title:setText(L.title)
@@ -126,6 +123,8 @@ function detailPanel:set(cityType, gameType, layout, config)
         group:allowSwitchOff(L.group.switchOff)
         group:show()
     end
+    self:processLayout()
+    self:processConfig()
 end
 
 function detailPanel:getCreateConfig()

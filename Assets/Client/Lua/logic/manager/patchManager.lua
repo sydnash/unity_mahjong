@@ -246,13 +246,15 @@ local DOWNLOAD_WORKING      = 1  --正在下载
 -------------------------------------------------------------------
 local function downloadPatches(url, files, callback)
     for _, v in pairs(files) do
+        local path = LFS.CombinePath(CACHE_PATH, v.name)
+        LFS.RemoveFile(path)
+
         local www = url .. "/" .. v.name
 
         downloadPatchAsync:addBytesRequest(www, HTTP_METHOD, patchTimeout * 1000, nil, function(bytes, size, completed)
             if bytes == nil then
                 callback(DOWNLOAD_FAILED, v.name, 0)
             else
-                local path = LFS.CombinePath(CACHE_PATH, v.name)
                 LFS.AppendBytes(path, bytes)
 
                 if completed then
@@ -333,7 +335,6 @@ function patchManager.patch(callback)
         end
       
         if #plist == 0 then--未检测到更新
-            print("patchManager: plsit is empty")
             invokeCallback()
             downloading:close()
             return
@@ -356,7 +357,6 @@ function patchManager.patch(callback)
             downloadPatches(url, files, function(status, filename, size)
                 if status == DOWNLOAD_FAILED then 
                     table.insert(failedList, { name = filename })
-                    print("download failed, filename = " .. filename)
                 else
                     if status == DOWNLOAD_COMPLETED then
                         successCount = successCount + 1

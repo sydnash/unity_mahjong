@@ -1765,6 +1765,9 @@ function mahjongOperation:getMahjongFromIdle(mid)
     end
         
     log("connot find pai [id = " .. tostring(mid) .. "] from idle.")
+    if not appConfig.debug then
+        commitError("connot find pai [id = " .. tostring(mid) .. "] from idle.")
+    end
     return nil, nil, nil
 end
 

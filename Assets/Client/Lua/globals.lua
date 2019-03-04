@@ -99,9 +99,10 @@ local function networkDisconnectedCallback(idx)
 
         if deskId <= 0 then
             gamepref.player.currentDesk = nil
-            if clientApp.currentDesk and not clientApp.currentDesk:isPlayback() and not clientApp.currentDesk.isGameOverUIShow then
+            local desk = clientApp.currentDesk
+            if desk and not clientApp.currentDesk:isPlayback() and not clientApp.currentDesk.isGameOverUIShow then
                 showMessageUI("牌局已经结束，请点击确定并去战绩查看详情", function()
-                    clientApp.currentDesk:exitGame()
+                    desk:exitGame()
                 end)
             end
             return

@@ -165,6 +165,13 @@ local doushisiLayoutBase = {
         }, 
         group = { value = true, switchOff = false },
     },
+    [6] = {
+        title = "",
+        items = {
+            [1] = { style = "checkbox", text = "古追", key = "GuZhui", value = { selected = 1, unselected = 2 }, },
+        },
+        group = { value = false, switchOff = false },
+    }
 }
 
 local chengduDoushisiLayout      = table.clone(doushisiLayoutBase)
@@ -252,6 +259,7 @@ local jintangDoushisiConfig      = table.clone(doushisiConfigBase)
 jintangDoushisiConfig["YingDa"]  = 1
 jintangDoushisiConfig["CaiShen"] = 1
 jintangDoushisiConfig["DianShu"] = 1
+jintangDoushisiConfig["GuZhui"]  = 2
 local xichongDoushisiConfig      = table.clone(doushisiConfigBase)
 local yingjingDoushisiConfig     = table.clone(doushisiConfigBase)
 local nanchongDoushisiConfig     = table.clone(doushisiConfigBase)
@@ -333,6 +341,7 @@ local doushisiShiftConfigBase = {
 local chengduDoushisiShiftConfig     = table.clone(doushisiShiftConfigBase)
 local jintangDoushisiShiftConfig     = table.clone(doushisiShiftConfigBase)
 jintangDoushisiShiftConfig["YingDa"]   = { [true] = 1, [false]  = 2 }
+jintangDoushisiShiftConfig["GuZhui"]   = { [true] = 1, [false]  = 2 }
 jintangDoushisiShiftConfig["CaiShen"]  = { [8] = 1, [12] = 2 }
 jintangDoushisiShiftConfig["DianShu"]  = { [80] = 1, [100] = 2, [120] = 3, [150] = 4 }
 local xichongDoushisiShiftConfig     = table.clone(doushisiShiftConfigBase)
