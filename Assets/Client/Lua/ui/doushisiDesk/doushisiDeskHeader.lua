@@ -149,6 +149,10 @@ function doushisiDeskHeader:playGfx(name)
     return 1
 end
 
+function doushisiDeskHeader:onDestroy() 
+    self:reset()
+end
+
 return doushisiDeskHeader
 
 --endregion
