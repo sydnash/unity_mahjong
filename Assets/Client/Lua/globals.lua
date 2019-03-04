@@ -51,6 +51,7 @@ talkingData     = require("platform.talkingData")
 
 local waiting       = require("ui.waiting")
 local messagebox    = require("ui.messageBox")
+local toast         = require("ui.toast")
 local mahjongType   = require("logic.mahjong.mahjongType")
 local doushisiType  = require("logic.doushisi.doushisiType")
 
@@ -211,7 +212,7 @@ end
 -- 关闭等待界面
 -------------------------------------------------------------
 function closeWaitingUI()
-    if waiting_ui~= nil then
+    if waiting_ui ~= nil then
         waiting_ui:close()
         waiting_ui = nil
     end
@@ -224,6 +225,24 @@ function showMessageUI(text, confirmCallback, cancelCallback)
     local ui = messagebox.new(text, confirmCallback, cancelCallback)
     ui:show()
     ui:setAsLastSibling()
+end
+
+local toast_ui = nil
+
+-------------------------------------------------------------
+-- 
+-------------------------------------------------------------
+function showToastUI(text)
+    if toast_ui == nil then
+        toast_ui = toast.new(function()
+            toast_ui = nil
+        end)
+    end
+
+    toast_ui:setText(text)
+
+    toast_ui:show()
+    toast_ui:setAsLastSibling()
 end
 
 -------------------------------------------------------------

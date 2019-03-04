@@ -81,7 +81,7 @@ local function classifyShouPai(shouPai)
     for _, pai in ipairs(shouPai) do
         local id = pai.id
         local desc = helper.cardDesc(id)
-        local v = desc.Value
+        local v = desc.value
         if vec[v] == nil then
             vec[v] = {cnt = 0, ids = {}, v = v}
         end
@@ -101,7 +101,7 @@ local function classifyIds(ids)
     end
     for _, id in ipairs(ids) do
         local desc = helper.cardDesc(id)
-        local v = desc.Value
+        local v = desc.value
         if vec[v] == nil then
             vec[v] = {cnt = 0, ids = {}, v = v}
         end
@@ -160,7 +160,7 @@ local function findZhaDan(shouPai)
 end
 
 local function isInExcepts(v, excepts)
-    local pos = table.indexof(excepts, v)
+    local pos = table.indexOf(excepts, v)
     if not pos then return false end
     return true
 end
@@ -263,7 +263,7 @@ function danzhang.compair(ori, cur)
 	end
 	local desc1 = cardDesc(ori[1])
 	local desc2 = cardDesc(cur[1])
-	return desc2.Value > desc1.Value
+	return desc2.value > desc1.value
 end
 
 function danzhang.findMax(ori, shouPai)
@@ -271,7 +271,7 @@ function danzhang.findMax(ori, shouPai)
     local ret = {}
     local vec = classifyShouPai(shouPai)
 
-    local v1 = cardDesc(ori[1]).Value
+    local v1 = cardDesc(ori[1]).value
     for v, info in ipairs(vec) do
         if info.cnt == 1 and v > v1 then
             table.insert(ret, {info.ids[1]})
@@ -302,7 +302,7 @@ function duizi.check(ids)
     if #ids ~= 2 then
 		return false
 	end
-	if cardDesc(ids[1]).Value == cardDesc(ids[2]).Value then
+	if cardDesc(ids[1]).value == cardDesc(ids[2]).value then
 		return true
 	end
 	return false
@@ -314,7 +314,7 @@ function duizi.compair(ori, cur)
 	end
 	local desc1 = cardDesc(ori[1])
 	local desc2 = cardDesc(cur[1])
-	return desc2.Value > desc1.Value
+	return desc2.value > desc1.value
 end
 
 function duizi.findMax(ori, shouPai)
@@ -322,7 +322,7 @@ function duizi.findMax(ori, shouPai)
     local ret = {}
     local vec = classifyShouPai(shouPai)
 
-    local v1 = cardDesc(ori[1]).Value
+    local v1 = cardDesc(ori[1]).value
 
     for v, info in ipairs(vec) do
         if info.cnt == 2 and v > v1 then
@@ -348,9 +348,9 @@ function sanzhang.check(ids)
     if #ids ~= 3 then
 		return false
 	end
-    local v1 = cardDesc(ids[1]).Value
+    local v1 = cardDesc(ids[1]).value
     for i = 2,3 do
-        local v = cardDesc(ids[i]).Value
+        local v = cardDesc(ids[i]).value
         if v ~= v1 then
             return false
         end
@@ -364,7 +364,7 @@ function sanzhang.compair(ori, cur)
 	end
 	local desc1 = cardDesc(ori[1])
 	local desc2 = cardDesc(cur[1])
-	return desc2.Value > desc1.Value
+	return desc2.value > desc1.value
 end
 
 function sanzhang.findMax(ori, shouPai)
@@ -372,7 +372,7 @@ function sanzhang.findMax(ori, shouPai)
     local ret = {}
     local vec = classifyShouPai(shouPai)
 
-    local v1 = cardDesc(ori[1]).Value
+    local v1 = cardDesc(ori[1]).value
 
     for v, info in ipairs(vec) do
         if info.cnt == 3 and v > v1 then
@@ -812,9 +812,9 @@ function zhadan.check(ids)
     if #ids ~= 4 then
 		return false
 	end
-    local v1 = cardDesc(ids[1]).Value
+    local v1 = cardDesc(ids[1]).value
     for i = 2,4 do
-        local v = cardDesc(ids[i]).Value
+        local v = cardDesc(ids[i]).value
         if v ~= v1 then
             return false
         end
@@ -828,13 +828,13 @@ function zhadan.compair(ori, cur)
 	end
 	local desc1 = cardDesc(ori[1])
 	local desc2 = cardDesc(cur[2])
-	return desc2.Value > desc1.Value
+	return desc2.value > desc1.value
 end
 
 function zhadan.findMax(ori, shouPai)
     local vec = classifyShouPai(shouPai)
 
-    local v1 = cardDesc(ori[1]).Value
+    local v1 = cardDesc(ori[1]).value
     local ret = {}
 
     for v, info in ipairs(vec) do
@@ -1036,7 +1036,7 @@ local function findMaxIdInShouPai(shouPai)
     local v = -1
     local id = -1
     for _, pai in pairs(shouPai) do
-        local curv = cardDesc(pai.id).Value
+        local curv = cardDesc(pai.id).value
         if v < curv then
             v = curv
             id = pai.id
@@ -1122,7 +1122,7 @@ local function cardToString(id)
     local desc = cardDesc(id)
 
     if id <= 51 then
-        return colorvec[desc.Color] .. valuevec[desc.Value]
+        return colorvec[desc.Color] .. valuevec[desc.value]
     end
 
     if id == 52 then
@@ -1157,8 +1157,8 @@ function helper.checkChosePai(chuOpInfo, chosePais, shouPai, checker, notsupport
         end
         if px == PDKPaiXingDanZhang and chuOpInfo.NeedMaxD then
             local maxid = findMaxIdInShouPai(shouPai)
-            local maxv = cardDesc(maxid).Value
-            if cardDesc(ids[1]).Value ~= maxv then
+            local maxv = cardDesc(maxid).value
+            if cardDesc(ids[1]).value ~= maxv then
                 return false, "必须出手中最大的单张"
             end
         end
@@ -1171,8 +1171,8 @@ function helper.checkChosePai(chuOpInfo, chosePais, shouPai, checker, notsupport
             return false, "请选择正确的牌型."
         end
         local maxid = findMaxIdInShouPai(shouPai)
-        local maxv = cardDesc(maxid).Value
-        if cardDesc(ids[1]).Value ~= maxv then
+        local maxv = cardDesc(maxid).value
+        if cardDesc(ids[1]).value ~= maxv then
             return false, "必须出手中最大的单张"
         end
         return true, PDKPaiXingDanZhang
@@ -1195,9 +1195,9 @@ function helper.getChuPaiSound(cards, px, lastPx)
     local dani = "pdk_dani"
 
     if px == PDKPaiXingDanZhang then
-        return "one_" .. cardDesc(cards[1]).Value
+        return "one_" .. cardDesc(cards[1]).value
     elseif px == PDKPaiXingDuiZi then
-        return "double_" .. cardDesc(cards[1]).Value
+        return "double_" .. cardDesc(cards[1]).value
     elseif px == PDKPaiXingSanZhang then
         if lastPx ~= PDKPaiXingNone then
             return dani

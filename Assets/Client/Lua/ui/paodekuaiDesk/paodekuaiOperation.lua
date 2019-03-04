@@ -62,6 +62,17 @@ local seats = {
     },
 }
 
+local notsupportpx = {
+    helper.paixing.PDKPaiXingNone,
+    helper.paixing.PDKPaiXingSanDaiYi,
+    helper.paixing.PDKPaiXingSanDaiEr,
+    helper.paixing.PDKPaiXingFeiJi,
+    helper.paixing.PDKPaiXingFeiJiDaiChiBang,
+    helper.paixing.PDKPaiXingSiDaiYi,
+    helper.paixing.PDKPaiXingSiDaiEr,
+    helper.paixing.PDKPaiXingSiDaiSan,
+}
+
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
@@ -72,6 +83,8 @@ function paodekuaiOperation:ctor(game)
     self.inhandCards = {}
     self.chuCards = {}
     self.touchedCards = {}
+
+    self.checker = helper.checker:create(3)
 end
 
 -------------------------------------------------------------------------------
@@ -162,7 +175,6 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:onGameStart()
-    log("paodekuaiOperation.onGameStart")
     touch.addListener(self.touchHandler, self)
 end
 
@@ -177,12 +189,22 @@ function paodekuaiOperation:onGameSync()
     self:createChuCards()
 
     local reenter = self.game.data.Reenter
-    log(table.tostring(reenter))
-
     local oplist = reenter.CurOpList
-    if oplist ~= nil then
-        if oplist.AcId == gamepref.player.acId then
-            self:showOpButtons()
+
+    if oplist ~= nil and oplist.OpInfos ~= nil then
+        for _, v in pairs(oplist.OpInfos) do
+            if v.Op == opType.paodekuai.chu.id then
+                self.lastChuCards = v
+                self:showOpButtons()
+            elseif v.Op == opType.paodekuai.tianGuan.id then
+
+            elseif v.Op == opType.paodekuai.pass.id then
+
+            elseif v.Op == opType.paodekuai.buChu.id then
+
+            else
+
+            end
         end
     end
 end
@@ -191,7 +213,6 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:onFaPai()
-    log("paodekuaiOperation.onFaPai")
     self:createInhandCards()
 end
 
@@ -456,6 +477,8 @@ function paodekuaiOperation:onOpList(msg)
     if msg.AcId == self.game.mainAcId then
         for _, v in pairs(msg.OpInfos) do
             if v.Op == opType.paodekuai.chu.id then
+                self.lastChuCards = v
+                self.hintGroups = nil
                 self:showOpButtons()
             elseif v.Op == opType.paodekuai.tianGuan.id then
 
@@ -493,6 +516,35 @@ end
 ----------------------------------------------------------------------------------
 function paodekuaiOperation:onHintClickedHandler()
     playButtonClickSound()
+
+    local inhandCards = self.inhandCards[gamepref.player.acId]
+
+    if self.hintGroups == nil then
+        self.hintGroups = helper.autoChose(self.lastChuCards, inhandCards, self.checker)
+        self.hintGroupIdx = 1
+    end
+
+    if self.hintGroups == nil or #self.hintGroups == 0 then
+        return
+    end
+
+    if self.hintGroupIdx == nil or self.hintGroupIdx > #self.hintGroups then
+        self.hintGroupIdx = 1
+    end
+
+    local hintCards = self.hintGroups[self.hintGroupIdx]
+    for _, v in pairs(inhandCards) do
+        v:setSelected(false)
+
+        for _, u in pairs(hintCards) do
+            if v.id == u then
+                v:setSelected(true)
+                break
+            end
+        end
+    end
+
+    self.hintGroupIdx = self.hintGroupIdx + 1
 end
 
 ----------------------------------------------------------------------------------
@@ -503,19 +555,27 @@ function paodekuaiOperation:onChuClickedHandler()
 
     local inhandCards = self.inhandCards[self.game.mainAcId]
     local selectCards = {}
-    for _, v in pairs(inhandCards) do
-        if v.selected then
-            table.insert(selectCards, v.id)
+
+    if #inhandCards == 1 then
+        table.insert(selectCards, inhandCards[1].id)
+    else
+        for _, v in pairs(inhandCards) do
+            if v.selected then
+                table.insert(selectCards, v.id)
+            end
         end
     end
 
-    if #selectCards == 0 then
+    local ok, txt = helper.checkChosePai(self.lastChuCards, selectCards, inhandCards, self.checker, notsupportpx)
 
-    else
-        networkManager.pdkChuPai(selectCards, function(msg)
-            self:relocateInhandCards(self.game.mainAcId)
-        end)
+    if not ok then
+        showToastUI(txt)
+        return
     end
+
+    networkManager.pdkChuPai(selectCards, function(msg)
+        
+    end)
 end
 
 -------------------------------------------------------------------------------
@@ -534,7 +594,9 @@ function paodekuaiOperation:onOpDoChu(acId, cards)
                 end
             end
         end
+
         self:relocateInhandCards(acId)
+        self.hintGroups = nil
     end
     self:createOnePlayerChuCards(acId, cards)
 end

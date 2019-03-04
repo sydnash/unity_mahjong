@@ -8,7 +8,7 @@ local base = require("common.object")
 local paodekuai = class("paodekuai", base)
 
 local DEFAULT_LAYER         = 0
-local INHAND_MAHJONG_LAYER  = 8
+local INHAND_CARD_LAYER  = 8
 
 local resourceSuffix = {
     [pokerType.cardType.shou]    = string.empty,
@@ -62,7 +62,7 @@ function paodekuai:fix()
             local rect = self.render.sprite.rect
             local pixelsPerUnit = self.render.sprite.pixelsPerUnit
             local size = Vector3.New(rect.width / pixelsPerUnit, rect.height / pixelsPerUnit, 0.01)
-            self.collider.center = Vector2.zero
+            self.collider.center = Vector3.zero
             self.collider.size = size
         end
     end
@@ -113,7 +113,7 @@ function paodekuai:setPickabled(pickabled)
     if self.pickabled ~= pickabled then
         self.pickabled = pickabled
 
-        local layer = pickabled and INHAND_MAHJONG_LAYER or DEFAULT_LAYER
+        local layer = pickabled and INHAND_CARD_LAYER or DEFAULT_LAYER
         self:setLayer(layer, true)
     end
 end
@@ -139,7 +139,7 @@ function paodekuai:reset()
     self.ctype = nil
 
     self:resetRender()
-    self:setColliderEnabled(false)
+--    self:setColliderEnabled(false)
 end
 
 -------------------------------------------------------------------------------

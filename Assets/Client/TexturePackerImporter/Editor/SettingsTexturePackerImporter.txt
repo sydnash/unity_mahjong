@@ -36,6 +36,7 @@ tpsheetFileNames:
 - Assets/Client/Artistic/Atlas/ShareUI/Atlas/Atlas/ShareUI.tpsheet
 - Assets/Client/Artistic/Atlas/ShareUI/Atlas/ShareUI.tpsheet
 - Assets/Client/Artistic/Atlas/ShopUI/Atlas/ShopUI.tpsheet
+- Assets/Client/Artistic/Atlas/ToastUI/Atlas/ToastUI.tpsheet
 - Assets/Client/Artistic/Atlas/UserAgreementUI/Atlas/UserAgreementUI.tpsheet
 - Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.tpsheet
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
@@ -75,10 +76,12 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/ShareUI/Atlas/Atlas/ShareUI.png
 - Assets/Client/Artistic/Atlas/ShareUI/Atlas/ShareUI.png
 - Assets/Client/Artistic/Atlas/ShopUI/Atlas/ShopUI.png
+- Assets/Client/Artistic/Atlas/ToastUI/Atlas/ToastUI.png
 - Assets/Client/Artistic/Atlas/UserAgreementUI/Atlas/UserAgreementUI.png
 - Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

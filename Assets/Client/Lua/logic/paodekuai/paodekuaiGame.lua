@@ -53,7 +53,7 @@ function paodekuaiGame:onEnter(msg)
     base.onEnter(self, msg)
 
     if msg.Reenter ~= nil then
-        log(msg.Reenter)
+        log("paodekuaiGame.onEnter, msg = " .. table.tostring(msg.Reenter))
         self.curOpTurn  = msg.Reenter.CurOpTurn
         self.curOpAcId  = self:getPlayerByTurn(self.curOpTurn).acId
         self.curOpType  = msg.Reenter.CurOpType
@@ -202,18 +202,16 @@ end
 -------------------------------------------------------------------------------
 function paodekuaiGame:onOpDoChu(msg)
     local player = self:getPlayerByAcId(msg.AcId)
+    local inhandCards = player[pokerType.cardType.shou]
 
-    if msg.DelCards ~= nil then
-        local inhandCards = player[pokerType.cardType.shou]
-        for _, id in pairs(msg.Del) do
-            table.removeItem(inhandCards, id)
-        end
+    for _, id in pairs(msg.Del) do
+        table.removeItem(inhandCards, id)
     end
 
-    player[pokerType.cardType.chu] = msg.DelCards
+    player.zhangShu = player.zhangShu - #msg.Del
+    player[pokerType.cardType.chu] = msg.Del
 
-    self.deskUI:updateInhandCardsCount()
-    self.deskUI:showClock(msg.AcId)
+    self.deskUI:onOpDoChu(msg.AcId)
     self.operationUI:onOpDoChu(msg.AcId, msg.Del)
 end
 

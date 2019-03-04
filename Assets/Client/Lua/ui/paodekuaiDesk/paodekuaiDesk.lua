@@ -115,6 +115,8 @@ function paodekuaiDesk:update()
             self.clockTimestamp = now
         end
     end
+
+    base.update(self)
 end
 
 -------------------------------------------------------------------------------
@@ -149,6 +151,14 @@ function paodekuaiDesk:onOpList(msg)
         
         end
     end
+end
+
+----------------------------------------------------------------------------------
+-- 
+----------------------------------------------------------------------------------
+function paodekuaiDesk:onOpDoChu(acId)
+    self:updateInhandCardsCount()
+    self:showClock(acId)
 end
 
 ----------------------------------------------------------------------------------

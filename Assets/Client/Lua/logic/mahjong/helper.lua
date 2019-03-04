@@ -51,6 +51,7 @@ function helper:isHu7Dui(cntVec, duiCnt, singleIdx, tid)
     end
     return false, nil
 end
+
 function helper:isHuNormal(cntVec)
     for idx, cnt in pairs(cntVec) do
         if cnt >= 2 then
