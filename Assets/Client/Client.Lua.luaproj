@@ -85,6 +85,7 @@
     <Compile Include="Lua\logic\manager\headerManager.lua" />
     <Compile Include="Lua\logic\manager\locationManager.lua" />
     <Compile Include="Lua\logic\manager\patchManager.lua" />
+    <Compile Include="Lua\logic\paodekuai\helper.lua" />
     <Compile Include="Lua\logic\paodekuai\paodekuai.lua" />
     <Compile Include="Lua\logic\paodekuai\paodekuaiGame.lua" />
     <Compile Include="Lua\logic\player\playHistory.lua" />
@@ -180,6 +181,7 @@
     <Compile Include="Lua\ui\setting\setting.lua" />
     <Compile Include="Lua\ui\share.lua" />
     <Compile Include="Lua\ui\shop.lua" />
+    <Compile Include="Lua\ui\toast.lua" />
     <Compile Include="Lua\ui\transfer.lua" />
     <Compile Include="Lua\ui\waiting.lua" />
   </ItemGroup>
