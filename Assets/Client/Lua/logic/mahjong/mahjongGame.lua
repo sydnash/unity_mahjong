@@ -137,7 +137,8 @@ function mahjongGame:syncSeats(seats)
             local detail = opType.hu.detail
             self.knownMahjong[player.hu[1].HuCard] = 1
             player.huType = huInfo.HuType
-            if huInfo.HuType == detail.zimo or huInfo.HuType == detail.gangshanghua or huInfo.HuType == detail.haidilao then --自摸
+--            if huInfo.HuType == detail.zimo or huInfo.HuType == detail.gangshanghua or huInfo.HuType == detail.haidilao then --自摸
+            if (#shou - 2) % 3 == 0 then --自摸
                 if player.acId == self.mainAcId then
                     for k, u in pairs(shou) do
                         if u == player.hu[1].HuCard then
