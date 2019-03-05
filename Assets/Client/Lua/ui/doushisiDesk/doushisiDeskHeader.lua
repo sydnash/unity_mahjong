@@ -151,6 +151,7 @@ end
 
 function doushisiDeskHeader:onDestroy() 
     self:reset()
+    base.onDestroy(self)
 end
 
 return doushisiDeskHeader
