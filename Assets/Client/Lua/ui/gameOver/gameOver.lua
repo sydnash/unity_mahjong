@@ -24,6 +24,7 @@ function gameOver:onInit()
     local info = string.format("%s", self.game:convertConfigToString(true))
     self.mTextR:setText(info)
 
+    self.game:markWinners(self.datas.players)
     self.items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD, }
 
     local i = 0
