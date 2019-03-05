@@ -35,16 +35,17 @@ function activity:onInit()
     --
     self.affichePages = {
         ["affiche_a"] = self.mAffichePageA,
-        ["affiche_b"] = self.mAffichePageB,
+        --["affiche_b"] = self.mAffichePageB,
     }
     self.mAfficheTabA.page = "affiche_a"
-    self.mAfficheTabB.page = "affiche_b"
+    --self.mAfficheTabB.page = "affiche_b"
 
-    self.mAfficheTabA:setSelected(false)
-    self.mAfficheTabB:setSelected(true)
+    self.mAfficheTabA:setSelected(true)
+    --self.mAfficheTabB:setSelected(true)
+    self.mAfficheTabB:hide()
 
     self.mAfficheTabA:addChangedListener(self.onAfficheTabChangedHandler, self)
-    self.mAfficheTabB:addChangedListener(self.onAfficheTabChangedHandler, self)
+    --self.mAfficheTabB:addChangedListener(self.onAfficheTabChangedHandler, self)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
