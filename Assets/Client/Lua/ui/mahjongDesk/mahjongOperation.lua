@@ -512,12 +512,12 @@ function mahjongOperation:onGameSync()
         self:onOpList(reenter.CurOpList)
         if self.game:hasHuPaiHint() then
             if self.canChuPai then
-                self:computeChuHint()
-                self:showChuPaiArrow()
+                -- self:computeChuHint()
+                -- self:showChuPaiArrow()
             else
                 local player = self.game:getPlayerByAcId(self.game.mainAcId)
                 if not player.isHu then
-                    self:computeJiao()
+                    self:computeJiao(player.hus)
                 end
             end
         end
@@ -803,10 +803,45 @@ function mahjongOperation:onMoPai(acId, cards)
     end
 
     if acId == self.game.mainAcId then
-        self:computeChuHint()
+        -- self:computeChuHint()
     end
 end
 
+function mahjongOperation:sHuToChu(huHint, totalCntVec)
+    local ret = {
+        jiaoTid = huHint.Hu,
+        fan = huHint.Fan,
+        left = 4 - totalCntVec[huHint.Hu], 
+    }
+    return ret
+end
+function mahjongOperation:generateChuPaiHint(chuHint)
+    if not self.game:hasHuPaiHint() then
+        return {}
+    end
+    if not self.game.chuHintComputeHelper then
+        return {}
+    end
+
+    if json.isNilOrNull(chuHint) then
+        return {}
+    end
+    local ret = {}
+    local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
+    for _, t in pairs(chuHint) do
+        local c = {}
+        if json.isNilOrNull(t.Hus) then
+            t.Hus = {}
+        end
+        for _, huHint in pairs(t.Hus) do
+            table.insert(c, self:sHuToChu(huHint, totalCntVec))
+        end
+        if #c > 0 then
+            table.insert(ret, { tid = t.Chu, hu = c} )
+        end
+    end
+    return ret
+end
 -------------------------------------------------------------------------------
 -- OpList
 -------------------------------------------------------------------------------
@@ -818,6 +853,7 @@ function mahjongOperation:onOpList(oplist)
 
         for _, v in pairs(infos) do
             if v.Op == opType.chu.id then
+                self.chuPaiHintInfo = self:generateChuPaiHint(v.Chus)
                 self:beginChuPai()
             end
         end
@@ -854,41 +890,51 @@ end
 
 function mahjongOperation:onDeskPlayStatusChanged()
     if self.game.deskPlayStatus == mahjongGame.status.playing then
-        if self.game:hasHuPaiHint() then
-            self:computeChuHint()
-            if self.canChuPai then
-                self:showChuPaiArrow()
-            end
-        end
+        -- if self.game:hasHuPaiHint() then
+        --     self:computeChuHint()
+        --     if self.canChuPai then
+        --         self:showChuPaiArrow()
+        --     end
+        -- end
     end
 end
 
-function mahjongOperation:computeChuHint()
-    if not self.game:hasHuPaiHint() then
-        return
-    end
-    if self.game.chuHintComputeHelper then
-        local ret = self.game.chuHintComputeHelper:checkChuPaiHint()
-        self.chuPaiHintInfo = ret
-    end
-end
+-- function mahjongOperation:computeChuHint()
+--     if not self.game:hasHuPaiHint() then
+--         return
+--     end
+--     if self.game.chuHintComputeHelper then
+--         local ret = self.game.chuHintComputeHelper:checkChuPaiHint()
+--         self.game:checkChuHint()
+--         self.chuPaiHintInfo = ret
+--     end
+-- end
 
-function mahjongOperation:computeJiao()
+function mahjongOperation:computeJiao(hus)
     if not self.game:hasHuPaiHint() then
         return
     end
     if self.game.chuHintComputeHelper then
         local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
-        local ret = self.game.chuHintComputeHelper:checkJiao(handCntVec, totalCntVec)
-        if #ret == 0 then
+        local c = {}
+        if json.isNilOrNull(hus) then
+            hus = {}
+        end
+        for _, huHint in pairs(hus) do
+            table.insert(c, self:sHuToChu(huHint, totalCntVec))
+        end
+
+        if #c == 0 then
             self.huPaiHintInfo = nil
         else
-            self.huPaiHintInfo = ret
+            self.huPaiHintInfo = c
         end
-        if self.huPaiHintInfo then
+        if self.huPaiHintInfo and #self.huPaiHintInfo > 0 then
             self.game.deskUI:showHuHintButton()
+            -- self:showHuPaiHint()
         else
             self.game.deskUI:hideHuHintButton()
+            self:hideHuPaiHint()
         end
     end
 end
@@ -1444,13 +1490,15 @@ function mahjongOperation:onOpDoChu(acId, cards)
 
     local chuId = cards[1]
     if acId == self.game.mainAcId then
+        self:hideHuPaiHint()
         local huPaiHintInfo = self:getHuPaiHintInfo(chuId)
         self.huPaiHintInfo = huPaiHintInfo
-        self:hideHuPaiHint()
         if self.huPaiHintInfo then
             self.game.deskUI:showHuHintButton()
+            -- self:showHuPaiHint()
         else
             self.game.deskUI:hideHuHintButton()
+            -- self:hideHuPaiHint()
         end
         self:hideChuPaiArrow()
     end
@@ -1492,7 +1540,7 @@ function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
         local player = self.game:getPlayerByAcId(acId)
         playMahjongOpSound(opType.peng.id, player.sex)
     -- end
-    self:computeChuHint()
+    -- self:computeChuHint()
 end
 
 -------------------------------------------------------------------------------
@@ -2616,17 +2664,21 @@ end
 
 function mahjongOperation:showHuPaiHintInfo(info, fromClickCard)
     if fromClickCard and not self.canChuPai then
+        self:hideHuPaiHint()
         return
     end
-    self:hideHuPaiHint()
     if not info then
+        self:hideHuPaiHint()
         return
     end
     local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
     for _, t in pairs(info) do
         t.left = 4 - totalCntVec[t.jiaoTid]
     end
-    self.huPaiHintUI = require ("ui.mahjongDesk.huPaiHint").new(info)
+    if self.huPaiHintUI == nil then
+        self.huPaiHintUI = require ("ui.mahjongDesk.huPaiHint").new(info)
+    end
+    self.huPaiHintUI:setInfo(info)
     self.huPaiHintUI:show()
     self.huPaiHintUI:setParent(self.mHuPaiHint)
     self.huPaiHintUI:setAnchoredPosition(Vector2.zero)
@@ -2636,8 +2688,15 @@ function mahjongOperation:showHuPaiHint()
 end
 function mahjongOperation:hideHuPaiHint()
     if self.huPaiHintUI ~= nil then
-        self.huPaiHintUI:close()
-        self.huPaiHintUI = nil
+        self.huPaiHintUI:hide()
+        -- self.huPaiHintUI = nil
+    end
+end
+function mahjongOperation:onHuPaiHintClicked()
+    if self.huPaiHintUI and self.huPaiHintUI:getVisibled() then
+        self:hideHuPaiHint()
+    else
+        self:showHuPaiHint()
     end
 end
 
@@ -2653,6 +2712,7 @@ function mahjongOperation:worldToUIPos(pos, node, camera)
 end
 
 function mahjongOperation:showChuPaiArrow()
+    self:hideHuPaiHint()
     self:hideChuPaiArrow()
     local usedIdx = 1
     if self.chuPaiHintInfo and #self.chuPaiHintInfo > 0 then

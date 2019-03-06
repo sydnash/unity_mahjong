@@ -310,7 +310,6 @@ function createDesk:onCreateClickedHandler()
     choose.Game = self.gameType
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 
-    log("-----------" .. table.tostring(choose))
     showWaitingUI("正在创建房间，请稍候...")
     
     local eventName = "createdesk_" .. tostring(self.cityType) .. "_" .. tostring(self.gameType)
@@ -356,6 +355,14 @@ function createDesk:createDetail()
         local has, cfg = self.friendsterData:isSupportGame(self.gameType)
         if has and cfg ~= nil and cfg ~= "" then
             local cfgJson = table.fromjson(cfg)
+            if self.gameType == gameType.mahjong then
+                if cfgJson.JuShu > 2 then
+                    cfgJson.JuShu = 2
+                end
+                if cfgJson.FengDing > 2 then
+                    cfgJson.FengDing = 2
+                end
+            end
             config = cfgJson
         end
     end
@@ -383,6 +390,18 @@ function createDesk:readConfig()
             config = deskConfig[self.cityType]
         else
             config = loadstring(text)()
+
+            --麻将屏蔽掉16局和5番
+            if self.gameType == gameType.mahjong then
+                local c = config[gameType.mahjong]
+                if c.JuShu == 3 then
+                    c.JuShu = 2
+                end
+
+                if c.FengDing == 3 then
+                    c.FengDing = 2
+                end
+            end
         end
     end
 

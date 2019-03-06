@@ -267,7 +267,7 @@ function printError(msg)
     local trance = debug.traceback("", 2)
     msg = msg .. "\n" .. trance
     if _gdb_tracebackk_callback_ ~= nil then
-        _gdb_tracebackk_callback_(msg, debug)
+        -- _gdb_tracebackk_callback_(msg, debug)
     end
     log(msg)
 end

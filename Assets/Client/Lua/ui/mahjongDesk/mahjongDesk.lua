@@ -37,11 +37,15 @@ function mahjongDesk:onInit()
 end
 
 function mahjongDesk:onHuHintClickedHandler()
-    self.game.operationUI:showHuPaiHint()
+    -- self.game.operationUI:showHuPaiHint()
+    self.game.operationUI:onHuPaiHintClicked()
 end
 
 function mahjongDesk:hideHuHintButton()
     self.mHuHint:hide()
+    if self.game and self.game.operationUI then
+        self.game.operationUI:hideHuPaiHint()
+    end
 end
 
 function mahjongDesk:showHuHintButton()

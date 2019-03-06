@@ -47,6 +47,107 @@ function mahjongGame:getTotalCountByConfig(config)
     return 108
 end
 
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+-- local lastTime 
+-- local idx = 1
+-- local function UUID()
+--     local t = os.time()
+--     if t == lastTime then
+--         idx = idx + 1
+--     else
+--         lastTime = t
+--         idx = 1
+--     end
+--     return tostring(t) .. tostring(idx)
+-- end
+
+-- Id        string
+-- Vec       []int
+-- ChiChes   []ChiChe
+-- Fxs       []base.HuFanXing
+-- Que       int
+-- DuiDuiHu2 bool
+-- seatCards *base.SeatCards
+
+
+-- function mahjongGame:initVec(cnt)
+--     local ret = {}
+--     for i = 1, cnt + 1 do
+--         ret[i] = 0
+--     end
+--     return ret
+-- end
+
+-- function mahjongGame:statisticCount()
+--     local opui = self.operationUI
+--     local inhandMjs = opui.inhandMahjongs[self.mainAcId]
+--     local handCntVec = self:initVec(27)
+--     for _, mj in pairs(inhandMjs) do
+--         local id = mahjongType.getMahjongTypeId(mj.id)
+--         handCntVec[id + 1] = handCntVec[id + 1] + 1
+--     end
+--     if opui.mo ~= nil then
+--         local id = mahjongType.getMahjongTypeId(opui.mo.id)
+--         handCntVec[id + 1] = handCntVec[id + 1] + 1
+--     end
+--     return handCntVec
+-- end
+
+-- function mahjongGame:computeInputParam()
+--     local input = {}
+--     input.Id = UUID()
+--     local handCntVec = self:statisticCount()
+--     input.Vec = handCntVec
+--     local player = self:getPlayerByAcId(self.mainAcId)
+--     input.ChiChes = player[mahjongGame.cardType.peng] 
+--     if #input.ChiChes == 0 then
+--         input.ChiChes = nil
+--     end
+--     input.Fxs = self.fxs
+--     input.Que = player.que
+--     input.DuiDuiHu2 = self.config.DuiDuiHu2
+
+--     return input
+-- end
+-- local http = require("network.http")
+-- function mahjongGame:checkHuHint(errorText)
+--     local input = self:computeInputParam()
+--     self.curHuPaiParam = input
+--     self.curHuPaiHint = nil
+--     local web = http.createAsync()
+--     web:addTextRequest("http://127.0.0.1:17776/mjhuhint", "POST", 10 * 1000, table.tojson(input), function(text)
+--         if self.curHuPaiParam and self.curHuPaiHint.Id == input.Id then
+--             self.curHuPaiHint = table.fromjson(text)
+--         end
+--     end)
+--     web:start()
+
+--     talkingData.event(talkingData.eventType.errmsg, { err = errorText })
+-- end
+-- function mahjongGame:clearHuHint()
+--     self.curHuPaiParam = nil
+--     self.curHuPaiHint = nil
+-- end
+-- function mahjongGame:checkChuHint()
+--     local input = self:computeInputParam()
+--     self.curChuPaiParam = input
+--     self.curChuPaiHint = nil
+--     local web = http.createAsync()
+--     web:addTextRequest("http://127.0.0.1:17776/mjchuhint", "POST", 10 * 1000, table.tojson(input), function(text)
+--         if self.curChuPaiParam and self.curChuPaiParam.Id == input.Id then
+--             self.curChuPaiHint = table.fromjson(text)
+--         end
+--     end)
+--     web:start()
+-- end
+-- function mahjongGame:clearChuHint()
+--     self.curChuPaiParam = nil
+--     self.curChuPaiHint = nil
+-- end
+
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
@@ -114,6 +215,7 @@ function mahjongGame:syncSeats(seats)
         player.hu = v.HuInfo
         player.isMarker = self:isMarker(player.acId)
 
+        player.hus = v.Hus
         player[mahjongGame.cardType.shou] = v.CardsInHand
         player[mahjongGame.cardType.chu]  = v.CardsInChuPai
         player[mahjongGame.cardType.peng] = v.ChiCheInfos
@@ -173,8 +275,48 @@ function mahjongGame:onDeskStatusChanged()
     self.operationUI:onDeskPlayStatusChanged()
 end
 
+-- fanXingType = {
+--     su                  = 0,
+--     qingYiSe            = 1,
+--     qiDui               = 2,
+--     daDuiZi             = 3,
+--     jinGouDiao          = 4,
+--     hunYiSe             = 5,
+--     jiangDui            = 6,
+--     yaoJiu              = 7,
+--     menQing             = 8,
+--     zhongZhang          = 9,
+--     jiangQiDui          = 10,
+--     jiaXinWu            = 11,
+-- }
+
 function mahjongGame:createChuHintComputeHlper()
     if self.deskPlayStatus == mahjongGame.status.playing then
+        self.fxs = {}
+        table.insert(self.fxs, fanXingType.su)
+        table.insert(self.fxs, fanXingType.qingYiSe)
+        table.insert(self.fxs, fanXingType.qiDui)
+        table.insert(self.fxs, fanXingType.daDuiZi)
+        table.insert(self.fxs, fanXingType.jinGouDiao)
+        local config = self.config
+
+		if config.MenQing then
+            table.insert(self.fxs, fanXingType.menQing)
+        end
+		if config.ZhongZhang then
+            table.insert(self.fxs, fanXingType.zhongZhang)
+        end
+		if config.YaoJiu then
+            table.insert(self.fxs, fanXingType.yaoJiu)
+        end
+		if config.JiangDui then
+            table.insert(self.fxs, fanXingType.jiangDui)
+            table.insert(self.fxs, fanXingType.jiangQiDui)
+        end
+		if config.JiaXinWu then
+            table.insert(self.fxs, fanXingType.jiaXinWu)
+        end
+
         local player = self:getPlayerByAcId(self.mainAcId)
         self.chuHintComputeHelper = require("logic.mahjong.helper").new(player.que, self)
     end

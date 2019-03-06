@@ -28,7 +28,7 @@ local huPaiHint = class("huPaiHint", base)
 _RES_(huPaiHint, "MahjongDeskUI", "HuPaiHintUI")
 
 function huPaiHint:ctor(info)
-    self.huInfo = info
+    -- self.huInfo = info
     base.ctor(self)
 end
 
@@ -38,7 +38,14 @@ local add = 195.8
 local base = 314.6
 
 function huPaiHint:onInit()
-    self.mThis:addClickListener(self.onThisClicked, self)
+    -- self.mThis:addClickListener(self.onThisClicked, self)
+    self.items = {}
+    -- self:setInfo(self.huInfo)
+end
+
+function huPaiHint:setInfo(info)
+    self:resetItems()
+    self.huInfo = info
     local cnt = #self.huInfo
     local size = singleSize
     if cnt > 1 then
@@ -59,14 +66,18 @@ function huPaiHint:onInit()
 end
 
 function huPaiHint:onThisClicked()
-    self:close()
+    self:hide()
 end
 
-function huPaiHint:onDestroy()
+function huPaiHint:resetItems()
     for _, item in pairs(self.items) do
         item:close()
     end
     self.itmes = {}
+end
+
+function huPaiHint:onDestroy()
+    self:resetItems()
 end
 
 return huPaiHint

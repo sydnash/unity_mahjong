@@ -16,7 +16,7 @@ function deskDetail:ctor(cityType, gameType, friendsterId, config, canJoin, desk
     self.managerAcId = managerAcId
 
     self.config = {}
-    log("deskDetail.ctor, config = " .. table.tostring(config))
+--    log("deskDetail.ctor, config = " .. table.tostring(config))
     for k, v in pairs(config) do
         local c = deskShiftConfig[cityType][gameType][k]
         if c ~= nil then
@@ -116,7 +116,7 @@ function deskDetail:onDissolveClickedHandler()
 end
 
 function deskDetail:processLayout()
-    log("deskDetail:processLayout, config = " .. table.tostring(self.config))
+--    log("deskDetail:processLayout, config = " .. table.tostring(self.config))
     if self.cityType == cityType.jintang then
         if self.gameType == gameType.doushisi then
             if self.config.CaiShen == 1 then
