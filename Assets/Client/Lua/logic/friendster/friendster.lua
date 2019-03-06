@@ -208,7 +208,8 @@ function friendster:isSupportGame(id)
 			cfg = info.Cfg
 			break
 		end
-	end
+    end
+    
 	return find, cfg
 end
 

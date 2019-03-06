@@ -355,6 +355,14 @@ function createDesk:createDetail()
         local has, cfg = self.friendsterData:isSupportGame(self.gameType)
         if has and cfg ~= nil and cfg ~= "" then
             local cfgJson = table.fromjson(cfg)
+            if self.gameType == gameType.mahjong then
+                if cfgJson.JuShu > 2 then
+                    cfgJson.JuShu = 2
+                end
+                if cfgJson.FengDing > 2 then
+                    cfgJson.FengDing = 2
+                end
+            end
             config = cfgJson
         end
     end
