@@ -11,7 +11,7 @@ end
 
 ------------
 -- 每种牌的个数的数组（2个1条， 就是{[0] = 2}
--- 返回：空table表示没有叫 如果有叫  { {jiao = id, fan = 5, c = { { Cs = {1,2,3}, Op = 1}, { Cs = {4,5,6}, Op = 1} } }, {jiao = id, fan = 2}  }
+-- 返回：空table表示没有叫 如果有叫  { {jiaoTid = id, fan = 5, c = { { Cs = {1,2,3}, Op = 1}, { Cs = {4,5,6}, Op = 1} } }, {jiaoTid = id, fan = 2}  }
 ------------
 function helper:checkJiao(cntVec, totalCntVec)
     for id, v in pairs(cntVec) do
