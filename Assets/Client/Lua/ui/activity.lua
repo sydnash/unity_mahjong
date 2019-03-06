@@ -182,8 +182,8 @@ function activity:onAfficheTabChangedHandler(sender, selected, clicked)
 end
 
 function activity:update()
-    local now = time.realtimeSinceStartup()
-    local delta = now - self.timestamp
+--    local now = time.realtimeSinceStartup()
+    local delta = 0.0333--now - self.timestamp
 
     for _, v in pairs(self.rewards) do
         local pos = v:getLocalPosition()
@@ -199,7 +199,7 @@ function activity:update()
         v:setLocalPosition(pos)
     end
 
-    self.timestamp = now
+--    self.timestamp = now
 end
 
 function activity:onCloseAllUIHandler()
