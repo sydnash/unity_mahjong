@@ -8,10 +8,12 @@ local gameEndItem = class("gameEndItem", base)
 _RES_(gameEndItem, "GameEndUI/Mahjong", "GameEndItem")
 
 local color = {
-    meId            = hexColorToColor("e2d488ff"),
-    otherId         = hexColorToColor("88c3e2ff"),
-    meFanFu         = hexColorToColor("f4e592ff"),
-    otherFanFu      = hexColorToColor("92d1f2ff"),
+    meId         = hexColorToColor("e2d488ff"),
+    otherId      = hexColorToColor("88c3e2ff"),
+    meFanShu     = hexColorToColor("fbdf85ff"),
+    otherFanShu  = hexColorToColor("78dcf5ff"),
+    meDetail     = hexColorToColor("fffee8ff"),
+    otherDetail  = hexColorToColor("e0f7ffff")
 }
 
 function gameEndItem:onInit()
@@ -21,35 +23,51 @@ function gameEndItem:onInit()
 end
 
 function gameEndItem:onRecordClickedHandler()
-    if self.recordCallback then
-        self.recordCallback()
-    end
+    local ui = require ("ui.gameEnd.scoreDetail").new(self.finalChanges)
+    ui:show()
+
+    playButtonClickSound()
 end
 
-function gameEndItem:setPlayerInfo(player, cb)
-    self.recordCallback = cb
+function gameEndItem:setPlayerInfo(player, scoreChanges)
     self.mHeader:setTexture(player.headerUrl)
     self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
     self.mId:setText(string.format("帐号:%d", player.acId))
     self.mScore:setScore(player.score)
 
-    local pos = self.mScore:getLocalPosition()
+    self.finalChanges = self:filterScoreChanges(player.acId, scoreChanges)
+    
+    self:setFanShu()
+    self:setScoreInfo()
+
     if player.acId == gamepref.player.acId then
         self.mRecord:show()
-        pos.y = 20
-        self.mScore:setLocalPosition(pos)
+        local scorePos = self.mScore:getLocalPosition()
+        scorePos.y = 20
+        self.mScore:setLocalPosition(scorePos)
         self.mBGL:setSprite("me")
         self.mBGR:setSprite("me")
         self.mNickname:setColor(color.meId)
         self.mId:setColor(color.meId)
+        local fanshuPos = self.mFanShu:getLocalPosition()
+        fanshuPos.y = 20
+        self.mFanShu:setLocalPosition(fanshuPos)
+        self.mFanShu:setColor(color.meFanShu)
+        self.mScoreInfo:setColor(color.meDetail)
     else
         self.mRecord:hide()
-        pos.y = 0
-        self.mScore:setLocalPosition(pos)
+        local scorePos = self.mScore:getLocalPosition()
+        scorePos.y = 0
+        self.mScore:setLocalPosition(scorePos)
         self.mBGL:setSprite("other")
         self.mBGR:setSprite("other")
         self.mNickname:setColor(color.otherId)
         self.mId:setColor(color.otherId)
+        local fanshuPos = self.mFanShu:getLocalPosition()
+        fanshuPos.y = 0
+        self.mFanShu:setLocalPosition(fanshuPos)
+        self.mFanShu:setColor(color.otherFanShu)
+        self.mScoreInfo:setColor(color.otherDetail)
     end
 
     if player.que ~= nil and player.que >= 0 then
@@ -86,9 +104,9 @@ function gameEndItem:setPlayerInfo(player, cb)
             p:setParent(self.mPai)
             p:show()
             p:setMahjongId(u[1])
-            p:setLocalPosition(Vector3.New(x, 0, 0))
+            p:setLocalPosition(Vector3.New(x, -8, 0))
 
-            x = x + p.width + 14
+            x = x + p.width + 10
             table.insert(self.pai, p)
         end
     end
@@ -100,9 +118,9 @@ function gameEndItem:setPlayerInfo(player, cb)
             p:setParent(self.mPai)
             p:show()
             p:setMahjongId(u[1])
-            p:setLocalPosition(Vector3.New(x, 0, 0))
+            p:setLocalPosition(Vector3.New(x, -8, 0))
 
-            x = x + p.width + 14
+            x = x + p.width + 10
             table.insert(self.pai, p)
         end
     end
@@ -129,10 +147,166 @@ function gameEndItem:setPlayerInfo(player, cb)
         p:setParent(self.mPai)
         p:show()
         p:setMahjongId(hu)
-        p:setLocalPosition(Vector3.New(x + 23, 0, 0))
+        p:setLocalPosition(Vector3.New(x + 20, 0, 0))
         p:setHighlight(true)
 
         table.insert(self.pai, p)
+    end
+end
+
+function gameEndItem:filterScoreChanges(acId, scoreChanges)
+    local finalChanges = {}
+
+    if (not json.isNilOrNull(scoreChanges)) and (#scoreChanges > 0) then
+        table.bubbleSort(scoreChanges, function(t1, t2)
+            return t1.Idx < t2.Idx
+        end)
+
+        for _, info in pairs(scoreChanges) do
+            local win = {}
+            local failed = {}
+            local hasSelf = false
+            local selfResult = 0
+            for _, c in pairs(info.C) do
+                if c.AcId == acId then
+                    hasSelf = true
+                    selfResult = c
+                end
+                if c.Change > 0 then
+                    table.insert(win, c.AcId)
+                else
+                    table.insert(failed, c.AcId)
+                end
+            end
+            if hasSelf then
+                local t = {}
+                t.Op            = info.Op
+                t.Detail        = info.De
+                t.IsHaiDi       = info.IsHaiDi
+                t.FanXing       = info.FanXing
+                t.Gen           = info.Gen
+                t.HuFanShu      = info.HuFanShu or 0
+                t.BeFanShu      = info.BeFanShu or 0
+
+                t.Fan           = selfResult.Fan
+                t.Score         = selfResult.Change
+                if selfResult.Change > 0 then
+                    t.BeAcIds = failed
+                else
+                    t.BeAcIds = win
+                end
+                table.insert(finalChanges, t)
+            end
+        end
+    end
+
+    return finalChanges
+end
+
+local detailTypeName = {
+    [opType.gang.detail.angang]                     = {"暗杠", ""},
+    [opType.gang.detail.bagangwithmoney]            = {"巴杠", ""},
+    [opType.gang.detail.minggang]                   = {"明杠", ""},
+    [opType.gang.detail.zhuanyu]                    = {"被转雨", "转雨"},
+    [opType.gang.detail.fanyu]                      = {"被返雨", "返雨"},
+    [opType.hu.detail.zimo]                         = {"自摸", ""},
+    [opType.hu.detail.dianpao]                      = {"接炮", "点炮"},
+    [opType.hu.detail.qianggang]                    = {"抢杠", "被抢杠"},
+    [opType.hu.detail.gangshanghua]                 = {"杠上花", ""},
+    [opType.hu.detail.gangshangpao]                 = {"杠上胡", "杠上炮"},
+    [opType.hu.detail.tianhu]                       = {"天胡", ""},
+    [opType.hu.detail.dihu]                         = {"地胡", "被地胡"},
+    [opType.hu.detail.chahuazhu]                    = {"查花猪", "被查花猪"},
+    [opType.hu.detail.chajiao]                      = {"查叫", "被查叫"},
+    [opType.hu.detail.bijiao]                       = {"比叫", "被比叫"},
+}
+
+local fanxingTypeName = {
+    [fanXingType.su]            = "平胡", 
+    [fanXingType.qingYiSe]      = "清一色", 
+    [fanXingType.qiDui]         = "七对", 
+    [fanXingType.daDuiZi]       = "大对子", 
+    [fanXingType.jinGouDiao]    = "金钩吊", 
+    [fanXingType.jiangDui]      = "将对", 
+    [fanXingType.yaoJiu]        = "幺九", 
+    [fanXingType.menQing]       = "门清", 
+    [fanXingType.zhongZhang]    = "中张", 
+    [fanXingType.jiangQiDui]    = "将七对", 
+    [fanXingType.jiaXinWu]      = "夹心五", 
+}
+
+function gameEndItem:setScoreInfo()
+--    log("gameEndItem.setScoreInfo, data = " .. table.tostring(self.finalChanges))
+    local text = string.empty
+
+    local gang = {
+        [opType.gang.detail.angang]          = 0,
+        [opType.gang.detail.bagangwithmoney] = 0,
+        [opType.gang.detail.minggang]        = 0,
+    }
+
+    for _, v in pairs(self.finalChanges) do
+        if v.Op == opType.hu.id then
+            local d = detailTypeName[v.Detail]
+            if v.Score > 0 then
+                local ht = string.empty
+                if v.Gen > 0 then
+                    ht = ht .. tostring(v.Gen) .. "根 "
+                end
+
+                if not json.isNilOrNull(v.FanXing) then
+                    for k, u in pairs(v.FanXing) do
+                        ht = ht .. fanxingTypeName[u]
+                        if k < #v.FanXing then
+                            ht = ht .. " "
+                        end
+                    end
+                end
+
+                text = text .. d[1]
+                if string.isNilOrEmpty(ht) then
+                    text = text .. " "
+                else
+                    text = text .. string.format("(%s) ", ht)
+                end
+            else
+                if v.Detail == opType.hu.detail.dianpao or v.Detail == opType.hu.detail.gangshangpao then
+                    text = text .. string.format("%s(%d)", d[2], v.BeAcIds[1]) .. " "
+                end
+            end
+        elseif v.Op == opType.gang.id then
+            if v.Score > 0 and gang[v.Detail] ~= nil then
+                gang[v.Detail] = gang[v.Detail] + 1
+            end
+        end
+    end
+
+    for k, v in pairs(gang) do
+        local d = detailTypeName[k]
+        if v > 0 then
+            text = text .. string.format("%sx%d ", d[1], v)
+        end
+    end
+
+    self.mScoreInfo:setText(text)
+end
+
+function gameEndItem:setFanShu()
+    local fan = -1
+
+    for _, v in pairs(self.finalChanges) do
+        if v.Op == opType.hu.id and v.Score >= 0 then
+            fan = v.Fan
+            break
+        end
+    end
+
+    if fan == 0 then
+        self.mFanShu:setText("素番")
+    elseif fan > 0 then
+        self.mFanShu:setText(tostring(fan) .. "番")
+    else
+        self.mFanShu:setText(string.empty)
     end
 end
 

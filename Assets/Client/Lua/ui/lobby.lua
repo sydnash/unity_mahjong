@@ -242,6 +242,17 @@ function lobby:refreshMailRP()
     end
 end
 
+function lobby:show()
+    base.show(self)
+
+    if not clientApp.activityShown then
+        local ui = require("ui.activity").new()
+        ui:show()
+
+        clientApp.activityShown = true
+    end
+end
+
 function lobby:onCloseAllUIHandler()
     self:close()
 end
