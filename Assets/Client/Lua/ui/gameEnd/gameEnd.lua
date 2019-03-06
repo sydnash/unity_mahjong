@@ -15,31 +15,10 @@ function gameEnd:ctor(game, datas)
 end
 
 function gameEnd:onInit()
-    -- local items = { 
-    --     self.mItemM, 
-    --     self.mItemR, 
-    --     self.mItemT, 
-    --     self.mItemL, 
-    -- }
-
-    -- local acc = 1
-    -- for _, v in pairs(self.datas.players) do
-    --     local item = items[acc]
-    --     acc = acc + 1
-
-    --     item:show()
-    --     item:setPlayerInfo(v)
-    -- end
-    -- for i = acc, 4 do
-    --     items[i]:hide()
-    -- end
-
     self.items = {}
     for _, v in pairs(self.datas.players) do
         local item = self:createItem()
-        item:setPlayerInfo(v, function()
-            self:onRecordClickedHandler()
-        end)
+        item:setPlayerInfo(v, self.datas.scoreChanges)
         item:show()
         item:setParent(self.mList)
         table.insert(self.items, item)
@@ -72,7 +51,6 @@ function gameEnd:onInit()
     self.mNext:addClickListener(self.onNextClickedHandler, self)
     self.mShare:addClickListener(self.onShareClickedHandler, self)
     self.mSharePanel:addClickListener(self.onSharePanelClickedHandler, self)
-    -- self.mRecord:addClickListener(self.onRecordClickedHandler, self)
     self.mShareWX:addClickListener(self.onShareWXClickedHandler, self)
     self.mShareQYQ:addClickListener(self.onShareQYQClickedHandler, self)
     self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)
@@ -112,13 +90,6 @@ end
 
 function gameEnd:onSharePanelClickedHandler()
     self.mSharePanel:hide()
-    playButtonClickSound()
-end
-
-function gameEnd:onRecordClickedHandler()
-    local ui = require ("ui.gameEnd.scoreDetail").new(self.datas.scoreChanges)
-    ui:show()
-
     playButtonClickSound()
 end
 

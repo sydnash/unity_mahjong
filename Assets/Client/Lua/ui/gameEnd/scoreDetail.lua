@@ -14,6 +14,7 @@ local seatTypeName = {
     [seatType.top]      = "对家",
     [seatType.left]     = "上家",
 }
+
 local detailTypeName = {
     [opType.gang.detail.angang]                     = {"下雨", "被下雨"},
     [opType.gang.detail.bagangwithmoney]            = {"刮风", "被刮风"},
@@ -36,7 +37,7 @@ local fanxingTypeName = {
     [fanXingType.su]            = "平胡", 
     [fanXingType.qingYiSe]      = "清一色", 
     [fanXingType.qiDui]         = "七对", 
-    [fanXingType.daDuiZi]       = "大队子", 
+    [fanXingType.daDuiZi]       = "大对子", 
     [fanXingType.jinGouDiao]    = "金钩吊", 
     [fanXingType.jiangDui]      = "将对", 
     [fanXingType.yaoJiu]        = "幺九", 
@@ -120,56 +121,12 @@ function scoreDetail:ctor(scoreChanges)
 end
 
 function scoreDetail:onInit()
-    if json.isNilOrNull(self.scoreChanges) or #self.scoreChanges == 0 then
+    if #self.scoreChanges == 0 then
         self.mEmpty:show()
         self.mList:hide()
     else
         self.mEmpty:hide()
         self.mList:show()
-
-        --sort and filter changes
-        self.finalChanges = {}
-        table.bubbleSort(self.scoreChanges, function(t1, t2)
-            return t1.Idx < t2.Idx
-        end)
-
-        for _, info in pairs(self.scoreChanges) do
-            local win = {}
-            local failed = {}
-            local hasSelf = false
-            local selfResult = 0
-            for _, c in pairs(info.C) do
-                if c.AcId == gamepref.player.acId then
-                    hasSelf = true
-                    selfResult = c
-                end
-                if c.Change > 0 then
-                    table.insert(win, c.AcId)
-                else
-                    table.insert(failed, c.AcId)
-                end
-            end
-            if hasSelf then
-                local t = {}
-                t.Op            = info.Op
-                t.Detail        = info.De
-                t.IsHaiDi       = info.IsHaiDi
-                t.FanXing       = info.FanXing
-                t.Gen           = info.Gen
-                t.HuFanShu      = info.HuFanShu or 0
-                t.BeFanShu      = info.BeFanShu or 0
-
-                t.Fan           = selfResult.Fan
-                t.Score         = selfResult.Change
-                if selfResult.Change > 0 then
-                    t.BeAcIds = failed
-                else
-                    t.BeAcIds = win
-                end
-                table.insert(self.finalChanges, t)
-            end
-        end
-
         self:refreshUI()
     end
 
@@ -188,11 +145,11 @@ function scoreDetail:refreshUI()
     end
 
     local refreshItem = function(item, index)
-        item:setData(self.finalChanges[index + 1])
+        item:setData(self.scoreChanges[index + 1])
     end
 
     self.mList:reset()
-    self.mList:set(#self.finalChanges, createItem, refreshItem)
+    self.mList:set(#self.scoreChanges, createItem, refreshItem)
 end
 
 function scoreDetail:onCloseAllUIHandler()

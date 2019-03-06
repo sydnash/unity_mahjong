@@ -20,7 +20,6 @@ local mahjongLayoutBase = {
         items = { 
             [1] = { style = "radiobox", text = "8局",  key = "JuShu", value = 1, },
             [2] = { style = "radiobox", text = "12局", key = "JuShu", value = 2, },
-            [3] = { style = "radiobox", text = "16局", key = "JuShu", value = 3, },
         }, 
         group = { value = true, switchOff = false },
     },
@@ -37,7 +36,6 @@ local mahjongLayoutBase = {
         items = { 
             [1] = { style = "radiobox", text = "3番", key = "FengDing", value = 1, },
             [2] = { style = "radiobox", text = "4番", key = "FengDing", value = 2, },
-            [3] = { style = "radiobox", text = "5番", key = "FengDing", value = 3, },
         }, 
         group = { value = true, switchOff = false },
     },
@@ -302,9 +300,9 @@ deskConfig = {
 ----------------------------------------------------------------
 local mahjongShiftConfigBase = {
     ["RenShu"]          = { [4] = 1, [3]  = 2, [2]  = 3 },
-    ["JuShu"]           = { [8] = 1, [12] = 2, [16] = 3 },
+    ["JuShu"]           = { [8] = 1, [12] = 2, },
     ["FangShu"]         = { [3] = 1, [2]  = 2 },
-    ["FengDing"]        = { [3] = 1, [4]  = 2, [5]  = 3 },
+    ["FengDing"]        = { [3] = 1, [4]  = 2, },
     ["ZiMoJiaX"]        = { [0] = 1, [1]  = 2 },
     ["DianGangHuaX"]    = { [0] = 1, [1]  = 2 },
     ["HuanNZhang"]      = { [0] = 1, [3]  = 2, [4]  = 3 },

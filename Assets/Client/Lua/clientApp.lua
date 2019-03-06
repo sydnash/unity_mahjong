@@ -60,6 +60,7 @@ end
 ----------------------------------------------------------------
 clientApp = {}
 local Application = UnityEngine.Application
+clientApp.activityShown = false
 
 ----------------------------------------------------------------
 --
