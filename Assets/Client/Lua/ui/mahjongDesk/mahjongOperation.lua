@@ -406,6 +406,9 @@ function mahjongOperation:onGameStart()
             m:show()
         end
     end)
+    eventManager.registerAnimationTrigger("table_plane_up", function()
+        self:showChuPaiArrow()
+    end)
 
     self:playAnimation(self.planeAnim)
     self:playAnimation(self.mahjongsRootAnim)
@@ -509,7 +512,7 @@ function mahjongOperation:onGameSync()
             self.mQue:show()
         end
     elseif self.game.deskPlayStatus == mahjongGame.status.playing then
-        self:onOpList(reenter.CurOpList)
+        local _, need = self:onOpList(reenter.CurOpList)
         if self.game:hasHuPaiHint() then
             if self.canChuPai then
                 -- self:computeChuHint()
@@ -518,6 +521,9 @@ function mahjongOperation:onGameSync()
                 local player = self.game:getPlayerByAcId(self.game.mainAcId)
                 if not player.isHu then
                     self:computeJiao(player.hus)
+                end
+                if need then
+                    self:showHuPaiHint()
                 end
             end
         end
@@ -847,6 +853,7 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpList(oplist)
     log("oplist = " .. table.tostring(oplist))
+    local needShowHuPaiHint
     if oplist ~= nil then
         local infos = oplist.OpInfos
         local leftTime = oplist.L
@@ -855,12 +862,18 @@ function mahjongOperation:onOpList(oplist)
             if v.Op == opType.chu.id then
                 self.chuPaiHintInfo = self:generateChuPaiHint(v.Chus)
                 self:beginChuPai()
+            elseif v.Op == opType.hu.id then
+                if self.mo == nil and (#self.inhandMahjongs[self.game.mainAcId] - 2) % 3 ~= 0 then
+                    self:showHuPaiHint()
+                    needShowHuPaiHint = true
+                end
             end
         end
 
         self.mDQTips:hide()
         self:showOperations(infos, leftTime)
     end
+    return 0, needShowHuPaiHint
 end
 
 -------------------------------------------------------------------------------
@@ -1016,7 +1029,7 @@ function mahjongOperation:onClickOnMahjong(mj)
         self.curSelectedMahjong:setSelected(true)
         self:highlightSelectMahjong()
         local huPaiHintInfo = self:getHuPaiHintInfo(mj.id)
-        self:showHuPaiHintInfo(huPaiHintInfo, true)
+        self:showChuPaiHintInfo(huPaiHintInfo, true)
         soundManager.playGfx("mahjong", "chose")
     else
         if self.curSelectedMahjong.id ~= mj.id then
@@ -1026,7 +1039,7 @@ function mahjongOperation:onClickOnMahjong(mj)
             self.curSelectedMahjong:setSelected(true)
             self:highlightSelectMahjong()
             local huPaiHintInfo = self:getHuPaiHintInfo(mj.id)
-            self:showHuPaiHintInfo(huPaiHintInfo, true)
+            self:showChuPaiHintInfo(huPaiHintInfo, true)
             soundManager.playGfx("mahjong", "chose")
         else
             --出牌
@@ -1034,7 +1047,7 @@ function mahjongOperation:onClickOnMahjong(mj)
                 if self:onChosedChuPai() then
                     self.curSelectedMahjong = nil
                 end
-                self:hideChuPaiHint()
+                self:hideChuPaiHintInfo()
             end
         end
     end
@@ -1042,6 +1055,7 @@ end
 
 function mahjongOperation:clearChosedMahjong()
     if self.curSelectedMahjong ~= nil then
+        self:hideChuPaiHintInfo()
         self.curSelectedMahjong:setSelected(false)
         self:clearSelectMahjong()
         self.curSelectedMahjong = nil
@@ -1305,6 +1319,7 @@ function mahjongOperation:onGuoClickedHandler()
 
     self.game:guo()
     self:hideOperations()
+    self:hideHuPaiHint()
 end
 
 -------------------------------------------------------------------------------
@@ -1490,7 +1505,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
 
     local chuId = cards[1]
     if acId == self.game.mainAcId then
-        self:hideHuPaiHint()
+        self:hideChuPaiHintInfo()
         local huPaiHintInfo = self:getHuPaiHintInfo(chuId)
         self.huPaiHintInfo = huPaiHintInfo
         if self.huPaiHintInfo then
@@ -2298,6 +2313,8 @@ function mahjongOperation:reset()
     end
     eventManager.registerAnimationTrigger("table_plane_down", function()
     end)
+    eventManager.registerAnimationTrigger("table_plane_up", function()
+    end)
 
     self.diceRoot:hide()
     self.centerGlass:show()
@@ -2315,6 +2332,7 @@ function mahjongOperation:reset()
 
     self:hideChuPaiArrow()
     self:hideHuPaiHint()
+    self:hideChuPaiHintInfo()
 end
 
 function mahjongOperation:onCloseAllUIHandler()
@@ -2662,6 +2680,33 @@ function mahjongOperation:onHuanNZhangDoPlayback(msg)
     self.animationManager:add(animation)
 end
 
+function mahjongOperation:showChuPaiHintInfo(info)
+    if not self.canChuPai then
+        self:hideChuPaiHintInfo()
+        return
+    end
+    if not info then
+        self:hideChuPaiHintInfo()
+        return
+    end
+    local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
+    for _, t in pairs(info) do
+        t.left = 4 - totalCntVec[t.jiaoTid]
+    end
+    if self.chuPaiHintUI == nil then
+        self.chuPaiHintUI = require ("ui.mahjongDesk.huPaiHint").new(info)
+    end
+    self.chuPaiHintUI:setInfo(info)
+    self.chuPaiHintUI:show()
+    self.chuPaiHintUI:setParent(self.mHuPaiHint)
+    self.chuPaiHintUI:setAnchoredPosition(Vector2.zero)
+end
+function mahjongOperation:hideChuPaiHintInfo()
+    if self.chuPaiHintUI then
+        self.chuPaiHintUI:hide()
+    end
+end
+
 function mahjongOperation:showHuPaiHintInfo(info, fromClickCard)
     if fromClickCard and not self.canChuPai then
         self:hideHuPaiHint()
@@ -2712,6 +2757,9 @@ function mahjongOperation:worldToUIPos(pos, node, camera)
 end
 
 function mahjongOperation:showChuPaiArrow()
+    if not self.canChuPai then
+        return
+    end
     self:hideHuPaiHint()
     self:hideChuPaiArrow()
     local usedIdx = 1
@@ -2746,6 +2794,7 @@ function mahjongOperation:showChuPaiArrow()
 end
 
 function mahjongOperation:hideChuPaiArrow()
+    self:hideChuPaiHintInfo()
     for _, v in pairs(self.mChuHuHints) do
         v:hide()
     end
