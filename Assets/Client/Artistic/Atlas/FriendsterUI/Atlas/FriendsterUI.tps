@@ -411,6 +411,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/QYQ_gb.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,19,19</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,19,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/QYQ_kf_biaoti.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -434,6 +447,19 @@
                 <rect>28,27,55,53</rect>
                 <key>scale9Paddings</key>
                 <rect>28,27,55,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_kf_di_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,10,25,19</rect>
+                <key>scale9Paddings</key>
+                <rect>13,10,25,19</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -970,6 +996,8 @@
             <filename>Images/wfsz_zi01.png</filename>
             <filename>Images/wfsz_zi02.png</filename>
             <filename>Images/wfsz_bc.png</filename>
+            <filename>Images/QYQ_gb.png</filename>
+            <filename>Images/QYQ_kf_di_1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

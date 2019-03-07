@@ -1,4 +1,4 @@
-num_debug=1.3.6
+num_debug=1.3.7
 url_debug=http://test.cdbshy.com/mahjong_hotfix
-num_release=1.1.22
+num_release=1.1.26
 url_release=http://update.cdbshy.com/mahjong_hotfix
