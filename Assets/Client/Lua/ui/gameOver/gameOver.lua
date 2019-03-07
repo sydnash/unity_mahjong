@@ -21,6 +21,10 @@ function gameOver:onInit()
     end
     self.mDateTime:setText(time.formatDateTime())
 
+    local eventName = "gameover_" .. tostring(self.game.cityType) .. "_" .. tostring(self.game.gameType)
+    talkingData.event(eventName, {play = self.datas.finishGameCount, total = self.datas.totalGameCount))}, true)
+
+
     local info = string.format("%s", self.game:convertConfigToString(true))
     self.mTextR:setText(info)
 
