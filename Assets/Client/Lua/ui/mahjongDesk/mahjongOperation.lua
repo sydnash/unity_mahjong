@@ -406,6 +406,9 @@ function mahjongOperation:onGameStart()
             m:show()
         end
     end)
+    eventManager.registerAnimationTrigger("table_plane_up", function()
+        self:showChuPaiArrow()
+    end)
 
     self:playAnimation(self.planeAnim)
     self:playAnimation(self.mahjongsRootAnim)
@@ -2310,6 +2313,8 @@ function mahjongOperation:reset()
     end
     eventManager.registerAnimationTrigger("table_plane_down", function()
     end)
+    eventManager.registerAnimationTrigger("table_plane_up", function()
+    end)
 
     self.diceRoot:hide()
     self.centerGlass:show()
@@ -2752,6 +2757,9 @@ function mahjongOperation:worldToUIPos(pos, node, camera)
 end
 
 function mahjongOperation:showChuPaiArrow()
+    if not self.canChuPai then
+        return
+    end
     self:hideHuPaiHint()
     self:hideChuPaiArrow()
     local usedIdx = 1
