@@ -248,30 +248,37 @@ function gameEndItem:setScoreInfo()
     for _, v in pairs(self.finalChanges) do
         if v.Op == opType.hu.id then
             local d = detailTypeName[v.Detail]
-            if v.Score > 0 then
-                local ht = string.empty
-                if v.Gen > 0 then
-                    ht = ht .. tostring(v.Gen) .. "根 "
-                end
+            if v.Score > 0 then                
+                if v.Detail == opType.hu.detail.bijiao or v.Detail == opType.hu.detail.qianggang then
+                    text = text .. string.format("%s(%d) ", d[1], v.BeAcIds[1])
+                else
+                    text = text .. d[1]
+                    --统计根数和番型
+                    local ht = string.empty
+                    if v.Gen > 0 then
+                        ht = ht .. tostring(v.Gen) .. "根 "
+                    end
 
-                if not json.isNilOrNull(v.FanXing) then
-                    for k, u in pairs(v.FanXing) do
-                        ht = ht .. fanxingTypeName[u]
-                        if k < #v.FanXing then
-                            ht = ht .. " "
+                    if not json.isNilOrNull(v.FanXing) then
+                        for k, u in pairs(v.FanXing) do
+                            ht = ht .. fanxingTypeName[u]
+                            if k < #v.FanXing then
+                                ht = ht .. " "
+                            end
                         end
                     end
-                end
 
-                text = text .. d[1]
-                if string.isNilOrEmpty(ht) then
-                    text = text .. " "
-                else
-                    text = text .. string.format("(%s) ", ht)
+                    if string.isNilOrEmpty(ht) then
+                        text = text .. " "
+                    else
+                        text = text .. string.format("(%s) ", ht)
+                    end
                 end
             else
-                if v.Detail == opType.hu.detail.dianpao or v.Detail == opType.hu.detail.gangshangpao then
-                    text = text .. string.format("%s(%d)", d[2], v.BeAcIds[1]) .. " "
+                if v.Detail == opType.hu.detail.dianpao or v.Detail == opType.hu.detail.gangshangpao or v.Detail == opType.hu.detail.qianggang or v.Detail == opType.hu.detail.bijiao then
+                    text = text .. string.format("%s(%d) ", d[2], v.BeAcIds[1])
+                else
+                    text = text .. d[2] .. " "
                 end
             end
         elseif v.Op == opType.gang.id then

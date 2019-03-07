@@ -200,7 +200,8 @@ public class GVoiceEngine
         if (mCloudVoice != null)
         {
             // The result of UploadRecordedFile needs to be obtained from callback method: UploadReccordFileCompleteHandler
-            mCloudVoice.UploadRecordedFile(filename, timeout);
+            int ret = mCloudVoice.UploadRecordedFile(filename, timeout);
+            Logger.Log("Upload, ret = " + ret.ToString());
         }
     }
 
@@ -296,6 +297,7 @@ public class GVoiceEngine
     {
         if (mUploadedCallback != null)
         {
+            Logger.Log("OnUploadReccordFileCompletedHandler, code = " + code.ToString());
             bool ok = (IGCloudVoice.GCloudVoiceCompleteCode.GV_ON_UPLOAD_RECORD_DONE == code);
             mUploadedCallback(ok, filepath, fileid);
         }
