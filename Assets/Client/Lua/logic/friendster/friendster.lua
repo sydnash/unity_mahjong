@@ -22,8 +22,14 @@ local function createPlayer(data)
 end
 
 local function createDesk(data)
-    local desk = friendsterDesk.new(data)
-    return desk
+    local ok, _ = checkGame(data.cityType, data.gameType)
+
+    if ok then
+        local desk = friendsterDesk.new(data)
+        return desk
+    end
+
+    return nil
 end
 
 function friendster:ctor(id)
@@ -123,11 +129,12 @@ function friendster:setDesks(data)
 
     for _, v in pairs(data) do
         local desk = self:addDesk(v)
-
-        for _, acId in pairs(v.Players) do 
-            local player = self.members[acId]
-            if player ~= nil then
-                desk:addPlayer(player)
+        if desk ~= nil then
+            for _, acId in pairs(v.Players) do 
+                local player = self.members[acId]
+                if player ~= nil then
+                    desk:addPlayer(player)
+                end
             end
         end
     end
@@ -139,8 +146,10 @@ function friendster:addDesk(data)
     end
 
     local desk = createDesk(data)
-    self.desks[desk.deskId] = desk
-    self.curDeskCount = self.curDeskCount + 1
+    if desk ~= nil then
+        self.desks[desk.deskId] = desk
+        self.curDeskCount = self.curDeskCount + 1
+    end
 
     return desk
 end
