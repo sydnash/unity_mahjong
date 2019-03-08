@@ -239,6 +239,7 @@
             <key type="filename">Images/mj_h_9tiao.png</key>
             <key type="filename">Images/mj_h_9tong.png</key>
             <key type="filename">Images/mj_h_9wan.png</key>
+            <key type="filename">Images/mj_h_bei.png</key>
             <key type="filename">Images/mj_h_fbaiban.png</key>
             <key type="filename">Images/mj_h_fbei.png</key>
             <key type="filename">Images/mj_h_fdong.png</key>
@@ -504,6 +505,7 @@
             <filename>Images/mj_su_sqiu_l.png</filename>
             <filename>Images/mj_su_sxia_l.png</filename>
             <filename>Images/mj_su_szu_l.png</filename>
+            <filename>Images/mj_h_bei.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

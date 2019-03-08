@@ -17,11 +17,19 @@ function gameEndGangPai:onInit()
     self.mD:setSprite(self.spriteName)
 end
 
-function gameEndGangPai:setMahjongId(mahjongId)
+function gameEndGangPai:setMahjongId(mahjongId, angang)
     local spriteName = mahjongType.getMahjongTypeById(mahjongId).name
-    self.mA:setSprite(spriteName)
-    self.mB:setSprite(spriteName)
-    self.mC:setSprite(spriteName)
+
+    if angang then
+        self.mA:setSprite("back")
+        self.mB:setSprite("back")
+        self.mC:setSprite("back")
+    else
+        self.mA:setSprite(spriteName)
+        self.mB:setSprite(spriteName)
+        self.mC:setSprite(spriteName)
+    end
+
     self.mD:setSprite(spriteName)
 end
 

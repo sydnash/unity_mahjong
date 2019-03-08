@@ -35,7 +35,9 @@ end
 
 
 
-
+local GameObject   = UnityEngine.GameObject
+local CanvasScaler = UnityEngine.UI.CanvasScaler
+local Screen       = UnityEngine.Screen
 
 require("utils.class")
 G_Current_Version = "0.0.0"
@@ -48,6 +50,19 @@ local app       = nil
 function main()
     if appConfig.debug then
         profiler:start()
+    end
+
+    if CanvasScaler ~= nil then
+        local canvas = GameObject.Find("UIRoot/Canvas")
+        local scaler = canvas.gameObject:GetComponent(typeof(CanvasScaler))
+        if scaler ~= nil then
+            local sr = Screen.width / Screen.height
+            if sr <= (16 / 9) then
+                scaler.matchWidthOrHeight = 0
+            else
+                scaler.matchWidthOrHeight = 1
+            end
+        end
     end
     
     local patchManager = require("logic.manager.patchManager")

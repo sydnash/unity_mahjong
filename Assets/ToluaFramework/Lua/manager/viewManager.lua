@@ -6,9 +6,7 @@ local viewManager = {}
 local assetType = "view"
 
 local GameObject = UnityEngine.GameObject
-local CanvasScaler = UnityEngine.UI.CanvasScaler
 local Camera     = UnityEngine.Camera
-local Screen = UnityEngine.Screen
 
 -------------------------------------------------------------------
 --
@@ -18,18 +16,6 @@ function viewManager.setup()
 
     local root = find("UIRoot")
     viewManager.canvas = root:findChild("Canvas")
-
-    if CanvasScaler ~= nil then
-        local canvasScaler = getComponentU(viewManager.canvas.gameObject, typeof(CanvasScaler))
-        if canvasScaler ~= nil then
-            local sr = Screen.width / Screen.height
-            if sr <= (16 / 9) then
-                canvasScaler.matchWidthOrHeight = 0
-            else
-                canvasScaler.matchWidthOrHeight = 1
-            end
-        end
-    end
 
     local camera = root:findChild("UICamera")
     viewManager.camera = getComponentU(camera.gameObject, typeof(Camera))
