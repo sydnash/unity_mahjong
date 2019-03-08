@@ -113,6 +113,7 @@ public static class LuaBinder
 		UnityEngine_UI_ScrollRectWrap.Register(L);
 		UnityEngine_UI_HorizontalLayoutGroupWrap.Register(L);
 		UnityEngine_UI_VerticalLayoutGroupWrap.Register(L);
+		UnityEngine_UI_CanvasScalerWrap.Register(L);
 		UnityEngine_UI_SpriteWrap.Register(L);
 		UnityEngine_UI_MaskableGraphicWrap.Register(L);
 		UnityEngine_UI_GraphicWrap.Register(L);

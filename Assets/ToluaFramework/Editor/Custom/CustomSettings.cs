@@ -111,7 +111,7 @@ public static class CustomSettings
         _GT(typeof(Shader)),        
         _GT(typeof(Renderer)),
         _GT(typeof(WWW)),
-        _GT(typeof(Screen)),        
+        _GT(typeof(Screen)),    
         _GT(typeof(CameraClearFlags)),
         _GT(typeof(AudioClip)),        
         _GT(typeof(AssetBundle)),
@@ -188,6 +188,7 @@ public static class CustomSettings
         _GT(typeof(LocationService)),
         _GT(typeof(LocationServiceStatus)),
         _GT(typeof(LocationInfo)),
+        _GT(typeof(CanvasScaler)),
 
         //Custom Classes
         _GT(typeof(AssetPoolManager)),
