@@ -693,6 +693,11 @@ function mahjongGame:onGameEndListener(specialData, datas, totalScores)
                 end
 
                 table.insert(d[u.Op], u.Cs)
+
+                if u.Op == opType.gang.id then --存放杠牌的类型
+                    local x = #d[u.Op]
+                    d[u.Op][x][5] = u.D
+                end
             end
         end
 

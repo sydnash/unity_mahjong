@@ -6,7 +6,7 @@ local base = require("ui.common.panel")
 local gameEndScore = class("gameEndScore", base)
 
 function gameEndScore:onInit()
-    self.n = { self.mC, self.mB, self.mA }
+    self.n = { self.mD, self.mC, self.mB, self.mA }
     for _, v in pairs(self.n) do
         v:hide()
     end

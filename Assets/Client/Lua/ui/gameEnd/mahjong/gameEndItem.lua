@@ -104,9 +104,9 @@ function gameEndItem:setPlayerInfo(player, scoreChanges)
             p:setParent(self.mPai)
             p:show()
             p:setMahjongId(u[1])
-            p:setLocalPosition(Vector3.New(x, -8, 0))
+            p:setLocalPosition(Vector3.New(x, -7, 0))
 
-            x = x + p.width + 10
+            x = x + p.width + 8
             table.insert(self.pai, p)
         end
     end
@@ -117,10 +117,10 @@ function gameEndItem:setPlayerInfo(player, scoreChanges)
             local p = require("ui.gameEnd.mahjong.gameEndGangPai").new()
             p:setParent(self.mPai)
             p:show()
-            p:setMahjongId(u[1])
-            p:setLocalPosition(Vector3.New(x, -8, 0))
+            p:setMahjongId(u[1], u[5] == opType.gang.detail.angang)
+            p:setLocalPosition(Vector3.New(x, -7, 0))
 
-            x = x + p.width + 10
+            x = x + p.width + 8
             table.insert(self.pai, p)
         end
     end
@@ -147,7 +147,7 @@ function gameEndItem:setPlayerInfo(player, scoreChanges)
         p:setParent(self.mPai)
         p:show()
         p:setMahjongId(hu)
-        p:setLocalPosition(Vector3.New(x + 20, 0, 0))
+        p:setLocalPosition(Vector3.New(x + 15, 0, 0))
         p:setHighlight(true)
 
         table.insert(self.pai, p)
