@@ -22,7 +22,9 @@ local function createPlayer(data)
 end
 
 local function createDesk(data)
-    local ok, _ = checkGame(data.cityType, data.gameType)
+    log("createDesk, data = " .. table.tostring(data))
+    local config = table.fromjson(data.Config)
+    local ok, _ = checkGame(data.GameType, config.Game)
 
     if ok then
         local desk = friendsterDesk.new(data)
