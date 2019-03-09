@@ -2806,7 +2806,7 @@ function mahjongOperation:showHuPaiHintInfo()
             item:show()
         end
 
-        self.mHuHintBg:setSize(Vector2.New(95 + 104 * #self.huPaiHintInfo, 130))
+        self.mHuHintBg:setSize(Vector2.New(105 + 90 * #self.huPaiHintInfo, 130))
         self.mHuHint:show()
     end
 end

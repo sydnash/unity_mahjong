@@ -11,16 +11,24 @@ local mahjongType  = require ("logic.mahjong.mahjongType")
 
 --end
 
+local WHITE_COLOR = Color.white
+local GRAY_COLOR = Color.New(1, 1, 1, 0.5)
+
 function huPaiHintOne:setInfo(info)
-    self:setMahjong(info.jiaoTid * 4)
+    self:setMahjong(info.jiaoTid * 4, info.left)
     self:setFanShu(info.fan)
     self:setCount(info.left)
 end
 
-function huPaiHintOne:setMahjong(id)
+function huPaiHintOne:setMahjong(id, count)
     local spriteName = mahjongType.getMahjongTypeById(id).name
---    log("sprite name : " .. spriteName)
     self.mMahjong:setSprite(spriteName)
+
+    if count > 0 then
+        self.mMahjong:setColor(WHITE_COLOR)
+    else
+        self.mMahjong:setColor(GRAY_COLOR)
+    end
 end
 
 function huPaiHintOne:setFanShu(fan)
