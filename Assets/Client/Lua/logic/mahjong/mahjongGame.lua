@@ -707,7 +707,7 @@ function mahjongGame:onGameEndListener(specialData, datas, totalScores)
     table.sort(datas.players, function(t1, t2)
         return t1.seatType < t2.seatType
     end)
-    self.deskUI:hideHuHintButton()
+    
     datas.scoreChanges = specialData.ScoreChanges
     for _, v in pairs(self.players) do
         v.que = -1
@@ -715,6 +715,7 @@ function mahjongGame:onGameEndListener(specialData, datas, totalScores)
         v.hu = nil
         self.deskUI:setScore(v.acId, v.score)
     end
+
     return datas
 end
 

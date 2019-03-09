@@ -3,12 +3,13 @@ local base = require("ui.common.panel")
 local huPaiHintOne = class("huPaiHintOne", base)
 local mahjongType  = require ("logic.mahjong.mahjongType")
 
-function huPaiHintOne:ctor(info, start)
-    base.ctor(self)
-end
+--function huPaiHintOne:ctor(info, start)
+--    base.ctor(self)
+--end
 
-function huPaiHintOne:onInit()
-end
+--function huPaiHintOne:onInit()
+
+--end
 
 function huPaiHintOne:setInfo(info)
     self:setMahjong(info.jiaoTid * 4)

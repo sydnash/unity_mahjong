@@ -114,6 +114,8 @@
     <Compile Include="Lua\ui\deskHeader.lua" />
     <Compile Include="Lua\ui\doushisiDesk\doushisiDesk.lua" />
     <Compile Include="Lua\ui\doushisiDesk\doushisiDeskHeader.lua" />
+    <Compile Include="Lua\ui\mahjongDesk\huPaiHint.lua" />
+    <Compile Include="Lua\ui\mahjongDesk\huPaiHintOne.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
     <Compile Include="Lua\ui\mail\mailItem.lua" />
     <Compile Include="Lua\ui\patch\patchDownload.lua" />
