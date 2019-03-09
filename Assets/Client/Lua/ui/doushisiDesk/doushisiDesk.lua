@@ -192,6 +192,7 @@ function doushisiDesk:createSettingUI()
 end
 
 function doushisiDesk:showClock(seat)
+    self.m_curOPDir = seat
     self.mClock:setParent(self.headerParents[seat])
     self.mClock:setLocalPosition(clockPosition[seat])
     self.countdown = COUNTDOWN_SECONDS_C
@@ -214,8 +215,8 @@ function doushisiDesk:updateClock()
         self.countdown = math.max(0, self.countdown - 1)
         self.mClockText:setText(tostring(self.countdown))
 
-        if self.countdown > 0 and self.countdown <= 5 then
-            --playClockTimerSound()
+        if self.m_curOPDir == seatType.mine and self.countdown > 0 and self.countdown <= 5 then
+            playClockTimerSound()
         end
     end
 end

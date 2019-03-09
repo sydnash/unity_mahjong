@@ -334,8 +334,8 @@ function mahjongOperation:update()
         if delta > 0.99999 then
             self.turnCountdown = math.max(0, self.turnCountdown - 1)
 
-            if self.turnCountdown <= 5 then
-                --playClockTimerSound()
+            if self.turnCountdown <= 5 and self.m_curOPDir == self.game.mainAcId then
+                playClockTimerSound()
             end
 
             local a = math.floor(self.turnCountdown / 10)
@@ -385,6 +385,25 @@ function mahjongOperation:setCountdownVisible(visible)
         self.centerGlass:hide()
         self.countdown:hide()
     end
+end
+
+function mahjongOperation:clearCountdownTick()
+    self.countdownTick = -1
+
+    self.turnCountdown = 0
+    local a = math.floor(self.turnCountdown / 10)
+    self.countdown.a:setSprite(tostring(a))
+    local b = math.floor(self.turnCountdown % 10)
+    self.countdown.b:setSprite(tostring(b))
+end
+function mahjongOperation:setCountdownTick()
+    self.countdownTick = time.realtimeSinceStartup()
+
+    self.turnCountdown = COUNTDOWN_SECONDS_C
+    local a = math.floor(self.turnCountdown / 10)
+    self.countdown.a:setSprite(tostring(a))
+    local b = math.floor(self.turnCountdown % 10)
+    self.countdown.b:setSprite(tostring(b))
 end
 
 -------------------------------------------------------------------------------
@@ -492,27 +511,37 @@ function mahjongOperation:onGameSync()
     
     if self.game.deskPlayStatus == mahjongGame.status.hsz then
         self:setDices()
-        self:highlightPlaneByAcId(self.game.markerAcId)
-        self:setCountdownVisible(false)
+        self:highlightPlaneByAcId(self.game.mainAcId)
+        self:setCountdownVisible(true)
         local datas = self.game.players[self.game.mainAcId][mahjongGame.cardType.huan]
         if datas ~= nil and #datas == self.hnzCount then
             self.hasHnzChoosed = true
+            self:clearCountdownTick()
             self.mHnz:hide()
         else
+            self:setCountdownTick()
             self.mHnz:show()
             self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
         end
     elseif self.game.deskPlayStatus == mahjongGame.status.dingque then
         self:setDices()
-        self:highlightPlaneByAcId(self.game.markerAcId)
-        self:setCountdownVisible(false)
+        self:highlightPlaneByAcId(self.game.mainAcId)
+        self:setCountdownVisible(true)
         self.mDQTips:show()
 
         local player = self.game:getPlayerByAcId(self.game.mainAcId)
         if player.que < 0 then
             self.mQue:show()
+            self:setCountdownTick()
+        else
+            self:clearCountdownTick()
         end
     elseif self.game.deskPlayStatus == mahjongGame.status.playing then
+        self:highlightPlaneByAcId(reenter.CurOpAcId)
+        self:clearCountdownTick()
+        self:setCountdownVisible(true)
+
+--        log("reenter: " .. table.tostring(reenter.CurOpList))
         local _, needHuHint = self:onOpList(reenter.CurOpList)
         if self.game:hasHuPaiHint() then
             if not self.canChuPai then
@@ -527,10 +556,6 @@ function mahjongOperation:onGameSync()
                 end
             end
         end
-        self:highlightPlaneByAcId(reenter.CurOpAcId)
-        self.turnCountdown = COUNTDOWN_SECONDS_C
-        self.countdownTick = time.realtimeSinceStartup()
-        self:setCountdownVisible(true)
     end
 
     self:rotatePlanes()
@@ -679,6 +704,9 @@ end
 function mahjongOperation:onDingQueHint(msg)
     self.mDQTips:show()
     self.mQue:show()
+    self:setCountdownVisible(true)
+    self:highlightPlaneByAcId(self.game.mainAcId)
+    self:setCountdownTick()
 end
 
 -------------------------------------------------------------------------------
@@ -774,8 +802,7 @@ end
 -- 摸牌
 -------------------------------------------------------------------------------
 function mahjongOperation:onMoPai(acId, cards)
-    self.turnCountdown = COUNTDOWN_SECONDS_C
-    self.countdownTick = time.realtimeSinceStartup()
+    self:setCountdownTick()
     self:highlightPlaneByAcId(acId)
     
     if acId ~= self.game.mainAcId then
@@ -878,6 +905,10 @@ function mahjongOperation:onOpList(oplist)
 
         self.mDQTips:hide()
         self:showOperations(infos, leftTime)
+        if self.CurOpAcId ~= self.game.mainAcId then
+            self:highlightPlaneByAcId(self.game.mainAcId)
+            self:setCountdownTick()
+        end
     end
 
     if needShowHuPaiHint then
@@ -894,8 +925,7 @@ function mahjongOperation:beginChuPai()
     self.canChuPai = true
 
     self:highlightPlaneByAcId(self.game.mainAcId)
-    self.turnCountdown = COUNTDOWN_SECONDS_C
-    self.countdownTick = time.realtimeSinceStartup()
+    self:setCountdownTick()
     self:setCountdownVisible(true)
 
     if self.mo == nil then
@@ -913,7 +943,8 @@ end
 
 function mahjongOperation:onDeskPlayStatusChanged()
     if self.game.deskPlayStatus == mahjongGame.status.playing then
-
+        self:highlightPlaneByAcId(self.game.markerAcId)
+        self:setCountdownTick()
     end
 end
 
@@ -1291,6 +1322,7 @@ function mahjongOperation:onTiaoClickedHandler()
     networkManager.dingque(mahjongClass.tiao, function(msg)
     end)
     self.mQue:hide()
+    self:clearCountdownTick()
 end
 
 -------------------------------------------------------------------------------
@@ -1302,6 +1334,7 @@ function mahjongOperation:onTongClickedHandler()
     networkManager.dingque(mahjongClass.tong, function(msg)
     end)
     self.mQue:hide()
+    self:clearCountdownTick()
 end
 
 -------------------------------------------------------------------------------
@@ -1313,6 +1346,7 @@ function mahjongOperation:onWanClickedHandler()
     networkManager.dingque(mahjongClass.wan, function(msg)
     end)
     self.mQue:hide()
+    self:clearCountdownTick()
 end
 
 -------------------------------------------------------------------------------
@@ -1458,6 +1492,9 @@ function mahjongOperation:virtureChu(mj)
     self.chupaiPtr:setLocalPosition(p)
     self.chupaiPtr:show()
     mj:light()
+
+    self:endChuPai()
+    self:clearCountdownTick()
 
     self.virtureChuMahjong = mj
 end
@@ -2231,7 +2268,7 @@ function mahjongOperation:highlightPlaneByAcId(acId)
         local base = self.game:getSeatTypeByAcId(self.game.markerAcId)
         local seat = self.game:getSeatTypeByAcId(acId)
         local diff = (seat ~= nil) and (seat - base + 4) % 4 or nil
-
+        self.m_curOPDir = acId
         for s, m in pairs(self.planeMats) do
             if diff ~= nil and s == diff then
                 m.mainTexture = panleHighlightTex
@@ -2313,6 +2350,7 @@ end
 -- 重置
 -------------------------------------------------------------------------------
 function mahjongOperation:reset()
+    self.m_curOPDir = 0
     if self.game.mode == gameMode.normal then
         touch.removeListener()
     end
@@ -2460,6 +2498,9 @@ function mahjongOperation:onHuanNZhangHint(msg)
     self.hnzCount = msg.Count
     self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
     self.mHnz:show()
+    self:highlightPlaneByAcId(self.game.mainAcId)
+    self:setCountdownVisible(true)
+    self:setCountdownTick()
 end
 
 -------------------------------------------------------------------------------
@@ -2483,6 +2524,7 @@ function mahjongOperation:onHnzChooseClickedHandler()
 
     local mahjongs = self:decreaseInhandMahjongs(self.game.mainAcId, data)
     self:putMahjongsToHuan(self.game.mainAcId, mahjongs)
+    self:clearCountdownTick()
 
     self.mHnz:hide()
 end
@@ -2738,7 +2780,7 @@ function mahjongOperation:showHuPaiHintInfo()
             item:show()
         end
 
-        self.mHuHintBg:setSize(Vector2.New(50 + 148 * #self.huPaiHintInfo, 136))
+        self.mHuHintBg:setSize(Vector2.New(95 + 104 * #self.huPaiHintInfo, 130))
         self.mHuHint:show()
     end
 end
