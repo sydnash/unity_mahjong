@@ -548,7 +548,11 @@ function mahjongOperation:onGameSync()
                 local player = self.game:getPlayerByAcId(self.game.mainAcId)
 
                 if not player.isHu then
-                    self:computeJiao(player.hus)
+                    if #player.hus == 0 then
+                        self:computeJiaoLocal()
+                    else
+                        self:computeJiao(player.hus)
+                    end
                 end
 
                 if needHuHint then
@@ -669,6 +673,28 @@ function mahjongOperation:OnFaPai()
     
     if self.game.mode == gameMode.normal then
         touch.addListener(self.touchHandler, self)
+    end
+end
+
+function mahjongOperation:computeJiaoLocal()
+    if not self.game:hasHuPaiHint() then
+        return
+    end
+
+    if self.game.chuHintComputeHelper then
+        local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
+        local ret = self.game.chuHintComputeHelper:checkJiao(handCntVec, totalCntVec)
+        if #ret == 0 then
+            self.huPaiHintInfo = nil
+        else
+            self.huPaiHintInfo = ret
+        end
+
+        if self.huPaiHintInfo then
+            self:showHuPaiHintInfo()
+        else
+            self:hideHuPaiHintInfo()
+        end
     end
 end
 
@@ -938,6 +964,9 @@ end
 
 function mahjongOperation:onDeskPlayStatusChanged()
     if self.game.deskPlayStatus == mahjongGame.status.playing then
+        if self.game.markerAcId ~= self.game.mainAcId then
+            self:computeJiaoLocal()
+        end
         self:highlightPlaneByAcId(self.game.markerAcId)
         self:setCountdownTick()
     end
@@ -2380,6 +2409,8 @@ function mahjongOperation:reset()
     self:hideChuPaiArrow()
     self:hideHuPaiHintInfo()
     self:hideChuPaiHintInfo()
+
+    self.huPaiHintInfo = nil
 end
 
 function mahjongOperation:onCloseAllUIHandler()

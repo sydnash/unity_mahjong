@@ -216,6 +216,9 @@ function mahjongGame:syncSeats(seats)
         player.isMarker = self:isMarker(player.acId)
 
         player.hus = v.Hus
+        if json.isNilOrNull(player.hus) then
+            player.hus = {}
+        end
         player[mahjongGame.cardType.shou] = v.CardsInHand
         player[mahjongGame.cardType.chu]  = v.CardsInChuPai
         player[mahjongGame.cardType.peng] = v.ChiCheInfos
