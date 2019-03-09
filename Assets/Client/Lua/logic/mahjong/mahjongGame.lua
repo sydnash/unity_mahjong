@@ -409,7 +409,15 @@ end
 function mahjongGame:onHuanNZhangDoHandler(msg)
     if self.mode == gameMode.normal then
         local func = (function()
---            log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
+-- log("mahjongGame:onHuanNZhangDoHandler, msg = " .. table.tostring(msg))
+            if msg.AcId == self.mainAcId then
+                for _, c in pairs(msg.D) do
+                    self.knownMahjong[c] = nil
+                end
+                for _, c in pairs(msg.A) do
+                    self.knownMahjong[c] = 1
+                end
+            end
             self.operationUI:onHuanNZhangDo(msg)
         end)
         self:pushMessage(func)
@@ -504,10 +512,22 @@ function mahjongGame:onClearHandler(msg)
     self:pushMessage(func)
 end
 
+function mahjongGame:endChuPai()
+    if self.operationUI then
+        self.operationUI:endChuPai()
+    end
+end
+function mahjongGame:clearCountdownTick()
+    if self.operationUI then
+        self.operationUI:clearCountdownTick()
+    end
+end
 -------------------------------------------------------------------------------
 -- CS 过
 -------------------------------------------------------------------------------
 function mahjongGame:guo()
+    self:endChuPai()
+    self:clearCountdownTick()
     networkManager.guoPai(function(msg)
     end)
 end
@@ -516,6 +536,8 @@ end
 -- CS 吃
 -------------------------------------------------------------------------------
 function mahjongGame:chi(cards)
+    self:endChuPai()
+    self:clearCountdownTick()
     networkManager.chiPai(cards, function(msg)
     end)
 end
@@ -524,6 +546,8 @@ end
 -- CS 碰
 -------------------------------------------------------------------------------
 function mahjongGame:peng(cards)
+    self:endChuPai()
+    self:clearCountdownTick()
     networkManager.pengPai(cards, function(msg)
     end)
 end
@@ -533,6 +557,8 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:gang(cards)
 --    log("mahjongGame.gang, cards = " .. table.tostring(cards))
+    self:endChuPai()
+    self:clearCountdownTick()
     networkManager.gangPai(cards, function(msg)
     end)
 end
@@ -541,6 +567,8 @@ end
 -- CS 胡
 -------------------------------------------------------------------------------
 function mahjongGame:hu(cards)
+    self:endChuPai()
+    self:clearCountdownTick()
     networkManager.huPai(cards, function(msg)
     end)
 end
