@@ -894,11 +894,6 @@ function mahjongOperation:onOpList(oplist)
                 self:beginChuPai()
             else
                 local player = self.game:getPlayerByAcId(self.game.mainAcId)
-
-                if not player.isHu then
-                    self:computeJiao(player.hus)
-                end
-
                 needShowHuPaiHint = (self.huPaiHintInfo ~= nil)
             end
         end
