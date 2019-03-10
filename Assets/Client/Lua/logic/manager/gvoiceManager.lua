@@ -16,6 +16,7 @@ local isRecording = false
 local isFirstPlay = true
 local tmpRecordFile
 local startTime = 0
+local hasSetup = false
 
 local networkConfig = require("config.networkConfig")
 local timeout = networkConfig.gvoiceTimeout * 1000
@@ -24,21 +25,25 @@ function gvoiceManager.setup(userId)
     if deviceConfig.isMacOSX then
         --
     else
-        if GVoiceEngine.instance:Setup(userId) then
-            GVoiceEngine.instance:RegisterApplyMessageKeyCallback(function(ok)
-                if ok then
-                    GVoiceEngine.instance:RegisterUploadedCallback(gvoiceManager.onUploadedHandler)
-                    GVoiceEngine.instance:RegisterDownloadedCallback(gvoiceManager.onDownloadedHandler)
-                    GVoiceEngine.instance:RegisterPlayFinishedCallback(gvoiceManager.onPlayFinishedHandler)
-                end
+        if not hasSetup then
+            if GVoiceEngine.instance:Setup(userId) then
+                GVoiceEngine.instance:RegisterApplyMessageKeyCallback(function(ok)
+                    if ok then
+                        GVoiceEngine.instance:RegisterUploadedCallback(gvoiceManager.onUploadedHandler)
+                        GVoiceEngine.instance:RegisterDownloadedCallback(gvoiceManager.onDownloadedHandler)
+                        GVoiceEngine.instance:RegisterPlayFinishedCallback(gvoiceManager.onPlayFinishedHandler)
+                    end
 
-                gvoiceManager.status = ok
-                gvoiceManager.fileNameToAcId = {}
-                gvoiceManager.downloadFileQueue = {}
-            end)
+                    gvoiceManager.status = ok
+                    gvoiceManager.fileNameToAcId = {}
+                    gvoiceManager.downloadFileQueue = {}
+                end)
 
-            GVoiceEngine.instance:SetMaxMessageLength(gameConfig.gvoiceMaxLength * 1000)
-            GVoiceEngine.instance:ApplyMessageKey(timeout)
+                GVoiceEngine.instance:SetMaxMessageLength(gameConfig.gvoiceMaxLength * 1000)
+                GVoiceEngine.instance:ApplyMessageKey(timeout)
+
+                hasSetup = true
+            end
         end
     end
 

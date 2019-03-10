@@ -1752,6 +1752,8 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
                         if m.id == beCard then
                             hu = m
                             table.remove(mahjongs, k)
+                            --被抢杠后删除杠的类型
+                            table.remove(mahjongs, #mahjongs)
                         end
                     end
                 end
