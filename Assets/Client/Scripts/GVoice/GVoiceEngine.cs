@@ -280,7 +280,6 @@ public class GVoiceEngine
     /// <param name="code"></param>
     private void OnApplyMessageKeyCompletedHandler(IGCloudVoice.GCloudVoiceCompleteCode code)
     {
-        Logger.Log("222222222222222222222222222222222");
         if (mApplyMessageKeyCallback != null)
         {
             bool ok = (IGCloudVoice.GCloudVoiceCompleteCode.GV_ON_MESSAGE_KEY_APPLIED_SUCC == code);
