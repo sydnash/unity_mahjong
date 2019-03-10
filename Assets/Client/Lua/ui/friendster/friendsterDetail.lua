@@ -45,9 +45,9 @@ local function getSoredDesks(desks)
 
     table.sort(d, function(a, b)
         --没开始游戏的排在前面
-        if a.state == friendsterDeskStatus.waiting and a.state == friendsterDeskStatus.playing then
+        if a.state == friendsterDeskStatus.waiting and b.state == friendsterDeskStatus.playing then
             return true
-        elseif a.state == friendsterDeskStatus.playing and a.state == friendsterDeskStatus.waiting then
+        elseif a.state == friendsterDeskStatus.playing and b.state == friendsterDeskStatus.waiting then
             return false
         end
 

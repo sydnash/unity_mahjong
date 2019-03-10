@@ -62,8 +62,8 @@ function game:initMessageHandlers()
         [protoType.sc.notifyExitVoteFailed]     = { func = self.onNotifyExitVoteFailedHandler,  nr = true },
         [protoType.sc.exitVote]                 = { func = self.onExitVoteHandler,              nr = true },
         [protoType.sc.gameEnd]                  = { func = self.onGameEndHandler,               nr = true },
-        [protoType.sc.deskStatusChange]         = { func = self.onDeskStatusChangedHandler,             nr = true },
-        [protoType.sc.chatMessage]              = { func = self.onChatMessageHandler,             nr = true },
+        [protoType.sc.deskStatusChange]         = { func = self.onDeskStatusChangedHandler,     nr = true },
+        [protoType.sc.chatMessage]              = { func = self.onChatMessageHandler,           nr = true },
         -- networkManager.registerCommandHandler(protoType.sc.chatMessage, function(msg)
     }
 end
