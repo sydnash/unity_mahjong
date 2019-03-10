@@ -313,6 +313,7 @@ public class GVoiceEngine
     {
         if (mDownloadedCallback != null)
         {
+            Logger.Log("OnDownloadRecordFileCompletedHandler, code = " + code.ToString());
             bool ok = (IGCloudVoice.GCloudVoiceCompleteCode.GV_ON_DOWNLOAD_RECORD_DONE == code);
             mDownloadedCallback(ok, filepath, fileid);
         }
