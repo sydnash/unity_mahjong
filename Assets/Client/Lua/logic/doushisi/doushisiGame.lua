@@ -105,7 +105,6 @@ function doushisiGame:computeXiaoJia()
     end
     local p = self:getPlayerByTurn(xiaoJiaTurn)
     p.isXiao = true
-    -- log("compute xiaojia:======================")
 end
 
 -------------------------------------------------------------------------------

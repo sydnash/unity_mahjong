@@ -862,7 +862,7 @@ end
 
 function doushisiOperation:onOpDoHua(acId, delIds)
     local info =self:opDoChiPengAnHua(acId, delIds, nil, opType.doushisi.hua.id)
-    return self:chiPengAction(acId, info.cards)
+    return self:chiPengAction(acId, info.cards) + 0.1
 end
 
 -----------------------------------------------------------
@@ -905,7 +905,7 @@ end
 
 function doushisiOperation:onOpDoChe(acId, delIds, beId)
     local info = self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.che.id)
-    return self:chiPengAction(acId, info.cards)
+    return self:chiPengAction(acId, info.cards) + 0.1
 end
 
 -----------------------------------------------------------
@@ -954,7 +954,7 @@ end
 
 function doushisiOperation:onOpDoAn(acId, delIds)
     local info = self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.an.id)
-    return self:chiPengAction(acId, info.cards)
+    return self:chiPengAction(acId, info.cards) + 0.1
 end
 
 -----------------------------------------------------------
@@ -997,7 +997,7 @@ function doushisiOperation:onOpDoBaGang(acId, id)
 
     self:relocateChiPengCards(acId)
 
-    return self:chiPengAction(acId, {card})
+    return self:chiPengAction(acId, {card}) + 0.1
 end
 
 -----------------------------------------------------------
@@ -1031,7 +1031,7 @@ function doushisiOperation:onOpDoCaiShen(acId, id)
     end
 
     self:pushBackPromoteNode()
-    return self:chiPengAction(acId, {card}, not playsound)
+    return self:chiPengAction(acId, {card}, not playsound) + 0.1
 end
 
 function doushisiOperation:onPanelBtnClick(btn, createFunc)
