@@ -324,11 +324,11 @@ function doushisiGame:onChiPengGangType(player, op, cards, beCard)
         end
         table.insert(info.Cards, beCard)
     end
-    self:delInhandCard(player, cards)
-    -- for _, c in pairs(cards) do --从手牌中删除
-    --     table.removeItem(player[self.cardType.shou], c)
-    --     table.insert(info.Cards, c)
-    -- end
+    -- self:delInhandCard(player, cards)
+    for _, c in pairs(cards) do --从手牌中删除
+        table.removeItem(player[self.cardType.shou], c)
+        table.insert(info.Cards, c)
+    end
     player.zhangShu = #player[self.cardType.shou]
     self.deskUI:updateInhandCardCount(player.acId)
     table.insert(player[self.cardType.peng], info)
