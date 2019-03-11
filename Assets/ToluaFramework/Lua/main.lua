@@ -52,6 +52,8 @@ function main()
         profiler:start()
     end
 
+    Screen.fullScreen = false
+
     if CanvasScaler ~= nil then
         local canvas = GameObject.Find("UIRoot/Canvas")
         local scaler = canvas.gameObject:GetComponent(typeof(CanvasScaler))
