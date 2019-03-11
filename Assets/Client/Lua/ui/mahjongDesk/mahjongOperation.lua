@@ -1257,7 +1257,7 @@ function mahjongOperation:touchHandler(phase, pos)
                 pos.z = mpos.z - cpos.z
                 local wpos = camera:ScreenToWorldPoint(pos)
                 local dpos = wpos - self.selectedStartPos
-                if dpos:Magnitude() > 0.010 then
+                if not self.startMove and dpos:Magnitude() > 0.010 then
                     self.isClick = false
                     self.startMove = true
                 end

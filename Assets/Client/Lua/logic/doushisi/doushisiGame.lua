@@ -105,6 +105,7 @@ function doushisiGame:computeXiaoJia()
     end
     local p = self:getPlayerByTurn(xiaoJiaTurn)
     p.isXiao = true
+    -- log("compute xiaojia:======================")
 end
 
 -------------------------------------------------------------------------------
@@ -324,10 +325,11 @@ function doushisiGame:onChiPengGangType(player, op, cards, beCard)
         end
         table.insert(info.Cards, beCard)
     end
-    for _, c in pairs(cards) do --从手牌中删除
-        table.removeItem(player[self.cardType.shou], c)
-        table.insert(info.Cards, c)
-    end
+    self:delInhandCard(player, cards)
+    -- for _, c in pairs(cards) do --从手牌中删除
+    --     table.removeItem(player[self.cardType.shou], c)
+    --     table.insert(info.Cards, c)
+    -- end
     player.zhangShu = #player[self.cardType.shou]
     self.deskUI:updateInhandCardCount(player.acId)
     table.insert(player[self.cardType.peng], info)
@@ -335,7 +337,8 @@ end
 
 function doushisiGame:onOpDoBaGang(player, msg)
     local card = msg.DelCards[1]
-    table.removeItem(player[self.cardType.shou], card)
+    -- table.removeItem(player[self.cardType.shou], card)
+    self:delInhandCard(player, msg.DelCards)
     local findInfo = nil
     for _, info in pairs(player[self.cardType.peng]) do
         if findInfo ~= nil then
@@ -357,7 +360,8 @@ end
 
 function doushisiGame:onOpDoCaiShen(player, msg)
     local card = msg.DelCards[1]
-    table.removeItem(player[self.cardType.shou], card)
+    self:delInhandCard(player, msg.DelCards)
+    -- table.removeItem(player[self.cardType.shou], card)
     table.removeItem(player[self.cardType.chu], card)
     local pengInfos = player[self.cardType.peng]
     local caiShenInfo = nil
@@ -420,12 +424,25 @@ end
 
 function doushisiGame:onOpDoChu(player, msg)
     local delCard = msg.DelCards[1]
-    table.removeItem(player[self.cardType.shou], delCard)
+    -- table.removeItem(player[self.cardType.shou], delCard)
+    self:delInhandCard(player, msg.DelCards)
     table.insert(player[self.cardType.chu], delCard)
 
     player.zhangShu = #player[self.cardType.shou]
     self.deskUI:updateInhandCardCount(player.acId)
     return self.operationUI:onOpDoChu(msg.AcId, msg.DelCards[1])
+end
+
+function doushisiGame:delInhandCard(player, delCards)
+    if self.mainAcId == player.acId then
+        for _, t in pairs(delCards) do
+            table.removeItem(player[self.cardType.shou], t)
+        end
+    else
+        for i = 1, #delCards do
+            table.remove(player[self.cardType.shou])
+        end
+    end
 end
 
 function doushisiGame:onOpDoHandler(msg)
@@ -525,6 +542,7 @@ function doushisiGame:onGameStartHandler(msg)
     self.diceAcId       = self:getPlayerByTurn(self.diceTurn).acId
     self:faPai(msg)
     
+    self:computeXiaoJia()
     self.deskUI:onGameStart()
     return self.operationUI:onGameStart()
 end

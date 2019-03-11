@@ -1664,6 +1664,8 @@ function doushisiOperation:touchHandler(phase, pos)
                 local cpos = camera.transform.localPosition
                 pos.z = cardPos.z - cpos.z
                 self.selectedLastPos = camera:ScreenToWorldPoint(pos)
+                self.selectedStartPos = self.selectedLastPos
+                self.startMove = false
             end
             self.dragCard:setId(self.curSelectdCard.id)
             self:addCardTo(self.dragCard, cardPos, seatType.mine, doushisiGame.cardType.perfect)
@@ -1679,14 +1681,18 @@ function doushisiOperation:touchHandler(phase, pos)
             local cpos = camera.transform.localPosition
             pos.z = mpos.z - cpos.z
             local wpos = camera:ScreenToWorldPoint(pos)
-            local dpos = wpos - self.selectedLastPos
-            if dpos:Magnitude() > 0.001 then
+            local dpos = wpos - self.selectedStartPos
+            if not self.startMove and dpos:Magnitude() > 0.010 then
                 self.isClick = false
+                self.startMove = true
             end
         
-            mpos = Vector3.New(mpos.x + dpos.x, mpos.y + dpos.y, mpos.z)
-            self.dragCard:setPosition(mpos)
-            self.selectedLastPos = wpos
+            if self.startMove then
+                local dpos = wpos - self.selectedLastPos
+                mpos = Vector3.New(mpos.x + dpos.x, mpos.y + dpos.y, mpos.z)
+                self.dragCard:setPosition(mpos)
+                self.selectedLastPos = wpos
+            end
         end
     else
         self.dragCard:hide()
