@@ -62,7 +62,7 @@ public abstract class StingyScrollRect : MonoBehaviour
         }
         mScrollRect.onValueChanged.AddListener(OnScrollRectValueChangedHandler);
 
-        mCapacity = capacity;
+        mCapacity = Mathf.Max(0, capacity);
         SetContentSpacing(mCapacity * mItemSpacing);
 
         if (itemInstantiateCallback != null)
@@ -90,6 +90,52 @@ public abstract class StingyScrollRect : MonoBehaviour
                 mLuaList.Add(lua);
                 InvokeItemRefreshCallback(lua, i);
             }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Add()
+    {
+        mCapacity++;
+        SetContentSpacing(mCapacity * mItemSpacing);
+
+        if (mTailIndex == mCapacity - 1)
+        {
+            mHeadIndex++;
+
+            LuaTable lua = mLuaList[0];
+            mLuaList.RemoveAt(0);
+            mLuaList.Add(lua);
+        }
+
+        float scrollRectSpacing = GetScrollRectSpacing();
+        int itemCount = Mathf.Min(mCapacity, Mathf.CeilToInt(scrollRectSpacing / mItemSpacing) + 1);
+        //Logger.Log("itemcount = " + itemCount.ToString());
+        for (int i = 0; i < itemCount; i++)
+        {
+            LuaTable lua = mLuaList[i];
+            RectTransform item = GetRectTransform(lua);
+            SetItemPosition(item, mHeadIndex + i);
+            InvokeItemRefreshCallback(lua, mHeadIndex + i);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Remove()
+    {
+        mCapacity = Mathf.Max(0, mCapacity - 1);
+        SetContentSpacing(mCapacity * mItemSpacing);
+
+        float scrollRectSpacing = GetScrollRectSpacing();
+        int itemCount = Mathf.Min(mCapacity, Mathf.CeilToInt(scrollRectSpacing / mItemSpacing) + 1);
+
+        for (int i = 0; i < itemCount; i++)
+        {
+
         }
     }
 

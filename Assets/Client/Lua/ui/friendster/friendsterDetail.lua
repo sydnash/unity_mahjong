@@ -232,7 +232,7 @@ function friendsterDetail:getOnlineCount()
 end
 
 function friendsterDetail:refreshMemberList()
-    local members = getSortedMembers(self.data.managerAcId, self.data.members)
+    self.members = getSortedMembers(self.data.managerAcId, self.data.members)
     self.mMemberList:reset()
 
     local createMemberItem = function()
@@ -240,11 +240,17 @@ function friendsterDetail:refreshMemberList()
     end
 
     local refreshMemberItem = function(item, index)
-        local m = members[index + 1]
+        log("friendsterDetail:refreshMemberList, index = " .. tostring(index))
+        local m = self.members[index + 1]
         item:set(self.data.id, self.data.managerAcId, m)
     end
 
-    self.mMemberList:set(#members, createMemberItem, refreshMemberItem)
+    self.mMemberList:set(#self.members, createMemberItem, refreshMemberItem)
+end
+
+function friendsterDetail:addMember()
+    self.members = getSortedMembers(self.data.managerAcId, self.data.members)
+    self.mMemberList:add()
 end
 
 function friendsterDetail:refreshDeskList()

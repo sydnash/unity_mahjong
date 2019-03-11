@@ -338,7 +338,8 @@ function friendster:onNotifyFriendster(msg)
             lc:addMember(d.PlayerInfo)
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
-                self.detailUI:refreshMemberList()
+                --self.detailUI:refreshMemberList()
+                self.detailUI:addMember()
             end
         end
     elseif t == friendsterNotifyType.playerOffline then
