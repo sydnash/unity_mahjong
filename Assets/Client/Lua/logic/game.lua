@@ -1018,6 +1018,12 @@ function game:convertConfigToString(ignoreJuShu)
     return convertConfigToString(self.cityType, self.gameType, self.config, ignoreJuShu)
 end
 
+function game:cancelVoice()
+    if self.deskUI ~= nil then
+        self.deskUI:cancelVoice()
+    end
+end
+
 return game
 
 --endregion

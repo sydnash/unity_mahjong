@@ -33,4 +33,13 @@ public class ClientApp : LuaClient
         AssetPoolManager.instance.Update();
         AudioManager.instance.Update();
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="status"></param>
+    protected void OnApplicationPause(bool status)
+    {
+        luaState.Call<bool>("onApplicationPause", status, false);
+    }
 }
