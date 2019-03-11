@@ -130,7 +130,6 @@ function gvoiceManager.stopRecord(cancel)
                 if deviceConfig.isMacOSX then
                     --
                 else
-                    log("gvoiceManager.stopRecord, begin upload")
                     GVoiceEngine.instance:Upload(recordFilename, timeout)
                 end
             else
@@ -178,7 +177,7 @@ function gvoiceManager.play(filename, acId)
         else
             ret = GVoiceEngine.instance:StartPlay(filename)
         end
-        log("gvoicemanager= start play: " .. filename .. "play ret: " .. tostring(ret))
+        
         if ret and playStartedCallback ~= nil then
             if not acId then
                 acId = gvoiceManager.fileNameToAcId[filename]
@@ -200,7 +199,7 @@ end
 
 function gvoiceManager.startPlay(filename, fileid, acId)
     if gvoiceManager.status then
-        log("gvoicemanager.startPlay")
+        
         gvoiceManager.fileNameToAcId[filename] = acId
         if fileid == nil then
             gvoiceManager.onDownloadedHandler(true, filename)
@@ -216,7 +215,7 @@ end
 function gvoiceManager.stopPlay()
     if gvoiceManager.status then
         isPlaying = false
-        log("gvoicemanager= stop all: ")
+        
         playFinishedCallback("", acId)
         if deviceConfig.isMacOSX then
         else
@@ -236,7 +235,7 @@ function gvoiceManager.reset()
 end
 
 function gvoiceManager.onUploadedHandler(ok, filename, fileid)
-    log("gvoiceManager.onUploadedHandler, ok = " .. tostring(ok) .. ", status = " .. tostring(gvoiceManager.status) .. ", fileid = " .. tostring(fileid))
+--    log("gvoiceManager.onUploadedHandler, ok = " .. tostring(ok) .. ", status = " .. tostring(gvoiceManager.status) .. ", fileid = " .. tostring(fileid))
     if gvoiceManager.status and ok then
         networkManager.sendChatMessage(chatType.voice, fileid, function(msg)
         end)
@@ -244,38 +243,34 @@ function gvoiceManager.onUploadedHandler(ok, filename, fileid)
 end
 
 function gvoiceManager.onDownloadedHandler(ok, filename, fileid)
-    log("gvoiceManager.onDownloadedHandler, ok = " .. tostring(ok) .. ", status = " .. tostring(gvoiceManager.status) .. ", filename = " .. tostring(filename))
+--    log("gvoiceManager.onDownloadedHandler, ok = " .. tostring(ok) .. ", status = " .. tostring(gvoiceManager.status) .. ", filename = " .. tostring(filename))
     if gvoiceManager.status then
         local acId = gvoiceManager.fileNameToAcId[filename]
-        log("gvoiceManager.onDownloadedHandler, acId = " .. tostring(acId))
         table.insert(gvoiceManager.downloadFileQueue, {filename = filename, acId = acId})
         gvoiceManager.checkHasNewFileNeedPlay()
     end
 end
 
 function gvoiceManager.checkHasNewFileNeedPlay()
---    log("gvoiceManager.checkHasNewFileNeedPlay   11")
     if isPlaying then
         return
     end
---    log("gvoiceManager.checkHasNewFileNeedPlay   22")
     if isRecording then
         return
     end
---    log("gvoiceManager.checkHasNewFileNeedPlay   33")
+
     if #gvoiceManager.downloadFileQueue == 0 then
         return
     end
     
     local msg = gvoiceManager.downloadFileQueue[1]
-    log("gvoiceManager.checkHasNewFileNeedPlay, filename = " .. msg.filename .. ", acId = " .. tostring(msg.acId))
+--    log("gvoiceManager.checkHasNewFileNeedPlay, filename = " .. msg.filename .. ", acId = " .. tostring(msg.acId))
     table.remove(gvoiceManager.downloadFileQueue, 1)
     gvoiceManager.play(msg.filename, msg.acId)
 end
 
 function gvoiceManager.onPlayFinishedHandler(ok, filename)
     if gvoiceManager.status and playFinishedCallback ~= nil then
-        log("gvoicemanager= play finish: " .. filename)
         local acId = gvoiceManager.fileNameToAcId[filename]
         playFinishedCallback(filename, acId)
         gvoiceManager.fileNameToAcId[filename] = nil
@@ -285,6 +280,18 @@ function gvoiceManager.onPlayFinishedHandler(ok, filename)
 
         soundManager.setBGMVolume(gamepref.getBGMVolume())
         soundManager.setSFXVolume(gamepref.getSFXVolume())
+    end
+end
+
+function gvoiceManager.pause()
+    if not deviceConfig.isMacOSX then
+        GVoiceEngine.instance:Pause()
+    end
+end
+
+function gvoiceManager.resume()
+    if not deviceConfig.isMacOSX then
+        GVoiceEngine.instance:Resume()
     end
 end
 

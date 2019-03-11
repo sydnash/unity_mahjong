@@ -37,7 +37,7 @@ function enterDesk:onInit()
 
     self:reset()
 
-    signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
 function enterDesk:onCloseClickedHandler()

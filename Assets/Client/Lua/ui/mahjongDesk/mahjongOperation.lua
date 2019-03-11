@@ -455,6 +455,21 @@ function mahjongOperation:onGameSync()
     self.idleMahjongStart = math.min(self.game.dices[1], self.game.dices[2]) * 2 + 1
     self:relocateIdleMahjongs(true)    
 
+    local hasPlay = false
+    if self.game.deskPlayStatus == mahjongGame.status.playing then
+        for _, v in pairs(self.game.players) do
+            if #v[mahjongGame.cardType.chu]  ~= 0 then
+                hasPlay = true
+            end
+            if #v[mahjongGame.cardType.peng] ~= 0 then
+                hasPlay = true
+            end
+            if v.isHu then
+                hasPlay = true
+            end
+        end
+    end
+
     for _, v in pairs(self.game.players) do 
         if not json.isNilOrNull(v.hu) then
             local mid = v.hu[1].HuCard
@@ -482,7 +497,11 @@ function mahjongOperation:onGameSync()
 
         self:createPengMahjongs(v)
         self:createChuMahjongs(v)
-        self:createInHandMahjongs(v)
+        if hasPlay then
+            self:createInHandMahjongs(v, reenter.CurOpType)
+        else
+            self:createInHandMahjongs(v)
+        end
         self:createHuanNZhangMahjongs(v)
     end
 
@@ -762,11 +781,49 @@ end
 -------------------------------------------------------------------------------
 -- 创建手牌
 -------------------------------------------------------------------------------
-function mahjongOperation:createInHandMahjongs(player)
+function mahjongOperation:createInHandMahjongs(player, curOpType)
     local datas = player[mahjongGame.cardType.shou]
 
+    local mo = nil
+    if player.acId == self.game.mainAcId and curOpType == opType.mo.id and (#datas - 2) % 3 == 0 then
+        mo = datas[#datas]
+        local t = datas
+        datas = {}
+        for i = 1, #t - 1 do
+            table.insert(datas, t[i])
+        end
+    end
     self.inhandMahjongs[player.acId] = {}
     self:increaseInhandMahjongs(player.acId, datas)
+    if mo ~= nil then
+        self.mo = self:getMahjongFromIdle(mo)
+        self:removeFromIdle()
+
+        local mahjongs = self.inhandMahjongs[player.acId]
+        local moPaiPos = self:getMyInhandMahjongPos(player, #mahjongs + 1)
+        moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
+
+        -- local to = Vector3.New(moPaiPos.x, moPaiPos.y, moPaiPos.z)
+        -- moPaiPos.y = moPaiPos.y + 0.04
+        self.mo:setLocalPosition(moPaiPos)
+        -- local mv = tweenPosition.new(self.mo, 0.04, moPaiPos, to, nil)
+        -- tweenManager.add(mv)
+        -- mv:play()
+
+        self.mo:setLocalRotation(mopaiConfig.rotation)
+
+        if self.mo.class == player.que then
+            self.mo:dark()
+        else
+            self.mo:light()
+        end
+
+        self.mo:setPickabled(true)
+        self.mo:setShadowMode(mahjong.shadowMode.noshadow)
+        self.mo:show()
+
+        self:clearChosedMahjong()
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -835,33 +892,21 @@ function mahjongOperation:onMoPai(acId, cards)
         self:increaseInhandMahjongs(acId, cards)
     else
         local player = self.game:getPlayerByAcId(acId)
-
         self.mo = self:getMahjongFromIdle(cards[1])
         self:removeFromIdle()
-
         local mahjongs = self.inhandMahjongs[player.acId]
         local moPaiPos = self:getMyInhandMahjongPos(player, #mahjongs + 1)
         moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
-
-        -- local to = Vector3.New(moPaiPos.x, moPaiPos.y, moPaiPos.z)
-        -- moPaiPos.y = moPaiPos.y + 0.04
         self.mo:setLocalPosition(moPaiPos)
-        -- local mv = tweenPosition.new(self.mo, 0.04, moPaiPos, to, nil)
-        -- tweenManager.add(mv)
-        -- mv:play()
-
         self.mo:setLocalRotation(mopaiConfig.rotation)
-
         if self.mo.class == player.que then
             self.mo:dark()
         else
             self.mo:light()
         end
-
         self.mo:setPickabled(true)
         self.mo:setShadowMode(mahjong.shadowMode.noshadow)
         self.mo:show()
-
         self:clearChosedMahjong()
     end
 end
@@ -1201,6 +1246,8 @@ function mahjongOperation:touchHandler(phase, pos)
                     local cpos = camera.transform.localPosition
                     pos.z = self.selectedOrgPos.z - cpos.z
                     self.selectedLastPos = camera:ScreenToWorldPoint(pos)
+                    self.selectedStartPos = self.selectedLastPos
+                    self.startMove = false
                 end
             end
         elseif phase == touch.phaseType.moved then
@@ -1209,14 +1256,18 @@ function mahjongOperation:touchHandler(phase, pos)
                 local cpos = camera.transform.localPosition
                 pos.z = mpos.z - cpos.z
                 local wpos = camera:ScreenToWorldPoint(pos)
-                local dpos = wpos - self.selectedLastPos
-                if dpos:Magnitude() > 0.000001 then
+                local dpos = wpos - self.selectedStartPos
+                if not self.startMove and dpos:Magnitude() > 0.010 then
                     self.isClick = false
+                    self.startMove = true
                 end
             
-                mpos = Vector3.New(mpos.x + dpos.x, mpos.y + dpos.y, mpos.z)
-                self.selectedMahjong:setPosition(mpos)
-                self.selectedLastPos = wpos
+                if self.startMove then
+                    local dpos = wpos - self.selectedLastPos
+                    mpos = Vector3.New(mpos.x + dpos.x, mpos.y + dpos.y, mpos.z)
+                    self.selectedMahjong:setPosition(mpos)
+                    self.selectedLastPos = wpos
+                end
             end
         else
             if self.selectedMahjong ~= nil then
@@ -1881,7 +1932,7 @@ function mahjongOperation:getMahjongFromIdle(mid)
     end
     --从扣起来的换n张里面找
     for acid, h in pairs(self.hnzMahjongs) do
-        if acid ~= self.game.mainAcId then
+        -- if acid ~= self.game.mainAcId then
             for k, v in pairs(h) do
                 if v.id == mid then
                     if #self.idleMahjongs > 0 then
@@ -1892,7 +1943,7 @@ function mahjongOperation:getMahjongFromIdle(mid)
                     end
                 end
             end
-        end
+        -- end
     end
         
     if not appConfig.debug then
@@ -2079,6 +2130,12 @@ function mahjongOperation:relocateInhandMahjongs(acId)
                 end
             end
         end
+    end
+    if acId == self.game.mainAcId and self.mo ~= nil then
+        local mahjongs = self.inhandMahjongs[player.acId]
+        local moPaiPos = self:getMyInhandMahjongPos(player, #mahjongs + 1)
+        moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
+        self.mo:setLocalPosition(moPaiPos)
     end
 end
 
@@ -2376,6 +2433,7 @@ end
 -- 重置
 -------------------------------------------------------------------------------
 function mahjongOperation:reset()
+    self.startMove = false
     self.m_curOPDir = 0
     if self.game.mode == gameMode.normal then
         touch.removeListener()

@@ -862,7 +862,7 @@ end
 
 function doushisiOperation:onOpDoHua(acId, delIds)
     local info =self:opDoChiPengAnHua(acId, delIds, nil, opType.doushisi.hua.id)
-    return self:chiPengAction(acId, info.cards)
+    return self:chiPengAction(acId, info.cards) + 0.1
 end
 
 -----------------------------------------------------------
@@ -905,7 +905,7 @@ end
 
 function doushisiOperation:onOpDoChe(acId, delIds, beId)
     local info = self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.che.id)
-    return self:chiPengAction(acId, info.cards)
+    return self:chiPengAction(acId, info.cards) + 0.1
 end
 
 -----------------------------------------------------------
@@ -954,7 +954,7 @@ end
 
 function doushisiOperation:onOpDoAn(acId, delIds)
     local info = self:opDoChiPengAnHua(acId, delIds, beId, opType.doushisi.an.id)
-    return self:chiPengAction(acId, info.cards)
+    return self:chiPengAction(acId, info.cards) + 0.1
 end
 
 -----------------------------------------------------------
@@ -997,7 +997,7 @@ function doushisiOperation:onOpDoBaGang(acId, id)
 
     self:relocateChiPengCards(acId)
 
-    return self:chiPengAction(acId, {card})
+    return self:chiPengAction(acId, {card}) + 0.1
 end
 
 -----------------------------------------------------------
@@ -1031,7 +1031,7 @@ function doushisiOperation:onOpDoCaiShen(acId, id)
     end
 
     self:pushBackPromoteNode()
-    return self:chiPengAction(acId, {card}, not playsound)
+    return self:chiPengAction(acId, {card}, not playsound) + 0.1
 end
 
 function doushisiOperation:onPanelBtnClick(btn, createFunc)
@@ -1664,6 +1664,8 @@ function doushisiOperation:touchHandler(phase, pos)
                 local cpos = camera.transform.localPosition
                 pos.z = cardPos.z - cpos.z
                 self.selectedLastPos = camera:ScreenToWorldPoint(pos)
+                self.selectedStartPos = self.selectedLastPos
+                self.startMove = false
             end
             self.dragCard:setId(self.curSelectdCard.id)
             self:addCardTo(self.dragCard, cardPos, seatType.mine, doushisiGame.cardType.perfect)
@@ -1679,14 +1681,18 @@ function doushisiOperation:touchHandler(phase, pos)
             local cpos = camera.transform.localPosition
             pos.z = mpos.z - cpos.z
             local wpos = camera:ScreenToWorldPoint(pos)
-            local dpos = wpos - self.selectedLastPos
-            if dpos:Magnitude() > 0.001 then
+            local dpos = wpos - self.selectedStartPos
+            if not self.startMove and dpos:Magnitude() > 0.010 then
                 self.isClick = false
+                self.startMove = true
             end
         
-            mpos = Vector3.New(mpos.x + dpos.x, mpos.y + dpos.y, mpos.z)
-            self.dragCard:setPosition(mpos)
-            self.selectedLastPos = wpos
+            if self.startMove then
+                local dpos = wpos - self.selectedLastPos
+                mpos = Vector3.New(mpos.x + dpos.x, mpos.y + dpos.y, mpos.z)
+                self.dragCard:setPosition(mpos)
+                self.selectedLastPos = wpos
+            end
         end
     else
         self.dragCard:hide()

@@ -309,6 +309,12 @@ function desk:onVoiceUpClickedHandler(sender, pos)
     self.voiceDownPos = Vector2.zero
 end
 
+function desk:cancelVoice()
+    gvoiceManager.stopRecord(true)
+    self.mVoiceTips:hide()
+    self.voiceDownPos = Vector2.zero
+end
+
 function desk:setScore(acId, score)
     local seat = self.game:getSeatTypeByAcId(acId)
     self.headers[seat]:setScore(score)

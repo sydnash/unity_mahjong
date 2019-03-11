@@ -38,9 +38,8 @@ local add = 195.8
 local base = 314.6
 
 function huPaiHint:onInit()
-    -- self.mThis:addClickListener(self.onThisClicked, self)
+    -- self.mThis:addClickListener(self.onThisClickedHandler, self)
     self.items = {}
-    -- self:setInfo(self.huInfo)
 end
 
 function huPaiHint:setInfo(info)
@@ -65,7 +64,7 @@ function huPaiHint:setInfo(info)
     end
 end
 
-function huPaiHint:onThisClicked()
+function huPaiHint:onThisClickedHandler()
     self:hide()
 end
 

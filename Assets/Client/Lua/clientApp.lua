@@ -111,6 +111,18 @@ function clientApp:update()
     end
 end
 
+function clientApp:pause()
+    if self.currentDesk ~= nil then
+        self.currentDesk:cancelVoice()
+    end
+
+    gvoiceManager.pause()
+end
+
+function clientApp:resume()
+    gvoiceManager.resume()
+end
+
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
