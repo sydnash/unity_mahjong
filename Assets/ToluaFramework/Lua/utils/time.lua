@@ -59,6 +59,14 @@ function time.formatDateTime(dt)
     return os.date("%Y.%m.%d %H:%M:%S", dt)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function time.formatDateTimeWithoutSecond(dt)
+    dt = (dt == nil) and time.now() or dt
+    return os.date("%Y.%m.%d %H:%M", dt)
+end
+
 return time
 
 --endregion

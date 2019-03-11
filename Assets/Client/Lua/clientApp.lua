@@ -111,6 +111,14 @@ function clientApp:update()
     end
 end
 
+function clientApp:pause()
+    gvoiceManager.pause()
+end
+
+function clientApp:resume()
+    gvoiceManager.pause()
+end
+
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------

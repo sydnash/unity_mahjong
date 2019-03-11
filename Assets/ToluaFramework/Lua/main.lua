@@ -90,4 +90,17 @@ function onApplicationQuit()
     Logger.Close()
 end
 
+function onApplicationPause(status)
+    Logger.Log("onApplicationPause, status = " .. tostring(status))
+    if status then
+        if app ~= nil then
+            app:pause()
+        end
+    else
+        if app ~= nil then
+            app:resume()
+        end
+    end 
+end
+
 --endregion

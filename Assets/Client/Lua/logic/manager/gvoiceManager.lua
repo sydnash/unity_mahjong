@@ -288,6 +288,18 @@ function gvoiceManager.onPlayFinishedHandler(ok, filename)
     end
 end
 
+function gvoiceManager.pause()
+    if not deviceConfig.isMacOSX then
+        GVoiceEngine.instance:Pause()
+    end
+end
+
+function gvoiceManager.resume()
+    if not deviceConfig.isMacOSX then
+        GVoiceEngine.instance:Resume()
+    end
+end
+
 return gvoiceManager
 
 --endregion
