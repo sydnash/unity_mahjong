@@ -240,7 +240,7 @@ function game:syncExitVote(msg)
             player.exitVoteState = v.Status
         end
         
-        self.exitDeskUI = require("ui.exitdesk").new(self)
+        self.exitDeskUI = require("ui.exitDesk").new(self)
         self.exitDeskUI:show()
     end
 end
