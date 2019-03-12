@@ -263,7 +263,11 @@ function friendster:onNotifyFriendster(msg)
 
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
-                self.detailUI:refreshDeskList()
+                if CSV ~= nil and CSV.instance:Query("stingyscrollview") ~= nil then
+                    self.detailUI:addDesk()
+                else
+                    self.detailUI:refreshDeskList()
+                end
             end
         end
     elseif t == friendsterNotifyType.deskStart then
@@ -274,7 +278,7 @@ function friendster:onNotifyFriendster(msg)
             end
 
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
-                if CSV ~= nil and CSV.instance:Query("scrollview") ~= nil then
+                if CSV ~= nil and CSV.instance:Query("stingyscrollview") ~= nil then
                     self.detailUI:refreshDesks()
                 else
                     self.detailUI:refreshDeskList()
@@ -287,14 +291,18 @@ function friendster:onNotifyFriendster(msg)
 
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
-                self.detailUI:refreshDeskList()
+                if CSV ~= nil and CSV.instance:Query("stingyscrollview") ~= nil then
+                    self.detailUI:removeDesk()
+                else
+                    self.detailUI:refreshDeskList()
+                end
             end
         end
     elseif t == friendsterNotifyType.deskPlayerEnter then
         if lc ~= nil then
             local desk = lc:addPlayerToDesk(d.AcId, d.DeskId)
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
-                if CSV ~= nil and CSV.instance:Query("scrollview") ~= nil then
+                if CSV ~= nil and CSV.instance:Query("stingyscrollview") ~= nil then
                     self.detailUI:refreshDesks()
                 else
                     self.detailUI:refreshDeskList()
@@ -305,7 +313,7 @@ function friendster:onNotifyFriendster(msg)
         if lc ~= nil then
             local desk = lc:removePlayerFromDesk(d.AcId, d.DeskId)
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
-                if CSV ~= nil and CSV.instance:Query("scrollview") ~= nil then
+                if CSV ~= nil and CSV.instance:Query("stingyscrollview") ~= nil then
                     self.detailUI:refreshDesks()
                 else
                     self.detailUI:refreshDeskList()
@@ -322,7 +330,7 @@ function friendster:onNotifyFriendster(msg)
             if desk ~= nil then
                 desk.playedCount = d.CurJu
                 if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
-                    if CSV ~= nil and CSV.instance:Query("scrollview") ~= nil then
+                    if CSV ~= nil and CSV.instance:Query("stingyscrollview") ~= nil then
                         self.detailUI:refreshDesks()
                     else
                         self.detailUI:refreshDeskList()
@@ -341,7 +349,7 @@ function friendster:onNotifyFriendster(msg)
             end
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
-                if CSV ~= nil and CSV.instance:Query("scrollview") ~= nil then
+                if CSV ~= nil and CSV.instance:Query("stingyscrollview") ~= nil then
                     self.detailUI:removeMember()
                 else
                     self.detailUI:refreshMemberList()
@@ -358,7 +366,7 @@ function friendster:onNotifyFriendster(msg)
             lc:addMember(d.PlayerInfo)
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
-                if CSV ~= nil and CSV.instance:Query("scrollview") ~= nil then
+                if CSV ~= nil and CSV.instance:Query("stingyscrollview") ~= nil then
                     self.detailUI:addMember()
                 else
                     self.detailUI:refreshMemberList()
@@ -370,7 +378,7 @@ function friendster:onNotifyFriendster(msg)
             lc:setMemberOnlineState(d.AcId, false)
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
-                if CSV ~= nil and CSV.instance:Query("scrollview") ~= nil then
+                if CSV ~= nil and CSV.instance:Query("stingyscrollview") ~= nil then
                     self.detailUI:refreshMembers()
                 else
                     self.detailUI:refreshMemberList()
@@ -382,7 +390,7 @@ function friendster:onNotifyFriendster(msg)
             lc:setMemberOnlineState(d.AcId, true)
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
-                if CSV ~= nil and CSV.instance:Query("scrollview") ~= nil then
+                if CSV ~= nil and CSV.instance:Query("stingyscrollview") ~= nil then
                     self.detailUI:refreshMembers()
                 else
                     self.detailUI:refreshMemberList()

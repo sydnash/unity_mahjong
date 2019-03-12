@@ -56,7 +56,7 @@ public class CSV
     private CSV()
     {
         mDic.Add("http", "1");
-        mDic.Add("scrollview", "1");
+        mDic.Add("stingyscrollview", "1");
     }
 
     #endregion

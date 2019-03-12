@@ -316,6 +316,46 @@ function friendsterDetail:getDeskRows()
     return deskRows
 end
 
+local function getDeskCount(desks)
+    local count = 0
+
+    for k, v in pairs(desks) do
+        count = count + 1
+    end
+
+    return count
+end
+
+function friendsterDetail:addDesk()
+    local count = getDeskCount(self.data.desks)
+    
+    self.deskRows = self:getDeskRows()
+    if count % 2 == 0 then
+        self.mDeskList:refresh()
+    else
+        if count == 1 then
+            self:refreshDeskList()
+        else
+            self.mDeskList:add()
+        end
+    end
+end
+
+function friendsterDetail:removeDesk()
+    local count = getDeskCount(self.data.desks)
+    self.deskRows = self:getDeskRows()
+    if count % 2 == 1 then
+        self.mDeskList:refresh()
+    else
+        self.mDeskList:remove()
+
+        if count == 0 then
+            self.mDeskEmpty:show()
+            self.mDeskList:hide()
+        end
+    end
+end
+
 function friendsterDetail:refreshDesks()
     self.deskRows = self:getDeskRows()
     self.mDeskList:refresh()

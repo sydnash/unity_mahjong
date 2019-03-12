@@ -22,7 +22,7 @@ local function createPlayer(data)
 end
 
 local function createDesk(data)
-    log("createDesk, data = " .. table.tostring(data))
+--    log("createDesk, data = " .. table.tostring(data))
     local config = table.fromjson(data.Config)
     local ok, _ = checkGame(data.GameType, config.Game)
 
