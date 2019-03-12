@@ -644,7 +644,7 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
         table.insert(pinfo.Cs, cards[1])
         self.knownMahjong[cards[1]] = 1
     end
-    self.deskUI:onPlayerGang(acId)
+    self.deskUI:onPlayerGang(acId, t)
     self.operationUI:onOpDoGang(acId, cards, beAcId, beCard, t)
 end
 

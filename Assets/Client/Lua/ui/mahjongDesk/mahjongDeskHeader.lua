@@ -82,7 +82,18 @@ end
 function mahjongDeskHeader:reset()
     self:hideDingQue()
     self:hideHu()
+    self.mRain:hide()
+    self.mWind:hide()
     base.reset(self)
+end
+
+function mahjongDeskHeader:playRain()
+    self.mRain:show()
+    self.mRain:play("deskplayer_rain")
+end
+function mahjongDeskHeader:playWind()
+    self.mWind:show()
+    self.mWind:play("deskplayer_wind")
 end
 
 return mahjongDeskHeader
