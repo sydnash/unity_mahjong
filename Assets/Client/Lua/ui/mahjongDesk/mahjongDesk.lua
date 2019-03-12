@@ -45,10 +45,19 @@ function mahjongDesk:onPlayerPeng(acId)
     p:playGfx("peng")
 end
 
-function mahjongDesk:onPlayerGang(acId)
+function mahjongDesk:onPlayerGang(acId, t)
     local s = self.game:getSeatTypeByAcId(acId)
     local p = self.headers[s]
     p:playGfx("gang")
+
+    local detail = opType.gang.detail
+    if t == detail.minggang then
+        p:playWind()
+    elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
+        p:playWind()
+    else
+        p:playRain()
+    end
 end
 
 function mahjongDesk:onPlayerHu(acId, t)

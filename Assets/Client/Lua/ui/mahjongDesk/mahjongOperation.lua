@@ -1703,6 +1703,7 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
         if self.chupaiPtr.mahjongId == beCard then
             self.chupaiPtr:hide()
         end
+        soundManager.playGfx("mahjong", "wind")
     elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
         if self.mo ~= nil then
             self:insertMahjongToInhand(self.mo)
@@ -1722,15 +1723,18 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
 
         local player = self.game:getPlayerByAcId(acId)
         self:relocatePengMahjongs(player)
+        soundManager.playGfx("mahjong", "wind")
     else
         if self.mo ~= nil then
             self:insertMahjongToInhand(self.mo)
+            self.mo = nil
         end
 
         local mahjongs = self:decreaseInhandMahjongs(acId, cards)
         mahjongs[5] = t
 
         self:putMahjongsToPeng(acId, mahjongs)
+        soundManager.playGfx("mahjong", "rain")
     end
 
     -- if self.game.mode == gameMode.playback or acId ~= self.game.mainAcId then 
