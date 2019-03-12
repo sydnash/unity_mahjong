@@ -10,6 +10,7 @@ public class StingyScrollRectWrap
 		L.RegFunction("Init", Init);
 		L.RegFunction("Add", Add);
 		L.RegFunction("Remove", Remove);
+		L.RegFunction("Refresh", Refresh);
 		L.RegFunction("Reset", Reset);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -60,6 +61,22 @@ public class StingyScrollRectWrap
 			ToLua.CheckArgsCount(L, 1);
 			StingyScrollRect obj = (StingyScrollRect)ToLua.CheckObject<StingyScrollRect>(L, 1);
 			obj.Remove();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Refresh(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			StingyScrollRect obj = (StingyScrollRect)ToLua.CheckObject<StingyScrollRect>(L, 1);
+			obj.Refresh();
 			return 0;
 		}
 		catch (Exception e)

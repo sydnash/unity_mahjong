@@ -22,8 +22,25 @@ function scrollview:set(capacity, itemInstantiateCallback, itemRefreshCallback)
     self.component:Init(capacity, itemInstantiateCallback, itemRefreshCallback)
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
 function scrollview:add()
     self.component:Add()
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function scrollview:remove()
+    self.component:Remove()
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function scrollview:refresh()
+    self.component:Refresh()
 end
 
 ----------------------------------------------------------------

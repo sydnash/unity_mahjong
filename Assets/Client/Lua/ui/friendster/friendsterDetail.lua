@@ -240,7 +240,6 @@ function friendsterDetail:refreshMemberList()
     end
 
     local refreshMemberItem = function(item, index)
-        log("friendsterDetail:refreshMemberList, index = " .. tostring(index))
         local m = self.members[index + 1]
         item:set(self.data.id, self.data.managerAcId, m)
     end
@@ -253,7 +252,47 @@ function friendsterDetail:addMember()
     self.mMemberList:add()
 end
 
+function friendsterDetail:removeMember()
+    self.members = getSortedMembers(self.data.managerAcId, self.data.members)
+    self.mMemberList:remove()
+end
+
+function friendsterDetail:refreshMembers()
+    self.members = getSortedMembers(self.data.managerAcId, self.data.members)
+    self.mMemberList:refresh()
+end
+
 function friendsterDetail:refreshDeskList()
+    self.deskRows = self:getDeskRows()
+    local count = #self.deskRows
+
+    if count <= 0 then
+        self.mDeskEmpty:show()
+        self.mDeskList:hide()
+    else
+        self.mDeskEmpty:hide()
+        self.mDeskList:show()
+
+        local createDeskItem = function()
+            return require("ui.friendster.friendsterDetailDeskItem").new(function(cityType, deskId)
+                if self.enterDeskCallback ~= nil then
+                    self.enterDeskCallback(cityType, deskId)
+                end
+
+                self:close()
+            end)
+        end
+
+        local refreshDeskItem = function(item, index)
+            item:set(self.deskRows[index + 1])
+        end
+
+        self.mDeskList:reset()
+        self.mDeskList:set(count, createDeskItem, refreshDeskItem)
+    end
+end
+
+function friendsterDetail:getDeskRows()
     local desks = getSoredDesks(self.data.desks)
     
     local deskRows = {}
@@ -274,32 +313,12 @@ function friendsterDetail:refreshDeskList()
         table.insert(deskRows, { L = L, R = R })
     end
 
-    local count = #deskRows
+    return deskRows
+end
 
-    if count <= 0 then
-        self.mDeskEmpty:show()
-        self.mDeskList:hide()
-    else
-        self.mDeskEmpty:hide()
-        self.mDeskList:show()
-
-        local createDeskItem = function()
-            return require("ui.friendster.friendsterDetailDeskItem").new(function(cityType, deskId, loading)
-                if self.enterDeskCallback ~= nil then
-                    self.enterDeskCallback(cityType, deskId, loading)
-                end
-
-                self:close()
-            end)
-        end
-
-        local refreshDeskItem = function(item, index)
-            item:set(deskRows[index + 1])
-        end
-
-        self.mDeskList:reset()
-        self.mDeskList:set(#deskRows, createDeskItem, refreshDeskItem)
-    end
+function friendsterDetail:refreshDesks()
+    self.deskRows = self:getDeskRows()
+    self.mDeskList:refresh()
 end
 
 function friendsterDetail:onMailClickedHandler()
