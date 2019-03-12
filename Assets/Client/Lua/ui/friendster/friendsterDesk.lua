@@ -16,6 +16,10 @@ function friendsterDesk:onInit()
     }
 
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+    
+    for k, v in pairs(self.slots) do 
+        v.add:addClickListener(self.onAddClickedHandler, self)
+    end
 end
 
 local function destroyDesk(friendsterId, cityType, deskId)
@@ -53,6 +57,9 @@ end
 function friendsterDesk:set(data)
     self.data = data
 
+    for k, v in pairs(self.slots) do 
+        v.root:hide()
+    end
     if self.data ~= nil then
         self.mType:setText(gameName[self.data.cityType].games[self.data.gameType])
         self.mNum:setText(string.format("（第%d/%d局）", self.data.playedCount, self.data.totalCount))
@@ -68,8 +75,6 @@ function friendsterDesk:set(data)
                 if p == nil then
                     v.icon:hide()
                     v.add:show()
-
-                    v.add:addClickListener(self.onAddClickedHandler, self)
                 else
                     v.icon:show()
                     v.add:hide()
