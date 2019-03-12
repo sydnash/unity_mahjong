@@ -8,6 +8,9 @@ public class StingyScrollRectWrap
 	{
 		L.BeginClass(typeof(StingyScrollRect), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("Init", Init);
+		L.RegFunction("Add", Add);
+		L.RegFunction("Remove", Remove);
+		L.RegFunction("Refresh", Refresh);
 		L.RegFunction("Reset", Reset);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -26,6 +29,54 @@ public class StingyScrollRectWrap
 			LuaFunction arg1 = ToLua.CheckLuaFunction(L, 3);
 			LuaFunction arg2 = ToLua.CheckLuaFunction(L, 4);
 			obj.Init(arg0, arg1, arg2);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Add(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			StingyScrollRect obj = (StingyScrollRect)ToLua.CheckObject<StingyScrollRect>(L, 1);
+			obj.Add();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Remove(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			StingyScrollRect obj = (StingyScrollRect)ToLua.CheckObject<StingyScrollRect>(L, 1);
+			obj.Remove();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Refresh(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			StingyScrollRect obj = (StingyScrollRect)ToLua.CheckObject<StingyScrollRect>(L, 1);
+			obj.Refresh();
 			return 0;
 		}
 		catch (Exception e)
