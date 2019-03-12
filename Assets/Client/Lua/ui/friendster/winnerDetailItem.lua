@@ -10,7 +10,7 @@ _RES_(winnerDetailItem, "FriendsterUI", "WinnerDetailItem")
 function winnerDetailItem:set(data)
     self.mDeskId:setText(tostring(data.deskId))
     self.mScore:setText(string.format("%d分", data.score))
-    self.mEndTime:setText(time.formatDateTime(data.endTime))
+    self.mEndTime:setText(time.formatDateTimeWithoutSecond(data.endTime))
 end
 
 return winnerDetailItem

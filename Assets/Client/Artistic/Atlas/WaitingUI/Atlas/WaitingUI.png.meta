@@ -80,7 +80,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -139,10 +139,10 @@ TextureImporter:
         serializedVersion: 2
         x: 79
         y: 45
-        width: 67
+        width: 68
         height: 67
-      alignment: 9
-      pivot: {x: 0.5074627, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -151,8 +151,8 @@ TextureImporter:
       name: DL_di01
       rect:
         serializedVersion: 2
-        x: 215
-        y: 51
+        x: 216
+        y: 50
         width: 63
         height: 62
       alignment: 0
@@ -165,8 +165,8 @@ TextureImporter:
       name: DL_di02
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
+        x: 216
+        y: 7
         width: 44
         height: 41
       alignment: 0
@@ -179,12 +179,12 @@ TextureImporter:
       name: DL_jz01
       rect:
         serializedVersion: 2
-        x: 143
-        y: 115
-        width: 140
-        height: 140
-      alignment: 9
-      pivot: {x: 0.50357145, y: 0.50357145}
+        x: 1
+        y: 114
+        width: 141
+        height: 141
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -193,12 +193,12 @@ TextureImporter:
       name: DL_jz02
       rect:
         serializedVersion: 2
-        x: 1
+        x: 144
         y: 114
-        width: 140
+        width: 141
         height: 141
-      alignment: 9
-      pivot: {x: 0.50357145, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -221,8 +221,8 @@ TextureImporter:
       name: mask
       rect:
         serializedVersion: 2
-        x: 148
-        y: 46
+        x: 149
+        y: 45
         width: 65
         height: 67
       alignment: 0

@@ -880,9 +880,23 @@ function findSpriteRD(transform, name)
     return nil
 end
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
 function gc()
 --    AssetPoolManager.instance:UnloadUnused()
 --    collectgarbage("collect")
+end
+
+----------------------------------------------------------------
+-- 
+----------------------------------------------------------------
+function queryFromCSV(key)
+    if CSV == nil then
+        return nil
+    end
+
+    return CSV.instance:Query(key)
 end
 
 --endregion

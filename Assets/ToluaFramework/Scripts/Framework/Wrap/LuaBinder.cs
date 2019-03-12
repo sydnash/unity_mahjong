@@ -40,6 +40,7 @@ public static class LuaBinder
 		AccountTypeWrap.Register(L);
 		GenderWrap.Register(L);
 		CSVWrap.Register(L);
+		DeviceInfoWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);
 		LuaInterface_InjectTypeWrap.Register(L);

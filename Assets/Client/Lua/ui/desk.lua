@@ -49,7 +49,10 @@ function desk:onInit()
     self:registerHandlers()
     self:refreshUI()
 
-    self.updateTimestamp = time.realtimeSinceStartup()
+    self.curtimeTimestamp = time.realtimeSinceStartup()
+    self.batteryTimestamp = time.realtimeSinceStartup()
+    self.networkTimestamp = time.realtimeSinceStartup()
+
     self.gvoiceRecordfileId = 1
 end
 
@@ -96,14 +99,52 @@ end
 function desk:update()
     local now = time.realtimeSinceStartup()
 
-    if now - self.updateTimestamp >= 1.0 then
-        self.mTime:setText(time.formatTime())
-        self.updateTimestamp = time.realtimeSinceStartup()
+    if now - self.curtimeTimestamp > 0.999 then
+        --刷新时间
+        self.mTime:setText(time.formatTimeWithoutSecond())
+        self.curtimeTimestamp = now
+        --刷新网络延时
+        self:updateNetworkDelays()
+    end
+
+    if now - self.batteryTimestamp > 59.9 then
+        --刷新电池状态
+        self:updateBatteryInfo()
+        self.batteryTimestamp = now
+    end
+
+    if now - self.networkTimestamp > 59.9 then
+        --刷新网络状态
+        self:updateNetworkInfo()
+        self.networkTimestamp = now
     end
 
     if self.game.mode == gameMode.normal then
         gvoiceManager.update()
     end
+end
+
+function desk:updateBatteryInfo()
+    local batteryLevel = self:getBatteryLevel()
+    if batteryLevel == -1 then
+
+    else
+
+    end
+end
+
+function desk:updateNetworkInfo()
+    local networkType = self:getNetworkType()
+    if networkType == 0 then
+
+    else
+
+    end
+end
+
+function desk:updateNetworkDelays()
+    local delays = math.floor(networkManager.delays)
+--    log("network delays: " .. tostring(delays))
 end
 
 function desk:getInvitationInfo()
@@ -128,7 +169,10 @@ function desk:refreshUI()
 
     self.mDeskID:setText(string.format("%s%s:%d", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.game.deskId))
     self:updateCurrentGameIndex()
-    self.mTime:setText(time.formatTime())
+    self.mTime:setText(time.formatTimeWithoutSecond())
+    self:updateBatteryInfo()
+    self:updateNetworkInfo()
+    self:updateNetworkDelays()
 
     for _, v in pairs(self.game.players) do
         local s = self.game:getSeatTypeByAcId(v.acId)
@@ -513,6 +557,30 @@ function desk:onGVoicePlayFinishedHandler(filename, acId)
             break
         end
     end
+end
+
+function desk:getBatteryLevel()
+    if queryFromCSV("deviceinfo") == nil then
+        return -1
+    end
+
+    return DeviceInfo.GetBatteryLevel()
+end
+
+function desk:getBatteryStatus()
+    if queryFromCSV("deviceinfo") == nil then
+        return 0
+    end
+
+    return DeviceInfo.GetBatteryStatus()
+end
+
+function desk:getNetworkType()
+    if queryFromCSV("deviceinfo") == nil then
+        return 0
+    end
+
+    return DeviceInfo.GetNetworkType()
 end
 
 return desk

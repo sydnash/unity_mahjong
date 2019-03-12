@@ -92,6 +92,7 @@ function doushisiDesk:onInit()
         self.headers[k]:show()
     end
 
+    self.countdownTimestamp = time.realtimeSinceStartup()
     self:hideClock()
 
     base.onInit(self)
@@ -195,6 +196,7 @@ function doushisiDesk:showClock(seat)
     self.m_curOPDir = seat
     self.mClock:setParent(self.headerParents[seat])
     self.mClock:setLocalPosition(clockPosition[seat])
+    self.countdownTimestamp = time.realtimeSinceStartup()
     self.countdown = COUNTDOWN_SECONDS_C
     self.mClockText:setText(tostring(self.countdown))
     self.mClock:show()
@@ -211,7 +213,7 @@ function doushisiDesk:updateClock()
 
     local now = time.realtimeSinceStartup()
 
-    if now - self.updateTimestamp >= 1.0 then
+    if now - self.countdownTimestamp > 0.999 then
         self.countdown = math.max(0, self.countdown - 1)
         self.mClockText:setText(tostring(self.countdown))
 

@@ -76,7 +76,7 @@ function friendsterStatisticsHistoryItem:set(data, historyContainer)
     self.mDeskId:setText(string.format("房号:%d", data.DeskId))
     self.mId:setText(string.format("账号:%d", data.ClubId))
     self.mCount:setText(string.format("局数:%d/%d", data.PlayTimes, config.JuShu))
-    self.mDatetime:setText(time.formatDateTime(data.EndTime))
+    self.mDatetime:setText(time.formatDateTimeWithoutSecond(data.EndTime))
 
     self:updatePayedStatus(data)
 
