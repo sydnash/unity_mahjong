@@ -1014,8 +1014,8 @@ function game:openLobbyUI()
     end)
 end
 
-function game:convertConfigToString(ignoreJuShu)
-    return convertConfigToString(self.cityType, self.gameType, self.config, ignoreJuShu)
+function game:convertConfigToString(ignoreRenShu, ignoreJuShu, splitChar)
+    return convertConfigToString(self.cityType, self.gameType, self.config, ignoreRenShu, ignoreJuShu, splitChar)
 end
 
 function game:cancelVoice()

@@ -30,7 +30,9 @@ function mahjongDesk:onInit()
         self.headers[k]:show()
     end
 
+    self.mRule:setText(self.game:convertConfigToString(true, true, " "))
     self:updateLeftMahjongCount()
+
     base.onInit(self)
 end
 

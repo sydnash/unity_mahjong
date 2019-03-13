@@ -83,7 +83,7 @@ function friendsterDesk:set(data)
             end
         end
         
-        local detailText = convertConfigToString(self.data.cityType, self.data.gameType, self.data.config, false)
+        local detailText = convertConfigToString(self.data.cityType, self.data.gameType, self.data.config, true, true, ",")
         self.mDetailText:setText(detailText)
 
         if gamepref.player.acId == self.data.managerAcId then

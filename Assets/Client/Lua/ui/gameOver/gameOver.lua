@@ -25,7 +25,7 @@ function gameOver:onInit()
     talkingData.event(eventName, {play = self.datas.finishGameCount, total = self.datas.totalGameCount}, true)
 
 
-    local info = string.format("%s", self.game:convertConfigToString(true))
+    local info = self.game:convertConfigToString(true, true, "，")
     self.mTextR:setText(info)
 
     self.game:markWinners(self.datas.players)
