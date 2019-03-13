@@ -80,15 +80,34 @@ function mahjongDeskHeader:hideHu()
 end
 
 function mahjongDeskHeader:reset()
+    log("1111111111111111111111111111")
+
     self:hideDingQue()
     self:hideHu()
     self.mRain:hide()
     self.mWind:hide()
+
+    if self.rainTween ~= nil then
+        self.rainTween:stop()
+        tweenManager.remove(self.rainTween)
+        self.rainTween = nil
+    end
+    if self.windTween ~= nil then
+        self.windTween:stop()
+        tweenManager.remove(self.windTween)
+        self.windTween = nil
+    end
+
     base.reset(self)
 end
 
 function mahjongDeskHeader:playRain()
-    local tween = tweenSerial.new(true)
+    if self.rainTween ~= nil then
+        self.rainTween:stop()
+        tweenManager.remove(self.rainTween)
+    end
+
+    self.rainTween = tweenSerial.new(true)
 
     local a = tweenFunction.new(function()
         self.mRain:hide()
@@ -98,18 +117,24 @@ function mahjongDeskHeader:playRain()
     local b = tweenDelay.new(2)
     local c = tweenFunction.new(function()
         self.mRain:hide()
+        self.rainTween = nil
     end)
 
-    tween:add(a)
-    tween:add(b)
-    tween:add(c)
+    self.rainTween:add(a)
+    self.rainTween:add(b)
+    self.rainTween:add(c)
 
-    tweenManager.add(tween)
-    tween:play()
+    tweenManager.add(self.rainTween)
+    self.rainTween:play()
 end
 
 function mahjongDeskHeader:playWind()
-    local tween = tweenSerial.new(true)
+    if self.windTween ~= nil then
+        self.rainTween:stop()
+        tweenManager.remove(self.windTween)
+    end
+
+    self.windTween = tweenSerial.new(true)
 
     local a = tweenFunction.new(function()
         self.mWind:hide()
@@ -119,14 +144,15 @@ function mahjongDeskHeader:playWind()
     local b = tweenDelay.new(2)
     local c = tweenFunction.new(function()
         self.mWind:hide()
+        self.windTween = nil
     end)
 
-    tween:add(a)
-    tween:add(b)
-    tween:add(c)
+    self.windTween:add(a)
+    self.windTween:add(b)
+    self.windTween:add(c)
 
-    tweenManager.add(tween)
-    tween:play()
+    tweenManager.add(self.windTween)
+    self.windTween:play()
 end
 
 return mahjongDeskHeader
