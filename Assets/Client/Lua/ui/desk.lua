@@ -150,7 +150,6 @@ end
 function desk:getInvitationInfo()
     local friendsterText = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d，", self.game.friendsterId)
     local configText = self.game:convertConfigToString(false)
-    log(configText)
     return string.format("%s%s", friendsterText, configText)
 end
 
