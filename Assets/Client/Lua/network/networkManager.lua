@@ -187,6 +187,8 @@ function networkManager.setup(disconnectedCallback)
     networkManager.disconnectedCallback_ = disconnectedCallback
 
     networkHandler.setup()
+
+    networkManager.delays = 128
 end
 
 function networkManager.disconnectedCallback()
@@ -212,7 +214,6 @@ function networkManager.startUpdateHandler()
     networkManager.pongTick = now
 
     if networkManager.updateHandler == nil then
-        networkManager.updateTick = now
         networkManager.updateHandler = registerUpdateListener(networkManager.update, nil)
     end
 end
@@ -224,7 +225,6 @@ function networkManager.stopUpdateHandler()
     end
 
     networkManager.hasPingPong = false
-    networkManager.updateTick = 0
 end
 
 -------------------------------------------------------------------
@@ -233,19 +233,17 @@ end
 function networkManager.update()
     local now = time.realtimeSinceStartup()
 
-    if now - networkManager.updateTick < 0.2 then
-        return
-    end
-
     if networkManager.hasPingPong then
         local ping = networkConfig.ping
         local pong = math.max(ping + 5, networkConfig.pong)
         --发送心跳包
         if now - networkManager.pingTick > ping then
+            local lastPingTick = now
             send(protoType.hb, table.empty, function(msg)
                 networkManager.pongTick = time.realtimeSinceStartup()
+                networkManager.delays = (networkManager.pongTick - lastPingTick) * 0.5 * 1000 --毫秒
             end)
-            networkManager.pingTick = time.realtimeSinceStartup()
+            networkManager.pingTick = now
         end
         --检查心跳是否超时
         if now - networkManager.pongTick > pong then

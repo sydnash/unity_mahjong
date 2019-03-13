@@ -58,7 +58,7 @@ function playHistoryItem:set(data, historyContainer)
     end
     
     self.mCount:setText(string.format("局数:%d/%d", data.PlayTimes, config.JuShu))
-    self.mDatetime:setText(time.formatDateTime(data.EndTime))
+    self.mDatetime:setText(time.formatDateTimeWithoutSecond(data.EndTime))
     self.mHistoryId = data.Id
 
     local players = data.Players

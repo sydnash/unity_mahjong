@@ -19,7 +19,7 @@ function gameOver:onInit()
     else
         self.mTextL:setText(string.format("俱乐部:%d\n%s%s:%d  第%d/%d局", self.game.friendsterId, cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.datas.deskId, self.datas.finishGameCount, self.datas.totalGameCount))
     end
-    self.mDateTime:setText(time.formatDateTime())
+    self.mDateTime:setText(time.formatDateTimeWithoutSecond())
 
     local eventName = "gameover_" .. tostring(self.game.cityType) .. "_" .. tostring(self.game.gameType)
     talkingData.event(eventName, {play = self.datas.finishGameCount, total = self.datas.totalGameCount}, true)

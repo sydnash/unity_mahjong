@@ -42,6 +42,11 @@ public abstract class StingyScrollRect : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
+    protected LuaFunction mItemInstantiateCallback = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
     protected LuaFunction mItemRefreshCallback = null;
 
     #endregion
@@ -54,6 +59,7 @@ public abstract class StingyScrollRect : MonoBehaviour
     /// <param name="item"></param>
     public void Init(int capacity, LuaFunction itemInstantiateCallback, LuaFunction itemRefreshCallback)
     {
+        mItemInstantiateCallback = itemInstantiateCallback;
         mItemRefreshCallback = itemRefreshCallback;
 
         if (mScrollRect == null)
@@ -62,10 +68,10 @@ public abstract class StingyScrollRect : MonoBehaviour
         }
         mScrollRect.onValueChanged.AddListener(OnScrollRectValueChangedHandler);
 
-        mCapacity = capacity;
+        mCapacity = Mathf.Max(0, capacity);
         SetContentSpacing(mCapacity * mItemSpacing);
 
-        if (itemInstantiateCallback != null)
+        if (mItemInstantiateCallback != null)
         {
             float scrollRectSpacing = GetScrollRectSpacing();
             int itemCount = Mathf.Min(mCapacity, Mathf.CeilToInt(scrollRectSpacing / mItemSpacing) + 1);
@@ -79,7 +85,7 @@ public abstract class StingyScrollRect : MonoBehaviour
             {
                 mTailIndex++;
 
-                LuaTable lua = itemInstantiateCallback.Invoke<LuaTable>();
+                LuaTable lua = mItemInstantiateCallback.Invoke<LuaTable>();
                 RectTransform item = GetRectTransform(lua);
                 item.SetParent(scrollContent, false);
                 SetItemPosition(item, i);
@@ -90,6 +96,111 @@ public abstract class StingyScrollRect : MonoBehaviour
                 mLuaList.Add(lua);
                 InvokeItemRefreshCallback(lua, i);
             }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Add()
+    {
+        mCapacity++;
+        SetContentSpacing(mCapacity * mItemSpacing);
+
+        float scrollRectSpacing = GetScrollRectSpacing();
+        int visualCount = Mathf.CeilToInt(scrollRectSpacing / mItemSpacing) + 1;
+
+        if (mCapacity <= visualCount)
+        {
+            if (mItemInstantiateCallback != null)
+            {
+                LuaTable lua = mItemInstantiateCallback.Invoke<LuaTable>();
+                RectTransform item = GetRectTransform(lua);
+                item.SetParent(scrollContent, false);
+
+                LuaFunction func = lua.GetLuaFunction("show");
+                func.Call(lua);
+
+                mLuaList.Add(lua);
+            }
+        }
+        else if (mTailIndex == mCapacity - 1)
+        {
+            mHeadIndex++;
+
+            LuaTable lua = mLuaList[0];
+            mLuaList.RemoveAt(0);
+            mLuaList.Add(lua);
+        }
+
+        if (mTailIndex < visualCount - 1)
+        {
+            mTailIndex++;
+        }
+
+        Logger.Log(string.Format("StingyScrollRect.Add, v = {0}, c = {1}, h = {2}, t = {3}, l = {4}", visualCount, mCapacity, mHeadIndex, mTailIndex, mLuaList.Count));
+
+        int itemCount = Mathf.Min(mCapacity, visualCount);
+        for (int i = 0; i < itemCount; i++)
+        {
+            LuaTable lua = mLuaList[i];
+            RectTransform item = GetRectTransform(lua);
+            SetItemPosition(item, mHeadIndex + i);
+            InvokeItemRefreshCallback(lua, mHeadIndex + i);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Remove()
+    {
+        mCapacity = Mathf.Max(0, mCapacity - 1);
+        SetContentSpacing(mCapacity * mItemSpacing);
+
+        float scrollRectSpacing = GetScrollRectSpacing();
+        int visualCount = Mathf.CeilToInt(scrollRectSpacing / mItemSpacing) + 1;
+
+        if (mCapacity <= visualCount)
+        {
+            int lastIndex = mLuaList.Count - 1;
+            LuaTable lua = mLuaList[lastIndex];
+            mLuaList.RemoveAt(lastIndex);
+
+            LuaFunction func = lua.GetLuaFunction("close");
+            func.Call(lua);
+        }
+
+        if (mTailIndex > mCapacity)
+        {
+            mTailIndex = Mathf.Max(0, mTailIndex--);
+        }
+        else
+        {
+            mHeadIndex = Mathf.Max(0, mHeadIndex--);
+        }
+
+        Logger.Log(string.Format("StingyScrollRect.Remove, v = {0}, c = {1}, h = {2}, t = {3}, l = {4}", visualCount, mCapacity, mHeadIndex, mTailIndex, mLuaList.Count));
+
+        int itemCount = Mathf.Min(mCapacity, visualCount);
+        for (int i = 0; i < itemCount; i++)
+        {
+            LuaTable lua = mLuaList[i];
+            RectTransform item = GetRectTransform(lua);
+            SetItemPosition(item, mHeadIndex + i);
+            InvokeItemRefreshCallback(lua, mHeadIndex + i);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Refresh()
+    {
+        for (int i = 0; i < mLuaList.Count; i++)
+        {
+            LuaTable lua = mLuaList[i];
+            InvokeItemRefreshCallback(lua, mHeadIndex + i);
         }
     }
 

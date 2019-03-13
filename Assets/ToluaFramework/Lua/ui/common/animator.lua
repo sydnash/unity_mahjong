@@ -15,6 +15,10 @@ function animator:ctor(gameObject)
     self.component = getComponentU(gameObject, typeof(Animator))
 end
 
+function animator:play(stateName)
+    self.component:Play(stateName)
+end
+
 return animator
 
 --endregion

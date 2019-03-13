@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/DeskUI/Atlas/DeskUI.tps</string>
+        <string>D:/mj/tdqp/Assets/Client/Artistic/Atlas/DeskUI/Atlas/DeskUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>500</int>
+            <int>-1</int>
             <key>height</key>
-            <int>460</int>
+            <int>-1</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -403,6 +403,87 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/effects_feng_00.png</key>
+            <key type="filename">Images/effects_feng_01.png</key>
+            <key type="filename">Images/effects_feng_02.png</key>
+            <key type="filename">Images/effects_feng_03.png</key>
+            <key type="filename">Images/effects_feng_04.png</key>
+            <key type="filename">Images/effects_feng_05.png</key>
+            <key type="filename">Images/effects_feng_06.png</key>
+            <key type="filename">Images/effects_feng_07.png</key>
+            <key type="filename">Images/effects_feng_08.png</key>
+            <key type="filename">Images/effects_feng_09.png</key>
+            <key type="filename">Images/effects_feng_10.png</key>
+            <key type="filename">Images/effects_feng_11.png</key>
+            <key type="filename">Images/effects_feng_12.png</key>
+            <key type="filename">Images/effects_feng_13.png</key>
+            <key type="filename">Images/effects_feng_14.png</key>
+            <key type="filename">Images/effects_feng_15.png</key>
+            <key type="filename">Images/effects_feng_16.png</key>
+            <key type="filename">Images/effects_feng_17.png</key>
+            <key type="filename">Images/effects_feng_18.png</key>
+            <key type="filename">Images/effects_feng_19.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>53,68,105,135</rect>
+                <key>scale9Paddings</key>
+                <rect>53,68,105,135</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/effects_xyu_00.png</key>
+            <key type="filename">Images/effects_xyu_01.png</key>
+            <key type="filename">Images/effects_xyu_02.png</key>
+            <key type="filename">Images/effects_xyu_03.png</key>
+            <key type="filename">Images/effects_xyu_04.png</key>
+            <key type="filename">Images/effects_xyu_05.png</key>
+            <key type="filename">Images/effects_xyu_06.png</key>
+            <key type="filename">Images/effects_xyu_07.png</key>
+            <key type="filename">Images/effects_xyu_08.png</key>
+            <key type="filename">Images/effects_xyu_09.png</key>
+            <key type="filename">Images/effects_xyu_10.png</key>
+            <key type="filename">Images/effects_xyu_11.png</key>
+            <key type="filename">Images/effects_xyu_12.png</key>
+            <key type="filename">Images/effects_xyu_13.png</key>
+            <key type="filename">Images/effects_xyu_14.png</key>
+            <key type="filename">Images/effects_xyu_15.png</key>
+            <key type="filename">Images/effects_xyu_16.png</key>
+            <key type="filename">Images/effects_xyu_17.png</key>
+            <key type="filename">Images/effects_xyu_18.png</key>
+            <key type="filename">Images/effects_xyu_19.png</key>
+            <key type="filename">Images/effects_xyu_20.png</key>
+            <key type="filename">Images/effects_xyu_21.png</key>
+            <key type="filename">Images/effects_xyu_22.png</key>
+            <key type="filename">Images/effects_xyu_23.png</key>
+            <key type="filename">Images/effects_xyu_24.png</key>
+            <key type="filename">Images/effects_xyu_25.png</key>
+            <key type="filename">Images/effects_xyu_26.png</key>
+            <key type="filename">Images/effects_xyu_27.png</key>
+            <key type="filename">Images/effects_xyu_28.png</key>
+            <key type="filename">Images/effects_xyu_29.png</key>
+            <key type="filename">Images/effects_xyu_30.png</key>
+            <key type="filename">Images/effects_xyu_31.png</key>
+            <key type="filename">Images/effects_xyu_32.png</key>
+            <key type="filename">Images/effects_xyu_33.png</key>
+            <key type="filename">Images/effects_xyu_34.png</key>
+            <key type="filename">Images/effects_xyu_35.png</key>
+            <key type="filename">Images/effects_xyu_36.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>54,64,108,128</rect>
+                <key>scale9Paddings</key>
+                <rect>54,64,108,128</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/fx_di02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -472,6 +553,63 @@
             <filename>Images/hp_di.png</filename>
             <filename>Images/hp_dp.png</filename>
             <filename>Images/hp_jt.png</filename>
+            <filename>Images/effects_feng_00.png</filename>
+            <filename>Images/effects_feng_01.png</filename>
+            <filename>Images/effects_feng_02.png</filename>
+            <filename>Images/effects_feng_03.png</filename>
+            <filename>Images/effects_feng_04.png</filename>
+            <filename>Images/effects_feng_05.png</filename>
+            <filename>Images/effects_feng_06.png</filename>
+            <filename>Images/effects_feng_07.png</filename>
+            <filename>Images/effects_feng_08.png</filename>
+            <filename>Images/effects_feng_09.png</filename>
+            <filename>Images/effects_feng_10.png</filename>
+            <filename>Images/effects_feng_11.png</filename>
+            <filename>Images/effects_feng_12.png</filename>
+            <filename>Images/effects_feng_13.png</filename>
+            <filename>Images/effects_feng_14.png</filename>
+            <filename>Images/effects_feng_15.png</filename>
+            <filename>Images/effects_feng_16.png</filename>
+            <filename>Images/effects_feng_17.png</filename>
+            <filename>Images/effects_feng_18.png</filename>
+            <filename>Images/effects_feng_19.png</filename>
+            <filename>Images/effects_xyu_00.png</filename>
+            <filename>Images/effects_xyu_01.png</filename>
+            <filename>Images/effects_xyu_02.png</filename>
+            <filename>Images/effects_xyu_03.png</filename>
+            <filename>Images/effects_xyu_04.png</filename>
+            <filename>Images/effects_xyu_05.png</filename>
+            <filename>Images/effects_xyu_06.png</filename>
+            <filename>Images/effects_xyu_07.png</filename>
+            <filename>Images/effects_xyu_08.png</filename>
+            <filename>Images/effects_xyu_09.png</filename>
+            <filename>Images/effects_xyu_10.png</filename>
+            <filename>Images/effects_xyu_11.png</filename>
+            <filename>Images/effects_xyu_12.png</filename>
+            <filename>Images/effects_xyu_13.png</filename>
+            <filename>Images/effects_xyu_14.png</filename>
+            <filename>Images/effects_xyu_15.png</filename>
+            <filename>Images/effects_xyu_16.png</filename>
+            <filename>Images/effects_xyu_17.png</filename>
+            <filename>Images/effects_xyu_18.png</filename>
+            <filename>Images/effects_xyu_19.png</filename>
+            <filename>Images/effects_xyu_20.png</filename>
+            <filename>Images/effects_xyu_21.png</filename>
+            <filename>Images/effects_xyu_22.png</filename>
+            <filename>Images/effects_xyu_23.png</filename>
+            <filename>Images/effects_xyu_24.png</filename>
+            <filename>Images/effects_xyu_25.png</filename>
+            <filename>Images/effects_xyu_26.png</filename>
+            <filename>Images/effects_xyu_27.png</filename>
+            <filename>Images/effects_xyu_28.png</filename>
+            <filename>Images/effects_xyu_29.png</filename>
+            <filename>Images/effects_xyu_30.png</filename>
+            <filename>Images/effects_xyu_31.png</filename>
+            <filename>Images/effects_xyu_32.png</filename>
+            <filename>Images/effects_xyu_33.png</filename>
+            <filename>Images/effects_xyu_34.png</filename>
+            <filename>Images/effects_xyu_35.png</filename>
+            <filename>Images/effects_xyu_36.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

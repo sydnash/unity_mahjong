@@ -52,7 +52,7 @@ function main()
         profiler:start()
     end
 
-    Screen.fullScreen = false
+--    Screen.fullScreen = false
 
     if CanvasScaler ~= nil then
         local canvas = GameObject.Find("UIRoot/Canvas")
@@ -93,7 +93,6 @@ function onApplicationQuit()
 end
 
 function onApplicationPause(status)
-    Logger.Log("onApplicationPause, status = " .. tostring(status))
     if status then
         if app ~= nil then
             app:pause()
