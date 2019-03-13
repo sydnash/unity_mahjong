@@ -432,6 +432,9 @@ end
 -- 获取玩家总人数
 -------------------------------------------------------------------------------
 function game:getTotalPlayerCount()
+    if self:isPlayback() then
+        return self.playerCount
+    end
     if self.quicklyStartSuccess then
         return self.quicklyStartPlayerCount
     end
