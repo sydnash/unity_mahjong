@@ -88,14 +88,45 @@ function mahjongDeskHeader:reset()
 end
 
 function mahjongDeskHeader:playRain()
-    self.mRain:hide()
-    self.mRain:show()
-    self.mRain:play("deskplayer_rain")
+    local tween = tweenSerial.new(true)
+
+    local a = tweenFunction.new(function()
+        self.mRain:hide()
+        self.mRain:show()
+        self.mRain:play("deskplayer_rain")
+    end)
+    local b = tweenDelay.new(2)
+    local c = tweenFunction.new(function()
+        self.mRain:hide()
+    end)
+
+    tween:add(a)
+    tween:add(b)
+    tween:add(c)
+
+    tweenManager.add(tween)
+    tween:play()
 end
+
 function mahjongDeskHeader:playWind()
-    self.mWind:hide()
-    self.mWind:show()
-    self.mWind:play("deskplayer_wind")
+    local tween = tweenSerial.new(true)
+
+    local a = tweenFunction.new(function()
+        self.mWind:hide()
+        self.mWind:show()
+        self.mWind:play("deskplayer_wind")
+    end)
+    local b = tweenDelay.new(2)
+    local c = tweenFunction.new(function()
+        self.mWind:hide()
+    end)
+
+    tween:add(a)
+    tween:add(b)
+    tween:add(c)
+
+    tweenManager.add(tween)
+    tween:play()
 end
 
 return mahjongDeskHeader

@@ -28,7 +28,7 @@ function gameEnd:onInit()
                                self.datas.finishGameCount, 
                                self.datas.totalGameCount, 
                                self.datas.deskId,
-                               self.game:convertConfigToString(true))
+                               self.game:convertConfigToString(true, true, "，"))
     self.mInfo:setText(info)
 
     if self.game.mode == gameMode.playback  then

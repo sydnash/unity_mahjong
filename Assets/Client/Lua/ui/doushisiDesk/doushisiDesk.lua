@@ -95,6 +95,8 @@ function doushisiDesk:onInit()
     self.countdownTimestamp = time.realtimeSinceStartup()
     self:hideClock()
 
+    self.mGameInfo:addClickListener(self.onGameInfoClickedHandler, self)
+
     base.onInit(self)
 end
 
@@ -354,6 +356,7 @@ function doushisiDesk:onOpDoHu(acId)
     self:playGfx(acId, "hu")
     self:playSound(acId, opType.doushisi.hu)
 end
+
 function doushisiDesk:onOpDoDang(acId, isDang)
     if isDang then
         self:playGfx(acId, "dang")
@@ -363,33 +366,64 @@ function doushisiDesk:onOpDoDang(acId, isDang)
         self:playSound(acId, opType.doushisi.budang)
     end
 end
+
 function doushisiDesk:onOpDoChe(acId)
     self:playGfx(acId, "peng")
     self:playSound(acId, opType.doushisi.che)
 end
+
 function doushisiDesk:onOpDoChi(acId)
     self:playGfx(acId, "chi")
     self:playSound(acId, opType.doushisi.chi)
 end
+
 function doushisiDesk:onOpDoAn(acId)
     self:playGfx(acId, "an")
     self:playSound(acId, opType.doushisi.an)
 end
+
 function doushisiDesk:onOpDoHua(acId)
     self:playGfx(acId, "hua")
     self:playSound(acId, opType.doushisi.hua)
 end
+
 function doushisiDesk:onOpDoBaGang(acId)
     self:playGfx(acId, "deng")
     self:playSound(acId, opType.doushisi.baGang)
 end
+
 function doushisiDesk:onOpDoBao(acId)
     self:playGfx(acId, "bao")
     self:playSound(acId, opType.doushisi.bao)
 end
+
 function doushisiDesk:onOpDoWeiGui(acId)
     self:playGfx(acId, "weigui")
     self:playSound(acId, opType.doushisi.weiGui)
+end
+
+function doushisiDesk:onGameInfoClickedHandler()
+    local ui = require("ui.deskDetail.deskDetail").new(self.game.cityType, 
+                                                       self.game.gameType, 
+                                                       nil,
+                                                       self.game.config,
+                                                       false,
+                                                       self.game.deskId,
+                                                       0)
+    ui:show()
+    playButtonClickSound()
+end
+
+function doushisiDesk:updateBatteryInfo()
+
+end
+
+function doushisiDesk:updateNetworkInfo()
+
+end
+
+function doushisiDesk:updateNetworkDelays()
+
 end
 
 return doushisiDesk

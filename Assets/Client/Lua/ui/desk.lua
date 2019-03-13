@@ -30,7 +30,6 @@ function desk:onInit()
     self.mVoiceTips:hide()
 
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
-    self.mGameInfo:addClickListener(self.onGameInfoClickedHandler, self)
 
     if self.game.mode == gameMode.normal then
         self.mInvite:addClickListener(self.onInviteClickedHandler, self)
@@ -125,32 +124,66 @@ function desk:update()
 end
 
 function desk:updateBatteryInfo()
-    local batteryLevel = self:getBatteryLevel()
-    if batteryLevel == -1 then
-
+    local level = self:getBatteryLevel()
+    if level == -1 then
+        self.mBattery:hide()
     else
+        self.mBattery:show()
 
+        local status = self:getBatteryStatus()
+        if status == 1 or status == 4 then --充电中
+            self.mBatteryCharging:show()
+        else
+            self.mBatteryCharging:hide()
+        end
+
+        if level < 0.2 then
+            self.mBatteryLevel:setSprite("r")
+        else
+            self.mBatteryLevel:setSprite("g")
+        end
+
+        self.mBatteryLevel:setFillAmount(level)
     end
 end
 
 function desk:updateNetworkInfo()
-    local networkType = self:getNetworkType()
-    if networkType == 0 then
-
+    self.networkType = self:getNetworkType()
+    if self.networkType == 0 then
+        self.mNet:hide()
     else
-
+        self.mNet:show()
+        self:updateNetworkDelays()
     end
 end
 
 function desk:updateNetworkDelays()
+    if self.networkType == 0 then
+        return 
+    end
+
     local delays = math.floor(networkManager.delays)
---    log("network delays: " .. tostring(delays))
+    
+    if delays < 200 then
+        if self.networkType == 1 then
+            self.mNetType:setSprite("net_g")
+        else
+            self.mNetType:setSprite("wifi_g")
+        end
+    else
+        if self.networkType == 1 then
+            self.mNetType:setSprite("net_r")
+        else
+            self.mNetType:setSprite("wifi_r")
+        end
+    end
+
+    self.mNetDelays:setText(string.format("%dms", delays))
 end
 
 function desk:getInvitationInfo()
     local friendsterText = (self.game.friendsterId == nil or self.game.friendsterId <= 0) and string.empty or string.format("亲友圈：%d，", self.game.friendsterId)
-    local configText = self.game:convertConfigToString(false)
-    log(configText)
+    local configText = self.game:convertConfigToString(false, false, "，")
     return string.format("%s%s", friendsterText, configText)
 end
 
@@ -478,18 +511,6 @@ function desk:onPlayerExit(seatType, msg)
     local p = self.headers[seatType]
 
     p:setPlayerInfo(nil)
-end
-
-function desk:onGameInfoClickedHandler()
-    local ui = require("ui.deskDetail.deskDetail").new(self.game.cityType, 
-                                                       self.game.gameType, 
-                                                       nil,
-                                                       self.game.config,
-                                                       false,
-                                                       self.game.deskId,
-                                                       0)
-    ui:show()
-    playButtonClickSound()
 end
 
 function desk:onChatMessageHandler(msg)

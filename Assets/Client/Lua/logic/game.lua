@@ -46,8 +46,10 @@ function game:ctor(data, playback)
         self:registerPlaybackHandlers(playback)
     end
 
-    self.quicklyStartPlayerCount    = data.QuicklyStartPlayerCnt
-    self.quicklyStartSuccess        = data.QuicklyStartSuccess
+    -- if data.IsReenter then
+        self.quicklyStartPlayerCount    = data.QuicklyStartPlayerCnt
+        self.quicklyStartSuccess        = data.QuicklyStartSuccess
+    -- end
 
     self:onEnter(data)
 end
@@ -1067,8 +1069,8 @@ function game:openLobbyUI()
     end)
 end
 
-function game:convertConfigToString(ignoreJuShu)
-    return convertConfigToString(self.cityType, self.gameType, self.config, ignoreJuShu)
+function game:convertConfigToString(ignoreRenShu, ignoreJuShu, splitChar)
+    return convertConfigToString(self.cityType, self.gameType, self.config, ignoreRenShu, ignoreJuShu, splitChar)
 end
 
 function game:cancelVoice()
