@@ -220,10 +220,6 @@ function desk:refreshUI()
     if self.game.mode == gameMode.normal then
         self:refreshInvitationButtonState()
     end
-
-    if self.mRule ~= nil then
-        self.mRule:setText(self.game:convertConfigToString(true, true, " "))
-    end
 end
 
 function desk:refreshInvitationButtonState()
