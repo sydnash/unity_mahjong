@@ -523,6 +523,33 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/ks_an.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>53,18,105,35</rect>
+                <key>scale9Paddings</key>
+                <rect>53,18,105,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ks_zi01.png</key>
+            <key type="filename">Images/ks_zi02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>43,9,86,17</rect>
+                <key>scale9Paddings</key>
+                <rect>43,9,86,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -610,6 +637,9 @@
             <filename>Images/effects_xyu_34.png</filename>
             <filename>Images/effects_xyu_35.png</filename>
             <filename>Images/effects_xyu_36.png</filename>
+            <filename>Images/ks_an.png</filename>
+            <filename>Images/ks_zi01.png</filename>
+            <filename>Images/ks_zi02.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

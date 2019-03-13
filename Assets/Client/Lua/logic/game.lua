@@ -46,6 +46,9 @@ function game:ctor(data, playback)
         self:registerPlaybackHandlers(playback)
     end
 
+    self.quicklyStartPlayerCount    = data.QuicklyStartPlayerCnt
+    self.quicklyStartSuccess        = data.QuicklyStartSuccess
+
     self:onEnter(data)
 end
 
@@ -102,6 +105,7 @@ function game:startLoop()
         end
 
         self:syncExitVote(self.data)
+        self:syncQuicklyVote(self.data)
     end
 
     self:startMessageQueue()
@@ -190,6 +194,26 @@ function game:onEnter(msg)
     self.leftGames = msg.LeftTime
     self.creator = msg.Creator
     self:syncPlayers(msg.Players)
+    self:computeRealTurn()
+end
+
+function game:computeRealTurn()
+    if self.quicklyStartSuccess then
+        local tmp = {}
+        for _, p in pairs(self.players) do
+            table.insert(tmp, p)
+        end
+        table.sort(tmp, function(t1, t2)
+            return t1.turn < t2.turn
+        end)
+        for i, p in ipairs(tmp) do
+            p.realTurn = i - 1
+        end
+
+        if self.deskUI then
+            self.deskUI:reReloacateHeader()
+        end
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -210,6 +234,7 @@ function game:syncPlayers(players)
         player.connected = v.IsConnected
         player.ready     = v.Ready
         player.turn      = v.Turn
+        player.realTurn  = v.Turn
         player.score     = v.Score
         player.isCreator = self:isCreator(player.acId)
         player.location  = { status = v.HasPosition, latitude = v.Latitude, longitude = v.Longitude }
@@ -245,6 +270,25 @@ function game:syncExitVote(msg)
     end
 end
 
+function game:syncQuicklyVote(msg)
+    if self.quicklyStartUI ~= nil then
+        self.quicklyStartUI:close()
+        self.quicklyStartUI = nil
+    end
+
+    if msg.IsInQuicklyStartVote and not self.quicklyStartSuccess then
+        self.quicklyStartVoteSeconds = msg.QuicklyStartLeftTime
+        self.quicklyStartVoteProposer = msg.QuicklyStartProposer
+        for _, v in pairs(msg.QuicklyStartVoteParams) do
+            local player = self:getPlayerByAcId(v.AcId)
+            player.quicklyStartVoteState = v.Status
+        end
+
+        self.quicklyStartUI = require("ui.quicklyStart").new(self)
+        self.quicklyStartUI:show()
+    end
+end
+
 -------------------------------------------------------------------------------
 -- 准备状态
 -------------------------------------------------------------------------------
@@ -274,6 +318,7 @@ function game:onOtherEnterHandler(msg)
         player.connected    = msg.IsConnected
         player.ready        = msg.Ready
         player.turn         = msg.Turn
+        player.realTurn     = msg.Turn
         player.score        = msg.Score
         player.location     = { status = msg.HasPosition, latitude = msg.Latitude, longitude = msg.Longitude }
 
@@ -385,6 +430,9 @@ end
 -- 获取玩家总人数
 -------------------------------------------------------------------------------
 function game:getTotalPlayerCount()
+    if self.quicklyStartSuccess then
+        return self.quicklyStartPlayerCount
+    end
     return self.config.RenShu
 end
 
@@ -427,8 +475,11 @@ end
 -- 根据acId获取位置
 -------------------------------------------------------------------------------
 function game:getSeatTypeByAcId(acId)
-    local mainTurn = self:getPlayerByAcId(self.mainAcId).turn
-    local turn = self:getPlayerByAcId(acId).turn
+    -- local mainTurn = self:getPlayerByAcId(self.mainAcId).turn
+    -- local turn = self:getPlayerByAcId(acId).turn
+    local mainTurn = self:getPlayerByAcId(self.mainAcId).realTurn
+    local turn = self:getPlayerByAcId(acId).realTurn
+
     local seat = turn - mainTurn
     local playerCount = self:getTotalPlayerCount()
 
@@ -688,8 +739,10 @@ function game:onGameEndHandler(msg)
         local preData = table.fromjson(special.PreData)
     
         for _, v in pairs(preData.TotalResuts) do
-            totalScores[v.AcId] = v.Score
-            self.players[v.AcId].score = v.Score
+            if self.players[v.AcId] ~= nil then
+                totalScores[v.AcId] = v.Score
+                self.players[v.AcId].score = v.Score
+            end
         end
 
         local datas = { deskId          = self.deskId,

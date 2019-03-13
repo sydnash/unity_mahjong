@@ -32,6 +32,41 @@ function mahjongDesk:onInit()
 
     self:updateLeftMahjongCount()
     base.onInit(self)
+    if self.game.mode == gameMode.normal then
+        self.mQuicklyStart:show()
+    else
+        self.mQuicklyStart:hide()
+    end
+    if self.game.mode == gameMode.normal then
+        self.mQuicklyStart:addClickListener(self.onQuicklyStartBtn, self)
+    end
+end
+
+function mahjongDesk:refreshInvitationButtonState()
+    local playerTotalCount = self.game:getTotalPlayerCount()
+    local playerCount = self.game:getPlayerCount()
+    if playerCount == playerTotalCount then
+        self.mQuicklyStart:hide()
+    else
+        -- if playerCount >= 2 then
+            self.mQuicklyStart:show()
+        -- end
+    end
+    if playerTotalCount == 4 then
+        self.mQuicklyStartIcon:setSprite("23ren")
+    else
+        self.mQuicklyStartIcon:setSprite("2ren")
+    end
+    base.refreshInvitationButtonState(self)
+end
+
+function mahjongDesk:onGameStart()
+    self.mQuicklyStart:hide()
+    base.onGameStart(self)
+end
+
+function mahjongDesk:onQuicklyStartBtn()
+    networkManager.proposerQuicklyStart()
 end
 
 function mahjongDesk:onGameSync()

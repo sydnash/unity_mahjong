@@ -772,6 +772,20 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartNotify(msg)
     log("mahjongGame:onQuicklyStartNotify " .. table.tostring(msg))
+    if not self.quicklyStartUI then
+        self.quicklyStartVoteSeconds = msg.LeftTime
+        self.quicklyStartVoteProposer = msg.Proposer
+
+        for _, p in pairs(self.players) do
+            p.quicklyStartVoteState = quicklyStartStatus.waiting
+            if p.acId == msg.Proposer then
+                p.quicklyStartVoteState = quicklyStartStatus.proposer
+            end
+        end
+
+        self.quicklyStartUI = require("ui.quicklyStart").new(self)
+        self.quicklyStartUI:show()
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -779,6 +793,29 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartEndNotify(msg)
     log("mahjongGame:onQuicklyStartEndNotify" .. table.tostring(msg))
+    local func = (function()
+        if self.quicklyStartUI then
+            if msg.Result == 0 then --快速开始成功
+                self.quicklyStartPlayerCount = msg.PlayerCnt
+                self.quicklyStartSuccess = true
+                self:computeRealTurn()
+            elseif msg.Result == 1 then --有人拒绝
+                local player = self.players[msg.Rejecter]
+                showMessageUI(string.format("玩家 %s 拒绝了解散申请", cutoutString(player.nickname,gameConfig.nicknameMaxLength)))
+            elseif msg.Result == 2 then --有人进入或者离开
+                showMessageUI(string.format("当前桌子人员发生变化，申请失败"))
+            elseif msg.Result == 3 then --有人进入或者离开
+                showMessageUI(string.format("当前桌子人员发生变化，申请失败"))
+            elseif msg.Result == 4 then --超时
+                showMessageUI(string.format("申请超时，请重新发起申请"))
+            end
+
+            self.quicklyStartUI:close()
+            self.quicklyStartUI = nil
+        end
+    end)
+    
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
@@ -786,6 +823,18 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartChose(msg)
     log("mahjongGame:onQuicklyStartChose" .. table.tostring(msg))
+    local func = (function()
+        if self.quicklyStartUI ~= nil then
+            local player = self:getPlayerByAcId(msg.AcId)
+            if msg.Agree then
+                player.quicklyStartVoteState = exitDeskStatus.agree
+            else
+                player.quicklyStartVoteState = exitDeskStatus.reject
+            end
+            self.quicklyStartUI:setPlayerState(player)
+        end
+    end)
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------

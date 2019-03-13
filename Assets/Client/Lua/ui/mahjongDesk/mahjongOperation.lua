@@ -541,6 +541,7 @@ function mahjongOperation:onGameSync()
             self:setCountdownTick()
             self.mHnz:show()
             self.mHnzText:setText(string.format("请选择%d张", self.hnzCount))
+            self:autoChoseHNZ(self.hnzCount)
         end
     elseif self.game.deskPlayStatus == mahjongGame.status.dingque then
         self:setDices()
@@ -2591,6 +2592,7 @@ function mahjongOperation:onHuanNZhangHint(msg)
     self:highlightPlaneByAcId(self.game.mainAcId)
     self:setCountdownVisible(true)
     self:setCountdownTick()
+    self:autoChoseHNZ(self.hnzCount)
 end
 
 -------------------------------------------------------------------------------
@@ -2932,6 +2934,81 @@ function mahjongOperation:hideChuPaiArrow()
     for _, v in pairs(self.mChuHuHints) do
         v:hide()
     end
+end
+
+function mahjongOperation:initVec(cnt)
+    local ret = {}
+    for i = 0, cnt do
+        ret[i] = 0
+    end
+    return ret
+end
+
+function mahjongOperation:_autoChoseQue()
+    local inhandMjs = self.inhandMahjongs[self.game.mainAcId]
+    local handCntVec = self:initVec(27)
+    for _, mj in pairs(inhandMjs) do
+        local id = mahjongType.getMahjongTypeId(mj.id)
+        handCntVec[id] = handCntVec[id] + 1
+    end
+    if self.mo ~= nil then
+        local id = mahjongType.getMahjongTypeId(opui.mo.id)
+        handCntVec[id] = handCntVec[id] + 1
+    end
+    local helper = require("logic.mahjong.helper")
+    local param = helper.computeDefaultQue(handCntVec, 14)
+    return param
+end
+function mahjongOperation:autoChoseQue()
+    local param = self:_autoChoseQue()
+    return param[1].class
+end
+
+function mahjongOperation:autoChoseHNZ(cnt)
+    local param = self:_autoChoseQue()
+    local ret = {}
+    for i = 1, 3 do
+        if param[i].cnt >= cnt then
+            local j = 1
+            for j = 1,#param[i].idScore do
+                local mjs = self:findMahjongInhandByTId(param[i].idScore[j].id, param[i].idScore[j].cnt)
+                for _, mj in pairs(mjs) do
+                    table.insert(ret, mj)
+                    if #ret >= cnt then
+                        break
+                    end
+                end
+                if #ret >= cnt then
+                    break
+                end
+            end
+            break
+        end
+    end
+    log("auto chose que param: " .. table.tostring(param))
+    log("auto chose mj: " .. #ret)
+    if self.hnzMahjongs[self.game.mainAcId] == nil then
+        self.hnzMahjongs[self.game.mainAcId] = {}
+    end
+    local hnzQueue = self.hnzMahjongs[self.game.mainAcId]
+    for _, mj in pairs(ret) do
+        mj:setSelected(true)
+        table.insert(hnzQueue, mj)
+    end
+end
+
+function mahjongOperation:findMahjongInhandByTId(tid, cnt)
+    local find = {}
+    local inhandMjs = self.inhandMahjongs[self.game.mainAcId]
+    for _, mj in pairs(inhandMjs) do
+        if mj.tid == tid then
+            table.insert(find, mj)
+        end
+        if #find >= cnt then
+            break
+        end
+    end
+    return find
 end
 
 return mahjongOperation
