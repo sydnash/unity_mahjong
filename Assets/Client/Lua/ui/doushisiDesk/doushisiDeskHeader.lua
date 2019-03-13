@@ -149,10 +149,10 @@ function doushisiDeskHeader:playGfx(name)
     return 1
 end
 
-function doushisiDeskHeader:onDestroy() 
-    self:reset()
-    base.onDestroy(self)
-end
+--function doushisiDeskHeader:onDestroy() 
+--    self:reset()
+--    base.onDestroy(self)
+--end
 
 return doushisiDeskHeader
 
