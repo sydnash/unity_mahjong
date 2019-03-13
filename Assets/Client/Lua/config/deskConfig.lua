@@ -379,12 +379,13 @@ deskShiftConfig = {
     },
 }
 
-function convertConfigToString(city, game, config, ignoreJushu)
+function convertConfigToString(city, game, config, ignoreRenShu, ignoreJushu, splitChar)
     local text = string.empty
+    splitChar = string.isNilOrEmpty(splitChar) and "，" or splitChar
 
     local function concat(t)
         if not string.isNilOrEmpty(text) then
-            text = text .. "，"
+            text = text .. splitChar
         end
 
         text = text .. t
@@ -395,7 +396,11 @@ function convertConfigToString(city, game, config, ignoreJushu)
 
     for _, v in pairs(layout) do
         for _, u in pairs(v.items) do
-            if (not ignoreJushu) or u.key ~= "JuShu" then
+            if ignoreRenShu and u.key == "RenShu" then
+                --
+            elseif ignoreJushu and u.key == "JuShu" then
+                --
+            else
                 local sc = shift[u.key]
                 if sc ~= nil then
                     local scv = sc[config[u.key]]

@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/mj/tdqp/Assets/Client/Artistic/Atlas/DeskUI/Atlas/DeskUI.tps</string>
+        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/DeskUI/Atlas/DeskUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -279,6 +279,20 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/ZM_4G.png</key>
+            <key type="filename">Images/ZM_4G_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,9,11</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,9,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/ZM_an01.png</key>
             <key type="filename">Images/ZM_an02.png</key>
             <key type="filename">Images/ZM_an03.png</key>
@@ -307,6 +321,46 @@
                 <rect>17,18,35,35</rect>
                 <key>scale9Paddings</key>
                 <rect>17,18,35,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZM_dcl.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,6,21,13</rect>
+                <key>scale9Paddings</key>
+                <rect>11,6,21,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZM_dcl_2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,4,6</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,4,6</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZM_dcl_g.png</key>
+            <key type="filename">Images/ZM_dcl_r.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,6,22,13</rect>
+                <key>scale9Paddings</key>
+                <rect>11,6,22,13</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -372,6 +426,20 @@
                 <rect>17,19,33,37</rect>
                 <key>scale9Paddings</key>
                 <rect>17,19,33,37</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/ZM_wifi.png</key>
+            <key type="filename">Images/ZM_wifi_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,5,13,11</rect>
+                <key>scale9Paddings</key>
+                <rect>7,5,13,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -610,6 +678,14 @@
             <filename>Images/effects_xyu_34.png</filename>
             <filename>Images/effects_xyu_35.png</filename>
             <filename>Images/effects_xyu_36.png</filename>
+            <filename>Images/ZM_4G.png</filename>
+            <filename>Images/ZM_4G_1.png</filename>
+            <filename>Images/ZM_dcl.png</filename>
+            <filename>Images/ZM_dcl_2.png</filename>
+            <filename>Images/ZM_wifi.png</filename>
+            <filename>Images/ZM_wifi_1.png</filename>
+            <filename>Images/ZM_dcl_g.png</filename>
+            <filename>Images/ZM_dcl_r.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
