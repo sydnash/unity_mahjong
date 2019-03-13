@@ -80,8 +80,6 @@ function mahjongDeskHeader:hideHu()
 end
 
 function mahjongDeskHeader:reset()
-    log("1111111111111111111111111111")
-
     self:hideDingQue()
     self:hideHu()
     self.mRain:hide()
