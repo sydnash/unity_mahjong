@@ -14,7 +14,6 @@ function lobby:onInit()
     self.mCards:setText(tostring(gamepref.player.cards))
     self.mCityText:setSprite(cityTypeSID[gamepref.city.City])
 
-    self.mHelp:hide()
     self.mAccuse:hide()
 
     self.mHead:addClickListener(self.onHeadClickedHandler, self)
@@ -80,6 +79,9 @@ function lobby:onAddRoomCardClickedHandler()
 end
 
 function lobby:onHelpClickedHandler()
+    local ui = require("ui.rule").new()
+    ui:show()
+
     playButtonClickSound()
 end
 
