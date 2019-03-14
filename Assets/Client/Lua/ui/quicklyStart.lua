@@ -3,17 +3,17 @@
 --此文件由[BabeLua]插件自动生成
 
 local base = require("ui.common.view")
-local exitDesk = class("exitDesk", base)
+local quicklyStart = class("quicklyStart", base)
 
-_RES_(exitDesk, "ExitDeskUI", "ExitDeskUI")
+_RES_(quicklyStart, "QuicklyStart", "QuicklyStart")
 
-function exitDesk:ctor(game)
+function quicklyStart:ctor(game)
     self.game = game
     base.ctor(self)
 end
 
-function exitDesk:onInit()
-    self.leftSeconds = self.game.leftVoteSeconds / 1000
+function quicklyStart:onInit()
+    self.leftSeconds = self.game.quicklyStartVoteSeconds / 1000
     self.timestamp = time.realtimeSinceStartup()
 
     local items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD, }
@@ -22,9 +22,9 @@ function exitDesk:onInit()
     local i = 0
     for k, v in pairs(self.game.players) do
         i = i + 1
-        if self.game.exitVoteProposer == v.acId then
+        if self.game.quicklyStartVoteProposer == v.acId then
             self.mProposer:setText(v.nickname)
-            v.exitVoteState = exitDeskStatus.proposer
+            v.exitVoteState = quicklyStartStatus.proposer
         end
 
         local item = items[i]
@@ -36,7 +36,7 @@ function exitDesk:onInit()
         items[j]:hide()
     end
 
-    if self.game.exitVoteProposer == gamepref.acId then
+    if self.game.quicklyStartVoteProposer == gamepref.acId then
         self.mAgree:setInteractabled(false)
         self.mReject:setInteractabled(false)
         self.mAgreeC:setSprite("JS_zi02_h")
@@ -53,41 +53,41 @@ function exitDesk:onInit()
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
-function exitDesk:setPlayerState(player)
+function quicklyStart:setPlayerState(player)
     local item = self.items[player.acId]
 
-    if player.acId == self.game.exitVoteProposer then
+    if player.acId == self.game.quicklyStartVoteProposer then
         item:setState(-1)
     else
-        item:setState(player.exitVoteState)
+        item:setState(player.quicklyStartVoteState)
     end
 end
 
-function exitDesk:onAgreeClickedHandler()
+function quicklyStart:onAgreeClickedHandler()
     self.mAgree:setInteractabled(false)
     self.mReject:setInteractabled(false)
     self.mAgreeC:setSprite("JS_zi02_h")
     self.mRejectC:setSprite("JS_zi01_h")
 
     local player = self.game:getPlayerByAcId(gamepref.acId)
-    self.items[player.acId]:setState(exitDeskStatus.agree)
+    self.items[player.acId]:setState(quicklyStartStatus.agree)
 
-    self.game:agreeExit()
+    networkManager.quicklyStartChose(true)
 end
 
-function exitDesk:onRejectClickedHandler()
+function quicklyStart:onRejectClickedHandler()
     self.mAgree:setInteractabled(false)
     self.mReject:setInteractabled(false)
     self.mAgreeC:setSprite("JS_zi02_h")
     self.mRejectC:setSprite("JS_zi01_h")
 
     local player = self.game:getPlayerByAcId(gamepref.acId)
-    self.items[player.acId]:setState(exitDeskStatus.reject)
+    self.items[player.acId]:setState(quicklyStartStatus.reject)
 
-    self.game:rejectExit()
+    networkManager.quicklyStartChose(false)
 end
 
-function exitDesk:update()
+function quicklyStart:update()
     local countdown = self.leftSeconds - (time.realtimeSinceStartup() - self.timestamp)
 
     local m = math.floor(countdown / 60)
@@ -104,15 +104,15 @@ function exitDesk:update()
     end
 end
 
-function exitDesk:onCloseAllUIHandler()
+function quicklyStart:onCloseAllUIHandler()
     self:close()
 end
 
-function exitDesk:onDestroy()
+function quicklyStart:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
     base.onDestroy(self)
 end
 
-return exitDesk
+return quicklyStart
 
 --endregion

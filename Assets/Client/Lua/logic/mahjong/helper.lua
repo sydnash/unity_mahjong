@@ -452,4 +452,66 @@ function helper:addTypeCnt(vec, tid, cnt)
     -- end
 end
 
+local mahjongClass = require("const.mahjongClass")
+function helper.computeDefaultQue(cntVec, handMaxCnt)
+    local huaSeCnt = {
+        {class = mahjongClass.tiao, cnt = 0, score = 0, idScore = {}},
+        {class = mahjongClass.tong, cnt = 0, score = 0, idScore = {}},
+        {class = mahjongClass.wan, cnt = 0, score = 0, idScore = {}},
+    }
+    for i = 0, 26 do
+        if cntVec[i] > 0 then
+            local typ = mahjongType.getMahjongTypeByTypeId(i)
+            huaSeCnt[typ.class+1].cnt = huaSeCnt[typ.class+1].cnt + cntVec[i]
+        end
+    end
+    for i = 0, 2 do
+        local startIdx = i * 9
+        local huaSeParam = huaSeCnt[i + 1]
+        local totalScore = 0
+        for j = startIdx, startIdx + 8 do
+            local jcnt = cntVec[j]
+            if jcnt > 0 then
+                local score = 0
+                if jcnt >= 2 then
+                    score = (jcnt - 1) * jcnt
+                end
+                for k = math.max(startIdx, j - 2),math.min(startIdx+8, j + 2) do
+                    if cntVec[k] > 0 then
+                        local ori = k - j
+                        local diff = math.abs(k - j)
+                        if diff ~= 0 then
+                            score = score + cntVec[k] * (3 - diff) * 1
+                        end
+                        -- if diff == 2 then
+                        --     score = score + cntVec[(k + j) / 2] * 2 
+                        -- end
+                        -- if diff == 1 then
+                        --     score = score + cntVec[j - ori] * 1
+                        -- end
+                    end
+                end
+                totalScore = totalScore + score * jcnt
+                table.insert(huaSeParam.idScore, {id = j, score = score, cnt = jcnt})
+            end
+        end
+        huaSeParam.score = totalScore * (1 + huaSeParam.cnt / handMaxCnt)
+        table.bubbleSort(huaSeParam.idScore, function(v1, v2)
+            return v1.score < v2.score
+        end)
+    end
+    table.bubbleSort(huaSeCnt, function(v1, v2)
+        return v1.score < v2.score
+    end)
+    if huaSeCnt[1].score == huaSeCnt[2].score then
+        local idx = math.random(1, 2)
+        if idx == 2 then
+            local t = huaSeCnt[2]
+            huaSeCnt[2] = huaSeCnt[1]
+            huaSeCnt[1] = t
+        end
+    end
+    return huaSeCnt
+end
+
 return helper

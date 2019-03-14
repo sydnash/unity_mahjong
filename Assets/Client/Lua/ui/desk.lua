@@ -443,6 +443,20 @@ function desk:onGameSync()
     self:updateCurrentGameIndex()
 end
 
+function desk:reReloacateHeader()
+    for _, v in pairs(self.headers) do 
+        v:reset()
+        v:hide()
+    end
+    for _, v in pairs(self.game.players) do 
+        local st = self.game:getSeatTypeByAcId(v.acId)
+        local hd = self.headers[st]
+
+        hd:show()
+        hd:setPlayerInfo(v)
+    end
+end
+
 function desk:syncPlayerInfo()
     for _, v in pairs(self.game.players) do 
         local st = self.game:getSeatTypeByAcId(v.acId)
