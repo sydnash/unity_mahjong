@@ -61,6 +61,7 @@ function mahjongDesk:refreshInvitationButtonState()
     else
         self.mQuicklyStartIcon:setSprite("2ren")
     end
+    self.mQuicklyStart:hide()
     base.refreshInvitationButtonState(self)
 end
 
