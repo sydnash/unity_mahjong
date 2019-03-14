@@ -128,7 +128,7 @@ end
 
 function mahjongDeskHeader:playWind()
     if self.windTween ~= nil then
-        self.rainTween:stop()
+        self.windTween:stop()
         tweenManager.remove(self.windTween)
     end
 
