@@ -95,11 +95,13 @@ function game:startLoop()
     end
     
     if self.mode == gameMode.normal then
+        self.gameScoreDetail    = self.data.SD
         if self.data.Reenter ~= nil then
             self.deskUI:onGameSync()
             self.operationUI:onGameSync()
         else
             self.deskUI:syncPlayerInfo()
+            self.deskUI:refreshInvitationButtonState()
             for _, player in pairs(self.players) do
                 self.deskUI:setReady(player.acId, player.ready)
                 self.deskUI:setScore(player.acId, player.score)
@@ -759,6 +761,7 @@ function game:onGameEndHandler(msg)
 
         self:onGameEndListener(specialData, datas, totalScores)
 
+        self.gameScoreDetail = msg.SD
         self.gameEndUI = require("ui.gameEnd.gameEnd").new(self, datas)
         self.gameEndUI:show()
         self.deskUI:reset()

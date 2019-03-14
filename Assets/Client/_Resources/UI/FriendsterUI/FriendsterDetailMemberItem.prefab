@@ -486,11 +486,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mAutoSize: 1
   mItems:
   - key: online
     sprite: {fileID: 21300038, guid: 67fc405719d5c58469c1103798ba0875, type: 3}
   - key: offline
     sprite: {fileID: 21300040, guid: 67fc405719d5c58469c1103798ba0875, type: 3}
+  - key: indesk
+    sprite: {fileID: 21300172, guid: 67fc405719d5c58469c1103798ba0875, type: 3}
 --- !u!222 &222220337447332516
 CanvasRenderer:
   m_ObjectHideFlags: 1

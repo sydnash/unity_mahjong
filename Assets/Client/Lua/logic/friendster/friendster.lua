@@ -17,6 +17,7 @@ local function createPlayer(data)
     player.totalPlayTimes   = data.TotalPlayTimes
     player.winPlayTimes     = data.WinPlayTimes
     player.isProxy          = data.IsProxy
+    player.deskStatus       = data.DeskStatus
 
     return player
 end
@@ -125,6 +126,17 @@ function friendster:setMemberOnlineState(acId, online)
     end
 end
 
+function friendster:setMemberDeskStatus(acId, status)
+    if self.members == nil then
+        return
+    end
+
+    local player = self.members[acId]
+    if player ~= nil then
+        player.deskStatus = status
+    end
+end
+
 function friendster:setDesks(data)
     self.desks = {}
     self.curDeskCount = 0
@@ -169,6 +181,13 @@ function friendster:removeDesk(deskId)
         return
     end
 
+    local desk = self.desks[deskId]
+    if desk then
+        for _, p in pairs(desk.players) do
+            self:setMemberDeskStatus(p.acId, friendsterMemberDeskStatus.idle)
+        end
+    end
+
     self.desks[deskId] = nil
     self.curDeskCount = self.curDeskCount - 1
 end
@@ -186,6 +205,8 @@ function friendster:addPlayerToDesk(acId, deskId)
     end
 
     desk:addPlayer(player)
+
+    self:setMemberDeskStatus(acId, friendsterMemberDeskStatus.indesk)
 end
 
 function friendster:removePlayerFromDesk(acId, deskId)
@@ -194,6 +215,7 @@ function friendster:removePlayerFromDesk(acId, deskId)
         if desk ~= nil then
             desk:removePlayer(acId)
         end
+        self:setMemberDeskStatus(acId, friendsterMemberDeskStatus.idle)
     end
 end
 

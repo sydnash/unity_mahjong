@@ -41,7 +41,13 @@ function mahjongDesk:onInit()
     end
     if self.game.mode == gameMode.normal then
         self.mQuicklyStart:addClickListener(self.onQuicklyStartBtn, self)
+        self.mGameScoreDetail:addClickListener(self.onGameScoreDetail, self)
     end
+end
+
+function mahjongDesk:onGameScoreDetail()
+    local sdui = require("ui.desk.scoreDetail")
+    sdui.new(self.game):show()
 end
 
 function mahjongDesk:refreshInvitationButtonState()
@@ -60,6 +66,13 @@ function mahjongDesk:refreshInvitationButtonState()
         self.mQuicklyStartIcon:setSprite("23ren")
     else
         self.mQuicklyStartIcon:setSprite("2ren")
+    end
+    self.mQuicklyStart:hide()
+
+    if self.game.gameScoreDetail then
+        self.mGameScoreDetail:show()
+    else
+        self.mGameScoreDetail:hide()
     end
     base.refreshInvitationButtonState(self)
 end

@@ -120,6 +120,7 @@ TextureImporter:
     21300226: ks_an
     21300228: ks_zi01
     21300230: ks_zi02
+    21300232: ZM_djtj
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -1437,6 +1438,20 @@ TextureImporter:
         y: 2
         width: 355
         height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_djtj
+      rect:
+        serializedVersion: 2
+        x: 1522
+        y: 50
+        width: 58
+        height: 58
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
