@@ -690,10 +690,14 @@ end
 -------------------------------------------------------------------------------
 function game:onNotifyExitVoteHandler(msg)
 --    log("notify exit vote, msg = " .. table.tostring(msg))
-    self:resetExitVoteInfo(msg)
+    local func = (function()
+        self:resetExitVoteInfo(msg)
 
-    self.exitDeskUI = require("ui.exitDesk").new(self)
-    self.exitDeskUI:show()
+        self.exitDeskUI = require("ui.exitDesk").new(self)
+        self.exitDeskUI:show()
+    end)
+
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
