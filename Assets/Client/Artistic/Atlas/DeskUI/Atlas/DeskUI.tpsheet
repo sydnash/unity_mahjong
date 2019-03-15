@@ -4,7 +4,7 @@
 # To import these sprites into your Unity project, download "TexturePackerImporter":
 # http://www.codeandweb.com/texturepacker/unity
 #
-# $TexturePacker:SmartUpdate:6a7a6378fbb83585cb6b2622a9ea0ecd:70ffde583183e4a2be88f582df9d7730:8a37926899fb4d83f0a20dedbedeeb47$
+# $TexturePacker:SmartUpdate:e2f2fa38145a46dbb2e2a310af59a3b4:16f464ec574203a968ec27f39db87e0e:8a37926899fb4d83f0a20dedbedeeb47$
 #
 :format=40300
 :texture=DeskUI.png
@@ -100,6 +100,7 @@ ZM_di;470;342;72;51; 0.5;0.5; 0;0;0;0
 ZM_di02;347;342;121;51; 0.5;0.5; 0;0;0;0
 ZM_di03;52;114;100;109; 0.5;0.5; 0;0;0;0
 ZM_di04;957;2;355;34; 0.5;0.5; 0;0;0;0
+ZM_djtj;1522;50;58;58; 0.5;0.5; 0;0;0;0
 ZM_ok;1384;252;66;74; 0.5;0.5; 0;0;0;0
 ZM_wifi;605;1;27;21; 0.5;0.5; 0;0;0;0
 ZM_wifi_1;634;1;27;21; 0.5;0.5; 0;0;0;0

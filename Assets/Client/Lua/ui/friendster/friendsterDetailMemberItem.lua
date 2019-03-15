@@ -31,7 +31,7 @@ function friendsterDetailMemberItem:set(friendsterId, managerId, data)
     self.mNickname:setText(cutoutString(data.nickname, gameConfig.nicknameMaxLength))
     self.mID:setText(string.format("账号:%d", data.acId))
 
-    self:setOnline(data.online)
+    self:setStatus(data)
 
     if data.acId == managerId then
         self.mQZ:show()
@@ -46,9 +46,14 @@ function friendsterDetailMemberItem:set(friendsterId, managerId, data)
     end
 end
 
-function friendsterDetailMemberItem:setOnline(online)
+function friendsterDetailMemberItem:setStatus(data)
+    local online = data.online
     if online then
-        self.mState:setSprite("online")
+        if data.deskStatus ~= friendsterMemberDeskStatus.idle then
+            self.mState:setSprite("indesk")
+        else
+            self.mState:setSprite("online")
+        end
     else
         self.mState:setSprite("offline")
     end

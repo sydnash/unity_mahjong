@@ -442,6 +442,7 @@ function desk:onGameSync()
         hd:setPlayerInfo(v)
     end
 
+    self:refreshInvitationButtonState()
     self:updateCurrentGameIndex()
 end
 
