@@ -24,6 +24,7 @@ end
 
 function createDesk:refreshLeftList(c)
     local has = false
+
     if c.mahjong.enable then
         has = true
         self.mMahjong:show()
@@ -33,6 +34,7 @@ function createDesk:refreshLeftList(c)
 
             self.mMahjongPanel:show()
             self.mChangpaiPanel:hide()
+            self.mPokePanel:hide()
         else
             self.mMahjong:setSelected(false)
         end
@@ -49,11 +51,29 @@ function createDesk:refreshLeftList(c)
 
             self.mMahjongPanel:hide()
             self.mChangpaiPanel:show()
+            self.mPokePanel:hide()
         else
             self.mChangpai:setSelected(false)
         end
     else
         self.mChangpai:hide()
+    end
+
+    if c.poke.enable then
+        has = true
+        self.mPoke:show()
+
+        if self.gameType == gameType.paodekuai then
+            self.mPoke:setSelected(true)
+
+            self.mMahjongPanel:hide()
+            self.mChangpaiPanel:hide()
+            self.mPokePanel:shoe()
+        else
+            self.mPoke:setSelected(false)
+        end
+    else
+        self.mPoke:hide()
     end
 
     if has then
@@ -86,6 +106,10 @@ function createDesk:onSupportGameChanges(games)
                 supportGame = gt
                 hasMore = true
                 c.changpai.enable = oric.changpai.enable
+            elseif gt == gameType.paodekuai then
+                supportGame = gt
+                hasMore = true
+                c.poke.enable = oric.poke.enable
             end
         end
         if needChanged then
@@ -133,6 +157,7 @@ function createDesk:onInit()
 
     self.mMahjong:addChangedListener(self.onMahjongChangedHandler, self)
     self.mChangpai:addChangedListener(self.onChangpaiChangedHandler, self)
+    self.mPoke:addChangedListener(self.onPokeChangedHandler, self)
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
@@ -284,6 +309,7 @@ function createDesk:onMahjongChangedHandler(sender, selected, clicked)
 
         self.mMahjongPanel:show()
         self.mChangpaiPanel:hide()
+        self.mPokePanel:hide()
 
         playButtonClickSound()
         self:onGameTypeChanged()
@@ -299,6 +325,23 @@ function createDesk:onChangpaiChangedHandler(sender, selected, clicked)
 
         self.mMahjongPanel:hide()
         self.mChangpaiPanel:show()
+        self.mPokePanel:hide()
+
+        playButtonClickSound()
+        self:onGameTypeChanged()
+    end
+end
+
+function createDesk:onPokeChangedHandler(sender, selected, clicked)
+    if clicked then
+        self.gameType = gameType.paodekuai
+
+        self.config = self:readConfig()
+        self:createDetail()
+
+        self.mMahjongPanel:hide()
+        self.mChangpaiPanel:hide()
+        self.mPokePanel:show()
 
         playButtonClickSound()
         self:onGameTypeChanged()

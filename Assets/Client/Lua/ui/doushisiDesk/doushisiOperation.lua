@@ -371,7 +371,7 @@ function doushisiOperation:onInit()
     inhandCameraT.position = Vector3.New(inhandCameraT.position.x, self.safeArea.bottom + camera.orthographicSize, inhandCameraT.position.z)
 
     self.tableRoot = find("doushisi/table")
-    local tbc = gamepref.getTablecloth()
+    local tbc = gamepref.getTablecloth(gameType.doushisi)
     self:changeBG(tbc)
 
     self.cardRoot = find("doushisi/changpai_root")

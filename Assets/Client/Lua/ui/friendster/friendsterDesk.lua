@@ -84,7 +84,7 @@ function friendsterDesk:set(data)
         end
         
         local detailText = convertConfigToString(self.data.cityType, self.data.gameType, self.data.config, true, true, ",")
-        self.mDetailText:setText(detailText)
+        self.mDetailText:setText(string.format("房号:%d.%s", self.data.deskId, detailText))
 
         if gamepref.player.acId == self.data.managerAcId then
             self.mClose:show()

@@ -33,7 +33,9 @@ function deskHeader:setPlayerInfo(player)
         self.mSomebody:show()
 
         self.mIcon:setTexture(player.headerUrl)
-
+        if self.mNickname ~= nil then
+            self.mNickname:setText(player.nickname)
+        end
         self:setScore(player.score)
         self:setReady(player.ready)
 
@@ -143,8 +145,15 @@ end
 
 function deskHeader:reset()
     self:setReady(false)
-    self.mGfx:hide()
-    self.mZhuang:hide()
+
+    if self.mGfx ~= nil then
+        self.mGfx:hide()
+    end
+
+    if self.mZhuang ~= nil then
+        self.mZhuang:hide()
+    end
+
     self:hideChatEmoji()
     self:hideChatText()
     self:hideChatVoice()

@@ -78,6 +78,7 @@ return {
                     [3] = 0,
                 },
             },
+            [gameType.paodekuai] = {                [1] = {                    [1] = 12,                    [2] = 15,                    [3] = 18,                },            },
         },
         --温江
         [cityType.wenjiang] = {
@@ -269,38 +270,39 @@ return {
     discounts = {
         --成都
         [cityType.chengdu] = {
-            [gameType.mahjong]  = 0,
-            [gameType.doushisi] = 1,
+            [gameType.mahjong]   = 0,
+            [gameType.doushisi]  = 1,
         },
         --金堂
         [cityType.jintang] = {
-            [gameType.mahjong]  = 0,
-            [gameType.doushisi] = 1,
+            [gameType.mahjong]   = 0,
+            [gameType.doushisi]  = 1,
+            [gameType.paodekuai] = 1,
         },
         --温江
         [cityType.wenjiang] = {
-            [gameType.mahjong]  = 0,
-            [gameType.doushisi] = 1,
+            [gameType.mahjong]   = 0,
+            [gameType.doushisi]  = 1,
         },
         --南充
         [cityType.nanchong] = {
-            [gameType.mahjong]  = 0,
-            [gameType.doushisi] = 1,
-        },
-        --西充
-        [cityType.xichong] = {
-            [gameType.mahjong]  = 0,
-            [gameType.doushisi] = 1,
-        },
-        --荥经
-        [cityType.yingjing] = {
-            [gameType.mahjong]  = 0,
-            [gameType.doushisi] = 1,
+            [gameType.mahjong]   = 0,
+            [gameType.doushisi]  = 1,
+        },                       
+        --西充                    
+        [cityType.xichong] = {   
+            [gameType.mahjong]   = 0,
+            [gameType.doushisi]  = 1,
+        },                       
+        --荥经                    
+        [cityType.yingjing] = {  
+            [gameType.mahjong]   = 0,
+            [gameType.doushisi]  = 1,
         },
         --中江
         [cityType.zhongjiang] = {
-            [gameType.mahjong]  = 0,
-            [gameType.doushisi] = 1,
+            [gameType.mahjong]   = 0,
+            [gameType.doushisi]  = 1,
         },
     }
 }

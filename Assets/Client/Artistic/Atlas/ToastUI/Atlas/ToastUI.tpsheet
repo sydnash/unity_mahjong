@@ -1,0 +1,15 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:ecf6593d99672da1367fd52136bf89d3:b143e3704dba6db155df7ba0a16ac600:e30f597de49bd12699f707e495513536$
+#
+:format=40300
+:texture=ToastUI.png
+:size=448x60
+:pivotpoints=enabled
+:borders=disabled
+
+pdk_tsk;1;4;444;55; 0.5;0.5; 0;0;0;0; 4;444;0;0;0;0;55;444;55; 2;1;2;3;0;1;3

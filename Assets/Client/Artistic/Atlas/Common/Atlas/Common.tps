@@ -603,6 +603,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/Pb_ss.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,20,28,40</rect>
+                <key>scale9Paddings</key>
+                <rect>14,20,28,40</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/QYQ_zi02.png</key>
             <key type="filename">Images/QYQ_zi15.png</key>
             <key type="filename">Images/QYQ_zi16.png</key>
@@ -918,6 +931,32 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/pdk_11.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>40,17,79,35</rect>
+                <key>scale9Paddings</key>
+                <rect>40,17,79,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/pdk_fs.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>24,7,49,14</rect>
+                <key>scale9Paddings</key>
+                <rect>24,7,49,14</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/zz_zi01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1044,6 +1083,9 @@
             <filename>Images/ZM_6_1.png</filename>
             <filename>Images/GY_rw_01.png</filename>
             <filename>Images/gz_01.png</filename>
+            <filename>Images/Pb_ss.png</filename>
+            <filename>Images/pdk_11.png</filename>
+            <filename>Images/pdk_fs.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -130,22 +130,22 @@ end
 function doushisiGame:initMessageHandlers()
     base.initMessageHandlers(self)
 
-    self.commandHandlers[protoType.sc.doushisi.start] = {func = self:onMessageHandler("onGameStartHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.faPai] = {func = self:onMessageHandler("onFaPaiHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.dang] = {func = self:onMessageHandler("onDangHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.dangNotify] = {func = self:onMessageHandler("onDangNotifyHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.anPai] = {func = self:onMessageHandler("onAnPaiHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.anPaiNotify] = {func = self:onMessageHandler("onAnPaiNotifyHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.moPai] = {func = self:onMessageHandler("onMoPaiHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.fanPai] = {func = self:onMessageHandler("onFanPaiHnadler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.opList] = {func = self:onMessageHandler("onOpListHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.opDo] = {func = self:onMessageHandler("onOpDoHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.bdList] = {func = self:onMessageHandler("onBdListHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.bdDo] = {func = self:onMessageHandler("onBdDoHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.piao] = {func = self:onMessageHandler("onPiaoHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.piaoNotify] = {func = self:onMessageHandler("onPiaoNotifyHandler"), nr = true}
-    self.commandHandlers[protoType.sc.doushisi.anPaiShow] = {func = self:onMessageHandler("onAnPaiShowHandler"), nr = true}
-    self.commandHandlers[protoType.sc.clear] = { func = self:onMessageHandler("onOpClearHandler"), nr = true }
+    self.commandHandlers[protoType.sc.doushisi.start]       = {func = self:onMessageHandler("onGameStartHandler"),      nr = true}
+    self.commandHandlers[protoType.sc.doushisi.faPai]       = {func = self:onMessageHandler("onFaPaiHandler"),          nr = true}
+    self.commandHandlers[protoType.sc.doushisi.dang]        = {func = self:onMessageHandler("onDangHandler"),           nr = true}
+    self.commandHandlers[protoType.sc.doushisi.dangNotify]  = {func = self:onMessageHandler("onDangNotifyHandler"),     nr = true}
+    self.commandHandlers[protoType.sc.doushisi.anPai]       = {func = self:onMessageHandler("onAnPaiHandler"),          nr = true}
+    self.commandHandlers[protoType.sc.doushisi.anPaiNotify] = {func = self:onMessageHandler("onAnPaiNotifyHandler"),    nr = true}
+    self.commandHandlers[protoType.sc.doushisi.moPai]       = {func = self:onMessageHandler("onMoPaiHandler"),          nr = true}
+    self.commandHandlers[protoType.sc.doushisi.fanPai]      = {func = self:onMessageHandler("onFanPaiHnadler"),         nr = true}
+    self.commandHandlers[protoType.sc.doushisi.opList]      = {func = self:onMessageHandler("onOpListHandler"),         nr = true}
+    self.commandHandlers[protoType.sc.doushisi.opDo]        = {func = self:onMessageHandler("onOpDoHandler"),           nr = true}
+    self.commandHandlers[protoType.sc.doushisi.bdList]      = {func = self:onMessageHandler("onBdListHandler"),         nr = true}
+    self.commandHandlers[protoType.sc.doushisi.bdDo]        = {func = self:onMessageHandler("onBdDoHandler"),           nr = true}
+    self.commandHandlers[protoType.sc.doushisi.piao]        = {func = self:onMessageHandler("onPiaoHandler"),           nr = true}
+    self.commandHandlers[protoType.sc.doushisi.piaoNotify]  = {func = self:onMessageHandler("onPiaoNotifyHandler"),     nr = true}
+    self.commandHandlers[protoType.sc.doushisi.anPaiShow]   = {func = self:onMessageHandler("onAnPaiShowHandler"),      nr = true}
+    self.commandHandlers[protoType.sc.clear]                = {func = self:onMessageHandler("onOpClearHandler"),        nr = true}
 end
 
 function doushisiGame:onFaPaiHandler(msg)

@@ -194,7 +194,9 @@ end
 function desk:refreshUI()
     local totalCount = self.game:getTotalPlayerCount()
     if totalCount == 3 then
-        self.headers[seatType.top]:hide()
+        if self.headers[seatType.top] ~= nil then
+            self.headers[seatType.top]:hide()
+        end
     elseif totalCount == 2 then
         self.headers[seatType.left]:hide()
         self.headers[seatType.right]:hide()
@@ -305,7 +307,7 @@ function desk:onPositionClickedHandler()
         networkManager.syncLocation(location, function(msg)
             closeWaitingUI()
 
-            if msg ~= nil then
+            if msg ~= nil and msg.Locations ~= nil then
                 for _, v in pairs(msg.Locations) do
                     local player = self.game:getPlayerByAcId(v.AcId)
                     player.location.status    = v.Has
@@ -527,7 +529,7 @@ function desk:onChatMessageHandler(msg)
         header:showChatText(content)
 
         local player = self.game:getPlayerByAcId(msg.AcId)
-        playChatTextSound(k, player.sex)
+        playChatTextSound(self.game.gameType, k, player.sex)
     elseif msg.Type == chatType.emoji then
         local info = chatConfig.emoji[msg.Data]
         if not info then
@@ -553,7 +555,7 @@ function desk:onChatTextSignalHandler(key)
     local header = self.headers[seatType.mine]
     header:showChatText(content)
 
-    playChatTextSound(key, gamepref.player.sex)
+    playChatTextSound(self.game.gameType, key, gamepref.player.sex)
 end
 
 function desk:onChatEmojiSignalHandler(key)

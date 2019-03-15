@@ -506,6 +506,31 @@ function game:getSeatTypeByAcId(acId)
 end
 
 -------------------------------------------------------------------------------
+-- 根据turn获取位置
+-------------------------------------------------------------------------------
+function game:getSeatTypeByTurn(turn)
+    local mainTurn = self:getPlayerByAcId(self.mainAcId).turn
+    local seat = turn - mainTurn
+    local playerCount = self:getTotalPlayerCount()
+
+    if seat < 0 then
+        seat = playerCount + turn - mainTurn
+    end
+
+    if playerCount == 3 then
+        if seat == seatType.top then
+            seat = seatType.left
+        end
+    elseif playerCount == 2 then
+        if seat == seatType.right then
+            seat = seatType.top
+        end
+    end
+
+    return seat
+end
+
+-------------------------------------------------------------------------------
 -- 退出桌子
 -------------------------------------------------------------------------------
 function game:exitGame()

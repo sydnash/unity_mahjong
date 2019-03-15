@@ -104,19 +104,6 @@ function doushisi:fix()
         local typ = doushisiType.getDoushisiTypeById(self.id)
         self:setSprite(typ.folder, typ.resource)
 
-        -- local scale = self:getLocalScale()
-        -- local rot = self:getLocalRotation()
-
-        -- self:setLocalScale(Vector3.one)
-        -- self:setLocalRotation(Vector3.zero)
-
-        -- local size = self.render.bounds.size
-        -- self.collider.center = Vector2.zero
-        -- self.collider.size = size
-
-        -- self:setLocalScale(scale)
-        -- self:setLocalRotation(rot)
-
         if self.render.sprite ~= nil then
             local rect = self.render.sprite.rect
             local pixelsPerUnit = self.render.sprite.pixelsPerUnit
@@ -130,6 +117,7 @@ end
 function doushisi:setSortingOrder(order)
     self.render.sortingOrder = order
 end
+
 function doushisi:getSortingOrder()
     return self.render.sortingOrder
 end

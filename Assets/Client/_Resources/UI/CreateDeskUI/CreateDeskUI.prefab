@@ -125,12 +125,12 @@ GameObject:
   - component: {fileID: 224048766692016826}
   - component: {fileID: 114402557184394410}
   m_Layer: 5
-  m_Name: PoKe
+  m_Name: Poke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1116061733938012
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1124840642143920
 GameObject:
   m_ObjectHideFlags: 1
@@ -336,7 +336,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1304837804985400
 GameObject:
   m_ObjectHideFlags: 1
@@ -1230,6 +1230,14 @@ MonoBehaviour:
   - variableName: mLockedHint
     widgetType: 0
     gameObject: {fileID: 1483810852673600}
+    panelScript: 
+  - variableName: mPoke
+    widgetType: 16
+    gameObject: {fileID: 1117299434822046}
+    panelScript: 
+  - variableName: mPokePanel
+    widgetType: 0
+    gameObject: {fileID: 1104852993958434}
     panelScript: 
 --- !u!114 &114047398310606982
 MonoBehaviour:
@@ -5143,7 +5151,7 @@ RectTransform:
   m_GameObject: {fileID: 1941148837215584}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.10546875, y: -0.0009765625, z: 0}
-  m_LocalScale: {x: 0.99910116, y: 0.99910116, z: 0.99910116}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224134714860448014}
   - {fileID: 224469382147430228}

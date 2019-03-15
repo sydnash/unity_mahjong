@@ -45,37 +45,47 @@ end
 -------------------------------------------------------------
 --
 -------------------------------------------------------------
-local function setLanguage(lan)
-    PlayerPrefs.SetString(language_key, lan)
+local function setLanguage(gametype, lan)
+    PlayerPrefs.SetString(language_key .. tostring(gametype), lan)
 end
 
 -------------------------------------------------------------
 --
 -------------------------------------------------------------
-local function getLanguage()
-    if not PlayerPrefs.HasKey(language_key) then
+local function getLanguage(gametype)
+    local key = language_key .. tostring(gametype)
+
+    if not PlayerPrefs.HasKey(key) then
         return language.mandarin
     end
 
-    return PlayerPrefs.GetString(language_key)
+    return PlayerPrefs.GetString(key)
 end
 
 -------------------------------------------------------------
 --
 -------------------------------------------------------------
-local function setTablecloth(tbc)
-    PlayerPrefs.SetString(tablecloth_key, tbc)
+local function setTablecloth(gametype, tbc)
+    PlayerPrefs.SetString(tablecloth_key .. tostring(gametype), tbc)
 end
 
 -------------------------------------------------------------
 --
 -------------------------------------------------------------
-local function getTablecloth()
-    if not PlayerPrefs.HasKey(tablecloth_key) then
-        return tablecloth.dft
+local function getTablecloth(gametype)
+    local key = tablecloth_key .. tostring(gametype)
+
+    if not PlayerPrefs.HasKey(key) then
+        if gametype == gameType.doushisi then
+            return tablecloth.dft
+        elseif gametype == gameType.paodekuai then
+            return tablecloth.paodekuai.qsl
+        else
+            return tablecloth.dft
+        end
     end
 
-    return PlayerPrefs.GetString(tablecloth_key)
+    return PlayerPrefs.GetString(key)
 end
 
 -------------------------------------------------------------
