@@ -281,7 +281,7 @@ function playChatTextSound(gtype, key, sex)
     end
     local resource = prefix .. chatConfig.text[key].audio
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 -------------------------------------------------------------
@@ -295,7 +295,7 @@ function playMahjongSound(mahjongId, sex)
     end
     local resource = prefix .. mahjongType.getMahjongTypeById(mahjongId).audio
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 local opsounds = {
@@ -338,7 +338,7 @@ function playMahjongOpSound(optype, sex, detail)
     end
     local resource = prefix .. file
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 -------------------------------------------------------------
@@ -372,7 +372,7 @@ function playDoushisiSound(cityType, doushisiId, sex)
         resource = cfg
     end
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 local d14opsound = {
@@ -461,7 +461,7 @@ function playDoushisiOpSound(cityType, optype, sex)
     end
 
     local resource = prefix .. op
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 -------------------------------------------------------------
@@ -488,7 +488,7 @@ function playPaodekuaiSound(soundKey, sex)
     end
 
     local resource = prefix .. postfix
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 -------------------------------------------------------------

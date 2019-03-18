@@ -127,16 +127,6 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiGame:onFaPaiHandler(msg)
-    self:faPai(msg)
-
-    self.deskUI:onFaPai()
-    return self.operationUI:onFaPai()
-end
-
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
-function paodekuaiGame:faPai(msg)
     self.totalCardsCount = self:getTotalCardCountByGame(self.cityType)
 
     if not json.isNilOrNull(msg.Seats) then
@@ -148,6 +138,9 @@ function paodekuaiGame:faPai(msg)
             self.deskUI:updateInhandCardsCount(player.acId)
         end
     end
+
+    self.deskUI:onFaPai()
+    return self.operationUI:onFaPai()
 end
 
 -------------------------------------------------------------------------------
