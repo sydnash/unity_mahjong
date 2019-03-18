@@ -45,6 +45,7 @@ deviceConfig    = require("config.deviceConfig")
 gameConfig      = require("config.gameConfig")
 enableConfig    = require("config.enableConfig")
 networkConfig   = require("config.networkConfig")
+soundConfig     = require("config.soundConfig")
 gamepref        = require("logic.gamepref")
 platformHelper  = require("platform.platformHelper")
 networkManager  = require("network.networkManager")
@@ -57,7 +58,6 @@ local messagebox    = require("ui.messageBox")
 local toast         = require("ui.toast")
 local mahjongType   = require("logic.mahjong.mahjongType")
 local doushisiType  = require("logic.doushisi.doushisiType")
-local soundConfig   = require("config.soundConfig")
 
 ----------------------------------------------------------------
 -- 断开连接后的回调
