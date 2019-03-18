@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/ExitDeskUI/Atlas/ExxitDeskUI.tps</string>
+        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/QuickStartUI/Atlas/QuickStartUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -150,7 +150,7 @@
             <key>datafile</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>ExxitDeskUI.tpsheet</filename>
+                <filename>QuickStartUI.tpsheet</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -238,19 +238,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/JS_zi01.png</key>
-            <key type="filename">Images/JS_zi01_h.png</key>
-            <key type="filename">Images/JS_zi02.png</key>
-            <key type="filename">Images/JS_zi02_h.png</key>
+            <key type="filename">Images/ks_jj.png</key>
+            <key type="filename">Images/ks_jj_h.png</key>
+            <key type="filename">Images/ks_ks.png</key>
+            <key type="filename">Images/ks_ks_h.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>20,10,39,21</rect>
+                <rect>34,10,68,21</rect>
                 <key>scale9Paddings</key>
-                <rect>20,10,39,21</rect>
+                <rect>34,10,68,21</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -260,10 +260,10 @@
             <filename>Images/JS_di.png</filename>
             <filename>Images/JS_di01.png</filename>
             <filename>Images/JS_mh.png</filename>
-            <filename>Images/JS_zi01.png</filename>
-            <filename>Images/JS_zi01_h.png</filename>
-            <filename>Images/JS_zi02.png</filename>
-            <filename>Images/JS_zi02_h.png</filename>
+            <filename>Images/ks_jj.png</filename>
+            <filename>Images/ks_ks.png</filename>
+            <filename>Images/ks_jj_h.png</filename>
+            <filename>Images/ks_ks_h.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

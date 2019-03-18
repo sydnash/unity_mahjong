@@ -50,6 +50,7 @@
     <Folder Include="Lua\ui\authentication\" />
     <Folder Include="Lua\ui\paodekuaiDesk\" />
     <Folder Include="Lua\ui\patch\" />
+    <Folder Include="Lua\ui\quicklyStart\" />
     <Folder Include="Lua\ui\setting\" />
     <Folder Include="Lua\ui\playHistory\" />
   </ItemGroup>
@@ -169,6 +170,7 @@
     <Compile Include="Lua\ui\playHistory\playHistoryDetail.lua" />
     <Compile Include="Lua\ui\playHistory\playHistoryDetailItem.lua" />
     <Compile Include="Lua\ui\playHistory\playHistoryItem.lua" />
+    <Compile Include="Lua\ui\quicklyStart\quicklyStartItem.lua" />
     <Compile Include="Lua\ui\setting\lobbySetting.lua" />
     <Compile Include="Lua\ui\setting\doushisiSetting.lua" />
     <Compile Include="Lua\ui\setting\mahjongSetting.lua" />

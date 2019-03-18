@@ -5,7 +5,7 @@
 local base = require("ui.common.view")
 local quicklyStart = class("quicklyStart", base)
 
-_RES_(quicklyStart, "QuicklyStart", "QuicklyStart")
+_RES_(quicklyStart, "QuicklyStartUI", "QuicklyStartUI")
 
 function quicklyStart:ctor(game)
     self.game = game
@@ -39,13 +39,13 @@ function quicklyStart:onInit()
     if self.game.quicklyStartVoteProposer == gamepref.acId then
         self.mAgree:setInteractabled(false)
         self.mReject:setInteractabled(false)
-        self.mAgreeC:setSprite("JS_zi02_h")
-        self.mRejectC:setSprite("JS_zi01_h")
+        self.mAgreeC:setSprite("ks_ks_h")
+        self.mRejectC:setSprite("ks_jj_h")
     else
         self.mAgree:setInteractabled(true)
         self.mReject:setInteractabled(true)
-        self.mAgreeC:setSprite("JS_zi02")
-        self.mRejectC:setSprite("JS_zi01")
+        self.mAgreeC:setSprite("ks_ks")
+        self.mRejectC:setSprite("ks_jj")
         self.mAgree:addClickListener(self.onAgreeClickedHandler, self)
         self.mReject:addClickListener(self.onRejectClickedHandler, self)
     end
@@ -66,8 +66,8 @@ end
 function quicklyStart:onAgreeClickedHandler()
     self.mAgree:setInteractabled(false)
     self.mReject:setInteractabled(false)
-    self.mAgreeC:setSprite("JS_zi02_h")
-    self.mRejectC:setSprite("JS_zi01_h")
+    self.mAgreeC:setSprite("ks_ks")
+    self.mRejectC:setSprite("ks_jj")
 
     local player = self.game:getPlayerByAcId(gamepref.acId)
     self.items[player.acId]:setState(quicklyStartStatus.agree)
@@ -78,8 +78,8 @@ end
 function quicklyStart:onRejectClickedHandler()
     self.mAgree:setInteractabled(false)
     self.mReject:setInteractabled(false)
-    self.mAgreeC:setSprite("JS_zi02_h")
-    self.mRejectC:setSprite("JS_zi01_h")
+    self.mAgreeC:setSprite("ks_ks_h")
+    self.mRejectC:setSprite("ks_jj_h")
 
     local player = self.game:getPlayerByAcId(gamepref.acId)
     self.items[player.acId]:setState(quicklyStartStatus.reject)

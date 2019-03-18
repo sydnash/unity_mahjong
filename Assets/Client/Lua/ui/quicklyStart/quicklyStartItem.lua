@@ -14,7 +14,7 @@ function quicklyStartItem:onInit()
 end
 
 function quicklyStartItem:setPlayerInfo(player)
-    self.mIcon:setTexture(player.headerUrl)
+--    self.mIcon:setTexture(player.headerUrl)
     self.mNickname:setText(cutoutString(player.nickname, gameConfig.nicknameMaxLength))
     self:setState(player.quicklyStartVoteState)
 end

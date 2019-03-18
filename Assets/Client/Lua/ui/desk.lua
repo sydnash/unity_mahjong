@@ -304,7 +304,7 @@ function desk:onPositionClickedHandler()
     else
         showWaitingUI("正在定位各玩家位置，请稍候...")
 
-        networkManager.syncLocation(location, function(msg)
+        local function onLocation(msg)
             closeWaitingUI()
 
             if msg ~= nil and msg.Locations ~= nil then
@@ -318,6 +318,10 @@ function desk:onPositionClickedHandler()
 
             local ui = require("ui.location").new(self.game)
             ui:show()
+        end
+
+        networkManager.syncLocation(location, function(msg)
+            self.game:pushMessage(onLocation, 0, msg)
         end)
     end
 

@@ -10,6 +10,9 @@ function reload(packageName)
     return require(packageName)
 end
 
+--设置随机数种子
+math.randomseed(os.time())
+
 Application = UnityEngine.Application
 
 appConfig = reload("config.appConfig")
@@ -461,14 +464,10 @@ function playDoushisiOpSound(cityType, optype, sex)
     return soundManager.playGfx(folder, resource)
 end
 
-local paodekuaiSounds = {
-}
-
 -------------------------------------------------------------
 -- 
 -------------------------------------------------------------
 function playPaodekuaiSound(soundKey, sex)
---    log("playPaodekuaiSound, soundKey = " .. soundKey)
     if string.isNilOrEmpty(soundKey) then
         return 
     end
@@ -484,7 +483,8 @@ function playPaodekuaiSound(soundKey, sex)
     local postfix = sounds[1]
     
     if #sounds > 1 then
-
+        local idx = math.random(1,#sounds)
+        postfix = sounds[idx]
     end
 
     local resource = prefix .. postfix
