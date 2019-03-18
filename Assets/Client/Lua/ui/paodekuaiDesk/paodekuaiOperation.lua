@@ -632,11 +632,11 @@ function paodekuaiOperation:onOpDoChu(acId, cards, curpx, lastpx)
 end
 
 function paodekuaiOperation:playChuPaiSound()
-    soundManager.playGfx("paodekuai", soundConfig.paodekuai.chupai)
+    soundManager.playGfx("paodekuai", soundConfig.paodekuai.chupai[1])
 end
 
 function paodekuaiOperation:playXuanPaiSound()
-    soundManager.playGfx("paodekuai", soundConfig.paodekuai.xuanpai)
+    soundManager.playGfx("paodekuai", soundConfig.paodekuai.xuanpai[1])
 end
 
 -------------------------------------------------------------------------------
