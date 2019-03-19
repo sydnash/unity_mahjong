@@ -439,13 +439,7 @@ function desk:onGameSync()
     self.mReady:hide()
     self.mCancel:hide()
 
-    for _, v in pairs(self.game.players) do 
-        local st = self.game:getSeatTypeByAcId(v.acId)
-        local hd = self.headers[st]
-
-        hd:setPlayerInfo(v)
-    end
-
+    self:syncPlayerInfo()
     self:refreshInvitationButtonState()
     self:updateCurrentGameIndex()
 end

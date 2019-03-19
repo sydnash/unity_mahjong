@@ -3,6 +3,7 @@
 --此文件由[BabeLua]插件自动生成
 
 local header = require("ui.mahjongDesk.mahjongDeskHeader")
+local sameip = require("ui.sameip")
 
 local base = require("ui.desk")
 local mahjongDesk = class("mahjongDesk", base)
@@ -93,6 +94,11 @@ function mahjongDesk:onGameSync()
     base.onGameSync(self)
 end
 
+function mahjongDesk:syncPlayerInfo()
+    base.syncPlayerInfo(self)
+    self:checkPlayersIP()
+end
+
 function mahjongDesk:onPlayerPeng(acId)
     local s = self.game:getSeatTypeByAcId(acId)
     local p = self.headers[s]
@@ -159,6 +165,37 @@ function mahjongDesk:createSettingUI()
     return require("ui.setting.mahjongSetting").new(self.game)
 end
 
+function mahjongDesk:onPlayerEnter(player)
+    base.onPlayerEnter(self, player)
+    self:checkPlayersIP()
+end
+
+function mahjongDesk:checkPlayersIP()
+    local ips = {}
+    local hasSameIP = false
+
+    for _, v in pairs(self.game.players) do
+        local ip = v.ip
+
+        if ips[ip] == nil then
+            ips[ip] = {}
+        end
+
+        table.insert(ips[ip], v.nickname)
+
+        if not hasSameIP then
+            hasSameIP = #ips[ip] > 1
+        end
+    end
+
+    if hasSameIP then
+        if self.sameIpUI == nil then
+            self.sameIpUI = sameip.new(ips)
+        end
+        self.sameIpUI:show()
+    end
+end
+
 function mahjongDesk:onDestroy()
     self:unregisterHandlers()
 
@@ -166,6 +203,11 @@ function mahjongDesk:onDestroy()
         v:close()
     end
     self.headers = {}
+
+    if self.sameIpUI ~= nil then
+        self.sameIpUI:close()
+    end
+    self.sameIpUI = nil
 
     base.onDestroy(self)
 end
