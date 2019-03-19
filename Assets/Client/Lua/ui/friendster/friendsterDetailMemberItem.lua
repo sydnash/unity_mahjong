@@ -11,20 +11,19 @@ function friendsterDetailMemberItem:onInit()
     self.mHead:addClickListener(self.onHeadClickedHandler, self)
 
     self.mQZ:hide()
-    self.mDL:hide()
+    self.mGLY:hide()
     self.mState:setSprite("offline")
 end
 
 function friendsterDetailMemberItem:onHeadClickedHandler()
-    local ui = require("ui.friendster.friendsterMemberInfo").new(self.friendsterId, self.managerId, self.data)
+    local ui = require("ui.friendster.friendsterMemberInfo").new(self.friendster, self.data)
     ui:show()
 
     playButtonClickSound()
 end
 
-function friendsterDetailMemberItem:set(friendsterId, managerId, data)
-    self.friendsterId = friendsterId
-    self.managerId = managerId
+function friendsterDetailMemberItem:set(friendster, data)
+    self.friendster = friendster
     self.data = data
 
     self.mIcon:setTexture(data.headerUrl)
@@ -38,11 +37,11 @@ function friendsterDetailMemberItem:set(friendsterId, managerId, data)
     else
         self.mQZ:hide()
 
---        if data.isProxy then
---            self.mDL:show()
---        else
---            self.mDL:hide()
---        end
+        if data.permission == 1 then
+            self.mGLY:show()
+        else
+            self.mGLY:hide()
+        end
     end
 end
 

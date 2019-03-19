@@ -202,7 +202,7 @@ function friendsterDetail:onReconnectedHandler()
 end
   
 function friendsterDetail:refreshUI()
-    if self.data.managerAcId == gamepref.player.acId then
+    if self.data:isCreator(gamepref.player.acId) or self.data:isManager(gamepref.player.acId) then
         self.mShare:show()
         self.mManage:show()
         self.mMail:show()
@@ -211,6 +211,8 @@ function friendsterDetail:refreshUI()
 
         if #self.data.applyList > 0 then
             self.mMailRP:show()
+        else
+            self.mMailRP:hide()
         end
     end
 
@@ -241,7 +243,7 @@ function friendsterDetail:refreshMemberList()
 
     local refreshMemberItem = function(item, index)
         local m = self.members[index + 1]
-        item:set(self.data.id, self.data.managerAcId, m)
+        item:set(self.data, m)
     end
 
     self.mMemberList:set(#self.members, createMemberItem, refreshMemberItem)

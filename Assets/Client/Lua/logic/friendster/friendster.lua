@@ -18,6 +18,7 @@ local function createPlayer(data)
     player.winPlayTimes     = data.WinPlayTimes
     player.isProxy          = data.IsProxy
     player.deskStatus       = data.DeskStatus
+    player.permission       = data.Permission
 
     return player
 end
@@ -49,7 +50,6 @@ function friendster:ctor(id)
     self.managerAcId        = 0
     self.managerNickname    = string.empty
     self.createSetting      = {}
-    -- self:checkCreateSetting()
 end
 
 function friendster:setData(data)
@@ -64,9 +64,7 @@ function friendster:setData(data)
     lc.managerAcId      = data.AcId
     lc.managerNickname  = data.NickName
     lc.applyList        = json.isNilOrNull(data.ApplyList) and {} or data.ApplyList
-    self.createSetting  = json.isNilOrNull(data.CreateSettings) and {} or data.CreateSettings
-    -- self:checkCreateSetting()
-    -- log("club setting: " .. table.tostring(self.createSetting))
+    lc.createSetting    = json.isNilOrNull(data.CreateSettings) and {} or data.CreateSettings
 end
 
 function friendster:getSupportGames()
@@ -123,6 +121,17 @@ function friendster:setMemberOnlineState(acId, online)
         if not online then
             player.lastOnlineTime = time.now()
         end
+    end
+end
+
+function friendster:setMemberPermission(acId, permission)
+    if self.members == nil then
+        return
+    end
+
+    local player = self.members[acId]
+    if player ~= nil then
+        player.permission = permission
     end
 end
 
@@ -281,6 +290,41 @@ function friendster:setGameIDCfg(cfg)
 			Cfg = cfg.Cfg,
 		})
 	end
+end
+
+function friendster:addApply(apply)
+    log("friendster:addApply, apply = " .. table.tostring(apply))
+    table.insert(self.applyList, apply)
+end
+
+function friendster:removeApply(apply)
+    log("friendster:removeApply, apply = " .. table.tostring(apply))
+    for k, v in pairs(self.applyList) do
+        if v.AcId == apply.AcId then 
+            table.remove(self.applyList, k)
+            break
+        end
+    end
+end
+
+--------------------------------------------------------------------
+-- 是否是群主
+--------------------------------------------------------------------
+function friendster:isCreator(acId)
+    return acId == self.managerAcId
+end
+
+--------------------------------------------------------------------
+-- 是否是管理员
+--------------------------------------------------------------------
+function friendster:isManager(acId)
+    for _, v in pairs(self.members) do
+        if v.acId == acId then
+            return v.permission == 1
+        end
+    end
+
+    return false
 end
 
 return friendster

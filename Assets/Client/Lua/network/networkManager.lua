@@ -788,6 +788,22 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function networkManager.setMemberToBeManager(friendserId, acId, callback)
+    local data = { ClubId = friendserId, AcId = acId, Permission = 1 }
+    send(protoType.cs.changeMemberPermission, data, callback)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function networkManager.setManagerToBeMember(friendserId, acId, callback)
+    local data = { ClubId = friendserId, AcId = acId, Permission = 0 }
+    send(protoType.cs.changeMemberPermission, data, callback)
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function networkManager.depositToFriendsterBank(friendsterId, value, callback)
     local data = { ClubId = friendsterId, Count = value }
     send(protoType.cs.depositToFriendsterBank, data, callback)

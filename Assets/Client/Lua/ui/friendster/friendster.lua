@@ -418,19 +418,38 @@ function friendster:onNotifyFriendster(msg)
                 if v.AcId == d.Info.AcId then return end
             end
 
-            table.insert(lc.applyList, d.Info)
+            lc:addApply(d.Info)
 
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
             end
         end
     elseif t == friendsterNotifyType.supportGameIdChanged then
-        if lc then
+        if lc ~= nil then
 		    lc:setSupportGameId(d.Ids)
         end
     elseif t == friendsterNotifyType.gameIdCfgChanged then
-        if lc then
+        if lc ~= nil then
             lc:setGameIDCfg(d.Cfg)
+        end
+    elseif t == friendsterNotifyType.changeMemberPermission then
+        if lc ~= nil then
+            lc:setMemberPermission(d.AcId, d.Permission)
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
+                if queryFromCSV("stingyscrollview") == "2" then
+                    self.detailUI:refreshMembers()
+                else
+                    self.detailUI:refreshMemberList()
+                end
+            end
+        end
+    elseif t == friendsterNotifyType.applyDeleted then
+        if lc ~= nil then
+            lc:addApply(d.Info)
+
+            if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
+                self.detailUI:refreshUI()
+            end
         end
     end
 end
