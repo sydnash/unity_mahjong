@@ -53,6 +53,7 @@ end
 function mahjongDesk:refreshInvitationButtonState()
     local playerTotalCount = self.game:getTotalPlayerCount()
     local playerCount = self.game:getPlayerCount()
+
     if playerCount == playerTotalCount then
         self.mQuicklyStart:hide()
     else
@@ -62,6 +63,7 @@ function mahjongDesk:refreshInvitationButtonState()
             self.mQuicklyStart:hide()
         end
     end
+
     if playerTotalCount == 4 then
         self.mQuicklyStartIcon:setSprite("23ren")
     else
@@ -73,6 +75,7 @@ function mahjongDesk:refreshInvitationButtonState()
     else
         self.mGameScoreDetail:hide()
     end
+
     base.refreshInvitationButtonState(self)
 end
 
