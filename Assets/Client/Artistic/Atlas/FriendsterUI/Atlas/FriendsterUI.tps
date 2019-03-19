@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/FriendsterUI/Atlas/FriendsterUI.tps</string>
+        <string>D:/mj/tdqp/Assets/Client/Artistic/Atlas/FriendsterUI/Atlas/FriendsterUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -517,6 +517,7 @@
             </struct>
             <key type="filename">Images/QYQ_qizi03.png</key>
             <key type="filename">Images/QYQ_qizi04.png</key>
+            <key type="filename">Images/QYQ_qizi05.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -998,6 +999,7 @@
             <filename>Images/wfsz_bc.png</filename>
             <filename>Images/QYQ_gb.png</filename>
             <filename>Images/QYQ_kf_di_1.png</filename>
+            <filename>Images/QYQ_qizi05.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -26,6 +26,10 @@ tablecloth = {
     qxl = "zm_zb02",
     mhw = "zm_zb03",
     hj  = "zm_zb04",
+    paodekuai = { 
+        qsl = "pdk_zb01", 
+        bsl = "pdk_zb02", 
+    },
 }
 
 --------------------------------------------------------------
@@ -34,6 +38,12 @@ tablecloth = {
 sexType = {
     boy  = 1,
     girl = 2,
+}
+
+friendsterMemberDeskStatus = {
+    idle     = 0,
+    indesk   = 1,
+    playing  = 2,
 }
 
 --------------------------------------------------------------
@@ -120,31 +130,39 @@ opType = {
                       bijiao        = 34,
            } 
     },
-    guo  = { id = 6, },
-    dui  = {id = 8,},
+    guo  = { id = 6 },
+    dui  = { id = 8 },
+    --
     doushisi = {
-        dang        = {id = 0},
-	    hua         = {id = 1},
-	    chu         = {id = 2},
-	    chi         = {id = 3},
-	    che         = {id = 4},
-	    hu          = {id = 5},
-	    gang        = {id = 6},
-	    pass        = {id = 7},
-	    fan         = {id = 8},
-	    mo          = {id = 9},
-	    an          = {id = 10},
-	    zhao        = {id = 11},
-	    shou        = {id = 12},
-	    bao         = {id = 13},
-	    baGang      = {id = 14},
-	    chiChengSan = {id = 15},
-	    caiShen     = {id = 16},
-	    baoJiao     = {id = 17},
-	    gen         = {id = 18},
-        weiGui      = {id = 19},
-        budang      = {id = 100},
+        dang        = { id = 0   },
+	    hua         = { id = 1   },
+	    chu         = { id = 2   },
+	    chi         = { id = 3   },
+	    che         = { id = 4   },
+	    hu          = { id = 5   },
+	    gang        = { id = 6   },
+	    pass        = { id = 7   },
+	    fan         = { id = 8   },
+	    mo          = { id = 9   },
+	    an          = { id = 10  },
+	    zhao        = { id = 11  },
+	    shou        = { id = 12  },
+	    bao         = { id = 13  },
+	    baGang      = { id = 14  },
+	    chiChengSan = { id = 15  },
+	    caiShen     = { id = 16  },
+	    baoJiao     = { id = 17  },
+	    gen         = { id = 18  },
+        weiGui      = { id = 19  },
+        budang      = { id = 100 },
 	},
+    --
+    paodekuai = {
+        chu      = { id = 1 },
+	    tianGuan = { id = 2 },
+	    pass     = { id = 3 },
+	    buChu    = { id = 4 },
+    },
 }
 
 --------------------------------------------------------------

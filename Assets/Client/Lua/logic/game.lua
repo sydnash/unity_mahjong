@@ -95,11 +95,13 @@ function game:startLoop()
     end
     
     if self.mode == gameMode.normal then
+        self.gameScoreDetail    = self.data.SD
         if self.data.Reenter ~= nil then
             self.deskUI:onGameSync()
             self.operationUI:onGameSync()
         else
             self.deskUI:syncPlayerInfo()
+            self.deskUI:refreshInvitationButtonState()
             for _, player in pairs(self.players) do
                 self.deskUI:setReady(player.acId, player.ready)
                 self.deskUI:setScore(player.acId, player.score)
@@ -506,6 +508,31 @@ function game:getSeatTypeByAcId(acId)
 end
 
 -------------------------------------------------------------------------------
+-- 根据turn获取位置
+-------------------------------------------------------------------------------
+function game:getSeatTypeByTurn(turn)
+    local mainTurn = self:getPlayerByAcId(self.mainAcId).turn
+    local seat = turn - mainTurn
+    local playerCount = self:getTotalPlayerCount()
+
+    if seat < 0 then
+        seat = playerCount + turn - mainTurn
+    end
+
+    if playerCount == 3 then
+        if seat == seatType.top then
+            seat = seatType.left
+        end
+    elseif playerCount == 2 then
+        if seat == seatType.right then
+            seat = seatType.top
+        end
+    end
+
+    return seat
+end
+
+-------------------------------------------------------------------------------
 -- 退出桌子
 -------------------------------------------------------------------------------
 function game:exitGame()
@@ -688,10 +715,14 @@ end
 -------------------------------------------------------------------------------
 function game:onNotifyExitVoteHandler(msg)
 --    log("notify exit vote, msg = " .. table.tostring(msg))
-    self:resetExitVoteInfo(msg)
+    local func = (function()
+        self:resetExitVoteInfo(msg)
 
-    self.exitDeskUI = require("ui.exitDesk").new(self)
-    self.exitDeskUI:show()
+        self.exitDeskUI = require("ui.exitDesk").new(self)
+        self.exitDeskUI:show()
+    end)
+
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
@@ -759,6 +790,7 @@ function game:onGameEndHandler(msg)
 
         self:onGameEndListener(specialData, datas, totalScores)
 
+        self.gameScoreDetail = msg.SD
         self.gameEndUI = require("ui.gameEnd.gameEnd").new(self, datas)
         self.gameEndUI:show()
         self.deskUI:reset()

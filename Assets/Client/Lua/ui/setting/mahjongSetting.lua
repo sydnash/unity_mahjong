@@ -28,7 +28,7 @@ end
 
 function mahjongSetting:onInit()
     base.onInit(self)
-    local lan = gamepref.getLanguage()
+    local lan = gamepref.getLanguage(gameType.mahjong)
 
     initLable(self.mMandarin)
     initLable(self.mSichuan)
@@ -67,7 +67,7 @@ end
 function mahjongSetting:onMandarinChangedHandler(sender, selected, clicked)
     if clicked then
         if selected then
-            gamepref.setLanguage(language.mandarin)
+            gamepref.setLanguage(gameType.mahjong, language.mandarin)
             setTextColor(self.mMandarin, true)
             setTextColor(self.mSichuan, false)
         end
@@ -79,7 +79,7 @@ end
 function mahjongSetting:onSichuanChangedHandler(sender, selected, clicked)
     if clicked then
         if selected then
-            gamepref.setLanguage(language.sichuan)
+            gamepref.setLanguage(gameType.mahjong, language.sichuan)
             setTextColor(self.mMandarin, false)
             setTextColor(self.mSichuan, true)
         end

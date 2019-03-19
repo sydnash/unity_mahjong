@@ -49,6 +49,10 @@ return {
         },
         ["poke"] = {
             enable = false,
+            detail = {
+                [gameType.doudizhu]  = false,
+                [gameType.paodekuai] = false,
+            }
         }
     },
     --西充

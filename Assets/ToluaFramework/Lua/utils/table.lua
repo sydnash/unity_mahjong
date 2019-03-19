@@ -18,6 +18,16 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
+function table.indexOf(array, value, begin)
+    for i = begin or 1, #array do
+        if array[i] == value then return i end
+    end
+    return false
+end
+
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
 function table.removeItem(t, o)
     for k, v in pairs(t) do
         if v == o then

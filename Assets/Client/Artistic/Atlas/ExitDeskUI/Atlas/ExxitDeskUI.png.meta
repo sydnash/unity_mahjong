@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 47d4dc95f6cdf9842a9a1979b7d463dc
-timeCreated: 1535978514
+timeCreated: 1552879944
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -72,33 +72,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Standalone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: 4
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 1
-  - buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: 4
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 1
-  - buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: 4
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -107,12 +80,12 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 44
+        y: 40
         width: 88
         height: 83
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 20, y: 20, z: 20, w: 20}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -120,13 +93,13 @@ TextureImporter:
       name: JS_di01
       rect:
         serializedVersion: 2
-        x: 91
-        y: 53
+        x: 169
+        y: 49
         width: 62
         height: 74
       alignment: 9
       pivot: {x: 0.5, y: 0.49324325}
-      border: {x: 15, y: 15, z: 15, w: 15}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -134,8 +107,8 @@ TextureImporter:
       name: JS_mh
       rect:
         serializedVersion: 2
-        x: 235
-        y: 98
+        x: 233
+        y: 94
         width: 10
         height: 29
       alignment: 0
@@ -148,8 +121,8 @@ TextureImporter:
       name: JS_zi01
       rect:
         serializedVersion: 2
-        x: 1
-        y: 3
+        x: 91
+        y: 84
         width: 76
         height: 39
       alignment: 0
@@ -162,8 +135,8 @@ TextureImporter:
       name: JS_zi01_h
       rect:
         serializedVersion: 2
-        x: 79
-        y: 3
+        x: 91
+        y: 43
         width: 76
         height: 39
       alignment: 0
@@ -176,8 +149,8 @@ TextureImporter:
       name: JS_zi02
       rect:
         serializedVersion: 2
-        x: 157
-        y: 88
+        x: 169
+        y: 8
         width: 76
         height: 39
       alignment: 0
@@ -190,8 +163,8 @@ TextureImporter:
       name: JS_zi02_h
       rect:
         serializedVersion: 2
-        x: 155
-        y: 47
+        x: 91
+        y: 2
         width: 76
         height: 39
       alignment: 0

@@ -10,6 +10,9 @@ function reload(packageName)
     return require(packageName)
 end
 
+--设置随机数种子
+math.randomseed(os.time())
+
 Application = UnityEngine.Application
 
 appConfig = reload("config.appConfig")
@@ -42,6 +45,7 @@ deviceConfig    = require("config.deviceConfig")
 gameConfig      = require("config.gameConfig")
 enableConfig    = require("config.enableConfig")
 networkConfig   = require("config.networkConfig")
+soundConfig     = require("config.soundConfig")
 gamepref        = require("logic.gamepref")
 platformHelper  = require("platform.platformHelper")
 networkManager  = require("network.networkManager")
@@ -51,6 +55,7 @@ talkingData     = require("platform.talkingData")
 
 local waiting       = require("ui.waiting")
 local messagebox    = require("ui.messageBox")
+local toast         = require("ui.toast")
 local mahjongType   = require("logic.mahjong.mahjongType")
 local doushisiType  = require("logic.doushisi.doushisiType")
 
@@ -216,7 +221,7 @@ end
 -- 关闭等待界面
 -------------------------------------------------------------
 function closeWaitingUI()
-    if waiting_ui~= nil then
+    if waiting_ui ~= nil then
         waiting_ui:close()
         waiting_ui = nil
     end
@@ -229,6 +234,24 @@ function showMessageUI(text, confirmCallback, cancelCallback)
     local ui = messagebox.new(text, confirmCallback, cancelCallback)
     ui:show()
     ui:setAsLastSibling()
+end
+
+local toast_ui = nil
+
+-------------------------------------------------------------
+-- 
+-------------------------------------------------------------
+function showToastUI(text)
+    if toast_ui == nil then
+        toast_ui = toast.new(function()
+            toast_ui = nil
+        end)
+    end
+
+    toast_ui:setText(text)
+
+    toast_ui:show()
+    toast_ui:setAsLastSibling()
 end
 
 -------------------------------------------------------------
@@ -250,15 +273,15 @@ local chatConfig = reload("config.chatConfig")
 -------------------------------------------------------------
 -- 播放聊天的音效
 -------------------------------------------------------------
-function playChatTextSound(key, sex)
+function playChatTextSound(gtype, key, sex)
     local folder = (sex == sexType.boy) and "chat/text/boy" or "chat/text/girl"
-    local prefix = gamepref.getLanguage()
+    local prefix = gamepref.getLanguage(gtype)
     if not string.isNilOrEmpty(prefix) then
         prefix = prefix .. "_"
     end
     local resource = prefix .. chatConfig.text[key].audio
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 -------------------------------------------------------------
@@ -266,13 +289,13 @@ end
 -------------------------------------------------------------
 function playMahjongSound(mahjongId, sex)
     local folder = (sex == sexType.boy) and "mahjong/boy" or "mahjong/girl"
-    local prefix = gamepref.getLanguage()
+    local prefix = gamepref.getLanguage(gameType.mahjong)
     if not string.isNilOrEmpty(prefix) then
         prefix = prefix .. "_"
     end
     local resource = prefix .. mahjongType.getMahjongTypeById(mahjongId).audio
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 local opsounds = {
@@ -300,7 +323,7 @@ local opsounds = {
 -------------------------------------------------------------
 function playMahjongOpSound(optype, sex, detail)
     local folder = (sex == sexType.boy) and "mahjong/boy" or "mahjong/girl"
-    local prefix = gamepref.getLanguage()
+    local prefix = gamepref.getLanguage(gameType.mahjong)
     if not string.isNilOrEmpty(prefix) then
         prefix = prefix .. "_"
     end
@@ -315,7 +338,7 @@ function playMahjongOpSound(optype, sex, detail)
     end
     local resource = prefix .. file
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 -------------------------------------------------------------
@@ -332,9 +355,10 @@ local d14sound = {
         [cityType.jintang] = "sc_pai_maomao",
     },
 }
+
 function playDoushisiSound(cityType, doushisiId, sex)
     local folder = (sex == sexType.boy) and "doushisi/boy" or "doushisi/girl"
-    local prefix = gamepref.getLanguage()
+    local prefix = gamepref.getLanguage(gameType.doushisi)
     if not string.isNilOrEmpty(prefix) then
         prefix = prefix .. "_"
     end
@@ -348,7 +372,7 @@ function playDoushisiSound(cityType, doushisiId, sex)
         resource = cfg
     end
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 local d14opsound = {
@@ -426,7 +450,7 @@ local d14opsound = {
 function playDoushisiOpSound(cityType, optype, sex)
     local folder = (sex == sexType.boy) and "doushisi/boy" or "doushisi/girl"
 
-    local prefix = gamepref.getLanguage()
+    local prefix = gamepref.getLanguage(gameType.doushisi)
     if not string.isNilOrEmpty(prefix) then
         prefix = prefix .. "_"
     end
@@ -437,7 +461,34 @@ function playDoushisiOpSound(cityType, optype, sex)
     end
 
     local resource = prefix .. op
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
+end
+
+-------------------------------------------------------------
+-- 
+-------------------------------------------------------------
+function playPaodekuaiSound(soundKey, sex)
+    if string.isNilOrEmpty(soundKey) then
+        return 
+    end
+
+    local folder = (sex == sexType.boy) and "paodekuai/boy" or "paodekuai/girl"
+
+    local prefix = gamepref.getLanguage(gameType.paodekuai)
+    if not string.isNilOrEmpty(prefix) then
+        prefix = prefix .. "_"
+    end
+
+    local sounds = soundConfig.paodekuai[soundKey]
+    local postfix = sounds[1]
+    
+    if #sounds > 1 then
+        local idx = math.random(1,#sounds)
+        postfix = sounds[idx]
+    end
+
+    local resource = prefix .. postfix
+    soundManager.playGfx(folder, resource)
 end
 
 -------------------------------------------------------------
@@ -451,6 +502,8 @@ function getLogicGame(citytype, gametype)
             return require ("logic.doushisi.doushisiGame_jintang")
         end
         return require("logic.doushisi.doushisiGame")
+    elseif gametype == gameType.paodekuai then
+        return require("logic.paodekuai.paodekuaiGame")
     end
 end
 
@@ -598,7 +651,9 @@ function fixInhandCameraParam(originSize, inhandCamera)
     local oriAspect = 16 / 9
     local newH = originSize
     local inhandCameraH = originSize
+
     if oriAspect < inhandCamera.aspect then
+        --
     else
         local oriScreenAspect = 16 / 9
         local inhandCameraW = inhandCameraH * oriScreenAspect

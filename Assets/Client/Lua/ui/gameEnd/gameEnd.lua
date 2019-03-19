@@ -146,6 +146,8 @@ function gameEnd:createItem()
         return require ("ui.gameEnd.mahjong.gameEndItem").new()
     elseif self.game.gameType == gameType.doushisi then
         return require ("ui.gameEnd.doushisi.gameEndItem").new()
+    elseif self.game.gameType == gameType.paodekuai then
+        return require ("ui.gameEnd.paodekuai.gameEndItem").new()
     end
 
     log("unknown game type")

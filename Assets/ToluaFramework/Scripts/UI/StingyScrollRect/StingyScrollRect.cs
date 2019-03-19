@@ -161,7 +161,7 @@ public abstract class StingyScrollRect : MonoBehaviour
         float scrollRectSpacing = GetScrollRectSpacing();
         int visualCount = Mathf.CeilToInt(scrollRectSpacing / mItemSpacing) + 1;
 
-        if (mCapacity <= visualCount)
+        if (mCapacity < visualCount)
         {
             int lastIndex = mLuaList.Count - 1;
             LuaTable lua = mLuaList[lastIndex];
@@ -173,11 +173,12 @@ public abstract class StingyScrollRect : MonoBehaviour
 
         if (mTailIndex > mCapacity)
         {
-            mTailIndex = Mathf.Max(0, mTailIndex--);
+            mTailIndex = Mathf.Max(0, mTailIndex - 1);
         }
-        else
+        
+        if (mTailIndex - mHeadIndex < visualCount)
         {
-            mHeadIndex = Mathf.Max(0, mHeadIndex--);
+            mHeadIndex = Mathf.Max(0, mHeadIndex - 1);
         }
 
         Logger.Log(string.Format("StingyScrollRect.Remove, v = {0}, c = {1}, h = {2}, t = {3}, l = {4}", visualCount, mCapacity, mHeadIndex, mTailIndex, mLuaList.Count));

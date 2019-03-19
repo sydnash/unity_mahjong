@@ -65,8 +65,13 @@ function friendsterDesk:set(data)
         self.mNum:setText(string.format("（第%d/%d局）", self.data.playedCount, self.data.totalCount))
         self:setState(self.data.state)
 
+        local maxCount = self.data.seatCount
+        if self.data.state == 1 then
+            maxCount = #self.data.players
+        end
+
         for k, v in pairs(self.slots) do 
-            if k > self.data.seatCount then
+            if k > maxCount then
                 v.root:hide()
             else
                 v.root:show()
@@ -84,7 +89,7 @@ function friendsterDesk:set(data)
         end
         
         local detailText = convertConfigToString(self.data.cityType, self.data.gameType, self.data.config, true, true, ",")
-        self.mDetailText:setText(detailText)
+        self.mDetailText:setText(string.format("房号:%d.%s", self.data.deskId, detailText))
 
         if gamepref.player.acId == self.data.managerAcId then
             self.mClose:show()

@@ -803,11 +803,11 @@ function mahjongGame:onQuicklyStartEndNotify(msg)
                 local player = self.players[msg.Rejecter]
                 showMessageUI(string.format("玩家 %s 拒绝了解散申请", cutoutString(player.nickname,gameConfig.nicknameMaxLength)))
             elseif msg.Result == 2 then --有人进入或者离开
-                showMessageUI(string.format("当前桌子人员发生变化，申请失败"))
+                showMessageUI(string.format("当前桌子人员发生变化，快速开始申请失败"))
             elseif msg.Result == 3 then --有人进入或者离开
-                showMessageUI(string.format("当前桌子人员发生变化，申请失败"))
+                showMessageUI(string.format("当前桌子人员发生变化，快速开始申请失败"))
             elseif msg.Result == 4 then --超时
-                showMessageUI(string.format("申请超时，请重新发起申请"))
+                showMessageUI(string.format("快速开始申请超时，请重新发起申请"))
             end
 
             self.quicklyStartUI:close()

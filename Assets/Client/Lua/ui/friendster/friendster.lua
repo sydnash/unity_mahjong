@@ -83,6 +83,16 @@ function friendster:onInit()
         self.filter = filter.my
     end
 
+    if self.filter == nil then
+        if #self.my > 0 then
+            self.filter = filter.my
+        elseif #self.joined > 0 then
+            self.filter = filter.joined
+        else
+            self.filter = filter.joined
+        end
+    end
+
     self.mTabGuideS:hide()
     self.mTabGuideU:show()
 
@@ -214,7 +224,6 @@ function friendster:refreshList()
     elseif self.filter == filter.joined then
         data = self.joined
     end
-    
     if data ~= nil then
         local count = #data
 
@@ -293,8 +302,10 @@ function friendster:onNotifyFriendster(msg)
                 self.detailUI:refreshUI()
                 if queryFromCSV("stingyscrollview") == "0" then
                     self.detailUI:removeDesk()
+                    self.detailUI:refreshMembers()
                 else
                     self.detailUI:refreshDeskList()
+                    self.detailUI:refreshMemberList()
                 end
             end
         end
@@ -304,8 +315,10 @@ function friendster:onNotifyFriendster(msg)
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 if queryFromCSV("stingyscrollview") == "0" then
                     self.detailUI:refreshDesks()
+                    self.detailUI:refreshMembers()
                 else
                     self.detailUI:refreshDeskList()
+                    self.detailUI:refreshMemberList()
                 end
             end
         end
@@ -315,8 +328,10 @@ function friendster:onNotifyFriendster(msg)
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 if queryFromCSV("stingyscrollview") == "0" then
                     self.detailUI:refreshDesks()
+                    self.detailUI:refreshMembers()
                 else
                     self.detailUI:refreshDeskList()
+                    self.detailUI:refreshMemberList()
                 end
             end
         end

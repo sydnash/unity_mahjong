@@ -25,15 +25,19 @@ tpsheetFileNames:
 - Assets/Client/Artistic/Atlas/LoginUI/Atlas/LoginUI.tpsheet
 - Assets/Client/Artistic/Atlas/Mahjong/Atlas/Mahjong.tpsheet
 - Assets/Client/Artistic/Atlas/MailUI/Atlas/MailUI.tpsheet
+- Assets/Client/Artistic/Atlas/PaoDeKuai/Atlas/PaoDeKuai.tpsheet
+- Assets/Client/Artistic/Atlas/PaodekuaiOperationUI/Atlas/PaodekuaiOperationUI.tpsheet
 - Assets/Client/Artistic/Atlas/PatchDownloadUI/Atlas/PatchDownloadUI.tpsheet
 - Assets/Client/Artistic/Atlas/PatchMessageBoxUI/Atlas/PatchMessageBoxUI.tpsheet
 - Assets/Client/Artistic/Atlas/PatchWaitingUI/Atlas/PatchWaitingUI.tpsheet
 - Assets/Client/Artistic/Atlas/PlaybackUI/Atlas/PlaybackUI.tpsheet
 - Assets/Client/Artistic/Atlas/PlayHistoryUI/Atlas/PlayHistory.tpsheet
+- Assets/Client/Artistic/Atlas/QuickStartUI/Atlas/QuickStartUI.tpsheet
 - Assets/Client/Artistic/Atlas/SettingUI/Atlas/SettingUI.tpsheet
 - Assets/Client/Artistic/Atlas/ShareUI/Atlas/Atlas/ShareUI.tpsheet
 - Assets/Client/Artistic/Atlas/ShareUI/Atlas/ShareUI.tpsheet
 - Assets/Client/Artistic/Atlas/ShopUI/Atlas/ShopUI.tpsheet
+- Assets/Client/Artistic/Atlas/ToastUI/Atlas/ToastUI.tpsheet
 - Assets/Client/Artistic/Atlas/UserAgreementUI/Atlas/UserAgreementUI.tpsheet
 - Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.tpsheet
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
@@ -62,19 +66,27 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/LoginUI/Atlas/LoginUI.png
 - Assets/Client/Artistic/Atlas/Mahjong/Atlas/Mahjong.png
 - Assets/Client/Artistic/Atlas/MailUI/Atlas/MailUI.png
+- Assets/Client/Artistic/Atlas/PaoDeKuai/Atlas/PaoDeKuai.png
+- Assets/Client/Artistic/Atlas/PaodekuaiOperationUI/Atlas/PaodekuaiOperationUI.png
 - Assets/Client/Artistic/Atlas/PatchDownloadUI/Atlas/PatchDownloadUI.png
 - Assets/Client/Artistic/Atlas/PatchMessageBoxUI/Atlas/PatchMessageBoxUI.png
 - Assets/Client/Artistic/Atlas/PatchWaitingUI/Atlas/PatchWaitingUI.png
 - Assets/Client/Artistic/Atlas/PlaybackUI/Atlas/PlaybackUI.png
 - Assets/Client/Artistic/Atlas/PlayHistoryUI/Atlas/PlayHistory.png
+- Assets/Client/Artistic/Atlas/QuickStartUI/Atlas/QuickStartUI.png
 - Assets/Client/Artistic/Atlas/SettingUI/Atlas/SettingUI.png
 - Assets/Client/Artistic/Atlas/ShareUI/Atlas/Atlas/ShareUI.png
 - Assets/Client/Artistic/Atlas/ShareUI/Atlas/ShareUI.png
 - Assets/Client/Artistic/Atlas/ShopUI/Atlas/ShopUI.png
+- Assets/Client/Artistic/Atlas/ToastUI/Atlas/ToastUI.png
 - Assets/Client/Artistic/Atlas/UserAgreementUI/Atlas/UserAgreementUI.png
 - Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
+- 
+- 
+- 
 - 
 - 
 - 

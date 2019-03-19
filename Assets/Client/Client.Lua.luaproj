@@ -27,7 +27,9 @@
     <Folder Include="Lua\logic\mahjong\" />
     <Folder Include="Lua\logic\friendster\" />
     <Folder Include="Lua\logic\manager\" />
+    <Folder Include="Lua\logic\paodekuai\" />
     <Folder Include="Lua\logic\player\" />
+    <Folder Include="Lua\logic\poker\" />
     <Folder Include="Lua\network\" />
     <Folder Include="Lua\logic\" />
     <Folder Include="Lua\const\" />
@@ -46,7 +48,9 @@
     <Folder Include="Lua\ui\mail\" />
     <Folder Include="Lua\ui\deskDetail\" />
     <Folder Include="Lua\ui\authentication\" />
+    <Folder Include="Lua\ui\paodekuaiDesk\" />
     <Folder Include="Lua\ui\patch\" />
+    <Folder Include="Lua\ui\quicklyStart\" />
     <Folder Include="Lua\ui\setting\" />
     <Folder Include="Lua\ui\playHistory\" />
   </ItemGroup>
@@ -80,7 +84,11 @@
     <Compile Include="Lua\logic\manager\headerManager.lua" />
     <Compile Include="Lua\logic\manager\locationManager.lua" />
     <Compile Include="Lua\logic\manager\patchManager.lua" />
+    <Compile Include="Lua\logic\paodekuai\helper.lua" />
+    <Compile Include="Lua\logic\paodekuai\paodekuai.lua" />
+    <Compile Include="Lua\logic\paodekuai\paodekuaiGame.lua" />
     <Compile Include="Lua\logic\player\playHistory.lua" />
+    <Compile Include="Lua\logic\poker\pokerType.lua" />
     <Compile Include="Lua\logic\touch.lua" />
     <Compile Include="Lua\network\proto.lua" />
     <Compile Include="Lua\logic\player\gamePlayer.lua" />
@@ -118,6 +126,9 @@
     <Compile Include="Lua\ui\mahjongDesk\huPaiHintOne.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
     <Compile Include="Lua\ui\mail\mailItem.lua" />
+    <Compile Include="Lua\ui\paodekuaiDesk\paodekuaiDesk.lua" />
+    <Compile Include="Lua\ui\paodekuaiDesk\paodekuaiDeskHeader.lua" />
+    <Compile Include="Lua\ui\paodekuaiDesk\paodekuaiOperation.lua" />
     <Compile Include="Lua\ui\patch\patchDownload.lua" />
     <Compile Include="Lua\ui\patch\patchMessageBox.lua" />
     <Compile Include="Lua\ui\patch\patchViewManager.lua" />
@@ -159,9 +170,12 @@
     <Compile Include="Lua\ui\playHistory\playHistoryDetail.lua" />
     <Compile Include="Lua\ui\playHistory\playHistoryDetailItem.lua" />
     <Compile Include="Lua\ui\playHistory\playHistoryItem.lua" />
+    <Compile Include="Lua\ui\quicklyStart.lua" />
+    <Compile Include="Lua\ui\quicklyStart\quicklyStartItem.lua" />
     <Compile Include="Lua\ui\setting\lobbySetting.lua" />
     <Compile Include="Lua\ui\setting\doushisiSetting.lua" />
     <Compile Include="Lua\ui\setting\mahjongSetting.lua" />
+    <Compile Include="Lua\ui\setting\paodekuaiSetting.lua" />
     <Compile Include="Lua\ui\setting\playbackSetting.lua" />
     <Compile Include="Lua\ui\setting\setting.lua" />
     <Compile Include="Lua\ui\share.lua" />

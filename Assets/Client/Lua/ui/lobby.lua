@@ -14,7 +14,6 @@ function lobby:onInit()
     self.mCards:setText(tostring(gamepref.player.cards))
     self.mCityText:setSprite(cityTypeSID[gamepref.city.City])
 
-    self.mHelp:hide()
     self.mAccuse:hide()
 
     self.mHead:addClickListener(self.onHeadClickedHandler, self)
@@ -34,6 +33,7 @@ function lobby:onInit()
     self.mShare:addClickListener(self.onShareClickedHandler, self)
     self.mAuthenticate:addClickListener(self.onAuthenticateClickedHandler, self)
     self.mMail:addClickListener(self.onMailClickedHandler, self)
+    self.mProxy:addClickListener(self.onProxyClickedHandler, self)
 
     if gamepref.player.currentDesk ~= nil then
         self.mReturnDesk:show()
@@ -80,6 +80,9 @@ function lobby:onAddRoomCardClickedHandler()
 end
 
 function lobby:onHelpClickedHandler()
+    local ui = require("ui.rule").new()
+    ui:show()
+
     playButtonClickSound()
 end
 
@@ -206,6 +209,13 @@ function lobby:onMailClickedHandler()
     ui:show()
 
     playButtonClickSound()
+end
+
+function lobby:onProxyClickedHandler()
+    local wxid = "tdcpkf001"
+    platformHelper.setToClipboard(wxid)
+
+    showMessageUI("客服微信已复制\n请前往微信添加客服")
 end
 
 function lobby:onCardsChangedHandler()

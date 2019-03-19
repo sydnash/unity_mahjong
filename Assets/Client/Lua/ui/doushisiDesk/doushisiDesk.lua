@@ -218,6 +218,7 @@ function doushisiDesk:updateClock()
     if now - self.countdownTimestamp > 0.999 then
         self.countdown = math.max(0, self.countdown - 1)
         self.mClockText:setText(tostring(self.countdown))
+        self.countdownTimestamp = now
 
         if self.m_curOPDir == seatType.mine and self.countdown > 0 and self.countdown <= 5 then
             playClockTimerSound()
