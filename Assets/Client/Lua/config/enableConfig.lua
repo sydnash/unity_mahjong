@@ -48,10 +48,10 @@ return {
             }
         },
         ["poke"] = {
-            enable = true,
+            enable = false,
             detail = {
                 [gameType.doudizhu]  = false,
-                [gameType.paodekuai] = true,
+                [gameType.paodekuai] = false,
             }
         }
     },

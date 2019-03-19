@@ -159,6 +159,8 @@ end
 function paodekuaiDesk:onOpDoChu(acId)
     self:updateInhandCardsCount()
     self:showClock(acId)
+
+    return 0
 end
 
 ----------------------------------------------------------------------------------
