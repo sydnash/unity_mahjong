@@ -393,7 +393,7 @@ function friendster:onNotifyFriendster(msg)
             lc:setMemberOnlineState(d.AcId, false)
             if self.detailUI ~= nil and self.detailUI.data.id == d.ClubId then
                 self.detailUI:refreshUI()
-                if queryFromCSV("stingyscrollview") ~= nil then
+                if queryFromCSV("stingyscrollview") == "2" then
                     self.detailUI:refreshMembers()
                 else
                     self.detailUI:refreshMemberList()
