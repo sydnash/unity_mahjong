@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 793ea7ae3ecb64441a102c743be8bdce
-timeCreated: 1552534195
+guid: f72b71bf39a29c145b2517b2e317e188
+timeCreated: 1552967204
 licenseType: Pro
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: ui/deskui/scoredetailui
+  assetBundleName: ui/sameipui/sameipui
   assetBundleVariant: 
