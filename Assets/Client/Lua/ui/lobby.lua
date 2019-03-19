@@ -149,8 +149,6 @@ function lobby:onEnterQYQClickedHandler()
             return
         end
 
---        log("query friendster list, msg = " .. table.tostring(msg))
-
         local ui = require("ui.friendster.friendster").new(msg.Clubs)
         ui:show()
     end)
@@ -216,6 +214,8 @@ function lobby:onProxyClickedHandler()
     platformHelper.setToClipboard(wxid)
 
     showMessageUI("客服微信已复制\n请前往微信添加客服")
+
+    playButtonClickSound()
 end
 
 function lobby:onCardsChangedHandler()
