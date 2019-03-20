@@ -248,11 +248,11 @@ end
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
-function platformHelper.shareImageCn(title, imageFile)
+function platformHelper.shareImageCn(imageFile)
     if deviceConfig.isAndroid then
-        AndroidHelper.instance:ShareImageCN(title, imageFile)
+        AndroidHelper.instance:ShareImageCN(imageFile)
     elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
-        IOSHelper.instance:ShareImageCN(title, imageFile)
+        IOSHelper.instance:ShareImageCN(imageFile)
     end
 end
 

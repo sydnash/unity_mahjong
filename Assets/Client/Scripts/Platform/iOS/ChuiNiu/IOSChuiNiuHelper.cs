@@ -21,7 +21,7 @@ public class IOSChuiNiuHelper
     /// </summary>
     /// <param name="title"></param>
     /// <param name="imageFile"></param>
-    public static void ShareImage(string title, string imageFile)
+    public static void ShareImage(string imageFile)
     {
 
     }

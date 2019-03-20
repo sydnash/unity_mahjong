@@ -266,9 +266,9 @@ public class AndroidHelper
     /// </summary>
     /// <param name="title"></param>
     /// <param name="imageFile"></param>
-    public void ShareImageCN(string title, string imageFile)
+    public void ShareImageCN(string imageFile)
     {
-        ChuiNiuHelper.ShareImage(javaObject, title, imageFile);
+        ChuiNiuHelper.ShareImage(javaObject, imageFile);
     }
 
     #endregion

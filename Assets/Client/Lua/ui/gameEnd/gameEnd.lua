@@ -55,6 +55,7 @@ function gameEnd:onInit()
     self.mShareQYQ:addClickListener(self.onShareQYQClickedHandler, self)
     self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
+    self.mShareCN:addClickListener(self.onShareCNClickedHandler, self)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -132,6 +133,19 @@ function gameEnd:onShareXLClickedHandler()
 
         if tex ~= nil then
             platformHelper.shareImageSg(tex)
+        end
+    end
+end
+
+function gameEnd:onShareCNClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
+
+    if deviceConfig.isMobile then
+        local tex = captureScreenshotUI()
+
+        if tex ~= nil then
+            platformHelper.shareImageCn(tex)
         end
     end
 end
