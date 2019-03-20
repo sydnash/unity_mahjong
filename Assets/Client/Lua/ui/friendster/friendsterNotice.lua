@@ -63,9 +63,10 @@ function friendsterNotice:onModifyClickedHandler()
         end
 
         self.friendster.notice.text = msg.Notice
-        self.mText:setText(msg.Notice)
+        self.friendster.notice.time = time.now()
 
         self.mInput:hide()
+        self.mText:setText(msg.Notice)
         self.mText:show()
 
         self.mEdit:show()

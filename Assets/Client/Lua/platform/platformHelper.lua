@@ -234,6 +234,28 @@ function platformHelper.getFromClipboard()
     return string.empty
 end
 
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function platformHelper.shareUrlCn(title, desc, url, thumb)
+    if deviceConfig.isAndroid then
+        AndroidHelper.instance:ShareUrlCN(title, desc, url, thumb)
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
+        IOSHelper.instance:ShareUrlCN(title, desc, url, thumb)
+    end
+end
+
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function platformHelper.shareImageCn(title, imageFile)
+    if deviceConfig.isAndroid then
+        AndroidHelper.instance:ShareImageCN(title, imageFile)
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
+        IOSHelper.instance:ShareImageCN(title, imageFile)
+    end
+end
+
 return platformHelper
 
 --endregion

@@ -36,6 +36,7 @@ function desk:onInit()
         self.mInvitePanel:addClickListener(self.onInvitePanelClickedHandler, self)
         self.mInviteWX:addClickListener(self.onInviteWXClickedHandler, self)
         self.mInviteXL:addClickListener(self.onInviteXLClickedHandler, self)
+        self.mInviteCN:addClickListener(self.onInviteCNClickedHandler, self)
         self.mReady:addClickListener(self.onReadyClickedHandler, self)
         self.mCancel:addClickListener(self.onCancelClickedHandler, self)
         self.mPosition:addClickListener(self.onPositionClickedHandler, self)
@@ -280,6 +281,27 @@ function desk:onInviteXLClickedHandler()
                                          networkConfig.server.shareURL)
         textureManager.unload(image)
     end
+
+    self.mInvitePanel:hide()
+end
+
+function desk:onInviteCNClickedHandler()
+    playButtonClickSound()
+
+    local thumbpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "appicon.jpg")
+    if not LFS.FileExist(thumbpath) then
+        local image = textureManager.load(string.empty, "appicon")
+        if image ~= nil then
+            saveTextureToJPG(thumbpath, image)
+            textureManager.unload(image)
+        end
+    end
+
+    platformHelper.shareUrlWx(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.game.deskId), 
+                              self:getInvitationInfo(), 
+                              networkConfig.server.shareURL,
+                              thumbpath)
+        
 
     self.mInvitePanel:hide()
 end

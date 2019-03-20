@@ -111,6 +111,7 @@
     <Compile Include="Lua\ui\exitDesk\exitDeskItem.lua" />
     <Compile Include="Lua\ui\friendster\friendsterDesk.lua" />
     <Compile Include="Lua\ui\friendster\friendsterBank.lua" />
+    <Compile Include="Lua\ui\friendster\friendsterNotice.lua" />
     <Compile Include="Lua\ui\friendster\winnerDetail.lua" />
     <Compile Include="Lua\ui\friendster\winnerDetailItem.lua" />
     <Compile Include="Lua\ui\gameEnd\gameEnd.lua" />

@@ -82,6 +82,12 @@ function friendsterDetail:onInit()
         self.mReturn:show()
     end
 
+    if string.isNilOrEmpty(self.data.notice.text) then
+        self.mNoticeRP:hide()
+    else
+        self.mNoticeRP:show()
+    end
+
     self.mShare:hide()
     self.mManage:hide()
     self.mMail:hide()
@@ -94,6 +100,16 @@ function friendsterDetail:onInit()
     signalManager.registerSignalHandler(signalType.friendsterMessageOp, self.onMessageOptHandler, self)
     signalManager.registerSignalHandler(signalType.deskDestroy, self.onDeskDestroyHandler, self)
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+end
+
+function friendsterDetail:show()
+    base.show(self)
+
+    local notice = self.data.notice
+    if not string.isNilOrEmpty(notice.text) and time.now() - notice.time < 2 * time.SECONDS_PER_DAY then
+        local ui = require("ui.friendster.friendsterNotice").new(self.data)
+        ui:show()
+    end
 end
 
 function friendsterDetail:onCloseClickedHandler()
