@@ -32,6 +32,8 @@ public class IOSHelperWrap
 		L.RegFunction("StartLocationUpdate", StartLocationUpdate);
 		L.RegFunction("StopLocationUpdate", StopLocationUpdate);
 		L.RegFunction("SetLocationUpdateHandler", SetLocationUpdateHandler);
+		L.RegFunction("ShareUrlCN", ShareUrlCN);
+		L.RegFunction("ShareImageCN", ShareImageCN);
 		L.RegFunction("New", _CreateIOSHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -490,6 +492,43 @@ public class IOSHelperWrap
 			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
 			System.Action<string> arg0 = (System.Action<string>)ToLua.CheckDelegate<System.Action<string>>(L, 2);
 			obj.SetLocationUpdateHandler(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareUrlCN(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 5);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			string arg2 = ToLua.CheckString(L, 4);
+			string arg3 = ToLua.CheckString(L, 5);
+			obj.ShareUrlCN(arg0, arg1, arg2, arg3);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareImageCN(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.ShareImageCN(arg0);
 			return 0;
 		}
 		catch (Exception e)

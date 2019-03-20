@@ -66,6 +66,10 @@ end
 function friendsterDetail:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mShare:addClickListener(self.onShareClickedHandler, self)
+    self.mSharePanel:addClickListener(self.onSharePanelClickedHandler, self)
+    self.mShareWX:addClickListener(self.onShareWXClickedHandler, self)
+    self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)
+    self.mShareCN:addClickListener(self.onShareCNClickedHandler, self)
     self.mNotice:addClickListener(self.onNoticeClickedHandler, self)
     self.mManage:addClickListener(self.onManageClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
@@ -125,6 +129,11 @@ end
 function friendsterDetail:onShareClickedHandler()
     playButtonClickSound()
     self.mSharePanel:show()
+end
+
+function friendsterDetail:onSharePanelClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
 end
 
 function friendsterDetail:onShareWXClickedHandler()
