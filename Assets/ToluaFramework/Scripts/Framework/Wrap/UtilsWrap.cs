@@ -21,6 +21,7 @@ public class UtilsWrap
 		L.RegFunction("SizeTextureBilinear", SizeTextureBilinear);
 		L.RegFunction("CaptureScreenshot", CaptureScreenshot);
 		L.RegFunction("ConvertTextureToSprite", ConvertTextureToSprite);
+		L.RegFunction("SaveTextureToJPG", SaveTextureToJPG);
 		L.RegFunction("CreateDictionarySO", CreateDictionarySO);
 		L.RegFunction("AddDictionarySO", AddDictionarySO);
 		L.RegFunction("SplitString", SplitString);
@@ -319,6 +320,23 @@ public class UtilsWrap
 			UnityEngine.Sprite o = Utils.ConvertTextureToSprite(arg0, arg1);
 			ToLua.PushSealed(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SaveTextureToJPG(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			UnityEngine.Texture2D arg1 = (UnityEngine.Texture2D)ToLua.CheckObject(L, 2, typeof(UnityEngine.Texture2D));
+			Utils.SaveTextureToJPG(arg0, arg1);
+			return 0;
 		}
 		catch (Exception e)
 		{
