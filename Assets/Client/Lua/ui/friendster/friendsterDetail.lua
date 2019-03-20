@@ -160,7 +160,8 @@ function friendsterDetail:onShareXLClickedHandler()
     local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then
         local params = { cityType = 0, deskId = 0, }
-        platformHelper.shareInvitationSg(title, desc, image, table.tojson(params), networkConfig.server.shareURL, networkConfig.server.shareURL)
+        local url = networkConfig.server.shareURL
+        platformHelper.shareInvitationSg(title, desc, image, table.tojson(params), url, url)
         textureManager.unload(image)
     end
 
@@ -170,19 +171,23 @@ end
 function friendsterDetail:onShareCNClickedHandler()
     playButtonClickSound()
     
-    local title = string.format("%s 邀请您加入幺九麻将", gamepref.player.nickname)
-    local desc = string.format("点击亲友圈，输入编号[%d]和邀请码[%s]加入亲友圈开始游戏", self.data.id, self.data.applyCode)
-    log("desc: " .. desc)
-    local thumbpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "appicon.jpg")
-    if not LFS.FileExist(thumbpath) then
-        local image = textureManager.load(string.empty, "appicon")
-        if image ~= nil then
-            saveTextureToJPG(thumbpath, image)
-            textureManager.unload(image)
+    if queryFromCSV("chuiniusdk") == nil then
+        showToastUI("请安装最新版使用此功能")
+    else
+        local title = string.format("%s 邀请您加入幺九麻将", gamepref.player.nickname)
+        local desc = string.format("点击亲友圈，输入编号[%d]和邀请码[%s]加入亲友圈开始游戏", self.data.id, self.data.applyCode)
+        log("desc: " .. desc)
+        local thumbpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "appicon.jpg")
+        if not LFS.FileExist(thumbpath) then
+            local image = textureManager.load(string.empty, "appicon")
+            if image ~= nil then
+                saveTextureToJPG(thumbpath, image)
+                textureManager.unload(image)
+            end
         end
-    end
 
-    platformHelper.shareUrlCn(title, desc, networkConfig.server.shareURL, thumbpath)
+        platformHelper.shareUrlCn(title, desc, networkConfig.server.shareURL, thumbpath)
+    end
 
     self.mSharePanel:hide()
 end

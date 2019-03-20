@@ -142,12 +142,16 @@ function gameEnd:onShareCNClickedHandler()
     self.mSharePanel:hide()
 
     if deviceConfig.isMobile then
-        local tex = captureScreenshotUI()
-        if tex ~= nil then
-            local texpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "gameend.jpg")
-            saveTextureToJPG(texpath, tex)
+        if queryFromCSV("chuiniusdk") == nil then
+            showToastUI("请安装最新版使用此功能")
+        else
+            local tex = captureScreenshotUI()
+            if tex ~= nil then
+                local texpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "gameend.jpg")
+                saveTextureToJPG(texpath, tex)
 
-            platformHelper.shareImageCn(tex, texpath)
+                platformHelper.shareImageCn(texpath)
+            end
         end
     end
 end

@@ -288,20 +288,23 @@ end
 function desk:onInviteCNClickedHandler()
     playButtonClickSound()
 
-    local thumbpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "appicon.jpg")
-    if not LFS.FileExist(thumbpath) then
-        local image = textureManager.load(string.empty, "appicon")
-        if image ~= nil then
-            saveTextureToJPG(thumbpath, image)
-            textureManager.unload(image)
+    if queryFromCSV("chuiniusdk") == nil then
+        showToastUI("请安装最新版使用此功能")
+    else
+        local thumbpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "appicon.jpg")
+        if not LFS.FileExist(thumbpath) then
+            local image = textureManager.load(string.empty, "appicon")
+            if image ~= nil then
+                saveTextureToJPG(thumbpath, image)
+                textureManager.unload(image)
+            end
         end
-    end
 
-    platformHelper.shareUrlCn(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.game.deskId), 
-                              self:getInvitationInfo(), 
-                              networkConfig.server.shareURL,
-                              thumbpath)
-        
+        platformHelper.shareUrlCn(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.game.deskId), 
+                                  self:getInvitationInfo(), 
+                                  networkConfig.server.shareURL,
+                                  thumbpath)
+    end
 
     self.mInvitePanel:hide()
 end
