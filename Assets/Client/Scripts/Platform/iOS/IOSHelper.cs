@@ -246,7 +246,7 @@ public class IOSHelper
         IOSChuiNiuHelper.showDownload();
     }
     public void OpenThirdApp(string p1, string p2) {
-        IOSChuiNiuHelper.OpenThirdApp(p1);
+        UtilsHelper.OpenThirdApp(p1);
     }
 
     #endregion

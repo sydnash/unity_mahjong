@@ -256,6 +256,13 @@ function platformHelper.shareImageCn(imageFile)
     end
 end
 
+function platformHelper.openWechat()
+    if deviceConfig.isAndroid then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
+        IOSHelper.instance:OpenThirdApp("weixin://")
+    end
+end
+
 return platformHelper
 
 --endregion
