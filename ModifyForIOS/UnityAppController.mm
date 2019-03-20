@@ -275,7 +275,7 @@ extern "C" void UnityRequestQuit()
     [[ForUnityBridge forUnityBridgeInstance] registerPlugin];
     [[XLUnityBridge shareHelper] registerXL];
     [[ChuiNiuHelper shareHelper] init: self];
-    return YES;
+   return YES;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication*)application

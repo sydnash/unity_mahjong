@@ -95,6 +95,9 @@ extern "C"
 
 - (void) init: (id) vc {
     self.vc = vc;
+    NSString* appid = @"cn9f4541ba54784f";
+    NSString* secret = @"0188b100834f492193487ba7fb5bc9c";
+    [CNManager registerAppWithAppid:appid appsecret:secret delegate:[ChuiNiuHelper shareHelper]];
 }
 
 + (void) shareImg: (NSDictionary*) param {
