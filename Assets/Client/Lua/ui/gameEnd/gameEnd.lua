@@ -143,9 +143,11 @@ function gameEnd:onShareCNClickedHandler()
 
     if deviceConfig.isMobile then
         local tex = captureScreenshotUI()
-
         if tex ~= nil then
-            platformHelper.shareImageCn(tex)
+            local texpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "gameend.jpg")
+            saveTextureToJPG(texpath, tex)
+
+            platformHelper.shareImageCn(tex, texpath)
         end
     end
 end

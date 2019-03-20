@@ -89,6 +89,7 @@ function friendsterDetail:onInit()
     end
 
     self.mShare:hide()
+    self.mSharePanel:hide()
     self.mManage:hide()
     self.mMail:hide()
     self.mMailRP:hide()
@@ -123,16 +124,58 @@ end
 
 function friendsterDetail:onShareClickedHandler()
     playButtonClickSound()
+    self.mSharePanel:show()
+end
+
+function friendsterDetail:onShareWXClickedHandler()
+    playButtonClickSound()
     
     local title = string.format("%s 邀请您加入幺九麻将", gamepref.player.nickname)
     local desc = string.format("点击亲友圈，输入编号[%d]和邀请码[%s]加入亲友圈开始游戏", self.data.id, self.data.applyCode)
-    
     log("desc: " .. desc)
     local url = networkConfig.server.shareURL
     local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then
         platformHelper.shareUrlWx(title, desc, url, image, false)
     end
+
+    self.mSharePanel:hide()
+end
+
+function friendsterDetail:onShareXLClickedHandler()
+    playButtonClickSound()
+    
+    local title = string.format("%s 邀请您加入幺九麻将", gamepref.player.nickname)
+    local desc = string.format("点击亲友圈，输入编号[%d]和邀请码[%s]加入亲友圈开始游戏", self.data.id, self.data.applyCode)
+    log("desc: " .. desc)
+    local image = textureManager.load(string.empty, "appicon")
+    if image ~= nil then
+        local params = { cityType = 0, deskId = 0, }
+        platformHelper.shareInvitationSg(title, desc, image, table.tojson(params), networkConfig.server.shareURL, networkConfig.server.shareURL)
+        textureManager.unload(image)
+    end
+
+    self.mSharePanel:hide()
+end
+
+function friendsterDetail:onShareCNClickedHandler()
+    playButtonClickSound()
+    
+    local title = string.format("%s 邀请您加入幺九麻将", gamepref.player.nickname)
+    local desc = string.format("点击亲友圈，输入编号[%d]和邀请码[%s]加入亲友圈开始游戏", self.data.id, self.data.applyCode)
+    log("desc: " .. desc)
+    local thumbpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "appicon.jpg")
+    if not LFS.FileExist(thumbpath) then
+        local image = textureManager.load(string.empty, "appicon")
+        if image ~= nil then
+            saveTextureToJPG(thumbpath, image)
+            textureManager.unload(image)
+        end
+    end
+
+    platformHelper.shareUrlCn(title, desc, networkConfig.server.shareURL, thumbpath)
+
+    self.mSharePanel:hide()
 end
 
 function friendsterDetail:onNoticeClickedHandler()
