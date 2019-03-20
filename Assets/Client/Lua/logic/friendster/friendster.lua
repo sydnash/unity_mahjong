@@ -50,6 +50,7 @@ function friendster:ctor(id)
     self.managerAcId        = 0
     self.managerNickname    = string.empty
     self.createSetting      = {}
+    self.notice             = { text = string.empty,  time = 0 }
 end
 
 function friendster:setData(data)
@@ -65,6 +66,8 @@ function friendster:setData(data)
     lc.managerNickname  = data.NickName
     lc.applyList        = json.isNilOrNull(data.ApplyList) and {} or data.ApplyList
     lc.createSetting    = json.isNilOrNull(data.CreateSettings) and {} or data.CreateSettings
+    lc.notice.text      = data.Notice
+    lc.notice.time      = data.NoticeTime
 end
 
 function friendster:getSupportGames()

@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>1024</int>
+            <int>-1</int>
             <key>height</key>
-            <int>600</int>
+            <int>-1</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -306,6 +306,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/QYQ_bj.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,10,39,21</rect>
+                <key>scale9Paddings</key>
+                <rect>20,10,39,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/QYQ_cy_01.png</key>
             <key type="filename">Images/QYQ_cy_02.png</key>
             <struct type="IndividualSpriteSettings">
@@ -424,6 +437,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/QYQ_gg.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>28,13,55,25</rect>
+                <key>scale9Paddings</key>
+                <rect>28,13,55,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/QYQ_kf_biaoti.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -527,6 +553,22 @@
                 <rect>24,6,48,12</rect>
                 <key>scale9Paddings</key>
                 <rect>24,6,48,12</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/QYQ_qrxg.png</key>
+            <key type="filename">Images/QYQ_zi14_1.png</key>
+            <key type="filename">Images/wfsz_zi01.png</key>
+            <key type="filename">Images/wfsz_zi02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>34,10,68,21</rect>
+                <key>scale9Paddings</key>
+                <rect>34,10,68,21</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -875,21 +917,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Images/QYQ_zi14_1.png</key>
-            <key type="filename">Images/wfsz_zi01.png</key>
-            <key type="filename">Images/wfsz_zi02.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>34,10,68,21</rect>
-                <key>scale9Paddings</key>
-                <rect>34,10,68,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Images/ZY_1_01.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -1016,6 +1043,9 @@
             <filename>Images/QYQ_qizi05.png</filename>
             <filename>Images/QYQ_qxgly.png</filename>
             <filename>Images/QYQ_szgly.png</filename>
+            <filename>Images/QYQ_bj.png</filename>
+            <filename>Images/QYQ_gg.png</filename>
+            <filename>Images/QYQ_qrxg.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

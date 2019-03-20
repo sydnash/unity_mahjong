@@ -66,6 +66,7 @@ end
 function friendsterDetail:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mShare:addClickListener(self.onShareClickedHandler, self)
+    self.mNotice:addClickListener(self.onNoticeClickedHandler, self)
     self.mManage:addClickListener(self.onManageClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
     self.mReturn:addClickListener(self.onReturnClickedHandler, self)
@@ -116,6 +117,13 @@ function friendsterDetail:onShareClickedHandler()
     if image ~= nil then
         platformHelper.shareUrlWx(title, desc, url, image, false)
     end
+end
+
+function friendsterDetail:onNoticeClickedHandler()
+    local ui = require("ui.friendster.friendsterNotice").new(self.data)
+    ui:show()
+
+    playButtonClickSound()
 end
 
 function friendsterDetail:onManageClickedHandler()

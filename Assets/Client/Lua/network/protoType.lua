@@ -51,6 +51,7 @@ return {
         getSharePlayHistory         = "CmdType.fly.CS.GetShareHistory",
         setClubDeskPayed            = "CmdType.fly.CS.ClubDeskPayed",
         modifyFriendsterDesc        = "CmdType.fly.CS_ModifyClubDesc",
+        modifyFriendsterNotice      = "CmdType.fly.CS.ModifyClubNotice",
         doushisi = {
             dang                    = "CmdType.fly.CS.DSSDang",
             anPai                   = "CmdType.fly.CS.DSSAnPai",

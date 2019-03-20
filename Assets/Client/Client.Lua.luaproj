@@ -172,6 +172,8 @@
     <Compile Include="Lua\ui\playHistory\playHistoryItem.lua" />
     <Compile Include="Lua\ui\quicklyStart.lua" />
     <Compile Include="Lua\ui\quicklyStart\quicklyStartItem.lua" />
+    <Compile Include="Lua\ui\rule.lua" />
+    <Compile Include="Lua\ui\sameip.lua" />
     <Compile Include="Lua\ui\setting\lobbySetting.lua" />
     <Compile Include="Lua\ui\setting\doushisiSetting.lua" />
     <Compile Include="Lua\ui\setting\mahjongSetting.lua" />
