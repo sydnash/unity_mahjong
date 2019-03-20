@@ -474,10 +474,11 @@ public class AndroidHelperWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
+			ToLua.CheckArgsCount(L, 3);
 			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.ShareImageCN(arg0);
+			string arg1 = ToLua.CheckString(L, 3);
+			obj.ShareImageCN(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)

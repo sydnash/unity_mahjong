@@ -250,7 +250,7 @@ end
 -------------------------------------------------------------------
 function platformHelper.shareImageCn(imageFile)
     if deviceConfig.isAndroid then
-        AndroidHelper.instance:ShareImageCN(imageFile)
+        AndroidHelper.instance:ShareImageCN("幺九麻将", imageFile)
     elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
         IOSHelper.instance:ShareImageCN(imageFile)
     end
