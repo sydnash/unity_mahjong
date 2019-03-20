@@ -90,7 +90,7 @@ function friendsterStatisticsHistoryItem:set(data, historyContainer)
         end
     end
 
-    for i=1, config.RenShu do
+    for i=1, #players do
         local d = players[i]
         local s = scores[i]
 
