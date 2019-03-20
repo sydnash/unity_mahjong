@@ -25,8 +25,8 @@ public class ChuiNiuHelper
     /// <param name="javaObject"></param>
     /// <param name="title"></param>
     /// <param name="imageFile"></param>
-    public static void ShareImage(AndroidJavaObject javaObject, string title, string imageFile)
+    public static void ShareImage(AndroidJavaObject javaObject, string imageFile)
     {
-        javaObject.Call("ShareImageCN", title, imageFile);
+        javaObject.Call("ShareImageCN", imageFile);
     }
 }

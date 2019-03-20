@@ -235,9 +235,9 @@ public class IOSHelper
     /// </summary>
     /// <param name="title"></param>
     /// <param name="imageFile"></param>
-    public void ShareImageCN(string title, string imageFile)
+    public void ShareImageCN(string imageFile)
     {
-        IOSChuiNiuHelper.ShareImage(title, imageFile);
+        IOSChuiNiuHelper.ShareImage(imageFile);
     }
 
     #endregion
