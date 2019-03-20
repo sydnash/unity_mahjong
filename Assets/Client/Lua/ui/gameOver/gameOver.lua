@@ -50,6 +50,7 @@ function gameOver:onInit()
     self.mShareWX:addClickListener(self.onShareWXClickedHandler, self)
     self.mShareQYQ:addClickListener(self.onShareQYQClickedHandler, self)
     self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)
+    self.mShareCN:addClickListener(self.onShareCNClickedHandler, self)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -112,6 +113,21 @@ function gameOver:onShareXLClickedHandler()
 
         if tex ~= nil then
             platformHelper.shareImageSg(tex)
+        end
+    end
+end
+
+function gameOver:onShareCNClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
+
+    if deviceConfig.isMobile then
+        local tex = captureScreenshotUI()
+        if tex ~= nil then
+            local texpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "gameover.jpg")
+            saveTextureToJPG(texpath, tex)
+
+            platformHelper.shareImageCn(tex, texpath)
         end
     end
 end

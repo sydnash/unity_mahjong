@@ -297,7 +297,7 @@ function desk:onInviteCNClickedHandler()
         end
     end
 
-    platformHelper.shareUrlWx(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.game.deskId), 
+    platformHelper.shareUrlCn(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.game.deskId), 
                               self:getInvitationInfo(), 
                               networkConfig.server.shareURL,
                               thumbpath)
