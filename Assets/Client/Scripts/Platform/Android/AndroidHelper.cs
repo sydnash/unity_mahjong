@@ -275,7 +275,7 @@ public class AndroidHelper
     /// 
     /// </summary>
     /// <param name="packageName"></param>
-    public void StartApplication(string packageName)
+    public void OpenThirdApp(string packageName)
     {
         javaObject.Call("StartActivity", packageName);
     }

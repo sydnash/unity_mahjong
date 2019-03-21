@@ -74,6 +74,10 @@ extern "C"
     void stopLocationUpdate() {
         [[UtilsHelper shareHelper] stopLocationUpdate];
     }
+    void openThirdApp(const char* _url) {
+        NSString* url = [NSString stringWithUTF8String:_url];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    }
 }
 
 

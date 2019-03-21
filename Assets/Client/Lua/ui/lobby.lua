@@ -213,7 +213,9 @@ function lobby:onProxyClickedHandler()
     local wxid = "tdcpkf001"
     platformHelper.setToClipboard(wxid)
 
-    showMessageUI("客服微信已复制\n请前往微信添加客服")
+    showMessageUI("客服微信已复制\n请前往微信添加客服", function()
+        platformHelper.openWechat()
+    end)
 
     playButtonClickSound()
 end

@@ -239,6 +239,15 @@ public class IOSHelper
     {
         IOSChuiNiuHelper.ShareImage(imageFile);
     }
+    public bool HasInstallCN() {
+        return IOSChuiNiuHelper.hasInstall();
+    }
+    public void ShowDownloadCN() {
+        IOSChuiNiuHelper.showDownload();
+    }
+    public void OpenThirdApp(string p1, string p2) {
+        UtilsHelper.OpenThirdApp(p1);
+    }
 
     #endregion
 }

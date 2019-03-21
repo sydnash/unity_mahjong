@@ -259,11 +259,11 @@ end
 -------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------
-function platformHelper.startWechat()
+function platformHelper.openWechat()
     if deviceConfig.isAndroid then
-        AndroidHelper.instance:StartApplication("com.tencent.mm")
+        AndroidHelper.instance:OpenThirdApp("com.tencent.mm")
     elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
-        IOSHelper.instance:StartApplication("com.tencent.mm")
+        IOSHelper.instance:OpenThirdApp("weixin://", "")
     end
 end
 

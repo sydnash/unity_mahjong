@@ -34,6 +34,9 @@ public class IOSHelperWrap
 		L.RegFunction("SetLocationUpdateHandler", SetLocationUpdateHandler);
 		L.RegFunction("ShareUrlCN", ShareUrlCN);
 		L.RegFunction("ShareImageCN", ShareImageCN);
+		L.RegFunction("HasInstallCN", HasInstallCN);
+		L.RegFunction("ShowDownloadCN", ShowDownloadCN);
+		L.RegFunction("OpenThirdApp", OpenThirdApp);
 		L.RegFunction("New", _CreateIOSHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -529,6 +532,57 @@ public class IOSHelperWrap
 			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			obj.ShareImageCN(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int HasInstallCN(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			bool o = obj.HasInstallCN();
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShowDownloadCN(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			obj.ShowDownloadCN();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OpenThirdApp(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			IOSHelper obj = (IOSHelper)ToLua.CheckObject<IOSHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			obj.OpenThirdApp(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)
