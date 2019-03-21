@@ -133,9 +133,10 @@ end
 -- 闲聊邀请的回调
 ----------------------------------------------------------------
 local function inviteSgCallback(params)
-    if json.isNilOrEmpty(params) then
+    if string.isNilOrEmpty(params) then
         return
     end
+    params = string.urlDecode(params)
     if clientApp.currentDesk == nil then
         closeAllUI()
 
