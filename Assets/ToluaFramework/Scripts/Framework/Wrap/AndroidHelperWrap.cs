@@ -29,6 +29,8 @@ public class AndroidHelperWrap
 		L.RegFunction("SetToClipboard", SetToClipboard);
 		L.RegFunction("GetFromClipboard", GetFromClipboard);
 		L.RegFunction("GetDistance", GetDistance);
+		L.RegFunction("ShareUrlCN", ShareUrlCN);
+		L.RegFunction("ShareImageCN", ShareImageCN);
 		L.RegFunction("New", _CreateAndroidHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -440,6 +442,44 @@ public class AndroidHelperWrap
 			float o = obj.GetDistance(arg0, arg1, arg2, arg3);
 			LuaDLL.lua_pushnumber(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareUrlCN(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 5);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			string arg2 = ToLua.CheckString(L, 4);
+			string arg3 = ToLua.CheckString(L, 5);
+			obj.ShareUrlCN(arg0, arg1, arg2, arg3);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareImageCN(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			obj.ShareImageCN(arg0, arg1);
+			return 0;
 		}
 		catch (Exception e)
 		{

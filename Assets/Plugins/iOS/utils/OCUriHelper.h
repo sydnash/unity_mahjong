@@ -8,5 +8,5 @@
 - (void) startLocationOnce;
 - (void) startLocationUpdate;
 - (void) stopLocationUpdate;
-
++ (void) openThirdApp: (NSDictionary*) param;
 @end

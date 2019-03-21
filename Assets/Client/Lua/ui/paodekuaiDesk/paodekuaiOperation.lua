@@ -240,6 +240,7 @@ function paodekuaiOperation:touchHandler(phase, pos)
                 end
 
                 self.touchedCards[card.id] = card
+                self:playXuanPaiSound()
             end
         end
     elseif phase == touch.phaseType.moved then
@@ -254,6 +255,7 @@ function paodekuaiOperation:touchHandler(phase, pos)
                 end
 
                 self.touchedCards[card.id] = card
+                self:playXuanPaiSound()
             end
         end
     else --phase == touch.phaseType.end
@@ -550,6 +552,7 @@ function paodekuaiOperation:onHintClickedHandler()
         end
     end
 
+    self:playXuanPaiSound()
     self.hintGroupIdx = self.hintGroupIdx + 1
 end
 
@@ -593,6 +596,7 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:onOpDoChu(acId, cards, curpx, lastpx)
+    local time = 0.1
     local player = self.game:getPlayerByAcId(acId)
 
     if acId == self.game.mainAcId then
@@ -611,15 +615,28 @@ function paodekuaiOperation:onOpDoChu(acId, cards, curpx, lastpx)
         self:relocateInhandCards(acId)
         self.hintGroups = nil
     else
+        self:playChuPaiSound()
         local soundRes = self:getSoundResName(cards[1], curpx, lastpx)
         playPaodekuaiSound(soundRes, player.sex)
     end
 
     if player.zhangShu == 1 then --报单
         playPaodekuaiSound("baodan", player.sex)
+        time = 0.5
+    elseif player.zhangShu == 0 then --牌出完
+        time = 1
     end
 
     self:createOnePlayerChuCards(acId, cards)
+    return time
+end
+
+function paodekuaiOperation:playChuPaiSound()
+    soundManager.playGfx("paodekuai", soundConfig.paodekuai.chupai[1])
+end
+
+function paodekuaiOperation:playXuanPaiSound()
+    soundManager.playGfx("paodekuai", soundConfig.paodekuai.xuanpai[1])
 end
 
 -------------------------------------------------------------------------------

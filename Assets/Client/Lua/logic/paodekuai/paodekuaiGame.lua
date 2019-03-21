@@ -133,9 +133,6 @@ function paodekuaiGame:onFaPaiHandler(msg)
     return self.operationUI:onFaPai()
 end
 
--------------------------------------------------------------------------------
--- 
--------------------------------------------------------------------------------
 function paodekuaiGame:faPai(msg)
     self.totalCardsCount = self:getTotalCardCountByGame(self.cityType)
 
@@ -187,14 +184,18 @@ end
 function paodekuaiGame:onOpDoHandler(msg)
     log("paodekuaiGame.onOpDoHandler, msg = " .. table.tostring(msg))
 
+    local time = 0
+
     self.operationUI:hideOpButtons()
     self.deskUI:hideClock()
 
     if msg.Op == opType.paodekuai.chu.id then
-        self:onOpDoChu(msg)
+        time = time + self:onOpDoChu(msg)
     elseif msg.Op == opType.paodekuai.buChu.id then
         self:onOpDoBuChu(msg)
     end
+
+    return time
 end
 
 -------------------------------------------------------------------------------
@@ -202,6 +203,8 @@ end
 -------------------------------------------------------------------------------
 function paodekuaiGame:onOpDoChu(msg)
     log("paodekuaiGame:onOpDoChu, msg = " .. table.tostring(msg))
+    local time = 0
+
     local player = self:getPlayerByAcId(msg.AcId)
     local inhandCards = player[pokerType.cardType.shou]
 
@@ -212,8 +215,10 @@ function paodekuaiGame:onOpDoChu(msg)
     player.zhangShu = player.zhangShu - #msg.Del
     player[pokerType.cardType.chu] = msg.Del
 
-    self.deskUI:onOpDoChu(msg.AcId)
-    self.operationUI:onOpDoChu(msg.AcId, msg.Del, msg.DetailTyp, msg.LastPX)
+    time = time + self.deskUI:onOpDoChu(msg.AcId)
+    time = time + self.operationUI:onOpDoChu(msg.AcId, msg.Del, msg.DetailTyp, msg.LastPX)
+
+    return time
 end
 
 -------------------------------------------------------------------------------

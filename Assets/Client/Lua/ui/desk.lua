@@ -36,6 +36,7 @@ function desk:onInit()
         self.mInvitePanel:addClickListener(self.onInvitePanelClickedHandler, self)
         self.mInviteWX:addClickListener(self.onInviteWXClickedHandler, self)
         self.mInviteXL:addClickListener(self.onInviteXLClickedHandler, self)
+        self.mInviteCN:addClickListener(self.onInviteCNClickedHandler, self)
         self.mReady:addClickListener(self.onReadyClickedHandler, self)
         self.mCancel:addClickListener(self.onCancelClickedHandler, self)
         self.mPosition:addClickListener(self.onPositionClickedHandler, self)
@@ -284,6 +285,30 @@ function desk:onInviteXLClickedHandler()
     self.mInvitePanel:hide()
 end
 
+function desk:onInviteCNClickedHandler()
+    playButtonClickSound()
+
+    if queryFromCSV("chuiniusdk") == nil then
+        showToastUI("请安装最新版使用此功能")
+    else
+        local thumbpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "appicon.jpg")
+        if not LFS.FileExist(thumbpath) then
+            local image = textureManager.load(string.empty, "appicon")
+            if image ~= nil then
+                saveTextureToJPG(thumbpath, image)
+                textureManager.unload(image)
+            end
+        end
+
+        platformHelper.shareUrlCn(string.format("%s%s：%d", cityName[self.game.cityType], gameName[self.game.cityType].games[self.game.gameType], self.game.deskId), 
+                                  self:getInvitationInfo(), 
+                                  networkConfig.server.shareURL,
+                                  thumbpath)
+    end
+
+    self.mInvitePanel:hide()
+end
+
 function desk:onReadyClickedHandler()
     self.game:ready(true)
     playButtonClickSound()
@@ -304,7 +329,7 @@ function desk:onPositionClickedHandler()
     else
         showWaitingUI("正在定位各玩家位置，请稍候...")
 
-        networkManager.syncLocation(location, function(msg)
+        local function onLocation(msg)
             closeWaitingUI()
 
             if msg ~= nil and msg.Locations ~= nil then
@@ -318,6 +343,10 @@ function desk:onPositionClickedHandler()
 
             local ui = require("ui.location").new(self.game)
             ui:show()
+        end
+
+        networkManager.syncLocation(location, function(msg)
+            self.game:pushMessage(onLocation, 0, msg)
         end)
     end
 
@@ -435,13 +464,7 @@ function desk:onGameSync()
     self.mReady:hide()
     self.mCancel:hide()
 
-    for _, v in pairs(self.game.players) do 
-        local st = self.game:getSeatTypeByAcId(v.acId)
-        local hd = self.headers[st]
-
-        hd:setPlayerInfo(v)
-    end
-
+    self:syncPlayerInfo()
     self:refreshInvitationButtonState()
     self:updateCurrentGameIndex()
 end

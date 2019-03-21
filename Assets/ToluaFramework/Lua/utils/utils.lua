@@ -328,4 +328,11 @@ function convertTextureToSprite(tex, pivot)
     return Utils.ConvertTextureToSprite(tex, pivot)
 end
 
+-------------------------------------------------------------------
+--
+-------------------------------------------------------------------
+function saveTextureToJPG(filename, tex)
+    return Utils.SaveTextureToJPG(filename, tex)
+end
+
 --endregion

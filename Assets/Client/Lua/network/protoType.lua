@@ -32,6 +32,7 @@ return {
         queryAcId                   = "CmdType.fly.CS.CheckAcId",
         addAcIdToFriendster         = "CmdType.fly.CS_InviteIntoClub",
         deleteAcIdFromFriendster    = "CmdType.fly.CS_KickOutClub",
+        changeMemberPermission      = "CmdType.fly.CS.ClubChmod",
         depositToFriendsterBank     = "CmdType.fly.CS.TopUpToClub",
         takeoutFromFriendsterBank   = "CmdType.fly.CS.WithdrawFromClub",
         queryFriendsterStatistics   = "CmdType.fly.CS_GetClubDeskHistory",
@@ -50,6 +51,7 @@ return {
         getSharePlayHistory         = "CmdType.fly.CS.GetShareHistory",
         setClubDeskPayed            = "CmdType.fly.CS.ClubDeskPayed",
         modifyFriendsterDesc        = "CmdType.fly.CS_ModifyClubDesc",
+        modifyFriendsterNotice      = "CmdType.fly.CS.ModifyClubNotice",
         doushisi = {
             dang                    = "CmdType.fly.CS.DSSDang",
             anPai                   = "CmdType.fly.CS.DSSAnPai",

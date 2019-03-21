@@ -10,6 +10,9 @@ local rule = class("rule", base)
 _RES_(rule, "RuleUI", "RuleUI")
 
 function rule:onInit()
+    local title = cityName[gamepref.city.City]
+    self.mTitle:setText(title .. "规则")
+
     local enables = enableConfig[gamepref.city.City]
     local on = false
 
@@ -25,7 +28,7 @@ function rule:onInit()
     end
 
     local changpai = enables.changpai
-    if  changpai.enable then
+    if changpai.enable then
         self.mDoushisiTab:hide()
 
         if on then

@@ -17,6 +17,7 @@
 
 #import "ForUnityBridge.h"
 #import "XLUnityBridge.h"
+#import "ChuiNiuHelper.h"
 
 // MSAA_DEFAULT_SAMPLE_COUNT was moved to iPhone_GlesSupport.h
 // ENABLE_INTERNAL_PROFILER and related defines were moved to iPhone_Profiler.h
@@ -222,6 +223,9 @@ extern "C" void UnityRequestQuit()
     if (not ret) {
         ret = [XLUnityBridge handlerOpenURL:url];
     }
+    if (not ret) {
+        ret = [ChuiNiuHelper handlerOpenURL:url];
+    }
     return ret;
 }
 
@@ -270,7 +274,8 @@ extern "C" void UnityRequestQuit()
 
     [[ForUnityBridge forUnityBridgeInstance] registerPlugin];
     [[XLUnityBridge shareHelper] registerXL];
-    return YES;
+    [[ChuiNiuHelper shareHelper] init: self];
+   return YES;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication*)application

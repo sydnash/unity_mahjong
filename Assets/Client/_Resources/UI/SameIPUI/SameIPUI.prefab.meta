@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1450579bd9c9b0a439e9d1f8bef970d4
-timeCreated: 1552448445
+guid: f72b71bf39a29c145b2517b2e317e188
+timeCreated: 1552967204
 licenseType: Pro
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 100100000
   userData: 
-  assetBundleName: ui/quicklystart/quicklystart
+  assetBundleName: ui/sameipui/sameipui
   assetBundleVariant: 

@@ -279,6 +279,35 @@ public class Utils
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="tex"></param>
+    public static void SaveTextureToJPG(string filename, Texture2D tex)
+    {
+        try
+        {
+            if (!filename.EndsWith(".jpg"))
+            {
+                filename += ".jpg";
+            }
+
+            FileStream fs = File.Open(filename, FileMode.Create);
+            using (BinaryWriter bw = new BinaryWriter(fs))
+            {
+                byte[] bytes = tex.EncodeToJPG();
+                bw.Write(bytes);
+                bw.Close();
+            }
+            fs.Close();
+        }
+        catch (Exception ex)
+        {
+            Logger.Log(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <returns></returns>
 	public static Dictionary<string, object> CreateDictionarySO() 
     {

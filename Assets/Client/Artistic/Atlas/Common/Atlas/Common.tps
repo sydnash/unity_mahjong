@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>1000</int>
+            <int>-1</int>
             <key>height</key>
-            <int>1000</int>
+            <int>-1</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -199,6 +199,32 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Images/DW_ts.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>37,16,73,31</rect>
+                <key>scale9Paddings</key>
+                <rect>37,16,73,31</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/FX_cn.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>23,23,47,47</rect>
+                <key>scale9Paddings</key>
+                <rect>23,23,47,47</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/FX_pyq.png</key>
             <key type="filename">Images/FX_xl.png</key>
             <struct type="IndividualSpriteSettings">
@@ -1086,6 +1112,8 @@
             <filename>Images/Pb_ss.png</filename>
             <filename>Images/pdk_11.png</filename>
             <filename>Images/pdk_fs.png</filename>
+            <filename>Images/DW_ts.png</filename>
+            <filename>Images/FX_cn.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

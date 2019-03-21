@@ -234,6 +234,35 @@ function platformHelper.getFromClipboard()
     return string.empty
 end
 
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function platformHelper.shareUrlCn(title, desc, url, thumb)
+    if deviceConfig.isAndroid then
+        AndroidHelper.instance:ShareUrlCN(title, desc, url, thumb)
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
+        IOSHelper.instance:ShareUrlCN(title, desc, url, thumb)
+    end
+end
+
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function platformHelper.shareImageCn(imageFile)
+    if deviceConfig.isAndroid then
+        AndroidHelper.instance:ShareImageCN("幺九麻将", imageFile)
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
+        IOSHelper.instance:ShareImageCN(imageFile)
+    end
+end
+
+function platformHelper.openWechat()
+    if deviceConfig.isAndroid then
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
+        IOSHelper.instance:OpenThirdApp("weixin://", "")
+    end
+end
+
 return platformHelper
 
 --endregion

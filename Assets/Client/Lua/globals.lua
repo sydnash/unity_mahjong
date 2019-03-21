@@ -10,6 +10,9 @@ function reload(packageName)
     return require(packageName)
 end
 
+--设置随机数种子
+math.randomseed(os.time())
+
 Application = UnityEngine.Application
 
 appConfig = reload("config.appConfig")
@@ -42,6 +45,7 @@ deviceConfig    = require("config.deviceConfig")
 gameConfig      = require("config.gameConfig")
 enableConfig    = require("config.enableConfig")
 networkConfig   = require("config.networkConfig")
+soundConfig     = require("config.soundConfig")
 gamepref        = require("logic.gamepref")
 platformHelper  = require("platform.platformHelper")
 networkManager  = require("network.networkManager")
@@ -54,7 +58,6 @@ local messagebox    = require("ui.messageBox")
 local toast         = require("ui.toast")
 local mahjongType   = require("logic.mahjong.mahjongType")
 local doushisiType  = require("logic.doushisi.doushisiType")
-local soundConfig   = require("config.soundConfig")
 
 ----------------------------------------------------------------
 -- 断开连接后的回调
@@ -278,7 +281,7 @@ function playChatTextSound(gtype, key, sex)
     end
     local resource = prefix .. chatConfig.text[key].audio
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 -------------------------------------------------------------
@@ -292,7 +295,7 @@ function playMahjongSound(mahjongId, sex)
     end
     local resource = prefix .. mahjongType.getMahjongTypeById(mahjongId).audio
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 local opsounds = {
@@ -335,7 +338,7 @@ function playMahjongOpSound(optype, sex, detail)
     end
     local resource = prefix .. file
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 -------------------------------------------------------------
@@ -369,7 +372,7 @@ function playDoushisiSound(cityType, doushisiId, sex)
         resource = cfg
     end
 
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 local d14opsound = {
@@ -458,17 +461,13 @@ function playDoushisiOpSound(cityType, optype, sex)
     end
 
     local resource = prefix .. op
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
-
-local paodekuaiSounds = {
-}
 
 -------------------------------------------------------------
 -- 
 -------------------------------------------------------------
 function playPaodekuaiSound(soundKey, sex)
---    log("playPaodekuaiSound, soundKey = " .. soundKey)
     if string.isNilOrEmpty(soundKey) then
         return 
     end
@@ -484,11 +483,12 @@ function playPaodekuaiSound(soundKey, sex)
     local postfix = sounds[1]
     
     if #sounds > 1 then
-
+        local idx = math.random(1,#sounds)
+        postfix = sounds[idx]
     end
 
     local resource = prefix .. postfix
-    return soundManager.playGfx(folder, resource)
+    soundManager.playGfx(folder, resource)
 end
 
 -------------------------------------------------------------
