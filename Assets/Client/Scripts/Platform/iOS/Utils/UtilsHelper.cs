@@ -39,6 +39,7 @@ public class UtilsHelper
     static extern void startLocationUpdate();
     [DllImport("__Internal")]
     static extern void stopLocationUpdate();
+    [DllImport("__Internal")]
     static extern void openThirdApp(string url);
     #endregion
 
