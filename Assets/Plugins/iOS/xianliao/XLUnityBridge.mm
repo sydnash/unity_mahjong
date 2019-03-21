@@ -108,7 +108,28 @@ extern "C" {
 }
 
 + (BOOL) handlerOpenURL: (NSURL*) url{
-    return [SugramApiManager handleOpenURL:url];
+    BOOL ret = [SugramApiManager handleOpenURL:url];
+    if (ret) {
+        return ret;
+    }
+    if ([url.scheme isEqualToString:@"yjmj"]) {
+        NSString *query = url.query;
+        NSArray *subArray = [query componentsSeparatedByString:@"&"];
+        NSString *param1 = @"";
+        NSString *param2 = @"";
+        for (int i = 0; i < subArray.count; i++) {
+            NSArray *dicarray = [subArray[i] componentsSeparatedByString:@"="];
+            NSString *key = dicarray[0];
+            if ([key isEqualToString:@"param1"]) {
+                param1 = dicarray[1];
+            } else if ([key isEqualToString:@"param2"]) {
+                param2 = dicarray[1];
+            }
+            [[XLUnityBridge shareHelper] onXLInviteMsg:param1 inviteRoomId:param2 invitePlayer:0];
+        }
+        return true;
+    }
+    return false;
 }
 
 @end

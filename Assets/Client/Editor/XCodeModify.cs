@@ -99,6 +99,7 @@ public class XCodeModify
 		AddUrlType(rootDict, "Editor", "weixin", "wx2ca58653c3f50625");
 		AddUrlType(rootDict, "Editor", "xianliao", "xianliaoMVGhscFdSy3OO7KG");
 		AddUrlType(rootDict, "Editor", "cnchat", "cn9f4541ba54784f");
+		AddUrlType(rootDict, "Editor", "yjmj", "yjmj");
 
 		/*<key>NSLocationAlwaysUsageDescription</key>
 		<string>开启定位，防止作弊打牌</string>
