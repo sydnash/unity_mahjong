@@ -12,10 +12,10 @@ function activity:onInit()
     self.mTitlebarTabAffiche:addClickListener(self.onTitlebarTabAfficheClickedHandler, self)
     self.mTitlebarTabActivity:addClickListener(self.onTitlebarTabActivityClickedHandler, self)
 
-    self.mTitlebarTabActivity:hide()
-    self.mTitlebarTabActivityS:show()
-    self.mTitlebarTabAffiche:show()
-    self.mTitlebarTabAfficheS:hide()
+    self.mTitlebarTabActivity:show()
+    self.mTitlebarTabActivityS:hide()
+    self.mTitlebarTabAffiche:hide()
+    self.mTitlebarTabAfficheS:show()
 
     --
     self.activityPages = {
@@ -28,16 +28,25 @@ function activity:onInit()
     --
     self.affichePages = {
         ["affiche_a"] = self.mAffichePageA,
+        ["affiche_b"] = self.mAffichePageB,
     }
     self.mAfficheTabA.page = "affiche_a"
+    self.mAfficheTabB.page = "affiche_b"
 
-    self.mAfficheTabA:setSelected(true)
+    self.mAfficheTabA:setSelected(false)
+    self.mAfficheTabB:setSelected(true)
     self.mAfficheTabA:addChangedListener(self.onAfficheTabChangedHandler, self)
+    self.mAfficheTabB:addChangedListener(self.onAfficheTabChangedHandler, self)
+    self.mAffichePageA:hide()
+    self.mAffichePageB:show()
 
-    self.mActivity:show()
-    self.mAffiche:hide()
+    self.mActivity:hide()
+    self.mAffiche:show()
     
-    self.timestamp = time.realtimeSinceStartup()
+    if not clientApp.activityShown then
+        self.timestamp = time.realtimeSinceStartup()
+        self.mClose:hide()
+    end
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -99,6 +108,20 @@ function activity:onAfficheTabChangedHandler(sender, selected, clicked)
             else
                 v:hide()
             end
+        end
+    end
+end
+
+function activity:update()
+    if not clientApp.activityShown then
+        local leftTime = 4 - (time.realtimeSinceStartup() - self.timestamp)
+
+        if leftTime > 0 then
+            self.mAffichePageBText:setText(string.format("%.1f秒后可关闭", leftTime))
+        else
+            clientApp.activityShown = true
+            self.mClose:show()
+            self.mAffichePageBText:hide()
         end
     end
 end
