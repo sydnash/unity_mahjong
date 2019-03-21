@@ -260,6 +260,10 @@ end
 -- 
 -------------------------------------------------------------------
 function platformHelper.openWechat()
+    if queryFromCSV("chuiniusdk") == nil then
+        return
+    end
+
     if deviceConfig.isAndroid then
         AndroidHelper.instance:OpenThirdApp("com.tencent.mm")
     elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
