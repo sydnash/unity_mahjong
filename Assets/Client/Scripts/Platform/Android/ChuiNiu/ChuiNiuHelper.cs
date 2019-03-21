@@ -6,6 +6,16 @@ public class ChuiNiuHelper
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="javaObject"></param>
+    /// <returns></returns>
+    public static bool IsInstalled(AndroidJavaObject javaObject)
+    {
+        return javaObject.Call<bool>("IsInstalledCN");
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="title"></param>
     /// <param name="desc"></param>
     /// <param name="url"></param>

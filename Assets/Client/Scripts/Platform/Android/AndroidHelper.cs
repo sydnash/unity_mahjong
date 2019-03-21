@@ -155,6 +155,7 @@ public class AndroidHelper
     {
         return UpdripsHelper.GetParams(javaObject);
     }
+
 	/// <summary>
 	/// Clears the SG invite parameter.
 	/// </summary>
@@ -247,6 +248,14 @@ public class AndroidHelper
     public float GetDistance(float la1, float lo1, float la2, float lo2)
     {
         return LocationHelper.GetDistance(javaObject, la1, lo1, la2, lo2);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool IsInstalledCN()
+    {
+        return ChuiNiuHelper.IsInstalled(javaObject);
     }
 
     /// <summary>

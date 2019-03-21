@@ -178,7 +178,7 @@ end
 
 function lobby:onRankClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能暂未开放，敬请期待！")
+    showToastUI("功能暂未开放，敬请期待！")
 end
 
 function lobby:onActivityClickedHandler()
