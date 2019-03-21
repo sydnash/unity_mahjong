@@ -133,6 +133,10 @@ end
 -- 闲聊邀请的回调
 ----------------------------------------------------------------
 local function inviteSgCallback(params)
+    if string.isNilOrEmpty(params) then
+        return
+    end
+    params = string.urlDecode(params)
     if clientApp.currentDesk == nil then
         closeAllUI()
 
@@ -140,6 +144,10 @@ local function inviteSgCallback(params)
 
         local cityType = t.cityType
         local deskId = t.deskId
+
+        if cityType == 0 or deskId == 0 then
+            return
+        end
 
         if clientApp.currentDesk ~= nil and clientApp.currentDesk:isPlayback() then
             return

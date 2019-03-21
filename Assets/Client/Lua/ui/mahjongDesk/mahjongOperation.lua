@@ -1330,10 +1330,12 @@ function mahjongOperation:onChosedChuPai()
         local chuCardType = mahjongType.getMahjongTypeById(id)
         if chuCardType.class ~= player.que then
             if self.mo and isQue(self.mo) then
+                showToastUI("请先打完定缺的牌")
                 return false
             end
             for _, mj in pairs(self.inhandMahjongs[self.game.mainAcId]) do
                 if isQue(mj) then
+                    showToastUI("请先打完定缺的牌")
                     return false
                 end
             end

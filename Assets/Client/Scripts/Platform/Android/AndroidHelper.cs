@@ -10,11 +10,6 @@ public class AndroidHelper
     /// </summary>
     private AndroidJavaObject mJavaObject = null;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private Action<string> mLoginWxCallback = null;
-
     #endregion
 
     #region Instance
@@ -160,6 +155,7 @@ public class AndroidHelper
     {
         return UpdripsHelper.GetParams(javaObject);
     }
+
 	/// <summary>
 	/// Clears the SG invite parameter.
 	/// </summary>
@@ -252,6 +248,45 @@ public class AndroidHelper
     public float GetDistance(float la1, float lo1, float la2, float lo2)
     {
         return LocationHelper.GetDistance(javaObject, la1, lo1, la2, lo2);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool IsInstalledCN()
+    {
+        return ChuiNiuHelper.IsInstalled(javaObject);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="title"></param>
+    /// <param name="desc"></param>
+    /// <param name="url"></param>
+    /// <param name="thumb"></param>
+    public void ShareUrlCN(string title, string desc, string url, string thumb)
+    {
+        ChuiNiuHelper.ShareUrl(javaObject, title, desc, url, thumb);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="title"></param>
+    /// <param name="imageFile"></param>
+    public void ShareImageCN(string title, string imageFile)
+    {
+        ChuiNiuHelper.ShareImage(javaObject, title, imageFile);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="packageName"></param>
+    public void OpenThirdApp(string packageName)
+    {
+        javaObject.Call("StartActivity", packageName);
     }
 
     #endregion

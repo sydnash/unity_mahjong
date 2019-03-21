@@ -178,7 +178,7 @@ end
 
 function lobby:onRankClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能暂未开放，敬请期待！")
+    showToastUI("功能暂未开放，敬请期待！")
 end
 
 function lobby:onActivityClickedHandler()
@@ -213,7 +213,9 @@ function lobby:onProxyClickedHandler()
     local wxid = "tdcpkf001"
     platformHelper.setToClipboard(wxid)
 
-    showMessageUI("客服微信已复制\n请前往微信添加客服")
+    showMessageUI("客服微信已复制\n请前往微信添加客服", function()
+        platformHelper.openWechat()
+    end)
 
     playButtonClickSound()
 end
@@ -258,8 +260,6 @@ function lobby:show()
     if not clientApp.activityShown then
         local ui = require("ui.activity").new()
         ui:show()
-
-        clientApp.activityShown = true
     end
 end
 

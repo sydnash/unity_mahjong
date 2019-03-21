@@ -99,14 +99,14 @@ function friendsterMemberManager:onAddClickedHandler()
     local text = self.mId:getText()
 
     if string.isNilOrEmpty(text) then
-        showMessageUI("请输入玩家账号")
+        showToastUI("请输入玩家账号")
         playButtonClickSound()
         return
     end
 
     local acid = tonumber(text)
     if acid == gamepref.player.acId then
-        showMessageUI("不能添加自己")
+        showToastUI("不能添加自己")
         return
     end
 
@@ -126,7 +126,7 @@ function friendsterMemberManager:onAddClickedHandler()
             return
         end
 
-        showMessageUI("玩家已经添加到亲友圈")
+        showToastUI("玩家已经添加到亲友圈")
         self:close()
     end)
 
@@ -137,14 +137,14 @@ function friendsterMemberManager:onDeleteClickedHandler()
     local text = self.mId:getText()
 
     if string.isNilOrEmpty(text) then
-        showMessageUI("请输入玩家账号")
+        showToastUI("请输入玩家账号")
         playButtonClickSound()
         return
     end
 
     local acid = tonumber(text)
     if acid == gamepref.player.acId then
-        showMessageUI("不能删除自己")
+        showToastUI("不能删除自己")
         return
     end
 
@@ -168,7 +168,7 @@ function friendsterMemberManager:onDeleteClickedHandler()
             return
         end
 
-        showMessageUI("玩家已经从亲友圈中删除")
+        showToastUI("玩家已经从亲友圈中删除")
         self:close()
     end)
 

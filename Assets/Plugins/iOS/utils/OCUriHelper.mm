@@ -62,7 +62,9 @@
     [self.locationManager stopUpdatingLocation];
 }
 
-
-
++ (void) openThirdApp: (NSDictionary*) param {
+    NSString* url = (NSString*)[param objectForKey:@"url"];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+}
 
 @end

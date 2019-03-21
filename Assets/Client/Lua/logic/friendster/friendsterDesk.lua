@@ -17,6 +17,8 @@ function friendsterDesk:ctor(data)
 
     self.players = {}
     self.playerCount = 0
+
+    self.time = time.now()
 end
 
 function friendsterDesk:addPlayer(player)

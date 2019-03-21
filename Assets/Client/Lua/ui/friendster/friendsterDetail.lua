@@ -66,6 +66,11 @@ end
 function friendsterDetail:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mShare:addClickListener(self.onShareClickedHandler, self)
+    self.mSharePanel:addClickListener(self.onSharePanelClickedHandler, self)
+    self.mShareWX:addClickListener(self.onShareWXClickedHandler, self)
+    self.mShareXL:addClickListener(self.onShareXLClickedHandler, self)
+    self.mShareCN:addClickListener(self.onShareCNClickedHandler, self)
+    self.mNotice:addClickListener(self.onNoticeClickedHandler, self)
     self.mManage:addClickListener(self.onManageClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
     self.mReturn:addClickListener(self.onReturnClickedHandler, self)
@@ -81,7 +86,14 @@ function friendsterDetail:onInit()
         self.mReturn:show()
     end
 
+    if string.isNilOrEmpty(self.data.notice.text) then
+        self.mNoticeRP:hide()
+    else
+        self.mNoticeRP:show()
+    end
+
     self.mShare:hide()
+    self.mSharePanel:hide()
     self.mManage:hide()
     self.mMail:hide()
     self.mMailRP:hide()
@@ -95,6 +107,16 @@ function friendsterDetail:onInit()
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
 
+function friendsterDetail:show()
+    base.show(self)
+
+    local notice = self.data.notice
+    if not string.isNilOrEmpty(notice.text) and time.now() - notice.time < 2 * time.SECONDS_PER_DAY then
+        local ui = require("ui.friendster.friendsterNotice").new(self.data)
+        ui:show()
+    end
+end
+
 function friendsterDetail:onCloseClickedHandler()
     if self.callback ~= nil then
         self.callback()
@@ -106,16 +128,75 @@ end
 
 function friendsterDetail:onShareClickedHandler()
     playButtonClickSound()
+    self.mSharePanel:show()
+end
+
+function friendsterDetail:onSharePanelClickedHandler()
+    playButtonClickSound()
+    self.mSharePanel:hide()
+end
+
+function friendsterDetail:onShareWXClickedHandler()
+    playButtonClickSound()
     
     local title = string.format("%s 邀请您加入幺九麻将", gamepref.player.nickname)
     local desc = string.format("点击亲友圈，输入编号[%d]和邀请码[%s]加入亲友圈开始游戏", self.data.id, self.data.applyCode)
-    
     log("desc: " .. desc)
     local url = networkConfig.server.shareURL
     local image = textureManager.load(string.empty, "appicon")
     if image ~= nil then
         platformHelper.shareUrlWx(title, desc, url, image, false)
     end
+
+    self.mSharePanel:hide()
+end
+
+function friendsterDetail:onShareXLClickedHandler()
+    playButtonClickSound()
+    
+    local title = string.format("%s 邀请您加入幺九麻将", gamepref.player.nickname)
+    local desc = string.format("点击亲友圈，输入编号[%d]和邀请码[%s]加入亲友圈开始游戏", self.data.id, self.data.applyCode)
+    log("desc: " .. desc)
+    local image = textureManager.load(string.empty, "appicon")
+    if image ~= nil then
+        local params = { cityType = 0, deskId = 0, }
+        local url = networkConfig.server.shareURL
+        platformHelper.shareInvitationSg(title, desc, image, table.tojson(params), url, url)
+        textureManager.unload(image)
+    end
+
+    self.mSharePanel:hide()
+end
+
+function friendsterDetail:onShareCNClickedHandler()
+    playButtonClickSound()
+    
+    if queryFromCSV("chuiniusdk") == nil then
+        showToastUI("请安装最新版使用此功能")
+    else
+        local title = string.format("%s 邀请您加入幺九麻将", gamepref.player.nickname)
+        local desc = string.format("点击亲友圈，输入编号[%d]和邀请码[%s]加入亲友圈开始游戏", self.data.id, self.data.applyCode)
+        log("desc: " .. desc)
+        local thumbpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "appicon.jpg")
+        if not LFS.FileExist(thumbpath) then
+            local image = textureManager.load(string.empty, "appicon")
+            if image ~= nil then
+                saveTextureToJPG(thumbpath, image)
+                textureManager.unload(image)
+            end
+        end
+
+        platformHelper.shareUrlCn(title, desc, networkConfig.server.shareURL, thumbpath)
+    end
+
+    self.mSharePanel:hide()
+end
+
+function friendsterDetail:onNoticeClickedHandler()
+    local ui = require("ui.friendster.friendsterNotice").new(self.data)
+    ui:show()
+
+    playButtonClickSound()
 end
 
 function friendsterDetail:onManageClickedHandler()
@@ -202,7 +283,7 @@ function friendsterDetail:onReconnectedHandler()
 end
   
 function friendsterDetail:refreshUI()
-    if self.data.managerAcId == gamepref.player.acId then
+    if self.data:isCreator(gamepref.player.acId) or self.data:isManager(gamepref.player.acId) then
         self.mShare:show()
         self.mManage:show()
         self.mMail:show()
@@ -211,6 +292,8 @@ function friendsterDetail:refreshUI()
 
         if #self.data.applyList > 0 then
             self.mMailRP:show()
+        else
+            self.mMailRP:hide()
         end
     end
 
@@ -241,7 +324,7 @@ function friendsterDetail:refreshMemberList()
 
     local refreshMemberItem = function(item, index)
         local m = self.members[index + 1]
-        item:set(self.data.id, self.data.managerAcId, m)
+        item:set(self.data, m)
     end
 
     self.mMemberList:set(#self.members, createMemberItem, refreshMemberItem)

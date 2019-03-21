@@ -58,6 +58,7 @@ public class CSV
         mDic.Add("http", "1");
         mDic.Add("stingyscrollview", "1");
         mDic.Add("deviceinfo", "1");
+        mDic.Add("chuiniusdk", "1");
     }
 
     #endregion
