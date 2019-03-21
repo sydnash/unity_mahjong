@@ -256,6 +256,17 @@ function platformHelper.shareImageCn(imageFile)
     end
 end
 
+-------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------
+function platformHelper.startWechat()
+    if deviceConfig.isAndroid then
+        AndroidHelper.instance:StartApplication("com.tencent.mm")
+    elseif deviceConfig.isApple and not deviceConfig.isMacOSX then
+        IOSHelper.instance:StartApplication("com.tencent.mm")
+    end
+end
+
 return platformHelper
 
 --endregion

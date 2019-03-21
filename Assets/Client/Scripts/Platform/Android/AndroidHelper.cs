@@ -271,6 +271,15 @@ public class AndroidHelper
         ChuiNiuHelper.ShareImage(javaObject, title, imageFile);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="packageName"></param>
+    public void StartApplication(string packageName)
+    {
+        javaObject.Call("StartActivity", packageName);
+    }
+
     #endregion
 
     #region Private
