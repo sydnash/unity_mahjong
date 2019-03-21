@@ -263,7 +263,7 @@ function friendster:onNotifyFriendster(msg)
 --    log("friendster:onNotifyFriendster, msg = " .. table.tostring(msg))
     local t = msg.Type
     local d = table.fromjson(msg.Msg) 
-    local STINGYSCROLLVIEW_VERSION = "2"
+    local STINGYSCROLLVIEW_VERSION = "1"
 
     local lc = self.friendsters[d.ClubId]
 
