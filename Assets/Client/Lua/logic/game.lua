@@ -1043,7 +1043,7 @@ function game:openLobbyUI()
 
     showWaitingUI("请稍候")
     networkManager.queryFriendsterList(function(msg)
-        if msg == nil then
+        if msg == nil or msg.RetCode ~= retc.ok then
             closeWaitingUI()
             lobby:show()
             return
@@ -1060,8 +1060,6 @@ function game:openLobbyUI()
             fst:show()
             return
         end
-
-        showWaitingUI("请稍候")
 
         networkManager.queryFriendsterMembers(self.friendsterId, function(msg)
             if msg == nil or msg.RetCode ~= retc.ok then

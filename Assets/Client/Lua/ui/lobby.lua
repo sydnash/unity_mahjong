@@ -149,6 +149,11 @@ function lobby:onEnterQYQClickedHandler()
             return
         end
 
+        if msg.RetCode ~= retc.ok then
+            showMessageUI(retcText[msg.RetCode])
+            return
+        end
+
         local ui = require("ui.friendster.friendster").new(msg.Clubs)
         ui:show()
     end)
