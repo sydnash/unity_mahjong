@@ -2529,6 +2529,10 @@ function mahjongOperation:onDestroy()
         panleHighlightTex = nil
     end
 
+    if self.chuPaiHintUI then
+        self.chuPaiHintUI:close()
+    end
+
     self.diceRoot:show()
     self.centerGlass:show()
     self.countdown:show()
