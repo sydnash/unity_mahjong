@@ -155,6 +155,7 @@ public class AndroidHelper
     {
         return UpdripsHelper.GetParams(javaObject);
     }
+
 	/// <summary>
 	/// Clears the SG invite parameter.
 	/// </summary>
@@ -252,6 +253,14 @@ public class AndroidHelper
     /// <summary>
     /// 
     /// </summary>
+    public bool IsInstalledCN()
+    {
+        return ChuiNiuHelper.IsInstalled(javaObject);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="title"></param>
     /// <param name="desc"></param>
     /// <param name="url"></param>
@@ -269,6 +278,15 @@ public class AndroidHelper
     public void ShareImageCN(string title, string imageFile)
     {
         ChuiNiuHelper.ShareImage(javaObject, title, imageFile);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="packageName"></param>
+    public void OpenThirdApp(string packageName)
+    {
+        javaObject.Call("StartActivity", packageName);
     }
 
     #endregion

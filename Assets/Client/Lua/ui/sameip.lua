@@ -16,15 +16,17 @@ function sameip:onInit()
     local text = string.empty
 
     for _, v in pairs(self.data) do
-        local ps = string.empty
-        for _, u in pairs(v) do
-            ps = ps .. string.format("\"%s\" ", u)
-        end
+        if #v > 1 then
+            local ps = string.empty
+            for _, u in pairs(v) do
+                ps = ps .. string.format("\"%s\" ", u)
+            end
 
-        if not string.isNilOrEmpty(text) then
-            text = text .. "\n"
+            if not string.isNilOrEmpty(text) then
+                text = text .. "\n"
+            end
+            text = text .. string.format("%s为同一IP地址", ps)
         end
-        text = text .. string.format("%s为同一IP地址", ps)
     end
 
     self.mText:setText(text)

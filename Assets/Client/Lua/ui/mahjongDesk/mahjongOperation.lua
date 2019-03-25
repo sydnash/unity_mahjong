@@ -2863,9 +2863,16 @@ end
 
 function mahjongOperation:showHuPaiHintInfo()
     if self.huPaiHintInfo ~= nil then
-        local huHintItems = { self.mHuHintA, self.mHuHintB, self.mHuHintC, self.mHuHintD, self.mHuHintE, self.mHuHintF, self.mHuHintG, self.mHuHintH, self.mHuHintI, }
+        if self.huHintItems == nil then
+            self.huHintItems = {}
 
-        for _, v in pairs(huHintItems) do
+            for i=1, 18 do
+                local k = "mHuHint" .. tostring(i)
+                table.insert(self.huHintItems, self[k])
+            end
+        end
+
+        for _, v in pairs(self.huHintItems) do
             v:hide()
         end
 
@@ -2873,12 +2880,20 @@ function mahjongOperation:showHuPaiHintInfo()
         for k, v in pairs(self.huPaiHintInfo) do
             v.left = 4 - totalCntVec[v.jiaoTid]
 
-            local item = huHintItems[k]
+            local item = self.huHintItems[k]
             item:setInfo(v)
             item:show()
         end
 
-        self.mHuHintBg:setSize(Vector2.New(105 + 90 * #self.huPaiHintInfo, 130))
+        local w = 918
+        local h = 198
+
+        if #self.huPaiHintInfo < 9 then
+            w = 105 + 90 * #self.huPaiHintInfo
+            h = 130
+        end
+
+        self.mHuHintBg:setSize(Vector2.New(w, h))
         self.mHuHint:show()
     end
 end

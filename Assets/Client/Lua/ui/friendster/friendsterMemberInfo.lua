@@ -99,7 +99,7 @@ function friendsterMemberInfo:onExitClickedHandler()
                       showWaitingUI("正在退出亲友圈，请稍候")
                       networkManager.exitFriendster(self.friendster.id, function(msg)
                           closeWaitingUI()
-                          showMessageUI(string.format("已经成功退出亲友圈[%d]", self.friendster.id))
+                          showToastUI(string.format("成功退出亲友圈[%d]", self.friendster.id))
                           signalManager.signal(signalType.friendsterExitedSignal, self.friendster.id)
                           self:close()
                       end)
@@ -116,7 +116,7 @@ function friendsterMemberInfo:onDissolveClickedHandler()
                       showWaitingUI("正在解散亲友圈，请稍候")
                       networkManager.dissolveFriendster(self.friendster.id, function(msg)
                           closeWaitingUI()
-                          showMessageUI(string.format("已经成功解散亲友圈[%d]", self.friendster.id))
+                          showToastUI(string.format("成功解散亲友圈[%d]", self.friendster.id))
                           self:close()
                       end)
                   end,
@@ -141,7 +141,7 @@ function friendsterMemberInfo:onDeleteClickedHandler()
                 return
             end
 
-            showMessageUI("玩家已经从亲友圈中删除")
+            showToastUI("玩家已经从亲友圈中删除")
             self:close()
         end)
     end, function()
@@ -165,6 +165,7 @@ function friendsterMemberInfo:onTobeManagerClickedHandler()
             return
         end
 
+        showToastUI("管理员权限设置成功")
         self:close()
     end)
 
@@ -186,6 +187,7 @@ function friendsterMemberInfo:onTobeMemberClickedHandler()
             return
         end
 
+        showToastUI("管理员权限已经取消")
         self:close()
     end)
 

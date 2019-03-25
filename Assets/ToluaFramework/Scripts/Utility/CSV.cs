@@ -56,7 +56,7 @@ public class CSV
     private CSV()
     {
         mDic.Add("http", "1");
-        mDic.Add("stingyscrollview", "1");
+        mDic.Add("stingyscrollview", "2");
         mDic.Add("deviceinfo", "1");
         mDic.Add("chuiniusdk", "1");
     }

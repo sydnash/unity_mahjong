@@ -56,6 +56,11 @@ end
 function quicklyStart:setPlayerState(player)
     local item = self.items[player.acId]
 
+    if item == nil then
+        commitError("quicklyStart.setPlayerState, can't find item by acid: %d", player.acId)
+        return
+    end
+
     if player.acId == self.game.quicklyStartVoteProposer then
         item:setState(-1)
     else

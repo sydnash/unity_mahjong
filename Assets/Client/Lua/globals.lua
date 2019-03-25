@@ -145,6 +145,10 @@ local function inviteSgCallback(params)
         local cityType = t.cityType
         local deskId = t.deskId
 
+        if cityType == 0 or deskId == 0 then
+            return
+        end
+
         if clientApp.currentDesk ~= nil and clientApp.currentDesk:isPlayback() then
             return
         end

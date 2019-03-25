@@ -31,6 +31,7 @@ public class AndroidHelperWrap
 		L.RegFunction("GetDistance", GetDistance);
 		L.RegFunction("ShareUrlCN", ShareUrlCN);
 		L.RegFunction("ShareImageCN", ShareImageCN);
+		L.RegFunction("OpenThirdApp", OpenThirdApp);
 		L.RegFunction("New", _CreateAndroidHelper);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, null);
@@ -479,6 +480,23 @@ public class AndroidHelperWrap
 			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			obj.ShareImageCN(arg0, arg1);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OpenThirdApp(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.OpenThirdApp(arg0);
 			return 0;
 		}
 		catch (Exception e)

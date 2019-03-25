@@ -149,6 +149,11 @@ function lobby:onEnterQYQClickedHandler()
             return
         end
 
+        if msg.RetCode ~= retc.ok then
+            showMessageUI(retcText[msg.RetCode])
+            return
+        end
+
         local ui = require("ui.friendster.friendster").new(msg.Clubs)
         ui:show()
     end)
@@ -178,7 +183,7 @@ end
 
 function lobby:onRankClickedHandler()
     playButtonClickSound()
-    showMessageUI("功能暂未开放，敬请期待！")
+    showToastUI("功能暂未开放，敬请期待！")
 end
 
 function lobby:onActivityClickedHandler()
@@ -260,8 +265,6 @@ function lobby:show()
     if not clientApp.activityShown then
         local ui = require("ui.activity").new()
         ui:show()
-
-        clientApp.activityShown = true
     end
 end
 

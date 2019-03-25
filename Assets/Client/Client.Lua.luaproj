@@ -72,6 +72,7 @@
     <Compile Include="Lua\logic\doushisi\doushisi.lua" />
     <Compile Include="Lua\logic\doushisi\doushisiGame.lua" />
     <Compile Include="Lua\logic\doushisi\doushisiType.lua" />
+    <Compile Include="Lua\logic\friendster\friendsterRobot.lua" />
     <Compile Include="Lua\logic\game.lua" />
     <Compile Include="Lua\logic\mahjong\helper.lua" />
     <Compile Include="Lua\logic\manager\gvoiceManager.lua" />
