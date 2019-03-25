@@ -57,7 +57,7 @@ function quicklyStart:setPlayerState(player)
     local item = self.items[player.acId]
 
     if item == nil then
-        commitError("quicklyStart.setPlayerState, can't find item by acid: %d", player.acId)
+        commitError(string.format("quicklyStart.setPlayerState, can't find item by acid: %d", player.acId))
         return
     end
 
