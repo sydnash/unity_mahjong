@@ -83,6 +83,8 @@ function clientApp:start()
     
     local login = require("ui.login").new()
     login:show()
+
+    
 end
 
 local escape = false

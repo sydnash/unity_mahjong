@@ -370,11 +370,13 @@ function doushisiOperation:onInit()
     local inhandCameraT = camera.transform
     inhandCameraT.position = Vector3.New(inhandCameraT.position.x, self.safeArea.bottom + camera.orthographicSize, inhandCameraT.position.z)
 
-    self.tableRoot = find("doushisi/table")
+    local root = find("doushisi").transform
+
+    self.tableRoot = findChild(root, "table")
     local tbc = gamepref.getTablecloth(gameType.doushisi)
     self:changeBG(tbc)
 
-    self.cardRoot = find("doushisi/changpai_root")
+    self.cardRoot = findChild(root, "changpai_root")
     self.allCards = {}
     self.idleCards = {}
     self.allActionCards = {}
@@ -389,7 +391,7 @@ function doushisiOperation:onInit()
     self.dragCard:setColliderEnabled(false)
     self.sortOrder = 0
     --剩余的牌
-    self.leftCards = find("doushisi/leftcards")
+    self.leftCards = findChild(root, "leftcards")
     self.leftCardsModel = findSpriteRD(self.leftCards.transform, "model/M")
     self.leftCardsNum = findChild(self.leftCards.transform, "num")
     self.leftCardsNumL = findSpriteRD(self.leftCardsNum.transform, "L")

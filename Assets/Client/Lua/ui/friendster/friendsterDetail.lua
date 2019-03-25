@@ -86,11 +86,11 @@ function friendsterDetail:onInit()
         self.mReturn:show()
     end
 
---    if string.isNilOrEmpty(self.data.notice.text) then
---        self.mNoticeRP:hide()
---    else
---        self.mNoticeRP:show()
---    end
+    if string.isNilOrEmpty(self.data.notice.text) then
+        self.mNoticeRP:hide()
+    else
+        self.mNoticeRP:show()
+    end
 
     self.mShare:hide()
     self.mSharePanel:hide()
@@ -193,10 +193,10 @@ function friendsterDetail:onShareCNClickedHandler()
 end
 
 function friendsterDetail:onNoticeClickedHandler()
---    local ui = require("ui.friendster.friendsterNotice").new(self.data)
---    ui:show()
+    local ui = require("ui.friendster.friendsterNotice").new(self.data)
+    ui:show()
 
---    playButtonClickSound()
+    playButtonClickSound()
 end
 
 function friendsterDetail:onManageClickedHandler()

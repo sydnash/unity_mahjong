@@ -224,6 +224,7 @@ public static class CustomSettings
         _GT(typeof(Gender)),
         _GT(typeof(CSV)),
         _GT(typeof(DeviceInfo)),
+        _GT(typeof(LuaTask)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

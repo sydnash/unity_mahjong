@@ -151,20 +151,22 @@ function mahjongOperation:onInit()
     camera.orthographicSize = inhandCameraParams.size
     fixInhandCameraParam(inhandCameraParams.size, camera)
 
+    local root = find("mahjong").transform
+
     --麻将出口的板子节点
-    local plane = find("mahjong/table_plane")
+    local plane = findChild(root, "table_plane")
     self.planeAnim = getComponentU(plane.gameObject, typeof(UnityEngine.Animation))
     local planeClip = animationManager.load("deskplane", "deskplane")
     self.planeAnim:AddClip(planeClip, planeClip.name)
     self.planeAnim.clip = planeClip
     --麻将根节点
-    self.mahjongsRoot = find("mahjong/mahjongs_root")
+    self.mahjongsRoot = findChild(root, "mahjongs_root")
     self.mahjongsRootAnim = getComponentU(self.mahjongsRoot.gameObject, typeof(UnityEngine.Animation))
     local mahjongsRootClip = animationManager.load("mahjongroot", "mahjongroot")
     self.mahjongsRootAnim:AddClip(mahjongsRootClip, mahjongsRootClip.name)
     self.mahjongsRootAnim.clip = mahjongsRootClip
     --方向指示节点
-    self.planeRoot = find("mahjong/planes")
+    self.planeRoot = findChild(root, "planes")
     self:rotatePlanes()
     local planeNames = { 
         [seatType.mine]  = "plane02/plane02_0", 
@@ -188,7 +190,7 @@ function mahjongOperation:onInit()
     end
     self:darkPlanes()
     --骰子节点和动画
-    self.diceRoot = find("mahjong/shaizi")
+    self.diceRoot = findChild(root, "shaizi")
     self.diceRootAnim = getComponentU(self.diceRoot.gameObject, typeof(UnityEngine.Animation))
     local diceRootClip = animationManager.load("diceroot", "diceroot")
     self.diceRootAnim:AddClip(diceRootClip, diceRootClip.name)
@@ -204,14 +206,14 @@ function mahjongOperation:onInit()
     end
     self.diceRoot:hide()
     --倒计时
-    self.centerGlass = find("mahjong/planes/glass")
-    self.countdown = find("mahjong/countdown")
+    self.centerGlass = findChild(root, "planes/glass")
+    self.countdown = findChild(root, "countdown")
     self.countdown.a = findSpriteRD(self.countdown.transform, "a")
     self.countdown.b = findSpriteRD(self.countdown.transform, "b")
     self.centerGlass:show()
     self.countdown:hide()
     --出牌指示器
-    self.chupaiPtr = find("mahjong/chupaiPtr")
+    self.chupaiPtr = findChild(root, "chupaiPtr")
     local chupaiPtrD = self.chupaiPtr:findChild("mesh_diamond2")
     local chupaiPtrAnim = getComponentU(chupaiPtrD.gameObject, typeof(UnityEngine.Animation))
     local chupaiPtrClip = animationManager.load("chupaiptr", "chupaiptr")

@@ -35,6 +35,7 @@ modelManager        = require("manager.modelManager")
 textureManager      = require("manager.textureManager")
 animationManager    = require("manager.animationManager")
 signalManager       = require("manager.signalManager")
+task                = require("task")
 
 require("const.typeDef")
 require("const.textDef")

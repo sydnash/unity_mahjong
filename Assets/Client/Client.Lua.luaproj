@@ -98,6 +98,7 @@
     <Compile Include="Lua\platform\platformHelper.lua" />
     <Compile Include="Lua\platform\talkingData.lua" />
     <Compile Include="Lua\scene\common\spriteRD.lua" />
+    <Compile Include="Lua\task.lua" />
     <Compile Include="Lua\ui\activity.lua" />
     <Compile Include="Lua\ui\agreement.lua" />
     <Compile Include="Lua\ui\authentication\authentication.lua" />

@@ -32,6 +32,7 @@ public class ClientApp : LuaClient
     {
         AssetPoolManager.instance.Update();
         AudioManager.instance.Update();
+        LuaCallback.instance.Update();
     }
 
     /// <summary>
@@ -41,5 +42,14 @@ public class ClientApp : LuaClient
     protected void OnApplicationPause(bool status)
     {
         luaState.Call<bool>("onApplicationPause", status, false);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    protected void OnApplicationQuit()
+    {
+        LuaTask.DestroyAll();
+        Destroy();
     }
 }
