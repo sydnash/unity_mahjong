@@ -850,17 +850,20 @@ function mahjongOperation:createPengMahjongs(player)
     local datas = player[mahjongGame.cardType.peng]
 
     for _, d in pairs(datas) do
-        local mahjongs = {}
+        local mahjongs = { cards = {} }
 
         for _, id in pairs(d.Cs) do
             local m = self:getMahjongFromIdle(id)
             m:show()
-            table.insert(mahjongs, m)
+            table.insert(mahjongs.cards, m)
             self:removeFromIdle()
         end
 
         if d.Op == opType.gang.id then
-            mahjongs[5] = d.D
+            mahjongs.typ = opType.gang.id
+            mahjongs.detail = d.D
+        else
+            mahjongs.typ = opType.peng.id
         end
 
         self:putMahjongsToPeng(player.acId, mahjongs, angang)
@@ -1076,8 +1079,8 @@ function mahjongOperation:highlightSelectMahjong(id)
 
     for _, lines in pairs(self.pengMahjongs) do
         for _, mahjongs in pairs(lines) do
-            for i=1, math.min(4, #mahjongs) do
-                local m = mahjongs[i]
+            for i=1, math.min(4, #mahjongs.cards) do
+                local m = mahjongs.cards[i]
                 if m.tid == tid then
                     m:blue(true)
                 end
@@ -1106,8 +1109,8 @@ function mahjongOperation:clearSelectMahjong(id)
 
     for _, lines in pairs(self.pengMahjongs) do
         for _, mahjongs in pairs(lines) do
-            for i=1, math.min(4, #mahjongs) do
-                local m = mahjongs[i]
+            for i=1, math.min(4, #mahjongs.cards) do
+                local m = mahjongs.cards[i]
                 if m.tid == tid then
                     m:blue(false)
                 end
@@ -1663,7 +1666,8 @@ function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
         end
     end
 
-    self:putMahjongsToPeng(acId, pengMahjongs)
+    local peng = { cards = pengMahjongs, typ = opType.peng.id }
+    self:putMahjongsToPeng(acId, peng)
 
     if self.chupaiPtr.mahjongId == beCard then
         self.chupaiPtr:hide()
@@ -1701,8 +1705,9 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
                 break
             end
         end
-        mahjongs[5] = t
+        --mahjongs[5] = t
 
+        local gangCards = { cards = mahjongs, typ = opType.gang.id, detail = t }
         self:putMahjongsToPeng(acId, mahjongs)
 
         if self.chupaiPtr.mahjongId == beCard then
@@ -1719,9 +1724,11 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
         local p = self.pengMahjongs[acId]
 
         for _, v in pairs(p) do
-            if v[1].name == m[1].name then
-                table.insert(v, m[1])
-                v[5] = t
+            local cs = v.cards
+            if cs[1].name == m[1].name then
+                table.insert(cs, m[1])
+                v.typ = opType.gang.id
+                v.detail = t
                 break
             end
         end 
@@ -1736,9 +1743,10 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
         end
 
         local mahjongs = self:decreaseInhandMahjongs(acId, cards)
-        mahjongs[5] = t
 
-        self:putMahjongsToPeng(acId, mahjongs)
+        local gang = { cards = mahjongs, typ = opType.gang.id, detail = t }
+        self:putMahjongsToPeng(acId, gang)
+
         soundManager.playGfx("mahjong", "rain")
     end
 
@@ -1805,15 +1813,19 @@ function mahjongOperation:onOpDoHu(acId, cards, beAcId, beCard, t, ft)
         end
         if hu == nil then --如果是抢杠，在出牌里面搜不到，要去碰牌里面搜
             local pengMahjongs = self.pengMahjongs[beAcId]
-            if pengMahjongs then
-                for i, mahjongs in pairs(pengMahjongs) do
-                    for k=1, math.min(4, #mahjongs) do 
-                        local m = mahjongs[k]
+            if pengMahjongs ~= nil then
+                for _, mahjongs in pairs(pengMahjongs) do
+                    local cs = mahjongs.cards
+                    for k=1, math.min(4, #cs) do 
+                        local m = cs[k]
                         if m.id == beCard then
                             hu = m
-                            table.remove(mahjongs, k)
+                            table.remove(cs, k)
                             --被抢杠后删除杠的类型
-                            table.remove(mahjongs, #mahjongs)
+                            table.remove(cs, #cs)
+                            --
+                            mahjongs.typ = opType.peng.id
+                            mahjong.detail = nil
                         end
                     end
                 end
@@ -2219,10 +2231,11 @@ function mahjongOperation:relocatePengMahjongs(player)
     for i, mahjongs in pairs(pengMahjongs) do
         i = i - 1
         local d = 0.015 * i -- 碰/杠牌每组之间的间隔
-        local angang = #mahjongs == 5 and mahjongs[5] == opType.gang.detail.angang or false
+        --local angang = #mahjongs == 5 and mahjongs[5] == opType.gang.detail.angang or false
+        local angang = (mahjongs.typ == opType.gang.id) and (mahjong.detail == opType.gang.detail.angang)
 
-        for k = 1, math.min(4, #mahjongs) do 
-            local m = mahjongs[k]
+        for k = 1, math.min(4, #mahjongs.cards) do 
+            local m = mahjongs.cards[k]
 
             local c = 3 * i + k - 1
             local p = m:getLocalPosition()
@@ -2302,17 +2315,17 @@ end
 -------------------------------------------------------------------------------
 -- 将mahjong放到出牌区
 -------------------------------------------------------------------------------
-function mahjongOperation:putMahjongsToPeng(acId, mahjongs, angang)
+function mahjongOperation:putMahjongsToPeng(acId, mahjongs)
     if self.pengMahjongs[acId] == nil then
         self.pengMahjongs[acId] = {}
     end
 
     table.insert(self.pengMahjongs[acId], mahjongs)
 
-    for i=1, math.min(4, #mahjongs) do
-        local m = mahjongs[i]
-        m:setShadowMode(mahjong.shadowMode.yang)
-    end
+--    for i=1, math.min(4, #mahjongs.cards) do
+--        local m = mahjongs.cards[i]
+--        m:setShadowMode(mahjong.shadowMode.yang)
+--    end
 
     local player = self.game:getPlayerByAcId(acId)
     self:relocatePengMahjongs(player)

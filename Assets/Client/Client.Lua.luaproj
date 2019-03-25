@@ -75,6 +75,7 @@
     <Compile Include="Lua\logic\friendster\friendsterRobot.lua" />
     <Compile Include="Lua\logic\game.lua" />
     <Compile Include="Lua\logic\mahjong\helper.lua" />
+    <Compile Include="Lua\logic\mahjong\mahjongGame_YaoTongRenYong.lua" />
     <Compile Include="Lua\logic\manager\gvoiceManager.lua" />
     <Compile Include="Lua\logic\friendster\friendster.lua" />
     <Compile Include="Lua\logic\friendster\friendsterDesk.lua" />
@@ -90,6 +91,7 @@
     <Compile Include="Lua\logic\paodekuai\paodekuaiGame.lua" />
     <Compile Include="Lua\logic\player\playHistory.lua" />
     <Compile Include="Lua\logic\poker\pokerType.lua" />
+    <Compile Include="Lua\logic\taskTest.lua" />
     <Compile Include="Lua\logic\touch.lua" />
     <Compile Include="Lua\network\proto.lua" />
     <Compile Include="Lua\logic\player\gamePlayer.lua" />
@@ -127,6 +129,7 @@
     <Compile Include="Lua\ui\doushisiDesk\doushisiDeskHeader.lua" />
     <Compile Include="Lua\ui\mahjongDesk\huPaiHint.lua" />
     <Compile Include="Lua\ui\mahjongDesk\huPaiHintOne.lua" />
+    <Compile Include="Lua\ui\mahjongDesk\mahjongOperation_YaoTongRenYong.lua" />
     <Compile Include="Lua\ui\mail\mail.lua" />
     <Compile Include="Lua\ui\mail\mailItem.lua" />
     <Compile Include="Lua\ui\paodekuaiDesk\paodekuaiDesk.lua" />

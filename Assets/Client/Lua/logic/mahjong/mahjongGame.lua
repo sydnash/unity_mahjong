@@ -3,10 +3,10 @@
 --此文件由[BabeLua]插件自动生成
 
 local gamePlayer = require("logic.player.gamePlayer")
+local mahjongType = require ("logic.mahjong.mahjongType")
 
 local base = require("logic.game")
 local mahjongGame = class("mahjongGame", base)
-local mahjongType = require ("logic.mahjong.mahjongType")
 
 --------------------------------------------------------------
 --
@@ -19,6 +19,9 @@ mahjongGame.status = {
     gameend =  5, --结束
 }
 
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
 mahjongGame.cardType = {
     idle = 1,
     shou = 2,
@@ -46,7 +49,6 @@ function mahjongGame:getTotalCountByConfig(config)
 
     return 108
 end
-
 
 ----------------------------------------------------------------
 --
@@ -723,11 +725,11 @@ function mahjongGame:onGameEndListener(specialData, datas, totalScores)
                     d[u.Op] = {}
                 end
 
-                table.insert(d[u.Op], u.Cs)
-
+                local op = d[u.Op]
                 if u.Op == opType.gang.id then --存放杠牌的类型
-                    local x = #d[u.Op]
-                    d[u.Op][x][5] = u.D
+                    table.insert(op, { cards = u.Cs, detial = u.D })
+                else
+                    table.insert(op, { cards = u.Cs })
                 end
             end
         end

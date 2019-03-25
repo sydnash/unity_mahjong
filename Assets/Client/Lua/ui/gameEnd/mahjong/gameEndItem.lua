@@ -103,7 +103,7 @@ function gameEndItem:setPlayerInfo(player, scoreChanges)
             local p = require("ui.gameEnd.mahjong.gameEndPengPai").new()
             p:setParent(self.mPai)
             p:show()
-            p:setMahjongId(u[1])
+            p:setMahjongId(u.cards[1])
             p:setLocalPosition(Vector3.New(x, -7, 0))
 
             x = x + p.width + 5
@@ -117,7 +117,7 @@ function gameEndItem:setPlayerInfo(player, scoreChanges)
             local p = require("ui.gameEnd.mahjong.gameEndGangPai").new()
             p:setParent(self.mPai)
             p:show()
-            p:setMahjongId(u[1], u[5] == opType.gang.detail.angang)
+            p:setMahjongId(u.cards[1], u.detail == opType.gang.detail.angang)
             p:setLocalPosition(Vector3.New(x, -7, 0))
 
             x = x + p.width + 5
