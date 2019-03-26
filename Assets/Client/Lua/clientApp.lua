@@ -42,19 +42,6 @@ local function tracebackHandler(errorMessage)
     networkManager.disconnect()
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
@@ -79,12 +66,19 @@ function clientApp:start()
     registerUpdateListener(self.update, self)
 
     clientApp.currentDesk = nil
+
+    computeTask = task.new()
+    if computeTask:dofile("task/init.lua") then
+        computeTask:call("Test", "xxx", function(xxx)
+            log("compute task ret:" .. xxx)
+        end)
+    end
+
     DISABLE_GLOBAL_VARIABLE_DECLARATION()
+
     
     local login = require("ui.login").new()
     login:show()
-
-    
 end
 
 local escape = false
