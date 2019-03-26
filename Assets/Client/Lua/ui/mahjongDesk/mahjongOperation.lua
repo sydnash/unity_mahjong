@@ -3073,10 +3073,12 @@ function mahjongOperation:generateChuPaiHintComputeParam(chus)
         que    = player.que,
     }
     if computeTask then
-        -- log("start compute chu pai hint:============")
+        local t1 = time.realtimeSinceStartup
         self.computeChuHintId = self.computeChuHintId + 1
         local id = self.computeChuHintId
         computeTask:call("computeChuHint", table.tojson(param), function(ret)
+            local t2 = time.realtimeSinceStartup
+            log("compute chu pai hint used time: %fms", (t2 - t1) * 1000)
             -- log("compute chu pai hint:========= " .. ret)
             if id == self.computeChuHintId and self.canChuPai then
                 local chus = table.fromjson(ret)
