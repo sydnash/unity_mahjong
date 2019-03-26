@@ -275,6 +275,11 @@ function mahjongOperation:onInit()
     }
     self:hideChuPaiHint()
 
+    self.gangCount = { self.mGangCount1, self.mGangCount2, self.mGangCount3, self.mGangCount4, }
+    for _, v in pairs(self.gangCount) do
+        v:hide()
+    end
+
     self.animationManager = tweenParallel.new(false)
     tweenManager.add(self.animationManager)
     self.animationManager:play()
@@ -958,7 +963,7 @@ end
 -- OpList
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpList(oplist)
---    log("oplist = " .. table.tostring(oplist))
+    log("oplist = " .. table.tostring(oplist))
     local needShowHuPaiHint = false
 
     if oplist ~= nil then
@@ -1708,7 +1713,7 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
         --mahjongs[5] = t
 
         local gangCards = { cards = mahjongs, typ = opType.gang.id, detail = t }
-        self:putMahjongsToPeng(acId, mahjongs)
+        self:putMahjongsToPeng(acId, gangCards)
 
         if self.chupaiPtr.mahjongId == beCard then
             self.chupaiPtr:hide()
@@ -2231,8 +2236,14 @@ function mahjongOperation:relocatePengMahjongs(player)
     for i, mahjongs in pairs(pengMahjongs) do
         i = i - 1
         local d = 0.015 * i -- 碰/杠牌每组之间的间隔
-        --local angang = #mahjongs == 5 and mahjongs[5] == opType.gang.detail.angang or false
-        local angang = (mahjongs.typ == opType.gang.id) and (mahjong.detail == opType.gang.detail.angang)
+        local gangIdx = 0
+        local gangCnt = 0
+        local gangPos = Vector3.zero
+
+        if mahjongs.typ == opType.gang.id then
+            gangIdx = gangIdx + 1
+            gangCnt = #mahjongs.cards - 3
+        end
 
         for k = 1, math.min(4, #mahjongs.cards) do 
             local m = mahjongs.cards[k]
@@ -2262,7 +2273,7 @@ function mahjongOperation:relocatePengMahjongs(player)
             m:setLocalPosition(p)
 
             if not isUpon then
-                if angang then
+                if mahjong.detail == opType.gang.detail.angang then
                     m:setLocalRotation(r.angang)
                     m:setShadowMode(mahjong.shadowMode.pa)
                 else
@@ -2273,7 +2284,17 @@ function mahjongOperation:relocatePengMahjongs(player)
             else
                 m:setLocalRotation(r.default)
                 m:setShadowMode(mahjong.shadowMode.noshadow)
+
+                gangPos = Vector3.New(p.x, p.y, p.z + mahjong.h)
             end
+        end
+
+        if gangCnt > 0 then
+            local txt = self.gangCount[gangIdx]
+            txt:setText(string.format("x%d", gangCnt))
+            local pos = self:worldToUIPos(gangPos, txt, UnityEngine.Camera.main)
+            txt:setAnchoredPosition(pos)
+            txt:show()
         end
     end
 
@@ -2493,6 +2514,10 @@ function mahjongOperation:reset()
     self:hideChuPaiHintInfo()
 
     self.huPaiHintInfo = nil
+
+    for _, v in pairs(self.gangCount) do
+        v:hide()
+    end
 end
 
 function mahjongOperation:onCloseAllUIHandler()
@@ -2919,12 +2944,14 @@ end
 
 function mahjongOperation:worldToUIPos(pos, node, camera)
     local mainCamera = camera
-    local scPos = mainCamera:WorldToScreenPoint(pos)
-    scPos.z = math.abs(viewManager.camera.transform.position.z)
-    local uiPos = viewManager.camera:ScreenToWorldPoint(scPos)
+    local viewCamera = viewManager.camera
 
-    local parent = node:getParent()
-    local _, uiPos = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(parent.rectTransform, scPos, viewManager.camera, nil)
+    local scPos = mainCamera:WorldToScreenPoint(pos)
+--    scPos.z = math.abs(viewManager.camera.transform.position.z)
+--    local uiPos = viewManager.camera:ScreenToWorldPoint(scPos)
+
+    local parent = node:getParent().rectTransform
+    local _, uiPos = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, scPos, viewCamera, nil)
     return uiPos
 end
 
