@@ -298,8 +298,19 @@ public class LuaTask
         LuaDLL.lua_getglobal(L, name);
         if (LuaDLL.lua_isfunction(L, -1))
         {
+            int functionIdx = LuaDLL.lua_gettop(L);
+
+            LuaDLL.lua_getglobal(L, "_GDB_TRACKBACK_");
+            int errFuncIdx = 0;
+            if (LuaDLL.lua_isfunction(L, -1)) {
+                errFuncIdx = functionIdx;
+                LuaDLL.lua_insert(L, errFuncIdx);
+            } else {
+                LuaDLL.lua_pop(L, 1);
+            }
+
             LuaDLL.lua_pushstring(L, args);
-            if (LuaDLL.lua_pcall(L, 1, 1, 0) == 0) {
+            if (LuaDLL.lua_pcall(L, 1, 1, errFuncIdx) == 0) {
                 int curTop = LuaDLL.lua_gettop(L);
                 ret = LuaDLL.lua_tostring(L, curTop);
             } else {

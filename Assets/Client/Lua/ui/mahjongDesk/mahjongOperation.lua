@@ -568,7 +568,6 @@ function mahjongOperation:onGameSync()
         if self.game:hasHuPaiHint() then
             if not self.canChuPai then
                 local player = self.game:getPlayerByAcId(self.game.mainAcId)
-
                 if not player.isHu then
                     if #player.hus == 0 then
                         self:computeJiaoLocal()
@@ -703,21 +702,22 @@ function mahjongOperation:computeJiaoLocal()
         return
     end
 
-    if self.game.chuHintComputeHelper then
-        local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
-        local ret = self.game.chuHintComputeHelper:checkJiao(handCntVec, totalCntVec)
-        if #ret == 0 then
-            self.huPaiHintInfo = nil
-        else
-            self.huPaiHintInfo = ret
-        end
+    -- if self.game.chuHintComputeHelper then
+    --     local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
+    --     local ret = self.game.chuHintComputeHelper:checkJiao(handCntVec, totalCntVec)
+    --     if #ret == 0 then
+    --         self.huPaiHintInfo = nil
+    --     else
+    --         self.huPaiHintInfo = ret
+    --     end
 
-        if self.huPaiHintInfo then
-            self:showHuPaiHintInfo()
-        else
-            self:hideHuPaiHintInfo()
-        end
-    end
+    --     if self.huPaiHintInfo then
+    --         self:showHuPaiHintInfo()
+    --     else
+    --         self:hideHuPaiHintInfo()
+    --     end
+    -- end
+    self:generateHuPaiHintComputeParam()
 end
 
 -------------------------------------------------------------------------------
@@ -965,6 +965,7 @@ function mahjongOperation:onOpList(oplist)
         for _, v in pairs(infos) do
             if v.Op == opType.chu.id then
                 self.chuPaiHintInfo = self:generateChuPaiHint(v.Chus)
+                self:generateChuPaiHintComputeParam(v.Chus)
                 self:beginChuPai()
             else
                 local player = self.game:getPlayerByAcId(self.game.mainAcId)
@@ -1024,7 +1025,14 @@ function mahjongOperation:computeJiao(hus)
     if not self.game:hasHuPaiHint() then
         return
     end
+    if computeTask then
+        self:generateHuPaiHintComputeParam()
+    else
+        self:_computeJiao(hus)
+    end
+end
 
+function mahjongOperation:_computeJiao(hus)
     if self.game.chuHintComputeHelper then
         local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
         local c = {}
@@ -1636,6 +1644,7 @@ function mahjongOperation:onOpDoChu(acId, cards)
              self:hideHuPaiHintInfo()
         end
         self:hideChuPaiArrow()
+        self:generateHuPaiHintComputeParam()
     end
 
     self:relocateInhandMahjongs(acId)
@@ -2448,6 +2457,8 @@ function mahjongOperation:reset()
         touch.removeListener()
     end
 
+    self.computeChuHintId = 0
+    self.computeHuHintId = 0
     self:darkPlanes()
     self:hideChuPaiHint()
 
@@ -3032,6 +3043,89 @@ function mahjongOperation:findMahjongInhandByTId(tid, cnt)
         end
     end
     return find
+end
+
+function mahjongOperation:generateChuPaiHintComputeParam(chus)
+    if self.game.gameType == gameType.mahjong then
+        return
+    end
+    --inhand cards
+    local cards = {}
+    for i = 1,30 do
+        cards[i] = 0
+    end
+    local inhandMjs = self.inhandMahjongs[self.game.mainAcId]
+    for _, mj in pairs(inhandMjs) do
+        cards[mj.tid + 1] = cards[mj.tid + 1] + 1
+    end
+    if self.mo then
+        cards[self.mo.tid + 1] = cards[self.mo.tid + 1] + 1
+    end
+    --chiche
+    local player = self.game:getPlayerByAcId(self.game.mainAcId)
+    local chiChe = player[mahjongGame.cardType.peng]
+    local config = self.game.config
+    local param = {
+        cards = cards,
+        chiChe = chiChe,
+        config = config,
+        chus   = chus,
+        que    = player.que,
+    }
+    if computeTask then
+        -- log("start compute chu pai hint:============")
+        self.computeChuHintId = self.computeChuHintId + 1
+        local id = self.computeChuHintId
+        computeTask:call("computeChuHint", table.tojson(param), function(ret)
+            -- log("compute chu pai hint:========= " .. ret)
+            if id == self.computeChuHintId and self.canChuPai then
+                local chus = table.fromjson(ret)
+                self.chuPaiHintInfo = self:generateChuPaiHint(chus)
+                self:showChuPaiArrow()
+            end
+        end)
+    end
+end
+function mahjongOperation:generateHuPaiHintComputeParam()
+    if self.game.gameType == gameType.mahjong then
+        return
+    end
+    local cards = {}
+    for i = 1,30 do
+        cards[i] = 0
+    end
+    local inhandMjs = self.inhandMahjongs[self.game.mainAcId]
+    for _, mj in pairs(inhandMjs) do
+        cards[mj.tid + 1] = cards[mj.tid + 1] + 1
+    end
+    if self.mo then
+        cards[self.mo.tid + 1] = cards[self.mo.tid + 1] + 1
+    end
+    --chiche
+    local player = self.game:getPlayerByAcId(self.game.mainAcId)
+    local chiChe = player[mahjongGame.cardType.peng]
+    local config = self.game.config
+    local param = {
+        cards = cards,
+        chiChe = chiChe,
+        config = config,
+        chus   = chus,
+        que    = player.que,
+    }
+    if computeTask then
+        self.computeHuHintId = self.computeHuHintId + 1
+        local id = self.computeHuHintId
+        computeTask:call("computeHuHint", table.tojson(param), function(ret)
+            if id == self.computeHuHintId then
+                local player = self.game:getPlayerByAcId(self.game.mainAcId)
+                if not player.isHu then
+                    if not self.canChuPai then
+                        self:_computeJiao(table.fromjson(ret))
+                    end
+                end
+            end
+        end)
+    end
 end
 
 return mahjongOperation

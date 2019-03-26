@@ -69,9 +69,8 @@ function clientApp:start()
 
     computeTask = task.new()
     if computeTask:dofile("task/init.lua") then
-        computeTask:call("Test", "xxx", function(xxx)
-            log("compute task ret:" .. xxx)
-        end)
+    else
+        computeTask = nil
     end
 
     DISABLE_GLOBAL_VARIABLE_DECLARATION()

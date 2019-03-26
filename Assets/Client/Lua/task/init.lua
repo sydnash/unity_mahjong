@@ -1,5 +1,14 @@
 require("task.yaotongmahjong.init")
 require("task.core.table")
+require("task.core.string")
+
+-------------------------------------------------------------------
+--全局错误/异常处理函数
+-------------------------------------------------------------------
+function _GDB_TRACKBACK_(errorMessage)
+    local msg = string.format("Lua error: %s\n%s", tostring(errorMessage), debug.traceback("", 2))
+    return msg
+end
 
 function printLog(tag, fmt, a, ...)
     local desc = ""
