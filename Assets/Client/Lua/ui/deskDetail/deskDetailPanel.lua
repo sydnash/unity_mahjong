@@ -109,6 +109,10 @@ function detailPanel:set(cityType, gameType, layout, config)
             item:setSelected(selected)
             setTextColor(item.label, selected)
 
+            if self.interactable and u.disabled then
+                item:setInteractable(false)
+            end
+
             if not L.group.value then
                 item:addChangedListener(self.onItemChangedHandler, self)
             else

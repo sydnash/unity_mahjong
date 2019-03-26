@@ -504,7 +504,7 @@ end
 -- 
 -------------------------------------------------------------
 function getLogicGame(citytype, gametype)
-    if gametype == gameType.mahjong then
+    if gametype == gameType.mahjong or gametype == gameType.yaotongrenyong then
         return require("logic.mahjong.mahjongGame")
     elseif gametype == gameType.doushisi then
         if citytype == cityType.jintang then
@@ -961,6 +961,16 @@ function queryFromCSV(key)
     end
 
     return CSV.instance:Query(key)
+end
+
+----------------------------------------------------------------
+-- 
+----------------------------------------------------------------
+function screenPointToLocalPointInRectangle(node, scpos, camera)
+    local parent = node:getParent().rectTransform
+    local _, pos = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, scpos, camera, nil)
+
+    return pos
 end
 
 --endregion

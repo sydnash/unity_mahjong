@@ -247,11 +247,7 @@ function mahjongOperation:onInit()
     self.mGang:hide()
     self.mHu:hide()
 
-    self.mGang_MS_ButtonA:addClickListener(self.onGangAClickedHandler, self)
-    self.mGang_MS_ButtonB:addClickListener(self.onGangBClickedHandler, self)
-    self.mGang_MS_ButtonC:addClickListener(self.onGangCClickedHandler, self)
-
-    self.mGang_MS:hide()
+    self.mGangPanel:hide()
     self.mHnz:hide()
     self.mQue:hide()
     self.mDQTips:hide()
@@ -1398,7 +1394,7 @@ function mahjongOperation:hideOperations()
     self.mGang:hide()
     self.mHu:hide()
 
-    self.mGang_MS:hide()
+    self.mGangPanel:hide()
 end
 
 -------------------------------------------------------------------------------
@@ -1493,50 +1489,61 @@ end
 -- 点击“杠”
 -------------------------------------------------------------------------------
 function mahjongOperation:onGangClickedHandler()
-    if #self.mGang.c == 1 then
+    local count = #self.mGang.c
+
+    if count == 1 then
         opGang(self.game, self.mGang.c[1].Cs)
         self:hideOperations()
     else
-        local buttons = { self.mGang_MS_ButtonA, self.mGang_MS_ButtonB, self.mGang_MS_ButtonC }
-        local sprites = { self.mGang_MS_SpriteA, self.mGang_MS_SpriteB, self.mGang_MS_SpriteC }
+        self.mGangPanel:show()
 
-        for _, v in pairs(buttons) do
-            v:hide()
+        local panelSpt = findSprite(self.mGangPanel)
+        local width = count * 65 + 20
+        panelSpt:setSize(Vector2.New(width, 106))
+
+        local viewCamera = viewManager.camera
+        local scPos = viewManager.camera:WorldToScreenPoint(self.mGangPanel:getPosition())
+        local outScreen = scPos.x + width * 0.5 - UnityEngine.Screen.width + 80
+        if outScreen > 0 then
+            scPos.x = scPos.x - outScreen
+            local lcPos = screenPointToLocalPointInRectangle(self.mGangPanel, scPos, viewCamera)
+            self.mGangPanel:setAnchoredPosition(lcPos)
+        end
+
+        if self.gangItems == nil then
+            self.gangItems = {}
+            
+            for i=1, 11 do
+                local child = "Layout/" .. tostring(i)
+                local btn = findButton(self.mGangPanel.transform, child)
+                local spt = findSprite(self.mGangPanel.transform, child)
+
+                table.insert(self.gangItems, { btn = btn, spt = spt })
+
+                btn:addClickListener(self.onGangItemClickedHandler, self)
+            end
+        end
+
+        for _, v in pairs(self.gangItems) do
+            v.btn:hide()
         end
 
         for i, c in pairs(self.mGang.c) do
-            local cs = c.Cs
-            buttons[i].cs = cs
-            sprites[i]:setSprite(mahjongType.getMahjongTypeById(cs[1]).name)
+            local item = self.gangItems[i]
 
-            buttons[i]:show()
+            item.btn.cs = c.Cs
+            item.spt:setSprite(mahjongType.getMahjongTypeById(c.Cs[1]).name)
+
+            item.btn:show()
         end
-
-        self.mGang_MS:show()
     end
 end
 
 -------------------------------------------------------------------------------
 -- 点击“杠A”
 -------------------------------------------------------------------------------
-function mahjongOperation:onGangAClickedHandler()
-    opGang(self.game, self.mGang_MS_ButtonA.cs)
-    self:hideOperations()
-end
-
--------------------------------------------------------------------------------
--- 点击“杠B”
--------------------------------------------------------------------------------
-function mahjongOperation:onGangBClickedHandler()
-    opGang(self.game, self.mGang_MS_ButtonB.cs)
-    self:hideOperations()
-end
-
--------------------------------------------------------------------------------
--- 点击“杠C”
--------------------------------------------------------------------------------
-function mahjongOperation:onGangCClickedHandler()
-    opGang(self.game, self.mGang_MS_ButtonC.cs)
+function mahjongOperation:onGangItemClickedHandler(sender)
+    opGang(self.game, sender.cs)
     self:hideOperations()
 end
 
@@ -1710,7 +1717,6 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
                 break
             end
         end
-        --mahjongs[5] = t
 
         local gangCards = { cards = mahjongs, typ = opType.gang.id, detail = t }
         self:putMahjongsToPeng(acId, gangCards)
@@ -2502,7 +2508,7 @@ function mahjongOperation:reset()
     self.hasHnzChoosed = false
     self:clear(false)
 
-    self.mGang_MS:hide()
+    self.mGangPanel:hide()
     self.mHnz:hide()
     self.mQue:hide()
     self.mDQTips:hide()
@@ -2950,9 +2956,7 @@ function mahjongOperation:worldToUIPos(pos, node, camera)
 --    scPos.z = math.abs(viewManager.camera.transform.position.z)
 --    local uiPos = viewManager.camera:ScreenToWorldPoint(scPos)
 
-    local parent = node:getParent().rectTransform
-    local _, uiPos = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, scPos, viewCamera, nil)
-    return uiPos
+    return screenPointToLocalPointInRectangle(node, scPos, viewCamera)
 end
 
 function mahjongOperation:showChuPaiArrow()

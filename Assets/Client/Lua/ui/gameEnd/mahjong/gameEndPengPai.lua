@@ -11,14 +11,18 @@ _RES_(gameEndPengPai, "GameEndUI/Mahjong", "GameEndUI_PengPai")
 gameEndPengPai.width = 139
 
 function gameEndPengPai:onInit()
-    
+
 end
 
-function gameEndPengPai:setMahjongId(mahjongId)
+local function setSprite(sprite, mahjongId)
     local spriteName = mahjongType.getMahjongTypeById(mahjongId).name
-    self.mA:setSprite(spriteName)
-    self.mB:setSprite(spriteName)
-    self.mC:setSprite(spriteName)
+    sprite:setSprite(spriteName)
+end
+
+function gameEndPengPai:setMahjongId(mahjongIds)
+    setSprite(self.mA, mahjongIds[1])
+    setSprite(self.mB, mahjongIds[2])
+    setSprite(self.mC, mahjongIds[3])
 end
 
 return gameEndPengPai

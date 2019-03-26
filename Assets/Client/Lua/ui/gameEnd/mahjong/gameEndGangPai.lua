@@ -11,26 +11,27 @@ _RES_(gameEndGangPai, "GameEndUI/Mahjong", "GameEndUI_GangPai")
 gameEndGangPai.width = 139
 
 function gameEndGangPai:onInit()
-    self.mA:setSprite(self.spriteName)
-    self.mB:setSprite(self.spriteName)
-    self.mC:setSprite(self.spriteName)
-    self.mD:setSprite(self.spriteName)
+    self.bottomItems = { self.mA, self.mB, self.mC }
 end
 
-function gameEndGangPai:setMahjongId(mahjongId, angang)
+local function setSprite(sprite, mahjongId)
     local spriteName = mahjongType.getMahjongTypeById(mahjongId).name
+    sprite:setSprite(spriteName)
+end
 
-    if angang then
-        self.mA:setSprite("back")
-        self.mB:setSprite("back")
-        self.mC:setSprite("back")
-    else
-        self.mA:setSprite(spriteName)
-        self.mB:setSprite(spriteName)
-        self.mC:setSprite(spriteName)
+function gameEndGangPai:setMahjongId(mahjongIds, angang)
+    for i=1, 3 do
+        local spt = self.bottomItems[i]
+        local mid = mahjongIds[i]
+
+        if angang then
+            spt:setSprite("back")
+        else
+            setSprite(spt, mid)
+        end
     end
 
-    self.mD:setSprite(spriteName)
+    setSprite(self.mD, mahjongIds[4])
 end
 
 return gameEndGangPai

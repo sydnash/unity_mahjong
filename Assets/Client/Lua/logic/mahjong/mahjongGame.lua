@@ -37,6 +37,7 @@ mahjongGame.cardType = {
 function mahjongGame:ctor(data, playback)
     self.totalCardsCount = self:getTotalCountByConfig(data.Config)
     base.ctor(self, data, playback)
+    log("mahjongGame:ctor, config = " .. table.tostring(self.config))
 end
 
 -------------------------------------------------------------------------------
@@ -615,10 +616,12 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
     local player = self:getPlayerByAcId(acId)
     local infos = player[mahjongGame.cardType.peng]
     local detail = opType.gang.detail
+
     if t == detail.minggang then
         table.insert(infos, {
             Op = opType.gang.id,
-            Cs = {beCard, cards[1], cards[2], cards[3]}
+            Cs = {beCard, cards[1], cards[2], cards[3]},
+            D = detail.minggang,
         })
         self.knownMahjong[beCard] = 1
         self.knownMahjong[cards[1]] = 1
@@ -635,17 +638,43 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
         self.knownMahjong[cards[3]] = 1
         self.knownMahjong[cards[4]] = 1
     elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
-        local pinfo
+        local pinfo = nil
         for _, info in pairs(infos) do
-            if info.Op == opType.peng.id and mahjongType.getMahjongTypeId(info.Cs[1]) == mahjongType.getMahjongTypeId(cards[1]) then
-                pinfo = info
-                break
+            local yaotongId = 9 --幺筒
+            local iid = mahjongType.getMahjongTypeId(info.Cs[1])
+            local cid = mahjongType.getMahjongTypeId(cards[1])
+
+            if info.Op == opType.peng.id then
+                if self.gameType == gameType.yaotongrenyong and cid == yaotongId then --幺筒
+                    pinfo = info
+                    break
+                end
+
+                if iid == cid then
+                    pinfo = info
+                    break
+                end
+            end
+
+            if info.Op == opType.gang.id and self.gameType == gameType.yaotongrenyong and self.config.GangShangGang then
+                if cid == yaotongId then --幺筒
+                    pinfo = info
+                    break
+                end
+
+                if iid == cid then
+                    pinfo = info
+                    break
+                end
             end
         end
+
         pinfo.Op = opType.gang.id
         table.insert(pinfo.Cs, cards[1])
+        log("mahjongGame:onOpDoGang, pinfo = " .. table.tostring(pinfo))
         self.knownMahjong[cards[1]] = 1
     end
+
     self.deskUI:onPlayerGang(acId, t)
     self.operationUI:onOpDoGang(acId, cards, beAcId, beCard, t)
 end

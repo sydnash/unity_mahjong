@@ -58,8 +58,8 @@ local mahjongLayoutBase = {
     [7] = {
         title = string.empty,
         items = {
-            [1] = { style = "radiobox", text = "可平胡",key = "CanPingHu",  value = 1, },
-            [2] = { style = "radiobox", text = "点炮不可平胡",key = "CanPingHu",  value = 2, },
+            [1] = { style = "radiobox", text = "可平胡",key = "CanPingHu", value = 1, },
+            [2] = { style = "radiobox", text = "点炮不可平胡",key = "CanPingHu", value = 2, },
         },
         group = { value = true, switchOff = false },
     },
@@ -74,10 +74,10 @@ local mahjongLayoutBase = {
     [9] = { 
         title = string.empty, 
         items = { 
-            [1] = { style = "checkbox", text = "幺九", key = "YaoJiu",     value = { selected = 1, unselected = 2 }, },
+            [1] = { style = "checkbox", text = "幺九", key = "YaoJiu", value = { selected = 1, unselected = 2 }, },
             [2] = { style = "checkbox", text = "中张", key = "ZhongZhang", value = { selected = 1, unselected = 2 }, },
-            [3] = { style = "checkbox", text = "将对", key = "JiangDui",   value = { selected = 1, unselected = 2 }, },
-            [4] = { style = "checkbox", text = "门清", key = "MenQing",    value = { selected = 1, unselected = 2 }, },
+            [3] = { style = "checkbox", text = "将对", key = "JiangDui", value = { selected = 1, unselected = 2 }, },
+            [4] = { style = "checkbox", text = "门清", key = "MenQing", value = { selected = 1, unselected = 2 }, },
         }, 
         group = { value = false, switchOff = false },
     },
@@ -85,7 +85,7 @@ local mahjongLayoutBase = {
         title = string.empty,
         items = {
             [1] = { style = "checkbox", text = "对对胡2番", key = "DuiDuiHu2",  value = { selected = 1, unselected = 2 }, },
-            [2] = { style = "checkbox", text = "夹心五",    key = "JiaXinWu", value = { selected = 1, unselected = 2 }, },
+            [2] = { style = "checkbox", text = "夹心五", key = "JiaXinWu", value = { selected = 1, unselected = 2 }, },
             [3] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
         },
         group = { value = false, switchOff = false },
@@ -93,8 +93,8 @@ local mahjongLayoutBase = {
     [11] = { 
         title = string.empty, 
         items = {
-            [1] = {style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, },
-            [2] = { style = "checkbox", text = "比叫<color=#FF0000>（新）</color>", key = "BiJiao", value = { selected = 1, unselected = 2 }, },
+            [1] = { style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, },
+            [2] = { style = "checkbox", text = "比叫", key = "BiJiao", value = { selected = 1, unselected = 2 }, },
         }, 
         group = { value = false, switchOff = false },
     },
@@ -225,41 +225,169 @@ local nanchongPaodekuaiLayout     = table.clone(paodekuaiLayoutBase)
 local wenjiangPaodekuaiLayout     = table.clone(paodekuaiLayoutBase)
 local zhongjiangPaodekuaiLayout   = table.clone(paodekuaiLayoutBase)
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+local yaotongrenyongLayoutBase = {
+    [1] = {
+        title = "人数", 
+        items = { 
+            [1] = { style = "radiobox", text = "4人", key = "RenShu", value = 1, },
+            [2] = { style = "radiobox", text = "3人", key = "RenShu", value = 2, },
+            [3] = { style = "radiobox", text = "2人", key = "RenShu", value = 3, },
+        },
+        group = { value = true, switchOff = false },
+    },
+    [2] = {
+        title = "局数", 
+        items = { 
+            [1] = { style = "radiobox", text = "8局",  key = "JuShu", value = 1, },
+            [2] = { style = "radiobox", text = "12局", key = "JuShu", value = 2, },
+        }, 
+        group = { value = true, switchOff = false },
+    },
+    [3] = { 
+        title = "房数", 
+        items = { 
+            [1] = { style = "radiobox", text = "3房", key = "FangShu", value = 1, },
+            [2] = { style = "radiobox", text = "2房", key = "FangShu", value = 2, },
+        }, 
+        group = { value = true, switchOff = false },
+    },
+    [4] = { 
+        title = "封顶", 
+        items = { 
+            [1] = { style = "radiobox", text = "3番", key = "FengDing", value = 1, },
+            [2] = { style = "radiobox", text = "4番", key = "FengDing", value = 2, },
+        }, 
+        group = { value = true, switchOff = false },
+    },
+    [5] = { 
+        title = "玩法", 
+        items = { 
+            [1] = { style = "checkbox", text = "杠上杠", key = "GangShangGang", value = { selected = 1, unselected = 2 }, disabled = true, },
+        }, 
+        group = { value = false, switchOff = false },
+    },
+    [6] = { 
+        title = string.empty,
+        items = { 
+            [1] = { style = "radiobox", text = "自摸加底", key = "ZiMoJiaX", value = 1, },
+            [2] = { style = "radiobox", text = "自摸加番", key = "ZiMoJiaX", value = 2, },
+        }, 
+        group = { value = true, switchOff = false },
+    },
+    [7] = { 
+        title = string.empty, 
+        items = { 
+            [1] = { style = "radiobox", text = "点杠花炮", key = "DianGangHuaX", value = 1, },
+            [2] = { style = "radiobox", text = "点杠花摸", key = "DianGangHuaX", value = 2, },
+        }, 
+        group = { value = true, switchOff = false },
+    },
+    [8] = {
+        title = string.empty,
+        items = {
+            [1] = { style = "radiobox", text = "可平胡",key = "CanPingHu", value = 1, },
+            [2] = { style = "radiobox", text = "点炮不可平胡",key = "CanPingHu", value = 2, },
+        },
+        group = { value = true, switchOff = false },
+    },
+    [9] = { 
+        title = string.empty, 
+        items = { 
+            [1] = { style = "checkbox", text = "换三张", key = "HuanNZhang", value = { selected = 2, unselected = 1 }, },
+            [2] = { style = "checkbox", text = "换四张", key = "HuanNZhang", value = { selected = 3, unselected = 1 }, },
+        }, 
+        group = { value = true, switchOff = true },
+    },
+    [10] = { 
+        title = string.empty, 
+        items = { 
+            [1] = { style = "checkbox", text = "幺九", key = "YaoJiu", value = { selected = 1, unselected = 2 }, },
+            [2] = { style = "checkbox", text = "中张", key = "ZhongZhang", value = { selected = 1, unselected = 2 }, },
+            [3] = { style = "checkbox", text = "将对", key = "JiangDui", value = { selected = 1, unselected = 2 }, },
+            [4] = { style = "checkbox", text = "门清", key = "MenQing", value = { selected = 1, unselected = 2 }, },
+        }, 
+        group = { value = false, switchOff = false },
+    },
+    [11] = {
+        title = string.empty,
+        items = {
+            [1] = { style = "checkbox", text = "对对胡2番", key = "DuiDuiHu2",  value = { selected = 1, unselected = 2 }, },
+            [2] = { style = "checkbox", text = "夹心五", key = "JiaXinWu", value = { selected = 1, unselected = 2 }, },
+            [3] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
+        },
+        group = { value = false, switchOff = false },
+    },
+    [12] = { 
+        title = string.empty, 
+        items = {
+            [1] = { style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, },
+            [2] = { style = "checkbox", text = "比叫", key = "BiJiao", value = { selected = 1, unselected = 2 }, },
+        }, 
+        group = { value = false, switchOff = false },
+    },
+    [13] = {
+        title = "胡牌",
+        items = {
+            [1] = { style = "radiobox", text = "开启提示", key = "HuPaiHint", value = 1 },
+            [2] = { style = "radiobox", text = "关闭提示", key = "HuPaiHint", value = 2 },
+        },
+        group = {value = true, switchOff = false},
+    }
+}
+
+local chengduYaotongrenyongLayout      = table.clone(yaotongrenyongLayoutBase)
+local jintangYaotongrenyongLayout      = table.clone(yaotongrenyongLayoutBase)
+local xichongYaotongrenyongLayout      = table.clone(yaotongrenyongLayoutBase)
+local yingjingYaotongrenyongLayout     = table.clone(yaotongrenyongLayoutBase)
+local nanchongYaotongrenyongLayout     = table.clone(yaotongrenyongLayoutBase)
+local wenjiangYaotongrenyongLayout     = table.clone(yaotongrenyongLayoutBase)
+local zhongjiangYaotongrenyongLayout   = table.clone(yaotongrenyongLayoutBase)
+
 deskConfigLayout = {
     [cityType.chengdu] = {
-        [gameType.mahjong]   = chengduMahjongLayout,
-        [gameType.doushisi]  = chengduDoushisiLayout,
-        [gameType.paodekuai] = chengduPaodekuaiLayout,
+        [gameType.mahjong]          = chengduMahjongLayout,
+        [gameType.doushisi]         = chengduDoushisiLayout,
+        [gameType.paodekuai]        = chengduPaodekuaiLayout,
+        [gameType.yaotongrenyong]   = chengduYaotongrenyongLayout,
     },
     [cityType.jintang] = {
-        [gameType.mahjong]   = jintangMahjongLayout,
-        [gameType.doushisi]  = jintangDoushisiLayout,
-        [gameType.paodekuai] = jintangPaodekuaiLayout,
+        [gameType.mahjong]          = jintangMahjongLayout,
+        [gameType.doushisi]         = jintangDoushisiLayout,
+        [gameType.paodekuai]        = jintangPaodekuaiLayout,
+        [gameType.yaotongrenyong]   = jintangYaotongrenyongLayout,
     },
     [cityType.xichong] = {
-        [gameType.mahjong]   = xichongMahjongLayout,
-        [gameType.doushisi]  = xichongDoushisiLayout,
-        [gameType.paodekuai] = xichongPaodekuaiLayout,
+        [gameType.mahjong]          = xichongMahjongLayout,
+        [gameType.doushisi]         = xichongDoushisiLayout,
+        [gameType.paodekuai]        = xichongPaodekuaiLayout,
+        [gameType.yaotongrenyong]   = xichongYaotongrenyongLayout,
     },
     [cityType.yingjing] = {
-        [gameType.mahjong]   = yingjingMahjongLayout,
-        [gameType.doushisi]  = yingjingDoushisiLayout,
-        [gameType.paodekuai] = yingjingPaodekuaiLayout,
+        [gameType.mahjong]          = yingjingMahjongLayout,
+        [gameType.doushisi]         = yingjingDoushisiLayout,
+        [gameType.paodekuai]        = yingjingPaodekuaiLayout,
+        [gameType.yaotongrenyong]   = yingjingYaotongrenyongLayout,
     },
     [cityType.nanchong] = {
-        [gameType.mahjong]   = nanchongMahjongLayout,
-        [gameType.doushisi]  = nanchongDoushisiLayout,
-        [gameType.paodekuai] = nanchongPaodekuaiLayout,
+        [gameType.mahjong]          = nanchongMahjongLayout,
+        [gameType.doushisi]         = nanchongDoushisiLayout,
+        [gameType.paodekuai]        = nanchongPaodekuaiLayout,
+        [gameType.yaotongrenyong]   = nanchongYaotongrenyongLayout,
     },
     [cityType.wenjiang] = {
-        [gameType.mahjong]   = wenjiangMahjongLayout,
-        [gameType.doushisi]  = wenjiangDoushisiLayout,
-        [gameType.paodekuai] = wenjiangPaodekuaiLayout,
+        [gameType.mahjong]          = wenjiangMahjongLayout,
+        [gameType.doushisi]         = wenjiangDoushisiLayout,
+        [gameType.paodekuai]        = wenjiangPaodekuaiLayout,
+        [gameType.yaotongrenyong]   = wenjiangYaotongrenyongLayout,
     },
     [cityType.zhongjiang] = {
-        [gameType.mahjong]   = zhongjiangMahjongLayout,
-        [gameType.doushisi]  = zhongjiangDoushisiLayout,
-        [gameType.paodekuai] = zhongjiangPaodekuaiLayout,
+        [gameType.mahjong]          = zhongjiangMahjongLayout,
+        [gameType.doushisi]         = zhongjiangDoushisiLayout,
+        [gameType.paodekuai]        = zhongjiangPaodekuaiLayout,
+        [gameType.yaotongrenyong]   = zhongjiangYaotongrenyongLayout,
     },
 }
 
@@ -334,41 +462,81 @@ local nanchongPaodekuaiConfig     = table.clone(paodekuaiConfigBase)
 local wenjiangPaodekuaiConfig     = table.clone(paodekuaiConfigBase)
 local zhongjiangPaodekuaiConfig   = table.clone(paodekuaiConfigBase)
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+local yaotongrenyongConfigBase = {
+    ["RenShu"]         = 1,
+    ["JuShu"]          = 1,
+    ["FangShu"]        = 1,
+    ["FengDing"]       = 1,
+    ["GangShangGang"]  = 1,
+    ["ZiMoJiaX"]       = 1,
+    ["DianGangHuaX"]   = 1,
+    ["HuanNZhang"]     = 1,
+    ["YaoJiu"]         = 2,
+    ["ZhongZhang"]     = 2,
+    ["BiJiao"]         = 2,
+    ["JiangDui"]       = 2,
+    ["MenQing"]        = 2,
+    ["TianDiHu"]       = 2,
+    ["HuPaiHint"]      = 1,
+    ["CanPingHu"]      = 1,
+    ["JiaXinWu"]       = 2,
+    ["DuiDuiHu2"]      = 2,
+    ["DaXiaoYu"]       = 2,
+}
+
+local chengduYaotongrenyongConfig      = table.clone(yaotongrenyongConfigBase)
+local jintangYaotongrenyongConfig      = table.clone(yaotongrenyongConfigBase)
+local xichongYaotongrenyongConfig      = table.clone(yaotongrenyongConfigBase)
+local yingjingYaotongrenyongConfig     = table.clone(yaotongrenyongConfigBase)
+local nanchongYaotongrenyongConfig     = table.clone(yaotongrenyongConfigBase)
+local wenjiangYaotongrenyongConfig     = table.clone(yaotongrenyongConfigBase)
+local zhongjiangYaotongrenyongConfig   = table.clone(yaotongrenyongConfigBase)
+
 deskConfig = {
     [cityType.chengdu] = {
-        [gameType.mahjong] = chengduMahjongConfig,
-        [gameType.doushisi] = chengduDoushisiConfig,
-        [gameType.paodekuai] = chengduPaodekuaiConfig,
+        [gameType.mahjong]          = chengduMahjongConfig,
+        [gameType.doushisi]         = chengduDoushisiConfig,
+        [gameType.paodekuai]        = chengduPaodekuaiConfig,
+        [gameType.yaotongrenyong]   = chengduYaotongrenyongConfig,
     },
     [cityType.jintang] = {
-        [gameType.mahjong] = jintangMahjongConfig,
-        [gameType.doushisi] = jintangDoushisiConfig,
-        [gameType.paodekuai] = jintangPaodekuaiConfig,
+        [gameType.mahjong]          = jintangMahjongConfig,
+        [gameType.doushisi]         = jintangDoushisiConfig,
+        [gameType.paodekuai]        = jintangPaodekuaiConfig,
+        [gameType.yaotongrenyong]   = jintangYaotongrenyongConfig,
     },
     [cityType.xichong] = {
-        [gameType.mahjong] = xichongMahjongConfig,
-        [gameType.doushisi] = xichongDoushisiConfig,
-        [gameType.paodekuai] = xichongPaodekuaiConfig,
+        [gameType.mahjong]          = xichongMahjongConfig,
+        [gameType.doushisi]         = xichongDoushisiConfig,
+        [gameType.paodekuai]        = xichongPaodekuaiConfig,
+        [gameType.yaotongrenyong]   = xichongYaotongrenyongConfig,
     },
     [cityType.yingjing] = {
-        [gameType.mahjong] = yingjingMahjongConfig,
-        [gameType.doushisi] = yingjingDoushisiConfig,
-        [gameType.paodekuai] = yingjingPaodekuaiConfig,
+        [gameType.mahjong]          = yingjingMahjongConfig,
+        [gameType.doushisi]         = yingjingDoushisiConfig,
+        [gameType.paodekuai]        = yingjingPaodekuaiConfig,
+        [gameType.yaotongrenyong]   = yingjingYaotongrenyongConfig,
     },
     [cityType.nanchong] = {
-        [gameType.mahjong] = nanchongMahjongConfig,
-        [gameType.doushisi] = nanchongDoushisiConfig,
-        [gameType.paodekuai] = nanchongPaodekuaiConfig,
+        [gameType.mahjong]          = nanchongMahjongConfig,
+        [gameType.doushisi]         = nanchongDoushisiConfig,
+        [gameType.paodekuai]        = nanchongPaodekuaiConfig,
+        [gameType.yaotongrenyong]   = nanchongYaotongrenyongConfig,
     },
     [cityType.wenjiang] = {
-        [gameType.mahjong] = wenjiangMahjongConfig,
-        [gameType.doushisi] = wenjiangDoushisiConfig,
-        [gameType.paodekuai] = wenjiangPaodekuaiConfig,
+        [gameType.mahjong]          = wenjiangMahjongConfig,
+        [gameType.doushisi]         = wenjiangDoushisiConfig,
+        [gameType.paodekuai]        = wenjiangPaodekuaiConfig,
+        [gameType.yaotongrenyong]   = wenjiangYaotongrenyongConfig,
     },
     [cityType.zhongjiang] = {
-        [gameType.mahjong] = zhongjiangMahjongConfig,
-        [gameType.doushisi] = zhongjiangDoushisiConfig,
-        [gameType.paodekuai] = zhongjiangPaodekuaiConfig,
+        [gameType.mahjong]          = zhongjiangMahjongConfig,
+        [gameType.doushisi]         = zhongjiangDoushisiConfig,
+        [gameType.paodekuai]        = zhongjiangPaodekuaiConfig,
+        [gameType.yaotongrenyong]   = zhongjiangYaotongrenyongConfig,
     },
 }
 
@@ -443,41 +611,81 @@ local nanchongPaodekuaiShiftConfig    = table.clone(paodekuaiShiftConfigBase)
 local wenjiangPaodekuaiShiftConfig    = table.clone(paodekuaiShiftConfigBase)
 local zhongjiangPaodekuaiShiftConfig  = table.clone(paodekuaiShiftConfigBase)
 
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+local yaotongrenyongShiftConfigBase = {
+    ["RenShu"]          = { [4] = 1, [3]  = 2, [2]  = 3 },
+    ["JuShu"]           = { [8] = 1, [12] = 2, },
+    ["FangShu"]         = { [3] = 1, [2]  = 2 },
+    ["FengDing"]        = { [3] = 1, [4]  = 2, },
+    ["GangShangGang"]   = { [true] = 1, [false] = 2 },
+    ["ZiMoJiaX"]        = { [0] = 1, [1]  = 2 },
+    ["DianGangHuaX"]    = { [0] = 1, [1]  = 2 },
+    ["HuanNZhang"]      = { [0] = 1, [3]  = 2, [4]  = 3 },
+    ["YaoJiu"]          = { [true] = 1, [false] = 2 },
+    ["ZhongZhang"]      = { [true] = 1, [false] = 2 },
+    ["BiJiao"]          = { [true] = 1, [false] = 2 },
+    ["JiangDui"]        = { [true] = 1, [false] = 2 },
+    ["MenQing"]         = { [true] = 1, [false] = 2 },
+    ["TianDiHu"]        = { [true] = 1, [false] = 2 },
+    ["HuPaiHint"]       = { [true] = 1, [false] = 2 },
+    ["CanPingHu"]       = { [true] = 1, [false] = 2 },
+    ["DuiDuiHu2"]       = { [true] = 1, [false] = 2 },
+    ["JiaXinWu"]        = { [true] = 1, [false] = 2 },
+    ["DaXiaoYu"]        = { [true] = 1, [false] = 2 },
+}
+
+local chengduYaotongrenyongShiftConfig     = table.clone(yaotongrenyongShiftConfigBase)
+local jintangYaotongrenyongShiftConfig     = table.clone(yaotongrenyongShiftConfigBase)
+local xichongYaotongrenyongShiftConfig     = table.clone(yaotongrenyongShiftConfigBase)
+local yingjingYaotongrenyongShiftConfig    = table.clone(yaotongrenyongShiftConfigBase)
+local nanchongYaotongrenyongShiftConfig    = table.clone(yaotongrenyongShiftConfigBase)
+local wenjiangYaotongrenyongShiftConfig    = table.clone(yaotongrenyongShiftConfigBase)
+local zhongjiangYaotongrenyongShiftConfig  = table.clone(yaotongrenyongShiftConfigBase)
+
 deskShiftConfig = {
     [cityType.chengdu] = {
-        [gameType.mahjong] = chengduMahjongShiftConfig,
-        [gameType.doushisi] = chengduDoushisiShiftConfig,
-        [gameType.paodekuai] = chengduPaodekuaiShiftConfig,
+        [gameType.mahjong]          = chengduMahjongShiftConfig,
+        [gameType.doushisi]         = chengduDoushisiShiftConfig,
+        [gameType.paodekuai]        = chengduPaodekuaiShiftConfig,
+        [gameType.yaotongrenyong]   = chengduYaotongrenyongShiftConfig,
     },
     [cityType.jintang] = {
-        [gameType.mahjong] = jintangMahjongShiftConfig,
-        [gameType.doushisi] = jintangDoushisiShiftConfig,
-        [gameType.paodekuai] = jintangPaodekuaiShiftConfig,
+        [gameType.mahjong]          = jintangMahjongShiftConfig,
+        [gameType.doushisi]         = jintangDoushisiShiftConfig,
+        [gameType.paodekuai]        = jintangPaodekuaiShiftConfig,
+        [gameType.yaotongrenyong]   = jintangYaotongrenyongShiftConfig,
     },
     [cityType.xichong] = {
-        [gameType.mahjong] = xichongMahjongShiftConfig,
-        [gameType.doushisi] = xichongDoushisiShiftConfig,
-        [gameType.paodekuai] = xichongPaodekuaiShiftConfig,
+        [gameType.mahjong]          = xichongMahjongShiftConfig,
+        [gameType.doushisi]         = xichongDoushisiShiftConfig,
+        [gameType.paodekuai]        = xichongPaodekuaiShiftConfig,
+        [gameType.yaotongrenyong]   = xichongYaotongrenyongShiftConfig,
     },
     [cityType.yingjing] = {
-        [gameType.mahjong] = yingjingMahjongShiftConfig,
-        [gameType.doushisi] = yingjingDoushisiShiftConfig,
-        [gameType.paodekuai] = yingjingPaodekuaiShiftConfig,
+        [gameType.mahjong]          = yingjingMahjongShiftConfig,
+        [gameType.doushisi]         = yingjingDoushisiShiftConfig,
+        [gameType.paodekuai]        = yingjingPaodekuaiShiftConfig,
+        [gameType.yaotongrenyong]   = yingjingYaotongrenyongShiftConfig,
     },
     [cityType.nanchong] = {
-        [gameType.mahjong] = nanchongMahjongShiftConfig,
-        [gameType.doushisi] = nanchongDoushisiShiftConfig,
-        [gameType.paodekuai] = nanchongPaodekuaiShiftConfig,
+        [gameType.mahjong]          = nanchongMahjongShiftConfig,
+        [gameType.doushisi]         = nanchongDoushisiShiftConfig,
+        [gameType.paodekuai]        = nanchongPaodekuaiShiftConfig,
+        [gameType.yaotongrenyong]   = nanchongYaotongrenyongShiftConfig,
     },
     [cityType.wenjiang] = {
-        [gameType.mahjong] = wenjiangMahjongShiftConfig,
-        [gameType.doushisi] = wenjiangDoushisiShiftConfig,
-        [gameType.paodekuai] = wenjiangPaodekuaiShiftConfig,
+        [gameType.mahjong]          = wenjiangMahjongShiftConfig,
+        [gameType.doushisi]         = wenjiangDoushisiShiftConfig,
+        [gameType.paodekuai]        = wenjiangPaodekuaiShiftConfig,
+        [gameType.yaotongrenyong]   = wenjiangYaotongrenyongShiftConfig,
     },
     [cityType.zhongjiang] = {
-        [gameType.mahjong] = zhongjiangMahjongShiftConfig,
-        [gameType.doushisi] = zhongjiangDoushisiShiftConfig,
-        [gameType.paodekuai] = zhongjiangPaodekuaiShiftConfig,
+        [gameType.mahjong]          = zhongjiangMahjongShiftConfig,
+        [gameType.doushisi]         = zhongjiangDoushisiShiftConfig,
+        [gameType.paodekuai]        = zhongjiangPaodekuaiShiftConfig,
+        [gameType.yaotongrenyong]   = zhongjiangYaotongrenyongShiftConfig,
     },
 }
 

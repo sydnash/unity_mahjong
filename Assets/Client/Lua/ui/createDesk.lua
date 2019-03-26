@@ -33,6 +33,7 @@ function createDesk:refreshLeftList(c)
             self.mMahjong:setSelected(true)
 
             self.mMahjongPanel:show()
+            self:initMahjongItems()
             self.mChangpaiPanel:hide()
             self.mPokePanel:hide()
         else
@@ -51,6 +52,7 @@ function createDesk:refreshLeftList(c)
 
             self.mMahjongPanel:hide()
             self.mChangpaiPanel:show()
+            self:initChangpaiItems()
             self.mPokePanel:hide()
         else
             self.mChangpai:setSelected(false)
@@ -68,7 +70,8 @@ function createDesk:refreshLeftList(c)
 
             self.mMahjongPanel:hide()
             self.mChangpaiPanel:hide()
-            self.mPokePanel:shoe()
+            self.mPokePanel:show()
+            self:initPokerItems()
         else
             self.mPoke:setSelected(false)
         end
@@ -245,7 +248,7 @@ function createDesk:saveSettingToServer(lock, node)
 end
 
 function createDesk:onGameTypeChanged()
-    if self.friendsterId and self.friendsterId > 0 then
+    if self.friendsterId ~= nil and self.friendsterId > 0 then
         if self.friendsterData.managerAcId == gamepref.player.acId  then
             local has, cfg = self.friendsterData:isSupportGame(self.gameType)
             if has then
@@ -308,11 +311,123 @@ function createDesk:onMahjongChangedHandler(sender, selected, clicked)
         self:createDetail()
 
         self.mMahjongPanel:show()
+        self:initMahjongItems()
         self.mChangpaiPanel:hide()
         self.mPokePanel:hide()
 
         playButtonClickSound()
         self:onGameTypeChanged()
+    end
+end
+
+function createDesk:initMahjongItems()
+    if self.mahjongItems ~= nil then
+        return
+    end
+
+    self.mahjongItems = {}
+    for i=1, 4 do
+        local name = "Viewport/Content/DetailType/" .. tostring(i)
+        local item = findPointerToggle(self.mMahjongPanel.transform, name)
+        item:hide()
+
+        table.insert(self.mahjongItems, item)
+    end
+
+    local idx = 1
+    for k, v in pairs(enableConfig[self.cityType].mahjong.detail) do
+        if v then
+            local it = self.mahjongItems[idx]
+            it.gameType = k
+            it:setSelected(idx == 1)
+            it:addChangedListener(self.onGameDetailChangedHandler, self)
+            it:show()
+
+            local btxt = findText(it.transform, "Background/Text")
+            local ctxt = findText(it.transform, "Checkmark/Text")
+            btxt:setText(gameName[self.cityType].games[k])
+            ctxt:setText(gameName[self.cityType].games[k])
+
+            idx = idx + 1
+        end
+    end
+end
+
+function createDesk:initChangpaiItems()
+    if self.changpaiItems ~= nil then
+        return
+    end
+
+    self.changpaiItems = {}
+    for i=1, 4 do
+        local name = "Viewport/Content/DetailType/" .. tostring(i)
+        local item = findPointerToggle(self.mChangpaiPanel.transform, name)
+        item:hide()
+
+        table.insert(self.changpaiItems, item)
+    end
+
+    local idx = 1
+    for k, v in pairs(enableConfig[self.cityType].changpai.detail) do
+        if v then
+            local it = self.changpaiItems[idx]
+            it.gameType = k
+            it:setSelected(idx == 1)
+            it:addChangedListener(self.onGameDetailChangedHandler, self)
+            it:show()
+
+            local btxt = findText(it.transform, "Background/Text")
+            local ctxt = findText(it.transform, "Checkmark/Text")
+            btxt:setText(gameName[self.cityType].games[k])
+            ctxt:setText(gameName[self.cityType].games[k])
+
+            idx = idx + 1
+        end
+    end
+end
+
+function createDesk:initPokerItems()
+    if self.pokerItems ~= nil then
+        return
+    end
+
+    self.pokerItems = {}
+    for i=1, 4 do
+        local name = "Viewport/Content/DetailType/" .. tostring(i)
+        local item = findPointerToggle(self.mPokePanel.transform, name)
+        item:hide()
+
+        table.insert(self.pokerItems, item)
+    end
+
+    local idx = 1
+    for k, v in pairs(enableConfig[self.cityType].poke.detail) do
+        if v then
+            local it = self.pokerItems[idx]
+            it.gameType = k
+            it:setSelected(idx == 1)
+            it:addChangedListener(self.onGameDetailChangedHandler, self)
+            it:show()
+
+            local btxt = findText(it.transform, "Background/Text")
+            local ctxt = findText(it.transform, "Checkmark/Text")
+            btxt:setText(gameName[self.cityType].games[k])
+            ctxt:setText(gameName[self.cityType].games[k])
+
+            idx = idx + 1
+        end
+    end
+end
+
+function createDesk:onGameDetailChangedHandler(sender, selected, clicked)
+    if clicked then
+        self.gameType = sender.gameType
+
+        self.config = self:readConfig()
+        self:createDetail()
+        self:onGameTypeChanged()
+
+        playButtonClickSound()
     end
 end
 
@@ -325,6 +440,7 @@ function createDesk:onChangpaiChangedHandler(sender, selected, clicked)
 
         self.mMahjongPanel:hide()
         self.mChangpaiPanel:show()
+        self:initChangpaiItems()
         self.mPokePanel:hide()
 
         playButtonClickSound()
@@ -342,6 +458,7 @@ function createDesk:onPokeChangedHandler(sender, selected, clicked)
         self.mMahjongPanel:hide()
         self.mChangpaiPanel:hide()
         self.mPokePanel:show()
+        self:initPokerItems()
 
         playButtonClickSound()
         self:onGameTypeChanged()
@@ -351,6 +468,7 @@ end
 function createDesk:onCreateClickedHandler()
     local choose = self.detail:getCreateConfig()
     choose.Game = self.gameType
+--    log("createDesk:onCreateClickedHandler, choose = " .. table.tostring(choose))
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 
     showWaitingUI("正在创建房间，请稍候...")

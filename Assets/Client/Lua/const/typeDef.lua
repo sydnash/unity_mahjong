@@ -172,7 +172,7 @@ chatType = {
     voice       = 0,
     text        = 1,
     emojimsg    = 2, --交互表情
-    cmsg        = 3,--输入的文字
+    cmsg        = 3, --输入的文字
     emoji       = 4, --普通头像表情
 }
 
@@ -272,13 +272,14 @@ cityTypeSID = {
 --
 --------------------------------------------------------------
 gameType = {
-    doushisi    = 2, --斗十四
-    erqishi     = 3, --贰柒拾
-    paodekuai   = 4, --跑得快
-    mahjong     = 5, --麻将
-    doudizhu    = 6, --斗地主
-    hundizhu    = 7, --荤地主
-    dpd14       = 8, --短牌斗十四
+    doushisi        = 2, --斗十四
+    erqishi         = 3, --贰柒拾
+    paodekuai       = 4, --跑得快
+    mahjong         = 5, --血战到底
+    doudizhu        = 6, --斗地主
+    hundizhu        = 7, --荤地主
+    dpd14           = 8, --短牌斗十四
+    yaotongrenyong  = 9, --幺筒任用
 }
 
 --------------------------------------------------------------
