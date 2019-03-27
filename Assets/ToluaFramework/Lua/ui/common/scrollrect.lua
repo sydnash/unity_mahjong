@@ -18,6 +18,20 @@ end
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
+function scrollrect:setContentWidth(w)
+    self.component.content:SetSizeWithCurrentAnchors(UnityEngine.RectTransform.Axis.Horizontal, w)
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
+function scrollrect:setContentHeight(h)
+    self.component.content:SetSizeWithCurrentAnchors(UnityEngine.RectTransform.Axis.Vertical, h)
+end
+
+----------------------------------------------------------------
+--
+----------------------------------------------------------------
 function scrollrect:reset()
     self.component.content.anchoredPosition = Vector2.zero;
 end

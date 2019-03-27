@@ -263,21 +263,14 @@ local yaotongrenyongLayoutBase = {
         group = { value = true, switchOff = false },
     },
     [5] = { 
-        title = "玩法", 
-        items = { 
-            [1] = { style = "checkbox", text = "杠上杠", key = "GangShangGang", value = { selected = 1, unselected = 2 }, disabled = true, },
-        }, 
-        group = { value = false, switchOff = false },
-    },
-    [6] = { 
-        title = string.empty,
+        title = "玩法",
         items = { 
             [1] = { style = "radiobox", text = "自摸加底", key = "ZiMoJiaX", value = 1, },
             [2] = { style = "radiobox", text = "自摸加番", key = "ZiMoJiaX", value = 2, },
         }, 
         group = { value = true, switchOff = false },
     },
-    [7] = { 
+    [6] = { 
         title = string.empty, 
         items = { 
             [1] = { style = "radiobox", text = "点杠花炮", key = "DianGangHuaX", value = 1, },
@@ -285,7 +278,7 @@ local yaotongrenyongLayoutBase = {
         }, 
         group = { value = true, switchOff = false },
     },
-    [8] = {
+    [7] = {
         title = string.empty,
         items = {
             [1] = { style = "radiobox", text = "可平胡",key = "CanPingHu", value = 1, },
@@ -293,7 +286,7 @@ local yaotongrenyongLayoutBase = {
         },
         group = { value = true, switchOff = false },
     },
-    [9] = { 
+    [8] = { 
         title = string.empty, 
         items = { 
             [1] = { style = "checkbox", text = "换三张", key = "HuanNZhang", value = { selected = 2, unselected = 1 }, },
@@ -301,7 +294,7 @@ local yaotongrenyongLayoutBase = {
         }, 
         group = { value = true, switchOff = true },
     },
-    [10] = { 
+    [9] = { 
         title = string.empty, 
         items = { 
             [1] = { style = "checkbox", text = "幺九", key = "YaoJiu", value = { selected = 1, unselected = 2 }, },
@@ -311,24 +304,23 @@ local yaotongrenyongLayoutBase = {
         }, 
         group = { value = false, switchOff = false },
     },
-    [11] = {
+    [10] = {
         title = string.empty,
         items = {
-            [1] = { style = "checkbox", text = "对对胡2番", key = "DuiDuiHu2",  value = { selected = 1, unselected = 2 }, },
-            [2] = { style = "checkbox", text = "夹心五", key = "JiaXinWu", value = { selected = 1, unselected = 2 }, },
-            [3] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
-        },
-        group = { value = false, switchOff = false },
-    },
-    [12] = { 
-        title = string.empty, 
-        items = {
-            [1] = { style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, },
-            [2] = { style = "checkbox", text = "比叫", key = "BiJiao", value = { selected = 1, unselected = 2 }, },
+            [1] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
+            [2] = { style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, },
+            [3] = { style = "checkbox", text = "比叫", key = "BiJiao", value = { selected = 1, unselected = 2 }, },
         }, 
         group = { value = false, switchOff = false },
     },
-    [13] = {
+    [11] = { 
+        title = string.empty, 
+        items = { 
+            [1] = { style = "checkbox", text = "杠上杠", key = "GangShangGang", value = { selected = 1, unselected = 2 }, disabled = true, },
+        }, 
+        group = { value = false, switchOff = false },
+    },
+    [12] = {
         title = "胡牌",
         items = {
             [1] = { style = "radiobox", text = "开启提示", key = "HuPaiHint", value = 1 },
@@ -482,8 +474,6 @@ local yaotongrenyongConfigBase = {
     ["TianDiHu"]       = 2,
     ["HuPaiHint"]      = 1,
     ["CanPingHu"]      = 1,
-    ["JiaXinWu"]       = 2,
-    ["DuiDuiHu2"]      = 2,
     ["DaXiaoYu"]       = 2,
 }
 
@@ -631,8 +621,6 @@ local yaotongrenyongShiftConfigBase = {
     ["TianDiHu"]        = { [true] = 1, [false] = 2 },
     ["HuPaiHint"]       = { [true] = 1, [false] = 2 },
     ["CanPingHu"]       = { [true] = 1, [false] = 2 },
-    ["DuiDuiHu2"]       = { [true] = 1, [false] = 2 },
-    ["JiaXinWu"]        = { [true] = 1, [false] = 2 },
     ["DaXiaoYu"]        = { [true] = 1, [false] = 2 },
 }
 

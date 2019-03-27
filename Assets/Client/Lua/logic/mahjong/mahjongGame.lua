@@ -37,7 +37,6 @@ mahjongGame.cardType = {
 function mahjongGame:ctor(data, playback)
     self.totalCardsCount = self:getTotalCountByConfig(data.Config)
     base.ctor(self, data, playback)
-    log("mahjongGame:ctor, config = " .. table.tostring(self.config))
 end
 
 -------------------------------------------------------------------------------
@@ -675,8 +674,9 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
         end
 
         pinfo.Op = opType.gang.id
+        pinfo.D = t
         table.insert(pinfo.Cs, cards[1])
-        log("mahjongGame:onOpDoGang, pinfo = " .. table.tostring(pinfo))
+--        log("mahjongGame:onOpDoGang, pinfo = " .. table.tostring(pinfo))
         self.knownMahjong[cards[1]] = 1
     end
 
@@ -807,7 +807,7 @@ end
 -- 服务器通知有玩家发起快速开始投票
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartNotify(msg)
-    log("mahjongGame:onQuicklyStartNotify " .. table.tostring(msg))
+--    log("mahjongGame:onQuicklyStartNotify " .. table.tostring(msg))
     if not self.quicklyStartUI then
         self.quicklyStartVoteSeconds = msg.LeftTime
         self.quicklyStartVoteProposer = msg.Proposer
@@ -828,7 +828,7 @@ end
 -- 服务器通知快速开始投票结果
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartEndNotify(msg)
-    log("mahjongGame:onQuicklyStartEndNotify" .. table.tostring(msg))
+--    log("mahjongGame:onQuicklyStartEndNotify" .. table.tostring(msg))
     local func = (function()
         if self.quicklyStartUI then
             if msg.Result == 0 then --快速开始成功
@@ -858,7 +858,7 @@ end
 -- 服务器通知有玩家选择快速开始投票
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartChose(msg)
-    log("mahjongGame:onQuicklyStartChose" .. table.tostring(msg))
+--    log("mahjongGame:onQuicklyStartChose" .. table.tostring(msg))
     local func = (function()
         if self.quicklyStartUI ~= nil then
             local player = self:getPlayerByAcId(msg.AcId)
