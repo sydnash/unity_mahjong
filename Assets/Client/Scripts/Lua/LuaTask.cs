@@ -77,9 +77,26 @@ public class LuaTask
         LuaDLL.tolua_pushcfunction(L, Print);
         LuaDLL.lua_setglobal(L, "print");
 
+        LuaDLL.tolua_pushcfunction(L, new_sized_table);
+        LuaDLL.lua_setglobal(L, "newsizedtable");
+
         tasks.Add(L, this);
     }
     
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int new_sized_table(IntPtr L) {
+            int c = LuaDLL.lua_gettop(L);
+            int asize = 0;
+            int nsize = 0;
+            if (c >= 1) {
+                asize = LuaDLL.lua_tointeger(L, 1);
+            }
+            if (c >= 2) {
+                nsize = LuaDLL.lua_tointeger(L, 2);
+            }
+            LuaDLL.lua_createtable(L, asize, nsize);
+            return 1;
+        }
     
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int Print(IntPtr L)
@@ -148,6 +165,7 @@ public class LuaTask
                 return LuaDLL.toluaL_exception(L, e);
             }
 #endif
+            return 0;
         }
     /// <summary>
     /// 

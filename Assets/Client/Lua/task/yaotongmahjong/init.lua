@@ -261,7 +261,7 @@ end
 local function checkHu(cards, tyCnt)
     --有缺 不行
     for id, cnt in pairs(cards) do
-        if cnt > 0 and math.floor((id-1) / 9) == que then
+        if id ~= TYRealId and cnt > 0 and math.floor((id-1) / 9) == que then
             return {}
         end
     end
@@ -353,5 +353,3 @@ function computeHuHint(xxx)
     local ret = table.tojson(hus)
     return ret
 end
-
-

@@ -26,7 +26,6 @@ local function typeIDToID(tid)
     return 4 * (tid - 1)
 end
 
-
 --------------------------------------------------------------
 --
 --------------------------------------------------------------
@@ -142,7 +141,7 @@ end
 
 -------------------------------找到胡的所有组合----------------------------
 local function findChiPengZu(cards, tyCnt, id)
-    ret = {}
+    ret = newsizedtable(4, 0)
     if cards[id]+tyCnt >= 3 then
         local usedIdCnt = math.min(cards[id], 3)
         table.insert(ret, {
@@ -157,11 +156,11 @@ local function findChiPengZu(cards, tyCnt, id)
     local base = (id - 1) - remain
     local minIdx = math.max(0, remain - 2)
     local maxIdx = math.min(remain + 2, 8)
+    local findId = newsizedtable(2)
     for re = minIdx+1, maxIdx+1 do
         if re+2 > maxIdx+1 then
             break
         end
-        local findId = {}
         for i = re,re+2 do
             local idx = base + i
             if idx ~= id and cards[idx] > 0 then
@@ -173,14 +172,21 @@ local function findChiPengZu(cards, tyCnt, id)
                 ty = 2 - #findId,
                 op = opType.chi.id,
                 cs = {typeIDToID(base + re), typeIDToID(base + re + 1), typeIDToID(base + re + 2)},
-                use = {},
+                use = newsizedtable(1 + #findId),
             }
             table.insert(chipeng.use, { id = id, cnt = 1 })
-            for _, fid in pairs(findId) do
-                table.insert(chipeng.use, {id = fid, cnt = 1})
+            local len = #findId
+            for i = 1, len do
+                table.insert(chipeng.use, {id = findId[i], cnt = 1})
+                findId[i] = nil
             end
 
             table.insert(ret, chipeng)
+        else
+            local len = #findId
+            for i = 1, len do
+                findId[i] = nil
+            end
         end
     end
 
@@ -200,7 +206,7 @@ local function isAllKan(cards, tyCnt, huCs, ret)
         end
     end
     if not findId then--找完了
-        local tmp = {}
+        local tmp = newsizedtable(#huCs.c)
         for i = 1,#huCs.c do
             table.insert(tmp, huCs.c[i])
         end
