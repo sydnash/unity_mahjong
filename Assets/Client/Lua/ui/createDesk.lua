@@ -23,69 +23,71 @@ function createDesk:ctor(cityType, friendsterId, friendsterData)
 end
 
 function createDesk:refreshLeftList(c)
-    local has = false
+    log(c)
+    local isempty = true
 
-    if c.mahjong.enable then
-        has = true
-        self.mMahjong:show()
+    local ui = { 
+        { key = "mahjong",  text = "麻将", init = function() self:initMahjongItems()  end, panel = self.mMahjongPanel,  gameType = gameType.mahjong,   gameTypeC = { [gameType.mahjong]   = true, [gameType.yaotongrenyong] = true}, },
+        { key = "changpai", text = "长牌", init = function() self:initChangpaiItems() end, panel = self.mChangpaiPanel, gameType = gameType.doushisi,  gameTypeC = { [gameType.doushisi]  = true, }, },
+        { key = "poke",     text = "扑克", init = function() self:initPokerItems()    end, panel = self.mPokePanel,     gameType = gameType.paodekuai, gameTypeC = { [gameType.paodekuai] = true, }, },
+    }
 
-        if self.gameType == gameType.mahjong then
-            self.mMahjong:setSelected(true)
+    if self.gameItems == nil then
+        self.gameItems = {}
 
-            self.mMahjongPanel:show()
-            self:initMahjongItems()
-            self.mChangpaiPanel:hide()
-            self.mPokePanel:hide()
-        else
-            self.mMahjong:setSelected(false)
+        local root = self.mGameType
+        for k, _ in pairs(ui) do
+            local toggle = findPointerToggle(root.transform, tostring(k))
+            local text   = findText(toggle.transform,   "Background/Text")
+            local sprite = findSprite(toggle.transform, "Checkmark/Image")
+
+            toggle:addChangedListener(self.onGameChangedHandler, self)
+            toggle:hide()
+
+            table.insert(self.gameItems, { toggle = toggle, text = text, sprite = sprite })
         end
-    else
-        self.mMahjong:hide()
     end
 
-    if c.changpai.enable then
-        has = true
-        self.mChangpai:show()
+    for k, v in pairs(ui) do
+        local panel  = v.panel
+        panel:hide()
 
-        if self.gameType == gameType.doushisi then
-            self.mChangpai:setSelected(true)
+        if c[v.key].enable then
+            local item = self.gameItems[k]
+            
+            local toggle = item.toggle
+            local text   = item.text
+            local sprite = item.sprite
 
-            self.mMahjongPanel:hide()
-            self.mChangpaiPanel:show()
-            self:initChangpaiItems()
-            self.mPokePanel:hide()
-        else
-            self.mChangpai:setSelected(false)
+            text:setText(v.text)
+            sprite:setSprite(v.key)
+            toggle:show()
+
+            if v.gameTypeC[self.gameType] then
+                toggle:setSelected(true)
+                panel:show()
+            else
+                toggle:setSelected(false)
+                panel:hide()
+            end
+
+            toggle.init     = v.init
+            toggle.panel    = v.panel
+            toggle.gameType = v.gameType
+
+            if isempty then
+                v.init()
+            end
+
+            isempty = false
         end
-    else
-        self.mChangpai:hide()
     end
 
-    if c.poke.enable then
-        has = true
-        self.mPoke:show()
-
-        if self.gameType == gameType.paodekuai then
-            self.mPoke:setSelected(true)
-
-            self.mMahjongPanel:hide()
-            self.mChangpaiPanel:hide()
-            self.mPokePanel:show()
-            self:initPokerItems()
-        else
-            self.mPoke:setSelected(false)
-        end
-    else
-        self.mPoke:hide()
-    end
-
-    if has then
-        self.mEmpty:hide()
-    else
+    if isempty then
         self.mEmpty:show()
+    else
+        self.mEmpty:hide()
     end
-    self.mGameType:hide()
-    self.mGameType:show()
 end
 
 function createDesk:onSupportGameChanges(games)
@@ -150,17 +152,10 @@ function createDesk:onInit()
         self:refreshLeftList(c)
     end
 
-    
---    self.mMahjongPanel:show()
---    self.mChangpaiPanel:hide()
-
     self.config = self:readConfig()
     self:createDetail()
     self:onGameTypeChanged()
 
-    self.mMahjong:addChangedListener(self.onMahjongChangedHandler, self)
-    self.mChangpai:addChangedListener(self.onChangpaiChangedHandler, self)
-    self.mPoke:addChangedListener(self.onPokeChangedHandler, self)
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
@@ -303,20 +298,23 @@ function createDesk:onCloseClickedHandler()
     playButtonClickSound()
 end
 
-function createDesk:onMahjongChangedHandler(sender, selected, clicked)
+function createDesk:onGameChangedHandler(sender, selected, clicked)
     if clicked then
-        self.gameType = gameType.mahjong
+        self.gameType = sender.gameType
+        self:onGameTypeChanged()
 
         self.config = self:readConfig()
         self:createDetail()
 
-        self.mMahjongPanel:show()
-        self:initMahjongItems()
-        self.mChangpaiPanel:hide()
-        self.mPokePanel:hide()
+        for _, v in pairs(self.gameItems) do
+            if v.toggle.panel ~= nil then
+                v.toggle.panel:hide()
+            end
+        end
+        sender.panel:show()
+        sender.init()
 
-        playButtonClickSound()
-        self:onGameTypeChanged()
+        playButtonClickSound()        
     end
 end
 
@@ -428,40 +426,6 @@ function createDesk:onGameDetailChangedHandler(sender, selected, clicked)
         self:onGameTypeChanged()
 
         playButtonClickSound()
-    end
-end
-
-function createDesk:onChangpaiChangedHandler(sender, selected, clicked)
-    if clicked then
-        self.gameType = gameType.doushisi
-
-        self.config = self:readConfig()
-        self:createDetail()
-
-        self.mMahjongPanel:hide()
-        self.mChangpaiPanel:show()
-        self:initChangpaiItems()
-        self.mPokePanel:hide()
-
-        playButtonClickSound()
-        self:onGameTypeChanged()
-    end
-end
-
-function createDesk:onPokeChangedHandler(sender, selected, clicked)
-    if clicked then
-        self.gameType = gameType.paodekuai
-
-        self.config = self:readConfig()
-        self:createDetail()
-
-        self.mMahjongPanel:hide()
-        self.mChangpaiPanel:hide()
-        self.mPokePanel:show()
-        self:initPokerItems()
-
-        playButtonClickSound()
-        self:onGameTypeChanged()
     end
 end
 
