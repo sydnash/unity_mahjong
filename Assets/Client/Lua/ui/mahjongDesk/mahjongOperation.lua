@@ -1041,12 +1041,30 @@ function mahjongOperation:_computeJiao(hus)
             table.insert(c, self:sHuToChu(huHint, totalCntVec))
         end
 
-        self.huPaiHintInfo = #c > 0 and c or nil
+        self.huPaiHintInfo = nil
+        self:hideHuPaiHintInfo()
 
-        if self.huPaiHintInfo then
-             self:showHuPaiHintInfo()
-        else
-            self:hideHuPaiHintInfo()
+        if #c > 0 then
+            self.huPaiHintInfo = c
+            
+            table.sort(self.huPaiHintInfo, function(a, b)
+                --剩余张数
+                if a.left > b.left then
+                    return true
+                elseif a.left < b.left then
+                    return false
+                end
+                --番数
+                if a.fan > b.fan then
+                    return true
+                elseif a.fan < b.fan then
+                    return false
+                end
+
+                return a.jiaoTid < b.jiaoTid
+            end)
+
+            self:showHuPaiHintInfo()
         end
     end
 end
@@ -2626,6 +2644,12 @@ function mahjongOperation:sortInhand(player, mahjongs)
 
     if player.acId == self.game.mainAcId then 
         table.bubbleSort(mahjongs, function(a, b)
+            if self:isYaoTong(a.id) and not self:isYaoTong(b.id) then
+                return true
+            elseif self:isYaoTong(b.id) and not self:isYaoTong(a.id) then
+                return false
+            end
+
             if self:isQue(player, a.id) and not self:isQue(player, b.id)then
                 return false
             elseif self:isQue(player, b.id) and not self:isQue(player, a.id) then
@@ -2636,6 +2660,12 @@ function mahjongOperation:sortInhand(player, mahjongs)
         end)
     elseif self.game.mode == gameMode.playback then
         table.bubbleSort(mahjongs, function(a, b)
+            if self:isYaoTong(a.id) and not self:isYaoTong(b.id) then
+                return true
+            elseif self:isYaoTong(b.id) and not self:isYaoTong(a.id) then
+                return false
+            end
+
             if self:isQue(player, a.id) and not self:isQue(player, b.id) then
                 return true
             elseif self:isQue(player, b.id) and not self:isQue(player, a.id) then
