@@ -232,7 +232,7 @@ end
 local function isHu(cards, tyCnt, chiChe, config, beCard)
     local maxFan = -1
     local ret = mjlib.findHuComponent(cards, tyCnt)
-    if ret == nil then
+    if ret == nil or #ret == 0 then
         -- printInfo("find hu component failed. can't hu.")
         return maxFan
     end

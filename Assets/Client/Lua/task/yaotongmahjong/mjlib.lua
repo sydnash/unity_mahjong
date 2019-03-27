@@ -299,12 +299,12 @@ local function find7DuiHuComponent(cards, tyCnt, ret)
 end
 
 function mjlib.findHuComponent(cards, tyCnt)
-    if not mjlib.canHu(cards, tyCnt) then
-        return nil
-    end
     local ret = {huC = {}, times = 0}
-    findNormalHuComponent(cards, tyCnt, ret)
     find7DuiHuComponent(cards, tyCnt, ret)
+    if not mjlib.canHu(cards, tyCnt) then
+        return ret.huC
+    end
+    findNormalHuComponent(cards, tyCnt, ret)
     return ret.huC
 end
 
