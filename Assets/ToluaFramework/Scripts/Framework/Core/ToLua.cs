@@ -118,7 +118,7 @@ namespace LuaInterface
 
         /*--------------------------------对于tolua扩展函数------------------------------------------*/
         #region TOLUA_EXTEND_FUNCTIONS
-        static void AddLuaLoader(IntPtr L)
+        public static void AddLuaLoader(IntPtr L)
         {
             LuaDLL.lua_getglobal(L, "package");
             LuaDLL.lua_getfield(L, -1, "loaders");

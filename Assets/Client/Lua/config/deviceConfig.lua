@@ -22,7 +22,7 @@ return {
     isApple   = isApple(),
     isMobile  = isAndroid() or isApple(),
     isMacOSX  = isMacOSX(),
-    deviceId  = "xieheng001",
+    deviceId  = "sy1",
 }
 
 --endregion

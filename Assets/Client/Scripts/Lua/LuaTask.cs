@@ -72,10 +72,83 @@ public class LuaTask
         LuaDLL.tolua_openlibs(L);
         OpenCJsonLib();
         LuaDLL.lua_settop(L, 0);
+        ToLua.AddLuaLoader(L);
+
+        LuaDLL.tolua_pushcfunction(L, Print);
+        LuaDLL.lua_setglobal(L, "print");
 
         tasks.Add(L, this);
     }
+    
+    
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int Print(IntPtr L)
+        {
+#if UNITY_EDITOR
+            try
+            {
+                int n = LuaDLL.lua_gettop(L);   
+                             
+                using (CString.Block())
+                {
+                    CString sb = CString.Alloc(256);
+#if UNITY_EDITOR
+                    int line = LuaDLL.tolua_where(L, 1);
+                    string filename = LuaDLL.lua_tostring(L, -1);
+                    LuaDLL.lua_settop(L, n);
+                    int offset = filename[0] == '@' ? 1 : 0;
 
+                    if (!filename.Contains("."))
+                    {
+                        sb.Append('[').Append(filename, offset, filename.Length - offset).Append(".lua:").Append(line).Append("]:");
+                    }
+                    else
+                    {
+                        sb.Append('[').Append(filename, offset, filename.Length - offset).Append(':').Append(line).Append("]:");
+                    }
+#endif
+
+                    for (int i = 1; i <= n; i++)
+                    {
+                        if (i > 1) sb.Append("    ");
+
+                        if (LuaDLL.lua_isstring(L, i) == 1)
+                        {
+                            sb.Append(LuaDLL.lua_tostring(L, i));
+                        }
+                        else if (LuaDLL.lua_isnil(L, i))
+                        {
+                            sb.Append("nil");
+                        }
+                        else if (LuaDLL.lua_isboolean(L, i))
+                        {
+                            sb.Append(LuaDLL.lua_toboolean(L, i) ? "true" : "false");
+                        }
+                        else
+                        {
+                            IntPtr p = LuaDLL.lua_topointer(L, i);
+
+                            if (p == IntPtr.Zero)
+                            {
+                                sb.Append("nil");
+                            }
+                            else
+                            {
+                                sb.Append(LuaDLL.luaL_typename(L, i)).Append(":0x").Append(p.ToString("X"));
+                            }
+                        }
+                    }
+
+                    UnityEngine.Debug.Log(sb.ToString());
+                }
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return LuaDLL.toluaL_exception(L, e);
+            }
+#endif
+        }
     /// <summary>
     /// 
     /// </summary>
@@ -94,9 +167,15 @@ public class LuaTask
                 thread.Start();
 
                 return true;
+            } else {
+                string errMsg = LuaDLL.lua_tostring(L, -1);
+                UnityEngine.Debug.Log(string.Format("call file {0} failed. {1}", filename, errMsg));
             }
+        } else {
+            UnityEngine.Debug.Log(string.Format("load file {0} failed.", filename));
         }
 
+        UnityEngine.Debug.Log(string.Format("do file {0} failed.", filename));
         return false;
     }
 
@@ -219,10 +298,25 @@ public class LuaTask
         LuaDLL.lua_getglobal(L, name);
         if (LuaDLL.lua_isfunction(L, -1))
         {
+            int functionIdx = LuaDLL.lua_gettop(L);
+
+            LuaDLL.lua_getglobal(L, "_GDB_TRACKBACK_");
+            int errFuncIdx = 0;
+            if (LuaDLL.lua_isfunction(L, -1)) {
+                errFuncIdx = functionIdx;
+                LuaDLL.lua_insert(L, errFuncIdx);
+            } else {
+                LuaDLL.lua_pop(L, 1);
+            }
+
             LuaDLL.lua_pushstring(L, args);
-            LuaDLL.lua_pcall(L, 1, 1, -1);
-            int curTop = LuaDLL.lua_gettop(L);
-            ret = LuaDLL.lua_tostring(L, curTop);
+            if (LuaDLL.lua_pcall(L, 1, 1, errFuncIdx) == 0) {
+                int curTop = LuaDLL.lua_gettop(L);
+                ret = LuaDLL.lua_tostring(L, curTop);
+            } else {
+                string errMsg = LuaDLL.lua_tostring(L, -1);
+                UnityEngine.Debug.Log(string.Format("call function {0} failed. {1}", name, errMsg));
+            }
         }
         LuaDLL.lua_settop(L, oldTop);
 
