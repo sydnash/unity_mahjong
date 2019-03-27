@@ -1322,7 +1322,8 @@ function mahjongOperation:touchHandler(phase, pos)
 end
 
 function mahjongOperation:isYaoTong(mid)
-    if self.game.gameType == gameType.yaotongrenyong and mid == 9 then
+    local tid = mahjongType.getMahjongTypeId(mid)
+    if self.game.gameType == gameType.yaotongrenyong and tid == 9 then
         return true
     end
 
