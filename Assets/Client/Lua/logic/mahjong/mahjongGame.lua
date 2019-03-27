@@ -675,6 +675,7 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
         end
 
         pinfo.Op = opType.gang.id
+        pinfo.D = t
         table.insert(pinfo.Cs, cards[1])
         log("mahjongGame:onOpDoGang, pinfo = " .. table.tostring(pinfo))
         self.knownMahjong[cards[1]] = 1

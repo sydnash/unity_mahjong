@@ -327,6 +327,7 @@ function createDesk:initMahjongItems()
     for i=1, 4 do
         local name = "Viewport/Content/DetailType/" .. tostring(i)
         local item = findPointerToggle(self.mMahjongPanel.transform, name)
+        item:addChangedListener(self.onGameDetailChangedHandler, self)
         item:hide()
 
         table.insert(self.mahjongItems, item)
@@ -338,7 +339,6 @@ function createDesk:initMahjongItems()
             local it = self.mahjongItems[idx]
             it.gameType = k
             it:setSelected(idx == 1)
-            it:addChangedListener(self.onGameDetailChangedHandler, self)
             it:show()
 
             local btxt = findText(it.transform, "Background/Text")
@@ -360,6 +360,7 @@ function createDesk:initChangpaiItems()
     for i=1, 4 do
         local name = "Viewport/Content/DetailType/" .. tostring(i)
         local item = findPointerToggle(self.mChangpaiPanel.transform, name)
+        item:addChangedListener(self.onGameDetailChangedHandler, self)
         item:hide()
 
         table.insert(self.changpaiItems, item)
@@ -371,7 +372,6 @@ function createDesk:initChangpaiItems()
             local it = self.changpaiItems[idx]
             it.gameType = k
             it:setSelected(idx == 1)
-            it:addChangedListener(self.onGameDetailChangedHandler, self)
             it:show()
 
             local btxt = findText(it.transform, "Background/Text")
@@ -393,6 +393,7 @@ function createDesk:initPokerItems()
     for i=1, 4 do
         local name = "Viewport/Content/DetailType/" .. tostring(i)
         local item = findPointerToggle(self.mPokePanel.transform, name)
+        item:addChangedListener(self.onGameDetailChangedHandler, self)
         item:hide()
 
         table.insert(self.pokerItems, item)
@@ -404,7 +405,6 @@ function createDesk:initPokerItems()
             local it = self.pokerItems[idx]
             it.gameType = k
             it:setSelected(idx == 1)
-            it:addChangedListener(self.onGameDetailChangedHandler, self)
             it:show()
 
             local btxt = findText(it.transform, "Background/Text")
@@ -556,6 +556,27 @@ end
 
 function createDesk:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+
+    if self.gameItems ~= nil then
+        for _, v in pairs(self.gameItems) do
+            v.toggle:destroy()
+        end
+    end
+    if self.mahjongItems ~= nil then
+        for _, v in pairs(self.mahjongItems) do
+            v:destroy()
+        end
+    end
+    if self.changpaiItems ~= nil then
+        for _, v in pairs(self.changpaiItems) do
+            v:destroy()
+        end
+    end
+    if self.pokerItems ~= nil then
+        for _, v in pairs(self.pokerItems) do
+            v:destroy()
+        end
+    end
     
     if self.detail ~= nil then
         self.detail:close()
