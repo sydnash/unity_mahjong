@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 224585729574607730}
   - component: {fileID: 114407345540144398}
   m_Layer: 5
-  m_Name: Poke
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -635,6 +635,7 @@ GameObject:
   - component: {fileID: 224163763035845430}
   - component: {fileID: 222661110009944134}
   - component: {fileID: 114949923739924346}
+  - component: {fileID: 114419313583420610}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -719,6 +720,7 @@ GameObject:
   - component: {fileID: 224268927315832428}
   - component: {fileID: 222096809112148510}
   - component: {fileID: 114629882383962234}
+  - component: {fileID: 114108112106536226}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1094,7 +1096,7 @@ GameObject:
   - component: {fileID: 224073643371398396}
   - component: {fileID: 114859813227097552}
   m_Layer: 5
-  m_Name: Changpai
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1278,7 +1280,7 @@ GameObject:
   - component: {fileID: 224201293100436706}
   - component: {fileID: 114277513288954836}
   m_Layer: 5
-  m_Name: Majiang
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1727,6 +1729,7 @@ GameObject:
   - component: {fileID: 224300193465426162}
   - component: {fileID: 222828233812757156}
   - component: {fileID: 114470609776351396}
+  - component: {fileID: 114293118400433428}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -2217,6 +2220,25 @@ MonoBehaviour:
   m_EffectColor: {r: 0.2901961, g: 0.29411766, b: 0.29411766, a: 1}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &114108112106536226
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1410822854116934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mAutoSize: 1
+  mItems:
+  - key: mahjong
+    sprite: {fileID: 21300018, guid: d9fa342baaac0dc42851f2e18a947bee, type: 3}
+  - key: changpai
+    sprite: {fileID: 21300020, guid: d9fa342baaac0dc42851f2e18a947bee, type: 3}
+  - key: poker
+    sprite: {fileID: 21300022, guid: d9fa342baaac0dc42851f2e18a947bee, type: 3}
 --- !u!114 &114116191355063590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2802,6 +2824,25 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114293118400433428
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1909029251071762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mAutoSize: 1
+  mItems:
+  - key: mahjong
+    sprite: {fileID: 21300018, guid: d9fa342baaac0dc42851f2e18a947bee, type: 3}
+  - key: changpai
+    sprite: {fileID: 21300020, guid: d9fa342baaac0dc42851f2e18a947bee, type: 3}
+  - key: poker
+    sprite: {fileID: 21300022, guid: d9fa342baaac0dc42851f2e18a947bee, type: 3}
 --- !u!114 &114306872303523728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3294,6 +3335,25 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114419313583420610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1356150662457688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17b06dcd3c90b46b847c48caad29e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mAutoSize: 1
+  mItems:
+  - key: mahjong
+    sprite: {fileID: 21300018, guid: d9fa342baaac0dc42851f2e18a947bee, type: 3}
+  - key: changpai
+    sprite: {fileID: 21300020, guid: d9fa342baaac0dc42851f2e18a947bee, type: 3}
+  - key: poker
+    sprite: {fileID: 21300022, guid: d9fa342baaac0dc42851f2e18a947bee, type: 3}
 --- !u!114 &114420398454450712
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -768,11 +768,7 @@ function mahjongOperation:onDingQueDo(msg)
     local mahjongs = self.inhandMahjongs[acId]
 
     for _, v in pairs(mahjongs) do
-        if v.class == player.que then
-            v:dark()
-        else
-            v:light()
-        end  
+        self:setMahjongColor(player, v)
     end
 
     self:relocateInhandMahjongs(acId)
@@ -780,6 +776,17 @@ function mahjongOperation:onDingQueDo(msg)
     self.mDQTips:hide()
     self.mQue:hide()
     self:setCountdownVisible(true)
+end
+
+-------------------------------------------------------------------------------
+-- 定缺结束
+-------------------------------------------------------------------------------
+function mahjongOperation:setMahjongColor(player, m)
+    if self:isQue(player, m.id) then
+        m:dark()
+    else
+        m:light()
+    end  
 end
 
 -------------------------------------------------------------------------------
@@ -807,25 +814,13 @@ function mahjongOperation:createInHandMahjongs(player, curOpType)
         local moPaiPos = self:getMyInhandMahjongPos(player, #mahjongs + 1)
         moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
 
-        -- local to = Vector3.New(moPaiPos.x, moPaiPos.y, moPaiPos.z)
-        -- moPaiPos.y = moPaiPos.y + 0.04
         self.mo:setLocalPosition(moPaiPos)
-        -- local mv = tweenPosition.new(self.mo, 0.04, moPaiPos, to, nil)
-        -- tweenManager.add(mv)
-        -- mv:play()
-
         self.mo:setLocalRotation(mopaiConfig.rotation)
-
-        if self.mo.class == player.que then
-            self.mo:dark()
-        else
-            self.mo:light()
-        end
-
         self.mo:setPickabled(true)
         self.mo:setShadowMode(mahjong.shadowMode.noshadow)
         self.mo:show()
 
+        self:setMahjongColor(player, self.mo)
         self:clearChosedMahjong()
     end
 end
@@ -906,14 +901,11 @@ function mahjongOperation:onMoPai(acId, cards)
         moPaiPos.x = moPaiPos.x + mahjong.w * 0.33
         self.mo:setLocalPosition(moPaiPos)
         self.mo:setLocalRotation(mopaiConfig.rotation)
-        if self.mo.class == player.que then
-            self.mo:dark()
-        else
-            self.mo:light()
-        end
         self.mo:setPickabled(true)
         self.mo:setShadowMode(mahjong.shadowMode.noshadow)
         self.mo:show()
+
+        self:setMahjongColor(player, self.mo)
         self:clearChosedMahjong()
     end
 end
@@ -1329,26 +1321,46 @@ function mahjongOperation:touchHandler(phase, pos)
     end
 end
 
+function mahjongOperation:isYaoTong(mid)
+    local tid = mahjongType.getMahjongTypeId(mid)
+    if self.game.gameType == gameType.yaotongrenyong and tid == 9 then
+        return true
+    end
+
+    return false
+end
+
+function mahjongOperation:isQue(player, mid)
+    if self:isYaoTong(mid) then
+        return false
+    end
+
+    local typ = mahjongType.getMahjongTypeById(mid)
+    if typ.class == player.que then
+        return true
+    end
+
+    return false
+end
+
 function mahjongOperation:onChosedChuPai()
     local player = self.game:getPlayerByAcId(self.game.mainAcId)
     local id = self.selectedMahjong.id
 
+    if self:isYaoTong(id) then
+        showToastUI("不能直接打出幺筒")
+        return false
+    end
+
     if player.que >= 0 then
-        local function isQue(mj)
-            local typ = mahjongType.getMahjongTypeById(mj.id)
-            if typ.class == player.que then
-                return true
-            end
-            return false
-        end
         local chuCardType = mahjongType.getMahjongTypeById(id)
         if chuCardType.class ~= player.que then
-            if self.mo and isQue(self.mo) then
+            if self.mo and self:isQue(player, self.mo.id) then
                 showToastUI("请先打完定缺的牌")
                 return false
             end
             for _, mj in pairs(self.inhandMahjongs[self.game.mainAcId]) do
-                if isQue(mj) then
+                if self:isQue(player, mj.id) then
                     showToastUI("请先打完定缺的牌")
                     return false
                 end
@@ -2010,12 +2022,8 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
         if acId == self.game.mainAcId then
             local player = self.game:getPlayerByAcId(acId)
             m:setPickabled(true)
-            if m.class == player.que then
-                m:dark()
-            else
-                m:light()
-            end
             m:setShadowMode(mahjong.shadowMode.noshadow)
+            self:setMahjongColor(player, m)
         else
             m:setPickabled(false)
             if self.game.mode == gameMode.playback then
@@ -2603,28 +2611,27 @@ function mahjongOperation:sortInhand(player, mahjongs)
     if mahjongs == nil then
         return
     end
+
     if player.acId == self.game.mainAcId then 
         table.bubbleSort(mahjongs, function(a, b)
-            if a.class == player.que and b.class ~= player.que then
+            if self:isQue(player, a.id) and not self:isQue(player, b.id)then
                 return false
-            elseif b.class == player.que and a.class ~= player.que then
+            elseif self:isQue(player, b.id) and not self:isQue(player, a.id) then
                 return true
             end
 
             return a.id < b.id
         end)
-    else
-        if self.game.mode == gameMode.playback then
-            table.bubbleSort(mahjongs, function(a, b)
-                if a.class == player.que and b.class ~= player.que then
-                    return true
-                elseif b.class == player.que and a.class ~= player.que then
-                    return false
-                end
+    elseif self.game.mode == gameMode.playback then
+        table.bubbleSort(mahjongs, function(a, b)
+            if self:isQue(player, a.id) and not self:isQue(player, b.id) then
+                return true
+            elseif self:isQue(player, b.id) and not self:isQue(player, a.id) then
+                return false
+            end
 
-                return a.id > b.id
-            end)
-        end
+            return a.id > b.id
+        end)
     end
 end
 
