@@ -951,7 +951,7 @@ end
 -- OpList
 -------------------------------------------------------------------------------
 function mahjongOperation:onOpList(oplist)
-    log("oplist = " .. table.tostring(oplist))
+--    log("oplist = " .. table.tostring(oplist))
     local needShowHuPaiHint = false
 
     if oplist ~= nil then
@@ -1949,7 +1949,7 @@ function mahjongOperation:getMahjongFromIdleForPlayback(mid)
         end
     end
         
-    log("connot find pai [id = " .. tostring(mid) .. "] from idle.")
+--    log("connot find pai [id = " .. tostring(mid) .. "] from idle.")
     return nil, nil, nil
 end
 -------------------------------------------------------------------------------
@@ -2939,7 +2939,6 @@ function mahjongOperation:showHuPaiHintInfo()
         end
 
         local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
-        log("-----------------------  " .. table.tostring(self.huPaiHintInfo))
         for k, v in pairs(self.huPaiHintInfo) do
             v.left = 4 - totalCntVec[v.jiaoTid]
 
@@ -3073,8 +3072,7 @@ function mahjongOperation:autoChoseHNZ(cnt)
             break
         end
     end
-    log("auto chose que param: " .. table.tostring(param))
-    log("auto chose mj: " .. #ret)
+
     if self.hnzMahjongs[self.game.mainAcId] == nil then
         self.hnzMahjongs[self.game.mainAcId] = {}
     end
@@ -3132,7 +3130,7 @@ function mahjongOperation:generateChuPaiHintComputeParam(chus)
         local id = self.computeChuHintId
         computeTask:call("computeChuHint", table.tojson(param), function(ret)
             local t2 = time.realtimeSinceStartup()
-            log("compute chu pai hint used time: " .. tostring((t2 - t1) * 1000) .. " ms")
+--            log("compute chu pai hint used time: " .. tostring((t2 - t1) * 1000) .. " ms")
             -- log("compute chu pai hint:========= " .. ret)
             if id == self.computeChuHintId and self.canChuPai then
                 local chus = table.fromjson(ret)
