@@ -768,7 +768,7 @@ function mahjongOperation:onDingQueDo(msg)
     local mahjongs = self.inhandMahjongs[acId]
 
     for _, v in pairs(mahjongs) do
-        self:setMahjongColor(v)
+        self:setMahjongColor(player, v)
     end
 
     self:relocateInhandMahjongs(acId)
@@ -781,8 +781,8 @@ end
 -------------------------------------------------------------------------------
 -- 定缺结束
 -------------------------------------------------------------------------------
-function mahjongOperation:setMahjongColor(m)
-    if self:isQue(m.id) then
+function mahjongOperation:setMahjongColor(player, m)
+    if self:isQue(player, m.id) then
         m:dark()
     else
         m:light()
@@ -820,7 +820,7 @@ function mahjongOperation:createInHandMahjongs(player, curOpType)
         self.mo:setShadowMode(mahjong.shadowMode.noshadow)
         self.mo:show()
 
-        self:setMahjongColor(self.mo)
+        self:setMahjongColor(player, self.mo)
         self:clearChosedMahjong()
     end
 end
@@ -905,7 +905,7 @@ function mahjongOperation:onMoPai(acId, cards)
         self.mo:setShadowMode(mahjong.shadowMode.noshadow)
         self.mo:show()
 
-        self:setMahjongColor(self.mo)
+        self:setMahjongColor(player, self.mo)
         self:clearChosedMahjong()
     end
 end
@@ -1329,7 +1329,7 @@ function mahjongOperation:isYaoTong(mid)
     return false
 end
 
-function mahjongOperation:isQue(mid)
+function mahjongOperation:isQue(player, mid)
     if self:isYaoTong(mid) then
         return false
     end
@@ -1354,12 +1354,12 @@ function mahjongOperation:onChosedChuPai()
     if player.que >= 0 then
         local chuCardType = mahjongType.getMahjongTypeById(id)
         if chuCardType.class ~= player.que then
-            if self.mo and self:isQue(self.mo) then
+            if self.mo and self:isQue(player, self.mo.id) then
                 showToastUI("请先打完定缺的牌")
                 return false
             end
             for _, mj in pairs(self.inhandMahjongs[self.game.mainAcId]) do
-                if self:isQue(mj) then
+                if self:isQue(player, mj.id) then
                     showToastUI("请先打完定缺的牌")
                     return false
                 end
@@ -2022,7 +2022,7 @@ function mahjongOperation:increaseInhandMahjongs(acId, datas)
             local player = self.game:getPlayerByAcId(acId)
             m:setPickabled(true)
             m:setShadowMode(mahjong.shadowMode.noshadow)
-            self:setMahjongColor(m)
+            self:setMahjongColor(player, m)
         else
             m:setPickabled(false)
             if self.game.mode == gameMode.playback then
@@ -2613,9 +2613,9 @@ function mahjongOperation:sortInhand(player, mahjongs)
 
     if player.acId == self.game.mainAcId then 
         table.bubbleSort(mahjongs, function(a, b)
-            if self:isQue(a) and not self:isQue(b)then
+            if self:isQue(player, a.id) and not self:isQue(player, b.id)then
                 return false
-            elseif self:isQue(b) and not self:isQue(a) then
+            elseif self:isQue(player, b.id) and not self:isQue(player, a.id) then
                 return true
             end
 
@@ -2623,9 +2623,9 @@ function mahjongOperation:sortInhand(player, mahjongs)
         end)
     elseif self.game.mode == gameMode.playback then
         table.bubbleSort(mahjongs, function(a, b)
-            if self:isQue(a) and not self:isQue(b) then
+            if self:isQue(player, a.id) and not self:isQue(player, b.id) then
                 return true
-            elseif self:isQue(b) and not self:isQue(a) then
+            elseif self:isQue(player, b.id) and not self:isQue(player, a.id) then
                 return false
             end
 
