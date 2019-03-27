@@ -43,10 +43,11 @@ function activity:onInit()
     self.mActivity:hide()
     self.mAffiche:show()
     
-    if not clientApp.activityShown then
-        self.timestamp = time.realtimeSinceStartup()
-        self.mClose:hide()
-    end
+--    if not clientApp.activityShown then
+--        self.timestamp = time.realtimeSinceStartup()
+--        self.mClose:hide()
+--    end
+    clientApp.activityShown = true
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -113,17 +114,17 @@ function activity:onAfficheTabChangedHandler(sender, selected, clicked)
 end
 
 function activity:update()
-    if not clientApp.activityShown then
-        local leftTime = 4 - (time.realtimeSinceStartup() - self.timestamp)
+--    if not clientApp.activityShown then
+--        local leftTime = 4 - (time.realtimeSinceStartup() - self.timestamp)
 
-        if leftTime > 0 then
-            self.mAffichePageBText:setText(string.format("%.1f秒后可关闭", leftTime))
-        else
-            clientApp.activityShown = true
-            self.mClose:show()
-            self.mAffichePageBText:hide()
-        end
-    end
+--        if leftTime > 0 then
+--            self.mAffichePageBText:setText(string.format("%.1f秒后可关闭", leftTime))
+--        else
+--            clientApp.activityShown = true
+--            self.mClose:show()
+--            self.mAffichePageBText:hide()
+--        end
+--    end
 end
 
 function activity:onCloseAllUIHandler()

@@ -1189,6 +1189,12 @@ function mahjongOperation:touchHandler(phase, pos)
             if go ~= nil then
                 local inhandMahjongs = self.inhandMahjongs[self.game.mainAcId]
                 local selectedMahjong = self:getMahjongByGo(inhandMahjongs, go)
+
+                if self:isYaoTong(selectedMahjong.id) then
+                    showToastUI("幺筒是任用牌，不能换")
+                    return
+                end
+
                 if self.hasHnzChoosed then
                     self:onClickOnMahjong(selectedMahjong)
                     return
@@ -1348,7 +1354,7 @@ function mahjongOperation:onChosedChuPai()
     local id = self.selectedMahjong.id
 
     if self:isYaoTong(id) then
-        showToastUI("不能直接打出幺筒")
+        showToastUI("幺筒是任用牌，不能直接打出")
         return false
     end
 
@@ -2313,7 +2319,7 @@ function mahjongOperation:relocatePengMahjongs(player)
                     m:setLocalRotation(r.default)
                     m:setShadowMode(mahjong.shadowMode.noshadow)
 
-                    gangPos = Vector3.New(p.x, p.y, p.z + mahjong.h)
+                    gangPos = Vector3.Add(p, m.transform.forward * mahjong.h)
                 end
             end
         end
