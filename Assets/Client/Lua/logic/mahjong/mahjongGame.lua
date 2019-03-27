@@ -643,11 +643,14 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
             local yaotongId = 9 --幺筒
             local iid = mahjongType.getMahjongTypeId(info.Cs[1])
             local cid = mahjongType.getMahjongTypeId(cards[1])
+            local bagangid = mahjongType.getMahjongTypeId(beCard)
 
             if info.Op == opType.peng.id then
                 if self.gameType == gameType.yaotongrenyong and cid == yaotongId then --幺筒
-                    pinfo = info
-                    break
+                    if bagangid == iid then
+                        pinfo = info
+                        break
+                    end
                 end
 
                 if iid == cid then
@@ -658,8 +661,10 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
 
             if info.Op == opType.gang.id and self.gameType == gameType.yaotongrenyong and self.config.GangShangGang then
                 if cid == yaotongId then --幺筒
-                    pinfo = info
-                    break
+                    if bagangid == iid then
+                        pinfo = info
+                        break
+                    end
                 end
 
                 if iid == cid then

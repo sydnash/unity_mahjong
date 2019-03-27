@@ -1,7 +1,3 @@
-require("task.yaotongmahjong.init")
-require("task.core.table")
-require("task.core.string")
-
 -------------------------------------------------------------------
 --全局错误/异常处理函数
 -------------------------------------------------------------------
@@ -33,3 +29,7 @@ end
 function printInfo(fmt, ...)
     printLog("INFO", fmt, ...)
 end
+
+require("task.yaotongmahjong.init")
+require("task.core.table")
+require("task.core.string")
