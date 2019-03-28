@@ -308,8 +308,8 @@ local yaotongrenyongLayoutBase = {
         title = string.empty,
         items = {
             [1] = { style = "checkbox", text = "天地胡", key = "TianDiHu", value = { selected = 1, unselected = 2 }, },
-            [2] = { style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, },
-            [3] = { style = "checkbox", text = "比叫", key = "BiJiao", value = { selected = 1, unselected = 2 }, },
+            -- [2] = { style = "checkbox", text = "大小雨", key = "DaXiaoYu", value = { selected = 1, unselected = 2 }, },
+            [2] = { style = "checkbox", text = "比叫", key = "BiJiao", value = { selected = 1, unselected = 2 }, },
         }, 
         group = { value = false, switchOff = false },
     },
