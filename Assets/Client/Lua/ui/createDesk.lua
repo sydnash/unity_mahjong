@@ -432,6 +432,7 @@ end
 function createDesk:onCreateClickedHandler()
     local choose = self.detail:getCreateConfig()
     choose.Game = self.gameType
+    self.config[self.gameType] = choose
 --    log("createDesk:onCreateClickedHandler, choose = " .. table.tostring(choose))
     local friendsterId = self.friendsterId == nil and 0 or self.friendsterId
 

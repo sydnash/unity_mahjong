@@ -67,7 +67,7 @@ function detailPanel:set(cityType, gameType, layout, config)
     self.cityType = cityType
     self.gameType = gameType
     self.layout = layout
-    self.config = config
+    self.config = {} --config
 
     for _, g in pairs(self.groups) do
         for _, v in pairs(g.items) do
@@ -93,7 +93,8 @@ function detailPanel:set(cityType, gameType, layout, config)
             item.background:setSprite(u.style)
             item.checkmark:setSprite(u.style)
             
-            local cvalue = self.config[u.key]
+            local cvalue = config[u.key]
+            self.config[u.key] = cvalue
             local selected = false
 
             if L.group.value then
