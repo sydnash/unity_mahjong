@@ -223,8 +223,8 @@ function mahjongOperation:onInit()
 
     self.mChuHuHints = {}
     for i = 1, 14 do
-        local name = string.format("mChuHuHint%d",i)
-        table.insert(self.mChuHuHints, self[name])
+        local hint = findChild(self.transform, "ChuForHuHint/" .. tostring(i))
+        table.insert(self.mChuHuHints, hint)
     end
     self:hideChuPaiArrow()
     --按钮
@@ -232,17 +232,12 @@ function mahjongOperation:onInit()
     self.mTiao:addClickListener(self.onTiaoClickedHandler, self)
     self.mTong:addClickListener(self.onTongClickedHandler, self)
     self.mWan:addClickListener(self.onWanClickedHandler, self)
-
     self.mGuo:addClickListener(self.onGuoClickedHandler, self)
-    self.mBao:addClickListener(self.onBaoClickedHandler, self)
-    self.mChi:addClickListener(self.onChiClickedHandler, self)
     self.mPeng:addClickListener(self.onPengClickedHandler, self)
     self.mGang:addClickListener(self.onGangClickedHandler, self)
     self.mHu:addClickListener(self.onHuClickedHandler, self)
 
     self.mGuo:hide()
-    self.mBao:hide()
-    self.mChi:hide()
     self.mPeng:hide()
     self.mGang:hide()
     self.mHu:hide()
@@ -271,9 +266,24 @@ function mahjongOperation:onInit()
     }
     self:hideChuPaiHint()
 
-    self.gangCount = { self.mGangCount1, self.mGangCount2, self.mGangCount3, self.mGangCount4, }
-    for _, v in pairs(self.gangCount) do
-        v:hide()
+    if self.gangItems == nil then
+        self.gangItems = {}
+            
+        for i=1, 11 do
+            local child = tostring(i)
+            local btn = findButton(self.mGangPanel.transform, child)
+            local spt = findSprite(self.mGangPanel.transform, child)
+            local flg = findSprite(self.mGangPanel.transform, child .. "/f")
+
+            btn:addClickListener(self.onGangItemClickedHandler, self)
+            table.insert(self.gangItems, { btn = btn, spt = spt, flg = flg })
+        end
+    end
+
+    self.gangCount = {}
+    for i=1, 16 do
+        local t = findText(self.transform, "GangCount/" .. tostring(i))
+        table.insert(self.gangCount, t)
     end
 
     self.animationManager = tweenParallel.new(false)
@@ -296,6 +306,10 @@ function mahjongOperation:loadMahjongs()
         local m = mahjong.new(i)
         m:hide()
         m:setParent(self.mahjongsRoot)
+
+        if self.game:isLaizi(m.id) then
+            m:showLaizi()
+        end
 
         table.insert(self.idleMahjongs, m)
         table.insert(self.mahjongs, m)
@@ -1208,7 +1222,7 @@ function mahjongOperation:touchHandler(phase, pos)
                 local inhandMahjongs = self.inhandMahjongs[self.game.mainAcId]
                 local selectedMahjong = self:getMahjongByGo(inhandMahjongs, go)
 
-                if self:isYaoTong(selectedMahjong.id) then
+                if self.game:isLaizi(selectedMahjong.id) then
                     showToastUI("幺筒是任用牌，不能换")
                     return
                 end
@@ -1345,17 +1359,8 @@ function mahjongOperation:touchHandler(phase, pos)
     end
 end
 
-function mahjongOperation:isYaoTong(mid)
-    local tid = mahjongType.getMahjongTypeId(mid)
-    if self.game.gameType == gameType.yaotongrenyong and tid == 9 then
-        return true
-    end
-
-    return false
-end
-
 function mahjongOperation:isQue(player, mid)
-    if self:isYaoTong(mid) then
+    if self.game:isLaizi(mid) then
         return false
     end
 
@@ -1371,7 +1376,7 @@ function mahjongOperation:onChosedChuPai()
     local player = self.game:getPlayerByAcId(self.game.mainAcId)
     local id = self.selectedMahjong.id
 
-    if self:isYaoTong(id) then
+    if self.game:isLaizi(id) then
         showToastUI("幺筒是任用牌，不能直接打出")
         return false
     end
@@ -1412,8 +1417,6 @@ function mahjongOperation:showOperations(ops, leftTime)
     for _, v in pairs(ops) do 
         if v.Op == opType.guo.id then
             self.mGuo:show()
-        elseif v.Op == opType.chi.id then
-            self.mChi:show()
         elseif v.Op == opType.peng.id then
             self.mPeng:show()
             self.mPeng.cs = v.C[1].Cs
@@ -1432,8 +1435,6 @@ end
 -------------------------------------------------------------------------------
 function mahjongOperation:hideOperations()
     self.mGuo:hide()
-    self.mBao:hide()
-    self.mChi:hide()
     self.mPeng:hide()
     self.mGang:hide()
     self.mHu:hide()
@@ -1489,26 +1490,6 @@ function mahjongOperation:onGuoClickedHandler()
 end
 
 -------------------------------------------------------------------------------
--- 点击“报”
--------------------------------------------------------------------------------
-function mahjongOperation:onBaoClickedHandler()
-    playButtonClickSound()
-
-    self.game:bao()
-    self:hideOperations()
-end
-
--------------------------------------------------------------------------------
--- 点击“吃”
--------------------------------------------------------------------------------
-function mahjongOperation:onChiClickedHandler()
-    playButtonClickSound()
-
-    self.game:chi()
-    self:hideOperations()
-end
-
--------------------------------------------------------------------------------
 -- 点击“碰”
 -------------------------------------------------------------------------------
 function mahjongOperation:onPengClickedHandler()
@@ -1541,31 +1522,14 @@ function mahjongOperation:onGangClickedHandler()
     else
         self.mGangPanel:show()
 
---        local panelSpt = findSprite(self.mGangPanel)
-        local width = count * 65 + 20
---        panelSpt:setSize(Vector2.New(width, 106))
-
+        local panelWidth = self.mGangPanel:getWidth()
         local viewCamera = viewManager.camera
         local scPos = viewManager.camera:WorldToScreenPoint(self.mGangPanel:getPosition())
-        local outScreen = scPos.x + width * 0.5 - UnityEngine.Screen.width + 80
+        local outScreen = scPos.x + panelWidth * 0.5 - UnityEngine.Screen.width + 80
         if outScreen > 0 then
             scPos.x = scPos.x - outScreen
             local lcPos = screenPointToLocalPointInRectangle(self.mGangPanel, scPos, viewCamera)
             self.mGangPanel:setAnchoredPosition(lcPos)
-        end
-
-        if self.gangItems == nil then
-            self.gangItems = {}
-            
-            for i=1, 11 do
-                local child = tostring(i)
-                local btn = findButton(self.mGangPanel.transform, child)
-                local spt = findSprite(self.mGangPanel.transform, child)
-
-                table.insert(self.gangItems, { btn = btn, spt = spt })
-
-                btn:addClickListener(self.onGangItemClickedHandler, self)
-            end
         end
 
         for _, v in pairs(self.gangItems) do
@@ -1577,6 +1541,7 @@ function mahjongOperation:onGangClickedHandler()
 
             item.btn.cs = c.Cs
             item.spt:setSprite(mahjongType.getMahjongTypeById(c.Cs[1]).name)
+            item.flg:setSprite((c.D == opType.gang.detail.angang) and "angang" or "bugang")
 
             item.btn:show()
         end
@@ -1778,10 +1743,12 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
 
         local m = self:decreaseInhandMahjongs(acId, cards)
         local p = self.pengMahjongs[acId]
-
+        
         for _, v in pairs(p) do
             local cs = v.cards
-            if (cs[1].tid == m[1].tid) or (self.game.gameType == gameType.yaotongrenyong and m[1].tid == 9) then
+            local bagangid = mahjongType.getMahjongTypeId(beCard)
+            
+            if (cs[1].tid == m[1].tid) or (self.game:isLaizi(m[1].id) and bagangid == cs[1].tid) then
                 table.insert(cs, m[1])
                 v.typ = opType.gang.id
                 v.detail = t
@@ -2283,11 +2250,12 @@ function mahjongOperation:relocatePengMahjongs(player)
 
     local pengMahjongs = self.pengMahjongs[acId]
 
+    local gangIdx = 0
     local lastPengPos = nil
+
     for i, mahjongs in pairs(pengMahjongs) do
         i = i - 1
         local d = 0.015 * i -- 碰/杠牌每组之间的间隔
-        local gangIdx = 0
         local gangCnt = 0
         local gangPos = Vector3.zero
 
@@ -2626,6 +2594,14 @@ function mahjongOperation:onDestroy()
         self.chuPaiHintUI:close()
     end
 
+    for _, v in pairs(self.gangItems) do
+        v.btn:destroy()
+        v.spt:destroy()
+    end
+    for _, v in pairs(self.gangCount) do
+        v:destroy()
+    end
+
     self.diceRoot:show()
     self.centerGlass:show()
     self.countdown:show()
@@ -2644,9 +2620,9 @@ function mahjongOperation:sortInhand(player, mahjongs)
 
     if player.acId == self.game.mainAcId then 
         table.bubbleSort(mahjongs, function(a, b)
-            if self:isYaoTong(a.id) and not self:isYaoTong(b.id) then
+            if self.game:isLaizi(a.id) and not self.game:isLaizi(b.id) then
                 return true
-            elseif self:isYaoTong(b.id) and not self:isYaoTong(a.id) then
+            elseif self.game:isLaizi(b.id) and not self.game:isLaizi(a.id) then
                 return false
             end
 
@@ -2660,9 +2636,9 @@ function mahjongOperation:sortInhand(player, mahjongs)
         end)
     elseif self.game.mode == gameMode.playback then
         table.bubbleSort(mahjongs, function(a, b)
-            if self:isYaoTong(a.id) and not self:isYaoTong(b.id) then
+            if self.game:isLaizi(a.id) and not self.game:isLaizi(b.id) then
                 return true
-            elseif self:isYaoTong(b.id) and not self:isYaoTong(a.id) then
+            elseif self.game:isLaizi(b.id) and not self.game:isLaizi(a.id) then
                 return false
             end
 
@@ -2991,10 +2967,6 @@ function mahjongOperation:showHuPaiHintInfo()
             bgw = 105 + 90 * cnt
         end
         self.mHuHintBg:setSize(Vector2.New(bgw, bgh))
-
-        --local ctw = 18 + 90 * math.min(cnt, 5)
---        local cth = 75 * math.ceil(cnt / 5)
---        self.mHuHintSR:setContentHeight(cth)
 
         self.mHuHint:show()
     end

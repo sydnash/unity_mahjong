@@ -11,18 +11,30 @@ _RES_(gameEndPengPai, "GameEndUI/Mahjong", "GameEndUI_PengPai")
 gameEndPengPai.width = 139
 
 function gameEndPengPai:onInit()
+    self.items = { 
+        { m = self.mA, f = self.mLaiziA },
+        { m = self.mB, f = self.mLaiziB },
+        { m = self.mC, f = self.mLaiziC },
+    }
 
-end
-
-local function setSprite(sprite, mahjongId)
-    local spriteName = mahjongType.getMahjongTypeById(mahjongId).name
-    sprite:setSprite(spriteName)
+    for _, v in pairs(self.items) do
+        v.f:hide()
+    end
 end
 
 function gameEndPengPai:setMahjongId(mahjongIds)
-    setSprite(self.mA, mahjongIds[1])
-    setSprite(self.mB, mahjongIds[2])
-    setSprite(self.mC, mahjongIds[3])
+    local game = clientApp.currentDesk
+
+    for k, v in pairs(self.items) do
+        local mid = mahjongIds[k]
+
+        local spriteName = mahjongType.getMahjongTypeById(mid).name
+        v.m:setSprite(spriteName)
+        
+        if game ~= nil and game:isLaizi(mid) then
+            v.f:show()
+        end
+    end
 end
 
 return gameEndPengPai

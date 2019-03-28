@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>1024</int>
+            <int>-1</int>
             <key>height</key>
-            <int>320</int>
+            <int>-1</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -199,6 +199,20 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Images/ZM_ag.png</key>
+            <key type="filename">Images/ZM_bg.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,12,23,23</rect>
+                <key>scale9Paddings</key>
+                <rect>12,12,23,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/ZM_an06.png</key>
             <key type="filename">Images/ZM_an07.png</key>
             <struct type="IndividualSpriteSettings">
@@ -414,6 +428,8 @@
             <filename>Images/ZM_di06.png</filename>
             <filename>Images/ZM_dq01.png</filename>
             <filename>Images/hp_jt.png</filename>
+            <filename>Images/ZM_ag.png</filename>
+            <filename>Images/ZM_bg.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -645,11 +645,9 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
             local bagangid = mahjongType.getMahjongTypeId(beCard)
 
             if info.Op == opType.peng.id then
-                if self.gameType == gameType.yaotongrenyong and cid == yaotongId then --幺筒
-                    if bagangid == iid then
-                        pinfo = info
-                        break
-                    end
+                if self:isLaizi(cards[1]) and bagangid == iid then --幺筒
+                    pinfo = info
+                    break
                 end
 
                 if iid == cid then
@@ -659,11 +657,9 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
             end
 
             if info.Op == opType.gang.id and self.gameType == gameType.yaotongrenyong and self.config.GangShangGang then
-                if cid == yaotongId then --幺筒
-                    if bagangid == iid then
-                        pinfo = info
-                        break
-                    end
+                if cid == yaotongId and bagangid == iid then --幺筒
+                    pinfo = info
+                    break
                 end
 
                 if iid == cid then
@@ -887,8 +883,23 @@ function mahjongGame:quicklyStartChose(agree, callback)
     networkManager.quicklyStartChose(agree, callback)
 end
 
+-------------------------------------------------------------------------------
+--
+-------------------------------------------------------------------------------
 function mahjongGame:hasHuPaiHint()
     return self.config.HuPaiHint and not self:isPlayback()
+end
+
+-------------------------------------------------------------------------------
+--
+-------------------------------------------------------------------------------
+function mahjongGame:isLaizi(mid)
+    if self.gameType == gameType.yaotongrenyong then
+        local tid = mahjongType.getMahjongTypeId(mid)
+        return tid == 9 --幺筒作癞子
+    end
+
+    return false
 end
 
 return mahjongGame
