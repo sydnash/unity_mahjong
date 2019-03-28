@@ -3079,7 +3079,7 @@ function mahjongOperation:_autoChoseQue()
         handCntVec[id] = handCntVec[id] + 1
     end
     local helper = require("logic.mahjong.helper")
-    if self:isYaoTong(9) then
+    if self:isYaoTong(9*4) then
         handCntVec[9] = 0
     end
     local param = helper.computeDefaultQue(handCntVec, 14)
