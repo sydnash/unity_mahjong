@@ -102,15 +102,15 @@ function createDesk:onSupportGameChanges(games)
             if gt == self.gameType then
                 needChanged = false
             end
-            if gt == gameType.mahjong then
+            if gt == gameType.mahjong and oric.mahjong.enable then
                 supportGame = gt
                 hasMore = true
                 c.mahjong.enable = oric.mahjong.enable
-            elseif gt == gameType.doushisi then
+            elseif gt == gameType.doushisi and oric.changpai.enable then
                 supportGame = gt
                 hasMore = true
                 c.changpai.enable = oric.changpai.enable
-            elseif gt == gameType.paodekuai then
+            elseif gt == gameType.paodekuai and oric.poke.enable then
                 supportGame = gt
                 hasMore = true
                 c.poke.enable = oric.poke.enable
@@ -120,7 +120,9 @@ function createDesk:onSupportGameChanges(games)
             if not hasMore then
                 showMessageUI("该亲友圈因为圈主设置原因，无法创建长牌和麻将，如有疑问请联系圈主。")
             else
-                self.gameType = supportGame
+                if self.gameType ~= gameType.yaotongrenyong then
+                    self.gameType = supportGame
+                end
             end
         end
         self:refreshLeftList(c)

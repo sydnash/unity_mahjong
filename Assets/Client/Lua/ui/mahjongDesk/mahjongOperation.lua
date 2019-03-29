@@ -717,21 +717,24 @@ function mahjongOperation:computeJiaoLocal()
         return
     end
 
-    -- if self.game.chuHintComputeHelper then
-    --     local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
-    --     local ret = self.game.chuHintComputeHelper:checkJiao(handCntVec, totalCntVec)
-    --     if #ret == 0 then
-    --         self.huPaiHintInfo = nil
-    --     else
-    --         self.huPaiHintInfo = ret
-    --     end
+    if not computeTask then
+        if self.game.chuHintComputeHelper then
+            local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
+            local ret = self.game.chuHintComputeHelper:checkJiao(handCntVec, totalCntVec)
+            if #ret == 0 then
+                self.huPaiHintInfo = nil
+            else
+                self.huPaiHintInfo = ret
+            end
 
-    --     if self.huPaiHintInfo then
-    --         self:showHuPaiHintInfo()
-    --     else
-    --         self:hideHuPaiHintInfo()
-    --     end
-    -- end
+            if self.huPaiHintInfo then
+                self:showHuPaiHintInfo()
+            else
+                self:hideHuPaiHintInfo()
+            end
+        end
+        return
+    end
     self:generateHuPaiHintComputeParam()
 end
 
