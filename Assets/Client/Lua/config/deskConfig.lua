@@ -316,7 +316,7 @@ local yaotongrenyongLayoutBase = {
     [11] = { 
         title = string.empty, 
         items = { 
-            [1] = { style = "checkbox", text = "杠上杠", key = "GangShangGang", value = { selected = 1, unselected = 2 }, disabled = true, },
+            [1] = { style = "checkbox", text = "杠上杠", key = "GangShangGang", value = { selected = 1, unselected = 2 }, disabled = false, },
         }, 
         group = { value = false, switchOff = false },
     },
