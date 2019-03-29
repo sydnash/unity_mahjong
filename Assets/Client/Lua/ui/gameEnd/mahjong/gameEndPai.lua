@@ -13,11 +13,19 @@ gameEndPai.width = 51
 function gameEndPai:onInit()
     self.mPai:setSprite(self.spriteName)
     self.mHuk:hide()
+    self.mLaizi:hide()
 end
 
 function gameEndPai:setMahjongId(mahjongId)
     local spriteName = mahjongType.getMahjongTypeById(mahjongId).name
     self.mPai:setSprite(spriteName)
+
+    local game = clientApp.currentDesk
+    if game ~= nil then
+        if game:isLaizi(mahjongId) then
+            self.mLaizi:show()
+        end
+    end
 end
 
 function gameEndPai:setHighlight(highlight)
