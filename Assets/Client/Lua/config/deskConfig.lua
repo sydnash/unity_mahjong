@@ -259,6 +259,7 @@ local yaotongrenyongLayoutBase = {
         items = { 
             [1] = { style = "radiobox", text = "3番", key = "FengDing", value = 1, },
             [2] = { style = "radiobox", text = "4番", key = "FengDing", value = 2, },
+            [3] = { style = "radiobox", text = "5番", key = "FengDing", value = 3, },
         }, 
         group = { value = true, switchOff = false },
     },
@@ -536,7 +537,7 @@ local mahjongShiftConfigBase = {
     ["RenShu"]          = { [4] = 1, [3]  = 2, [2]  = 3 },
     ["JuShu"]           = { [8] = 1, [12] = 2, },
     ["FangShu"]         = { [3] = 1, [2]  = 2 },
-    ["FengDing"]        = { [3] = 1, [4]  = 2, },
+    ["FengDing"]        = { [3] = 1, [4]  = 2, [5] = 3 },
     ["ZiMoJiaX"]        = { [0] = 1, [1]  = 2 },
     ["DianGangHuaX"]    = { [0] = 1, [1]  = 2 },
     ["HuanNZhang"]      = { [0] = 1, [3]  = 2, [4]  = 3 },
@@ -604,14 +605,14 @@ local zhongjiangPaodekuaiShiftConfig  = table.clone(paodekuaiShiftConfigBase)
 --
 ----------------------------------------------------------------
 local yaotongrenyongShiftConfigBase = {
-    ["RenShu"]          = { [4] = 1, [3]  = 2, [2]  = 3 },
+    ["RenShu"]          = { [4] = 1, [3]  = 2, [2] = 3 },
     ["JuShu"]           = { [8] = 1, [12] = 2, },
     ["FangShu"]         = { [3] = 1, [2]  = 2 },
-    ["FengDing"]        = { [3] = 1, [4]  = 2, },
+    ["FengDing"]        = { [3] = 1, [4]  = 2, [5] = 3 },
     ["GangShangGang"]   = { [true] = 1, [false] = 2 },
     ["ZiMoJiaX"]        = { [0] = 1, [1]  = 2 },
     ["DianGangHuaX"]    = { [0] = 1, [1]  = 2 },
-    ["HuanNZhang"]      = { [0] = 1, [3]  = 2, [4]  = 3 },
+    ["HuanNZhang"]      = { [0] = 1, [3]  = 2, [4] = 3 },
     ["YaoJiu"]          = { [true] = 1, [false] = 2 },
     ["ZhongZhang"]      = { [true] = 1, [false] = 2 },
     ["BiJiao"]          = { [true] = 1, [false] = 2 },

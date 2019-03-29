@@ -396,13 +396,13 @@ doushisiColor = {
 
 defaultFriendsterSupporCityGames = {
     [cityType.chengdu] = {
-        gameType.mahjong,
+        gameType.mahjong, gameType.yaotongrenyong,
     },
     [cityType.wenjiang] = {
-        gameType.mahjong, gameType.doushisi, gameType.hundizhu,
+        gameType.mahjong, gameType.doushisi, gameType.hundizhu, gameType.yaotongrenyong,
     },
     [cityType.jintang] = {
-        gameType.doushisi, gameType.paodekuai, gameType.mahjong, gameType.doudizhu,
+        gameType.doushisi, gameType.paodekuai, gameType.mahjong, gameType.doudizhu, gameType.yaotongrenyong,
     },
     [cityType.yingjing] = {
         gameType.mahjong, gameType.erqishi,
@@ -422,7 +422,7 @@ gameClassify = {
     {
         id = 1,
         name = "麻将",
-        games = {gameType.mahjong},
+        games = {gameType.mahjong, gameType.yaotongrenyong},
     },
     {
         id = 2,
