@@ -1544,7 +1544,7 @@ function mahjongOperation:onGangClickedHandler()
 
             item.btn.cs = c.Cs
             item.spt:setSprite(mahjongType.getMahjongTypeById(c.Cs[1]).name)
-            item.flg:setSprite((c.D == opType.gang.detail.angang) and "angang" or "bugang")
+            item.flg:setSprite((c.T == opType.gang.detail.angang) and "angang" or "bugang")
 
             item.btn:show()
         end
