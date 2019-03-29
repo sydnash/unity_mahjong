@@ -3043,17 +3043,18 @@ function mahjongOperation:_autoChoseQue()
     local inhandMjs = self.inhandMahjongs[self.game.mainAcId]
     local handCntVec = self:initVec(27)
     for _, mj in pairs(inhandMjs) do
-        local id = mahjongType.getMahjongTypeId(mj.id)
-        handCntVec[id] = handCntVec[id] + 1
+        if not self.game:isLaizi(mj.id) then
+            local id = mj.tid
+            handCntVec[id] = handCntVec[id] + 1
+        end
     end
     if self.mo ~= nil then
-        local id = mahjongType.getMahjongTypeId(opui.mo.id)
-        handCntVec[id] = handCntVec[id] + 1
+        if not self.game:isLaizi(self.mo.id) then
+            local id = self.mo.tid
+            handCntVec[id] = handCntVec[id] + 1
+        end
     end
     local helper = require("logic.mahjong.helper")
-    if self:isYaoTong(9*4) then
-        handCntVec[9] = 0
-    end
     local param = helper.computeDefaultQue(handCntVec, 14)
     return param
 end
