@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/mj/tdqp/Assets/Client/Artistic/Atlas/CreateDeskUI/Atlas/CreateDeskUI.tps</string>
+        <string>E:/Works/tdqp_android/Assets/Client/Artistic/Atlas/CreateDeskUI/Atlas/CreateDeskUI.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -97,9 +97,9 @@
         <key>fixedTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>512</int>
+            <int>-1</int>
             <key>height</key>
-            <int>1024</int>
+            <int>-1</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
@@ -108,7 +108,7 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
             <false/>
             <key>maxRects</key>
@@ -304,6 +304,45 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/CJ_wfgz.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>37,13,75,25</rect>
+                <key>scale9Paddings</key>
+                <rect>37,13,75,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/CJ_wfsz.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>39,17,78,33</rect>
+                <key>scale9Paddings</key>
+                <rect>39,17,78,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Images/CJ_xin.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,9,20,17</rect>
+                <key>scale9Paddings</key>
+                <rect>10,9,20,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Images/CJ_zi01.png</key>
             <key type="filename">Images/CJ_zi02.png</key>
             <key type="filename">Images/CJ_zi03.png</key>
@@ -406,6 +445,9 @@
             <filename>Images/wfsz_jcsd.png</filename>
             <filename>Images/wfsz_sdwf.png</filename>
             <filename>Images/wfsz_yz.png</filename>
+            <filename>Images/CJ_wfgz.png</filename>
+            <filename>Images/CJ_wfsz.png</filename>
+            <filename>Images/CJ_xin.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

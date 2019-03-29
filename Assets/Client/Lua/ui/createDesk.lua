@@ -23,7 +23,6 @@ function createDesk:ctor(cityType, friendsterId, friendsterData)
 end
 
 function createDesk:refreshLeftList(c)
-    log(c)
     local isempty = true
 
     local ui = { 
@@ -160,6 +159,7 @@ function createDesk:onInit()
     self.mCreate:addClickListener(self.onCreateClickedHandler, self)
     self.mSetting:addClickListener(self.onSettingClickedHandler, self)
     self.mLock:addChangedListener(self.onLockChangedHandler, self)
+    self.mHelp:addClickListener(self.onHelpClickedHandler, self)
 
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
 end
@@ -179,6 +179,13 @@ function createDesk:onLockChangedHandler(sender, selected, isClicked)
         self:saveSettingToServer(selected, sender)
     end, function()
     end)
+end
+
+function createDesk:onHelpClickedHandler()
+    local ui = require("ui.rule").new()
+    ui:show()
+
+    playButtonClickSound()
 end
 
 function createDesk:saveSettingToServer(lock, node)
@@ -318,6 +325,10 @@ function createDesk:onGameChangedHandler(sender, selected, clicked)
     end
 end
 
+local newFlags = {
+    [gameType.yaotongrenyong] = true,
+}
+
 function createDesk:initMahjongItems()
     if self.mahjongItems ~= nil then
         return
@@ -334,11 +345,12 @@ function createDesk:initMahjongItems()
     end
 
     local idx = 1
+    local curIdx = 1
     for k, v in pairs(enableConfig[self.cityType].mahjong.detail) do
         if v then
             local it = self.mahjongItems[idx]
             it.gameType = k
-            it:setSelected(idx == 1)
+            it:setSelected(false)
             it:show()
 
             local btxt = findText(it.transform, "Background/Text")
@@ -346,9 +358,23 @@ function createDesk:initMahjongItems()
             btxt:setText(gameName[self.cityType].games[k])
             ctxt:setText(gameName[self.cityType].games[k])
 
+            local new  = findChild(it.transform, "New")
+            if newFlags[k] then
+                new:show()
+            else
+                new:hide()
+            end
+
+            if k == self.gameType then
+                curIdx = idx
+            end
+
             idx = idx + 1
         end
     end
+
+    local curItem = self.mahjongItems[curIdx]
+    curItem:setSelected(true)
 end
 
 function createDesk:initChangpaiItems()
@@ -367,11 +393,12 @@ function createDesk:initChangpaiItems()
     end
 
     local idx = 1
+    local curIdx = 1
     for k, v in pairs(enableConfig[self.cityType].changpai.detail) do
         if v then
             local it = self.changpaiItems[idx]
             it.gameType = k
-            it:setSelected(idx == 1)
+            it:setSelected(false)
             it:show()
 
             local btxt = findText(it.transform, "Background/Text")
@@ -379,9 +406,23 @@ function createDesk:initChangpaiItems()
             btxt:setText(gameName[self.cityType].games[k])
             ctxt:setText(gameName[self.cityType].games[k])
 
+            local new  = findChild(it.transform, "New")
+            if newFlags[k] then
+                new:show()
+            else
+                new:hide()
+            end
+
+            if k == self.gameType then
+                curIdx = idx
+            end
+
             idx = idx + 1
         end
     end
+
+    local curItem = self.changpaiItems[curIdx]
+    curItem:setSelected(true)
 end
 
 function createDesk:initPokerItems()
@@ -400,11 +441,12 @@ function createDesk:initPokerItems()
     end
 
     local idx = 1
+    local curIdx = 1
     for k, v in pairs(enableConfig[self.cityType].poke.detail) do
         if v then
             local it = self.pokerItems[idx]
             it.gameType = k
-            it:setSelected(idx == 1)
+            it:setSelected(false)
             it:show()
 
             local btxt = findText(it.transform, "Background/Text")
@@ -412,9 +454,23 @@ function createDesk:initPokerItems()
             btxt:setText(gameName[self.cityType].games[k])
             ctxt:setText(gameName[self.cityType].games[k])
 
+            local new  = findChild(it.transform, "New")
+            if newFlags[k] then
+                new:show()
+            else
+                new:hide()
+            end
+
+            if k == self.gameType then
+                curIdx = idx
+            end
+
             idx = idx + 1
         end
     end
+
+    local curItem = self.pokerItems[curIdx]
+    curItem:setSelected(true)
 end
 
 function createDesk:onGameDetailChangedHandler(sender, selected, clicked)

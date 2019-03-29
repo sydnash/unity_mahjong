@@ -2962,9 +2962,9 @@ function mahjongOperation:showHuPaiHintInfo()
 
         local cnt = #self.huPaiHintInfo
         local bgw = 566
-        local bgh = 126
+        local bgh = 130
         if cnt < 5 then
-            bgw = 105 + 90 * cnt
+            bgw = 95 + 90 * cnt
         end
         self.mHuHintBg:setSize(Vector2.New(bgw, bgh))
 
