@@ -67,10 +67,12 @@ function clientApp:start()
 
     clientApp.currentDesk = nil
 
-    computeTask = task.new()
-    if computeTask:dofile("task/init.lua") then
-    else
-        computeTask = nil
+    if queryFromCSV("luatask") ~= nil then
+        computeTask = task.new()
+        if computeTask:dofile("task/init.lua") then
+        else
+            computeTask = nil
+        end
     end
 
     DISABLE_GLOBAL_VARIABLE_DECLARATION()
