@@ -173,7 +173,7 @@ function lobby:onHistoryClickedHandler()
     gamepref.player.playHistory:updateHistory(function(ok)
         closeWaitingUI()
         if not ok then
-            showMessageUI("同步战绩失败")
+            showToastUI("同步战绩失败")
             return
         end
         local ui = require("ui.playHistory.playHistory").new(gamepref.player.playHistory)

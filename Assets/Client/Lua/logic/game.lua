@@ -547,6 +547,17 @@ end
 -------------------------------------------------------------------------------
 function game:exitPlayback()
     self:exitGame()
+
+--    showWaitingUI("正在拉取战绩数据，请稍候")
+--    gamepref.player.playHistory:updateHistory(function(ok)
+--        closeWaitingUI()
+--        if not ok then
+--            showToastUI("同步战绩失败")
+--            return
+--        end
+--        local ui = require("ui.playHistory.playHistory").new(gamepref.player.playHistory)
+--        ui:show()
+--    end)
 end
 
 -------------------------------------------------------------------------------

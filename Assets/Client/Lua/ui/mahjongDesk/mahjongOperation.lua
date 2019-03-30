@@ -1680,18 +1680,31 @@ function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
     self:hideChuPaiHint()
     local beAcId = beAcId[1]
 
+    local mahjongs = {}
+
     local pengMahjongs = self:decreaseInhandMahjongs(acId, cards)
     local chuMahjongs = self.chuMahjongs[beAcId]
 
-    for k, v in pairs(chuMahjongs) do
-        if v.id == beCard then
-            table.insert(pengMahjongs, v)
-            table.remove(chuMahjongs, k)
-            break
+    local lastChu = chuMahjongs[#chuMahjongs]
+    if lastChu.id == beCard then
+        table.insert(mahjongs, lastChu)
+        table.remove(chuMahjongs)
+    else
+        for k, v in pairs(chuMahjongs) do
+            if v.id == beCard then
+                table.insert(mahjongs, v)
+                table.remove(chuMahjongs, k)
+                break
+            end
         end
     end
 
-    local peng = { cards = pengMahjongs, typ = opType.peng.id }
+    for _, v in pairs(pengMahjongs) do
+        table.insert(mahjongs, v)
+    end
+    self:sortLaizi(mahjongs)
+
+    local peng = { cards = mahjongs, typ = opType.peng.id }
     self:putMahjongsToPeng(acId, peng)
 
     if self.chupaiPtr.mahjongId == beCard then
@@ -1705,6 +1718,25 @@ function mahjongOperation:onOpDoPeng(acId, cards, beAcId, beCard)
         playMahjongOpSound(opType.peng.id, player.sex)
     -- end
     -- self:computeChuHint()
+end
+
+function mahjongOperation:sortLaizi(cards)
+    if #cards <= 4 then
+        local function isLaizi(m)
+            return self.game:isLaizi(m.id)
+        end
+
+        table.sort(cards, function(a, b)
+            if not isLaizi(a) and isLaizi(b) then
+                return true
+            end
+            if isLaizi(a) and not isLaizi(b) then
+                return false
+            end
+
+            return false
+        end)
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -1730,6 +1762,7 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
                 break
             end
         end
+        self:sortLaizi(mahjongs)
 
         local gangCards = { cards = mahjongs, typ = opType.gang.id, detail = t }
         self:putMahjongsToPeng(acId, gangCards)
@@ -1753,6 +1786,7 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
             
             if (cs[1].tid == m[1].tid) or (self.game:isLaizi(m[1].id) and bagangid == cs[1].tid) then
                 table.insert(cs, m[1])
+                self:sortLaizi(cs)
                 v.typ = opType.gang.id
                 v.detail = t
                 break
@@ -1769,7 +1803,7 @@ function mahjongOperation:onOpDoGang(acId, cards, beAcId, beCard, t)
         end
 
         local mahjongs = self:decreaseInhandMahjongs(acId, cards)
-
+        self:sortLaizi(mahjongs)
         local gang = { cards = mahjongs, typ = opType.gang.id, detail = t }
         self:putMahjongsToPeng(acId, gang)
 

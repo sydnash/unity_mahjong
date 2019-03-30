@@ -331,7 +331,7 @@ end
 -- 开始游戏
 -------------------------------------------------------------------------------
 function mahjongGame:onGameStartHandler(msg)
---    log("start game, msg = " .. table.tostring(msg))
+    log("start game, msg = " .. table.tostring(msg))
     self.canBack = false
     self.knownMahjong = {}
     self.chuHintComputeHelper = nil
@@ -365,7 +365,7 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongGame:onFaPaiHandler(msg)
---    log("fapai, msg = " .. table.tostring(msg))
+    log("fapai, msg = " .. table.tostring(msg))
     local func = (function()
         self.deskPlayStatus = mahjongGame.status.fapai
 
