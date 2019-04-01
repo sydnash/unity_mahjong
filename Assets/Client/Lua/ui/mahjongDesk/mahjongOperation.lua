@@ -1063,27 +1063,30 @@ function mahjongOperation:_computeJiao(hus)
 
         if #c > 0 then
             self.huPaiHintInfo = c
-            
-            table.sort(self.huPaiHintInfo, function(a, b)
-                --剩余张数
-                if a.left > b.left then
-                    return true
-                elseif a.left < b.left then
-                    return false
-                end
-                --番数
-                if a.fan > b.fan then
-                    return true
-                elseif a.fan < b.fan then
-                    return false
-                end
-
-                return a.jiaoTid < b.jiaoTid
-            end)
+            self:sortHu(self.huPaiHintInfo)
 
             self:showHuPaiHintInfo()
         end
     end
+end
+
+function mahjongOperation:sortHu(huInfo)
+    table.sort(huInfo, function(a, b)
+        --剩余张数
+        if a.left > b.left then
+            return true
+        elseif a.left < b.left then
+            return false
+        end
+        --番数
+        if a.fan > b.fan then
+            return true
+        elseif a.fan < b.fan then
+            return false
+        end
+
+        return a.jiaoTid < b.jiaoTid
+    end)
 end
 
 function mahjongOperation:getHuPaiHintInfo(id)
@@ -2958,6 +2961,9 @@ function mahjongOperation:showChuPaiHintInfo(info)
         self:hideChuPaiHintInfo()
         return
     end
+
+    log("mahjongOperation:showChuPaiHintInfo, info = " .. table.tostring(info))
+    self:sortHu(info)
 
     local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
     for _, t in pairs(info) do

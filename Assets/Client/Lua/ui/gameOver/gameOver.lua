@@ -84,6 +84,7 @@ function gameOver:onShareWXClickedHandler()
             local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
             platformHelper.shareImageWx(tex, thumb, false)
             destroyTexture(thumb)
+            destroyTexture(tex)
         end
     end
     
@@ -100,6 +101,7 @@ function gameOver:onShareQYQClickedHandler()
             local thumb = getSizedTexture(tex, gameConfig.thumbSize, gameConfig.thumbSize)
             platformHelper.shareImageWx(tex, thumb, true)
             destroyTexture(thumb)
+            destroyTexture(tex)
         end
     end
 end
@@ -129,7 +131,7 @@ function gameOver:onShareCNClickedHandler()
             if tex ~= nil then
                 local texpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, "gameover.jpg")
                 saveTextureToJPG(texpath, tex)
-
+                destroyTexture(tex)
                 platformHelper.shareImageCn(texpath)
             end
         end

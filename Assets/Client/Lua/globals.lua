@@ -857,12 +857,9 @@ end
 -- 截取全屏UI
 -------------------------------------------------------------
 function captureScreenshotUI()
-    local go = find("UIRoot/UICamera")
-    if go ~= nil then
-        local camera = getComponentU(go.gameObject, typeof(UnityEngine.Camera))
-        if camera ~= nil then
-            return Utils.CaptureScreenshot(camera)
-        end
+    local camera = viewManager.camera
+    if camera ~= nil then
+        return Utils.CaptureScreenshot(camera)
     end
 
     return nil
