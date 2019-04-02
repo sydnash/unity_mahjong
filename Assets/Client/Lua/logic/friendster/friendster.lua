@@ -68,6 +68,60 @@ function friendster:setData(data)
     lc.createSetting    = json.isNilOrNull(data.CreateSettings) and {} or data.CreateSettings
     lc.notice.text      = data.Notice
     lc.notice.time      = data.NoticeTime
+    self:initCreateSetting()
+end
+
+function friendster:initCreateSetting()
+    self:defaultSupportGame(gameType.yaotongrenyong)
+end
+function friendster:defaultSupportGame(gt)
+    local myAcId = gamepref.player.acId
+    if not self:hasCreateSetting() then
+        if self:isManager(myAcId) or self:isCreator(myAcId) then
+            local data = {}
+            local games = defaultFriendsterSupporCityGames[self.cityType]
+            for _, st in pairs(games) do
+                table.insert(data, {Id = st})
+            end
+            networkManager.friendsterGameSetting(self.id, 1, data)
+        end
+        return
+    end
+    local games = defaultFriendsterSupporCityGames[self.cityType]
+    local hasGame
+    for _, st in pairs(games) do
+        if st == gt then
+            hasGame = true
+        end
+    end
+    if hasGame then
+        local hasDelete = false
+        for _, cfg in pairs(self.createSetting) do
+            if cfg.Id == gt and cfg.D == true then
+                hasDelete = true
+            end
+        end
+        if not hasDelete then
+            local hasS = false
+            for _, cfg in pairs(self.createSetting) do
+                if cfg.Id == gt and not cfg.D then
+                    hasS = true
+                end
+            end
+            if not hasS then
+                table.insert(self.createSetting, {Id = gt})
+                if self:isManager(myAcId) or self:isCreator(myAcId) then
+                    local data = {}
+                    for _, info in pairs(self.createSetting) do
+                        if not info.D then
+                            table.insert(data, {Id = info.Id})
+                        end
+                    end
+                    networkManager.friendsterGameSetting(self.id, 1, data)
+                end
+            end
+        end
+    end
 end
 
 function friendster:getSupportGames()
@@ -79,7 +133,9 @@ function friendster:getSupportGames()
         end
     else
         for _, gt in pairs(self.createSetting) do
-            table.insert(ret, gt.Id)
+            if not gt.D then
+                table.insert(ret, gt.Id)
+            end
         end
     end
     return ret
@@ -248,7 +304,7 @@ function friendster:isSupportGame(id)
 	local find = false
 	local cfg = nil
 	for _, info in pairs(self.createSetting) do
-		if info.Id == id then
+		if info.Id == id and not info.D then
 			find = true
 			cfg = info.Cfg
 			break
@@ -321,6 +377,9 @@ end
 -- 是否是管理员
 --------------------------------------------------------------------
 function friendster:isManager(acId)
+    if not self.members then
+        return false
+    end
     for _, v in pairs(self.members) do
         if v.acId == acId then
             return v.permission == 1

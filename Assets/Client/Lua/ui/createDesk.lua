@@ -24,6 +24,7 @@ end
 
 function createDesk:refreshLeftList(c)
     local isempty = true
+    self.enableConfig = c
 
     local ui = { 
         { key = "mahjong",  text = "麻将", init = function() self:initMahjongItems()  end, panel = self.mMahjongPanel,  gameType = gameType.mahjong,   gameTypeC = { [gameType.mahjong]   = true, [gameType.yaotongrenyong] = true}, },
@@ -31,7 +32,14 @@ function createDesk:refreshLeftList(c)
         { key = "poke",     text = "扑克", init = function() self:initPokerItems()    end, panel = self.mPokePanel,     gameType = gameType.paodekuai, gameTypeC = { [gameType.paodekuai] = true, }, },
     }
 
-    if self.gameItems == nil then
+    if self.gameItems ~= nil then
+        for _, v in pairs(self.gameItems) do
+            v.toggle:destroy()
+            v.text:destroy()
+            v.sprite:destroy()
+        end
+    end
+    
         self.gameItems = {}
 
         local root = self.mGameType
@@ -45,7 +53,6 @@ function createDesk:refreshLeftList(c)
 
             table.insert(self.gameItems, { toggle = toggle, text = text, sprite = sprite })
         end
-    end
 
     for k, v in pairs(ui) do
         local panel  = v.panel
@@ -90,11 +97,33 @@ function createDesk:refreshLeftList(c)
 end
 
 function createDesk:onSupportGameChanges(games)
+    local function destoryItems(items)
+        if items == nil then
+            return
+        end
+        for _, item in pairs(items) do
+            item:destroy()
+        end
+    end
+    destoryItems(self.mahjongItems)
+    destoryItems(self.changpaiItems)
+    destoryItems(self.pokerItems)
+    self.mahjongItems = nil
+    self.changpaiItems = nil
+    self.pokerItems = nil
     if self.friendsterId and self.friendsterId > 0 then
         local oric = table.clone(enableConfig[self.cityType])
         local c = table.clone(enableConfig[self.cityType])
         c.mahjong.enable = false
         c.changpai.enable = false
+        c.poke.enable = false
+        for _, info in pairs(c) do
+            if info.detail then
+                for k in pairs(info.detail) do
+                    info.detail[k] = false
+                end
+            end
+        end
         local supportGame
         local needChanged = true
         local hasMore = false
@@ -106,23 +135,31 @@ function createDesk:onSupportGameChanges(games)
                 supportGame = gt
                 hasMore = true
                 c.mahjong.enable = oric.mahjong.enable
+                c.mahjong.detail[gt] = true
+            elseif gt == gameType.yaotongrenyong and oric.mahjong.enable then
+                supportGame = gt
+                hasMore = true
+                c.mahjong.enable = oric.mahjong.enable
+                c.mahjong.detail[gt] = true
             elseif gt == gameType.doushisi and oric.changpai.enable then
                 supportGame = gt
                 hasMore = true
                 c.changpai.enable = oric.changpai.enable
+                c.changpai.detail[gt] = true
             elseif gt == gameType.paodekuai and oric.poke.enable then
                 supportGame = gt
                 hasMore = true
                 c.poke.enable = oric.poke.enable
+                c.poke.detail[gt] = true
             end
         end
         if needChanged then
             if not hasMore then
                 showMessageUI("该亲友圈因为圈主设置原因，无法创建长牌和麻将，如有疑问请联系圈主。")
             else
-                if self.gameType ~= gameType.yaotongrenyong then
+                -- if self.gameType ~= gameType.yaotongrenyong then
                     self.gameType = supportGame
-                end
+                -- end
             end
         end
         self:refreshLeftList(c)
@@ -348,7 +385,7 @@ function createDesk:initMahjongItems()
 
     local idx = 1
     local curIdx = 1
-    for k, v in pairs(enableConfig[self.cityType].mahjong.detail) do
+    for k, v in pairs(self.enableConfig.mahjong.detail) do
         if v then
             local it = self.mahjongItems[idx]
             it.gameType = k
@@ -396,7 +433,7 @@ function createDesk:initChangpaiItems()
 
     local idx = 1
     local curIdx = 1
-    for k, v in pairs(enableConfig[self.cityType].changpai.detail) do
+    for k, v in pairs(self.enableConfig.changpai.detail) do
         if v then
             local it = self.changpaiItems[idx]
             it.gameType = k
@@ -444,7 +481,7 @@ function createDesk:initPokerItems()
 
     local idx = 1
     local curIdx = 1
-    for k, v in pairs(enableConfig[self.cityType].poke.detail) do
+    for k, v in pairs(self.enableConfig.poke.detail) do
         if v then
             local it = self.pokerItems[idx]
             it.gameType = k
