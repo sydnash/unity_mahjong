@@ -685,7 +685,7 @@ function networkManager.friendsterGameSetting(friendsterId, typ, msg, callback)
         Type        = typ,
         Settings    = msg, 
     }
-    log("send data : " .. table.tostring(data))
+    
     send(protoType.cs.friendsterGameSetting, data, callback)
 end
 

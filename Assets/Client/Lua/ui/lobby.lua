@@ -262,10 +262,10 @@ end
 function lobby:show()
     base.show(self)
 
-    if not clientApp.activityShown then
-        local ui = require("ui.activity").new()
-        ui:show()
-    end
+--    if not clientApp.activityShown then
+--        local ui = require("ui.activity").new()
+--        ui:show()
+--    end
 end
 
 function lobby:onCloseAllUIHandler()
