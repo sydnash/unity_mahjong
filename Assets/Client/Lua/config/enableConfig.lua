@@ -64,6 +64,7 @@ return {
             enable = true,
             detail = {
                 [gameType.mahjong] = true,
+                [gameType.yaotongrenyong] = true,
             }
         },
         ["changpai"] = {
@@ -79,6 +80,7 @@ return {
             enable = true,
             detail = {
                 [gameType.mahjong] = true,
+                [gameType.yaotongrenyong] = true,
             }
         },
         ["changpai"] = {
@@ -94,6 +96,7 @@ return {
             enable = true,
             detail = {
                 [gameType.mahjong] = true,
+                [gameType.yaotongrenyong] = true,
             }
         },
         ["changpai"] = {
@@ -109,6 +112,7 @@ return {
             enable = true,
             detail = {
                 [gameType.mahjong] = true,
+                [gameType.yaotongrenyong] = true,
             }
         },
         ["changpai"] = {
