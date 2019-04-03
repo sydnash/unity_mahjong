@@ -48,6 +48,7 @@ function createDesk:refreshLeftList(c)
             local text   = findText(toggle.transform,   "Background/Text")
             local sprite = findSprite(toggle.transform, "Checkmark/Image")
 
+            toggle:setSelected(false)
             toggle:addChangedListener(self.onGameChangedHandler, self)
             toggle:hide()
 
@@ -72,6 +73,7 @@ function createDesk:refreshLeftList(c)
             if v.gameTypeC[self.gameType] then
                 toggle:setSelected(true)
                 panel:show()
+                v.init()
             else
                 toggle:setSelected(false)
                 panel:hide()
@@ -82,7 +84,7 @@ function createDesk:refreshLeftList(c)
             toggle.gameType = v.gameType
 
             if isempty then
-                v.init()
+                -- v.init()
             end
 
             isempty = false
