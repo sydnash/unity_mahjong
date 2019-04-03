@@ -75,6 +75,9 @@ function friendster:initCreateSetting()
     self:defaultSupportGame(gameType.yaotongrenyong)
 end
 function friendster:defaultSupportGame(gt)
+    if defaultFriendsterSupporCityGames[self.cityType] == nil then
+        return
+    end
     local myAcId = gamepref.player.acId
     if not self:hasCreateSetting() then
         if self:isManager(myAcId) or self:isCreator(myAcId) then
