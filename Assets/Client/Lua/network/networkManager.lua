@@ -570,48 +570,48 @@ end
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.chuPai(cards, callback)
-    local data = { Op = opType.chu.id, Chose = { Cs = cards } }
+function networkManager.chuPai(cards, callback, idx)
+    local data = { Op = opType.chu.id, Chose = { Cs = cards }, I = idx}
     send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.chiPai(cards, callback)
-    local data = { Op = opType.chi.id, Chose = { Cs = cards } }
+function networkManager.chiPai(cards, callback, idx)
+    local data = { Op = opType.chi.id, Chose = { Cs = cards }, I = idx}
     send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.pengPai(cards, callback)
-    local data = { Op = opType.peng.id, Chose = { Cs = cards } }
+function networkManager.pengPai(cards, callback, idx)
+    local data = { Op = opType.peng.id, Chose = { Cs = cards }, I = idx}
     send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.gangPai(cards, callback)
-    local data = { Op = opType.gang.id, Chose = { Cs = cards } }
+function networkManager.gangPai(cards, callback, idx)
+    local data = { Op = opType.gang.id, Chose = { Cs = cards }, I = idx}
     send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.huPai(cards, callback)
-    local data = { Op = opType.hu.id, Chose = { Cs = cards } }
+function networkManager.huPai(cards, callback, idx)
+    local data = { Op = opType.hu.id, Chose = { Cs = cards }, I = idx}
     send(protoType.cs.opChoose, data, callback)
 end
 
 -------------------------------------------------------------------
 --
 -------------------------------------------------------------------
-function networkManager.guoPai(callback)
-    local data = { Op = opType.guo.id }
+function networkManager.guoPai(callback, idx)
+    local data = { Op = opType.guo.id, I = idx}
     send(protoType.cs.opChoose, data, callback)
 end
 

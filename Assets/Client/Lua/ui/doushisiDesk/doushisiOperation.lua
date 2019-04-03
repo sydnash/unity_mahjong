@@ -627,6 +627,7 @@ function doushisiOperation:onOpList(opList)
     self:closeAllBtnPanel()
     local leftTime = opList.LeftTime
 
+    self.game.curOpListIdx = opList.I
     self:sortOpList(opList)
     for _, opInfo in pairs(opList.OpInfos) do
         local op = opInfo.Op
@@ -711,7 +712,7 @@ end
 
 function doushisiOperation:onPassClickedHandler()
     local sendData = self:getOpChoseData(opType.doushisi.pass.id)
-    networkManager.csOpChose(sendData)
+    self.game:opChose(sendData)
 end
 
 function doushisiOperation:showChuHint()
@@ -859,7 +860,7 @@ end
 
 function doushisiOperation:onHuaChose(info)
     local data = self:getOpChoseData(opType.doushisi.hua.id, info.c, info.hasTY, nil)
-    networkManager.csOpChose(data)
+    self.game:opChose(sendData)
 end
 
 function doushisiOperation:onOpDoHua(acId, delIds)
@@ -884,7 +885,7 @@ end
 
 function doushisiOperation:onChiChose(info)
     local data = self:getOpChoseData(opType.doushisi.chi.id, info.c, info.hasTY, nil)
-    networkManager.csOpChose(data)
+    self.game:opChose(sendData)
 end
 
 function doushisiOperation:onOpDoChi(acId, delIds, beId)
@@ -902,7 +903,7 @@ end
 function doushisiOperation:onCheClickedHandler()
     local info = self.mChe.opInfo
     local data = self:getOpChoseData(opType.doushisi.che.id, info.Cards[1], info.HasTY[1], nil)
-    networkManager.csOpChose(data)
+    self.game:opChose(sendData)
 end
 
 function doushisiOperation:onOpDoChe(acId, delIds, beId)
@@ -920,7 +921,7 @@ end
 function doushisiOperation:onHuClickedHandler()
     local info = self.mHu.opInfo
     local data = self:getOpChoseData(opType.doushisi.hu.id, info.Cards[1])
-    networkManager.csOpChose(data)
+    self.game:opChose(sendData)
 end
 
 function doushisiOperation:onOpDoHu(acId, id)
@@ -976,7 +977,7 @@ end
 
 function doushisiOperation:onBaGangChose(info)
     local data = self:getOpChoseData(opType.doushisi.baGang.id, info.c, info.hasTY, nil)
-    networkManager.csOpChose(data)
+    self.game:opChose(sendData)
 end
 
 function doushisiOperation:onOpDoBaGang(acId, id)
@@ -1732,7 +1733,7 @@ end
 function doushisiOperation:onChoseChuPai(card)
     local id = card.id
     local sendData = self:getOpChoseData(opType.doushisi.chu.id, id, nil, nil)
-    networkManager.csOpChose(sendData)
+    self.game:opChose(sendData)
     self.canChuPai = false
 
     self:virtureChu(card)

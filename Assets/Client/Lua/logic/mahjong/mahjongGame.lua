@@ -534,7 +534,7 @@ function mahjongGame:guo()
     self:endChuPai()
     self:clearCountdownTick()
     networkManager.guoPai(function(msg)
-    end)
+    end, self.curOpListIdx)
 end
 
 -------------------------------------------------------------------------------
@@ -544,7 +544,7 @@ function mahjongGame:chi(cards)
     self:endChuPai()
     self:clearCountdownTick()
     networkManager.chiPai(cards, function(msg)
-    end)
+    end, self.curOpListIdx)
 end
 
 -------------------------------------------------------------------------------
@@ -554,7 +554,7 @@ function mahjongGame:peng(cards)
     self:endChuPai()
     self:clearCountdownTick()
     networkManager.pengPai(cards, function(msg)
-    end)
+    end, self.curOpListIdx)
 end
 
 -------------------------------------------------------------------------------
@@ -565,7 +565,7 @@ function mahjongGame:gang(cards)
     self:endChuPai()
     self:clearCountdownTick()
     networkManager.gangPai(cards, function(msg)
-    end)
+    end, self.curOpListIdx)
 end
 
 -------------------------------------------------------------------------------
@@ -575,7 +575,7 @@ function mahjongGame:hu(cards)
     self:endChuPai()
     self:clearCountdownTick()
     networkManager.huPai(cards, function(msg)
-    end)
+    end, self.curOpListIdx)
 end
 
 -------------------------------------------------------------------------------

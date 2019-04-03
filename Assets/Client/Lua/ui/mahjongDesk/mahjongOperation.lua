@@ -972,6 +972,7 @@ function mahjongOperation:onOpList(oplist)
     local needShowHuPaiHint = false
 
     if oplist ~= nil then
+        self.game.curOpListIdx = oplist.I
         local infos = oplist.OpInfos
         local leftTime = oplist.L
 
@@ -1405,7 +1406,7 @@ function mahjongOperation:onChosedChuPai()
 
     networkManager.chuPai({ id }, function(msg)
         self:relocateInhandMahjongs(self.game.mainAcId)
-    end)
+    end, self.game.curOpListIdx)
 
     self:clearChosedMahjong()
     self:virtureChu(self.selectedMahjong)
