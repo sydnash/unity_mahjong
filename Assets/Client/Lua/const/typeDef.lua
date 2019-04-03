@@ -405,16 +405,16 @@ defaultFriendsterSupporCityGames = {
         gameType.doushisi, gameType.paodekuai, gameType.mahjong, gameType.doudizhu, gameType.yaotongrenyong,
     },
     [cityType.yingjing] = {
-        gameType.mahjong, gameType.erqishi,
+        gameType.mahjong, gameType.erqishi, gameType.yaotongrenyong,
     },
     [cityType.zhongjiang] = {
-        gameType.mahjong, gameType.doushisi,
+        gameType.mahjong, gameType.doushisi, gameType.yaotongrenyong,
     },
     [cityType.nanchong] = {
-        gameType.mahjong, gameType.doushisi, gameType.doudizhu, gameType.hundizhu,
+        gameType.mahjong, gameType.doushisi, gameType.doudizhu, gameType.hundizhu, gameType.yaotongrenyong,
     },
     [cityType.xichong] = {
-        gameType.mahjong, gameType.doushisi, gameType.doudizhu, gameType.hundizhu,
+        gameType.mahjong, gameType.doushisi, gameType.doudizhu, gameType.hundizhu, gameType.yaotongrenyong,
     },
 }
 
