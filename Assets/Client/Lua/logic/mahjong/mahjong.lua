@@ -58,6 +58,9 @@ function mahjong:ctor(id)
         v:hide()
     end
 
+    self.laizi = self:findChild("mj_flag_laizi")
+    self:hideLaizi()
+
     self.name  = mtype.name
     self.class = mtype.class
     self.mahjongTex = {
@@ -184,6 +187,18 @@ end
 
 function mahjong:getShadowMode()
     return self.shadowMode
+end
+
+function mahjong:showLaizi()
+    if self.laizi ~= nil then
+        self.laizi:show()
+    end
+end
+
+function mahjong:hideLaizi()
+    if self.laizi ~= nil then
+        self.laizi:hide()
+    end
 end
 
 function mahjong:reset()

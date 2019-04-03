@@ -92,7 +92,11 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:onInit()
-    self.cardRoot = find("paodekuai/poker_root")
+    local root = find("paodekuai").transform
+
+    self.cardRoot = findChild(root, "poker_root")
+    self.tableRoot = findChild(root, "table")
+    self.tableRoot_t = findChild(root, "table_t")
 
     local mainCamera = UnityEngine.Camera.main
     mainCamera.transform.position = mainCameraParams.position
@@ -135,10 +139,6 @@ end
 -- 
 -------------------------------------------------------------------------------
 function paodekuaiOperation:changeBG(key)
-    if self.tableRoot == nil then
-        self.tableRoot = find("paodekuai/table")
-    end
-
     if self.tableRoot ~= nil then
         local render = getComponentU(self.tableRoot.gameObject, typeof(UnityEngine.SpriteRenderer))
         if render ~= nil then
@@ -151,10 +151,6 @@ function paodekuaiOperation:changeBG(key)
             local tex = textureManager.load("poker/table", key)
             render.sprite = convertTextureToSprite(tex, Vector2.New(0.5, 0.5))
         end
-    end
-
-    if self.tableRoot_t == nil then
-        self.tableRoot_t = find("paodekuai/table_t")
     end
 
     if self.tableRoot_t ~= nil then

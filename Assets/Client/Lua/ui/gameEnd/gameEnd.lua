@@ -162,7 +162,7 @@ function gameEnd:onCloseClickedHandler()
 end
 
 function gameEnd:createItem()
-    if self.game.gameType == gameType.mahjong then
+    if self.game.gameType == gameType.mahjong or self.game.gameType == gameType.yaotongrenyong then
         return require ("ui.gameEnd.mahjong.gameEndItem").new()
     elseif self.game.gameType == gameType.doushisi then
         return require ("ui.gameEnd.doushisi.gameEndItem").new()

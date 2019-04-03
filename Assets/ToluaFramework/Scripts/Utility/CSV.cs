@@ -59,6 +59,7 @@ public class CSV
         mDic.Add("stingyscrollview", "2");
         mDic.Add("deviceinfo", "1");
         mDic.Add("chuiniusdk", "1");
+        mDic.Add("luatask", "1");
     }
 
     #endregion

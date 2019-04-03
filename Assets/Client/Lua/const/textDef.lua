@@ -39,14 +39,16 @@ retcText = {
 gameName = {
     [cityType.chengdu] = {
         games = {
-            [gameType.mahjong] = "血战到底",
+            [gameType.mahjong]          = "血战到底",
+            [gameType.yaotongrenyong]   = "幺筒任用",
         },
     },
     [cityType.wenjiang] = {
         games = {
-            [gameType.doushisi] = "考考",
-            [gameType.hundizhu] = "昏地主",
-            [gameType.mahjong] = "血战到底",
+            [gameType.doushisi]         = "考考",
+            [gameType.hundizhu]         = "昏地主",
+            [gameType.mahjong]          = "血战到底",
+            [gameType.yaotongrenyong]   = "幺筒任用",
         },
     },
     [cityType.pixian] = {
@@ -56,10 +58,11 @@ gameName = {
     },
     [cityType.jintang] = {
         games = {
-            [gameType.doushisi] = "斗十四",
-            [gameType.paodekuai] = "跑得快",
-            [gameType.doudizhu] = "斗地主",
-            [gameType.mahjong] = "血战到底",
+            [gameType.doushisi]         = "斗十四",
+            [gameType.paodekuai]        = "跑得快",
+            [gameType.doudizhu]         = "斗地主",
+            [gameType.mahjong]          = "血战到底",
+            [gameType.yaotongrenyong]   = "幺筒任用",
         },
     },
     [cityType.huayang] = {
@@ -94,8 +97,9 @@ gameName = {
     },
     [cityType.zhongjiang] = {
         games = {
-            [gameType.doushisi] = "长牌",
-            [gameType.mahjong] = "血战到底",
+            [gameType.doushisi]         = "长牌",
+            [gameType.mahjong]          = "血战到底",
+            [gameType.yaotongrenyong]   = "幺筒任用",
         },
     },
     [cityType.guanghan] = {
@@ -105,24 +109,26 @@ gameName = {
     },
     [cityType.xichong] = {
         games = {
-            [gameType.doushisi] = "考考",
-            [gameType.doudizhu] = "3人斗地主",
-            [gameType.hundizhu] = "4人斗地主",
-            [gameType.mahjong] = "血战到底",
+            [gameType.doushisi]         = "考考",
+            [gameType.doudizhu]         = "3人斗地主",
+            [gameType.hundizhu]         = "4人斗地主",
+            [gameType.mahjong]          = "血战到底",
+            [gameType.yaotongrenyong]   = "幺筒任用",
         },
     },
     [cityType.nanchong] = {
         games = {
-            [gameType.doushisi] = "考考",
-            [gameType.doudizhu] = "3人斗地主",
-            [gameType.hundizhu] = "4人斗地主",
-            [gameType.mahjong] = "血战到底",
+            [gameType.doushisi]         = "考考",
+            [gameType.doudizhu]         = "3人斗地主",
+            [gameType.hundizhu]         = "4人斗地主",
+            [gameType.mahjong]          = "血战到底",
+            [gameType.yaotongrenyong]   = "幺筒任用",
         },
     },
     [cityType.maoxian] = {
         games = {
-            [gameType.doushisi] = "斗十四",
-            [gameType.paodekuai] = "跑得快",
+            [gameType.doushisi]     = "斗十四",
+            [gameType.paodekuai]    = "跑得快",
         },
     },
     [cityType.anyue] = {
@@ -132,15 +138,16 @@ gameName = {
     },
     [cityType.tianquan] = {
         games = {
-            [gameType.erqishi] = "大贰",
-            [gameType.paodekuai] = "跑得快",
-            [gameType.dpd14] = "斗十四",
+            [gameType.erqishi]      = "大贰",
+            [gameType.paodekuai]    = "跑得快",
+            [gameType.dpd14]        = "斗十四",
         },
     },
     [cityType.yingjing] = {
         games = {
-            [gameType.erqishi] = "字牌",
-            [gameType.mahjong] = "血战到底",
+            [gameType.erqishi]          = "字牌",
+            [gameType.mahjong]          = "血战到底",
+            [gameType.yaotongrenyong]   = "幺筒任用",
         },
     },
     [cityType.jiangyou] = {

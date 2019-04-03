@@ -547,6 +547,24 @@ end
 -------------------------------------------------------------------------------
 function game:exitPlayback()
     self:exitGame()
+
+    if self.mode == gameMode.playback then
+        showWaitingUI("正在拉取战绩数据，请稍候")
+        gamepref.player.playHistory:updateHistory(function(ok)
+            closeWaitingUI()
+            if not ok then
+                showToastUI("同步战绩失败")
+                return
+            end
+
+            local historyUI = require("ui.playHistory.playHistory").new(gamepref.player.playHistory)
+            historyUI:show()
+
+            local historyDetailUI = require("ui.playHistory.playHistoryDetail").new()
+            historyDetailUI:setHistory(self.data.historyId, gamepref.player.playHistory)
+            historyDetailUI:show()
+        end)
+    end
 end
 
 -------------------------------------------------------------------------------
@@ -1043,7 +1061,7 @@ function game:openLobbyUI()
 
     showWaitingUI("请稍候")
     networkManager.queryFriendsterList(function(msg)
-        if msg == nil then
+        if msg == nil or msg.RetCode ~= retc.ok then
             closeWaitingUI()
             lobby:show()
             return
@@ -1060,8 +1078,6 @@ function game:openLobbyUI()
             fst:show()
             return
         end
-
-        showWaitingUI("请稍候")
 
         networkManager.queryFriendsterMembers(self.friendsterId, function(msg)
             if msg == nil or msg.RetCode ~= retc.ok then

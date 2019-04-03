@@ -228,7 +228,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 527
+        y: 1103
         width: 69
         height: 92
       alignment: 9
@@ -241,8 +241,8 @@ TextureImporter:
       name: mj_h_1tiao
       rect:
         serializedVersion: 2
-        x: 717
-        y: 392
+        x: 1
+        y: 2
         width: 49
         height: 67
       alignment: 9
@@ -255,8 +255,8 @@ TextureImporter:
       name: mj_h_1tong
       rect:
         serializedVersion: 2
-        x: 768
-        y: 392
+        x: 52
+        y: 2
         width: 49
         height: 67
       alignment: 9
@@ -269,8 +269,8 @@ TextureImporter:
       name: mj_h_1wan
       rect:
         serializedVersion: 2
-        x: 819
-        y: 392
+        x: 298
+        y: 624
         width: 49
         height: 67
       alignment: 9
@@ -283,8 +283,8 @@ TextureImporter:
       name: mj_h_2tiao
       rect:
         serializedVersion: 2
-        x: 870
-        y: 392
+        x: 298
+        y: 555
         width: 49
         height: 67
       alignment: 9
@@ -297,8 +297,8 @@ TextureImporter:
       name: mj_h_2tong
       rect:
         serializedVersion: 2
-        x: 921
-        y: 392
+        x: 298
+        y: 486
         width: 49
         height: 67
       alignment: 9
@@ -311,8 +311,8 @@ TextureImporter:
       name: mj_h_2wan
       rect:
         serializedVersion: 2
-        x: 972
-        y: 392
+        x: 298
+        y: 417
         width: 49
         height: 67
       alignment: 9
@@ -325,8 +325,8 @@ TextureImporter:
       name: mj_h_3tiao
       rect:
         serializedVersion: 2
-        x: 717
-        y: 323
+        x: 298
+        y: 348
         width: 49
         height: 67
       alignment: 9
@@ -339,8 +339,8 @@ TextureImporter:
       name: mj_h_3tong
       rect:
         serializedVersion: 2
-        x: 664
-        y: 321
+        x: 298
+        y: 279
         width: 49
         height: 67
       alignment: 9
@@ -353,8 +353,8 @@ TextureImporter:
       name: mj_h_3wan
       rect:
         serializedVersion: 2
-        x: 607
-        y: 312
+        x: 298
+        y: 210
         width: 49
         height: 67
       alignment: 9
@@ -367,8 +367,8 @@ TextureImporter:
       name: mj_h_4tiao
       rect:
         serializedVersion: 2
-        x: 768
-        y: 323
+        x: 298
+        y: 141
         width: 49
         height: 67
       alignment: 9
@@ -381,8 +381,8 @@ TextureImporter:
       name: mj_h_4tong
       rect:
         serializedVersion: 2
-        x: 819
-        y: 323
+        x: 298
+        y: 72
         width: 49
         height: 67
       alignment: 9
@@ -395,8 +395,8 @@ TextureImporter:
       name: mj_h_4wan
       rect:
         serializedVersion: 2
-        x: 870
-        y: 323
+        x: 349
+        y: 630
         width: 49
         height: 67
       alignment: 9
@@ -409,8 +409,8 @@ TextureImporter:
       name: mj_h_5tiao
       rect:
         serializedVersion: 2
-        x: 921
-        y: 323
+        x: 349
+        y: 561
         width: 49
         height: 67
       alignment: 9
@@ -423,8 +423,8 @@ TextureImporter:
       name: mj_h_5tong
       rect:
         serializedVersion: 2
-        x: 972
-        y: 323
+        x: 349
+        y: 492
         width: 49
         height: 67
       alignment: 9
@@ -437,8 +437,8 @@ TextureImporter:
       name: mj_h_5wan
       rect:
         serializedVersion: 2
-        x: 607
-        y: 243
+        x: 349
+        y: 423
         width: 49
         height: 67
       alignment: 9
@@ -451,8 +451,8 @@ TextureImporter:
       name: mj_h_6tiao
       rect:
         serializedVersion: 2
-        x: 607
-        y: 174
+        x: 349
+        y: 354
         width: 49
         height: 67
       alignment: 9
@@ -465,8 +465,8 @@ TextureImporter:
       name: mj_h_6tong
       rect:
         serializedVersion: 2
-        x: 607
-        y: 105
+        x: 349
+        y: 285
         width: 49
         height: 67
       alignment: 9
@@ -479,8 +479,8 @@ TextureImporter:
       name: mj_h_6wan
       rect:
         serializedVersion: 2
-        x: 607
-        y: 36
+        x: 349
+        y: 216
         width: 49
         height: 67
       alignment: 9
@@ -493,8 +493,8 @@ TextureImporter:
       name: mj_h_7tiao
       rect:
         serializedVersion: 2
-        x: 658
-        y: 252
+        x: 349
+        y: 147
         width: 49
         height: 67
       alignment: 9
@@ -507,8 +507,8 @@ TextureImporter:
       name: mj_h_7tong
       rect:
         serializedVersion: 2
-        x: 658
-        y: 183
+        x: 349
+        y: 78
         width: 49
         height: 67
       alignment: 9
@@ -521,8 +521,8 @@ TextureImporter:
       name: mj_h_7wan
       rect:
         serializedVersion: 2
-        x: 658
-        y: 114
+        x: 400
+        y: 630
         width: 49
         height: 67
       alignment: 9
@@ -535,8 +535,8 @@ TextureImporter:
       name: mj_h_8tiao
       rect:
         serializedVersion: 2
-        x: 658
-        y: 45
+        x: 400
+        y: 561
         width: 49
         height: 67
       alignment: 9
@@ -549,8 +549,8 @@ TextureImporter:
       name: mj_h_8tong
       rect:
         serializedVersion: 2
-        x: 709
-        y: 252
+        x: 400
+        y: 492
         width: 49
         height: 67
       alignment: 9
@@ -563,8 +563,8 @@ TextureImporter:
       name: mj_h_8wan
       rect:
         serializedVersion: 2
-        x: 709
-        y: 183
+        x: 400
+        y: 423
         width: 49
         height: 67
       alignment: 9
@@ -577,8 +577,8 @@ TextureImporter:
       name: mj_h_9tiao
       rect:
         serializedVersion: 2
-        x: 709
-        y: 114
+        x: 400
+        y: 354
         width: 49
         height: 67
       alignment: 9
@@ -591,8 +591,8 @@ TextureImporter:
       name: mj_h_9tong
       rect:
         serializedVersion: 2
-        x: 709
-        y: 45
+        x: 400
+        y: 285
         width: 49
         height: 67
       alignment: 9
@@ -605,8 +605,8 @@ TextureImporter:
       name: mj_h_9wan
       rect:
         serializedVersion: 2
-        x: 760
-        y: 254
+        x: 400
+        y: 216
         width: 49
         height: 67
       alignment: 9
@@ -619,8 +619,8 @@ TextureImporter:
       name: mj_h_bei
       rect:
         serializedVersion: 2
-        x: 664
-        y: 390
+        x: 418
+        y: 714
         width: 51
         height: 69
       alignment: 9
@@ -633,8 +633,8 @@ TextureImporter:
       name: mj_h_fbaiban
       rect:
         serializedVersion: 2
-        x: 811
-        y: 254
+        x: 400
+        y: 147
         width: 49
         height: 67
       alignment: 9
@@ -647,8 +647,8 @@ TextureImporter:
       name: mj_h_fbei
       rect:
         serializedVersion: 2
-        x: 862
-        y: 254
+        x: 400
+        y: 78
         width: 49
         height: 67
       alignment: 9
@@ -661,8 +661,8 @@ TextureImporter:
       name: mj_h_fdong
       rect:
         serializedVersion: 2
-        x: 913
-        y: 254
+        x: 451
+        y: 645
         width: 49
         height: 67
       alignment: 9
@@ -675,8 +675,8 @@ TextureImporter:
       name: mj_h_ffa
       rect:
         serializedVersion: 2
-        x: 964
-        y: 254
+        x: 451
+        y: 576
         width: 49
         height: 67
       alignment: 9
@@ -689,8 +689,8 @@ TextureImporter:
       name: mj_h_fnan
       rect:
         serializedVersion: 2
-        x: 760
-        y: 185
+        x: 451
+        y: 507
         width: 49
         height: 67
       alignment: 9
@@ -703,8 +703,8 @@ TextureImporter:
       name: mj_h_fxi
       rect:
         serializedVersion: 2
-        x: 760
-        y: 116
+        x: 451
+        y: 438
         width: 49
         height: 67
       alignment: 9
@@ -717,8 +717,8 @@ TextureImporter:
       name: mj_h_fzhong
       rect:
         serializedVersion: 2
-        x: 760
-        y: 47
+        x: 451
+        y: 369
         width: 49
         height: 67
       alignment: 9
@@ -731,8 +731,8 @@ TextureImporter:
       name: mj_h_schun
       rect:
         serializedVersion: 2
-        x: 811
-        y: 185
+        x: 451
+        y: 300
         width: 49
         height: 67
       alignment: 9
@@ -745,8 +745,8 @@ TextureImporter:
       name: mj_h_sdong
       rect:
         serializedVersion: 2
-        x: 862
-        y: 185
+        x: 451
+        y: 231
         width: 49
         height: 67
       alignment: 9
@@ -759,8 +759,8 @@ TextureImporter:
       name: mj_h_sju
       rect:
         serializedVersion: 2
-        x: 913
-        y: 185
+        x: 451
+        y: 162
         width: 49
         height: 67
       alignment: 9
@@ -773,8 +773,8 @@ TextureImporter:
       name: mj_h_slan
       rect:
         serializedVersion: 2
-        x: 964
-        y: 185
+        x: 451
+        y: 93
         width: 49
         height: 67
       alignment: 9
@@ -787,8 +787,8 @@ TextureImporter:
       name: mj_h_smei
       rect:
         serializedVersion: 2
-        x: 811
-        y: 116
+        x: 298
+        y: 3
         width: 49
         height: 67
       alignment: 9
@@ -801,8 +801,8 @@ TextureImporter:
       name: mj_h_sqiu
       rect:
         serializedVersion: 2
-        x: 811
-        y: 47
+        x: 349
+        y: 9
         width: 49
         height: 67
       alignment: 9
@@ -815,8 +815,8 @@ TextureImporter:
       name: mj_h_sxia
       rect:
         serializedVersion: 2
-        x: 862
-        y: 116
+        x: 400
+        y: 9
         width: 49
         height: 67
       alignment: 9
@@ -829,8 +829,8 @@ TextureImporter:
       name: mj_h_szu
       rect:
         serializedVersion: 2
-        x: 862
-        y: 47
+        x: 451
+        y: 24
         width: 49
         height: 67
       alignment: 9
@@ -843,8 +843,8 @@ TextureImporter:
       name: mj_su_1tiao
       rect:
         serializedVersion: 2
-        x: 379
-        y: 369
+        x: 190
+        y: 773
         width: 55
         height: 78
       alignment: 9
@@ -858,7 +858,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 441
+        y: 1017
         width: 61
         height: 84
       alignment: 0
@@ -871,12 +871,12 @@ TextureImporter:
       name: mj_su_1tong
       rect:
         serializedVersion: 2
-        x: 387
-        y: 538
+        x: 253
+        y: 859
         width: 55
-        height: 81
+        height: 78
       alignment: 9
-      pivot: {x: 0.5, y: 0.48765433}
+      pivot: {x: 0.5, y: 0.50641024}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -885,8 +885,8 @@ TextureImporter:
       name: mj_su_1tong_l
       rect:
         serializedVersion: 2
-        x: 1
-        y: 355
+        x: 72
+        y: 1111
         width: 61
         height: 84
       alignment: 0
@@ -899,8 +899,8 @@ TextureImporter:
       name: mj_su_1wan
       rect:
         serializedVersion: 2
-        x: 379
-        y: 289
+        x: 316
+        y: 945
         width: 55
         height: 78
       alignment: 9
@@ -914,7 +914,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 269
+        y: 931
         width: 61
         height: 84
       alignment: 0
@@ -928,7 +928,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 379
-        y: 209
+        y: 1031
         width: 55
         height: 78
       alignment: 9
@@ -941,8 +941,8 @@ TextureImporter:
       name: mj_su_2tiao_l
       rect:
         serializedVersion: 2
-        x: 1
-        y: 183
+        x: 135
+        y: 1111
         width: 61
         height: 84
       alignment: 0
@@ -955,8 +955,8 @@ TextureImporter:
       name: mj_su_2tong
       rect:
         serializedVersion: 2
-        x: 379
-        y: 129
+        x: 127
+        y: 601
         width: 55
         height: 78
       alignment: 9
@@ -970,7 +970,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 97
+        y: 845
         width: 61
         height: 84
       alignment: 0
@@ -983,8 +983,8 @@ TextureImporter:
       name: mj_su_2wan
       rect:
         serializedVersion: 2
-        x: 379
-        y: 49
+        x: 190
+        y: 693
         width: 55
         height: 78
       alignment: 9
@@ -997,8 +997,8 @@ TextureImporter:
       name: mj_su_2wan_l
       rect:
         serializedVersion: 2
-        x: 1
-        y: 11
+        x: 198
+        y: 1111
         width: 61
         height: 84
       alignment: 0
@@ -1012,7 +1012,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 436
-        y: 369
+        y: 1031
         width: 55
         height: 78
       alignment: 9
@@ -1025,8 +1025,8 @@ TextureImporter:
       name: mj_su_3tiao_l
       rect:
         serializedVersion: 2
-        x: 64
-        y: 441
+        x: 1
+        y: 759
         width: 61
         height: 84
       alignment: 0
@@ -1039,8 +1039,8 @@ TextureImporter:
       name: mj_su_3tong
       rect:
         serializedVersion: 2
-        x: 442
-        y: 458
+        x: 127
+        y: 521
         width: 55
         height: 78
       alignment: 9
@@ -1053,8 +1053,8 @@ TextureImporter:
       name: mj_su_3tong_l
       rect:
         serializedVersion: 2
-        x: 72
-        y: 535
+        x: 261
+        y: 1111
         width: 61
         height: 84
       alignment: 0
@@ -1067,8 +1067,8 @@ TextureImporter:
       name: mj_su_3wan
       rect:
         serializedVersion: 2
-        x: 444
-        y: 541
+        x: 127
+        y: 441
         width: 55
         height: 78
       alignment: 9
@@ -1081,8 +1081,8 @@ TextureImporter:
       name: mj_su_3wan_l
       rect:
         serializedVersion: 2
-        x: 64
-        y: 355
+        x: 1
+        y: 673
         width: 61
         height: 84
       alignment: 0
@@ -1095,8 +1095,8 @@ TextureImporter:
       name: mj_su_4tiao
       rect:
         serializedVersion: 2
-        x: 436
-        y: 289
+        x: 127
+        y: 361
         width: 55
         height: 78
       alignment: 9
@@ -1109,8 +1109,8 @@ TextureImporter:
       name: mj_su_4tiao_l
       rect:
         serializedVersion: 2
-        x: 64
-        y: 269
+        x: 324
+        y: 1111
         width: 61
         height: 84
       alignment: 0
@@ -1123,8 +1123,8 @@ TextureImporter:
       name: mj_su_4tong
       rect:
         serializedVersion: 2
-        x: 436
-        y: 209
+        x: 127
+        y: 281
         width: 55
         height: 78
       alignment: 9
@@ -1137,8 +1137,8 @@ TextureImporter:
       name: mj_su_4tong_l
       rect:
         serializedVersion: 2
-        x: 64
-        y: 183
+        x: 1
+        y: 587
         width: 61
         height: 84
       alignment: 0
@@ -1151,8 +1151,8 @@ TextureImporter:
       name: mj_su_4wan
       rect:
         serializedVersion: 2
-        x: 436
-        y: 129
+        x: 127
+        y: 201
         width: 55
         height: 78
       alignment: 9
@@ -1165,8 +1165,8 @@ TextureImporter:
       name: mj_su_4wan_l
       rect:
         serializedVersion: 2
-        x: 64
-        y: 97
+        x: 387
+        y: 1111
         width: 61
         height: 84
       alignment: 0
@@ -1179,8 +1179,8 @@ TextureImporter:
       name: mj_su_5tiao
       rect:
         serializedVersion: 2
-        x: 436
-        y: 49
+        x: 127
+        y: 121
         width: 55
         height: 78
       alignment: 9
@@ -1193,8 +1193,8 @@ TextureImporter:
       name: mj_su_5tiao_l
       rect:
         serializedVersion: 2
-        x: 64
-        y: 11
+        x: 450
+        y: 1111
         width: 61
         height: 84
       alignment: 0
@@ -1207,8 +1207,8 @@ TextureImporter:
       name: mj_su_5tong
       rect:
         serializedVersion: 2
-        x: 493
-        y: 378
+        x: 127
+        y: 41
         width: 55
         height: 78
       alignment: 9
@@ -1221,8 +1221,8 @@ TextureImporter:
       name: mj_su_5tong_l
       rect:
         serializedVersion: 2
-        x: 127
-        y: 449
+        x: 1
+        y: 501
         width: 61
         height: 84
       alignment: 0
@@ -1235,8 +1235,8 @@ TextureImporter:
       name: mj_su_5wan
       rect:
         serializedVersion: 2
-        x: 499
-        y: 461
+        x: 247
+        y: 773
         width: 55
         height: 78
       alignment: 9
@@ -1249,8 +1249,8 @@ TextureImporter:
       name: mj_su_5wan_l
       rect:
         serializedVersion: 2
-        x: 135
-        y: 535
+        x: 1
+        y: 415
         width: 61
         height: 84
       alignment: 0
@@ -1263,8 +1263,8 @@ TextureImporter:
       name: mj_su_6tiao
       rect:
         serializedVersion: 2
-        x: 501
-        y: 541
+        x: 247
+        y: 693
         width: 55
         height: 78
       alignment: 9
@@ -1277,8 +1277,8 @@ TextureImporter:
       name: mj_su_6tiao_l
       rect:
         serializedVersion: 2
-        x: 127
-        y: 363
+        x: 1
+        y: 329
         width: 61
         height: 84
       alignment: 0
@@ -1291,8 +1291,8 @@ TextureImporter:
       name: mj_su_6tong
       rect:
         serializedVersion: 2
-        x: 493
-        y: 298
+        x: 310
+        y: 859
         width: 55
         height: 78
       alignment: 9
@@ -1305,8 +1305,8 @@ TextureImporter:
       name: mj_su_6tong_l
       rect:
         serializedVersion: 2
-        x: 127
-        y: 277
+        x: 1
+        y: 243
         width: 61
         height: 84
       alignment: 0
@@ -1319,8 +1319,8 @@ TextureImporter:
       name: mj_su_6wan
       rect:
         serializedVersion: 2
-        x: 493
-        y: 218
+        x: 304
+        y: 779
         width: 55
         height: 78
       alignment: 9
@@ -1333,8 +1333,8 @@ TextureImporter:
       name: mj_su_6wan_l
       rect:
         serializedVersion: 2
-        x: 127
-        y: 191
+        x: 1
+        y: 157
         width: 61
         height: 84
       alignment: 0
@@ -1347,8 +1347,8 @@ TextureImporter:
       name: mj_su_7tiao
       rect:
         serializedVersion: 2
-        x: 493
-        y: 138
+        x: 304
+        y: 699
         width: 55
         height: 78
       alignment: 9
@@ -1361,8 +1361,8 @@ TextureImporter:
       name: mj_su_7tiao_l
       rect:
         serializedVersion: 2
-        x: 127
-        y: 105
+        x: 1
+        y: 71
         width: 61
         height: 84
       alignment: 0
@@ -1375,8 +1375,8 @@ TextureImporter:
       name: mj_su_7tong
       rect:
         serializedVersion: 2
-        x: 493
-        y: 58
+        x: 373
+        y: 945
         width: 55
         height: 78
       alignment: 9
@@ -1389,8 +1389,8 @@ TextureImporter:
       name: mj_su_7tong_l
       rect:
         serializedVersion: 2
-        x: 127
-        y: 19
+        x: 64
+        y: 1017
         width: 61
         height: 84
       alignment: 0
@@ -1403,8 +1403,8 @@ TextureImporter:
       name: mj_su_7wan
       rect:
         serializedVersion: 2
-        x: 550
-        y: 381
+        x: 367
+        y: 865
         width: 55
         height: 78
       alignment: 9
@@ -1417,8 +1417,8 @@ TextureImporter:
       name: mj_su_7wan_l
       rect:
         serializedVersion: 2
-        x: 190
-        y: 449
+        x: 64
+        y: 931
         width: 61
         height: 84
       alignment: 0
@@ -1431,8 +1431,8 @@ TextureImporter:
       name: mj_su_8tiao
       rect:
         serializedVersion: 2
-        x: 556
-        y: 461
+        x: 430
+        y: 951
         width: 55
         height: 78
       alignment: 9
@@ -1445,8 +1445,8 @@ TextureImporter:
       name: mj_su_8tiao_l
       rect:
         serializedVersion: 2
-        x: 198
-        y: 535
+        x: 64
+        y: 845
         width: 61
         height: 84
       alignment: 0
@@ -1459,8 +1459,8 @@ TextureImporter:
       name: mj_su_8tong
       rect:
         serializedVersion: 2
-        x: 558
-        y: 541
+        x: 184
+        y: 601
         width: 55
         height: 78
       alignment: 9
@@ -1473,8 +1473,8 @@ TextureImporter:
       name: mj_su_8tong_l
       rect:
         serializedVersion: 2
-        x: 190
-        y: 363
+        x: 64
+        y: 759
         width: 61
         height: 84
       alignment: 0
@@ -1487,8 +1487,8 @@ TextureImporter:
       name: mj_su_8wan
       rect:
         serializedVersion: 2
-        x: 550
-        y: 301
+        x: 184
+        y: 521
         width: 55
         height: 78
       alignment: 9
@@ -1501,8 +1501,8 @@ TextureImporter:
       name: mj_su_8wan_l
       rect:
         serializedVersion: 2
-        x: 190
-        y: 277
+        x: 64
+        y: 673
         width: 61
         height: 84
       alignment: 0
@@ -1515,8 +1515,8 @@ TextureImporter:
       name: mj_su_9tiao
       rect:
         serializedVersion: 2
-        x: 550
-        y: 221
+        x: 184
+        y: 441
         width: 55
         height: 78
       alignment: 9
@@ -1529,8 +1529,8 @@ TextureImporter:
       name: mj_su_9tiao_l
       rect:
         serializedVersion: 2
-        x: 190
-        y: 191
+        x: 64
+        y: 587
         width: 61
         height: 84
       alignment: 0
@@ -1543,8 +1543,8 @@ TextureImporter:
       name: mj_su_9tong
       rect:
         serializedVersion: 2
-        x: 550
-        y: 141
+        x: 184
+        y: 361
         width: 55
         height: 78
       alignment: 9
@@ -1557,8 +1557,8 @@ TextureImporter:
       name: mj_su_9tong_l
       rect:
         serializedVersion: 2
-        x: 190
-        y: 105
+        x: 64
+        y: 501
         width: 61
         height: 84
       alignment: 0
@@ -1571,8 +1571,8 @@ TextureImporter:
       name: mj_su_9wan
       rect:
         serializedVersion: 2
-        x: 550
-        y: 61
+        x: 184
+        y: 281
         width: 55
         height: 78
       alignment: 9
@@ -1585,8 +1585,8 @@ TextureImporter:
       name: mj_su_9wan_l
       rect:
         serializedVersion: 2
-        x: 190
-        y: 19
+        x: 64
+        y: 415
         width: 61
         height: 84
       alignment: 0
@@ -1599,8 +1599,8 @@ TextureImporter:
       name: mj_su_fbaiban
       rect:
         serializedVersion: 2
-        x: 615
-        y: 541
+        x: 184
+        y: 201
         width: 55
         height: 78
       alignment: 9
@@ -1613,8 +1613,8 @@ TextureImporter:
       name: mj_su_fbaiban_l
       rect:
         serializedVersion: 2
-        x: 253
-        y: 449
+        x: 64
+        y: 329
         width: 61
         height: 84
       alignment: 0
@@ -1627,8 +1627,8 @@ TextureImporter:
       name: mj_su_fbei
       rect:
         serializedVersion: 2
-        x: 672
-        y: 541
+        x: 184
+        y: 121
         width: 55
         height: 78
       alignment: 9
@@ -1641,8 +1641,8 @@ TextureImporter:
       name: mj_su_fbei_l
       rect:
         serializedVersion: 2
-        x: 261
-        y: 535
+        x: 64
+        y: 243
         width: 61
         height: 84
       alignment: 0
@@ -1655,8 +1655,8 @@ TextureImporter:
       name: mj_su_fdong
       rect:
         serializedVersion: 2
-        x: 729
-        y: 541
+        x: 184
+        y: 41
         width: 55
         height: 78
       alignment: 9
@@ -1669,8 +1669,8 @@ TextureImporter:
       name: mj_su_fdong_l
       rect:
         serializedVersion: 2
-        x: 253
-        y: 363
+        x: 64
+        y: 157
         width: 61
         height: 84
       alignment: 0
@@ -1683,8 +1683,8 @@ TextureImporter:
       name: mj_su_ffa
       rect:
         serializedVersion: 2
-        x: 786
-        y: 541
+        x: 241
+        y: 613
         width: 55
         height: 78
       alignment: 9
@@ -1697,8 +1697,8 @@ TextureImporter:
       name: mj_su_ffa_l
       rect:
         serializedVersion: 2
-        x: 253
-        y: 277
+        x: 64
+        y: 71
         width: 61
         height: 84
       alignment: 0
@@ -1711,8 +1711,8 @@ TextureImporter:
       name: mj_su_fnan
       rect:
         serializedVersion: 2
-        x: 843
-        y: 541
+        x: 241
+        y: 533
         width: 55
         height: 78
       alignment: 9
@@ -1725,8 +1725,8 @@ TextureImporter:
       name: mj_su_fnan_l
       rect:
         serializedVersion: 2
-        x: 253
-        y: 191
+        x: 127
+        y: 1025
         width: 61
         height: 84
       alignment: 0
@@ -1739,8 +1739,8 @@ TextureImporter:
       name: mj_su_fxi
       rect:
         serializedVersion: 2
-        x: 900
-        y: 541
+        x: 241
+        y: 453
         width: 55
         height: 78
       alignment: 9
@@ -1753,8 +1753,8 @@ TextureImporter:
       name: mj_su_fxi_l
       rect:
         serializedVersion: 2
-        x: 253
-        y: 105
+        x: 127
+        y: 939
         width: 61
         height: 84
       alignment: 0
@@ -1767,8 +1767,8 @@ TextureImporter:
       name: mj_su_fzhong
       rect:
         serializedVersion: 2
-        x: 957
-        y: 541
+        x: 241
+        y: 373
         width: 55
         height: 78
       alignment: 9
@@ -1781,8 +1781,8 @@ TextureImporter:
       name: mj_su_fzhong_l
       rect:
         serializedVersion: 2
-        x: 253
-        y: 19
+        x: 190
+        y: 1025
         width: 61
         height: 84
       alignment: 0
@@ -1795,8 +1795,8 @@ TextureImporter:
       name: mj_su_schun
       rect:
         serializedVersion: 2
-        x: 613
-        y: 461
+        x: 241
+        y: 293
         width: 55
         height: 78
       alignment: 9
@@ -1809,8 +1809,8 @@ TextureImporter:
       name: mj_su_schun_l
       rect:
         serializedVersion: 2
-        x: 316
-        y: 449
+        x: 127
+        y: 853
         width: 61
         height: 84
       alignment: 0
@@ -1823,8 +1823,8 @@ TextureImporter:
       name: mj_su_sdong
       rect:
         serializedVersion: 2
-        x: 670
-        y: 461
+        x: 241
+        y: 213
         width: 55
         height: 78
       alignment: 9
@@ -1837,8 +1837,8 @@ TextureImporter:
       name: mj_su_sdong_l
       rect:
         serializedVersion: 2
-        x: 324
-        y: 535
+        x: 190
+        y: 939
         width: 61
         height: 84
       alignment: 0
@@ -1851,8 +1851,8 @@ TextureImporter:
       name: mj_su_sju
       rect:
         serializedVersion: 2
-        x: 727
-        y: 461
+        x: 241
+        y: 133
         width: 55
         height: 78
       alignment: 9
@@ -1865,8 +1865,8 @@ TextureImporter:
       name: mj_su_sju_l
       rect:
         serializedVersion: 2
-        x: 316
-        y: 363
+        x: 253
+        y: 1025
         width: 61
         height: 84
       alignment: 0
@@ -1879,8 +1879,8 @@ TextureImporter:
       name: mj_su_slan
       rect:
         serializedVersion: 2
-        x: 784
-        y: 461
+        x: 241
+        y: 53
         width: 55
         height: 78
       alignment: 9
@@ -1893,8 +1893,8 @@ TextureImporter:
       name: mj_su_slan_l
       rect:
         serializedVersion: 2
-        x: 316
-        y: 277
+        x: 127
+        y: 767
         width: 61
         height: 84
       alignment: 0
@@ -1907,8 +1907,8 @@ TextureImporter:
       name: mj_su_smei
       rect:
         serializedVersion: 2
-        x: 841
-        y: 461
+        x: 361
+        y: 779
         width: 55
         height: 78
       alignment: 9
@@ -1921,8 +1921,8 @@ TextureImporter:
       name: mj_su_smei_l
       rect:
         serializedVersion: 2
-        x: 316
-        y: 191
+        x: 190
+        y: 853
         width: 61
         height: 84
       alignment: 0
@@ -1935,8 +1935,8 @@ TextureImporter:
       name: mj_su_sqiu
       rect:
         serializedVersion: 2
-        x: 898
-        y: 461
+        x: 361
+        y: 699
         width: 55
         height: 78
       alignment: 9
@@ -1949,8 +1949,8 @@ TextureImporter:
       name: mj_su_sqiu_l
       rect:
         serializedVersion: 2
-        x: 316
-        y: 105
+        x: 253
+        y: 939
         width: 61
         height: 84
       alignment: 0
@@ -1963,8 +1963,8 @@ TextureImporter:
       name: mj_su_sxia
       rect:
         serializedVersion: 2
-        x: 955
-        y: 461
+        x: 424
+        y: 865
         width: 55
         height: 78
       alignment: 9
@@ -1978,7 +1978,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 316
-        y: 19
+        y: 1025
         width: 61
         height: 84
       alignment: 0
@@ -1991,8 +1991,8 @@ TextureImporter:
       name: mj_su_szu
       rect:
         serializedVersion: 2
-        x: 607
-        y: 381
+        x: 418
+        y: 785
         width: 55
         height: 78
       alignment: 9
@@ -2005,8 +2005,8 @@ TextureImporter:
       name: mj_su_szu_l
       rect:
         serializedVersion: 2
-        x: 379
-        y: 449
+        x: 127
+        y: 681
         width: 61
         height: 84
       alignment: 0

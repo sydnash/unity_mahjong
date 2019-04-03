@@ -149,6 +149,11 @@ function lobby:onEnterQYQClickedHandler()
             return
         end
 
+        if msg.RetCode ~= retc.ok then
+            showMessageUI(retcText[msg.RetCode])
+            return
+        end
+
         local ui = require("ui.friendster.friendster").new(msg.Clubs)
         ui:show()
     end)
@@ -168,7 +173,7 @@ function lobby:onHistoryClickedHandler()
     gamepref.player.playHistory:updateHistory(function(ok)
         closeWaitingUI()
         if not ok then
-            showMessageUI("同步战绩失败")
+            showToastUI("同步战绩失败")
             return
         end
         local ui = require("ui.playHistory.playHistory").new(gamepref.player.playHistory)
@@ -257,10 +262,10 @@ end
 function lobby:show()
     base.show(self)
 
-    if not clientApp.activityShown then
-        local ui = require("ui.activity").new()
-        ui:show()
-    end
+--    if not clientApp.activityShown then
+--        local ui = require("ui.activity").new()
+--        ui:show()
+--    end
 end
 
 function lobby:onCloseAllUIHandler()

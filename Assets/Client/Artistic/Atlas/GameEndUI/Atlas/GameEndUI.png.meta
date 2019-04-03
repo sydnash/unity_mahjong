@@ -107,6 +107,7 @@ TextureImporter:
     21300200: ZM_zi14
     21300202: fx_di01
     21300204: hf_zi01
+    21300206: ZM_tp01
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -203,7 +204,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 348
+        y: 92
         width: 422
         height: 163
       alignment: 0
@@ -216,8 +217,8 @@ TextureImporter:
       name: hf_zi01
       rect:
         serializedVersion: 2
-        x: 425
-        y: 470
+        x: 123
+        y: 4
         width: 78
         height: 41
       alignment: 0
@@ -231,7 +232,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 39
+        y: 43
         width: 114
         height: 47
       alignment: 0
@@ -244,8 +245,8 @@ TextureImporter:
       name: JS_di01
       rect:
         serializedVersion: 2
-        x: 1
-        y: 218
+        x: 425
+        y: 127
         width: 156
         height: 128
       alignment: 0
@@ -258,8 +259,8 @@ TextureImporter:
       name: JS_di01_1
       rect:
         serializedVersion: 2
-        x: 159
-        y: 224
+        x: 425
+        y: 3
         width: 149
         height: 122
       alignment: 0
@@ -272,8 +273,8 @@ TextureImporter:
       name: JS_di02
       rect:
         serializedVersion: 2
-        x: 1
-        y: 88
+        x: 583
+        y: 127
         width: 156
         height: 128
       alignment: 0
@@ -286,8 +287,8 @@ TextureImporter:
       name: JS_di02_1
       rect:
         serializedVersion: 2
-        x: 159
-        y: 100
+        x: 576
+        y: 3
         width: 149
         height: 122
       alignment: 0
@@ -300,8 +301,8 @@ TextureImporter:
       name: JS_dian
       rect:
         serializedVersion: 2
-        x: 505
-        y: 505
+        x: 109
+        y: 21
         width: 6
         height: 6
       alignment: 0
@@ -314,8 +315,8 @@ TextureImporter:
       name: JS_zi01
       rect:
         serializedVersion: 2
-        x: 117
-        y: 47
+        x: 1
+        y: 2
         width: 106
         height: 39
       alignment: 0
@@ -328,10 +329,24 @@ TextureImporter:
       name: mask
       rect:
         serializedVersion: 2
-        x: 425
-        y: 456
+        x: 109
+        y: 29
         width: 12
         height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: ZM_tp01
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 47
+        width: 43
+        height: 43
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

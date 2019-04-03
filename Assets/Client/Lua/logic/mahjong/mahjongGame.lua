@@ -3,10 +3,10 @@
 --此文件由[BabeLua]插件自动生成
 
 local gamePlayer = require("logic.player.gamePlayer")
+local mahjongType = require ("logic.mahjong.mahjongType")
 
 local base = require("logic.game")
 local mahjongGame = class("mahjongGame", base)
-local mahjongType = require ("logic.mahjong.mahjongType")
 
 --------------------------------------------------------------
 --
@@ -19,6 +19,9 @@ mahjongGame.status = {
     gameend =  5, --结束
 }
 
+--------------------------------------------------------------
+--
+--------------------------------------------------------------
 mahjongGame.cardType = {
     idle = 1,
     shou = 2,
@@ -46,7 +49,6 @@ function mahjongGame:getTotalCountByConfig(config)
 
     return 108
 end
-
 
 ----------------------------------------------------------------
 --
@@ -329,7 +331,7 @@ end
 -- 开始游戏
 -------------------------------------------------------------------------------
 function mahjongGame:onGameStartHandler(msg)
---    log("start game, msg = " .. table.tostring(msg))
+    log("start game, msg = " .. table.tostring(msg))
     self.canBack = false
     self.knownMahjong = {}
     self.chuHintComputeHelper = nil
@@ -363,7 +365,7 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongGame:onFaPaiHandler(msg)
---    log("fapai, msg = " .. table.tostring(msg))
+    log("fapai, msg = " .. table.tostring(msg))
     local func = (function()
         self.deskPlayStatus = mahjongGame.status.fapai
 
@@ -613,10 +615,12 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
     local player = self:getPlayerByAcId(acId)
     local infos = player[mahjongGame.cardType.peng]
     local detail = opType.gang.detail
+
     if t == detail.minggang then
         table.insert(infos, {
             Op = opType.gang.id,
-            Cs = {beCard, cards[1], cards[2], cards[3]}
+            Cs = {beCard, cards[1], cards[2], cards[3]},
+            D = detail.minggang,
         })
         self.knownMahjong[beCard] = 1
         self.knownMahjong[cards[1]] = 1
@@ -633,17 +637,45 @@ function mahjongGame:onOpDoGang(acId, cards, beAcId, beCard, t)
         self.knownMahjong[cards[3]] = 1
         self.knownMahjong[cards[4]] = 1
     elseif t == detail.bagangwithmoney or t == detail.bagangwithoutmoney then
-        local pinfo
+        local pinfo = nil
         for _, info in pairs(infos) do
-            if info.Op == opType.peng.id and mahjongType.getMahjongTypeId(info.Cs[1]) == mahjongType.getMahjongTypeId(cards[1]) then
-                pinfo = info
-                break
+            local yaotongId = 9 --幺筒
+            local iid = mahjongType.getMahjongTypeId(info.Cs[1])
+            local cid = mahjongType.getMahjongTypeId(cards[1])
+            local bagangid = mahjongType.getMahjongTypeId(beCard)
+
+            if info.Op == opType.peng.id then
+                if self:isLaizi(cards[1]) and bagangid == iid then --幺筒
+                    pinfo = info
+                    break
+                end
+
+                if iid == cid then
+                    pinfo = info
+                    break
+                end
+            end
+
+            if info.Op == opType.gang.id and self.gameType == gameType.yaotongrenyong and self.config.GangShangGang then
+                if cid == yaotongId and bagangid == iid then --幺筒
+                    pinfo = info
+                    break
+                end
+
+                if iid == cid then
+                    pinfo = info
+                    break
+                end
             end
         end
+
         pinfo.Op = opType.gang.id
+        pinfo.D = t
         table.insert(pinfo.Cs, cards[1])
+--        log("mahjongGame:onOpDoGang, pinfo = " .. table.tostring(pinfo))
         self.knownMahjong[cards[1]] = 1
     end
+
     self.deskUI:onPlayerGang(acId, t)
     self.operationUI:onOpDoGang(acId, cards, beAcId, beCard, t)
 end
@@ -723,11 +755,11 @@ function mahjongGame:onGameEndListener(specialData, datas, totalScores)
                     d[u.Op] = {}
                 end
 
-                table.insert(d[u.Op], u.Cs)
-
+                local op = d[u.Op]
                 if u.Op == opType.gang.id then --存放杠牌的类型
-                    local x = #d[u.Op]
-                    d[u.Op][x][5] = u.D
+                    table.insert(op, { cards = u.Cs, detial = u.D })
+                else
+                    table.insert(op, { cards = u.Cs })
                 end
             end
         end
@@ -771,7 +803,7 @@ end
 -- 服务器通知有玩家发起快速开始投票
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartNotify(msg)
-    log("mahjongGame:onQuicklyStartNotify " .. table.tostring(msg))
+--    log("mahjongGame:onQuicklyStartNotify " .. table.tostring(msg))
     if not self.quicklyStartUI then
         self.quicklyStartVoteSeconds = msg.LeftTime
         self.quicklyStartVoteProposer = msg.Proposer
@@ -792,7 +824,7 @@ end
 -- 服务器通知快速开始投票结果
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartEndNotify(msg)
-    log("mahjongGame:onQuicklyStartEndNotify" .. table.tostring(msg))
+--    log("mahjongGame:onQuicklyStartEndNotify" .. table.tostring(msg))
     local func = (function()
         if self.quicklyStartUI then
             if msg.Result == 0 then --快速开始成功
@@ -801,13 +833,13 @@ function mahjongGame:onQuicklyStartEndNotify(msg)
                 self:computeRealTurn()
             elseif msg.Result == 1 then --有人拒绝
                 local player = self.players[msg.Rejecter]
-                showMessageUI(string.format("玩家 %s 拒绝了解散申请", cutoutString(player.nickname,gameConfig.nicknameMaxLength)))
+                showMessageUI(string.format("玩家 %s 拒绝了快速开局申请", cutoutString(player.nickname,gameConfig.nicknameMaxLength)))
             elseif msg.Result == 2 then --有人进入或者离开
-                showMessageUI(string.format("当前桌子人员发生变化，快速开始申请失败"))
+                showMessageUI(string.format("当前桌子人员发生变化，快速开局申请失败"))
             elseif msg.Result == 3 then --有人进入或者离开
-                showMessageUI(string.format("当前桌子人员发生变化，快速开始申请失败"))
+                showMessageUI(string.format("当前桌子人员发生变化，快速开局申请失败"))
             elseif msg.Result == 4 then --超时
-                showMessageUI(string.format("快速开始申请超时，请重新发起申请"))
+                showMessageUI(string.format("快速开局申请超时，请重新发起申请"))
             end
 
             self.quicklyStartUI:close()
@@ -822,7 +854,7 @@ end
 -- 服务器通知有玩家选择快速开始投票
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartChose(msg)
-    log("mahjongGame:onQuicklyStartChose" .. table.tostring(msg))
+--    log("mahjongGame:onQuicklyStartChose" .. table.tostring(msg))
     local func = (function()
         if self.quicklyStartUI ~= nil then
             local player = self:getPlayerByAcId(msg.AcId)
@@ -851,8 +883,23 @@ function mahjongGame:quicklyStartChose(agree, callback)
     networkManager.quicklyStartChose(agree, callback)
 end
 
+-------------------------------------------------------------------------------
+--
+-------------------------------------------------------------------------------
 function mahjongGame:hasHuPaiHint()
     return self.config.HuPaiHint and not self:isPlayback()
+end
+
+-------------------------------------------------------------------------------
+--
+-------------------------------------------------------------------------------
+function mahjongGame:isLaizi(mid)
+    if self.gameType == gameType.yaotongrenyong then
+        local tid = mahjongType.getMahjongTypeId(mid)
+        return tid == 9 --幺筒作癞子
+    end
+
+    return false
 end
 
 return mahjongGame

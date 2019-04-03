@@ -253,11 +253,6 @@ public class LuaClient : MonoBehaviour
         Destroy();
     }
 
-    protected void OnApplicationQuit()
-    {
-        Destroy();
-    }
-
     //public static LuaState GetMainState()
     //{
     //    return Instance.luaState;

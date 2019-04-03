@@ -34,7 +34,6 @@ tpsheetFileNames:
 - Assets/Client/Artistic/Atlas/PlayHistoryUI/Atlas/PlayHistory.tpsheet
 - Assets/Client/Artistic/Atlas/QuickStartUI/Atlas/QuickStartUI.tpsheet
 - Assets/Client/Artistic/Atlas/SettingUI/Atlas/SettingUI.tpsheet
-- Assets/Client/Artistic/Atlas/ShareUI/Atlas/Atlas/ShareUI.tpsheet
 - Assets/Client/Artistic/Atlas/ShareUI/Atlas/ShareUI.tpsheet
 - Assets/Client/Artistic/Atlas/ShopUI/Atlas/ShopUI.tpsheet
 - Assets/Client/Artistic/Atlas/ToastUI/Atlas/ToastUI.tpsheet
@@ -75,7 +74,6 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/PlayHistoryUI/Atlas/PlayHistory.png
 - Assets/Client/Artistic/Atlas/QuickStartUI/Atlas/QuickStartUI.png
 - Assets/Client/Artistic/Atlas/SettingUI/Atlas/SettingUI.png
-- Assets/Client/Artistic/Atlas/ShareUI/Atlas/Atlas/ShareUI.png
 - Assets/Client/Artistic/Atlas/ShareUI/Atlas/ShareUI.png
 - Assets/Client/Artistic/Atlas/ShopUI/Atlas/ShopUI.png
 - Assets/Client/Artistic/Atlas/ToastUI/Atlas/ToastUI.png
@@ -83,7 +81,6 @@ textureFileNames:
 - Assets/Client/Artistic/Atlas/WaitingUI/Atlas/WaitingUI.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
-- 
 - 
 - 
 - 

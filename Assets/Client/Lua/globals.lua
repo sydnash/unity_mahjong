@@ -35,6 +35,7 @@ modelManager        = require("manager.modelManager")
 textureManager      = require("manager.textureManager")
 animationManager    = require("manager.animationManager")
 signalManager       = require("manager.signalManager")
+task                = require("task")
 
 require("const.typeDef")
 require("const.textDef")
@@ -503,7 +504,7 @@ end
 -- 
 -------------------------------------------------------------
 function getLogicGame(citytype, gametype)
-    if gametype == gameType.mahjong then
+    if gametype == gameType.mahjong or gametype == gameType.yaotongrenyong then
         return require("logic.mahjong.mahjongGame")
     elseif gametype == gameType.doushisi then
         if citytype == cityType.jintang then
@@ -856,12 +857,9 @@ end
 -- 截取全屏UI
 -------------------------------------------------------------
 function captureScreenshotUI()
-    local go = find("UIRoot/UICamera")
-    if go ~= nil then
-        local camera = getComponentU(go.gameObject, typeof(UnityEngine.Camera))
-        if camera ~= nil then
-            return Utils.CaptureScreenshot(camera)
-        end
+    local camera = viewManager.camera
+    if camera ~= nil then
+        return Utils.CaptureScreenshot(camera)
     end
 
     return nil
@@ -960,6 +958,16 @@ function queryFromCSV(key)
     end
 
     return CSV.instance:Query(key)
+end
+
+----------------------------------------------------------------
+-- 
+----------------------------------------------------------------
+function screenPointToLocalPointInRectangle(node, scpos, camera)
+    local parent = node:getParent().rectTransform
+    local _, pos = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, scpos, camera, nil)
+
+    return pos
 end
 
 --endregion

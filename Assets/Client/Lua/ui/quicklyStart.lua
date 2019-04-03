@@ -16,14 +16,14 @@ function quicklyStart:onInit()
     self.leftSeconds = self.game.quicklyStartVoteSeconds / 1000
     self.timestamp = time.realtimeSinceStartup()
 
-    local items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD, }
+    local items = { self.mItemA, self.mItemB, self.mItemC, }
     self.items = {}
 
     local i = 0
     for k, v in pairs(self.game.players) do
         i = i + 1
         if self.game.quicklyStartVoteProposer == v.acId then
-            self.mProposer:setText(v.nickname)
+            self.mProposer:setText(string.format("玩家“%s”申请快速开局", v.nickname))
             v.exitVoteState = quicklyStartStatus.proposer
         end
 
@@ -32,7 +32,7 @@ function quicklyStart:onInit()
         item:setPlayerInfo(v)
         self.items[v.acId] = item
     end
-    for j = i + 1, 4 do
+    for j = i + 1, #items do
         items[j]:hide()
     end
 
@@ -57,7 +57,7 @@ function quicklyStart:setPlayerState(player)
     local item = self.items[player.acId]
 
     if item == nil then
-        commitError("quicklyStart.setPlayerState, can't find item by acid: %d", player.acId)
+        commitError(string.format("quicklyStart.setPlayerState, can't find item by acid: %d", player.acId))
         return
     end
 
@@ -71,8 +71,8 @@ end
 function quicklyStart:onAgreeClickedHandler()
     self.mAgree:setInteractabled(false)
     self.mReject:setInteractabled(false)
-    self.mAgreeC:setSprite("ks_ks")
-    self.mRejectC:setSprite("ks_jj")
+    self.mAgreeC:setSprite("ks_ks_h")
+    self.mRejectC:setSprite("ks_jj_h")
 
     local player = self.game:getPlayerByAcId(gamepref.acId)
     self.items[player.acId]:setState(quicklyStartStatus.agree)

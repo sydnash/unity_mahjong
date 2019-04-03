@@ -14,6 +14,7 @@ function share:onInit()
     self.mClose:addClickListener(self.onCloseClickedHandler, self)
     self.mHY:addClickListener(self.onHyClickedHandler, self)
     self.mPYQ:addClickListener(self.onPyqClickedHandler, self)
+    self.mCN:addClickListener(self.onCnClickedHandler, self)
 
     self:updateTips()
     signalManager.registerSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
@@ -89,6 +90,21 @@ function share:onPyqClickedHandler()
         textureManager.unload(tex)
         destroyTexture(thumb)
     end
+end
+
+function share:onCnClickedHandler()
+    playButtonClickSound()
+
+    local texpath = LFS.CombinePath(LFS.DOWNLOAD_DATA_PATH, imageName .. ".jpg")
+    if not LFS.FileExist(texpath) then
+        local tex = textureManager.load(imagePath, imageName)
+        if tex ~= nil then
+            saveTextureToJPG(texpath, tex)
+            textureManager.unload(tex)
+        end
+    end
+        
+    platformHelper.shareImageCn(texpath)
 end
 
 function share:onCloseAllUIHandler()

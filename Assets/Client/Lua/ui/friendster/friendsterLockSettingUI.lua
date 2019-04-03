@@ -57,7 +57,8 @@ function friendsterLockSettingUI:onConfirmSetting()
             showMessageUI("保存数据失败，请重试。")
             return
         end
-        showMessageUI("保存成功")
+        -- showMessageUI("保存成功")
+        showToastUI("保存成功")
         if self.createUI then
             self.createUI:onSupportGameChanges(self.chosedGames)
         end

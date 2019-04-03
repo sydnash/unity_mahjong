@@ -29,6 +29,7 @@ public class AndroidHelperWrap
 		L.RegFunction("SetToClipboard", SetToClipboard);
 		L.RegFunction("GetFromClipboard", GetFromClipboard);
 		L.RegFunction("GetDistance", GetDistance);
+		L.RegFunction("IsInstalledCN", IsInstalledCN);
 		L.RegFunction("ShareUrlCN", ShareUrlCN);
 		L.RegFunction("ShareImageCN", ShareImageCN);
 		L.RegFunction("OpenThirdApp", OpenThirdApp);
@@ -442,6 +443,23 @@ public class AndroidHelperWrap
 			float arg3 = (float)LuaDLL.luaL_checknumber(L, 5);
 			float o = obj.GetDistance(arg0, arg1, arg2, arg3);
 			LuaDLL.lua_pushnumber(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsInstalledCN(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			AndroidHelper obj = (AndroidHelper)ToLua.CheckObject<AndroidHelper>(L, 1);
+			bool o = obj.IsInstalledCN();
+			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}
 		catch (Exception e)
