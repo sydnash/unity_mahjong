@@ -711,4 +711,9 @@ function doushisiGame:clearPlayerGameStatus()
     end
 end
 
+function doushisiGame:opChose(data)
+    data.I = self.curOpListIdx
+    networkManager.csOpChose(data)
+end
+
 return doushisiGame
