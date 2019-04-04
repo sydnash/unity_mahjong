@@ -860,7 +860,7 @@ end
 
 function doushisiOperation:onHuaChose(info)
     local data = self:getOpChoseData(opType.doushisi.hua.id, info.c, info.hasTY, nil)
-    self.game:opChose(sendData)
+    self.game:opChose(data)
 end
 
 function doushisiOperation:onOpDoHua(acId, delIds)
@@ -885,7 +885,7 @@ end
 
 function doushisiOperation:onChiChose(info)
     local data = self:getOpChoseData(opType.doushisi.chi.id, info.c, info.hasTY, nil)
-    self.game:opChose(sendData)
+    self.game:opChose(data)
 end
 
 function doushisiOperation:onOpDoChi(acId, delIds, beId)
@@ -903,7 +903,7 @@ end
 function doushisiOperation:onCheClickedHandler()
     local info = self.mChe.opInfo
     local data = self:getOpChoseData(opType.doushisi.che.id, info.Cards[1], info.HasTY[1], nil)
-    self.game:opChose(sendData)
+    self.game:opChose(data)
 end
 
 function doushisiOperation:onOpDoChe(acId, delIds, beId)
@@ -921,7 +921,7 @@ end
 function doushisiOperation:onHuClickedHandler()
     local info = self.mHu.opInfo
     local data = self:getOpChoseData(opType.doushisi.hu.id, info.Cards[1])
-    self.game:opChose(sendData)
+    self.game:opChose(data)
 end
 
 function doushisiOperation:onOpDoHu(acId, id)
@@ -977,7 +977,7 @@ end
 
 function doushisiOperation:onBaGangChose(info)
     local data = self:getOpChoseData(opType.doushisi.baGang.id, info.c, info.hasTY, nil)
-    self.game:opChose(sendData)
+    self.game:opChose(data)
 end
 
 function doushisiOperation:onOpDoBaGang(acId, id)
@@ -2196,8 +2196,8 @@ function doushisiOperation:computeFlyTime(x1, y1, x2, y2, time)
     local dis = math.sqrt(d1)
     local speed = 11.40 --pixels per second
     local time = dis / speed
-    if time < 0.22 then
-        time = 0.22
+    if time < 0.20 then
+        time = 0.20
     end
     if time > 0.26 then
         time = 0.26
