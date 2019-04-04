@@ -115,6 +115,11 @@ end
 
 function quicklyStart:onDestroy()
     signalManager.unregisterSignalHandler(signalType.closeAllUI, self.onCloseAllUIHandler, self)
+    
+    for _, v in pairs(self.items) do
+        v:show()
+    end
+
     base.onDestroy(self)
 end
 
