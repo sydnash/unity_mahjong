@@ -1528,21 +1528,6 @@ function mahjongOperation:onGangClickedHandler()
         self:hideOperations()
     else
         self.mGangPanel:show()
-
-        local panelWidth = self.mGangPanel:getWidth()
-        local viewCamera = viewManager.camera
-        local scPos = viewManager.camera:WorldToScreenPoint(self.mGangPanel:getPosition())
-        local outScreen = scPos.x + panelWidth * 0.5 - UnityEngine.Screen.width + 80
-        if outScreen > 0 then
-            scPos.x = scPos.x - outScreen
-            local lcPos = screenPointToLocalPointInRectangle(self.mGangPanel, scPos, viewCamera)
-            self.mGangPanel:setAnchoredPosition(lcPos)
-        else
-            local pos = self.mGangPanel:getAnchoredPosition()
-            pos.x = 0
-            self.mGangPanel:setAnchoredPosition(pos)
-        end
-
         for _, v in pairs(self.gangItems) do
             v.btn:hide()
         end
@@ -1555,6 +1540,21 @@ function mahjongOperation:onGangClickedHandler()
             item.flg:setSprite((c.T == opType.gang.detail.angang) and "angang" or "bugang")
 
             item.btn:show()
+        end
+
+        local panelWidth = self.mGangPanel:getWidth()
+        panelWidth = 20 + 65 * count + 25 * count - 1 + 20
+        local viewCamera = viewManager.camera
+        local scPos = viewManager.camera:WorldToScreenPoint(self.mGangPanel:getPosition())
+        local outScreen = scPos.x + panelWidth * 0.5 - UnityEngine.Screen.width + 80
+        if outScreen > 0 then
+            scPos.x = scPos.x - outScreen
+            local lcPos = screenPointToLocalPointInRectangle(self.mGangPanel, scPos, viewCamera)
+            self.mGangPanel:setAnchoredPosition(lcPos)
+        else
+            local pos = self.mGangPanel:getAnchoredPosition()
+            pos.x = 0
+            self.mGangPanel:setAnchoredPosition(pos)
         end
     end
 end
