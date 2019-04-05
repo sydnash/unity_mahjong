@@ -16,10 +16,15 @@ function quicklyStart:onInit()
     self.leftSeconds = self.game.quicklyStartVoteSeconds / 1000
     self.timestamp = time.realtimeSinceStartup()
 
-    local items = { self.mItemA, self.mItemB, self.mItemC, }
-    self.items = {}
+    local items = { self.mItemA, self.mItemB, self.mItemC, self.mItemD }
 
+    for _, v in pairs(items) do
+        v:hide()
+    end
+
+    self.items = {}
     local i = 0
+
     for k, v in pairs(self.game.players) do
         i = i + 1
         if self.game.quicklyStartVoteProposer == v.acId then
@@ -31,9 +36,6 @@ function quicklyStart:onInit()
         item:show()
         item:setPlayerInfo(v)
         self.items[v.acId] = item
-    end
-    for j = i + 1, #items do
-        items[j]:hide()
     end
 
     if self.game.quicklyStartVoteProposer == gamepref.acId then
