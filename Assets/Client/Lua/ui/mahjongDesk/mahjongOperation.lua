@@ -1538,7 +1538,9 @@ function mahjongOperation:onGangClickedHandler()
             local lcPos = screenPointToLocalPointInRectangle(self.mGangPanel, scPos, viewCamera)
             self.mGangPanel:setAnchoredPosition(lcPos)
         else
-            self.mGangPanel:setAnchoredPosition(Vector3.zero)
+            local pos = self.mGangPanel:getAnchoredPosition()
+            pos.x = 0
+            self.mGangPanel:setAnchoredPosition(pos)
         end
 
         for _, v in pairs(self.gangItems) do
