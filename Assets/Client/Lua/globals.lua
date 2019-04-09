@@ -67,14 +67,14 @@ local function networkDisconnectedCallback(idx)
     log("[test for reconnect] networkDisconnectedCallback : " .. tostring(idx))
     if idx ~= nil and idx > 5 then
         closeWaitingUI()
+        closeAllUI()
 
         if clientApp.currentDesk ~= nil then
             clientApp.currentDesk:destroy()
             clientApp.currentDesk = nil
         end
-        gamepref.player.currentDesk = nil
 
-        closeAllUI()
+        gamepref.player.currentDesk = nil
         networkManager.disconnect()
 
         showMessageUI("与服务器失去连接，请重新登录。", 
@@ -896,25 +896,33 @@ end
 ----------------------------------------------------------------
 function closeAllUI()
     signalManager.signal(signalType.closeAllUI)
+
+    if clientApp.currentDesk ~= nil then
+        clientApp.currentDesk:clearUI()
+    end
 end
 
 ----------------------------------------------------------------
 --
 ----------------------------------------------------------------
 function commitError(errorText)
-    local ver = G_Current_Version ~= nil and (G_Current_Version .. "|") or string.empty
-    local ctt = { 
-        Title = "[ERR]" .. ver .. tostring(gamepref.player.acId) .. "|" .. time.formatDateTime(),
-        Content = string.gsub(errorText, "\n", "<br />"),
-    }
+    if appConfig.debug then
+        log(errorText)
+    else
+        local ver = G_Current_Version ~= nil and (G_Current_Version .. "|") or string.empty
+        local ctt = { 
+            Title = "[ERR]" .. ver .. tostring(gamepref.player.acId) .. "|" .. time.formatDateTime(),
+            Content = string.gsub(errorText, "\n", "<br />"),
+        }
 
-    local web = http.createAsync()
-    web:addTextRequest("http://test.cdbshy.com:17776/errorreport", "POST", 10 * 1000, table.tojson(ctt), function(text)
+        local web = http.createAsync()
+        web:addTextRequest("http://test.cdbshy.com:17776/errorreport", "POST", 10 * 1000, table.tojson(ctt), function(text)
         
-    end)
-    web:start()
+        end)
+        web:start()
 
-    talkingData.event(talkingData.eventType.errmsg, { err = errorText })
+        talkingData.event(talkingData.eventType.errmsg, { err = errorText })
+    end
 end
 
 ----------------------------------------------------------------

@@ -169,6 +169,7 @@ function enterPlaybackCode:enter()
         data.Ready              = true
         data.Players            = history.Players
         data.Turn               = 0
+        data.historyId          = history.Id
 
         for k, v in pairs(data.Players) do
             v.Turn          = k - 1

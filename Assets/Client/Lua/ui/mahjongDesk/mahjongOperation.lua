@@ -2647,11 +2647,6 @@ function mahjongOperation:onDestroy()
         v:destroy()
     end
 
-    self.diceRoot:show()
-    self.centerGlass:show()
-    self.countdown:show()
-    self.chupaiPtr:show()
-
     base.onDestroy(self)
 end
 
@@ -2967,7 +2962,7 @@ function mahjongOperation:showChuPaiHintInfo(info)
         return
     end
 
-    log("mahjongOperation:showChuPaiHintInfo, info = " .. table.tostring(info))
+--    log("mahjongOperation:showChuPaiHintInfo, info = " .. table.tostring(info))
     self:sortHu(info)
 
     local handCntVec, totalCntVec = self.game.chuHintComputeHelper:statisticCount()
