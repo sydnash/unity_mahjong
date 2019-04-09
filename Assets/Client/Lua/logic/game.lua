@@ -95,7 +95,7 @@ function game:startLoop()
     end
     
     if self.mode == gameMode.normal then
-        self.gameScoreDetail    = self.data.SD
+        self.gameScoreDetail = self.data.SD
         if self.data.Reenter ~= nil then
             self.deskUI:onGameSync()
             self.operationUI:onGameSync()
@@ -855,9 +855,7 @@ function game:destroy()
         end
     end
 
-    self.deskUI = nil
-    self.operationUI = nil
-    self.exitDeskUI = nil
+    self:clearUI()
 
     self.deskId = nil
     clientApp.currentDesk = nil
@@ -1119,6 +1117,13 @@ function game:cancelVoice()
     if self.deskUI ~= nil then
         self.deskUI:cancelVoice()
     end
+end
+
+function game:clearUI()
+    self.deskUI = nil
+    self.operationUI = nil
+    self.exitDeskUI = nil
+    self.quicklyStartUI = nil
 end
 
 return game

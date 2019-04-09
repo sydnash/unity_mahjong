@@ -331,7 +331,7 @@ end
 -- 开始游戏
 -------------------------------------------------------------------------------
 function mahjongGame:onGameStartHandler(msg)
-    log("start game, msg = " .. table.tostring(msg))
+--    log("start game, msg = " .. table.tostring(msg))
     self.canBack = false
     self.knownMahjong = {}
     self.chuHintComputeHelper = nil
@@ -365,7 +365,7 @@ end
 -- 发牌
 -------------------------------------------------------------------------------
 function mahjongGame:onFaPaiHandler(msg)
-    log("fapai, msg = " .. table.tostring(msg))
+--    log("fapai, msg = " .. table.tostring(msg))
     local func = (function()
         self.deskPlayStatus = mahjongGame.status.fapai
 
@@ -804,20 +804,24 @@ end
 -------------------------------------------------------------------------------
 function mahjongGame:onQuicklyStartNotify(msg)
 --    log("mahjongGame:onQuicklyStartNotify " .. table.tostring(msg))
-    if not self.quicklyStartUI then
-        self.quicklyStartVoteSeconds = msg.LeftTime
-        self.quicklyStartVoteProposer = msg.Proposer
+    local func = (function()
+        if not self.quicklyStartUI then
+            self.quicklyStartVoteSeconds = msg.LeftTime
+            self.quicklyStartVoteProposer = msg.Proposer
 
-        for _, p in pairs(self.players) do
-            p.quicklyStartVoteState = quicklyStartStatus.waiting
-            if p.acId == msg.Proposer then
-                p.quicklyStartVoteState = quicklyStartStatus.proposer
+            for _, p in pairs(self.players) do
+                p.quicklyStartVoteState = quicklyStartStatus.waiting
+                if p.acId == msg.Proposer then
+                    p.quicklyStartVoteState = quicklyStartStatus.proposer
+                end
             end
-        end
 
-        self.quicklyStartUI = require("ui.quicklyStart").new(self)
-        self.quicklyStartUI:show()
-    end
+            self.quicklyStartUI = require("ui.quicklyStart").new(self)
+            self.quicklyStartUI:show()
+        end
+    end)
+    
+    self:pushMessage(func)
 end
 
 -------------------------------------------------------------------------------
