@@ -11,6 +11,7 @@ function patchMessageBox:ctor(text, confirmCallback, cancelCallback)
     self.transform  = gameObject.transform
     self.transform:SetParent(patchViewManager.root.transform, false)
 
+    self.text = text
     self.confirmCallback = confirmCallback
     self.cancelCallback = cancelCallback
 
@@ -32,13 +33,19 @@ function patchMessageBox:ctor(text, confirmCallback, cancelCallback)
         self.mCancel = go:GetComponent(typeof(UnityEngine.UI.Button))
     end
 
-    self.mText.text = text
-    self.mConfirm.onClick:AddListener(function()
-        self.onConfirmClickedHandler(self)
-    end)
-    self.mCancel.onClick:AddListener(function()
-        self.onCancelClickedHandler(self)
-    end)
+    self:onInit()
+end
+
+function patchMessageBox:onInit()
+    self.mText.text = self.text
+    self.mConfirm.onClick:AddListener(function() self.onConfirmClickedHandler(self) end)
+    self.mCancel.onClick:AddListener(function() self.onCancelClickedHandler(self) end)
+
+    if self.cancelCallback == nil then
+        self.mCancel.gameObject:SetActive(false)
+    else
+        self.mCancel.gameObject:SetActive(true)
+    end
 end
 
 function patchMessageBox:onConfirmClickedHandler()

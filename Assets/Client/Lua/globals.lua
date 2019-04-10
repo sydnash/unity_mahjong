@@ -64,7 +64,8 @@ local doushisiType  = require("logic.doushisi.doushisiType")
 -- 断开连接后的回调
 ----------------------------------------------------------------
 local function networkDisconnectedCallback(idx)
-    log("[test for reconnect] networkDisconnectedCallback : " .. tostring(idx))
+    local idx = idx or 1
+--    log("[test for reconnect] networkDisconnectedCallback : " .. tostring(idx))
     if idx ~= nil and idx > 5 then
         closeWaitingUI()
         closeAllUI()
@@ -85,7 +86,6 @@ local function networkDisconnectedCallback(idx)
         return
     end
 
-    local idx = idx or 1
     showWaitingUI(string.format("正在尝试重连(%d/5)，请稍候...", idx))
 
     if clientApp.currentDesk ~= nil and not clientApp.currentDesk:isPlayback() then
@@ -105,10 +105,10 @@ local function networkDisconnectedCallback(idx)
 
         if deskId <= 0 then
             gamepref.player.currentDesk = nil
-            local desk = clientApp.currentDesk
-            if desk and not clientApp.currentDesk:isPlayback() and not clientApp.currentDesk.isGameOverUIShow then
+            
+            if clientApp.currentDesk ~= nil and not clientApp.currentDesk:isPlayback() and not clientApp.currentDesk.isGameOverUIShow then
                 showMessageUI("牌局已经结束，请点击确定并去战绩查看详情", function()
-                    desk:exitGame()
+                    clientApp.currentDesk:exitGame()
                 end)
             end
             return
@@ -754,26 +754,39 @@ function loginServer(callback, func)
             platformHelper.clearSGInviteParam()
         end
 
-        sceneManager.load("mahjongscene", function(completed, progress)
-            if completed then
-                if cityType == 0 and deskId == 0 then
-                    local lobby = require("ui.lobby").new()
-                    lobby:show()
+        local loginFunc = function()
+            if cityType <= 0 or deskId <= 0 then
+                local lobby = require("ui.lobby").new()
+                lobby:show()
                     
-                    callback(true)
-                else -- 如有在房间内则跳过大厅直接进入房间
-                    enterDesk(cityType, deskId, function(ok, func)
-                        local lobby = require("ui.lobby").new()
-                        lobby:show()
-                        if func then
-                            func()
-                        end
+                callback(true)
+            else -- 如有在房间内则跳过大厅直接进入房间
+                enterDesk(cityType, 
+                          deskId, 
+                          function(ok, func)
+                              local lobby = require("ui.lobby").new()
+                              lobby:show()
+
+                              if func then
+                                  func()
+                              end
                         
-                        callback(true)
-                    end, true)
-                end
+                              callback(true)
+                          end, 
+                          true)
             end
-        end)
+        end
+
+        local mainCameraGO = find("Main Camera")
+        if mainCameraGO ~= nil then
+            loginFunc()
+        else
+            sceneManager.load("mahjongscene", function(completed, progress)
+                if completed then
+                    loginFunc()
+                end
+            end)
+        end
     end)
 end
 
