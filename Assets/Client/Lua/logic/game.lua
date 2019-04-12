@@ -537,8 +537,8 @@ end
 -------------------------------------------------------------------------------
 function game:exitGame()
     closeAllUI()
-    self:openLobbyUI()
 
+    self:openLobbyUI()
     self:destroy()
 end
 
@@ -546,16 +546,25 @@ end
 -- 
 -------------------------------------------------------------------------------
 function game:exitPlayback()
-    self:exitGame()
+    closeAllUI()
 
-    if self.mode == gameMode.playback then
-        local historyUI = require("ui.playHistory.playHistory").new(gamepref.player.playHistory)
-        historyUI:show()
+    self:openLobbyUI(function()
+        local history = nil
+
+        if self.friendsterId ~= nil and self.friendsterId > 0 then 
+            history = gamepref.player:getFriendsterPlayHistory(self.friendsterId)
+        else
+            history = gamepref.player.playHistory
+            local historyUI = require("ui.playHistory.playHistory").new(history)
+            historyUI:show()
+        end
 
         local historyDetailUI = require("ui.playHistory.playHistoryDetail").new()
-        historyDetailUI:setHistory(self.data.historyId, gamepref.player.playHistory)
+        historyDetailUI:setHistory(self.data.historyId, history)
         historyDetailUI:show()
-    end
+    end)
+
+    self:destroy()
 end
 
 -------------------------------------------------------------------------------
@@ -1039,12 +1048,15 @@ end
 -------------------------------------------------------------------------------
 -- 
 -------------------------------------------------------------------------------
-function game:openLobbyUI()
+function game:openLobbyUI(callback)
     local lobby = require("ui.lobby").new()
     lobby:hide()
 
     if self.friendsterId == nil or self.friendsterId <= 0 then
         lobby:show()
+        if callback ~= nil then
+            callback()
+        end
         return
     end
 
@@ -1053,6 +1065,9 @@ function game:openLobbyUI()
         if msg == nil or msg.RetCode ~= retc.ok then
             closeWaitingUI()
             lobby:show()
+            if callback ~= nil then
+                callback()
+            end
             return
         end
 
@@ -1065,6 +1080,9 @@ function game:openLobbyUI()
             showMessageUI("你已经不在该亲友圈")
             lobby:show()
             fst:show()
+            if callback ~= nil then
+                callback()
+            end
             return
         end
 
@@ -1073,6 +1091,9 @@ function game:openLobbyUI()
                 closeWaitingUI()
                 lobby:show()
                 fst:show()
+                if callback ~= nil then
+                    callback()
+                end
                 return
             end
 
@@ -1084,6 +1105,9 @@ function game:openLobbyUI()
                 if msg == nil or msg.RetCode ~= retc.ok then
                     lobby:show()
                     fst:show()
+                    if callback ~= nil then
+                        callback()
+                    end
                     return
                 end
 
@@ -1104,6 +1128,10 @@ function game:openLobbyUI()
                 lobby:show()
                 fst:show()
                 fst.detailUI = fstDetail
+
+                if callback ~= nil then
+                    callback()
+                end
             end)
         end)
     end)
