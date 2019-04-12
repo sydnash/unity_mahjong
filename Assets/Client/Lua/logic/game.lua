@@ -553,6 +553,10 @@ function game:exitPlayback()
 
         if self.friendsterId ~= nil and self.friendsterId > 0 then 
             history = gamepref.player:getFriendsterPlayHistory(self.friendsterId)
+            local statisticsUI = require("ui.friendster.friendsterStatistics").new()
+            local histories = history:getData()
+            statisticsUI:set(histories, history)
+            statisticsUI:show()
         else
             history = gamepref.player.playHistory
             local historyUI = require("ui.playHistory.playHistory").new(history)
