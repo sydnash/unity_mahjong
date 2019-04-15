@@ -755,8 +755,10 @@ function game:onNotifyExitVoteFailedHandler(msg)
 --        log("notify exit vote failed, msg = " .. table.tostring(msg))
         local player = self.players[msg.Rejecter]
         showMessageUI(string.format("玩家 %s 拒绝了解散申请", cutoutString(player.nickname,gameConfig.nicknameMaxLength)))
-        self.exitDeskUI:close()
-        self.exitDeskUI = nil
+        if self.exitDeskUI ~= nil then
+            self.exitDeskUI:close()
+            self.exitDeskUI = nil
+        end
     end)
     
     self:pushMessage(func)

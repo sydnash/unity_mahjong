@@ -389,46 +389,46 @@ return {
     discounts = {
         --成都
         [cityType.chengdu] = {
-            [gameType.mahjong]          = 0,
+            [gameType.mahjong]          = 1,
             [gameType.doushisi]         = 1,
-            [gameType.yaotongrenyong]   = 0,
+            [gameType.yaotongrenyong]   = 1,
         },
         --金堂
         [cityType.jintang] = {
-            [gameType.mahjong]          = 0,
+            [gameType.mahjong]          = 1,
             [gameType.doushisi]         = 1,
             [gameType.paodekuai]        = 1,
-            [gameType.yaotongrenyong]   = 0,
+            [gameType.yaotongrenyong]   = 1,
         },
         --温江
         [cityType.wenjiang] = {
-            [gameType.mahjong]          = 0,
+            [gameType.mahjong]          = 1,
             [gameType.doushisi]         = 1,
-            [gameType.yaotongrenyong]   = 0,
+            [gameType.yaotongrenyong]   = 1,
         },
         --南充
         [cityType.nanchong] = {
-            [gameType.mahjong]          = 0,
+            [gameType.mahjong]          = 1,
             [gameType.doushisi]         = 1,
-            [gameType.yaotongrenyong]   = 0,
+            [gameType.yaotongrenyong]   = 1,
         },                       
         --西充                    
         [cityType.xichong] = {   
-            [gameType.mahjong]          = 0,
+            [gameType.mahjong]          = 1,
             [gameType.doushisi]         = 1,
-            [gameType.yaotongrenyong]   = 0,
+            [gameType.yaotongrenyong]   = 1,
         },                       
         --荥经                    
         [cityType.yingjing] = {  
-            [gameType.mahjong]          = 0,
+            [gameType.mahjong]          = 1,
             [gameType.doushisi]         = 1,
-            [gameType.yaotongrenyong]   = 0,
+            [gameType.yaotongrenyong]   = 1,
         },
         --中江
         [cityType.zhongjiang] = {
-            [gameType.mahjong]          = 0,
+            [gameType.mahjong]          = 1,
             [gameType.doushisi]         = 1,
-            [gameType.yaotongrenyong]   = 0,
+            [gameType.yaotongrenyong]   = 1,
         },
     }
 }
