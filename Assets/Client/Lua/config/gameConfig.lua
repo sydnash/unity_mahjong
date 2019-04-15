@@ -5,7 +5,7 @@
 local gameConfig = {
     fps                     = 30,       --帧率
     nicknameMaxLength       = 5,        --玩家昵称可显示的最大长度
-    friendsterNameMaxLength = 10,       --亲友圈名称可显示的最大长度
+    friendsterNameMaxLength = 8,        --亲友圈名称可显示的最大长度
     messageTextMaxLength    = 50,       --可输入聊天信息的最大长度
     thumbSize               = 150,      --缩略图尺寸
     gvoiceMaxLength         = 120,      --语音录制最大时长，单位秒
